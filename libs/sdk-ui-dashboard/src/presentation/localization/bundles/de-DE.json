@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "Titel hier hinzufügen...",
     "layout.header.add.description.placeholder": "Beschreibung hier hinzufügen...",
     "controlButtons.options.tooltip": "Weitere Aktionen",
+    "controlButtons.options.widgetLabel": "Weitere Aktionen für {title}",
     "controlButtons.options.back": "Zurück zum vorherigen Schritt",
     "controlButtons.options.closeMenu": "Menü schließen",
     "controlButtons.edit.value": "Bearbeiten",

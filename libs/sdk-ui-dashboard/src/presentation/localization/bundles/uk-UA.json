@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "Додайте заголовок тут...",
     "layout.header.add.description.placeholder": "Додайте опис тут...",
     "controlButtons.options.tooltip": "Більше дій",
+    "controlButtons.options.widgetLabel": "Більше дій для {title}",
     "controlButtons.options.back": "Назад до попереднього кроку",
     "controlButtons.options.closeMenu": "Закрити меню",
     "controlButtons.edit.value": "Редагувати",

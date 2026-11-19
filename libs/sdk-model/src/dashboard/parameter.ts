@@ -2,7 +2,7 @@
 
 import { _isEmpty } from "@gooddata/util";
 
-import { type ParameterType, type ParameterValue } from "../ldm/metadata/parameter/index.js";
+import { type ParameterValue, type ScalarParameterType } from "../ldm/metadata/parameter/index.js";
 import { type IdentifierRef, isIdentifierRef } from "../objRef/index.js";
 
 /**
@@ -49,7 +49,7 @@ export interface IDashboardParameter {
     /**
      * Type tag; matches the workspace parameter definition's `type`.
      */
-    readonly parameterType: ParameterType;
+    readonly parameterType: ScalarParameterType;
 
     /**
      * Dashboard's pinned override; absent when equal to the workspace default.
@@ -88,7 +88,7 @@ export interface IDashboardExportParameter {
      * Parameter type tag; matches the workspace parameter definition's `type`. Absent on rows
      * persisted before the tag existed — those are decoded as NUMBER.
      */
-    parameterType?: ParameterType;
+    parameterType?: ScalarParameterType;
 }
 
 /**

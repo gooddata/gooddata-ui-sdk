@@ -30,6 +30,9 @@ export const EndDateInputField = forwardRef<HTMLInputElement, IDateRangeInputFie
             isSecondsEnabled,
             errors,
             intl,
+            onCalendarOpen,
+            isCalendarOpen,
+            calendarId,
         },
         ref,
     ) => {
@@ -37,6 +40,7 @@ export const EndDateInputField = forwardRef<HTMLInputElement, IDateRangeInputFie
             () => ({
                 dateAriaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.to" }),
                 timeAriaLabel: intl.formatMessage({ id: "filters.time.accessibility.label.to" }),
+                calendarButtonAriaLabel: intl.formatMessage({ id: "filters.date.accessibility.calendar.to" }),
                 dateInputHintId: DATE_INPUT_HINT_ID,
                 timeInputHintId: TIME_INPUT_HINT_ID,
             }),
@@ -83,6 +87,9 @@ export const EndDateInputField = forwardRef<HTMLInputElement, IDateRangeInputFie
                 defaultTime={DAY_END_TIME}
                 inputErrorMessageTexts={inputErrorMessageTexts}
                 errors={errors}
+                onCalendarOpen={onCalendarOpen}
+                isCalendarOpen={isCalendarOpen}
+                calendarId={calendarId}
             />
         );
     },

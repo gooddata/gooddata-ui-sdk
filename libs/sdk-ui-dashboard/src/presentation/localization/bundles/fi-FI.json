@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "Lisää otsikko tähän...",
     "layout.header.add.description.placeholder": "Lisää kuvaus tähän...",
     "controlButtons.options.tooltip": "Lisää toimintoja",
+    "controlButtons.options.widgetLabel": "Lisätoiminnot kohteelle {title}",
     "controlButtons.options.back": "Takaisin edelliseen vaiheeseen",
     "controlButtons.options.closeMenu": "Sulje valikko",
     "controlButtons.edit.value": "Muokkaa",

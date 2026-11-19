@@ -158,6 +158,14 @@ describe("parameter placeholders of a custom URL drill", () => {
         await expectDrillToFail("https://example.com/?n={parameter(unknown)}");
     });
 
+    it("resolves the insight value of a parameter that is not on the dashboard", async () => {
+        Tester.dispatch(tabsActions.removeParameter({ ref: topNRef }));
+        setInsightTopNValue(7);
+        setWorkspaceTopNDefault(10);
+
+        expect(await resolveUrl("https://example.com/?n={parameter(topN)}")).toBe("https://example.com/?n=7");
+    });
+
     it("rejects a drill when parameters are disabled", async () => {
         setSettings({ enableParameters: false, enableStringParameters: true });
 

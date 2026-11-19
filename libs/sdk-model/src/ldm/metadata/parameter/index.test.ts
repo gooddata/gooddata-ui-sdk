@@ -1,12 +1,21 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, expectTypeOf, it } from "vitest";
+
+import { type DateFilterGranularity } from "../../../dateFilterConfig/index.js";
+import { idRef } from "../../../objRef/factory.js";
 
 import {
+    type DateRangeParameterGranularity,
+    type IDateRangeParameterDefinition,
     type IParameterDefinition,
+    type IParameterMetadataObject,
     getParameterAllowedValueTitle,
     getParameterAllowedValues,
     getParameterValueTitle,
+    isDateRangeParameterDefinition,
+    isScalarParameterDefinition,
+    isScalarParameterMetadataObject,
     isStringParameterDefinition,
     isValidNumberParameterValue,
     isValidParameterValue,
@@ -14,6 +23,20 @@ import {
     parameterValueMatchesType,
     sanitizeParameterValue,
 } from "./index.js";
+
+const dateRangeDefinition: IDateRangeParameterDefinition = {
+    type: "DATE_RANGE",
+    defaultValue: { granularity: "GDC.time.month", from: "2025-08", to: "2026-08" },
+};
+
+describe("DateRangeParameterGranularity", () => {
+    it("matches the date filter granularities except for the ISO week", () => {
+        expectTypeOf<"GDC.time.week">().toExtend<DateRangeParameterGranularity>();
+        expectTypeOf<
+            Exclude<DateRangeParameterGranularity, "GDC.time.week">
+        >().toExtend<DateFilterGranularity>();
+    });
+});
 
 describe("isValidNumberParameterValue", () => {
     it("returns true for a value within min/max bounds", () => {
@@ -318,5 +341,44 @@ describe("isStringParameterDefinition", () => {
     it("is true for a STRING definition and false for a NUMBER definition", () => {
         expect(isStringParameterDefinition({ type: "STRING", defaultValue: "Actual" })).toBe(true);
         expect(isStringParameterDefinition({ type: "NUMBER", defaultValue: 5 })).toBe(false);
+    });
+});
+
+describe("isDateRangeParameterDefinition", () => {
+    it("is true only for a DATE_RANGE definition", () => {
+        expect(isDateRangeParameterDefinition(dateRangeDefinition)).toBe(true);
+        expect(isDateRangeParameterDefinition({ type: "NUMBER", defaultValue: 5 })).toBe(false);
+    });
+});
+
+describe("isScalarParameterDefinition", () => {
+    it("is true for NUMBER and STRING definitions and false for a DATE_RANGE definition", () => {
+        expect(isScalarParameterDefinition({ type: "NUMBER", defaultValue: 5 })).toBe(true);
+        expect(isScalarParameterDefinition({ type: "STRING", defaultValue: "Actual" })).toBe(true);
+        expect(isScalarParameterDefinition(dateRangeDefinition)).toBe(false);
+    });
+});
+
+describe("isScalarParameterMetadataObject", () => {
+    function parameterWith(definition: IParameterDefinition): IParameterMetadataObject {
+        return {
+            type: "parameter",
+            id: "parameter",
+            uri: "",
+            ref: idRef("parameter", "parameter"),
+            title: "Parameter",
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            definition,
+        };
+    }
+
+    it("is true for a NUMBER parameter and false for a DATE_RANGE parameter", () => {
+        expect(isScalarParameterMetadataObject(parameterWith({ type: "NUMBER", defaultValue: 5 }))).toBe(
+            true,
+        );
+        expect(isScalarParameterMetadataObject(parameterWith(dateRangeDefinition))).toBe(false);
     });
 });

@@ -7,19 +7,22 @@ import cx from "classnames";
 import { bemFactory } from "@gooddata/sdk-ui-kit";
 
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/config.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
 import { useResizeWidthStatus } from "../../../dragAndDrop/LayoutResizeContext.js";
 
 const { b, e } = bemFactory("gd-grid-layout-ruler");
 
 export function BulletsBar() {
     const widthResizingStatus = useResizeWidthStatus();
+    const enableCanvasScroll = useDashboardSelector(selectSettings)?.enableDashboardCanvasScroll ?? false;
 
     const isActive = widthResizingStatus.isResizingWidth && !widthResizingStatus.isItemNested;
     const initialIndex = isActive ? widthResizingStatus.initialIndex : undefined;
     const currentIndex = isActive ? widthResizingStatus.currentIndex : undefined;
     const columnsNum = DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
 
-    return (
+    const ruler = (
         <div
             className={b({ active: isActive })}
             style={{ "--columns-num": columnsNum } as CSSProperties}
@@ -50,6 +53,8 @@ export function BulletsBar() {
             </div>
         </div>
     );
+
+    return enableCanvasScroll ? <div className="gd-grid-layout-ruler-viewport">{ruler}</div> : ruler;
 }
 
 export function Bullet({

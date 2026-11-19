@@ -4,7 +4,11 @@ import { render, screen } from "@testing-library/react";
 import { RawIntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
-import { DashboardParameterModeValues, type IParameterMetadataObject, idRef } from "@gooddata/sdk-model";
+import {
+    DashboardParameterModeValues,
+    type IScalarParameterMetadataObject,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { selectCatalogParameterByRef } from "../../../model/store/catalog/catalogSelectors.js";
 import { selectDashboardParameterEntryByRef } from "../../../model/store/tabs/parameters/parametersSelectors.js";
@@ -16,7 +20,7 @@ import { DefaultParameterDraggingComponent } from "./DefaultParameterDraggingCom
 const enumRef = idRef("scenario", "parameter");
 const numberRef = idRef("topN", "parameter");
 
-const enumWorkspaceParameter: IParameterMetadataObject = {
+const enumWorkspaceParameter: IScalarParameterMetadataObject = {
     type: "parameter",
     id: "scenario",
     uri: "/scenario",
@@ -38,7 +42,7 @@ const enumWorkspaceParameter: IParameterMetadataObject = {
     },
 };
 
-const numberWorkspaceParameter: IParameterMetadataObject = {
+const numberWorkspaceParameter: IScalarParameterMetadataObject = {
     ...enumWorkspaceParameter,
     id: "topN",
     uri: "/topN",
@@ -74,7 +78,7 @@ vi.mock("../../../model/react/DashboardStoreProvider.js", () => ({
 
 function renderPreview(
     entry: IDashboardParameterEntry,
-    workspaceParameter: IParameterMetadataObject | undefined,
+    workspaceParameter: IScalarParameterMetadataObject | undefined,
 ) {
     mockUseDashboardSelector.mockImplementation((selector: unknown) => {
         if (selector === selectDashboardParameterEntryByRef(entry.parameter.ref)) {

@@ -19,7 +19,7 @@ export interface IDateRangeInputFieldProps {
     onDateChange: (date: Date | undefined, shouldSubmitForm?: boolean) => void;
     onTimeChange: (time: ITime | undefined, shouldSubmitForm?: boolean) => void;
     onInputClick: () => void;
-    onDateInputKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
+    onDateInputKeyDown: (e: KeyboardEvent<HTMLElement>) => void;
     dateFormat: string | undefined;
     isMobile: boolean;
     isTimeEnabled: boolean;
@@ -27,6 +27,9 @@ export interface IDateRangeInputFieldProps {
     errors?: IDateTimePickerErrors;
     intl: IntlShape;
     withoutApply?: boolean;
+    onCalendarOpen?: (moveFocus: boolean) => void;
+    isCalendarOpen?: boolean;
+    calendarId?: string;
 }
 
 export interface IDateRange {
@@ -37,6 +40,7 @@ export interface IDateRange {
 export interface IInputAccessibilityConfig {
     ariaLabel?: AriaAttributes["aria-label"];
     inputHintId?: string;
+    calendarButtonAriaLabel?: AriaAttributes["aria-label"];
 }
 
 export interface IDateInputErrorMessageTexts {

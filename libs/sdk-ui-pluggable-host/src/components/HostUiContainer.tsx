@@ -26,6 +26,7 @@ import { _isEqual, _omit } from "@gooddata/util";
 import { now } from "../debug.js";
 import { getModuleMessageBroker, useHeadlessModules } from "../headless/useHeadlessModules.js";
 import { setActiveHostHandle } from "../lib/hostNotifications.js";
+import { getHostBasePath, getHostPathname } from "../loader/hostBasePath.js";
 import { getAppLifecycleCallbacks } from "../loader/pluggableApplicationsLoader.js";
 import { getActiveInternalApplication } from "../loader/routing.js";
 import {
@@ -224,7 +225,8 @@ export function HostUiContainer({ ctx, apps, pathname, routerNavigate, onError }
                 url,
                 // The page's, not the router's: an application moving its own router leaves the host
                 // router on the path it last navigated to.
-                currentPathname: window.location.pathname,
+                currentPathname: getHostPathname(),
+                basePath: getHostBasePath(),
                 guardRef: appNavigationRequestRef,
                 navigate: (target) => void navigateRef.current(target),
             });

@@ -1,7 +1,8 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { type ReactElement, useCallback } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
@@ -25,9 +26,9 @@ export function useSaveAsDialogProps(): ISaveAsDialogProps {
     const isSaveAsDialogOpen = useDashboardSelector(selectIsSaveAsDialogOpen);
 
     const onSaveAsError = useCallback(() => {
-        closeSaveAsDialog();
+        // keep the dialog open so the user is not left in an unknown state and can retry or cancel
         addError(messages.messagesDashboardSaveFailed, { id: "message_dashboard_save_failed" });
-    }, [closeSaveAsDialog, addError]);
+    }, [addError]);
 
     const onSaveAsSuccess = useCallback(() => {
         closeSaveAsDialog();
@@ -56,6 +57,17 @@ export function DefaultSaveAsDialog({
     isVisible,
     onSuccess,
 }: ISaveAsDialogProps): ReactElement | null {
+    const [hasSaveError, setHasSaveError] = useState(false);
+
+    // the command handlers are bound once, so only the stable state setter is used here besides the props
+    const handleSubmitError = useCallback(
+        (error: GoodDataSdkError) => {
+            setHasSaveError(true);
+            onError?.(error);
+        },
+        [onError],
+    );
+
     const {
         locale,
         dashboardTitle,
@@ -64,7 +76,20 @@ export function DefaultSaveAsDialog({
         isDashboardLoaded,
         handleSaveAs,
         isInEditMode,
-    } = useSaveAs({ onSubmit, onSubmitSuccess: onSuccess, onSubmitError: onError });
+    } = useSaveAs({ onSubmit, onSubmitSuccess: onSuccess, onSubmitError: handleSubmitError });
+
+    const handleSubmit = useCallback(
+        (title: string, switchToCopy?: boolean, useOriginalFilterContext?: boolean) => {
+            setHasSaveError(false);
+            handleSaveAs(title, switchToCopy, useOriginalFilterContext);
+        },
+        [handleSaveAs],
+    );
+
+    // forget the previous failure once the dialog is closed
+    if (!isVisible && hasSaveError) {
+        setHasSaveError(false);
+    }
 
     if (!isVisible) {
         return null;
@@ -78,7 +103,8 @@ export function DefaultSaveAsDialog({
             isDashboardLoaded={isDashboardLoaded}
             isDashboardSaving={isDashboardSaving}
             isInEditMode={isInEditMode}
-            onSubmit={handleSaveAs}
+            hasSaveError={hasSaveError}
+            onSubmit={handleSubmit}
             onCancel={onCancel}
         />
     );

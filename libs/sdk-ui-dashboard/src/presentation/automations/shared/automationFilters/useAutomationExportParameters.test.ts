@@ -7,7 +7,7 @@ import {
     type IAutomationMetadataObject,
     type IDashboardExportParameter,
     type IDashboardParameter,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -26,7 +26,7 @@ import {
 interface IMockContextState {
     enableParameters: boolean;
     enableStringParameters: boolean;
-    catalog: IParameterMetadataObject[];
+    catalog: IScalarParameterMetadataObject[];
     dashboardParametersByTab: Record<string, IDashboardParameter[]>;
     tabIds: string[];
     widgetTabMap: Record<string, string>;

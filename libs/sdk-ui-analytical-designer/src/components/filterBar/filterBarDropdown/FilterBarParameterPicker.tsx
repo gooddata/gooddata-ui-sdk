@@ -3,7 +3,7 @@
 import { useIntl } from "react-intl";
 import { useSelector } from "react-redux";
 
-import { type IParameterMetadataObject } from "@gooddata/sdk-model";
+import { type IScalarParameterMetadataObject } from "@gooddata/sdk-model";
 import { ParameterPicker, UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
 import { getCatalogParameters, isLoadingItems } from "../../../store/catalog/catalog_selector.js";
@@ -13,7 +13,7 @@ export interface IFilterBarParameterPickerProps {
     maxListHeight: number;
     onBack: () => void;
     onClose: () => void;
-    onAdd: (parameters: ReadonlyArray<IParameterMetadataObject>) => void;
+    onAdd: (parameters: ReadonlyArray<IScalarParameterMetadataObject>) => void;
 }
 
 export function FilterBarParameterPicker({
@@ -27,7 +27,7 @@ export function FilterBarParameterPicker({
     const isLoading = useSelector(isLoadingItems);
     const activeKeys = useSelector(getActiveParameterRefKeys);
 
-    const handleAdd = (selected: ReadonlyArray<IParameterMetadataObject>) => {
+    const handleAdd = (selected: ReadonlyArray<IScalarParameterMetadataObject>) => {
         onAdd(selected);
         onClose();
     };

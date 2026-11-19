@@ -12,7 +12,7 @@ import {
     type IDashboardParameter,
     type IInsight,
     type IInsightParameterValue,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
     idRef,
@@ -42,7 +42,7 @@ import { type IDashboardParameterEntry } from "./parametersState.js";
 const topNRef: IdentifierRef = idRef("topN", "parameter");
 const sampleSizeRef: IdentifierRef = idRef("sampleSize", "parameter");
 
-const topNWorkspace: IParameterMetadataObject = {
+const topNWorkspace: IScalarParameterMetadataObject = {
     type: "parameter",
     id: "topN",
     uri: "/topN",
@@ -55,14 +55,14 @@ const topNWorkspace: IParameterMetadataObject = {
     definition: { type: "NUMBER", defaultValue: 10 },
 };
 
-const boundedWorkspace: IParameterMetadataObject = {
+const boundedWorkspace: IScalarParameterMetadataObject = {
     ...topNWorkspace,
     definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
 };
 
 const scenarioRef: IdentifierRef = idRef("scenario", "parameter");
 
-const scenarioWorkspace: IParameterMetadataObject = {
+const scenarioWorkspace: IScalarParameterMetadataObject = {
     type: "parameter",
     id: "scenario",
     uri: "/scenario",
@@ -75,12 +75,12 @@ const scenarioWorkspace: IParameterMetadataObject = {
     definition: { type: "STRING", defaultValue: "Actual" },
 };
 
-const boundedScenarioWorkspace: IParameterMetadataObject = {
+const boundedScenarioWorkspace: IScalarParameterMetadataObject = {
     ...scenarioWorkspace,
     definition: { type: "STRING", defaultValue: "Actual", constraints: { maxLength: 6 } },
 };
 
-const enumScenarioWorkspace: IParameterMetadataObject = {
+const enumScenarioWorkspace: IScalarParameterMetadataObject = {
     ...scenarioWorkspace,
     definition: {
         type: "STRING",
@@ -117,11 +117,11 @@ describe("computeHydratedRuntimeOverride", () => {
     });
 
     it("seeds the value verbatim regardless of min-only or max-only bounds", () => {
-        const minOnly: IParameterMetadataObject = {
+        const minOnly: IScalarParameterMetadataObject = {
             ...topNWorkspace,
             definition: { type: "NUMBER", defaultValue: 5, constraints: { min: 0 } },
         };
-        const maxOnly: IParameterMetadataObject = {
+        const maxOnly: IScalarParameterMetadataObject = {
             ...topNWorkspace,
             definition: { type: "NUMBER", defaultValue: 5, constraints: { max: 100 } },
         };
@@ -170,7 +170,7 @@ describe("classifyParameterReconciliation", () => {
     });
 
     it("classifies a workspace parameter that is no longer a NUMBER as incompatible", () => {
-        const nonNumberWorkspace: IParameterMetadataObject = {
+        const nonNumberWorkspace: IScalarParameterMetadataObject = {
             ...topNWorkspace,
             definition: scenarioWorkspace.definition,
         };
@@ -225,7 +225,7 @@ describe("classifyParameterReconciliation", () => {
 describe("collectParameterReconciliations", () => {
     it("collects reset, removed and incompatible kinds in entry order", () => {
         const legacyRef = idRef("legacy", "parameter");
-        const incompatibleWorkspace: IParameterMetadataObject = {
+        const incompatibleWorkspace: IScalarParameterMetadataObject = {
             ...topNWorkspace,
             id: "legacy",
             uri: "/legacy",
@@ -386,7 +386,7 @@ describe("resolveEffectiveParameterValuesForRefs", () => {
         runtimeOverride,
     });
 
-    const noWorkspace = new Map<string, IParameterMetadataObject>();
+    const noWorkspace = new Map<string, IScalarParameterMetadataObject>();
     const boundedByRef = new Map([[objRefToString(topNRef), boundedWorkspace]]);
 
     it("includes a dashboard override for a referenced ref", () => {
@@ -740,7 +740,7 @@ describe("collectAppliedParameterEntriesForRoots", () => {
             [serializeObjRef(computedAttributeRef)]: [sampleSizeRef],
         },
         filterRoots,
-        workspaceParameterByRef: new Map<string, IParameterMetadataObject>(),
+        workspaceParameterByRef: new Map<string, IScalarParameterMetadataObject>(),
         isStringEnabled: true,
     });
 
@@ -776,7 +776,7 @@ describe("collectAppliedParameterEntriesForRoots", () => {
 describe("resolveParameterDisplayValues", () => {
     const contextWith = (
         entries: IDashboardParameterEntry[],
-        workspaceParameters: IParameterMetadataObject[] = [topNWorkspace],
+        workspaceParameters: IScalarParameterMetadataObject[] = [topNWorkspace],
     ) => ({
         entries,
         dependenciesByRoot: {},
@@ -847,7 +847,7 @@ describe("resolveParameterDisplayValues", () => {
     });
 
     it("covers every workspace parameter, not only the ones with an entry", () => {
-        const sampleSizeWorkspace: IParameterMetadataObject = {
+        const sampleSizeWorkspace: IScalarParameterMetadataObject = {
             ...topNWorkspace,
             id: "sampleSize",
             uri: "/sampleSize",

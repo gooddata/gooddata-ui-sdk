@@ -23,7 +23,7 @@ aliases:
   - "../references/embed_semantic_search/"
 ---
 
-GoodData.UI provides a React component for a search box that finds analytical objects by the meaning of a natural-language query. GoodData Cloud calls the same feature Smart Search; see [Use Smart Search](https://www.gooddata.ai/docs/cloud/ai/smart-search/). The `SemanticSearch` component and the `useSemanticSearch` hook are `@beta`; see [API maturity](../../integrations/platform/api-maturity/).
+GoodData.UI provides a React component for a search box that finds analytical objects by the meaning of a natural-language query. GoodData Cloud calls the same feature Smart Search; see [Use Smart Search](https://www.gooddata.ai/docs/cloud/ai/smart-search/).
 
 With Semantic Search, you can:
 

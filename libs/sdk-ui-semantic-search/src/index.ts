@@ -5,7 +5,7 @@
 /**
  * This package provides React hooks and components for semantic search.
  * @packageDocumentation
- * @beta
+ * @public
  */
 
 export {

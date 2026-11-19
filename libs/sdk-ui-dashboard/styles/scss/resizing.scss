@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 @use "variables";
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -379,6 +379,23 @@
         top: 0;
         right: -13px;
         left: unset;
+    }
+}
+
+.gd-grid-layout-ruler-viewport {
+    position: absolute;
+    left: 0;
+    right: 0;
+    overflow: clip;
+    pointer-events: none;
+
+    .gd-grid-layout-ruler {
+        position: relative;
+        left: auto;
+        right: auto;
+        box-sizing: border-box;
+        width: var(--dgd-dashboard-content-width, 100%);
+        transform: translateX(var(--dgd-dashboard-content-offset, 0));
     }
 }
 

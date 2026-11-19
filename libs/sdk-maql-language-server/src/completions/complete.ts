@@ -17,7 +17,7 @@ import {
 } from "vscode-languageserver";
 
 import { type IPosition, MaqlLexer, MaqlParser, escapeString } from "@gooddata/maql-antlr4ts";
-import { type IParameterDefinition } from "@gooddata/sdk-model";
+import { type IScalarParameterDefinition, isScalarParameterDefinition } from "@gooddata/sdk-model";
 
 import { type LabelContext, findLabelContext } from "../labelElements.js";
 import { toMaqlObjectType } from "../maqlObjectTypes.js";
@@ -259,13 +259,18 @@ function completeParameter(
 ): CompletionItem[] {
     return ldmObjects
         .get("parameter")
-        .filter((parameter) =>
-            allowedTypes.some((type) => isSubtype(parameterMaqlType(parameter.definition), type)),
-        )
+        .filter((parameter) => {
+            const { definition } = parameter;
+            // MAQL references only scalar parameters; date filters reference date range ones.
+            return (
+                isScalarParameterDefinition(definition) &&
+                allowedTypes.some((type) => isSubtype(parameterMaqlType(definition), type))
+            );
+        })
         .map((obj) => createParameterCompletionItem(obj, range));
 }
 
-function parameterMaqlType(definition: IParameterDefinition): MaqlType {
+function parameterMaqlType(definition: IScalarParameterDefinition): MaqlType {
     switch (definition.type) {
         case "NUMBER":
             return MaqlType.NUMERIC;

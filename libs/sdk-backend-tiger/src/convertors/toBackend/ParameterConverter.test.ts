@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { JsonApiParameterOutWithLinks } from "@gooddata/api-client-tiger";
-import type { IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
+import type { IDateRangeParameterDefinition, IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 import { convertParameter } from "../fromBackend/ParameterConverter.js";
 
@@ -190,6 +190,55 @@ describe("convertParameterToBackendUpdate", () => {
                 },
             },
         });
+    });
+});
+
+describe("DATE_RANGE parameter", () => {
+    const model: IParameterMetadataObjectDefinition = {
+        type: "parameter",
+        id: "lastHoldingMonth",
+        title: "Last holding month",
+        definition: {
+            type: "DATE_RANGE",
+            defaultValue: { granularity: "GDC.time.month", from: "2025-08", to: "2026-08" },
+        },
+    };
+
+    it("sends the period for create and update requests", () => {
+        const backendDefinition = {
+            type: "DATE_RANGE",
+            defaultValue: { granularity: "MONTH", from: "2025-08", to: "2026-08" },
+        };
+
+        expect(convertParameterToBackendCreate(model).definition).toEqual(backendDefinition);
+        expect(convertParameterToBackendUpdate({ definition: model.definition }).definition).toEqual(
+            backendDefinition,
+        );
+    });
+
+    it.each([
+        "GDC.time.year",
+        "GDC.time.quarter",
+        "GDC.time.month",
+        "GDC.time.week",
+        "GDC.time.date",
+        "GDC.time.hour",
+        "GDC.time.minute",
+        "GDC.time.second",
+    ] as const)("preserves a %s period through toBackend create then fromBackend", (granularity) => {
+        const definition: IDateRangeParameterDefinition = {
+            type: "DATE_RANGE",
+            defaultValue: { granularity },
+        };
+        const backendCreate = convertParameterToBackendCreate({ ...model, definition });
+        const out: JsonApiParameterOutWithLinks = {
+            id: "lastHoldingMonth",
+            type: "parameter",
+            attributes: { title: backendCreate.title, definition: backendCreate.definition },
+            links: { self: "/api/v1/entities/workspaces/demo/parameters/lastHoldingMonth" },
+        };
+
+        expect(convertParameter(out).definition).toEqual(definition);
     });
 });
 

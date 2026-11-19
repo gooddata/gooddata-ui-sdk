@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-all: Add the `DATE_RANGE` parameter type and the `enableDateRangeParameters` flag; parameter controls, automations and runtime values skip date range parameters",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

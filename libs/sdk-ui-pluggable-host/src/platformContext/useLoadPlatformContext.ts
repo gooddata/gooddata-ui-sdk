@@ -302,10 +302,16 @@ class BackendPlatformContextProviderClass implements IBackendPlatformContextProv
         this._rejectedEmbeddingOrigin = error.origin;
         // Discard the token: the backend goes back to no credentials.
         reinitializeBackend();
-        console.warn(
-            `[host-runtime/platform-context] The token from "${error.origin}" was not applied: the origin is not in the embedding origins of the organization, or the check failed.`,
-            error.cause,
-        );
+        if (error.isCheckFailed) {
+            console.warn(
+                `[host-runtime/platform-context] The token from "${error.origin}" was not applied: could not check the origin against the embedding origins of the organization.`,
+                error.cause,
+            );
+        } else {
+            console.warn(
+                `[host-runtime/platform-context] The token from "${error.origin}" was not applied: the origin is not in the embedding origins of the organization.`,
+            );
+        }
         this._setResult({ state: "error", error: error.message });
     }
 

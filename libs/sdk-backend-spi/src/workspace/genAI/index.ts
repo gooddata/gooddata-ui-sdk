@@ -299,7 +299,7 @@ export interface IDashboardSummary {
 
 /**
  * Semantic search query.
- * @beta
+ * @public
  */
 export interface ISemanticSearchQuery {
     /**
@@ -346,7 +346,7 @@ export interface ISemanticSearchQuery {
 
 /**
  * Semantic search result payload.
- * @beta
+ * @public
  * @deprecated Use `ISemanticSearchResult` from \@gooddata/sdk-model instead.
  */
 // oxlint-disable-next-line no-barrel-files/no-barrel-files

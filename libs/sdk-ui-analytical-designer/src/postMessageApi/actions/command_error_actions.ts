@@ -33,3 +33,17 @@ export const hostVerificationFailed = createAction(
         payload: createPostMessageContextFromId(contextId),
     }),
 );
+
+/**
+ * The origin check did not give an answer, for example because of a network error. It is not a
+ * denial: the next command checks the origin again.
+ */
+export const hostVerificationErrored = createAction(
+    PostEventActionTypeKeys.HOST_VERIFICATION_ERRORED,
+    (contextId: string = DEFAULT_POST_MESSAGE_CONTEXT_ID) => ({
+        payload: createPostMessageContextFromId(contextId),
+    }),
+);
+
+export type IHostVerificationFailedAction = ReturnType<typeof hostVerificationFailed>;
+export type IHostVerificationErroredAction = ReturnType<typeof hostVerificationErrored>;

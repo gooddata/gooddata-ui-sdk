@@ -104,10 +104,20 @@ describe("UiAutofocus", () => {
         interface IOwnedHarnessProps {
             menu?: boolean;
             panel?: boolean;
+            trailingPanel?: boolean;
+            stackedDialog?: boolean;
+            wrappedStackedDialog?: boolean;
             portalTarget?: Element;
         }
 
-        function OwnedHarness({ menu = false, panel = false, portalTarget }: IOwnedHarnessProps) {
+        function OwnedHarness({
+            menu = false,
+            panel = false,
+            trailingPanel = false,
+            stackedDialog = false,
+            wrappedStackedDialog = false,
+            portalTarget,
+        }: IOwnedHarnessProps) {
             const [modal, setModal] = useState<HTMLDivElement | null>(null);
             const menuArea = (
                 <UiAutofocus>
@@ -133,9 +143,56 @@ describe("UiAutofocus", () => {
                             {menu && portalTarget ? createPortal(menuArea, portalTarget) : null}
                         </UiModalOwnerProvider>
                     </div>
+                    {stackedDialog ? (
+                        <div role="dialog" aria-modal="true" aria-label="Stacked" {...modalOwnerAttributes}>
+                            <UiAutofocus>
+                                <button type="button">in stacked dialog</button>
+                            </UiAutofocus>
+                        </div>
+                    ) : null}
+                    {wrappedStackedDialog ? (
+                        <UiAutofocus>
+                            <div role="dialog" aria-label="Wrapped stacked">
+                                <button type="button">in wrapped stacked dialog</button>
+                            </div>
+                        </UiAutofocus>
+                    ) : null}
+                    {trailingPanel ? (
+                        <UiAutofocus>
+                            <button type="button">in trailing panel</button>
+                        </UiAutofocus>
+                    ) : null}
                 </>
             );
         }
+
+        it("does not take focus from it when mounted after it outside any modal, such as a background panel", async () => {
+            const { rerender } = render(<OwnedHarness />);
+            screen.getByText("in dialog").focus();
+
+            rerender(<OwnedHarness trailingPanel />);
+            await settle();
+
+            expect(screen.getByText("in dialog")).toHaveFocus();
+        });
+
+        it("takes focus when a dialog opens on top of it, such as a create dialog opened from a list dialog", async () => {
+            const { rerender } = render(<OwnedHarness />);
+            screen.getByText("in dialog").focus();
+
+            rerender(<OwnedHarness stackedDialog />);
+
+            await waitFor(() => expect(screen.getByText("in stacked dialog")).toHaveFocus());
+        });
+
+        it("takes focus when it wraps a non-aria-modal dialog opened on top of it, such as the scheduled export form", async () => {
+            const { rerender } = render(<OwnedHarness />);
+            screen.getByText("in dialog").focus();
+
+            rerender(<OwnedHarness wrappedStackedDialog />);
+
+            await waitFor(() => expect(screen.getByText("in wrapped stacked dialog")).toHaveFocus());
+        });
 
         it("does not take focus from it when mounted outside it later, such as a background panel", async () => {
             const { rerender } = render(<OwnedHarness />);

@@ -55,7 +55,7 @@ export function DefaultLandingQuestion({ icon, question, answer, title = questio
 
                 setMessagesAction({
                     items: [
-                        makeUserItem({ type: "text", text: escapeMarkdown(question) }),
+                        makeUserItem({ type: "text", text: question }),
                         makeAssistantItem({ type: "text", text: escapeMarkdown(answer) }, "", true),
                     ],
                 });

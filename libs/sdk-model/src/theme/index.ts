@@ -1046,6 +1046,15 @@ export interface IThemeMessageVariant {
      * Color of the link button
      */
     linkButtonColor?: ThemeColor;
+
+    /**
+     * Color of the separator line above the expanded "Show more" detail.
+     *
+     * @remarks
+     * Applies to `UiMessage` and to toast messages. The legacy inline message does not render
+     * the separator, so it ignores this value.
+     */
+    separatorLineColor?: ThemeColor;
 }
 
 /**
@@ -1053,12 +1062,7 @@ export interface IThemeMessageVariant {
  *
  * @beta
  */
-export interface IThemeToastMessageVariant extends IThemeMessageVariant {
-    /**
-     * Color of the separator line in the toast message when there is a Show more section
-     */
-    separatorLineColor?: ThemeColor;
-}
+export type IThemeToastMessageVariant = IThemeMessageVariant;
 
 /**
  * Application header (top bar) customizable properties.

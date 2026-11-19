@@ -80,6 +80,7 @@ export type IUiMenuContentItem<T extends IUiMenuItemData = object> = {
     isDisabled?: boolean;
     showComponentOnly?: boolean;
     iconLeft?: ReactNode;
+    ariaAttributes?: AriaAttributes;
     data: T["content"];
     Component: ComponentType<{
         onBack: () => void;

@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "Titel hier toevoegen...",
     "layout.header.add.description.placeholder": "Beschrijving hier toevoegen...",
     "controlButtons.options.tooltip": "Meer acties",
+    "controlButtons.options.widgetLabel": "Meer acties voor {title}",
     "controlButtons.options.back": "Terug naar vorige stap",
     "controlButtons.options.closeMenu": "Menu sluiten",
     "controlButtons.edit.value": "Bewerken",

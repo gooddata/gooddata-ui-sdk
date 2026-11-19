@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 @use "sass:color";
 @use "react-day-picker/src/style.css";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -120,6 +120,21 @@ $gd-day-picker-input-width: 126px;
             font-size: 16px;
             color: kit-variables.$gd-palette-primary-base;
             pointer-events: none;
+        }
+
+        // transparent button over the calendar icon that opens the calendar, the icon renders unchanged
+        &-calendar-button {
+            appearance: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 34px;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: none;
+            cursor: pointer;
         }
 
         &__description {

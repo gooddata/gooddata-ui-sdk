@@ -26,6 +26,7 @@ import {
     type IUiAsyncTableColumn,
     type IUiAsyncTableFilter,
     type IconType,
+    type TooltipArrowPlacement,
     type UiAsyncTableVariant,
 } from "@gooddata/sdk-ui-kit";
 
@@ -399,7 +400,8 @@ export interface IAutomationIconTooltipProps {
     content?: ReactNode;
     sections: ITooltipSection[];
     children: ReactNode;
-    align?: string;
+    arrowPlacement?: TooltipArrowPlacement;
+    triggerAriaLabel: string;
 }
 
 export interface IAutomationIconProps {

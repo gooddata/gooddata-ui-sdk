@@ -33,7 +33,7 @@ interface IUseSaveAsResult {
      *
      * Default is false.
      */
-    handleSaveAs: (title: string, switchToCopy?: boolean) => void;
+    handleSaveAs: (title: string, switchToCopy?: boolean, useOriginalFilterContext?: boolean) => void;
 
     /**
      * Status of the save as operation.

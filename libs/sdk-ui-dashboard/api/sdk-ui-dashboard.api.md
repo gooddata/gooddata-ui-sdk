@@ -187,13 +187,13 @@ import { INotificationChannelMetadataObjectBase } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
-import { IParameterDefinition } from '@gooddata/sdk-model';
-import { IParameterMetadataObject } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
 import { IRawExportCustomOverrides } from '@gooddata/sdk-backend-spi';
 import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IRichTextWidget } from '@gooddata/sdk-model';
+import { IScalarParameterDefinition } from '@gooddata/sdk-model';
+import { IScalarParameterMetadataObject } from '@gooddata/sdk-model';
 import { isDashboardFilter as isDashboardFilter_2 } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
@@ -3058,7 +3058,7 @@ export interface IAutomationManagementDialogCallbacks {
 
 // @beta
 export interface IAutomationParameter {
-    definition: IParameterDefinition;
+    definition: IScalarParameterDefinition;
     mode: DashboardParameterMode;
     ref: IdentifierRef;
     title: string;
@@ -3138,7 +3138,7 @@ export interface IAutomationsDateFilterConfig {
 
 // @beta
 export interface IAutomationsParameters {
-    catalog: IParameterMetadataObject[];
+    catalog: IScalarParameterMetadataObject[];
     catalogIsLoaded: boolean;
     dashboardParametersByTab: Record<string, IDashboardParameter[]>;
     enabled: boolean;
@@ -3252,7 +3252,7 @@ export interface ICatalogParameterDependenciesState {
 // @alpha
 export interface ICatalogParametersState {
     // (undocumented)
-    parameters: IParameterMetadataObject[];
+    parameters: IScalarParameterMetadataObject[];
     // (undocumented)
     status: CatalogParametersStatus;
 }
@@ -12170,7 +12170,7 @@ export const selectCatalogParameterDependencies: DashboardSelector<Record<string
 export const selectCatalogParameterDependenciesStatus: DashboardSelector<CatalogParameterDependenciesStatus>;
 
 // @alpha
-export const selectCatalogParameters: DashboardSelector<IParameterMetadataObject[]>;
+export const selectCatalogParameters: DashboardSelector<IScalarParameterMetadataObject[]>;
 
 // @alpha
 export const selectCatalogParametersIsLoaded: DashboardSelector<boolean>;

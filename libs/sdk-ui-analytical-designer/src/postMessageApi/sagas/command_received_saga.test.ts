@@ -37,7 +37,11 @@ import { hasMetricEditorUnsavedChanges } from "../../store/metric_editor/metric_
 import { withRoot } from "../../tests/state_builder.test.helpers.js";
 import { clearInsightRequested } from "../actions/clear_insight_actions.js";
 import { clearInsightContentRequested } from "../actions/clear_insight_content_actions.js";
-import { hostVerificationFailed, insecureCommandFailed } from "../actions/command_error_actions.js";
+import {
+    hostVerificationErrored,
+    hostVerificationFailed,
+    insecureCommandFailed,
+} from "../actions/command_error_actions.js";
 import { commandReceived } from "../actions/command_received_actions.js";
 import {
     removeFilterContextRequested,
@@ -537,7 +541,7 @@ describe("command received saga", () => {
             expect(saga.effects.put).toEqual([put(hostVerificationFailed(contextId))]);
         });
 
-        it("should put action when origin validation throws", async () => {
+        it("should report a failed origin check apart from a denial", async () => {
             const saga: RunResult = await expectSaga(watchCommandReceived)
                 .provide([
                     [select(isEmbeddingOriginValidationEnabled), true],
@@ -547,7 +551,7 @@ describe("command received saga", () => {
                 .dispatch(commandReceived(command, "origin"))
                 .silentRun();
 
-            expect(saga.effects.put).toEqual([put(hostVerificationFailed(contextId))]);
+            expect(saga.effects.put).toEqual([put(hostVerificationErrored(contextId))]);
         });
     });
 });

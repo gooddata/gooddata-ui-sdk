@@ -397,6 +397,62 @@ describe("CopilotHandler", () => {
         expect(onClarificationQuestions).toHaveBeenCalledTimes(1);
     });
 
+    it.each(["unclaimed-generation", "foreground-skill"])(
+        "notifies clarification ownership without a request: %s",
+        (workflow) => {
+            const onClarificationQuestions =
+                vi.fn<NonNullable<ICopilotConfiguration["onClarificationQuestions"]>>();
+            const handler = new CopilotHandler({
+                registrations: [
+                    {
+                        type,
+                        skills: ["dashboard_builder"],
+                        resolveDefinition: () => target,
+                        onApplyDefinition: vi.fn<ICopilotRegistration["onApplyDefinition"]>(),
+                    },
+                ],
+                onClarificationQuestions,
+            });
+            handler.setContext({ ...target, isEditing: true, builderTarget: target });
+            handler.startGeneration(type);
+            if (workflow === "foreground-skill") {
+                handler.handleEvent({
+                    type: "chatConversationChanged",
+                    threadId: "thread",
+                    conversation: { id: "thread", localId: "local", createdAt: "", updatedAt: "" },
+                });
+                handler.handleEvent({
+                    type: "chatAssistantMessage",
+                    threadId: "thread",
+                    useCase: "GENERAL",
+                    skills: [{ name: "dashboard_builder", title: "Building" }],
+                });
+            }
+            const questions = {
+                type: "chatClarificationQuestions" as const,
+                threadId: workflow === "unclaimed-generation" ? undefined : "thread",
+                interactionId: "question",
+                questions: [
+                    {
+                        text: "Choose",
+                        control: { type: "singleChoice" as const, options: [{ text: "Yes" }] },
+                    },
+                ],
+            };
+            handler.handleEvent(questions);
+            handler.handleEvent(questions);
+            expect(handler.getSnapshot().requests).toEqual([]);
+            expect(handler.getStatus({ ...target, isEditing: true, isBuilder: true })).toBe("waiting");
+            expect(onClarificationQuestions).toHaveBeenCalledExactlyOnceWith(questions);
+            handler.handleEvent({ ...questions, responses: { "0": "Yes" } });
+            expect(onClarificationQuestions).toHaveBeenCalledOnce();
+            const nextQuestions = { ...questions, interactionId: "next-question" };
+            handler.handleEvent(nextQuestions);
+            expect(onClarificationQuestions).toHaveBeenCalledTimes(2);
+            expect(onClarificationQuestions).toHaveBeenLastCalledWith(nextQuestions);
+        },
+    );
+
     it("instances have isolated state, application IDs, and listeners", () => {
         const first = setup().handler;
         const second = setup().handler;

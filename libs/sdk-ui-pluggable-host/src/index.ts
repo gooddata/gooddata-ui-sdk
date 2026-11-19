@@ -22,6 +22,7 @@ export {
 } from "./loader/pluggableApplicationsLoader.js";
 
 export { mapLegacyUrlToHost, type ILegacyLocation } from "./loader/legacyRedirect.js";
+export { getHostBasePath } from "./loader/hostBasePath.js";
 
 export { Root, type IRootCallbacks } from "./components/Root.js";
 export {

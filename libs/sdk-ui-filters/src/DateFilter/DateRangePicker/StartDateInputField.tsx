@@ -31,6 +31,9 @@ export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputF
             errors,
             intl,
             withoutApply,
+            onCalendarOpen,
+            isCalendarOpen,
+            calendarId,
         },
         ref,
     ) => {
@@ -38,6 +41,9 @@ export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputF
             () => ({
                 dateAriaLabel: intl.formatMessage({ id: "filters.date.accessibility.label.from" }),
                 timeAriaLabel: intl.formatMessage({ id: "filters.time.accessibility.label.from" }),
+                calendarButtonAriaLabel: intl.formatMessage({
+                    id: "filters.date.accessibility.calendar.from",
+                }),
                 dateInputHintId: DATE_INPUT_HINT_ID,
                 timeInputHintId: TIME_INPUT_HINT_ID,
             }),
@@ -85,6 +91,9 @@ export const StartDateInputField = forwardRef<HTMLInputElement, IDateRangeInputF
                 inputErrorMessageTexts={inputErrorMessageTexts}
                 errors={errors}
                 withoutApply={withoutApply}
+                onCalendarOpen={onCalendarOpen}
+                isCalendarOpen={isCalendarOpen}
+                calendarId={calendarId}
             />
         );
     },

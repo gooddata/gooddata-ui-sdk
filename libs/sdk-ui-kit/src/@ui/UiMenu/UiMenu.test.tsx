@@ -89,6 +89,27 @@ describe("UiMenu", () => {
         expect(disabledItemLi).toHaveAttribute("aria-disabled", "true");
     });
 
+    it("should pass aria attributes to content items", () => {
+        renderMenu({
+            items: [
+                {
+                    type: "content",
+                    id: "content1",
+                    stringTitle: "Content 1",
+                    isDisabled: true,
+                    ariaAttributes: { "aria-describedby": "content1-description" },
+                    data: "content data",
+                    Component: () => null,
+                },
+            ],
+        });
+
+        const contentItemLi = screen.getByText("Content 1").closest("li");
+
+        expect(contentItemLi).toHaveAttribute("role", "menuitem");
+        expect(contentItemLi).toHaveAttribute("aria-describedby", "content1-description");
+    });
+
     it("should call onSelect when item is clicked", () => {
         const onSelect = vi.fn();
         renderMenu({ onSelect });

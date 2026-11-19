@@ -1190,6 +1190,10 @@ export interface IPluggableApplicationMountOptions {
 export interface IHostNavigationRequest {
     /**
      * Target URL of the pending navigation.
+     *
+     * @remarks
+     * The URL as the browser will show it, including the path prefix of a reverse proxy the host
+     * may be served under, so it compares directly with the mount `basePath`.
      */
     readonly url: string;
 

@@ -29,6 +29,7 @@ import { IChatSuggestion } from '@gooddata/sdk-backend-spi';
 import { IChatSuggestions } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
+import { IDashboardProps } from '@gooddata/sdk-ui-dashboard';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
@@ -880,6 +881,7 @@ export type IGenAIAssistantMessageReasoningContentProps = {
 // @alpha
 export type IGenAIAssistantMessageTextContentProps = {
     text: string;
+    useMarkdown?: boolean;
     objects: TextContentObject[];
     isLoading?: boolean;
 };
@@ -1093,6 +1095,19 @@ export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMess
 export const isChatVisualizationErrorEvent: (event: ChatEvent) => event is ChatVisualizationErrorEvent;
 
 // @alpha
+export interface IUseDashboardCopilotResult {
+    assistantProps: (props?: GenAIAssistantProps) => GenAIAssistantProps;
+    cancelGeneration: () => void;
+    composingProps: Omit<ICopilotInteractionComposingWithHandlerProps, "children">;
+    copilot: CopilotHandler;
+    dashboardProps: (props?: IDashboardProps) => IDashboardProps;
+    genAiStoreProps: (props?: Omit<GenAiStoreProps, "children">) => Omit<GenAiStoreProps, "children">;
+    generateDashboard: (message: string) => void;
+    replyInChat: () => void;
+    sendMessage: (message: string) => void;
+}
+
+// @alpha
 export interface IWhatIfRenderableScenario {
     execConfig?: IExecutionConfig;
     isBaseline: boolean;
@@ -1209,6 +1224,9 @@ export function transitionCopilot<TBuild extends string = CopilotBuildType>(stat
 
 // @alpha
 export function useCopilotSnapshot<TBuild extends string = CopilotBuildType>(handler: CopilotHandler<TBuild>): ICopilotSnapshot<TBuild>;
+
+// @alpha
+export function useDashboardCopilot(): IUseDashboardCopilotResult;
 
 // @internal (undocumented)
 export function useGenAiChatAvailability(backend: IAnalyticalBackend, workspaceId?: string, enabled?: boolean, canManage?: boolean): boolean;

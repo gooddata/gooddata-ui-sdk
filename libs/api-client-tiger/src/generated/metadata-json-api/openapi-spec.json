@@ -7882,7 +7882,7 @@
                     "entities",
                     "aggregated-fact-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@AggregatedFacts",
                 "parameters": [
                     {
@@ -8331,7 +8331,7 @@
                     "entities",
                     "analytical-dashboard-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@AnalyticalDashboards",
                 "parameters": [
                     {
@@ -9015,7 +9015,7 @@
                     "entities",
                     "attribute-hierarchy-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@AttributeHierarchies",
                 "parameters": [
                     {
@@ -9571,7 +9571,7 @@
                     "entities",
                     "attribute-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@Attributes",
                 "parameters": [
                     {
@@ -9764,7 +9764,7 @@
                     "entities",
                     "attribute-controller"
                 ],
-                "summary": "Patch an Attribute (beta)",
+                "summary": "Patch an Attribute",
                 "operationId": "patchEntity@Attributes",
                 "parameters": [
                     {
@@ -9863,7 +9863,7 @@
                     "entities",
                     "automation-result-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@AutomationResults",
                 "parameters": [
                     {
@@ -10200,7 +10200,7 @@
                     "entities",
                     "automation-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@Automations",
                 "parameters": [
                     {
@@ -10844,7 +10844,7 @@
                     "entities",
                     "custom-application-setting-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@CustomApplicationSettings",
                 "parameters": [
                     {
@@ -11413,7 +11413,7 @@
                     "entities",
                     "dashboard-plugin-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@DashboardPlugins",
                 "parameters": [
                     {
@@ -11966,7 +11966,7 @@
                     "entities",
                     "dataset-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@Datasets",
                 "parameters": [
                     {
@@ -12159,7 +12159,7 @@
                     "entities",
                     "dataset-controller"
                 ],
-                "summary": "Patch a Dataset (beta)",
+                "summary": "Patch a Dataset",
                 "operationId": "patchEntity@Datasets",
                 "parameters": [
                     {
@@ -12501,7 +12501,7 @@
                     "entities",
                     "export-definition-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@ExportDefinitions",
                 "parameters": [
                     {
@@ -13069,7 +13069,7 @@
                     "entities",
                     "fact-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@Facts",
                 "parameters": [
                     {
@@ -13259,7 +13259,7 @@
                     "entities",
                     "fact-controller"
                 ],
-                "summary": "Patch a Fact (beta)",
+                "summary": "Patch a Fact",
                 "operationId": "patchEntity@Facts",
                 "parameters": [
                     {
@@ -13591,7 +13591,7 @@
                     "entities",
                     "filter-context-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@FilterContexts",
                 "parameters": [
                     {
@@ -14229,7 +14229,7 @@
                     "entities",
                     "filter-view-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@FilterViews",
                 "parameters": [
                     {
@@ -14862,7 +14862,7 @@
                     "entities",
                     "knowledge-recommendation-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@KnowledgeRecommendations",
                 "parameters": [
                     {
@@ -15415,7 +15415,7 @@
                     "entities",
                     "label-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@Labels",
                 "parameters": [
                     {
@@ -15605,7 +15605,7 @@
                     "entities",
                     "label-controller"
                 ],
-                "summary": "Patch a Label (beta)",
+                "summary": "Patch a Label",
                 "operationId": "patchEntity@Labels",
                 "parameters": [
                     {
@@ -15931,7 +15931,7 @@
                     "entities",
                     "memory-item-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@MemoryItems",
                 "parameters": [
                     {
@@ -16599,7 +16599,7 @@
                     "entities",
                     "metric-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@Metrics",
                 "parameters": [
                     {
@@ -17274,7 +17274,7 @@
                     "entities",
                     "parameter-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@Parameters",
                 "parameters": [
                     {
@@ -17940,7 +17940,7 @@
                     "entities",
                     "user-data-filter-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@UserDataFilters",
                 "parameters": [
                     {
@@ -18632,7 +18632,7 @@
                     "entities",
                     "visualization-object-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@VisualizationObjects",
                 "parameters": [
                     {
@@ -19305,7 +19305,7 @@
                     "entities",
                     "workspace-data-filter-setting-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@WorkspaceDataFilterSettings",
                 "parameters": [
                     {
@@ -19950,7 +19950,7 @@
                     "entities",
                     "workspace-data-filter-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@WorkspaceDataFilters",
                 "parameters": [
                     {
@@ -20991,7 +20991,7 @@
                     "entities",
                     "workspace-setting-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@WorkspaceSettings",
                 "parameters": [
                     {
@@ -26927,7 +26927,7 @@
                     "Permissions",
                     "actions"
                 ],
-                "summary": "(BETA) Get Metric Permissions",
+                "summary": "Get Metric Permissions",
                 "operationId": "metricPermissions",
                 "parameters": [
                     {
@@ -26967,7 +26967,7 @@
                     "Permissions",
                     "actions"
                 ],
-                "summary": "(BETA) Manage Permissions for a Metric",
+                "summary": "Manage Permissions for a Metric",
                 "operationId": "manageMetricPermissions",
                 "parameters": [
                     {
@@ -27472,7 +27472,7 @@
                     "entities",
                     "computed-attribute-controller"
                 ],
-                "summary": "The search endpoint (beta)",
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@ComputedAttributes",
                 "parameters": [
                     {
@@ -29629,7 +29629,7 @@
                     "Permissions",
                     "actions"
                 ],
-                "summary": "(BETA) Manage Permissions for a Computed Attribute",
+                "summary": "Manage Permissions for a Computed Attribute",
                 "operationId": "manageComputedAttributePermissions",
                 "parameters": [
                     {
@@ -29684,7 +29684,7 @@
                     "Permissions",
                     "actions"
                 ],
-                "summary": "(BETA) Get Computed Attribute Permissions",
+                "summary": "Get Computed Attribute Permissions",
                 "operationId": "computedAttributePermissions",
                 "parameters": [
                     {
@@ -29757,7 +29757,7 @@
                     "Permissions",
                     "actions"
                 ],
-                "summary": "(BETA) Manage Permissions for a Visualization",
+                "summary": "Manage Permissions for a Visualization",
                 "operationId": "manageVisualizationPermissions",
                 "parameters": [
                     {
@@ -29812,7 +29812,7 @@
                     "Permissions",
                     "actions"
                 ],
-                "summary": "(BETA) Get Visualization Permissions",
+                "summary": "Get Visualization Permissions",
                 "operationId": "visualizationPermissions",
                 "parameters": [
                     {
@@ -29852,8 +29852,8 @@
                     "Localization",
                     "actions"
                 ],
-                "summary": "(BETA) Workspaces that use a language.",
-                "description": "(BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.",
+                "summary": "Workspaces that use a language.",
+                "description": "Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.",
                 "operationId": "organizationLocalizationUsageWorkspaces",
                 "parameters": [
                     {
@@ -29961,8 +29961,8 @@
                     "Localization",
                     "actions"
                 ],
-                "summary": "(BETA) Languages used in the organization.",
-                "description": "(BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.",
+                "summary": "Languages used in the organization.",
+                "description": "Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.",
                 "operationId": "organizationLocalizationUsage",
                 "responses": {
                     "200": {
@@ -29990,8 +29990,8 @@
                     "Localization",
                     "actions"
                 ],
-                "summary": "(BETA) Users who set a language themselves.",
-                "description": "(BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.",
+                "summary": "Users who set a language themselves.",
+                "description": "Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.",
                 "operationId": "organizationLocalizationUsageUsers",
                 "parameters": [
                     {
@@ -30219,8 +30219,8 @@
                     "Localization",
                     "actions"
                 ],
-                "summary": "(BETA) Languages with translations in the organization.",
-                "description": "(BETA) Lists the languages that have at least one translation, separately for each kind of translation.",
+                "summary": "Languages with translations in the organization.",
+                "description": "Lists the languages that have at least one translation, separately for each kind of translation.",
                 "operationId": "organizationLocalizationStatistics",
                 "responses": {
                     "200": {
@@ -30248,8 +30248,8 @@
                     "Localization",
                     "actions"
                 ],
-                "summary": "(BETA) Workspace members who get a language.",
-                "description": "(BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.",
+                "summary": "Workspace members who get a language.",
+                "description": "Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.",
                 "operationId": "workspaceLocalizationUsageUsers",
                 "parameters": [
                     {
@@ -30365,8 +30365,8 @@
                     "Localization",
                     "actions"
                 ],
-                "summary": "(BETA) Languages used in the workspace.",
-                "description": "(BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.",
+                "summary": "Languages used in the workspace.",
+                "description": "Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.",
                 "operationId": "workspaceLocalizationUsage",
                 "parameters": [
                     {
@@ -30404,8 +30404,8 @@
                     "Localization",
                     "actions"
                 ],
-                "summary": "(BETA) Languages with translations in the workspace.",
-                "description": "(BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.",
+                "summary": "Languages with translations in the workspace.",
+                "description": "Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.",
                 "operationId": "workspaceLocalizationStatistics",
                 "parameters": [
                     {
@@ -30419,7 +30419,7 @@
                     {
                         "name": "includeCoverage",
                         "in": "query",
-                        "description": "Adds translation counts for the workspace and each parent, root first.",
+                        "description": "(BETA) Adds translation counts for the workspace and each parent, root first.",
                         "required": false,
                         "schema": {
                             "type": "boolean"
@@ -32529,7 +32529,7 @@
                         }
                     }
                 },
-                "description": "An absolute date range filter defined at a specific granularity. The 'from'/'to' literals must match the format of the chosen granularity (e.g. '2020' for YEAR, '2012-05' for MONTH, '2012-3' for QUARTER, '1996-01' for WEEK, '2010-10-30' for DAY, '2010-10-30 13' for HOUR, '2010-10-30 13:30' for MINUTE, '2010-10-30 13:30:45' for SECOND, or a plain ordinal like '6' for periodical granularities such as MONTH_OF_YEAR). At least one of 'from'/'to' must be provided; specifying only one yields an open-ended range."
+                "description": "An absolute date range filter defined at a specific granularity. The 'from'/'to' literals must match the format of the chosen granularity (e.g. '2020' for YEAR, '2012-05' for MONTH, '2012-3' for QUARTER, '1996-01' for WEEK, '2010-10-30' for DAY, '2010-10-30 13' for HOUR, '2010-10-30 13:30' for MINUTE, '2010-10-30 13:30:45' for SECOND, or a plain ordinal like '6' for periodical granularities such as MONTH_OF_YEAR). At least one of 'from'/'to' must be provided; specifying only one yields an open-ended range. When both are provided, 'from' must not be after 'to'."
             },
             "AbsolutePublisherDocumentPeriod": {
                 "required": [
@@ -35727,6 +35727,58 @@
                         "$ref": "#/components/schemas/AllTimeDateFilter"
                     }
                 ]
+            },
+            "DateRangeParameterDefinition": {
+                "required": [
+                    "defaultValue",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "defaultValue": {
+                        "$ref": "#/components/schemas/DateRangeParameterValue"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "The parameter type.",
+                        "enum": [
+                            "DATE_RANGE"
+                        ]
+                    }
+                }
+            },
+            "DateRangeParameterValue": {
+                "required": [
+                    "granularity"
+                ],
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "type": "string",
+                        "description": "Start of the period (inclusive) in the format matching 'granularity'. If omitted, the period is unbounded at the start.",
+                        "example": "2025-08"
+                    },
+                    "granularity": {
+                        "type": "string",
+                        "description": "Granularity of the period; determines the format of 'from' and 'to'.",
+                        "example": "MONTH",
+                        "enum": [
+                            "YEAR",
+                            "QUARTER",
+                            "MONTH",
+                            "WEEK",
+                            "DAY",
+                            "HOUR",
+                            "MINUTE",
+                            "SECOND"
+                        ]
+                    },
+                    "to": {
+                        "type": "string",
+                        "description": "End of the period (inclusive) in the format matching 'granularity'. If omitted, the period is unbounded at the end.",
+                        "example": "2026-08"
+                    }
+                }
             },
             "DateValue": {
                 "required": [
@@ -57532,7 +57584,8 @@
                                     "propertyName": "type",
                                     "mapping": {
                                         "NUMBER": "#/components/schemas/NumberParameterDefinition",
-                                        "STRING": "#/components/schemas/StringParameterDefinition"
+                                        "STRING": "#/components/schemas/StringParameterDefinition",
+                                        "DATE_RANGE": "#/components/schemas/DateRangeParameterDefinition"
                                     }
                                 },
                                 "oneOf": [
@@ -57541,6 +57594,9 @@
                                     },
                                     {
                                         "$ref": "#/components/schemas/StringParameterDefinition"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/DateRangeParameterDefinition"
                                     }
                                 ]
                             },
@@ -57638,7 +57694,8 @@
                                     "propertyName": "type",
                                     "mapping": {
                                         "NUMBER": "#/components/schemas/NumberParameterDefinition",
-                                        "STRING": "#/components/schemas/StringParameterDefinition"
+                                        "STRING": "#/components/schemas/StringParameterDefinition",
+                                        "DATE_RANGE": "#/components/schemas/DateRangeParameterDefinition"
                                     }
                                 },
                                 "oneOf": [
@@ -57647,6 +57704,9 @@
                                     },
                                     {
                                         "$ref": "#/components/schemas/StringParameterDefinition"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/DateRangeParameterDefinition"
                                     }
                                 ]
                             },
@@ -57852,7 +57912,8 @@
                                     "propertyName": "type",
                                     "mapping": {
                                         "NUMBER": "#/components/schemas/NumberParameterDefinition",
-                                        "STRING": "#/components/schemas/StringParameterDefinition"
+                                        "STRING": "#/components/schemas/StringParameterDefinition",
+                                        "DATE_RANGE": "#/components/schemas/DateRangeParameterDefinition"
                                     }
                                 },
                                 "oneOf": [
@@ -57861,6 +57922,9 @@
                                     },
                                     {
                                         "$ref": "#/components/schemas/StringParameterDefinition"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/DateRangeParameterDefinition"
                                     }
                                 ]
                             },
@@ -57930,7 +57994,8 @@
                                     "propertyName": "type",
                                     "mapping": {
                                         "NUMBER": "#/components/schemas/NumberParameterDefinition",
-                                        "STRING": "#/components/schemas/StringParameterDefinition"
+                                        "STRING": "#/components/schemas/StringParameterDefinition",
+                                        "DATE_RANGE": "#/components/schemas/DateRangeParameterDefinition"
                                     }
                                 },
                                 "oneOf": [
@@ -57939,6 +58004,9 @@
                                     },
                                     {
                                         "$ref": "#/components/schemas/StringParameterDefinition"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/DateRangeParameterDefinition"
                                     }
                                 ]
                             },
@@ -71216,7 +71284,7 @@
                     },
                     "workspaces": {
                         "type": "array",
-                        "description": "Translation counts of the workspace and each parent workspace, root first. Present only with `includeCoverage=true` on the workspace endpoint.",
+                        "description": "(BETA) Translation counts of the workspace and each parent workspace, root first. Present only with `includeCoverage=true` on the workspace endpoint.",
                         "items": {
                             "$ref": "#/components/schemas/LocalizationStatisticsWorkspace"
                         }
@@ -72265,7 +72333,8 @@
                     "propertyName": "type",
                     "mapping": {
                         "NUMBER": "#/components/schemas/NumberParameterDefinition",
-                        "STRING": "#/components/schemas/StringParameterDefinition"
+                        "STRING": "#/components/schemas/StringParameterDefinition",
+                        "DATE_RANGE": "#/components/schemas/DateRangeParameterDefinition"
                     }
                 },
                 "oneOf": [
@@ -72274,6 +72343,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/StringParameterDefinition"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DateRangeParameterDefinition"
                     }
                 ]
             },

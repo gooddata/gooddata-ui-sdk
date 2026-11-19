@@ -72,7 +72,7 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
 export type AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
- * An absolute date range filter defined at a specific granularity. The \'from\'/\'to\' literals must match the format of the chosen granularity (e.g. \'2020\' for YEAR, \'2012-05\' for MONTH, \'2012-3\' for QUARTER, \'1996-01\' for WEEK, \'2010-10-30\' for DAY, \'2010-10-30 13\' for HOUR, \'2010-10-30 13:30\' for MINUTE, \'2010-10-30 13:30:45\' for SECOND, or a plain ordinal like \'6\' for periodical granularities such as MONTH_OF_YEAR). At least one of \'from\'/\'to\' must be provided; specifying only one yields an open-ended range.
+ * An absolute date range filter defined at a specific granularity. The \'from\'/\'to\' literals must match the format of the chosen granularity (e.g. \'2020\' for YEAR, \'2012-05\' for MONTH, \'2012-3\' for QUARTER, \'1996-01\' for WEEK, \'2010-10-30\' for DAY, \'2010-10-30 13\' for HOUR, \'2010-10-30 13:30\' for MINUTE, \'2010-10-30 13:30:45\' for SECOND, or a plain ordinal like \'6\' for periodical granularities such as MONTH_OF_YEAR). At least one of \'from\'/\'to\' must be provided; specifying only one yields an open-ended range. When both are provided, \'from\' must not be after \'to\'.
  */
 export interface AbsoluteGranularityDateFilter {
     'absoluteGranularityDateFilter': AbsoluteGranularityDateFilterAbsoluteGranularityDateFilter;
@@ -1513,6 +1513,33 @@ export type DatasetWorkspaceDataFilterIdentifierTypeEnum = 'workspaceDataFilter'
  * Abstract filter definition type for dates.
  */
 export type DateFilter = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | RelativeDateFilter;
+
+export interface DateRangeParameterDefinition {
+    'defaultValue': DateRangeParameterValue;
+    /**
+     * The parameter type.
+     */
+    'type': DateRangeParameterDefinitionTypeEnum;
+}
+
+export type DateRangeParameterDefinitionTypeEnum = 'DATE_RANGE';
+
+export interface DateRangeParameterValue {
+    /**
+     * Start of the period (inclusive) in the format matching \'granularity\'. If omitted, the period is unbounded at the start.
+     */
+    'from'?: string;
+    /**
+     * Granularity of the period; determines the format of \'from\' and \'to\'.
+     */
+    'granularity': DateRangeParameterValueGranularityEnum;
+    /**
+     * End of the period (inclusive) in the format matching \'granularity\'. If omitted, the period is unbounded at the end.
+     */
+    'to'?: string;
+}
+
+export type DateRangeParameterValueGranularityEnum = 'YEAR' | 'QUARTER' | 'MONTH' | 'WEEK' | 'DAY' | 'HOUR' | 'MINUTE' | 'SECOND';
 
 export interface DateValue {
     'value': string;
@@ -12964,7 +12991,7 @@ export interface JsonApiParameterInAttributes {
 /**
  * @type JsonApiParameterInAttributesDefinition
  */
-export type JsonApiParameterInAttributesDefinition = { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
+export type JsonApiParameterInAttributesDefinition = { type: 'DATE_RANGE' } & DateRangeParameterDefinition | { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
 
 export interface JsonApiParameterInDocument {
     'data': JsonApiParameterIn;
@@ -13018,7 +13045,7 @@ export interface JsonApiParameterOutAttributes {
 /**
  * @type JsonApiParameterOutAttributesDefinition
  */
-export type JsonApiParameterOutAttributesDefinition = { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
+export type JsonApiParameterOutAttributesDefinition = { type: 'DATE_RANGE' } & DateRangeParameterDefinition | { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
 
 export interface JsonApiParameterOutDocument {
     'data': JsonApiParameterOut;
@@ -13133,7 +13160,7 @@ export interface JsonApiParameterPatchAttributes {
 /**
  * @type JsonApiParameterPatchAttributesDefinition
  */
-export type JsonApiParameterPatchAttributesDefinition = { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
+export type JsonApiParameterPatchAttributesDefinition = { type: 'DATE_RANGE' } & DateRangeParameterDefinition | { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
 
 export interface JsonApiParameterPatchDocument {
     'data': JsonApiParameterPatch;
@@ -13167,7 +13194,7 @@ export interface JsonApiParameterPostOptionalIdAttributes {
 /**
  * @type JsonApiParameterPostOptionalIdAttributesDefinition
  */
-export type JsonApiParameterPostOptionalIdAttributesDefinition = { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
+export type JsonApiParameterPostOptionalIdAttributesDefinition = { type: 'DATE_RANGE' } & DateRangeParameterDefinition | { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
 
 export interface JsonApiParameterPostOptionalIdDocument {
     'data': JsonApiParameterPostOptionalId;
@@ -18089,7 +18116,7 @@ export interface LocalizationIssues {
 export interface LocalizationMetadataStatistics {
     'locales': Array<LocalizationStatisticsLocale>;
     /**
-     * Translation counts of the workspace and each parent workspace, root first. Present only with `includeCoverage=true` on the workspace endpoint.
+     * (BETA) Translation counts of the workspace and each parent workspace, root first. Present only with `includeCoverage=true` on the workspace endpoint.
      */
     'workspaces'?: Array<LocalizationStatisticsWorkspace>;
 }
@@ -18646,7 +18673,7 @@ export interface Parameter {
  * @type ParameterDefinition
  * Parameter content (type-discriminated).
  */
-export type ParameterDefinition = { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
+export type ParameterDefinition = { type: 'DATE_RANGE' } & DateRangeParameterDefinition | { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
 
 /**
  * (EXPERIMENTAL) Parameter value for this execution.
@@ -22485,7 +22512,7 @@ export async function ActionsApiAxiosParamCreator_CleanTranslations(
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Get Computed Attribute Permissions
+ * @summary Get Computed Attribute Permissions
  * @param {string} workspaceId 
  * @param {string} computedAttributeId 
  * @param {*} [options] Override http request option.
@@ -23334,7 +23361,7 @@ export async function ActionsApiAxiosParamCreator_ManageAttributePermissions(
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Manage Permissions for a Computed Attribute
+ * @summary Manage Permissions for a Computed Attribute
  * @param {string} workspaceId 
  * @param {string} computedAttributeId 
  * @param {Array<ManageComputedAttributePermissionsRequestInner>} manageComputedAttributePermissionsRequestInner 
@@ -23660,7 +23687,7 @@ export async function ActionsApiAxiosParamCreator_ManageLabelPermissions(
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Manage Permissions for a Metric
+ * @summary Manage Permissions for a Metric
  * @param {string} workspaceId 
  * @param {string} metricId 
  * @param {Array<ManageMetricPermissionsRequestInner>} manageMetricPermissionsRequestInner 
@@ -23784,7 +23811,7 @@ export async function ActionsApiAxiosParamCreator_ManageOrganizationPermissions(
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Manage Permissions for a Visualization
+ * @summary Manage Permissions for a Visualization
  * @param {string} workspaceId 
  * @param {string} visualizationObjectId 
  * @param {Array<ManageVisualizationPermissionsRequestInner>} manageVisualizationPermissionsRequestInner 
@@ -23912,7 +23939,7 @@ export async function ActionsApiAxiosParamCreator_ManageWorkspacePermissions(
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Get Metric Permissions
+ * @summary Get Metric Permissions
  * @param {string} workspaceId 
  * @param {string} metricId 
  * @param {*} [options] Override http request option.
@@ -24071,8 +24098,8 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationIssues
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
- * @summary (BETA) Languages with translations in the organization.
+ * Lists the languages that have at least one translation, separately for each kind of translation.
+ * @summary Languages with translations in the organization.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
@@ -24112,8 +24139,8 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationStatis
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
- * @summary (BETA) Languages used in the organization.
+ * Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
+ * @summary Languages used in the organization.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
@@ -24153,8 +24180,8 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsage(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Users who set a language themselves.
+ * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Users who set a language themselves.
  * @param {string} [value] Language tag that the user sets.
  * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
@@ -24224,8 +24251,8 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsageU
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Workspaces that use a language.
+ * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Workspaces that use a language.
  * @param {string} [value] Language tag that the workspace gets.
  * @param {string} [name] Filter by workspace name. Note that the filter is case insensitive.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
@@ -25741,7 +25768,7 @@ export async function ActionsApiAxiosParamCreator_ValidateEmbeddingOrigin(
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Get Visualization Permissions
+ * @summary Get Visualization Permissions
  * @param {string} workspaceId 
  * @param {string} visualizationObjectId 
  * @param {*} [options] Override http request option.
@@ -25834,10 +25861,10 @@ export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationIssues(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
- * @summary (BETA) Languages with translations in the workspace.
+ * Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
+ * @summary Languages with translations in the workspace.
  * @param {string} workspaceId 
- * @param {boolean} [includeCoverage] Adds translation counts for the workspace and each parent, root first.
+ * @param {boolean} [includeCoverage] (BETA) Adds translation counts for the workspace and each parent, root first.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
@@ -25884,8 +25911,8 @@ export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationStatistic
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
- * @summary (BETA) Languages used in the workspace.
+ * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * @summary Languages used in the workspace.
  * @param {string} workspaceId 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -25929,8 +25956,8 @@ export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationUsage(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Workspace members who get a language.
+ * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Workspace members who get a language.
  * @param {string} workspaceId 
  * @param {string} [value] Language tag that the user gets.
  * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
@@ -26278,7 +26305,7 @@ export async function ActionsApi_CleanTranslations(
 // ActionsApi Api FP
 /**
  * 
- * @summary (BETA) Get Computed Attribute Permissions
+ * @summary Get Computed Attribute Permissions
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiComputedAttributePermissionsRequest} requestParameters Request parameters.
@@ -26692,7 +26719,7 @@ export async function ActionsApi_ManageAttributePermissions(
 // ActionsApi Api FP
 /**
  * 
- * @summary (BETA) Manage Permissions for a Computed Attribute
+ * @summary Manage Permissions for a Computed Attribute
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiManageComputedAttributePermissionsRequest} requestParameters Request parameters.
@@ -26822,7 +26849,7 @@ export async function ActionsApi_ManageLabelPermissions(
 // ActionsApi Api FP
 /**
  * 
- * @summary (BETA) Manage Permissions for a Metric
+ * @summary Manage Permissions for a Metric
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
@@ -26874,7 +26901,7 @@ export async function ActionsApi_ManageOrganizationPermissions(
 // ActionsApi Api FP
 /**
  * 
- * @summary (BETA) Manage Permissions for a Visualization
+ * @summary Manage Permissions for a Visualization
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
@@ -26926,7 +26953,7 @@ export async function ActionsApi_ManageWorkspacePermissions(
 // ActionsApi Api FP
 /**
  * 
- * @summary (BETA) Get Metric Permissions
+ * @summary Get Metric Permissions
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiMetricPermissionsRequest} requestParameters Request parameters.
@@ -27002,8 +27029,8 @@ export async function ActionsApi_OrganizationLocalizationIssues(
 
 // ActionsApi Api FP
 /**
- * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
- * @summary (BETA) Languages with translations in the organization.
+ * Lists the languages that have at least one translation, separately for each kind of translation.
+ * @summary Languages with translations in the organization.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {*} [options] Override http request option.
@@ -27027,8 +27054,8 @@ export async function ActionsApi_OrganizationLocalizationStatistics(
 
 // ActionsApi Api FP
 /**
- * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
- * @summary (BETA) Languages used in the organization.
+ * Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
+ * @summary Languages used in the organization.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {*} [options] Override http request option.
@@ -27052,8 +27079,8 @@ export async function ActionsApi_OrganizationLocalizationUsage(
 
 // ActionsApi Api FP
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Users who set a language themselves.
+ * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Users who set a language themselves.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
@@ -27078,8 +27105,8 @@ export async function ActionsApi_OrganizationLocalizationUsageUsers(
 
 // ActionsApi Api FP
 /**
- * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Workspaces that use a language.
+ * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Workspaces that use a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
@@ -27803,7 +27830,7 @@ export async function ActionsApi_ValidateEmbeddingOrigin(
 // ActionsApi Api FP
 /**
  * 
- * @summary (BETA) Get Visualization Permissions
+ * @summary Get Visualization Permissions
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
@@ -27854,8 +27881,8 @@ export async function ActionsApi_WorkspaceLocalizationIssues(
 
 // ActionsApi Api FP
 /**
- * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
- * @summary (BETA) Languages with translations in the workspace.
+ * Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
+ * @summary Languages with translations in the workspace.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
@@ -27880,8 +27907,8 @@ export async function ActionsApi_WorkspaceLocalizationStatistics(
 
 // ActionsApi Api FP
 /**
- * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
- * @summary (BETA) Languages used in the workspace.
+ * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * @summary Languages used in the workspace.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
@@ -27906,8 +27933,8 @@ export async function ActionsApi_WorkspaceLocalizationUsage(
 
 // ActionsApi Api FP
 /**
- * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Workspace members who get a language.
+ * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Workspace members who get a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ActionsApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
@@ -28049,7 +28076,7 @@ export interface ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Computed Attribute Permissions
+     * @summary Get Computed Attribute Permissions
      * @param {ActionsApiComputedAttributePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28207,7 +28234,7 @@ export interface ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Computed Attribute
+     * @summary Manage Permissions for a Computed Attribute
      * @param {ActionsApiManageComputedAttributePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28257,7 +28284,7 @@ export interface ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Metric
+     * @summary Manage Permissions for a Metric
      * @param {ActionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28277,7 +28304,7 @@ export interface ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Visualization
+     * @summary Manage Permissions for a Visualization
      * @param {ActionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28297,7 +28324,7 @@ export interface ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Metric Permissions
+     * @summary Get Metric Permissions
      * @param {ActionsApiMetricPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28325,8 +28352,8 @@ export interface ActionsApiInterface {
     organizationLocalizationIssues(options?: AxiosRequestConfig): AxiosPromise<LocalizationIssues>;
 
     /**
-     * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
-     * @summary (BETA) Languages with translations in the organization.
+     * Lists the languages that have at least one translation, separately for each kind of translation.
+     * @summary Languages with translations in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
@@ -28334,8 +28361,8 @@ export interface ActionsApiInterface {
     organizationLocalizationStatistics(options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
 
     /**
-     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
-     * @summary (BETA) Languages used in the organization.
+     * Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
+     * @summary Languages used in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
@@ -28343,8 +28370,8 @@ export interface ActionsApiInterface {
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Users who set a language themselves.
+     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Users who set a language themselves.
      * @param {ActionsApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28353,8 +28380,8 @@ export interface ActionsApiInterface {
     organizationLocalizationUsageUsers(requestParameters: ActionsApiOrganizationLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
 
     /**
-     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Workspaces that use a language.
+     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Workspaces that use a language.
      * @param {ActionsApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28630,7 +28657,7 @@ export interface ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Visualization Permissions
+     * @summary Get Visualization Permissions
      * @param {ActionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28649,8 +28676,8 @@ export interface ActionsApiInterface {
     workspaceLocalizationIssues(requestParameters: ActionsApiWorkspaceLocalizationIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationIssues>;
 
     /**
-     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
-     * @summary (BETA) Languages with translations in the workspace.
+     * Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
+     * @summary Languages with translations in the workspace.
      * @param {ActionsApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28659,8 +28686,8 @@ export interface ActionsApiInterface {
     workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
 
     /**
-     * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
-     * @summary (BETA) Languages used in the workspace.
+     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * @summary Languages used in the workspace.
      * @param {ActionsApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -28669,8 +28696,8 @@ export interface ActionsApiInterface {
     workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
 
     /**
-     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Workspace members who get a language.
+     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Workspace members who get a language.
      * @param {ActionsApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -29953,7 +29980,7 @@ export interface ActionsApiWorkspaceLocalizationStatisticsRequest {
     readonly workspaceId: string
 
     /**
-     * Adds translation counts for the workspace and each parent, root first.
+     * (BETA) Adds translation counts for the workspace and each parent, root first.
      * @type {boolean}
      * @memberof ActionsApiWorkspaceLocalizationStatistics
      */
@@ -30159,7 +30186,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Computed Attribute Permissions
+     * @summary Get Computed Attribute Permissions
      * @param {ActionsApiComputedAttributePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -30349,7 +30376,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Computed Attribute
+     * @summary Manage Permissions for a Computed Attribute
      * @param {ActionsApiManageComputedAttributePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -30409,7 +30436,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Metric
+     * @summary Manage Permissions for a Metric
      * @param {ActionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -30433,7 +30460,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Visualization
+     * @summary Manage Permissions for a Visualization
      * @param {ActionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -30457,7 +30484,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Metric Permissions
+     * @summary Get Metric Permissions
      * @param {ActionsApiMetricPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -30491,8 +30518,8 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
-     * @summary (BETA) Languages with translations in the organization.
+     * Lists the languages that have at least one translation, separately for each kind of translation.
+     * @summary Languages with translations in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApi
@@ -30502,8 +30529,8 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
-     * @summary (BETA) Languages used in the organization.
+     * Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
+     * @summary Languages used in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApi
@@ -30513,8 +30540,8 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Users who set a language themselves.
+     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Users who set a language themselves.
      * @param {ActionsApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -30525,8 +30552,8 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Workspaces that use a language.
+     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Workspaces that use a language.
      * @param {ActionsApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -30858,7 +30885,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Visualization Permissions
+     * @summary Get Visualization Permissions
      * @param {ActionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -30881,8 +30908,8 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
-     * @summary (BETA) Languages with translations in the workspace.
+     * Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
+     * @summary Languages with translations in the workspace.
      * @param {ActionsApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -30893,8 +30920,8 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
-     * @summary (BETA) Languages used in the workspace.
+     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * @summary Languages used in the workspace.
      * @param {ActionsApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -30905,8 +30932,8 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Workspace members who get a language.
+     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Workspace members who get a language.
      * @param {ActionsApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -32837,7 +32864,7 @@ export async function AggregatedFactControllerApiAxiosParamCreator_GetEntityAggr
 // AggregatedFactControllerApi FP - AggregatedFactControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -32962,7 +32989,7 @@ export async function AggregatedFactControllerApi_GetEntityAggregatedFacts(
 // AggregatedFactControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AggregatedFactControllerApiSearchEntitiesAggregatedFactsRequest} requestParameters Request parameters.
@@ -33013,7 +33040,7 @@ export interface AggregatedFactControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AggregatedFactControllerApiSearchEntitiesAggregatedFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -33210,7 +33237,7 @@ export class AggregatedFactControllerApi extends BaseAPI implements AggregatedFa
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AggregatedFactControllerApiSearchEntitiesAggregatedFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -33578,7 +33605,7 @@ export async function AnalyticalDashboardControllerApiAxiosParamCreator_PatchEnt
 // AnalyticalDashboardControllerApi FP - AnalyticalDashboardControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -33858,7 +33885,7 @@ export async function AnalyticalDashboardControllerApi_PatchEntityAnalyticalDash
 // AnalyticalDashboardControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AnalyticalDashboardControllerApiSearchEntitiesAnalyticalDashboardsRequest} requestParameters Request parameters.
@@ -33965,7 +33992,7 @@ export interface AnalyticalDashboardControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AnalyticalDashboardControllerApiSearchEntitiesAnalyticalDashboardsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -34348,7 +34375,7 @@ export class AnalyticalDashboardControllerApi extends BaseAPI implements Analyti
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AnalyticalDashboardControllerApiSearchEntitiesAnalyticalDashboardsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -38796,7 +38823,7 @@ export async function AttributeControllerApiAxiosParamCreator_GetEntityAttribute
 // AttributeControllerApi FP - AttributeControllerApiAxiosParamCreator
 /**
  * 
- * @summary Patch an Attribute (beta)
+ * @summary Patch an Attribute
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiAttributePatchDocument} jsonApiAttributePatchDocument 
@@ -38873,7 +38900,7 @@ export async function AttributeControllerApiAxiosParamCreator_PatchEntityAttribu
 // AttributeControllerApi FP - AttributeControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -38998,7 +39025,7 @@ export async function AttributeControllerApi_GetEntityAttributes(
 // AttributeControllerApi Api FP
 /**
  * 
- * @summary Patch an Attribute (beta)
+ * @summary Patch an Attribute
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AttributeControllerApiPatchEntityAttributesRequest} requestParameters Request parameters.
@@ -39024,7 +39051,7 @@ export async function AttributeControllerApi_PatchEntityAttributes(
 // AttributeControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AttributeControllerApiSearchEntitiesAttributesRequest} requestParameters Request parameters.
@@ -39075,7 +39102,7 @@ export interface AttributeControllerApiInterface {
 
     /**
      * 
-     * @summary Patch an Attribute (beta)
+     * @summary Patch an Attribute
      * @param {AttributeControllerApiPatchEntityAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -39085,7 +39112,7 @@ export interface AttributeControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AttributeControllerApiSearchEntitiesAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -39324,7 +39351,7 @@ export class AttributeControllerApi extends BaseAPI implements AttributeControll
 
     /**
      * 
-     * @summary Patch an Attribute (beta)
+     * @summary Patch an Attribute
      * @param {AttributeControllerApiPatchEntityAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -39336,7 +39363,7 @@ export class AttributeControllerApi extends BaseAPI implements AttributeControll
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AttributeControllerApiSearchEntitiesAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -39704,7 +39731,7 @@ export async function AttributeHierarchiesApiAxiosParamCreator_PatchEntityAttrib
 // AttributeHierarchiesApi FP - AttributeHierarchiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -39984,7 +40011,7 @@ export async function AttributeHierarchiesApi_PatchEntityAttributeHierarchies(
 // AttributeHierarchiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AttributeHierarchiesApiSearchEntitiesAttributeHierarchiesRequest} requestParameters Request parameters.
@@ -40091,7 +40118,7 @@ export interface AttributeHierarchiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AttributeHierarchiesApiSearchEntitiesAttributeHierarchiesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -40474,7 +40501,7 @@ export class AttributeHierarchiesApi extends BaseAPI implements AttributeHierarc
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AttributeHierarchiesApiSearchEntitiesAttributeHierarchiesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -40854,7 +40881,7 @@ export async function AttributeHierarchyControllerApiAxiosParamCreator_PatchEnti
 // AttributeHierarchyControllerApi FP - AttributeHierarchyControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -41134,7 +41161,7 @@ export async function AttributeHierarchyControllerApi_PatchEntityAttributeHierar
 // AttributeHierarchyControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AttributeHierarchyControllerApiSearchEntitiesAttributeHierarchiesRequest} requestParameters Request parameters.
@@ -41241,7 +41268,7 @@ export interface AttributeHierarchyControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AttributeHierarchyControllerApiSearchEntitiesAttributeHierarchiesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -41624,7 +41651,7 @@ export class AttributeHierarchyControllerApi extends BaseAPI implements Attribut
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AttributeHierarchyControllerApiSearchEntitiesAttributeHierarchiesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -41805,7 +41832,7 @@ export async function AttributesApiAxiosParamCreator_GetEntityAttributes(
 // AttributesApi FP - AttributesApiAxiosParamCreator
 /**
  * 
- * @summary Patch an Attribute (beta)
+ * @summary Patch an Attribute
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiAttributePatchDocument} jsonApiAttributePatchDocument 
@@ -41882,7 +41909,7 @@ export async function AttributesApiAxiosParamCreator_PatchEntityAttributes(
 // AttributesApi FP - AttributesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -42007,7 +42034,7 @@ export async function AttributesApi_GetEntityAttributes(
 // AttributesApi Api FP
 /**
  * 
- * @summary Patch an Attribute (beta)
+ * @summary Patch an Attribute
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AttributesApiPatchEntityAttributesRequest} requestParameters Request parameters.
@@ -42033,7 +42060,7 @@ export async function AttributesApi_PatchEntityAttributes(
 // AttributesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AttributesApiSearchEntitiesAttributesRequest} requestParameters Request parameters.
@@ -42084,7 +42111,7 @@ export interface AttributesApiInterface {
 
     /**
      * 
-     * @summary Patch an Attribute (beta)
+     * @summary Patch an Attribute
      * @param {AttributesApiPatchEntityAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -42094,7 +42121,7 @@ export interface AttributesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AttributesApiSearchEntitiesAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -42333,7 +42360,7 @@ export class AttributesApi extends BaseAPI implements AttributesApiInterface {
 
     /**
      * 
-     * @summary Patch an Attribute (beta)
+     * @summary Patch an Attribute
      * @param {AttributesApiPatchEntityAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -42345,7 +42372,7 @@ export class AttributesApi extends BaseAPI implements AttributesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AttributesApiSearchEntitiesAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -42817,7 +42844,7 @@ export async function AutomationControllerApiAxiosParamCreator_PatchEntityAutoma
 // AutomationControllerApi FP - AutomationControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -43097,7 +43124,7 @@ export async function AutomationControllerApi_PatchEntityAutomations(
 // AutomationControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AutomationControllerApiSearchEntitiesAutomationsRequest} requestParameters Request parameters.
@@ -43204,7 +43231,7 @@ export interface AutomationControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AutomationControllerApiSearchEntitiesAutomationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -43587,7 +43614,7 @@ export class AutomationControllerApi extends BaseAPI implements AutomationContro
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AutomationControllerApiSearchEntitiesAutomationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -43800,7 +43827,7 @@ export class AutomationOrganizationViewControllerApi extends BaseAPI implements 
 // AutomationResultControllerApi FP - AutomationResultControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -43873,7 +43900,7 @@ export async function AutomationResultControllerApiAxiosParamCreator_SearchEntit
 // AutomationResultControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AutomationResultControllerApiSearchEntitiesAutomationResultsRequest} requestParameters Request parameters.
@@ -43904,7 +43931,7 @@ export async function AutomationResultControllerApi_SearchEntitiesAutomationResu
 export interface AutomationResultControllerApiInterface {
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AutomationResultControllerApiSearchEntitiesAutomationResultsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -43958,7 +43985,7 @@ export interface AutomationResultControllerApiSearchEntitiesAutomationResultsReq
 export class AutomationResultControllerApi extends BaseAPI implements AutomationResultControllerApiInterface {
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AutomationResultControllerApiSearchEntitiesAutomationResultsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -44687,7 +44714,7 @@ export async function AutomationsApiAxiosParamCreator_PauseWorkspaceAutomations(
 // AutomationsApi FP - AutomationsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -44759,7 +44786,7 @@ export async function AutomationsApiAxiosParamCreator_SearchEntitiesAutomationRe
 // AutomationsApi FP - AutomationsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -45632,7 +45659,7 @@ export async function AutomationsApi_PauseWorkspaceAutomations(
 // AutomationsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AutomationsApiSearchEntitiesAutomationResultsRequest} requestParameters Request parameters.
@@ -45658,7 +45685,7 @@ export async function AutomationsApi_SearchEntitiesAutomationResults(
 // AutomationsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {AutomationsApiSearchEntitiesAutomationsRequest} requestParameters Request parameters.
@@ -46032,7 +46059,7 @@ export interface AutomationsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AutomationsApiSearchEntitiesAutomationResultsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -46042,7 +46069,7 @@ export interface AutomationsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AutomationsApiSearchEntitiesAutomationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -46877,7 +46904,7 @@ export class AutomationsApi extends BaseAPI implements AutomationsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AutomationsApiSearchEntitiesAutomationResultsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -46889,7 +46916,7 @@ export class AutomationsApi extends BaseAPI implements AutomationsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {AutomationsApiSearchEntitiesAutomationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -49235,7 +49262,7 @@ export async function ComputedAttributeControllerApiAxiosParamCreator_PatchEntit
 // ComputedAttributeControllerApi FP - ComputedAttributeControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -49515,7 +49542,7 @@ export async function ComputedAttributeControllerApi_PatchEntityComputedAttribut
 // ComputedAttributeControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
@@ -49622,7 +49649,7 @@ export interface ComputedAttributeControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -50005,7 +50032,7 @@ export class ComputedAttributeControllerApi extends BaseAPI implements ComputedA
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ComputedAttributeControllerApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -50385,7 +50412,7 @@ export async function ComputedAttributesApiAxiosParamCreator_PatchEntityComputed
 // ComputedAttributesApi FP - ComputedAttributesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -50665,7 +50692,7 @@ export async function ComputedAttributesApi_PatchEntityComputedAttributes(
 // ComputedAttributesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ComputedAttributesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
@@ -50772,7 +50799,7 @@ export interface ComputedAttributesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ComputedAttributesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -51155,7 +51182,7 @@ export class ComputedAttributesApi extends BaseAPI implements ComputedAttributes
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ComputedAttributesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -53174,7 +53201,7 @@ export async function CustomApplicationSettingControllerApiAxiosParamCreator_Pat
 // CustomApplicationSettingControllerApi FP - CustomApplicationSettingControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -53449,7 +53476,7 @@ export async function CustomApplicationSettingControllerApi_PatchEntityCustomApp
 // CustomApplicationSettingControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {CustomApplicationSettingControllerApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
@@ -53556,7 +53583,7 @@ export interface CustomApplicationSettingControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {CustomApplicationSettingControllerApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -53904,7 +53931,7 @@ export class CustomApplicationSettingControllerApi extends BaseAPI implements Cu
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {CustomApplicationSettingControllerApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -55813,7 +55840,7 @@ export async function DashboardPluginControllerApiAxiosParamCreator_PatchEntityD
 // DashboardPluginControllerApi FP - DashboardPluginControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -56093,7 +56120,7 @@ export async function DashboardPluginControllerApi_PatchEntityDashboardPlugins(
 // DashboardPluginControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {DashboardPluginControllerApiSearchEntitiesDashboardPluginsRequest} requestParameters Request parameters.
@@ -56200,7 +56227,7 @@ export interface DashboardPluginControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DashboardPluginControllerApiSearchEntitiesDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -56583,7 +56610,7 @@ export class DashboardPluginControllerApi extends BaseAPI implements DashboardPl
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DashboardPluginControllerApiSearchEntitiesDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -56963,7 +56990,7 @@ export async function DashboardsApiAxiosParamCreator_PatchEntityAnalyticalDashbo
 // DashboardsApi FP - DashboardsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -57243,7 +57270,7 @@ export async function DashboardsApi_PatchEntityAnalyticalDashboards(
 // DashboardsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {DashboardsApiSearchEntitiesAnalyticalDashboardsRequest} requestParameters Request parameters.
@@ -57350,7 +57377,7 @@ export interface DashboardsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DashboardsApiSearchEntitiesAnalyticalDashboardsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -57733,7 +57760,7 @@ export class DashboardsApi extends BaseAPI implements DashboardsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DashboardsApiSearchEntitiesAnalyticalDashboardsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -58860,7 +58887,7 @@ export async function DataFiltersApiAxiosParamCreator_PatchEntityWorkspaceDataFi
 // DataFiltersApi FP - DataFiltersApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -58932,7 +58959,7 @@ export async function DataFiltersApiAxiosParamCreator_SearchEntitiesUserDataFilt
 // DataFiltersApi FP - DataFiltersApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -59004,7 +59031,7 @@ export async function DataFiltersApiAxiosParamCreator_SearchEntitiesWorkspaceDat
 // DataFiltersApi FP - DataFiltersApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -59781,7 +59808,7 @@ export async function DataFiltersApi_PatchEntityWorkspaceDataFilters(
 // DataFiltersApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {DataFiltersApiSearchEntitiesUserDataFiltersRequest} requestParameters Request parameters.
@@ -59807,7 +59834,7 @@ export async function DataFiltersApi_SearchEntitiesUserDataFilters(
 // DataFiltersApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {DataFiltersApiSearchEntitiesWorkspaceDataFilterSettingsRequest} requestParameters Request parameters.
@@ -59833,7 +59860,7 @@ export async function DataFiltersApi_SearchEntitiesWorkspaceDataFilterSettings(
 // DataFiltersApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {DataFiltersApiSearchEntitiesWorkspaceDataFiltersRequest} requestParameters Request parameters.
@@ -60127,7 +60154,7 @@ export interface DataFiltersApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DataFiltersApiSearchEntitiesUserDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -60137,7 +60164,7 @@ export interface DataFiltersApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DataFiltersApiSearchEntitiesWorkspaceDataFilterSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -60147,7 +60174,7 @@ export interface DataFiltersApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DataFiltersApiSearchEntitiesWorkspaceDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -61293,7 +61320,7 @@ export class DataFiltersApi extends BaseAPI implements DataFiltersApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DataFiltersApiSearchEntitiesUserDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -61305,7 +61332,7 @@ export class DataFiltersApi extends BaseAPI implements DataFiltersApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DataFiltersApiSearchEntitiesWorkspaceDataFilterSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -61317,7 +61344,7 @@ export class DataFiltersApi extends BaseAPI implements DataFiltersApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DataFiltersApiSearchEntitiesWorkspaceDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -64403,7 +64430,7 @@ export async function DatasetControllerApiAxiosParamCreator_GetEntityDatasets(
 // DatasetControllerApi FP - DatasetControllerApiAxiosParamCreator
 /**
  * 
- * @summary Patch a Dataset (beta)
+ * @summary Patch a Dataset
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiDatasetPatchDocument} jsonApiDatasetPatchDocument 
@@ -64480,7 +64507,7 @@ export async function DatasetControllerApiAxiosParamCreator_PatchEntityDatasets(
 // DatasetControllerApi FP - DatasetControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -64605,7 +64632,7 @@ export async function DatasetControllerApi_GetEntityDatasets(
 // DatasetControllerApi Api FP
 /**
  * 
- * @summary Patch a Dataset (beta)
+ * @summary Patch a Dataset
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {DatasetControllerApiPatchEntityDatasetsRequest} requestParameters Request parameters.
@@ -64631,7 +64658,7 @@ export async function DatasetControllerApi_PatchEntityDatasets(
 // DatasetControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {DatasetControllerApiSearchEntitiesDatasetsRequest} requestParameters Request parameters.
@@ -64682,7 +64709,7 @@ export interface DatasetControllerApiInterface {
 
     /**
      * 
-     * @summary Patch a Dataset (beta)
+     * @summary Patch a Dataset
      * @param {DatasetControllerApiPatchEntityDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -64692,7 +64719,7 @@ export interface DatasetControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DatasetControllerApiSearchEntitiesDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -64931,7 +64958,7 @@ export class DatasetControllerApi extends BaseAPI implements DatasetControllerAp
 
     /**
      * 
-     * @summary Patch a Dataset (beta)
+     * @summary Patch a Dataset
      * @param {DatasetControllerApiPatchEntityDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -64943,7 +64970,7 @@ export class DatasetControllerApi extends BaseAPI implements DatasetControllerAp
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DatasetControllerApiSearchEntitiesDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -65112,7 +65139,7 @@ export async function DatasetsApiAxiosParamCreator_GetEntityDatasets(
 // DatasetsApi FP - DatasetsApiAxiosParamCreator
 /**
  * 
- * @summary Patch a Dataset (beta)
+ * @summary Patch a Dataset
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiDatasetPatchDocument} jsonApiDatasetPatchDocument 
@@ -65189,7 +65216,7 @@ export async function DatasetsApiAxiosParamCreator_PatchEntityDatasets(
 // DatasetsApi FP - DatasetsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -65314,7 +65341,7 @@ export async function DatasetsApi_GetEntityDatasets(
 // DatasetsApi Api FP
 /**
  * 
- * @summary Patch a Dataset (beta)
+ * @summary Patch a Dataset
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {DatasetsApiPatchEntityDatasetsRequest} requestParameters Request parameters.
@@ -65340,7 +65367,7 @@ export async function DatasetsApi_PatchEntityDatasets(
 // DatasetsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {DatasetsApiSearchEntitiesDatasetsRequest} requestParameters Request parameters.
@@ -65391,7 +65418,7 @@ export interface DatasetsApiInterface {
 
     /**
      * 
-     * @summary Patch a Dataset (beta)
+     * @summary Patch a Dataset
      * @param {DatasetsApiPatchEntityDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -65401,7 +65428,7 @@ export interface DatasetsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DatasetsApiSearchEntitiesDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -65640,7 +65667,7 @@ export class DatasetsApi extends BaseAPI implements DatasetsApiInterface {
 
     /**
      * 
-     * @summary Patch a Dataset (beta)
+     * @summary Patch a Dataset
      * @param {DatasetsApiPatchEntityDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -65652,7 +65679,7 @@ export class DatasetsApi extends BaseAPI implements DatasetsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {DatasetsApiSearchEntitiesDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -82124,7 +82151,7 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityAttributeHierarchi
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary Patch an Attribute (beta)
+ * @summary Patch an Attribute
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiAttributePatchDocument} jsonApiAttributePatchDocument 
@@ -82844,7 +82871,7 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityDataSources(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary Patch a Dataset (beta)
+ * @summary Patch a Dataset
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiDatasetPatchDocument} jsonApiDatasetPatchDocument 
@@ -83220,7 +83247,7 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityExportTemplates(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary Patch a Fact (beta)
+ * @summary Patch a Fact
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiFactPatchDocument} jsonApiFactPatchDocument 
@@ -83664,7 +83691,7 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityKnowledgeRecommend
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary Patch a Label (beta)
+ * @summary Patch a Label
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiLabelPatchDocument} jsonApiLabelPatchDocument 
@@ -85513,7 +85540,7 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityWorkspaces(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -85585,7 +85612,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesAggregatedFacts
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -85657,7 +85684,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesAnalyticalDashb
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -85729,7 +85756,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesAttributeHierar
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -85801,7 +85828,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesAttributes(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -85873,7 +85900,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesAutomationResul
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -85945,7 +85972,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesAutomations(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86017,7 +86044,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesComputedAttribu
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86089,7 +86116,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesCustomApplicati
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86161,7 +86188,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesDashboardPlugin
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86305,7 +86332,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesDocuments(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86377,7 +86404,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesExportDefinitio
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86449,7 +86476,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesFacts(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86521,7 +86548,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesFilterContexts(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86593,7 +86620,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesFilterViews(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86665,7 +86692,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesKnowledgeRecomm
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86737,7 +86764,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesLabels(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86809,7 +86836,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesMemoryItems(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86881,7 +86908,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesMetrics(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -86953,7 +86980,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesParameters(
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -87025,7 +87052,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesUserDataFilters
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -87097,7 +87124,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesVisualizationOb
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -87169,7 +87196,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesWorkspaceDataFi
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -87241,7 +87268,7 @@ export async function EntitiesApiAxiosParamCreator_SearchEntitiesWorkspaceDataFi
 // EntitiesApi FP - EntitiesApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -96652,7 +96679,7 @@ export async function EntitiesApi_PatchEntityAttributeHierarchies(
 // EntitiesApi Api FP
 /**
  * 
- * @summary Patch an Attribute (beta)
+ * @summary Patch an Attribute
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiPatchEntityAttributesRequest} requestParameters Request parameters.
@@ -96912,7 +96939,7 @@ export async function EntitiesApi_PatchEntityDataSources(
 // EntitiesApi Api FP
 /**
  * 
- * @summary Patch a Dataset (beta)
+ * @summary Patch a Dataset
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiPatchEntityDatasetsRequest} requestParameters Request parameters.
@@ -97042,7 +97069,7 @@ export async function EntitiesApi_PatchEntityExportTemplates(
 // EntitiesApi Api FP
 /**
  * 
- * @summary Patch a Fact (beta)
+ * @summary Patch a Fact
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiPatchEntityFactsRequest} requestParameters Request parameters.
@@ -97198,7 +97225,7 @@ export async function EntitiesApi_PatchEntityKnowledgeRecommendations(
 // EntitiesApi Api FP
 /**
  * 
- * @summary Patch a Label (beta)
+ * @summary Patch a Label
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiPatchEntityLabelsRequest} requestParameters Request parameters.
@@ -97848,7 +97875,7 @@ export async function EntitiesApi_PatchEntityWorkspaces(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesAggregatedFactsRequest} requestParameters Request parameters.
@@ -97874,7 +97901,7 @@ export async function EntitiesApi_SearchEntitiesAggregatedFacts(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesAnalyticalDashboardsRequest} requestParameters Request parameters.
@@ -97900,7 +97927,7 @@ export async function EntitiesApi_SearchEntitiesAnalyticalDashboards(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesAttributeHierarchiesRequest} requestParameters Request parameters.
@@ -97926,7 +97953,7 @@ export async function EntitiesApi_SearchEntitiesAttributeHierarchies(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesAttributesRequest} requestParameters Request parameters.
@@ -97952,7 +97979,7 @@ export async function EntitiesApi_SearchEntitiesAttributes(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesAutomationResultsRequest} requestParameters Request parameters.
@@ -97978,7 +98005,7 @@ export async function EntitiesApi_SearchEntitiesAutomationResults(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesAutomationsRequest} requestParameters Request parameters.
@@ -98004,7 +98031,7 @@ export async function EntitiesApi_SearchEntitiesAutomations(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
@@ -98030,7 +98057,7 @@ export async function EntitiesApi_SearchEntitiesComputedAttributes(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
@@ -98056,7 +98083,7 @@ export async function EntitiesApi_SearchEntitiesCustomApplicationSettings(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesDashboardPluginsRequest} requestParameters Request parameters.
@@ -98082,7 +98109,7 @@ export async function EntitiesApi_SearchEntitiesDashboardPlugins(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesDatasetsRequest} requestParameters Request parameters.
@@ -98134,7 +98161,7 @@ export async function EntitiesApi_SearchEntitiesDocuments(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesExportDefinitionsRequest} requestParameters Request parameters.
@@ -98160,7 +98187,7 @@ export async function EntitiesApi_SearchEntitiesExportDefinitions(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesFactsRequest} requestParameters Request parameters.
@@ -98186,7 +98213,7 @@ export async function EntitiesApi_SearchEntitiesFacts(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesFilterContextsRequest} requestParameters Request parameters.
@@ -98212,7 +98239,7 @@ export async function EntitiesApi_SearchEntitiesFilterContexts(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesFilterViewsRequest} requestParameters Request parameters.
@@ -98238,7 +98265,7 @@ export async function EntitiesApi_SearchEntitiesFilterViews(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
@@ -98264,7 +98291,7 @@ export async function EntitiesApi_SearchEntitiesKnowledgeRecommendations(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesLabelsRequest} requestParameters Request parameters.
@@ -98290,7 +98317,7 @@ export async function EntitiesApi_SearchEntitiesLabels(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
@@ -98316,7 +98343,7 @@ export async function EntitiesApi_SearchEntitiesMemoryItems(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesMetricsRequest} requestParameters Request parameters.
@@ -98342,7 +98369,7 @@ export async function EntitiesApi_SearchEntitiesMetrics(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesParametersRequest} requestParameters Request parameters.
@@ -98368,7 +98395,7 @@ export async function EntitiesApi_SearchEntitiesParameters(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesUserDataFiltersRequest} requestParameters Request parameters.
@@ -98394,7 +98421,7 @@ export async function EntitiesApi_SearchEntitiesUserDataFilters(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesVisualizationObjectsRequest} requestParameters Request parameters.
@@ -98420,7 +98447,7 @@ export async function EntitiesApi_SearchEntitiesVisualizationObjects(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesWorkspaceDataFilterSettingsRequest} requestParameters Request parameters.
@@ -98446,7 +98473,7 @@ export async function EntitiesApi_SearchEntitiesWorkspaceDataFilterSettings(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesWorkspaceDataFiltersRequest} requestParameters Request parameters.
@@ -98472,7 +98499,7 @@ export async function EntitiesApi_SearchEntitiesWorkspaceDataFilters(
 // EntitiesApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {EntitiesApiSearchEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
@@ -101998,7 +102025,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary Patch an Attribute (beta)
+     * @summary Patch an Attribute
      * @param {EntitiesApiPatchEntityAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102098,7 +102125,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary Patch a Dataset (beta)
+     * @summary Patch a Dataset
      * @param {EntitiesApiPatchEntityDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102148,7 +102175,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary Patch a Fact (beta)
+     * @summary Patch a Fact
      * @param {EntitiesApiPatchEntityFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102208,7 +102235,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary Patch a Label (beta)
+     * @summary Patch a Label
      * @param {EntitiesApiPatchEntityLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102458,7 +102485,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAggregatedFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102468,7 +102495,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAnalyticalDashboardsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102478,7 +102505,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAttributeHierarchiesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102488,7 +102515,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102498,7 +102525,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAutomationResultsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102508,7 +102535,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAutomationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102518,7 +102545,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102528,7 +102555,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102538,7 +102565,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102548,7 +102575,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102568,7 +102595,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102578,7 +102605,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102588,7 +102615,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesFilterContextsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102598,7 +102625,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesFilterViewsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102608,7 +102635,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102618,7 +102645,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102628,7 +102655,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102638,7 +102665,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102648,7 +102675,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesParametersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102658,7 +102685,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesUserDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102668,7 +102695,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesVisualizationObjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102678,7 +102705,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesWorkspaceDataFilterSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102688,7 +102715,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesWorkspaceDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -102698,7 +102725,7 @@ export interface EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118102,7 +118129,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary Patch an Attribute (beta)
+     * @summary Patch an Attribute
      * @param {EntitiesApiPatchEntityAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118222,7 +118249,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary Patch a Dataset (beta)
+     * @summary Patch a Dataset
      * @param {EntitiesApiPatchEntityDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118282,7 +118309,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary Patch a Fact (beta)
+     * @summary Patch a Fact
      * @param {EntitiesApiPatchEntityFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118354,7 +118381,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary Patch a Label (beta)
+     * @summary Patch a Label
      * @param {EntitiesApiPatchEntityLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118654,7 +118681,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAggregatedFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118666,7 +118693,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAnalyticalDashboardsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118678,7 +118705,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAttributeHierarchiesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118690,7 +118717,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118702,7 +118729,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAutomationResultsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118714,7 +118741,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesAutomationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118726,7 +118753,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesComputedAttributesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118738,7 +118765,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118750,7 +118777,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118762,7 +118789,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesDatasetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118786,7 +118813,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118798,7 +118825,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118810,7 +118837,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesFilterContextsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118822,7 +118849,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesFilterViewsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118834,7 +118861,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118846,7 +118873,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118858,7 +118885,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118870,7 +118897,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118882,7 +118909,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesParametersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118894,7 +118921,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesUserDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118906,7 +118933,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesVisualizationObjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118918,7 +118945,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesWorkspaceDataFilterSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118930,7 +118957,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesWorkspaceDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -118942,7 +118969,7 @@ export class EntitiesApi extends BaseAPI implements EntitiesApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {EntitiesApiSearchEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -120691,7 +120718,7 @@ export async function ExportDefinitionControllerApiAxiosParamCreator_PatchEntity
 // ExportDefinitionControllerApi FP - ExportDefinitionControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -120971,7 +120998,7 @@ export async function ExportDefinitionControllerApi_PatchEntityExportDefinitions
 // ExportDefinitionControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ExportDefinitionControllerApiSearchEntitiesExportDefinitionsRequest} requestParameters Request parameters.
@@ -121078,7 +121105,7 @@ export interface ExportDefinitionControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ExportDefinitionControllerApiSearchEntitiesExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -121461,7 +121488,7 @@ export class ExportDefinitionControllerApi extends BaseAPI implements ExportDefi
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ExportDefinitionControllerApiSearchEntitiesExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -121841,7 +121868,7 @@ export async function ExportDefinitionsApiAxiosParamCreator_PatchEntityExportDef
 // ExportDefinitionsApi FP - ExportDefinitionsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -122121,7 +122148,7 @@ export async function ExportDefinitionsApi_PatchEntityExportDefinitions(
 // ExportDefinitionsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ExportDefinitionsApiSearchEntitiesExportDefinitionsRequest} requestParameters Request parameters.
@@ -122228,7 +122255,7 @@ export interface ExportDefinitionsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ExportDefinitionsApiSearchEntitiesExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -122611,7 +122638,7 @@ export class ExportDefinitionsApi extends BaseAPI implements ExportDefinitionsAp
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ExportDefinitionsApiSearchEntitiesExportDefinitionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -125327,7 +125354,7 @@ export async function FactControllerApiAxiosParamCreator_GetEntityFacts(
 // FactControllerApi FP - FactControllerApiAxiosParamCreator
 /**
  * 
- * @summary Patch a Fact (beta)
+ * @summary Patch a Fact
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiFactPatchDocument} jsonApiFactPatchDocument 
@@ -125404,7 +125431,7 @@ export async function FactControllerApiAxiosParamCreator_PatchEntityFacts(
 // FactControllerApi FP - FactControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -125529,7 +125556,7 @@ export async function FactControllerApi_GetEntityFacts(
 // FactControllerApi Api FP
 /**
  * 
- * @summary Patch a Fact (beta)
+ * @summary Patch a Fact
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {FactControllerApiPatchEntityFactsRequest} requestParameters Request parameters.
@@ -125555,7 +125582,7 @@ export async function FactControllerApi_PatchEntityFacts(
 // FactControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {FactControllerApiSearchEntitiesFactsRequest} requestParameters Request parameters.
@@ -125606,7 +125633,7 @@ export interface FactControllerApiInterface {
 
     /**
      * 
-     * @summary Patch a Fact (beta)
+     * @summary Patch a Fact
      * @param {FactControllerApiPatchEntityFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -125616,7 +125643,7 @@ export interface FactControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FactControllerApiSearchEntitiesFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -125855,7 +125882,7 @@ export class FactControllerApi extends BaseAPI implements FactControllerApiInter
 
     /**
      * 
-     * @summary Patch a Fact (beta)
+     * @summary Patch a Fact
      * @param {FactControllerApiPatchEntityFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -125867,7 +125894,7 @@ export class FactControllerApi extends BaseAPI implements FactControllerApiInter
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FactControllerApiSearchEntitiesFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -126190,7 +126217,7 @@ export async function FactsApiAxiosParamCreator_GetEntityFacts(
 // FactsApi FP - FactsApiAxiosParamCreator
 /**
  * 
- * @summary Patch a Fact (beta)
+ * @summary Patch a Fact
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiFactPatchDocument} jsonApiFactPatchDocument 
@@ -126267,7 +126294,7 @@ export async function FactsApiAxiosParamCreator_PatchEntityFacts(
 // FactsApi FP - FactsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -126339,7 +126366,7 @@ export async function FactsApiAxiosParamCreator_SearchEntitiesAggregatedFacts(
 // FactsApi FP - FactsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -126516,7 +126543,7 @@ export async function FactsApi_GetEntityFacts(
 // FactsApi Api FP
 /**
  * 
- * @summary Patch a Fact (beta)
+ * @summary Patch a Fact
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {FactsApiPatchEntityFactsRequest} requestParameters Request parameters.
@@ -126542,7 +126569,7 @@ export async function FactsApi_PatchEntityFacts(
 // FactsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {FactsApiSearchEntitiesAggregatedFactsRequest} requestParameters Request parameters.
@@ -126568,7 +126595,7 @@ export async function FactsApi_SearchEntitiesAggregatedFacts(
 // FactsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {FactsApiSearchEntitiesFactsRequest} requestParameters Request parameters.
@@ -126639,7 +126666,7 @@ export interface FactsApiInterface {
 
     /**
      * 
-     * @summary Patch a Fact (beta)
+     * @summary Patch a Fact
      * @param {FactsApiPatchEntityFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -126649,7 +126676,7 @@ export interface FactsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FactsApiSearchEntitiesAggregatedFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -126659,7 +126686,7 @@ export interface FactsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FactsApiSearchEntitiesFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -127076,7 +127103,7 @@ export class FactsApi extends BaseAPI implements FactsApiInterface {
 
     /**
      * 
-     * @summary Patch a Fact (beta)
+     * @summary Patch a Fact
      * @param {FactsApiPatchEntityFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -127088,7 +127115,7 @@ export class FactsApi extends BaseAPI implements FactsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FactsApiSearchEntitiesAggregatedFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -127100,7 +127127,7 @@ export class FactsApi extends BaseAPI implements FactsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FactsApiSearchEntitiesFactsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -127468,7 +127495,7 @@ export async function FilterContextApiAxiosParamCreator_PatchEntityFilterContext
 // FilterContextApi FP - FilterContextApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -127748,7 +127775,7 @@ export async function FilterContextApi_PatchEntityFilterContexts(
 // FilterContextApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {FilterContextApiSearchEntitiesFilterContextsRequest} requestParameters Request parameters.
@@ -127855,7 +127882,7 @@ export interface FilterContextApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FilterContextApiSearchEntitiesFilterContextsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -128238,7 +128265,7 @@ export class FilterContextApi extends BaseAPI implements FilterContextApiInterfa
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FilterContextApiSearchEntitiesFilterContextsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -128618,7 +128645,7 @@ export async function FilterContextControllerApiAxiosParamCreator_PatchEntityFil
 // FilterContextControllerApi FP - FilterContextControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -128898,7 +128925,7 @@ export async function FilterContextControllerApi_PatchEntityFilterContexts(
 // FilterContextControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {FilterContextControllerApiSearchEntitiesFilterContextsRequest} requestParameters Request parameters.
@@ -129005,7 +129032,7 @@ export interface FilterContextControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FilterContextControllerApiSearchEntitiesFilterContextsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -129388,7 +129415,7 @@ export class FilterContextControllerApi extends BaseAPI implements FilterContext
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FilterContextControllerApiSearchEntitiesFilterContextsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -129758,7 +129785,7 @@ export async function FilterViewControllerApiAxiosParamCreator_PatchEntityFilter
 // FilterViewControllerApi FP - FilterViewControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -130038,7 +130065,7 @@ export async function FilterViewControllerApi_PatchEntityFilterViews(
 // FilterViewControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {FilterViewControllerApiSearchEntitiesFilterViewsRequest} requestParameters Request parameters.
@@ -130145,7 +130172,7 @@ export interface FilterViewControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FilterViewControllerApiSearchEntitiesFilterViewsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -130514,7 +130541,7 @@ export class FilterViewControllerApi extends BaseAPI implements FilterViewContro
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FilterViewControllerApiSearchEntitiesFilterViewsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -130934,7 +130961,7 @@ export async function FilterViewsApiAxiosParamCreator_PatchEntityFilterViews(
 // FilterViewsApi FP - FilterViewsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -131302,7 +131329,7 @@ export async function FilterViewsApi_PatchEntityFilterViews(
 // FilterViewsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {FilterViewsApiSearchEntitiesFilterViewsRequest} requestParameters Request parameters.
@@ -131445,7 +131472,7 @@ export interface FilterViewsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FilterViewsApiSearchEntitiesFilterViewsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -131878,7 +131905,7 @@ export class FilterViewsApi extends BaseAPI implements FilterViewsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {FilterViewsApiSearchEntitiesFilterViewsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -138907,7 +138934,7 @@ export async function KnowledgeRecommendationControllerApiAxiosParamCreator_Patc
 // KnowledgeRecommendationControllerApi FP - KnowledgeRecommendationControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -139187,7 +139214,7 @@ export async function KnowledgeRecommendationControllerApi_PatchEntityKnowledgeR
 // KnowledgeRecommendationControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {KnowledgeRecommendationControllerApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
@@ -139294,7 +139321,7 @@ export interface KnowledgeRecommendationControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {KnowledgeRecommendationControllerApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -139677,7 +139704,7 @@ export class KnowledgeRecommendationControllerApi extends BaseAPI implements Kno
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {KnowledgeRecommendationControllerApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -140057,7 +140084,7 @@ export async function KnowledgeRecommendationsApiAxiosParamCreator_PatchEntityKn
 // KnowledgeRecommendationsApi FP - KnowledgeRecommendationsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -140337,7 +140364,7 @@ export async function KnowledgeRecommendationsApi_PatchEntityKnowledgeRecommenda
 // KnowledgeRecommendationsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
@@ -140444,7 +140471,7 @@ export interface KnowledgeRecommendationsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -140827,7 +140854,7 @@ export class KnowledgeRecommendationsApi extends BaseAPI implements KnowledgeRec
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {KnowledgeRecommendationsApiSearchEntitiesKnowledgeRecommendationsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -142715,7 +142742,7 @@ export async function LabelControllerApiAxiosParamCreator_GetEntityLabels(
 // LabelControllerApi FP - LabelControllerApiAxiosParamCreator
 /**
  * 
- * @summary Patch a Label (beta)
+ * @summary Patch a Label
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiLabelPatchDocument} jsonApiLabelPatchDocument 
@@ -142792,7 +142819,7 @@ export async function LabelControllerApiAxiosParamCreator_PatchEntityLabels(
 // LabelControllerApi FP - LabelControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -142917,7 +142944,7 @@ export async function LabelControllerApi_GetEntityLabels(
 // LabelControllerApi Api FP
 /**
  * 
- * @summary Patch a Label (beta)
+ * @summary Patch a Label
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {LabelControllerApiPatchEntityLabelsRequest} requestParameters Request parameters.
@@ -142943,7 +142970,7 @@ export async function LabelControllerApi_PatchEntityLabels(
 // LabelControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {LabelControllerApiSearchEntitiesLabelsRequest} requestParameters Request parameters.
@@ -142994,7 +143021,7 @@ export interface LabelControllerApiInterface {
 
     /**
      * 
-     * @summary Patch a Label (beta)
+     * @summary Patch a Label
      * @param {LabelControllerApiPatchEntityLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -143004,7 +143031,7 @@ export interface LabelControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {LabelControllerApiSearchEntitiesLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -143243,7 +143270,7 @@ export class LabelControllerApi extends BaseAPI implements LabelControllerApiInt
 
     /**
      * 
-     * @summary Patch a Label (beta)
+     * @summary Patch a Label
      * @param {LabelControllerApiPatchEntityLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -143255,7 +143282,7 @@ export class LabelControllerApi extends BaseAPI implements LabelControllerApiInt
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {LabelControllerApiSearchEntitiesLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -143424,7 +143451,7 @@ export async function LabelsApiAxiosParamCreator_GetEntityLabels(
 // LabelsApi FP - LabelsApiAxiosParamCreator
 /**
  * 
- * @summary Patch a Label (beta)
+ * @summary Patch a Label
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {JsonApiLabelPatchDocument} jsonApiLabelPatchDocument 
@@ -143501,7 +143528,7 @@ export async function LabelsApiAxiosParamCreator_PatchEntityLabels(
 // LabelsApi FP - LabelsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -143626,7 +143653,7 @@ export async function LabelsApi_GetEntityLabels(
 // LabelsApi Api FP
 /**
  * 
- * @summary Patch a Label (beta)
+ * @summary Patch a Label
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {LabelsApiPatchEntityLabelsRequest} requestParameters Request parameters.
@@ -143652,7 +143679,7 @@ export async function LabelsApi_PatchEntityLabels(
 // LabelsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {LabelsApiSearchEntitiesLabelsRequest} requestParameters Request parameters.
@@ -143703,7 +143730,7 @@ export interface LabelsApiInterface {
 
     /**
      * 
-     * @summary Patch a Label (beta)
+     * @summary Patch a Label
      * @param {LabelsApiPatchEntityLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -143713,7 +143740,7 @@ export interface LabelsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {LabelsApiSearchEntitiesLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -143952,7 +143979,7 @@ export class LabelsApi extends BaseAPI implements LabelsApiInterface {
 
     /**
      * 
-     * @summary Patch a Label (beta)
+     * @summary Patch a Label
      * @param {LabelsApiPatchEntityLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -143964,7 +143991,7 @@ export class LabelsApi extends BaseAPI implements LabelsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {LabelsApiSearchEntitiesLabelsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -150447,8 +150474,8 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationI
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
- * @summary (BETA) Languages with translations in the organization.
+ * Lists the languages that have at least one translation, separately for each kind of translation.
+ * @summary Languages with translations in the organization.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
@@ -150488,8 +150515,8 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationS
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
- * @summary (BETA) Languages used in the organization.
+ * Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
+ * @summary Languages used in the organization.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
@@ -150529,8 +150556,8 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Users who set a language themselves.
+ * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Users who set a language themselves.
  * @param {string} [value] Language tag that the user sets.
  * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
@@ -150600,8 +150627,8 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Workspaces that use a language.
+ * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Workspaces that use a language.
  * @param {string} [value] Language tag that the workspace gets.
  * @param {string} [name] Filter by workspace name. Note that the filter is case insensitive.
  * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
@@ -150716,10 +150743,10 @@ export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationIssu
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
- * @summary (BETA) Languages with translations in the workspace.
+ * Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
+ * @summary Languages with translations in the workspace.
  * @param {string} workspaceId 
- * @param {boolean} [includeCoverage] Adds translation counts for the workspace and each parent, root first.
+ * @param {boolean} [includeCoverage] (BETA) Adds translation counts for the workspace and each parent, root first.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
@@ -150766,8 +150793,8 @@ export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationStat
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
- * @summary (BETA) Languages used in the workspace.
+ * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * @summary Languages used in the workspace.
  * @param {string} workspaceId 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
@@ -150811,8 +150838,8 @@ export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsag
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Workspace members who get a language.
+ * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Workspace members who get a language.
  * @param {string} workspaceId 
  * @param {string} [value] Language tag that the user gets.
  * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
@@ -150938,8 +150965,8 @@ export async function LocalizationApi_OrganizationLocalizationIssues(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
- * @summary (BETA) Languages with translations in the organization.
+ * Lists the languages that have at least one translation, separately for each kind of translation.
+ * @summary Languages with translations in the organization.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {*} [options] Override http request option.
@@ -150963,8 +150990,8 @@ export async function LocalizationApi_OrganizationLocalizationStatistics(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
- * @summary (BETA) Languages used in the organization.
+ * Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
+ * @summary Languages used in the organization.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {*} [options] Override http request option.
@@ -150988,8 +151015,8 @@ export async function LocalizationApi_OrganizationLocalizationUsage(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Users who set a language themselves.
+ * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Users who set a language themselves.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {LocalizationApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
@@ -151014,8 +151041,8 @@ export async function LocalizationApi_OrganizationLocalizationUsageUsers(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Workspaces that use a language.
+ * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Workspaces that use a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {LocalizationApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
@@ -151066,8 +151093,8 @@ export async function LocalizationApi_WorkspaceLocalizationIssues(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
- * @summary (BETA) Languages with translations in the workspace.
+ * Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
+ * @summary Languages with translations in the workspace.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {LocalizationApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
@@ -151092,8 +151119,8 @@ export async function LocalizationApi_WorkspaceLocalizationStatistics(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
- * @summary (BETA) Languages used in the workspace.
+ * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * @summary Languages used in the workspace.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {LocalizationApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
@@ -151118,8 +151145,8 @@ export async function LocalizationApi_WorkspaceLocalizationUsage(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
- * @summary (BETA) Workspace members who get a language.
+ * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * @summary Workspace members who get a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {LocalizationApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
@@ -151168,8 +151195,8 @@ export interface LocalizationApiInterface {
     organizationLocalizationIssues(options?: AxiosRequestConfig): AxiosPromise<LocalizationIssues>;
 
     /**
-     * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
-     * @summary (BETA) Languages with translations in the organization.
+     * Lists the languages that have at least one translation, separately for each kind of translation.
+     * @summary Languages with translations in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LocalizationApiInterface
@@ -151177,8 +151204,8 @@ export interface LocalizationApiInterface {
     organizationLocalizationStatistics(options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
 
     /**
-     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
-     * @summary (BETA) Languages used in the organization.
+     * Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
+     * @summary Languages used in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LocalizationApiInterface
@@ -151186,8 +151213,8 @@ export interface LocalizationApiInterface {
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Users who set a language themselves.
+     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Users who set a language themselves.
      * @param {LocalizationApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -151196,8 +151223,8 @@ export interface LocalizationApiInterface {
     organizationLocalizationUsageUsers(requestParameters: LocalizationApiOrganizationLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
 
     /**
-     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Workspaces that use a language.
+     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Workspaces that use a language.
      * @param {LocalizationApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -151216,8 +151243,8 @@ export interface LocalizationApiInterface {
     workspaceLocalizationIssues(requestParameters: LocalizationApiWorkspaceLocalizationIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationIssues>;
 
     /**
-     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
-     * @summary (BETA) Languages with translations in the workspace.
+     * Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
+     * @summary Languages with translations in the workspace.
      * @param {LocalizationApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -151226,8 +151253,8 @@ export interface LocalizationApiInterface {
     workspaceLocalizationStatistics(requestParameters: LocalizationApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
 
     /**
-     * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
-     * @summary (BETA) Languages used in the workspace.
+     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * @summary Languages used in the workspace.
      * @param {LocalizationApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -151236,8 +151263,8 @@ export interface LocalizationApiInterface {
     workspaceLocalizationUsage(requestParameters: LocalizationApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
 
     /**
-     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Workspace members who get a language.
+     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Workspace members who get a language.
      * @param {LocalizationApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -151415,7 +151442,7 @@ export interface LocalizationApiWorkspaceLocalizationStatisticsRequest {
     readonly workspaceId: string
 
     /**
-     * Adds translation counts for the workspace and each parent, root first.
+     * (BETA) Adds translation counts for the workspace and each parent, root first.
      * @type {boolean}
      * @memberof LocalizationApiWorkspaceLocalizationStatistics
      */
@@ -151523,8 +151550,8 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Lists the languages that have at least one translation, separately for each kind of translation.
-     * @summary (BETA) Languages with translations in the organization.
+     * Lists the languages that have at least one translation, separately for each kind of translation.
+     * @summary Languages with translations in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LocalizationApi
@@ -151534,8 +151561,8 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
-     * @summary (BETA) Languages used in the organization.
+     * Counts workspaces and users per language of the display, metadata and data language settings. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves count. `defaults` holds the value a workspace gets when it and its parents set nothing.
+     * @summary Languages used in the organization.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LocalizationApi
@@ -151545,8 +151572,8 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Users who set a language themselves.
+     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Users who set a language themselves.
      * @param {LocalizationApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -151557,8 +151584,8 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Workspaces that use a language.
+     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Workspaces that use a language.
      * @param {LocalizationApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -151581,8 +151608,8 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
-     * @summary (BETA) Languages with translations in the workspace.
+     * Lists the languages that have at least one translation in the workspace or its parent workspaces. Each kind of translation has its own list. With includeCoverage=true, it also counts the translated metadata texts of the workspace and each parent.
+     * @summary Languages with translations in the workspace.
      * @param {LocalizationApiWorkspaceLocalizationStatisticsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -151593,8 +151620,8 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
-     * @summary (BETA) Languages used in the workspace.
+     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * @summary Languages used in the workspace.
      * @param {LocalizationApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -151605,8 +151632,8 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
-     * @summary (BETA) Workspace members who get a language.
+     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * @summary Workspace members who get a language.
      * @param {LocalizationApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -152361,7 +152388,7 @@ export async function MemoryItemControllerApiAxiosParamCreator_PatchEntityMemory
 // MemoryItemControllerApi FP - MemoryItemControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -152641,7 +152668,7 @@ export async function MemoryItemControllerApi_PatchEntityMemoryItems(
 // MemoryItemControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {MemoryItemControllerApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
@@ -152748,7 +152775,7 @@ export interface MemoryItemControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {MemoryItemControllerApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -153131,7 +153158,7 @@ export class MemoryItemControllerApi extends BaseAPI implements MemoryItemContro
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {MemoryItemControllerApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -153819,7 +153846,7 @@ export async function MemoryItemsApiAxiosParamCreator_PatchEntityOrgMemoryItems(
 // MemoryItemsApi FP - MemoryItemsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -154302,7 +154329,7 @@ export async function MemoryItemsApi_PatchEntityOrgMemoryItems(
 // MemoryItemsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {MemoryItemsApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
@@ -154485,7 +154512,7 @@ export interface MemoryItemsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {MemoryItemsApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -155120,7 +155147,7 @@ export class MemoryItemsApi extends BaseAPI implements MemoryItemsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {MemoryItemsApiSearchEntitiesMemoryItemsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -155616,7 +155643,7 @@ export async function MetricControllerApiAxiosParamCreator_PatchEntityMetrics(
 // MetricControllerApi FP - MetricControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -155896,7 +155923,7 @@ export async function MetricControllerApi_PatchEntityMetrics(
 // MetricControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {MetricControllerApiSearchEntitiesMetricsRequest} requestParameters Request parameters.
@@ -156003,7 +156030,7 @@ export interface MetricControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {MetricControllerApiSearchEntitiesMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -156386,7 +156413,7 @@ export class MetricControllerApi extends BaseAPI implements MetricControllerApiI
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {MetricControllerApiSearchEntitiesMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -156766,7 +156793,7 @@ export async function MetricsApiAxiosParamCreator_PatchEntityMetrics(
 // MetricsApi FP - MetricsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -157046,7 +157073,7 @@ export async function MetricsApi_PatchEntityMetrics(
 // MetricsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {MetricsApiSearchEntitiesMetricsRequest} requestParameters Request parameters.
@@ -157153,7 +157180,7 @@ export interface MetricsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {MetricsApiSearchEntitiesMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -157536,7 +157563,7 @@ export class MetricsApi extends BaseAPI implements MetricsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {MetricsApiSearchEntitiesMetricsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -166855,7 +166882,7 @@ export async function ParameterControllerApiAxiosParamCreator_PatchEntityParamet
 // ParameterControllerApi FP - ParameterControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -167135,7 +167162,7 @@ export async function ParameterControllerApi_PatchEntityParameters(
 // ParameterControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ParameterControllerApiSearchEntitiesParametersRequest} requestParameters Request parameters.
@@ -167242,7 +167269,7 @@ export interface ParameterControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ParameterControllerApiSearchEntitiesParametersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -167625,7 +167652,7 @@ export class ParameterControllerApi extends BaseAPI implements ParameterControll
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ParameterControllerApiSearchEntitiesParametersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -168005,7 +168032,7 @@ export async function ParametersApiAxiosParamCreator_PatchEntityParameters(
 // ParametersApi FP - ParametersApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -168285,7 +168312,7 @@ export async function ParametersApi_PatchEntityParameters(
 // ParametersApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {ParametersApiSearchEntitiesParametersRequest} requestParameters Request parameters.
@@ -168392,7 +168419,7 @@ export interface ParametersApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ParametersApiSearchEntitiesParametersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -168775,7 +168802,7 @@ export class ParametersApi extends BaseAPI implements ParametersApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {ParametersApiSearchEntitiesParametersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -168900,7 +168927,7 @@ export async function PermissionsApiAxiosParamCreator_AvailableAssignees(
 // PermissionsApi FP - PermissionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Get Computed Attribute Permissions
+ * @summary Get Computed Attribute Permissions
  * @param {string} workspaceId 
  * @param {string} computedAttributeId 
  * @param {*} [options] Override http request option.
@@ -169338,7 +169365,7 @@ export async function PermissionsApiAxiosParamCreator_ManageAttributePermissions
 // PermissionsApi FP - PermissionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Manage Permissions for a Computed Attribute
+ * @summary Manage Permissions for a Computed Attribute
  * @param {string} workspaceId 
  * @param {string} computedAttributeId 
  * @param {Array<ManageComputedAttributePermissionsRequestInner>} manageComputedAttributePermissionsRequestInner 
@@ -169664,7 +169691,7 @@ export async function PermissionsApiAxiosParamCreator_ManageLabelPermissions(
 // PermissionsApi FP - PermissionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Manage Permissions for a Metric
+ * @summary Manage Permissions for a Metric
  * @param {string} workspaceId 
  * @param {string} metricId 
  * @param {Array<ManageMetricPermissionsRequestInner>} manageMetricPermissionsRequestInner 
@@ -169788,7 +169815,7 @@ export async function PermissionsApiAxiosParamCreator_ManageOrganizationPermissi
 // PermissionsApi FP - PermissionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Manage Permissions for a Visualization
+ * @summary Manage Permissions for a Visualization
  * @param {string} workspaceId 
  * @param {string} visualizationObjectId 
  * @param {Array<ManageVisualizationPermissionsRequestInner>} manageVisualizationPermissionsRequestInner 
@@ -169916,7 +169943,7 @@ export async function PermissionsApiAxiosParamCreator_ManageWorkspacePermissions
 // PermissionsApi FP - PermissionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Get Metric Permissions
+ * @summary Get Metric Permissions
  * @param {string} workspaceId 
  * @param {string} metricId 
  * @param {*} [options] Override http request option.
@@ -170209,7 +170236,7 @@ export async function PermissionsApiAxiosParamCreator_SetWorkspacePermissions(
 // PermissionsApi FP - PermissionsApiAxiosParamCreator
 /**
  * 
- * @summary (BETA) Get Visualization Permissions
+ * @summary Get Visualization Permissions
  * @param {string} workspaceId 
  * @param {string} visualizationObjectId 
  * @param {*} [options] Override http request option.
@@ -170311,7 +170338,7 @@ export async function PermissionsApi_AvailableAssignees(
 // PermissionsApi Api FP
 /**
  * 
- * @summary (BETA) Get Computed Attribute Permissions
+ * @summary Get Computed Attribute Permissions
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {PermissionsApiComputedAttributePermissionsRequest} requestParameters Request parameters.
@@ -170544,7 +170571,7 @@ export async function PermissionsApi_ManageAttributePermissions(
 // PermissionsApi Api FP
 /**
  * 
- * @summary (BETA) Manage Permissions for a Computed Attribute
+ * @summary Manage Permissions for a Computed Attribute
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {PermissionsApiManageComputedAttributePermissionsRequest} requestParameters Request parameters.
@@ -170674,7 +170701,7 @@ export async function PermissionsApi_ManageLabelPermissions(
 // PermissionsApi Api FP
 /**
  * 
- * @summary (BETA) Manage Permissions for a Metric
+ * @summary Manage Permissions for a Metric
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {PermissionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
@@ -170726,7 +170753,7 @@ export async function PermissionsApi_ManageOrganizationPermissions(
 // PermissionsApi Api FP
 /**
  * 
- * @summary (BETA) Manage Permissions for a Visualization
+ * @summary Manage Permissions for a Visualization
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {PermissionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
@@ -170778,7 +170805,7 @@ export async function PermissionsApi_ManageWorkspacePermissions(
 // PermissionsApi Api FP
 /**
  * 
- * @summary (BETA) Get Metric Permissions
+ * @summary Get Metric Permissions
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {PermissionsApiMetricPermissionsRequest} requestParameters Request parameters.
@@ -170908,7 +170935,7 @@ export async function PermissionsApi_SetWorkspacePermissions(
 // PermissionsApi Api FP
 /**
  * 
- * @summary (BETA) Get Visualization Permissions
+ * @summary Get Visualization Permissions
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {PermissionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
@@ -170959,7 +170986,7 @@ export interface PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Computed Attribute Permissions
+     * @summary Get Computed Attribute Permissions
      * @param {PermissionsApiComputedAttributePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -171048,7 +171075,7 @@ export interface PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Computed Attribute
+     * @summary Manage Permissions for a Computed Attribute
      * @param {PermissionsApiManageComputedAttributePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -171098,7 +171125,7 @@ export interface PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Metric
+     * @summary Manage Permissions for a Metric
      * @param {PermissionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -171118,7 +171145,7 @@ export interface PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Visualization
+     * @summary Manage Permissions for a Visualization
      * @param {PermissionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -171138,7 +171165,7 @@ export interface PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Metric Permissions
+     * @summary Get Metric Permissions
      * @param {PermissionsApiMetricPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -171188,7 +171215,7 @@ export interface PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Visualization Permissions
+     * @summary Get Visualization Permissions
      * @param {PermissionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -171770,7 +171797,7 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Computed Attribute Permissions
+     * @summary Get Computed Attribute Permissions
      * @param {PermissionsApiComputedAttributePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -171877,7 +171904,7 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Computed Attribute
+     * @summary Manage Permissions for a Computed Attribute
      * @param {PermissionsApiManageComputedAttributePermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -171937,7 +171964,7 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Metric
+     * @summary Manage Permissions for a Metric
      * @param {PermissionsApiManageMetricPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -171961,7 +171988,7 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Manage Permissions for a Visualization
+     * @summary Manage Permissions for a Visualization
      * @param {PermissionsApiManageVisualizationPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -171985,7 +172012,7 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Metric Permissions
+     * @summary Get Metric Permissions
      * @param {PermissionsApiMetricPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -172045,7 +172072,7 @@ export class PermissionsApi extends BaseAPI implements PermissionsApiInterface {
 
     /**
      * 
-     * @summary (BETA) Get Visualization Permissions
+     * @summary Get Visualization Permissions
      * @param {PermissionsApiVisualizationPermissionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -172413,7 +172440,7 @@ export async function PluginsApiAxiosParamCreator_PatchEntityDashboardPlugins(
 // PluginsApi FP - PluginsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -172693,7 +172720,7 @@ export async function PluginsApi_PatchEntityDashboardPlugins(
 // PluginsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {PluginsApiSearchEntitiesDashboardPluginsRequest} requestParameters Request parameters.
@@ -172800,7 +172827,7 @@ export interface PluginsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {PluginsApiSearchEntitiesDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -173183,7 +173210,7 @@ export class PluginsApi extends BaseAPI implements PluginsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {PluginsApiSearchEntitiesDashboardPluginsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -185855,7 +185882,7 @@ export async function UserDataFilterControllerApiAxiosParamCreator_PatchEntityUs
 // UserDataFilterControllerApi FP - UserDataFilterControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -186135,7 +186162,7 @@ export async function UserDataFilterControllerApi_PatchEntityUserDataFilters(
 // UserDataFilterControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {UserDataFilterControllerApiSearchEntitiesUserDataFiltersRequest} requestParameters Request parameters.
@@ -186242,7 +186269,7 @@ export interface UserDataFilterControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {UserDataFilterControllerApiSearchEntitiesUserDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -186625,7 +186652,7 @@ export class UserDataFilterControllerApi extends BaseAPI implements UserDataFilt
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {UserDataFilterControllerApiSearchEntitiesUserDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -195051,7 +195078,7 @@ export async function VisualizationObjectApiAxiosParamCreator_PatchEntityVisuali
 // VisualizationObjectApi FP - VisualizationObjectApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -195331,7 +195358,7 @@ export async function VisualizationObjectApi_PatchEntityVisualizationObjects(
 // VisualizationObjectApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {VisualizationObjectApiSearchEntitiesVisualizationObjectsRequest} requestParameters Request parameters.
@@ -195438,7 +195465,7 @@ export interface VisualizationObjectApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {VisualizationObjectApiSearchEntitiesVisualizationObjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -195821,7 +195848,7 @@ export class VisualizationObjectApi extends BaseAPI implements VisualizationObje
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {VisualizationObjectApiSearchEntitiesVisualizationObjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -196201,7 +196228,7 @@ export async function VisualizationObjectControllerApiAxiosParamCreator_PatchEnt
 // VisualizationObjectControllerApi FP - VisualizationObjectControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -196481,7 +196508,7 @@ export async function VisualizationObjectControllerApi_PatchEntityVisualizationO
 // VisualizationObjectControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {VisualizationObjectControllerApiSearchEntitiesVisualizationObjectsRequest} requestParameters Request parameters.
@@ -196588,7 +196615,7 @@ export interface VisualizationObjectControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {VisualizationObjectControllerApiSearchEntitiesVisualizationObjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -196971,7 +196998,7 @@ export class VisualizationObjectControllerApi extends BaseAPI implements Visuali
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {VisualizationObjectControllerApiSearchEntitiesVisualizationObjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -199179,7 +199206,7 @@ export async function WorkspaceDataFilterControllerApiAxiosParamCreator_PatchEnt
 // WorkspaceDataFilterControllerApi FP - WorkspaceDataFilterControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -199459,7 +199486,7 @@ export async function WorkspaceDataFilterControllerApi_PatchEntityWorkspaceDataF
 // WorkspaceDataFilterControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {WorkspaceDataFilterControllerApiSearchEntitiesWorkspaceDataFiltersRequest} requestParameters Request parameters.
@@ -199566,7 +199593,7 @@ export interface WorkspaceDataFilterControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {WorkspaceDataFilterControllerApiSearchEntitiesWorkspaceDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -199949,7 +199976,7 @@ export class WorkspaceDataFilterControllerApi extends BaseAPI implements Workspa
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {WorkspaceDataFilterControllerApiSearchEntitiesWorkspaceDataFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -200329,7 +200356,7 @@ export async function WorkspaceDataFilterSettingControllerApiAxiosParamCreator_P
 // WorkspaceDataFilterSettingControllerApi FP - WorkspaceDataFilterSettingControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -200609,7 +200636,7 @@ export async function WorkspaceDataFilterSettingControllerApi_PatchEntityWorkspa
 // WorkspaceDataFilterSettingControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {WorkspaceDataFilterSettingControllerApiSearchEntitiesWorkspaceDataFilterSettingsRequest} requestParameters Request parameters.
@@ -200716,7 +200743,7 @@ export interface WorkspaceDataFilterSettingControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {WorkspaceDataFilterSettingControllerApiSearchEntitiesWorkspaceDataFilterSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -201099,7 +201126,7 @@ export class WorkspaceDataFilterSettingControllerApi extends BaseAPI implements 
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {WorkspaceDataFilterSettingControllerApiSearchEntitiesWorkspaceDataFilterSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -202394,7 +202421,7 @@ export async function WorkspaceSettingControllerApiAxiosParamCreator_PatchEntity
 // WorkspaceSettingControllerApi FP - WorkspaceSettingControllerApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -202669,7 +202696,7 @@ export async function WorkspaceSettingControllerApi_PatchEntityWorkspaceSettings
 // WorkspaceSettingControllerApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {WorkspaceSettingControllerApiSearchEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
@@ -202776,7 +202803,7 @@ export interface WorkspaceSettingControllerApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {WorkspaceSettingControllerApiSearchEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -203124,7 +203151,7 @@ export class WorkspaceSettingControllerApi extends BaseAPI implements WorkspaceS
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {WorkspaceSettingControllerApiSearchEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -206141,7 +206168,7 @@ export async function WorkspacesSettingsApiAxiosParamCreator_PatchEntityWorkspac
 // WorkspacesSettingsApi FP - WorkspacesSettingsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -206213,7 +206240,7 @@ export async function WorkspacesSettingsApiAxiosParamCreator_SearchEntitiesCusto
 // WorkspacesSettingsApi FP - WorkspacesSettingsApiAxiosParamCreator
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {string} workspaceId 
  * @param {EntitySearchBody} entitySearchBody Search request body with filter, pagination, and sorting options
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
@@ -206807,7 +206834,7 @@ export async function WorkspacesSettingsApi_PatchEntityWorkspaceSettings(
 // WorkspacesSettingsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {WorkspacesSettingsApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
@@ -206833,7 +206860,7 @@ export async function WorkspacesSettingsApi_SearchEntitiesCustomApplicationSetti
 // WorkspacesSettingsApi Api FP
 /**
  * 
- * @summary The search endpoint (beta)
+ * @summary The search endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {WorkspacesSettingsApiSearchEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
@@ -207068,7 +207095,7 @@ export interface WorkspacesSettingsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {WorkspacesSettingsApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -207078,7 +207105,7 @@ export interface WorkspacesSettingsApiInterface {
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {WorkspacesSettingsApiSearchEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -207824,7 +207851,7 @@ export class WorkspacesSettingsApi extends BaseAPI implements WorkspacesSettings
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {WorkspacesSettingsApiSearchEntitiesCustomApplicationSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -207836,7 +207863,7 @@ export class WorkspacesSettingsApi extends BaseAPI implements WorkspacesSettings
 
     /**
      * 
-     * @summary The search endpoint (beta)
+     * @summary The search endpoint
      * @param {WorkspacesSettingsApiSearchEntitiesWorkspaceSettingsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

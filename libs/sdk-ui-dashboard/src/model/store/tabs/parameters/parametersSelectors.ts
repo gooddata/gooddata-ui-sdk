@@ -7,11 +7,11 @@ import {
     type IDashboardParameter,
     type IDashboardTab,
     type IInsightParameterValue,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
-    type ParameterType,
     type ParameterValue,
+    type ScalarParameterType,
     areObjRefsEqual,
     insightRef,
     isInsightWidget,
@@ -52,13 +52,13 @@ import {
     collectParameterReconciliations,
     collectRootParameterRefs,
     collectWidgetFilterParameterRoots,
+    collectWidgetParameters,
     computeParameterResetTargets,
     computeParameterResetValue,
     displayOverride,
     hydrateParameterEntry,
     isGatedStringEntry,
     resolveEffectiveParameterValuesForRefs,
-    resolveParameterTitle,
     resolveParameterValues,
     smartPersistResolvedEntry,
     ungatedInsightParameterValues,
@@ -77,7 +77,7 @@ const EMPTY_WIDGET_PARAMETER_VALUES: IWidgetParameterValue[] = [];
 const EMPTY_TABS: IDashboardTab[] = [];
 const EMPTY_RESET_TARGETS: IInsightParameterValue[] = [];
 const EMPTY_RECONCILIATIONS: IParameterReconciliationEntry[] = [];
-const EMPTY_WORKSPACE_PARAMETERS_BY_REF: Map<string, IParameterMetadataObject> = new Map();
+const EMPTY_WORKSPACE_PARAMETERS_BY_REF: Map<string, IScalarParameterMetadataObject> = new Map();
 
 const selectParametersState = createSelector(
     selectActiveTab,
@@ -92,10 +92,10 @@ const selectPersistedDashboardTabsRaw: DashboardSelector<IDashboardTab[]> = (sta
 
 // Built once and shared by reference, so the per-widget execution selectors don't each
 // reconstruct an identical catalog-by-ref map.
-const selectWorkspaceParametersByRef: DashboardSelector<Map<string, IParameterMetadataObject>> =
+const selectWorkspaceParametersByRef: DashboardSelector<Map<string, IScalarParameterMetadataObject>> =
     createSelector(selectCatalogParameters, buildWorkspaceParametersByRef);
 
-const selectLoadedWorkspaceParametersByRef: DashboardSelector<Map<string, IParameterMetadataObject>> =
+const selectLoadedWorkspaceParametersByRef: DashboardSelector<Map<string, IScalarParameterMetadataObject>> =
     createSelector(selectWorkspaceParametersByRef, selectCatalogParametersIsLoaded, (byRef, isLoaded) =>
         isLoaded ? byRef : EMPTY_WORKSPACE_PARAMETERS_BY_REF,
     );
@@ -486,7 +486,7 @@ interface IWidgetParameterContext {
     // ignores no filter, and thus takes every filter of its tab.
     filterRoots: IdentifierRef[];
     // Workspace catalog keyed by ref, so out-of-range runtime values recover to the default at execution.
-    workspaceParameterByRef: Map<string, IParameterMetadataObject>;
+    workspaceParameterByRef: Map<string, IScalarParameterMetadataObject>;
     // The insight the widget executes; undefined for a host that executes none, such as a rich text
     // widget or a section header.
     widgetInsightRef: ObjRef | undefined;
@@ -642,22 +642,23 @@ export const selectReferencedInsightParameterValuesForWidget: (
 );
 
 /**
- * A parameter of the widget's tab and the value that a drill to URL puts in place of its
+ * A parameter of the widget's tab or insight and the value that a drill to URL puts in place of its
  * `{parameter(id)}` placeholder.
  *
  * @internal
  */
 export interface IWidgetParameterValue {
     identifier: string;
-    parameterType: ParameterType;
+    parameterType: ScalarParameterType;
     title: string;
     value: ParameterValue | undefined;
 }
 
 /**
- * Every ungated parameter of the widget's tab, all modes, with its drill to URL value: the dashboard
- * `runtimeOverride`, else the insight value, else the workspace default. Returns `[]` when
- * `enableParameters` is off.
+ * Every ungated parameter of the widget's tab, all modes, then every ungated parameter that the
+ * widget's insight saves, the tab does not have and the workspace catalog has. Each comes with its
+ * drill to URL value: the dashboard `runtimeOverride`, else the insight value, else the workspace
+ * default. Returns `[]` when `enableParameters` is off.
  *
  * @internal
  */
@@ -667,22 +668,19 @@ export const selectWidgetParameterValues: (ref: ObjRef) => DashboardSelector<IWi
             if (!context) {
                 return EMPTY_WIDGET_PARAMETER_VALUES;
             }
-            const { entries, workspaceParameterByRef, widgetInsightRef } = context;
-            const insight = widgetInsightRef ? insights.get(widgetInsightRef) : undefined;
+            const insight = context.widgetInsightRef ? insights.get(context.widgetInsightRef) : undefined;
+            const parameters = collectWidgetParameters(context, insight);
             const values = resolveParameterValues(
                 context,
-                entries.map((entry) => entry.parameter.ref),
+                parameters.map(({ ref }) => ref),
                 insight,
             );
-            return entries.map(({ parameter }): IWidgetParameterValue => {
-                const { identifier } = parameter.ref;
-                return {
-                    identifier,
-                    parameterType: parameter.parameterType,
-                    title: resolveParameterTitle(parameter, workspaceParameterByRef.get(identifier)),
-                    value: values.get(identifier),
-                };
-            });
+            return parameters.map(({ ref, parameterType, title }): IWidgetParameterValue => ({
+                identifier: ref.identifier,
+                parameterType,
+                title,
+                value: values.get(ref.identifier),
+            }));
         }),
     );
 

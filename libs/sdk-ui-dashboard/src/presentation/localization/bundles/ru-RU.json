@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "Добавьте заголовок здесь...",
     "layout.header.add.description.placeholder": "Добавьте описание здесь...",
     "controlButtons.options.tooltip": "Дополнительные действия",
+    "controlButtons.options.widgetLabel": "Дополнительные действия для {title}",
     "controlButtons.options.back": "Назад к предыдущему шагу",
     "controlButtons.options.closeMenu": "Закрыть меню",
     "controlButtons.edit.value": "Изменить",

@@ -23,6 +23,7 @@ import { getCellId, getColumnWidth, getItemKey, getRowId, getRowLabelId } from "
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 
 export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
+    tableId,
     item,
     itemIndex,
     columns,
@@ -41,6 +42,23 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
     const { renderCellContent } = useRenderCellContent<T>({ isLarge: isLarge ?? false });
     const isRowFocused = isFocused && focusedColumnIndex === undefined;
     const tooltipId = useId();
+    const itemId = getItemKey(item);
+    const resolvedColumns = columns.map((column) => ({
+        column,
+        multiLineTextContent:
+            column.renderButton || column.renderMenu ? undefined : column.getMultiLineTextContent?.(item),
+    }));
+    const firstColumn = columns[0];
+    const firstMultiLineTextContent = resolvedColumns[0]?.multiLineTextContent;
+    const rowLabelId =
+        firstColumn &&
+        !firstColumn.renderButton &&
+        !firstColumn.renderMenu &&
+        (firstMultiLineTextContent === undefined
+            ? firstColumn.getTextContent || firstColumn.key !== undefined
+            : firstMultiLineTextContent.length > 0)
+            ? getRowLabelId(tableId, itemIndex)
+            : undefined;
 
     const handleRowClick = useCallback(
         (e: MouseEvent<HTMLDivElement>) => {
@@ -51,9 +69,7 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
             if (target.closest('[data-id="menu-button"]')) {
                 return;
             }
-            if (item) {
-                onClick?.(item);
-            }
+            onClick?.(item);
         },
         [onClick, item],
     );
@@ -68,32 +84,33 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
             })}
             ref={isRowFocused ? (focusedElementRef as Ref<HTMLDivElement>) : undefined}
             role="row"
-            id={item ? getRowId(getItemKey(item)) : undefined}
+            id={getRowId(tableId, itemId)}
+            data-item-id={itemId}
             aria-rowindex={itemIndex + 1}
-            aria-labelledby={getRowLabelId(itemIndex)}
+            aria-labelledby={rowLabelId}
             aria-describedby={tooltip ? tooltipId : undefined}
         >
-            {hasCheckbox && item ? (
+            {hasCheckbox ? (
                 <UiAsyncTableCheckbox
                     checked={isSelected}
                     onChange={() => onSelect?.(item)}
                     ariaLabel={accessibilityConfig?.getCheckboxItemAriaLabel?.(item)}
                     isCellFocused={isFocused ? focusedColumnIndex === 0 : undefined}
                     cellRef={isFocused && focusedColumnIndex === 0 ? focusedElementRef : undefined}
-                    cellId={getCellId(getItemKey(item), 0)}
+                    cellId={getCellId(tableId, itemId, 0)}
                 />
             ) : null}
-            {columns.map((column, index) => {
+            {resolvedColumns.map(({ column, multiLineTextContent }, index) => {
                 const { bold, renderMenu, width: widthProp } = column;
                 const width = getColumnWidth(!!renderMenu, isLarge ?? false, widthProp);
                 const totalColumnIndex = index + (hasCheckbox ? 1 : 0);
                 const isCellFocused = isFocused && focusedColumnIndex === totalColumnIndex;
-                const labelId = index === 0 ? getRowLabelId(itemIndex) : undefined;
+                const labelId = index === 0 ? rowLabelId : undefined;
                 return (
                     <div
                         style={{ width }}
                         key={index}
-                        id={item ? getCellId(getItemKey(item), totalColumnIndex) : undefined}
+                        id={getCellId(tableId, itemId, totalColumnIndex)}
                         className={e("cell", {
                             bold: bold ?? false,
                             align: column.align ?? false,
@@ -101,15 +118,14 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
                         })}
                         role="gridcell"
                     >
-                        {item
-                            ? renderCellContent(
-                                  column,
-                                  labelId,
-                                  item,
-                                  focusedElementRef ?? (() => {}),
-                                  isCellFocused ?? false,
-                              )
-                            : null}
+                        {renderCellContent(
+                            column,
+                            labelId,
+                            item,
+                            focusedElementRef ?? (() => {}),
+                            isCellFocused ?? false,
+                            multiLineTextContent,
+                        )}
                     </div>
                 );
             })}
@@ -234,12 +250,12 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
             key: keyof T | undefined,
             labelId: string | undefined,
             getTextContent: ((item: T) => string | ReactNode) | undefined,
-            getMultiLineTextContent: ((item: T) => Array<string>) | undefined,
+            multiLineTextContent: string[] | undefined,
             renderSuffixIcon: ((item: T) => ReactNode) | undefined,
             isLocked: IUiAsyncTableColumn<T>["isLocked"],
         ) => {
-            if (getMultiLineTextContent) {
-                return getMultiLineTextContent(item).map((line, index) => {
+            if (multiLineTextContent !== undefined) {
+                return multiLineTextContent.map((line, index) => {
                     const isFirst = index === 0;
                     return (
                         <span className={e("text-line", { first: isFirst })} key={index}>
@@ -268,7 +284,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
             key: keyof T | undefined,
             labelId: string | undefined,
             getTextContent: ((item: T) => string | ReactNode) | undefined,
-            getMultiLineTextContent: ((item: T) => Array<string>) | undefined,
+            multiLineTextContent: string[] | undefined,
             getTextTitle: ((item: T) => string) | undefined,
             getTextHref: ((item: T) => string | undefined) | undefined,
             renderSuffixIcon: ((item: T) => ReactNode) | undefined,
@@ -282,7 +298,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                 key,
                 labelId,
                 getTextContent,
-                getMultiLineTextContent,
+                multiLineTextContent,
                 renderSuffixIcon,
                 isLocked,
             );
@@ -296,16 +312,17 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
             return (
                 <WithConditionalAnchor href={getTextHref?.(item)}>
                     <div
+                        id={typeof textContent === "string" ? labelId : undefined}
                         title={title}
                         ref={
                             isActive && isCellFocused ? (focusedElementRef as Ref<HTMLDivElement>) : undefined
                         }
                         className={e("text", {
-                            "multi-line": !!getMultiLineTextContent,
-                            color: !getMultiLineTextContent && textColor ? textColor : false,
+                            "multi-line": multiLineTextContent !== undefined,
+                            color: multiLineTextContent === undefined && textColor ? textColor : false,
                         })}
                     >
-                        {!getMultiLineTextContent && isLocked?.(item) ? <LockIcon /> : null}
+                        {multiLineTextContent === undefined && isLocked?.(item) ? <LockIcon /> : null}
                         {textContent}
                     </div>
                 </WithConditionalAnchor>
@@ -324,7 +341,6 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                 renderSuffixIcon,
                 renderBadge,
                 getTextContent,
-                getMultiLineTextContent,
                 getTextTitle,
                 getTextHref,
                 getAccessibilityConfig,
@@ -336,6 +352,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
             item: T,
             focusedElementRef: Ref<HTMLElement>,
             isCellFocused: boolean,
+            multiLineTextContent: string[] | undefined,
         ) => {
             const accessibilityConfig = getAccessibilityConfig?.(item);
 
@@ -362,7 +379,7 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                         key,
                         labelId,
                         getTextContent,
-                        getMultiLineTextContent,
+                        multiLineTextContent,
                         getTextTitle,
                         getTextHref,
                         renderSuffixIcon,
@@ -372,9 +389,9 @@ const useRenderCellContent = <T extends { id: string } | { ref: ObjRef }>({
                         isCellFocused,
                     )}
                     {renderBadge ? renderBadgeWithWrapper(renderBadge, item) : null}
-                    {getMultiLineTextContent
-                        ? null
-                        : renderSuffixIcon && renderSuffixIconWithWrapper(renderSuffixIcon, item)}
+                    {multiLineTextContent === undefined
+                        ? renderSuffixIcon && renderSuffixIconWithWrapper(renderSuffixIcon, item)
+                        : null}
                 </>
             );
         },

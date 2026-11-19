@@ -5,7 +5,7 @@ import { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
-import { type IParameterMetadataObject } from "@gooddata/sdk-model";
+import { type IScalarParameterMetadataObject } from "@gooddata/sdk-model";
 
 import {
     addFilter,
@@ -75,7 +75,7 @@ export function FilterBarDropdown() {
         [dispatch],
     );
     const onAddParameterFilters = useCallback(
-        (parameters: ReadonlyArray<IParameterMetadataObject>) => {
+        (parameters: ReadonlyArray<IScalarParameterMetadataObject>) => {
             dispatch(addParameterFilters(parameters));
         },
         [dispatch],

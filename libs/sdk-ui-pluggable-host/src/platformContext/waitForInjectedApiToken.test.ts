@@ -10,7 +10,8 @@ const { postEvent, setApiToken, setJwt } = vi.hoisted(() => ({
     setJwt: vi.fn(),
 }));
 
-type WaitForInjectedApiToken = typeof import("./waitForInjectedApiToken.js").waitForInjectedApiToken;
+type WaitForInjectedApiTokenModule = typeof import("./waitForInjectedApiToken.js");
+type WaitForInjectedApiToken = WaitForInjectedApiTokenModule["waitForInjectedApiToken"];
 
 const PARENT = "https://parent.example.com";
 
@@ -29,6 +30,8 @@ function setApiTokenMessage(token: string): MessageEvent {
 
 describe("waitForInjectedApiToken", () => {
     let waitForInjectedApiToken: WaitForInjectedApiToken;
+    let shouldWaitForInjectedApiToken: WaitForInjectedApiTokenModule["shouldWaitForInjectedApiToken"];
+    let resetHostBasePath: () => void;
 
     // The package shares one module registry between test files (isolate: false), so this file loads
     // its own copy with the mocks and drops it afterwards.
@@ -36,7 +39,10 @@ describe("waitForInjectedApiToken", () => {
         vi.resetModules();
         vi.doMock("@gooddata/sdk-embedding/internal", () => ({ messagingUtils: { postEvent } }));
         vi.doMock("./backend.js", () => ({ setApiToken, setJwt }));
-        ({ waitForInjectedApiToken } = await import("./waitForInjectedApiToken.js"));
+        ({ waitForInjectedApiToken, shouldWaitForInjectedApiToken } =
+            await import("./waitForInjectedApiToken.js"));
+        // This file's module copy keeps its own detected base path.
+        ({ resetHostBasePath } = await import("../loader/hostBasePath.js"));
     });
 
     afterAll(() => {
@@ -47,6 +53,32 @@ describe("waitForInjectedApiToken", () => {
 
     afterEach(() => {
         vi.clearAllMocks();
+        window.history.replaceState(null, "", "/");
+        resetHostBasePath();
+    });
+
+    it.each([
+        ["an embedded URL", "/embedded/workspace/ws1/dashboards/?apiTokenAuthentication=true", true],
+        [
+            "a prefixed embedded URL",
+            "/ext/gdcn/embedded/workspace/ws1/dashboards/?apiTokenAuthentication=true",
+            true,
+        ],
+        [
+            "a prefixed embedded URL with the flag in the hash",
+            "/ext/gdcn/embedded/workspace/ws1/dashboards/#/dashboard/d1?apiTokenAuthentication=true",
+            true,
+        ],
+        [
+            "a prefixed URL that is not embedded",
+            "/ext/gdcn/workspace/ws1/dashboards/?apiTokenAuthentication=true",
+            false,
+        ],
+        ["a prefixed embedded URL without the flag", "/ext/gdcn/embedded/workspace/ws1/dashboards/", false],
+    ])("decides whether to wait for the token on %s", (_case, url, expected) => {
+        window.history.replaceState(null, "", url);
+
+        expect(shouldWaitForInjectedApiToken()).toBe(expected);
     });
 
     it("posts listeningForApiToken around the origin gate", () => {

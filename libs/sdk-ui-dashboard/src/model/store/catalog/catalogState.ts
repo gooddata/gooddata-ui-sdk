@@ -8,7 +8,7 @@ import {
     type ICatalogFact,
     type ICatalogMeasure,
     type IDateHierarchyTemplate,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type IdentifierRef,
 } from "@gooddata/sdk-model";
 
@@ -26,7 +26,7 @@ export type CatalogParametersStatus = "uninitialized" | "loading" | "loaded" | "
  */
 export interface ICatalogParametersState {
     status: CatalogParametersStatus;
-    parameters: IParameterMetadataObject[];
+    parameters: IScalarParameterMetadataObject[];
 }
 
 /**

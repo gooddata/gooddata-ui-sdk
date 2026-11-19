@@ -11,7 +11,7 @@ import {
     type IDashboardParameter,
     type IInsight,
     type IInsightParameterValue,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
     idRef,
@@ -113,7 +113,7 @@ const topNParameter: IDashboardParameter = {
     mode: "active",
 };
 
-const topNWorkspace: IParameterMetadataObject = {
+const topNWorkspace: IScalarParameterMetadataObject = {
     type: "parameter",
     id: "topN",
     uri: "/topN",
@@ -139,7 +139,7 @@ const scenarioParameter: IDashboardParameter = {
     mode: "active",
 };
 
-const scenarioWorkspace: IParameterMetadataObject = {
+const scenarioWorkspace: IScalarParameterMetadataObject = {
     ...topNWorkspace,
     id: "scenario",
     uri: "/scenario",
@@ -165,7 +165,7 @@ function makeState(parameters: IDashboardParameterEntry[]): DashboardState {
 
 interface IFullStateOptions {
     entries: IDashboardParameterEntry[];
-    workspaceParameters?: IParameterMetadataObject[];
+    workspaceParameters?: IScalarParameterMetadataObject[];
     catalogStatus?: CatalogParametersStatus;
     persistedDashboardParameters?: IDashboardParameter[];
     enableParameters?: boolean;
@@ -740,7 +740,7 @@ describe("parameter selectors (per tab)", () => {
                 parameterType: "NUMBER",
                 mode: "active",
             };
-            const sampleWorkspace: IParameterMetadataObject = {
+            const sampleWorkspace: IScalarParameterMetadataObject = {
                 ...topNWorkspace,
                 id: "sampleSize",
                 uri: "/sampleSize",
@@ -1167,7 +1167,7 @@ describe("parameter selectors (per tab)", () => {
         });
 
         it("substitutes the workspace default for an out-of-range runtimeOverride (recovery at execution)", () => {
-            const boundedTopN: IParameterMetadataObject = {
+            const boundedTopN: IScalarParameterMetadataObject = {
                 ...topNWorkspace,
                 definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
             };
@@ -1569,7 +1569,7 @@ describe("parameter selectors (per tab)", () => {
         const widgetRef = W1_REF;
         const metricRef = idRef("m1", "measure");
         const depMapTopN = { [serializeObjRef(W1_INSIGHT_REF)]: [topNRef] };
-        const boundedTopN: IParameterMetadataObject = {
+        const boundedTopN: IScalarParameterMetadataObject = {
             ...topNWorkspace,
             definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
         };
@@ -1606,7 +1606,7 @@ describe("parameter selectors (per tab)", () => {
     });
 
     describe("selectWidgetParameterValues", () => {
-        const sampleSizeWorkspace: IParameterMetadataObject = {
+        const sampleSizeWorkspace: IScalarParameterMetadataObject = {
             ...topNWorkspace,
             id: "sampleSize",
             uri: "/sampleSize",
@@ -1642,6 +1642,105 @@ describe("parameter selectors (per tab)", () => {
                 { title: "Scenario", value: "Actual" },
             ]);
         });
+
+        it("lists a parameter saved only on the insight after the tab parameters, with its catalog title and type", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [topNWorkspace, scenarioWorkspace],
+                insights: [
+                    makeInsightWithMetric(W1_INSIGHT_REF, idRef("m1", "measure"), [
+                        { ref: scenarioRef, value: "Budget" },
+                    ]),
+                ],
+            });
+
+            expect(selectWidgetParameterValues(W1_REF)(state)).toEqual([
+                { identifier: "topN", parameterType: "NUMBER", title: "Top N", value: 25 },
+                { identifier: "scenario", parameterType: "STRING", title: "Scenario", value: "Budget" },
+            ]);
+        });
+
+        it("lists a parameter saved on both the insight and the tab once, with the chip value", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [topNWorkspace],
+                insights: [
+                    makeInsightWithMetric(W1_INSIGHT_REF, idRef("m1", "measure"), [
+                        { ref: topNRef, value: 42 },
+                    ]),
+                ],
+            });
+
+            expect(selectWidgetParameterValues(W1_REF)(state)).toEqual([
+                { identifier: "topN", parameterType: "NUMBER", title: "Top N", value: 25 },
+            ]);
+        });
+
+        it("drops a parameter saved only on the insight when the workspace catalog does not have it", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [topNWorkspace],
+                insights: [
+                    makeInsightWithMetric(W1_INSIGHT_REF, idRef("m1", "measure"), [
+                        { ref: scenarioRef, value: "Budget" },
+                    ]),
+                ],
+            });
+
+            expect(selectWidgetParameterValues(W1_REF)(state)).toEqual([
+                { identifier: "topN", parameterType: "NUMBER", title: "Top N", value: 25 },
+            ]);
+        });
+
+        it("drops a string value saved on the insight when string parameters are disabled", () => {
+            const state = makeFullState({
+                entries: [{ parameter: topNParameter, runtimeOverride: 25 }],
+                workspaceParameters: [topNWorkspace, scenarioWorkspace],
+                enableStringParameters: false,
+                insights: [
+                    makeInsightWithMetric(W1_INSIGHT_REF, idRef("m1", "measure"), [
+                        { ref: scenarioRef, value: "Budget" },
+                    ]),
+                ],
+            });
+
+            expect(selectWidgetParameterValues(W1_REF)(state)).toEqual([
+                { identifier: "topN", parameterType: "NUMBER", title: "Top N", value: 25 },
+            ]);
+        });
+
+        it("lists a parameter saved only on the insight with a value of the wrong type, with the workspace default", () => {
+            const state = makeFullState({
+                entries: [],
+                workspaceParameters: [sampleSizeWorkspace],
+                insights: [
+                    makeInsightWithMetric(W1_INSIGHT_REF, idRef("m1", "measure"), [
+                        { ref: otherRef, value: "many" },
+                    ]),
+                ],
+            });
+
+            expect(selectWidgetParameterValues(W1_REF)(state)).toEqual([
+                { identifier: "sampleSize", parameterType: "NUMBER", title: "Sample size", value: 100 },
+            ]);
+        });
+
+        it("lists a number parameter saved only on the insight with a string value when string parameters are disabled, with the workspace default", () => {
+            const state = makeFullState({
+                entries: [],
+                workspaceParameters: [sampleSizeWorkspace],
+                enableStringParameters: false,
+                insights: [
+                    makeInsightWithMetric(W1_INSIGHT_REF, idRef("m1", "measure"), [
+                        { ref: otherRef, value: "many" },
+                    ]),
+                ],
+            });
+
+            expect(selectWidgetParameterValues(W1_REF)(state)).toEqual([
+                { identifier: "sampleSize", parameterType: "NUMBER", title: "Sample size", value: 100 },
+            ]);
+        });
     });
 
     describe("per-tab independence (acceptance tests)", () => {
@@ -1665,7 +1764,7 @@ describe("parameter selectors (per tab)", () => {
         }: {
             tabAEntries: IDashboardParameterEntry[];
             tabBEntries: IDashboardParameterEntry[];
-            workspaceParameters?: IParameterMetadataObject[];
+            workspaceParameters?: IScalarParameterMetadataObject[];
             enableParameters?: boolean;
             insights?: IInsight[];
         }): DashboardState {
@@ -1866,7 +1965,7 @@ describe("parameter selectors (per tab)", () => {
 
     describe("selectExportEffectiveParameters", () => {
         const exportSampleSizeRef = idRef("sampleSize", "parameter");
-        const exportSampleSizeWorkspace: IParameterMetadataObject = {
+        const exportSampleSizeWorkspace: IScalarParameterMetadataObject = {
             ...topNWorkspace,
             id: "sampleSize",
             uri: "/sampleSize",
@@ -2243,7 +2342,7 @@ describe("parameter selectors (per tab)", () => {
 });
 
 describe("parameter reconciliation selectors", () => {
-    const boundedTopNWorkspace: IParameterMetadataObject = {
+    const boundedTopNWorkspace: IScalarParameterMetadataObject = {
         ...topNWorkspace,
         definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
     };

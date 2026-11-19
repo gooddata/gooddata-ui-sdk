@@ -31,7 +31,6 @@ import { GenAIChatContextIndicator } from "./GenAIChatContextIndicator.js";
 import { useHighlight } from "./highlight/useHighlight.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { useInputAutofocus } from "./hooks/useInputAutofocus.js";
-import { escapeMarkdown } from "./utils/markdownUtils.js";
 
 export type InputOwnProps = {
     autofocus?: boolean;
@@ -93,7 +92,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
     const handleSubmit = () => {
         const item = makeUserItem({
             type: "text",
-            text: escapeMarkdown(value),
+            text: value,
             objects: collectReferences(value, used.current),
         });
         dispatch(newMessageAction(item));

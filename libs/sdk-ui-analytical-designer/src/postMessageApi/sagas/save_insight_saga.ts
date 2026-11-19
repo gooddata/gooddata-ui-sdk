@@ -19,6 +19,7 @@ import {
 import {
     insightSaved,
     insightSavingFailed,
+    insightSavingInvalidArgument,
     insightSavingInvalidState,
 } from "../outgoing/save_insight_events.js";
 import { getPostMessageContextId } from "../sagas/post_message_saga_helper.js";
@@ -31,6 +32,12 @@ export function* saveInsight(action: SaveInsightAction, saveAsNew: boolean) {
         payload: { title, postMessageContext },
     } = action;
     const contextId = getPostMessageContextId(postMessageContext);
+    // Same rule as the save dialog: the title is trimmed and it must not be empty.
+    const trimmedTitle = typeof title === "string" ? title.trim() : "";
+    if (!trimmedTitle) {
+        yield put(saveInsightFailed(saveAsNew, undefined, contextId, GdcErrorType.InvalidArgument));
+        return;
+    }
     const isSaveAsNewDisabled: ReturnType<typeof isSaveAsNewDisabledSelector> =
         yield select(isSaveAsNewDisabledSelector);
     const isReportSaved: ReturnType<typeof isReportSavedSelector> = yield select(isReportSavedSelector);
@@ -39,7 +46,7 @@ export function* saveInsight(action: SaveInsightAction, saveAsNew: boolean) {
         yield put(saveInsightFailed(saveAsNew, undefined, contextId, GdcErrorType.InvalidState));
         return;
     }
-    yield put(reportTitleChange(title));
+    yield put(reportTitleChange(trimmedTitle));
     yield put(saveReportRequested(saveAsNew, false, contextId));
 }
 
@@ -58,6 +65,8 @@ export function* handleSaveInsightFailed({
 
     if (errorType === GdcErrorType.InvalidState) {
         yield call(insightSavingInvalidState, contextId);
+    } else if (errorType === GdcErrorType.InvalidArgument) {
+        yield call(insightSavingInvalidArgument, contextId);
     } else {
         yield call(insightSavingFailed, contextId);
     }

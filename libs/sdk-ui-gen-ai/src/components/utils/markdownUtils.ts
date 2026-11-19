@@ -1,7 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
-const MARKDOWN_ESCAPE_PATTERN = /(\{[^{}]*\})|[\\`*_{}[\]()#+\-.!]/g;
-const MARKDOWN_UNESCAPE_PATTERN = /\\([\\`*_{}[\]()#+\-.!])/g;
+const MARKDOWN_ESCAPE_PATTERN = /(\{[^{}]*\})|[\\`*_{}[\]()#+\-.!:]/g;
+const MARKDOWN_UNESCAPE_PATTERN = /\\([\\`*_{}[\]()#+\-.!:])/g;
 
 export function escapeMarkdown(text: string): string {
     return text.replace(MARKDOWN_ESCAPE_PATTERN, (match, inBraces: string) => inBraces || `\\${match}`);

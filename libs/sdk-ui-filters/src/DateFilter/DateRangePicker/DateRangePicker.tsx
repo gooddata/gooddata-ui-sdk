@@ -6,6 +6,7 @@ import { type DateRange, type DayPickerProps, type SelectRangeEventHandler } fro
 import { useIntl } from "react-intl";
 
 import { type WeekStart } from "@gooddata/sdk-model";
+import { useId } from "@gooddata/sdk-ui-kit";
 
 import { type DateRangePosition } from "../interfaces/index.js";
 
@@ -38,26 +39,44 @@ const isClickOutsideOfCalendar = (
     );
 };
 
+/**
+ * The calendar button belongs to the field of the open calendar, so pressing it must not close
+ * (and remount) the calendar. Buttons of the other field still close it.
+ */
+const isClickOnOwnCalendarButton = (event: MouseEvent, selectedInput: HTMLElement | null): boolean => {
+    const button =
+        event.target instanceof Element ? event.target.closest(".s-date-range-picker-calendar-button") : null;
+    return !!button && !!selectedInput && !!button.parentElement?.contains(selectedInput);
+};
+
 const useCalendarPopup = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedInput, setSelectedInput] = useState<DateRangePosition | undefined>();
+    const [shouldFocusCalendar, setShouldFocusCalendar] = useState(false);
 
     const startDateInputRef = useRef<HTMLInputElement>(null);
     const endDateInputRef = useRef<HTMLInputElement>(null);
     const calendarPopupRef = useRef<HTMLDivElement>(null);
 
-    const onStartDateClick = useCallback(() => {
-        setSelectedInput("from");
+    const openCalendar = useCallback((input: DateRangePosition, moveFocus: boolean) => {
+        setSelectedInput(input);
+        setShouldFocusCalendar(moveFocus);
         setIsOpen(true);
     }, []);
 
-    const onEndDateClick = useCallback(() => {
-        setSelectedInput("to");
-        setIsOpen(true);
-    }, []);
+    const onStartDateClick = useCallback(() => openCalendar("from", false), [openCalendar]);
+    const onEndDateClick = useCallback(() => openCalendar("to", false), [openCalendar]);
+    const onStartDateCalendarOpen = useCallback(
+        (moveFocus: boolean) => openCalendar("from", moveFocus),
+        [openCalendar],
+    );
+    const onEndDateCalendarOpen = useCallback(
+        (moveFocus: boolean) => openCalendar("to", moveFocus),
+        [openCalendar],
+    );
 
     const onDateInputKeyDown = useCallback(
-        (e: KeyboardEvent<HTMLInputElement>) => {
+        (e: KeyboardEvent<HTMLElement>) => {
             if (isOpen && (e.key === "Escape" || e.key === "Tab")) {
                 setIsOpen(false);
                 e.stopPropagation(); // only the calendar closes, the form stays open
@@ -66,20 +85,33 @@ const useCalendarPopup = () => {
         [isOpen],
     );
 
-    const closeCalendarPopup = useCallback(() => setIsOpen(false), []);
-
-    const handleClickOutside = useCallback((event: MouseEvent) => {
-        if (
-            isClickOutsideOfCalendar(
-                event,
-                calendarPopupRef.current!,
-                startDateInputRef.current!,
-                endDateInputRef.current!,
-            )
-        ) {
-            setIsOpen(false);
+    // when the calendar has focus, return it to the related date input so that it never lands on <body>
+    const closeCalendarPopup = useCallback(() => {
+        const calendarHasFocus = !!calendarPopupRef.current?.contains(document.activeElement);
+        setIsOpen(false);
+        if (calendarHasFocus) {
+            const inputRef = selectedInput === "to" ? endDateInputRef : startDateInputRef;
+            inputRef.current?.focus();
         }
-    }, []);
+    }, [selectedInput]);
+
+    const handleClickOutside = useCallback(
+        (event: MouseEvent) => {
+            const selectedInputRef = selectedInput === "to" ? endDateInputRef : startDateInputRef;
+            if (
+                isClickOutsideOfCalendar(
+                    event,
+                    calendarPopupRef.current!,
+                    startDateInputRef.current!,
+                    endDateInputRef.current!,
+                ) &&
+                !isClickOnOwnCalendarButton(event, selectedInputRef.current)
+            ) {
+                setIsOpen(false);
+            }
+        },
+        [selectedInput],
+    );
 
     useEffect(() => {
         document.addEventListener("mousedown", handleClickOutside);
@@ -92,6 +124,9 @@ const useCalendarPopup = () => {
         onDateInputKeyDown,
         onStartDateClick,
         onEndDateClick,
+        onStartDateCalendarOpen,
+        onEndDateCalendarOpen,
+        shouldFocusCalendar,
         calendarPopupRef,
         startDateInputRef,
         endDateInputRef,
@@ -300,11 +335,16 @@ export function DateRangePicker({
         onDateInputKeyDown,
         onStartDateClick,
         onEndDateClick,
+        onStartDateCalendarOpen,
+        onEndDateCalendarOpen,
+        shouldFocusCalendar,
         calendarPopupRef,
         startDateInputRef,
         endDateInputRef,
         closeCalendarPopup,
     } = useCalendarPopup();
+
+    const calendarId = useId();
 
     const {
         startDate,
@@ -336,6 +376,9 @@ export function DateRangePicker({
             errors={startDateTimeErrors}
             intl={intl}
             withoutApply={withoutApply}
+            onCalendarOpen={onStartDateCalendarOpen}
+            isCalendarOpen={isCalendarPopupOpen && selectedInput === "from"}
+            calendarId={calendarId}
         />
     );
 
@@ -354,6 +397,9 @@ export function DateRangePicker({
             isSecondsEnabled={isSecondsEnabled}
             errors={endDateTimeErrors}
             intl={intl}
+            onCalendarOpen={onEndDateCalendarOpen}
+            isCalendarOpen={isCalendarPopupOpen && selectedInput === "to"}
+            calendarId={calendarId}
         />
     );
 
@@ -371,6 +417,15 @@ export function DateRangePicker({
             weekStart={weekStart}
             renderAsOverlay={shouldOverlayDatePicker}
             intl={intl}
+            id={calendarId}
+            ariaLabel={intl.formatMessage({
+                id:
+                    selectedInput === "to"
+                        ? "filters.date.accessibility.calendar.to"
+                        : "filters.date.accessibility.calendar.from",
+            })}
+            shouldFocusOnOpen={shouldFocusCalendar}
+            onEscape={closeCalendarPopup}
         />
     );
 

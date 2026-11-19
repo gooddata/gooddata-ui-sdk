@@ -5,7 +5,7 @@ import { type GenAIObjectType } from "./common.js";
 /**
  * Allowed relationship type combination for semantic search.
  * Filters relationships and results to only include direct matches or objects reachable via allowed relationship types.
- * @beta
+ * @public
  */
 export interface IAllowedRelationshipType {
     /**
@@ -26,7 +26,7 @@ export interface IAllowedRelationshipType {
 
 /**
  * Semantic search result payload.
- * @beta
+ * @public
  */
 export interface ISemanticSearchResult {
     /**
@@ -49,7 +49,7 @@ export interface ISemanticSearchResult {
 
 /**
  * Represents an error encountered during a semantic search operation.
- * @beta
+ * @public
  */
 export interface ISemanticSearchError {
     /**
@@ -64,7 +64,7 @@ export interface ISemanticSearchError {
 
 /**
  * Certification info surfaced on a semantic search result item.
- * @beta
+ * @public
  */
 export interface ISemanticSearchCertification {
     /**
@@ -79,7 +79,7 @@ export interface ISemanticSearchCertification {
 
 /**
  * A single search result returned by semantic search.
- * @beta
+ * @public
  */
 export interface ISemanticSearchResultItem {
     /**
@@ -143,7 +143,7 @@ export interface ISemanticSearchResultItem {
 
 /**
  * Tests whether the provided item is a semantic search result item.
- * @beta
+ * @public
  */
 export function isSemanticSearchResultItem(item: object): item is ISemanticSearchResultItem {
     return Boolean("type" in item && "id" in item && "workspaceId" in item && "title" in item);
@@ -151,7 +151,7 @@ export function isSemanticSearchResultItem(item: object): item is ISemanticSearc
 
 /**
  * Reference between two metadata objects.
- * @beta
+ * @public
  */
 export interface ISemanticSearchRelationship {
     /**
@@ -190,7 +190,7 @@ export interface ISemanticSearchRelationship {
 
 /**
  * Tests whether the provided item is a semantic search relationship.
- * @beta
+ * @public
  */
 export function isSemanticSearchRelationship(item: object): item is ISemanticSearchRelationship {
     return Boolean(

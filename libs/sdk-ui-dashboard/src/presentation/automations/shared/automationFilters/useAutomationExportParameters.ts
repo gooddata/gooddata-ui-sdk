@@ -9,7 +9,7 @@ import {
     type IAutomationMetadataObject,
     type IDashboardExportParameter,
     type IDashboardParameter,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type IdentifierRef,
     type ParameterValue,
     areObjRefsEqual,
@@ -337,7 +337,7 @@ function isVisibleParameter(parameter: IAutomationParameter): boolean {
 function reconstructParametersByTab(
     byTab: Record<string, IDashboardExportParameter[]>,
     dashboardParametersByTab: Record<string, IDashboardParameter[]>,
-    catalog: IParameterMetadataObject[],
+    catalog: IScalarParameterMetadataObject[],
     isStringParametersEnabled: boolean,
 ): EditedParametersByTab {
     return mapValues(byTab, (exportParameters, tabId) =>

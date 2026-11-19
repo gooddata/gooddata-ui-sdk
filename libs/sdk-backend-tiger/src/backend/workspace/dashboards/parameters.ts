@@ -4,8 +4,8 @@ import {
     type IDashboard,
     type IDashboardExportParameter,
     type IDashboardParameter,
-    type ParameterType,
     type ParameterValue,
+    type ScalarParameterType,
     throwUnexpected,
 } from "@gooddata/sdk-model";
 
@@ -63,7 +63,7 @@ function applyParameterOverrides(
     });
 }
 
-function parseParameterValue(type: ParameterType, raw: string): ParameterValue {
+function parseParameterValue(type: ScalarParameterType, raw: string): ParameterValue {
     switch (type) {
         case "NUMBER":
             return Number(raw);

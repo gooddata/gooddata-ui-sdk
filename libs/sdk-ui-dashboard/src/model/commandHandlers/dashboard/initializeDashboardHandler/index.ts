@@ -18,7 +18,7 @@ import {
     type IDateFilterConfig,
     type IDateHierarchyTemplate,
     type IInsight,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type ISettings,
     type IWidget,
     type ObjRef,
@@ -652,7 +652,7 @@ export function* requestCatalog(ctx: DashboardContext, cmd: InitializeDashboard)
 function* loadWorkspaceParametersWithStatus(
     ctx: DashboardContext,
     settings: ISettings | undefined,
-): SagaIterator<IParameterMetadataObject[] | "gated-off" | "failed"> {
+): SagaIterator<IScalarParameterMetadataObject[] | "gated-off" | "failed"> {
     if (!settings?.enableParameters) {
         return "gated-off";
     }
@@ -668,9 +668,9 @@ function* loadWorkspaceParametersWithStatus(
     }
 }
 
-function makeCatalogParametersPayload(result: IParameterMetadataObject[] | "gated-off" | "failed"): {
+function makeCatalogParametersPayload(result: IScalarParameterMetadataObject[] | "gated-off" | "failed"): {
     status: "loaded" | "gated-off" | "failed";
-    parameters: IParameterMetadataObject[];
+    parameters: IScalarParameterMetadataObject[];
 } {
     if (result === "gated-off") {
         return { status: "gated-off", parameters: [] };

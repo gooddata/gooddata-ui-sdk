@@ -2,7 +2,7 @@
 
 import { afterEach, describe, expect, it } from "vitest";
 
-import { LocalFeatureFlagOverrides, TigerFeatureDefinitions } from "../uiFeatures.js";
+import { DefaultFeatureFlags, LocalFeatureFlagOverrides, TigerFeatureDefinitions } from "../uiFeatures.js";
 
 import { type FeatureDef, mapFeatures } from "./feature.js";
 
@@ -39,6 +39,20 @@ describe("feature mapping", () => {
             expected[key] = value;
         }
         expect(mapFeatures(inputs)).toEqual(expected);
+    });
+
+    it("registers dashboard canvas scrolling as a boolean disabled by default", () => {
+        expect(TigerFeatureDefinitions).toHaveProperty("enableDashboardCanvasScroll", {
+            type: "BOOLEAN",
+            defaultValue: false,
+        });
+        expect(DefaultFeatureFlags).toHaveProperty("enableDashboardCanvasScroll", false);
+    });
+
+    it.each([true, false])("loads the remote dashboard canvas scrolling value %s", (value) => {
+        expect(mapFeatures({ enableDashboardCanvasScroll: feature("BOOLEAN", value) })).toEqual({
+            enableDashboardCanvasScroll: value,
+        });
     });
 
     it("ignores unknown, missing and invalid values without overriding defaults", () => {

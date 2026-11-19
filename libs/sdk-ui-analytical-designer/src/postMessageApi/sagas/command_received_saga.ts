@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type Channel } from "redux-saga";
+import { type Channel, type SagaIterator } from "redux-saga";
 import { type SagaReturnType, actionChannel, call, put, select, take } from "redux-saga/effects";
 
 import {
@@ -40,7 +40,11 @@ import {
 import { PostEventActionTypeKeys } from "../actions/action_types.js";
 import { clearInsightRequested } from "../actions/clear_insight_actions.js";
 import { clearInsightContentRequested } from "../actions/clear_insight_content_actions.js";
-import { hostVerificationFailed, insecureCommandFailed } from "../actions/command_error_actions.js";
+import {
+    hostVerificationErrored,
+    hostVerificationFailed,
+    insecureCommandFailed,
+} from "../actions/command_error_actions.js";
 import { type ICommandReceivedAction } from "../actions/command_received_actions.js";
 import {
     removeFilterContextRequested,
@@ -62,31 +66,40 @@ export async function validateHostDomain(organizationId: string, url: string): P
     return backend.organization(organizationId).securitySettings().isUrlValid(url, "UI_EVENT");
 }
 
-function* isCommandOriginValid(origin: string) {
+/**
+ * Result of the origin check of a command:
+ * - `valid`: the origin is in the embedding origins of the organization, or the validation is off,
+ * - `denied`: the backend answered that the origin is not in the embedding origins,
+ * - `failed`: the check did not give an answer, for example because of a network error.
+ */
+type CommandOriginCheckResult = "valid" | "denied" | "failed";
+
+function* checkCommandOrigin(origin: string): SagaIterator<CommandOriginCheckResult> {
     const isValidationEnabled: ReturnType<typeof isEmbeddingOriginValidationEnabled> = yield select(
         isEmbeddingOriginValidationEnabled,
     );
     // Without the flag, no backend call: every origin is valid, as before the validation existed.
     if (!isValidationEnabled) {
-        return true;
+        return "valid";
     }
+    let isValid: SagaReturnType<typeof validateHostDomain>;
     try {
         const organizationId: ReturnType<typeof getOrganizationId> = yield select(getOrganizationId);
-        const result: SagaReturnType<typeof validateHostDomain> = yield call(
-            validateHostDomain,
-            organizationId,
-            origin,
-        );
-        if (result) {
-            // The outgoing events may wait for the first command with a valid origin.
-            yield call(notifyValidatedCommandOrigin, origin);
-        }
-        return result;
+        isValid = yield call(validateHostDomain, organizationId, origin);
     } catch (e) {
         // oxlint-disable-next-line eslint-js/no-console
-        console.log(e);
-        return false;
+        console.warn(
+            `Could not check the origin "${origin}" against the embedding origins of the organization. The command was not run.`,
+            e,
+        );
+        return "failed";
     }
+    if (!isValid) {
+        return "denied";
+    }
+    // The outgoing events may wait for the first command with a valid origin.
+    yield call(notifyValidatedCommandOrigin, origin);
+    return "valid";
 }
 
 function* isCommandTypeValid(commandType: string) {
@@ -133,13 +146,18 @@ export function* handleReceivedCommand({
     // Commands injected in-process by an installed host adapter carry the sentinel origin — no
     // host-domain validation applies (the sentinel is unreachable via window messages).
     const isHostInjected = commandOrigin === HOST_ADAPTER_ORIGIN && !!getHostAdapter();
-    const isValidOrigin: SagaReturnType<typeof isCommandOriginValid> = isHostInjected
-        ? true
-        : yield call(isCommandOriginValid, commandOrigin);
-    if (!isValidOrigin) {
+    const originCheck: SagaReturnType<typeof checkCommandOrigin> = isHostInjected
+        ? "valid"
+        : yield call(checkCommandOrigin, commandOrigin);
+    if (originCheck === "failed") {
+        // Not cached: the next command checks the origin again.
+        yield put(hostVerificationErrored(contextId));
+        return;
+    }
+    if (originCheck === "denied") {
         // oxlint-disable-next-line eslint-js/no-console
         console.warn(
-            `Denied the "${commandType}" command from the origin "${commandOrigin}". The origin is not in the embedding origins of the organization, or the check failed.`,
+            `Denied the "${commandType}" command from the origin "${commandOrigin}". The origin is not in the embedding origins of the organization.`,
         );
         yield put(hostVerificationFailed(contextId));
         return;

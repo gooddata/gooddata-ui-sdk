@@ -118,6 +118,7 @@ const WS2_PATHNAME = "/workspace/ws2/analyze";
 vi.resetModules();
 const { HostIntlProvider } = await import("./HostIntlProvider.js");
 const { PluggableApplicationRenderer } = await import("./PluggableApplicationRenderer.js");
+const { resetHostBasePath } = await import("../loader/hostBasePath.js");
 
 type AiAssistantAppEvent = Parameters<
     NonNullable<ComponentProps<typeof PluggableApplicationRenderer>["onAiAssistantAppEvent"]>
@@ -202,6 +203,49 @@ describe("PluggableApplicationRenderer", () => {
 
         expect(navigationRequestRef.current?.(request)).toBe(true);
         expect(onHostNavigationRequested).toHaveBeenCalledWith(request);
+    });
+
+    describe("application base path", () => {
+        // This file's module copy keeps its own detected base path.
+        afterEach(() => {
+            window.history.replaceState(null, "", "/");
+            resetHostBasePath();
+        });
+
+        it.each([
+            ["the domain root", "/workspace/ws1/analyze", "none", "/workspace/ws1/analyze"],
+            ["an embedding", "/embedded/workspace/ws1/analyze", "iframe", "/embedded/workspace/ws1/analyze"],
+            ["a proxy prefix", "/ext/gdcn/workspace/ws1/analyze", "none", "/ext/gdcn/workspace/ws1/analyze"],
+            [
+                "an embedding behind a proxy prefix",
+                "/ext/gdcn/embedded/workspace/ws1/analyze",
+                "iframe",
+                "/ext/gdcn/embedded/workspace/ws1/analyze",
+            ],
+        ] as const)(
+            "mounts the application at the browser path under %s",
+            async (_case, url, mode, expected) => {
+                window.history.replaceState(null, "", url);
+                const mounted: { basePath?: string } = {};
+                mocks.loadPluggableApplication.mockResolvedValue({
+                    mount: (options): IPluggableApplicationMountHandle => {
+                        mounted.basePath = options.basePath;
+                        return { unmount: vi.fn() };
+                    },
+                });
+
+                render(
+                    renderer({
+                        pathname: WS1_PATHNAME,
+                        ctx: { ...context(), embeddingMode: mode },
+                        navigationRequestRef,
+                    }),
+                );
+                await flushMount();
+
+                expect(mounted.basePath).toBe(expected);
+            },
+        );
     });
 
     it("forwards the conversation ID as the final open-assistant argument", async () => {

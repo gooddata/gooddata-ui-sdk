@@ -3,7 +3,7 @@
 import {
     type IDashboardParameter,
     type IDashboardTab,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type ParameterValue,
     areObjRefsEqual,
     objRefToString,
@@ -32,7 +32,7 @@ import { DEFAULT_TAB_ID } from "../../../store/tabs/tabsState.js";
  */
 export function hydrateParameterEntries(
     dashboardParameters: IDashboardParameter[] | undefined,
-    workspaceParameters: IParameterMetadataObject[],
+    workspaceParameters: IScalarParameterMetadataObject[],
 ): IDashboardParameterEntry[] {
     if (!dashboardParameters || dashboardParameters.length === 0) {
         return [];
@@ -55,7 +55,7 @@ export function hydrateParameterEntries(
 export function distributeParametersToTabs(
     tabs: IDashboardTab[] | undefined,
     rootParameters: IDashboardParameter[] | undefined,
-    workspaceParameters: IParameterMetadataObject[],
+    workspaceParameters: IScalarParameterMetadataObject[],
     activeTabOverride?: { tabId: string; overrides: IDashboardParameter[] },
 ): Record<string, IDashboardParameterEntry[]> {
     const effectiveTabs: IDashboardTab[] = tabs ?? [
@@ -81,7 +81,7 @@ export function distributeParametersToTabs(
 export function resolveParameterValuesForFilterView(
     entries: ReadonlyArray<IDashboardParameterEntry>,
     filterViewParameters: ReadonlyArray<IDashboardParameter>,
-    workspaceParameters: IParameterMetadataObject[],
+    workspaceParameters: IScalarParameterMetadataObject[],
 ): IParameterValueChange[] {
     const workspaceByRef = buildWorkspaceParametersByRef(workspaceParameters);
     return entries.map((entry) => {

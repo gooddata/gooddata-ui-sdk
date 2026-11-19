@@ -26,7 +26,7 @@ import {
     insightBuckets,
     insightVisualizationUrl,
     isNumberParameterDefinition,
-    isStringParameterDefinition,
+    isScalarParameterMetadataObject,
     newInsightDefinition,
 } from "@gooddata/sdk-model";
 import { _compact, _isEqual } from "@gooddata/util";
@@ -223,11 +223,9 @@ export function* loadParameters() {
         return result.all();
     });
 
-    const supportedParameters = parameters.filter(
-        (parameter) =>
-            isNumberParameterDefinition(parameter.definition) ||
-            (stringParametersEnabled && isStringParameterDefinition(parameter.definition)),
-    );
+    const supportedParameters = parameters
+        .filter(isScalarParameterMetadataObject)
+        .filter((parameter) => stringParametersEnabled || isNumberParameterDefinition(parameter.definition));
 
     yield put(setCatalogParameters(supportedParameters));
 }

@@ -361,6 +361,68 @@ describe("mapLegacyUrlToHost", () => {
     });
 });
 
+describe("mapLegacyUrlToHost behind a reverse proxy path prefix", () => {
+    const PREFIX = "/ext/gdcn";
+
+    it.each([
+        [
+            "/dashboards/embedded/",
+            "#/workspace/ws1/dashboard/d1?apiTokenAuthentication=true",
+            "",
+            "/ext/gdcn/embedded/workspace/ws1/dashboards/#/dashboard/d1?apiTokenAuthentication=true",
+        ],
+        [
+            "/dashboards/",
+            "#/workspace/ws1/dashboard/d1",
+            "?showNavigation=false",
+            "/ext/gdcn/workspace/ws1/dashboards/?showNavigation=false#/dashboard/d1",
+        ],
+        [
+            "/analyze/embedded/",
+            "#/ws1/insight1/edit",
+            "",
+            "/ext/gdcn/embedded/workspace/ws1/analyze/#/insight1/edit",
+        ],
+        [
+            "/embedded/workspace/ws1/dashboards/",
+            "#/workspace/ws2/dashboard/d1",
+            "",
+            "/ext/gdcn/embedded/workspace/ws2/dashboards/#/dashboard/d1",
+        ],
+    ])("keeps the prefix when mapping %s%s%s", (pathname, hash, search, expected) => {
+        expect(mapLegacyUrlToHost(location(`${PREFIX}${pathname}`, hash, search))).toBe(expected);
+    });
+
+    // One URL per branch of the mapping: behind the prefix each must map exactly as without it.
+    it.each([
+        ["/embedded/workspace/ws1/dashboards/", "#/workspace/ws2/dashboard/d1", ""],
+        ["/workspace/ws1/publisher/document/d1", "", "?mode=export_slideshow"],
+        ["/dashboards/embedded/", "#/project/ws1/dashboard/d1", "?showNavigation=false"],
+        ["/dashboards/embedded/", "#/client/c1/dashboard/d1", ""],
+        ["/dashboards/", "#/client/c1", ""],
+        ["/dashboards/403.html", "", ""],
+        ["/dashboards/", "", ""],
+        ["/analyze/", "#/ws1/insight1/edit?aibuilder=1", ""],
+        ["/analyze/embedded/", "#/client/prod1:client1/insight1/edit", ""],
+        ["/analyze/403.html", "", ""],
+        ["/metrics/", "#/ws1/metric/m1", ""],
+        ["/modeler/", "#/ws1/displayEditMode", ""],
+        ["/settings", "#ai", ""],
+        ["/workspaces/ws1/catalog", "", "?tab=a"],
+        ["/workspace/ws1/catalog", "", ""],
+    ])("maps %s%s%s behind the prefix as without it", (pathname, hash, search) => {
+        const unprefixed = mapLegacyUrlToHost(location(pathname, hash, search));
+
+        expect(mapLegacyUrlToHost(location(`${PREFIX}${pathname}`, hash, search))).toBe(
+            unprefixed === null ? null : `${PREFIX}${unprefixed}`,
+        );
+    });
+
+    it("leaves the bare prefix alone", () => {
+        expect(mapLegacyUrlToHost(location(`${PREFIX}/`, "#/workspace/ws1"))).toBeNull();
+    });
+});
+
 describe("mapBareLegacyPathToApp", () => {
     it.each([
         ["/dashboards", "/dashboards"],

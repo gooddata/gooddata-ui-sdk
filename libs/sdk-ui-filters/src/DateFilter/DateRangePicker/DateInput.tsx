@@ -7,6 +7,7 @@ import {
     forwardRef,
     useCallback,
     useEffect,
+    useRef,
     useState,
 } from "react";
 
@@ -16,6 +17,7 @@ import {
     ValidationContextStore,
     createInvalidDatapoint,
     createInvalidNode,
+    useCombineRefs,
     useValidationContextValue,
 } from "@gooddata/sdk-ui";
 import { isArrowKey, isEnterKey, useId } from "@gooddata/sdk-ui-kit";
@@ -32,7 +34,10 @@ export interface IDateInputProps {
     value?: Date;
     inputLabel: string;
     onChange: (date: Date | undefined, shouldSubmitForm?: boolean) => void;
-    onKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void;
+    /**
+     * Handles keys of the date input and of its calendar button (Escape and Tab close an open calendar).
+     */
+    onKeyDown: (e: KeyboardEvent<HTMLElement>) => void;
     onClick: () => void;
     dateFormat: string;
     isMobile: boolean;
@@ -41,6 +46,12 @@ export interface IDateInputProps {
     errorMessageTexts: IDateInputErrorMessageTexts;
     accessibilityConfig: IInputAccessibilityConfig;
     withoutApply?: boolean;
+    /**
+     * Opens the calendar and moves focus into it (calendar button or Alt+ArrowDown).
+     */
+    onCalendarOpen?: (moveFocus: boolean) => void;
+    isCalendarOpen?: boolean;
+    calendarId?: string;
 }
 
 type ErrorCause = "empty" | "invalid" | undefined;
@@ -69,6 +80,7 @@ type DateInputHookProps = Pick<
     | "isDateOrderError"
     | "errorMessageTexts"
     | "withoutApply"
+    | "onCalendarOpen"
 >;
 
 const useDateInput = ({
@@ -79,6 +91,7 @@ const useDateInput = ({
     isDateOrderError = false,
     errorMessageTexts,
     withoutApply = false,
+    onCalendarOpen,
 }: DateInputHookProps) => {
     const [inputValue, setInputValue] = useState<string>(formatDate(value!, dateFormat) ?? "");
 
@@ -164,13 +177,18 @@ const useDateInput = ({
         (e: KeyboardEvent<HTMLInputElement>) => {
             if (isEnterKey(e) && !withoutApply) {
                 onSubmitValue(true);
+            } else if (e.altKey && e.key === "ArrowDown" && onCalendarOpen) {
+                e.preventDefault();
+                e.stopPropagation();
+                onSubmitValue(false); // commit the typed date so that the calendar focuses it
+                onCalendarOpen(true);
             } else if (isArrowKey(e)) {
                 e.stopPropagation(); // allow navigation in the input
             } else {
                 onKeyDown(e);
             }
         },
-        [withoutApply, onSubmitValue, onKeyDown],
+        [withoutApply, onSubmitValue, onKeyDown, onCalendarOpen],
     );
 
     return {
@@ -198,6 +216,9 @@ export const DateInput = forwardRef<HTMLInputElement, IDateInputProps>(
             isDateOrderError,
             errorMessageTexts,
             withoutApply,
+            onCalendarOpen,
+            isCalendarOpen = false,
+            calendarId,
         },
         ref,
     ) => {
@@ -216,9 +237,12 @@ export const DateInput = forwardRef<HTMLInputElement, IDateInputProps>(
             isDateOrderError,
             errorMessageTexts,
             withoutApply,
+            onCalendarOpen,
         });
 
         const inputLabelId = useId();
+        const inputRef = useRef<HTMLInputElement | null>(null);
+        const combinedInputRef = useCombineRefs<HTMLInputElement | null>(inputRef, ref);
 
         const { isValid, getInvalidDatapoints } = validationContextValue;
         const invalidDatapoint = getInvalidDatapoints()[0];
@@ -257,8 +281,9 @@ export const DateInput = forwardRef<HTMLInputElement, IDateInputProps>(
                 })}
             >
                 <span className="gd-icon-calendar" aria-hidden="true" />
+                {/* the calendar button is a transparent overlay of the icon, so the icon renders as before */}
                 <input
-                    ref={ref}
+                    ref={combinedInputRef}
                     placeholder={dateFormat}
                     onChange={onDateInputChange}
                     onClick={onClick}
@@ -268,6 +293,28 @@ export const DateInput = forwardRef<HTMLInputElement, IDateInputProps>(
                     className="input-text s-date-range-picker-input-field"
                     {...ariaProps}
                 />
+                {onCalendarOpen ? (
+                    <button
+                        type="button"
+                        className="gd-date-range-picker-input-calendar-button s-date-range-picker-calendar-button"
+                        aria-label={accessibilityConfig.calendarButtonAriaLabel}
+                        aria-haspopup="dialog"
+                        aria-expanded={isCalendarOpen}
+                        aria-controls={isCalendarOpen ? calendarId : undefined}
+                        // like the input, Escape and Tab close only the open calendar, not the date filter
+                        onKeyDown={onKeyDown}
+                        // a mouse press on the icon keeps focus in the input, as before the button existed
+                        onMouseDown={(e) => e.preventDefault()}
+                        // move focus into the calendar only when activated by keyboard (detail is 0),
+                        // mouse users keep the same behaviour as when clicking the input
+                        onClick={(e) => {
+                            if (e.detail !== 0) {
+                                inputRef.current?.focus();
+                            }
+                            onCalendarOpen(e.detail === 0);
+                        }}
+                    />
+                ) : null}
             </div>
         );
 

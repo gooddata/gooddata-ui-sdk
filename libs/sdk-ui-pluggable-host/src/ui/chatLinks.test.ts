@@ -23,11 +23,11 @@ describe("handleChatLinkClick", () => {
     const assign = vi.fn();
     const open = vi.fn();
 
-    function stubNavigation() {
+    function stubNavigation(pathname = "/workspace/ws/dashboards") {
         vi.stubGlobal("location", {
             ...window.location,
             assign,
-            pathname: "/workspace/ws/dashboards",
+            pathname,
             hash: "",
         });
         vi.stubGlobal("open", open);
@@ -96,6 +96,36 @@ describe("handleChatLinkClick", () => {
         });
 
         expect(assign).not.toHaveBeenCalled();
+    });
+
+    it("stays on a link to the page that is already open behind a proxy prefix", () => {
+        stubNavigation("/ext/gdcn/workspace/ws/dashboards");
+
+        handleChatLinkClick(linkOf({ itemUrl: "/workspace/ws/dashboards" }), {
+            embedded: false,
+            onAppLinkClick: () => false,
+        });
+
+        expect(assign).not.toHaveBeenCalled();
+    });
+
+    it("keeps the proxy prefix when navigating to the link", () => {
+        stubNavigation("/ext/gdcn/workspace/ws/analyze");
+
+        handleChatLinkClick(linkOf({ itemUrl: "/workspace/ws/dashboards/#/dashboard/d1" }), {
+            embedded: false,
+            onAppLinkClick: () => false,
+        });
+
+        expect(assign).toHaveBeenCalledExactlyOnceWith("/ext/gdcn/workspace/ws/dashboards/#/dashboard/d1");
+    });
+
+    it("keeps the proxy prefix when opening the link in a new tab", () => {
+        stubNavigation("/ext/gdcn/workspace/ws/analyze");
+
+        handleChatLinkClick(linkOf({ newTab: true }), { embedded: false, onAppLinkClick: () => false });
+
+        expect(open).toHaveBeenCalledExactlyOnceWith("/ext/gdcn/workspace/ws/reports/report/r1", "_blank");
     });
 
     it("does not navigate for a copy action", () => {

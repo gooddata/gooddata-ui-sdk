@@ -101,6 +101,32 @@ const CustomSendButton: NonNullable<IGenAIAssistantSlots["SendButton"]> = ({ def
     </button>
 );
 
+describe("user message submission", () => {
+    it.each(
+        [".", "#", "+", "-", "(", ")", "[", "]", "\\", "\\#"].flatMap((character) =>
+            ["button", "keyboard"].map((method) => ({ text: `test${character}`, method })),
+        ),
+    )("preserves $text when sent using the $method", ({ text, method }) => {
+        const store = makeStore();
+        renderInput(store);
+
+        fireEvent.change(screen.getByRole("textbox"), { target: { value: text } });
+        if (method === "button") {
+            fireEvent.click(screen.getByRole("button", { name: "Send" }));
+        } else {
+            fireEvent.keyDown(screen.getByRole("textbox"), { key: "Enter" });
+        }
+
+        expect(conversationMessagesSelector(store.getState())).toEqual([
+            expect.objectContaining({
+                role: "user",
+                content: { type: "text", text, objects: [] },
+            }),
+        ]);
+        expect(screen.getByRole("textbox")).toHaveValue("");
+    });
+});
+
 describe("SendButton slot", () => {
     it.each([true, false])(
         "replaces the default button and sends the current input (preview: %s)",

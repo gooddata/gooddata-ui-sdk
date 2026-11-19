@@ -36,7 +36,7 @@ import { SemanticSearchTreeView } from "./SemanticSearchTreeView.js";
 
 /**
  * Semantic search component props.
- * @beta
+ * @public
  */
 export type SemanticSearchProps = {
     /**
@@ -120,7 +120,7 @@ const THRESHOLD = 0.5;
 
 /**
  * Semantic search component core.
- * @beta
+ * @public
  */
 function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
     const {
@@ -293,7 +293,7 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
 
 /**
  * Semantic search filed with dropdown for selecting items.
- * @beta
+ * @public
  */
 export function SemanticSearch({ locale, ...coreProps }: SemanticSearchProps) {
     return (

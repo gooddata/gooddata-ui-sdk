@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 import {
     type IDashboardParameter,
     type IDashboardTab,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type ParameterValue,
     idRef,
 } from "@gooddata/sdk-model";
@@ -36,7 +36,7 @@ const sampleParameter: IDashboardParameter = {
     mode: "active",
 };
 
-const topNWorkspace: IParameterMetadataObject = {
+const topNWorkspace: IScalarParameterMetadataObject = {
     type: "parameter",
     id: "topN",
     uri: "/topN",
@@ -152,7 +152,7 @@ const scenarioParameter: IDashboardParameter = {
     mode: "active",
 };
 
-const sampleWorkspace: IParameterMetadataObject = {
+const sampleWorkspace: IScalarParameterMetadataObject = {
     ...topNWorkspace,
     id: "sampleSize",
     uri: "/sampleSize",
@@ -161,7 +161,7 @@ const sampleWorkspace: IParameterMetadataObject = {
     definition: { type: "NUMBER", defaultValue: 6 },
 };
 
-const scenarioWorkspace: IParameterMetadataObject = {
+const scenarioWorkspace: IScalarParameterMetadataObject = {
     ...topNWorkspace,
     id: "scenario",
     uri: "/scenario",
@@ -170,7 +170,7 @@ const scenarioWorkspace: IParameterMetadataObject = {
     definition: { type: "STRING", defaultValue: "Actual" },
 };
 
-function entry(parameter: IDashboardParameter, runtimeOverride?: ParameterValue | undefined) {
+function entry(parameter: IDashboardParameter, runtimeOverride?: ParameterValue) {
     return { parameter, runtimeOverride } satisfies IDashboardParameterEntry;
 }
 

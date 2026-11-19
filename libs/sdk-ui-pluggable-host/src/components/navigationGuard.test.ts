@@ -43,6 +43,7 @@ describe("runGuardedNavigation", () => {
         runGuardedNavigation({
             url: TARGET,
             currentPathname: CURRENT,
+            basePath: "",
             guardRef: { current: undefined },
             navigate,
         });
@@ -58,6 +59,7 @@ describe("runGuardedNavigation", () => {
         runGuardedNavigation({
             url: TARGET,
             currentPathname: CURRENT,
+            basePath: "",
             guardRef: { current: guard },
             navigate,
         });
@@ -74,6 +76,7 @@ describe("runGuardedNavigation", () => {
         runGuardedNavigation({
             url: TARGET,
             currentPathname: CURRENT,
+            basePath: "",
             guardRef: { current: guard },
             navigate,
         });
@@ -92,6 +95,7 @@ describe("runGuardedNavigation", () => {
         runGuardedNavigation({
             url: TARGET,
             currentPathname: CURRENT,
+            basePath: "",
             guardRef: { current: guard },
             navigate,
         });
@@ -111,6 +115,7 @@ describe("runGuardedNavigation", () => {
         runGuardedNavigation({
             url: CURRENT,
             currentPathname: CURRENT,
+            basePath: "",
             guardRef: { current: guard },
             navigate,
         });
@@ -131,6 +136,7 @@ describe("runGuardedNavigation", () => {
         runGuardedNavigation({
             url: TARGET,
             currentPathname: CURRENT,
+            basePath: "",
             guardRef: { current: guard },
             navigate,
         });
@@ -150,7 +156,7 @@ describe("runGuardedNavigation", () => {
         };
         const guardRef: { current: Guard | undefined } = { current: guard };
 
-        runGuardedNavigation({ url: TARGET, currentPathname: CURRENT, guardRef, navigate });
+        runGuardedNavigation({ url: TARGET, currentPathname: CURRENT, basePath: "", guardRef, navigate });
 
         guardRef.current = vi.fn().mockReturnValue(false);
         captured?.proceed();
@@ -167,11 +173,51 @@ describe("runGuardedNavigation", () => {
         };
         const guardRef: { current: Guard | undefined } = { current: guard };
 
-        runGuardedNavigation({ url: TARGET, currentPathname: CURRENT, guardRef, navigate });
+        runGuardedNavigation({ url: TARGET, currentPathname: CURRENT, basePath: "", guardRef, navigate });
 
         guardRef.current = undefined;
         captured?.proceed();
 
         expect(navigate).not.toHaveBeenCalled();
+    });
+    describe("behind a reverse proxy path prefix", () => {
+        const PREFIX = "/ext/gdcn";
+
+        it("hands the guard the browser URL and navigates the router to the host route", () => {
+            const navigate = vi.fn();
+            let captured: IHostNavigationRequest | undefined;
+            const guard: Guard = (request) => {
+                captured = request;
+                return true;
+            };
+
+            runGuardedNavigation({
+                url: TARGET,
+                currentPathname: CURRENT,
+                basePath: PREFIX,
+                guardRef: { current: guard },
+                navigate,
+            });
+            captured?.proceed();
+
+            expect(captured?.url).toBe(`${PREFIX}${TARGET}`);
+            expect(navigate).toHaveBeenCalledExactlyOnceWith(TARGET);
+        });
+
+        it("skips the guard when the target is the host route already open", () => {
+            const navigate = vi.fn();
+            const guard = vi.fn().mockReturnValue(true);
+
+            runGuardedNavigation({
+                url: CURRENT,
+                currentPathname: CURRENT,
+                basePath: PREFIX,
+                guardRef: { current: guard },
+                navigate,
+            });
+
+            expect(guard).not.toHaveBeenCalled();
+            expect(navigate).toHaveBeenCalledExactlyOnceWith(CURRENT);
+        });
     });
 });

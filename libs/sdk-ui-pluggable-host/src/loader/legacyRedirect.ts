@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { LEGACY_HOME_PATHS, splitHostBasePath, withHostBasePath } from "./hostBasePath.js";
+
 /**
  * @alpha
  */
@@ -113,21 +115,6 @@ function mapLegacyDashboardsUrl(pathname: string, hash: string, search: string):
 // on the organization scope under this route base, and keeps the legacy path shape below it.
 const HOME_UI_ROUTE_BASE = "/organization/settings";
 
-// Top-level paths the standalone home-ui served from the root. `/workspaces/{id}/catalog` is
-// deliberately NOT special-cased onto the catalog application: the module's own route already
-// checks that the catalog is enabled for the workspace before handing off, and rewriting straight
-// to `/workspace/{id}/catalog` would reach the host with no such check and render "app not found".
-const LEGACY_HOME_PATHS = [
-    "/workspaces",
-    "/data-sources",
-    "/users-and-groups",
-    "/settings",
-    "/configuration",
-    "/automations",
-    "/ai-hub",
-    "/getting-started",
-];
-
 // A host KD URL whose hash still names a workspace: [/embedded]/workspace/<A>/dashboards/#/workspace/<B>/<rest>.
 // The hash workspace is the link target, so it replaces the path workspace.
 const HOST_DASHBOARDS_PATH = /^(\/embedded)?\/workspace\/[^/]+\/dashboards\/?$/;
@@ -149,10 +136,18 @@ const FORMER_REPORTS_ROUTE = /^((?:\/embedded)?\/workspace\/[^/]+)\/publisher(\/
  * Maps a legacy KD/AD/modeler/metrics/home-ui/publisher URL (embedded or standalone) to its host equivalent,
  * or `null` when it is not a recognized legacy URL. Mirrors the standalone→host redirects that live
  * in the legacy apps; runs client-side because the workspace id is in the (server-invisible) hash.
+ * A reverse proxy path prefix in front of the legacy path is kept in the result. The prefix is
+ * whatever precedes the first known route segment, so an unknown leading segment is kept the same way.
  *
  * @alpha
  */
 export function mapLegacyUrlToHost(location: ILegacyLocation): string | null {
+    const { basePath, path } = splitHostBasePath(location.pathname);
+    const target = mapUnprefixedLegacyUrl({ ...location, pathname: path });
+    return target === null ? null : withHostBasePath(target, basePath);
+}
+
+function mapUnprefixedLegacyUrl(location: ILegacyLocation): string | null {
     const { pathname, hash, search } = location;
 
     const hostDashboards = mapHostDashboardsWorkspaceHash(pathname, hash, search);
@@ -196,6 +191,10 @@ export function mapLegacyUrlToHost(location: ILegacyLocation): string | null {
         return `${HOME_UI_ROUTE_BASE}/ai-hub${search}${hash}`;
     }
 
+    // `/workspaces/{id}/catalog` is deliberately NOT special-cased onto the catalog application: the
+    // module's own route already checks that the catalog is enabled for the workspace before handing
+    // off, and rewriting straight to `/workspace/{id}/catalog` would reach the host with no such check
+    // and render "app not found".
     if (LEGACY_HOME_PATHS.some((prefix) => isUnder(pathname, prefix))) {
         return `${HOME_UI_ROUTE_BASE}${pathname}${search}${hash}`;
     }

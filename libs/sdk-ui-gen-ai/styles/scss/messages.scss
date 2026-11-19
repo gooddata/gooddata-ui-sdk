@@ -939,7 +939,7 @@ $dataset_color: #952f8e;
             @include object-types("user");
 
             p {
-                white-space: pre-line;
+                white-space: pre-wrap;
             }
         }
     }

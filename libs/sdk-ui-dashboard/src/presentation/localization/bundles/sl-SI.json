@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "Dodajte naslov tukaj...",
     "layout.header.add.description.placeholder": "Dodajte opis tukaj...",
     "controlButtons.options.tooltip": "Več dejanj",
+    "controlButtons.options.widgetLabel": "Dodatna dejanja za {title}",
     "controlButtons.options.back": "Nazaj na prejšnji korak",
     "controlButtons.options.closeMenu": "Zapri meni",
     "controlButtons.edit.value": "Uredi",

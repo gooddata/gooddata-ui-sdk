@@ -100,6 +100,209 @@ describe("DateRangePicker", () => {
         });
     });
 
+    describe("calendar keyboard accessibility", () => {
+        it("should render labelled calendar buttons after the date inputs", () => {
+            renderComponent();
+
+            const startButton = screen.getByRole("button", { name: "Choose start date" });
+            const endButton = screen.getByRole("button", { name: "Choose end date" });
+            expect(startButton).toHaveAttribute("aria-haspopup", "dialog");
+            expect(startButton).toHaveAttribute("aria-expanded", "false");
+            expect(endButton).toHaveAttribute("aria-expanded", "false");
+            const position = getInput("05/05/2019").compareDocumentPosition(startButton);
+            expect(position & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+        });
+
+        it("should open the calendar from the button and focus the selected start date", () => {
+            renderComponent();
+            const startButton = screen.getByRole("button", { name: "Choose start date" });
+            fireEvent.click(startButton, { detail: 0 });
+
+            const dialog = screen.getByRole("dialog", { name: "Choose start date" });
+            expect(startButton).toHaveAttribute("aria-expanded", "true");
+            expect(startButton).toHaveAttribute("aria-controls", dialog.id);
+            expect(screen.getByRole("grid")).toHaveAccessibleName("May 2019");
+            expect(document.activeElement).toHaveAccessibleName("Sunday, May 5th, 2019, selected");
+            expect(document.activeElement?.closest("[role='gridcell']")).toHaveAttribute(
+                "aria-selected",
+                "true",
+            );
+        });
+
+        it("should expose only the chosen date as selected", () => {
+            renderComponent();
+            fireEvent.click(screen.getByRole("button", { name: "Choose end date" }), { detail: 0 });
+
+            const selectedCells = document.querySelectorAll("[role='gridcell'][aria-selected='true']");
+            expect(selectedCells).toHaveLength(1);
+            expect(selectedCells[0]).toHaveAttribute("data-day", "2019-05-15");
+            expect(screen.getByRole("button", { name: "Sunday, May 5th, 2019" })).toBeInTheDocument();
+        });
+
+        it("should rename the grid when PageDown moves to the next month", () => {
+            renderComponent();
+            fireEvent.click(screen.getByRole("button", { name: "Choose start date" }), { detail: 0 });
+            fireEvent.keyDown(document.activeElement!, { key: "PageDown" });
+
+            expect(screen.getByRole("grid")).toHaveAccessibleName("June 2019");
+            expect(document.activeElement).toHaveAccessibleName("Wednesday, June 5th, 2019");
+        });
+
+        it("should reach labelled previous and next month buttons with Tab", () => {
+            renderComponent();
+            fireEvent.click(screen.getByRole("button", { name: "Choose start date" }), { detail: 0 });
+            const day = document.activeElement!;
+
+            fireEvent.keyDown(day, { key: "Tab" });
+            expect(document.activeElement).toHaveAccessibleName("Previous month");
+            fireEvent.keyDown(document.activeElement!, { key: "Tab" });
+            expect(document.activeElement).toHaveAccessibleName("Next month");
+            fireEvent.keyDown(document.activeElement!, { key: "Tab" });
+            expect(document.activeElement).toBe(day);
+        });
+
+        it("should open the calendar with Alt+ArrowDown and focus the selected end date", () => {
+            renderComponent();
+            fireEvent.keyDown(getInput("05/15/2019"), { key: "ArrowDown", altKey: true });
+
+            expect(screen.getByRole("dialog", { name: "Choose end date" })).toBeInTheDocument();
+            expect(document.activeElement).toHaveAccessibleName("Wednesday, May 15th, 2019, selected");
+        });
+
+        it("should select the focused day with Enter and return focus to the input", () => {
+            const onRangeChange = vi.fn();
+            renderComponent({ onRangeChange });
+            const input = getInput("05/05/2019");
+            fireEvent.keyDown(input, { key: "ArrowDown", altKey: true });
+
+            const day = document.activeElement as HTMLElement;
+            fireEvent.keyDown(day, { key: "ArrowRight" });
+            const nextDay = document.activeElement as HTMLElement;
+            expect(nextDay).toHaveAccessibleName("Monday, May 6th, 2019");
+            fireEvent.click(nextDay, { detail: 0 });
+
+            expect(onRangeChange).toHaveBeenLastCalledWith({
+                ...getDefaultRange(),
+                from: new Date(2019, 4, 6),
+            });
+            expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+            expect(document.activeElement).toBe(getInput("05/06/2019"));
+
+            fireEvent.keyDown(getInput("05/06/2019"), { key: "ArrowDown", altKey: true });
+            expect(document.activeElement).toHaveAccessibleName("Monday, May 6th, 2019, selected");
+        });
+
+        it("should keep the navigated month when the open calendar's own button is pressed with the mouse", () => {
+            renderComponent();
+            const startButton = screen.getByRole("button", { name: "Choose start date" });
+            fireEvent.click(startButton, { detail: 0 });
+            fireEvent.keyDown(document.activeElement!, { key: "PageDown" });
+            expect(screen.getByRole("grid")).toHaveAccessibleName("June 2019");
+
+            fireEvent.mouseDown(startButton);
+            fireEvent.click(startButton, { detail: 1 });
+            expect(screen.getByRole("grid")).toHaveAccessibleName("June 2019");
+
+            fireEvent.mouseDown(screen.getByRole("button", { name: "Choose end date" }));
+            expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+        });
+
+        it("should focus the date typed while the calendar was open with the mouse", () => {
+            renderComponent();
+            const input = getInput("05/05/2019");
+            fireEvent.click(input);
+            expect(screen.getByRole("dialog")).toBeInTheDocument();
+
+            fireEvent.change(input, { target: { value: "05/20/2019" } });
+            fireEvent.keyDown(input, { key: "ArrowDown", altKey: true });
+
+            expect(document.activeElement).toHaveAccessibleName("Monday, May 20th, 2019, selected");
+        });
+
+        it("should show the end date's month before focusing it when the calendar stayed open", () => {
+            renderComponent({ range: { from: new Date(2019, 4, 5), to: new Date(2019, 7, 15) } });
+            fireEvent.click(getInput("05/05/2019"));
+            expect(screen.getByRole("grid")).toHaveAccessibleName("May 2019");
+            const endInput = getInput("08/15/2019");
+            fireEvent.click(endInput);
+            expect(screen.getByRole("grid")).toHaveAccessibleName("May 2019");
+
+            fireEvent.keyDown(endInput, { key: "ArrowDown", altKey: true });
+
+            expect(screen.getByRole("grid")).toHaveAccessibleName("August 2019");
+            expect(document.activeElement).toHaveAccessibleName("Thursday, August 15th, 2019, selected");
+        });
+
+        it("should close only the calendar on Escape and return focus to the input", () => {
+            const onParentKeyDown = vi.fn();
+            render(
+                <div onKeyDown={onParentKeyDown}>
+                    {IntlDecorator(
+                        <DateRangePicker
+                            dateFormat={defaultDateFormat}
+                            range={getDefaultRange()}
+                            onRangeChange={() => {}}
+                            isMobile={false}
+                            isTimeEnabled={false}
+                            submitForm={() => {}}
+                        />,
+                    )}
+                </div>,
+            );
+            fireEvent.keyDown(getInput("05/05/2019"), { key: "ArrowDown", altKey: true });
+            fireEvent.keyDown(document.activeElement!, { key: "Escape" });
+
+            expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+            expect(document.activeElement).toBe(getInput("05/05/2019"));
+            expect(onParentKeyDown).not.toHaveBeenCalled();
+        });
+
+        it("should close only the calendar on Escape pressed on its focused button", () => {
+            const onParentKeyDown = vi.fn();
+            render(
+                <div onKeyDown={onParentKeyDown}>
+                    {IntlDecorator(
+                        <DateRangePicker
+                            dateFormat={defaultDateFormat}
+                            range={getDefaultRange()}
+                            onRangeChange={() => {}}
+                            isMobile={false}
+                            isTimeEnabled={false}
+                            submitForm={() => {}}
+                        />,
+                    )}
+                </div>,
+            );
+            const startButton = screen.getByRole("button", { name: "Choose start date" });
+            fireEvent.click(startButton, { detail: 1 });
+            expect(screen.getByRole("dialog")).toBeInTheDocument();
+
+            fireEvent.keyDown(startButton, { key: "Escape" });
+
+            expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+            expect(onParentKeyDown).not.toHaveBeenCalled();
+        });
+
+        it("should keep focus in the input when the calendar icon is clicked with the mouse", () => {
+            renderComponent();
+            const startButton = screen.getByRole("button", { name: "Choose start date" });
+
+            const mouseDownAllowed = fireEvent.mouseDown(startButton);
+            fireEvent.click(startButton, { detail: 1 });
+
+            expect(mouseDownAllowed).toBe(false);
+            expect(screen.getByRole("dialog")).toBeInTheDocument();
+            expect(document.activeElement).toBe(getInput("05/05/2019"));
+        });
+
+        it("should mark today with aria-current", () => {
+            renderComponent({ range: { from: new Date(), to: new Date() } });
+            fireEvent.click(screen.getByRole("button", { name: "Choose start date" }), { detail: 0 });
+
+            expect(document.activeElement).toHaveAttribute("aria-current", "date");
+        });
+    });
+
     describe("custom range hint", () => {
         it("should render custom content inside the hint area after the default format hint", () => {
             renderComponent({ customRangeHint: <div className="s-custom-range-hint">Custom hint</div> });

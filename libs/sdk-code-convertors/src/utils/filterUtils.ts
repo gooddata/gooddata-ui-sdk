@@ -15,7 +15,13 @@ import type { TextFilterCondition } from "./typeGuards.js";
 function findDateLabelGranularity(entities: FromEntities | ExportEntities, label: string) {
     const [type, objId] = label.split("/");
     const id = objId || type;
-    const [dateDatasetId, gran] = id.split(".");
+    // A date dataset id may itself contain dots, while a granularity never does, so split at the last one
+    const separator = id.lastIndexOf(".");
+    if (separator < 0) {
+        return undefined;
+    }
+    const dateDatasetId = id.slice(0, separator);
+    const gran = id.slice(separator + 1);
 
     const dateDatasetEntity = entities.find((e) => e.type === "date" && e.id === dateDatasetId);
     if (dateDatasetEntity?.data) {
@@ -56,6 +62,31 @@ export function parseDateValuesToDeclarative(
 
     // value by value, as a granularity specific parsing would drop the "" which is to be kept
     return values.flatMap((value) => (value === "" ? [null] : convertDateValues(gran, [value])));
+}
+
+/**
+ * Converts the values of an attribute filter in the declarative to YAML direction like
+ * {@link parseDateValues}, but a `null` (the "(empty value)" element) in the values of a date label is
+ * written as `""`, which {@link parseDateValuesToDeclarative} turns back into `null`, so the empty value
+ * survives a round trip. A stored `""` (from the API, or deployed before that conversion) is the same empty
+ * value on a date label and is written as `""` too, instead of being dropped by the granularity mapping.
+ * Labels of ordinary attributes drop `null`, as YAML has no way to say it there and
+ * `""` is a different value for them.
+ */
+export function parseDateValuesToYaml(
+    entities: FromEntities | ExportEntities,
+    label: string,
+    values: (string | null)[],
+) {
+    const gran = findDateLabelGranularity(entities, label);
+    if (!gran) {
+        return values.filter((value): value is string => value !== null);
+    }
+
+    // value by value, as a granularity specific parsing would drop the "" which is to be kept
+    return values.flatMap((value) =>
+        value === null || value === "" ? [""] : convertDateValues(gran, [value]),
+    );
 }
 
 export function matchConditionToYaml(operator: MatchFilterOperator, negativeSelection?: boolean): string {

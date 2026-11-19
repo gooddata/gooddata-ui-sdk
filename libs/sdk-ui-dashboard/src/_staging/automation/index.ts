@@ -14,11 +14,11 @@ import {
     type IExportDefinitionVisualizationObjectRequestPayload,
     type IFilter,
     type IInsightParameterValue,
-    type IParameterDefinition,
+    type IScalarParameterDefinition,
     type IUser,
     type IWorkspaceUser,
-    type ParameterType,
     type ParameterValue,
+    type ScalarParameterType,
     assertNever,
     idRef,
     isExportDefinitionDashboardRequestPayload,
@@ -235,7 +235,7 @@ export function exportParametersToValues(
  * definition's type (see {@link decodeParameterWireValue}).
  */
 function decodeParameterValue(
-    tag: ParameterType,
+    tag: ScalarParameterType,
     value: ParameterValue | null | undefined,
 ): ParameterValue | undefined {
     if (value == null) {
@@ -275,7 +275,7 @@ export function parseNumberWireValue(wireValue: string): number | undefined {
  * @internal
  */
 export function decodeParameterWireValue(
-    definition: IParameterDefinition,
+    definition: IScalarParameterDefinition,
     value: ParameterValue,
 ): ParameterValue | undefined {
     return decodeParameterValue(definition.type, value);

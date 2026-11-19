@@ -1551,6 +1551,26 @@
         "text": "Select date to",
         "crowdinContext": "Accessibility label for the 'to' date input field in date range selectors. Used by screen readers to identify the end date selection."
     },
+    "filters.date.accessibility.calendar.from": {
+        "text": "Choose start date",
+        "crowdinContext": "Accessibility label of the calendar icon button next to the start date input in the static period date range picker, and of the calendar popup it opens. Used by screen readers."
+    },
+    "filters.date.accessibility.calendar.to": {
+        "text": "Choose end date",
+        "crowdinContext": "Accessibility label of the calendar icon button next to the end date input in the static period date range picker, and of the calendar popup it opens. Used by screen readers."
+    },
+    "filters.date.accessibility.calendar.selectedDay": {
+        "text": "{date}, selected",
+        "crowdinContext": "Accessibility label of the day in the static period calendar that is the currently chosen start or end date. {date} is the full localized date, for example 'Wednesday, January 1st, 2025'. Used by screen readers."
+    },
+    "filters.date.accessibility.calendar.previousMonth": {
+        "text": "Previous month",
+        "crowdinContext": "Accessibility label of the button that shows the previous month in the calendar of the static period date range picker. Used by screen readers."
+    },
+    "filters.date.accessibility.calendar.nextMonth": {
+        "text": "Next month",
+        "crowdinContext": "Accessibility label of the button that shows the next month in the calendar of the static period date range picker. Used by screen readers."
+    },
     "filters.time.accessibility.label.from": {
         "text": "Select time from",
         "crowdinContext": "Accessibility label for the 'from' time input field in time range selectors. Used by screen readers to identify the start time selection."
@@ -3162,6 +3182,14 @@
     "uiKit.toast.regionLabel": {
         "text": "{count, plural, one {# notification} other {# notifications}}",
         "crowdinContext": "Accessible name of the area with the toast notifications (success and error messages that pop up), read by screen readers. # is the number of notifications shown."
+    },
+    "uiKit.message.showMore": {
+        "text": "Show more",
+        "crowdinContext": "Link right after the text of an inline message (info, success, warning or error) that reveals its additional detail."
+    },
+    "uiKit.message.showLess": {
+        "text": "Show less",
+        "crowdinContext": "Link right after the text of an inline message (info, success, warning or error) that hides its additional detail again."
     },
     "uiKit.autocomplete.stateLoading": {
         "text": "Loading…",

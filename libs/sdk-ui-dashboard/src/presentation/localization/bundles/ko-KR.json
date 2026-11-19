@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "여기에 제목 추가...",
     "layout.header.add.description.placeholder": "여기에 설명 추가...",
     "controlButtons.options.tooltip": "추가 작업",
+    "controlButtons.options.widgetLabel": "{title}에 대한 추가 작업",
     "controlButtons.options.back": "이전 단계로 돌아가기",
     "controlButtons.options.closeMenu": "메뉴 닫기",
     "controlButtons.edit.value": "편집",

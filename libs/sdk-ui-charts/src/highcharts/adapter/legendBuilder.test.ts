@@ -10,7 +10,10 @@ import { measureLocalId } from "@gooddata/sdk-model";
 import { DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 import { DEFAULT_LEGEND_CONFIG, type ISeriesItemMetric } from "@gooddata/sdk-ui-vis-commons";
 
+import { ScatterPlotWith2MetricsAndAttributeNullsInData } from "../../testUtils/fixturesData/ScatterPlotWith2MetricsAndAttributeNullsInData.fixture.js";
+import { localDataView } from "../../testUtils/localDataView.fixture.js";
 import { recordedDataFacade } from "../../testUtils/recordings.fixture.js";
+import { getChartOptions } from "../chartTypes/_chartOptions/chartOptionsBuilder.js";
 import { generateChartOptions } from "../chartTypes/_util/helper.js";
 import { type IChartOptions } from "../typings/unsafe.js";
 
@@ -170,6 +173,7 @@ describe("getLegendItems", () => {
                     .XAndYAxisMeasuresAndAttributeWithNullsInData as unknown as ScenarioRecording,
             );
             const rows = dv.rawData().twoDimData();
+            const viewByItems = dv.meta().attributeHeaders()[0][0];
             const visibleClusters = [0, 1, 2].filter((cluster) => cluster !== missingCluster);
             const clusters = rows.map((row, index) =>
                 row.some((value) => value === null)
@@ -179,7 +183,7 @@ describe("getLegendItems", () => {
             const dataView = dv.dataView.withClustering(
                 { numberOfClusters: 3 },
                 {
-                    attribute: rows.map((_, index) => `${index}`),
+                    attribute: viewByItems.map((header) => header.attributeHeaderItem.uri),
                     clusters,
                     xcoord: rows.map((row) => (row[0] === null ? null : Number(row[0]))),
                     ycoord: rows.map((row) => (row[1] === null ? null : Number(row[1]))),
@@ -197,6 +201,71 @@ describe("getLegendItems", () => {
             }
         },
     );
+
+    it("should keep cluster labels and legend items aligned when clustering skips NULL rows", () => {
+        const dataView = {
+            ...localDataView(ScatterPlotWith2MetricsAndAttributeNullsInData),
+            clusteringConfig: { numberOfClusters: 2 },
+            clusteringResult: {
+                attribute: ["elem_949_168279", "elem_949_168282", "elem_949_965523"],
+                clusters: [0, 1, 0],
+                xcoord: [1221828444.21, 1240493764.75, 582846654.5],
+                ycoord: [246, 224, 92],
+            },
+        };
+        const chartOptions = getChartOptions(
+            dataView,
+            { type: "scatter", clustering: { enabled: true, numberOfClusters: 2 } },
+            [],
+            "empty value",
+            undefined,
+            undefined,
+            "Cluster",
+        );
+        const legendItems = getLegendItems(chartOptions, undefined);
+        const points = chartOptions.data!.series![0].data!;
+
+        expect(legendItems).toMatchObject([
+            { name: "Cluster 0", legendIndex: 0 },
+            { name: "Cluster 1", legendIndex: 1 },
+        ]);
+        expect(points).toMatchObject([
+            { name: "CompuSci", clusterName: "Cluster 0", legendIndex: 0 },
+            { name: "Educationly", clusterName: "Cluster 1", legendIndex: 1 },
+            { name: "WonderKid", clusterName: "Cluster 0", legendIndex: 0 },
+        ]);
+    });
+
+    it("should preserve cluster assignments for scatter plots without a View by attribute", () => {
+        const dv = rec(
+            ReferenceRecordings.Scenarios.ScatterPlot.XAxisMeasure as unknown as ScenarioRecording,
+        );
+        const dataView = dv.dataView.withClustering(
+            { numberOfClusters: 2 },
+            {
+                attribute: [],
+                clusters: [1],
+                xcoord: [Number(dv.rawData().twoDimData()[0][0])],
+                ycoord: [0],
+            },
+        );
+        const chartOptions = getChartOptions(
+            dataView,
+            { type: "scatter", clustering: { enabled: true, numberOfClusters: 2 } },
+            [],
+            "empty value",
+            undefined,
+            undefined,
+            "Cluster",
+        );
+
+        expect(getLegendItems(chartOptions, undefined)).toMatchObject([
+            { name: "Cluster 1", legendIndex: 0 },
+        ]);
+        expect(chartOptions.data!.series![0].data).toMatchObject([
+            { clusterName: "Cluster 1", legendIndex: 0 },
+        ]);
+    });
 
     it("should name sankey legend items by the node name, falling back to the node id", () => {
         const chartOptions = {

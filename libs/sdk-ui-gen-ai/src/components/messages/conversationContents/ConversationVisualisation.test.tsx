@@ -9,6 +9,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type IAttribute,
+    type IExecutionConfig,
     type IInsight,
     type ISeparators,
     attributeDisplayFormRef,
@@ -20,6 +21,7 @@ import {
     newMeasure,
     newMeasureSort,
 } from "@gooddata/sdk-model";
+import { type IAxisConfig } from "@gooddata/sdk-ui-charts";
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { type IChatConversationLocalItem } from "../../../model.js";
@@ -43,7 +45,10 @@ type RecordedProps = {
         primaryChartType?: unknown;
         secondaryChartType?: unknown;
         inlineVisualizations?: unknown;
+        secondary_xaxis?: IAxisConfig;
+        secondary_yaxis?: IAxisConfig;
     };
+    execConfig?: IExecutionConfig;
     attribute?: unknown;
     measures?: unknown[];
     primaryMeasures?: unknown[];
@@ -163,6 +168,7 @@ function renderVisualisation(
         isTable?: boolean;
         enableNewPivotTable?: boolean;
         onVisualisationSuccess?: () => void;
+        execConfig?: IExecutionConfig;
     } = {},
     insight: Partial<IInsight["insight"]> = {},
 ) {
@@ -426,6 +432,161 @@ describe("ConversationVisualisation", () => {
         expect(lastProps.get("ColumnChart")).toMatchObject({
             measures: [newMeasure("m1"), newMeasure("m2")],
             stackBy: undefined,
+        });
+    });
+
+    // The local IDs deliberately differ from the catalog IDs: the chart matches axes by local ID.
+    const sales = newMeasure("net_sales", (m) => m.localId("m_sales"));
+    const orders = newMeasure("net_orders", (m) => m.localId("m_orders"));
+    const extra = newMeasure("net_extra", (m) => m.localId("m_extra"));
+
+    describe.each([
+        ["local:line", "LineChart", "secondary_yaxis", "trend"],
+        ["local:column", "ColumnChart", "secondary_yaxis", "view"],
+        ["local:bar", "BarChart", "secondary_xaxis", "view"],
+    ] as const)("secondary axis of %s", (url, component, axisKey, attributeBucket) => {
+        const otherAxisKey = axisKey === "secondary_xaxis" ? "secondary_yaxis" : "secondary_xaxis";
+
+        function renderWith(
+            properties: Record<string, unknown>,
+            measures = [sales, orders],
+            props: { execConfig?: IExecutionConfig } = {},
+        ) {
+            renderVisualisation(url, props, {
+                buckets: [
+                    newBucket("measures", ...measures),
+                    newBucket(attributeBucket, newAttribute("date.month")),
+                ],
+                properties,
+            });
+            return lastProps.get(component);
+        }
+
+        it("forwards the saved membership without the stored axis styling or input changes", () => {
+            const controls = {
+                [axisKey]: { measures: ["m_orders"], min: "0", name: { position: "left" } },
+            };
+            const before = structuredClone(controls);
+
+            const props = renderWith({ controls });
+
+            expect(props?.config?.[axisKey]).toEqual({ measures: ["m_orders"] });
+            expect(props?.config).not.toHaveProperty(otherAxisKey);
+            expect(props?.measures).toEqual([sales, orders]);
+            expect(props?.secondaryMeasures).toBeUndefined();
+            expect(controls).toEqual(before);
+        });
+
+        it.each([
+            [
+                "only displayed local IDs, once each",
+                [null, 1, "net_orders", "metric/net_orders", "m_order", "removed", "m_orders", "m_orders"],
+                [sales, orders],
+                ["m_orders"],
+            ],
+            [
+                "every marked metric in display order",
+                ["m_extra", "m_orders"],
+                [sales, orders, extra],
+                ["m_orders", "m_extra"],
+            ],
+            [
+                "every metric when all are secondary",
+                ["m_sales", "m_orders"],
+                [sales, orders],
+                ["m_sales", "m_orders"],
+            ],
+        ])("keeps %s", (_, membership, measures, expected) => {
+            const props = renderWith({ controls: { [axisKey]: { measures: membership } } }, measures);
+
+            expect(props?.config?.[axisKey]).toEqual({ measures: expected });
+            expect(props?.measures).toEqual(measures);
+        });
+
+        it.each([
+            ["no controls", {}],
+            ["null controls", { controls: null }],
+            ["no axis", { controls: {} }],
+            ["a null axis", { controls: { [axisKey]: null } }],
+            ["an axis without measures", { controls: { [axisKey]: {} } }],
+            ["null measures", { controls: { [axisKey]: { measures: null } } }],
+            ["empty measures", { controls: { [axisKey]: { measures: [] } } }],
+            ["string measures", { controls: { [axisKey]: { measures: "m_orders" } } }],
+            ["object measures", { controls: { [axisKey]: { measures: {} } } }],
+            ["number measures", { controls: { [axisKey]: { measures: 1 } } }],
+            ["boolean measures", { controls: { [axisKey]: { measures: true } } }],
+            ["only stale IDs", { controls: { [axisKey]: { measures: ["removed", "metric/net_orders"] } } }],
+            [
+                "membership saved on the other axis",
+                { controls: { [otherAxisKey]: { measures: ["m_orders"] } } },
+            ],
+        ])("draws one axis for %s", (_, properties) => {
+            const props = renderWith(properties);
+
+            expect(props?.config).not.toHaveProperty(axisKey);
+            expect(props?.config).not.toHaveProperty(otherAxisKey);
+            expect(props?.measures).toEqual([sales, orders]);
+        });
+
+        it("passes the execution config through beside the axis", () => {
+            const execConfig: IExecutionConfig = { dataSamplingPercentage: 50 };
+
+            const props = renderWith({ controls: { [axisKey]: { measures: ["m_orders"] } } }, undefined, {
+                execConfig,
+            });
+
+            expect(props?.execConfig).toBe(execConfig);
+            expect(props?.config?.[axisKey]).toEqual({ measures: ["m_orders"] });
+        });
+
+        it("reads shared controls without changing them across renders", () => {
+            const controls = Object.freeze({
+                [axisKey]: Object.freeze({ measures: Object.freeze(["m_orders"]) }),
+            });
+
+            expect(renderWith({ controls })?.config?.[axisKey]).toEqual({ measures: ["m_orders"] });
+            expect(renderWith({ controls }, [sales])?.config).not.toHaveProperty(axisKey);
+            expect(controls).toEqual({ [axisKey]: { measures: ["m_orders"] } });
+        });
+    });
+
+    describe.each([
+        ["local:column", "ColumnChart", "secondary_yaxis"],
+        ["local:bar", "BarChart", "secondary_xaxis"],
+    ] as const)("secondary axis of a stacked %s", (url, component, axisKey) => {
+        const category = newAttribute("category");
+        const keptSort = newAttributeSort(category, "asc");
+
+        function renderStacked(membership: string[]) {
+            renderVisualisation(
+                url,
+                {},
+                {
+                    buckets: [
+                        newBucket("measures", sales, orders),
+                        newBucket("view", category),
+                        newBucket("stack", newAttribute("region")),
+                    ],
+                    sorts: [keptSort, newMeasureSort(orders, "desc")],
+                    properties: { controls: { [axisKey]: { measures: membership } } },
+                },
+            );
+            return lastProps.get(component);
+        }
+
+        it("drops the axis of a metric the stacked chart leaves out", () => {
+            const props = renderStacked(["m_orders"]);
+
+            expect(props?.measures).toEqual([sales]);
+            expect(props?.sortBy).toEqual([keptSort]);
+            expect(props?.config).not.toHaveProperty(axisKey);
+        });
+
+        it("keeps the axis of the metric the stacked chart shows", () => {
+            const props = renderStacked(["m_sales", "m_orders"]);
+
+            expect(props?.measures).toEqual([sales]);
+            expect(props?.config?.[axisKey]).toEqual({ measures: ["m_sales"] });
         });
     });
 

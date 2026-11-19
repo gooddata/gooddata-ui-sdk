@@ -7,7 +7,7 @@ import { describe, expect, it } from "vitest";
 
 import {
     type ICatalogAttributeHierarchy,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     idRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -38,7 +38,7 @@ describe("catalogReducers", () => {
     });
 
     describe("setCatalogParameters", () => {
-        const topN: IParameterMetadataObject = {
+        const topN: IScalarParameterMetadataObject = {
             type: "parameter",
             id: "topN",
             uri: "/topN",

@@ -40,7 +40,7 @@ import {
 
 import { type FromEntities } from "../types.js";
 import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "../utils/errors.js";
-import { matchConditionToYaml, parseDateValues } from "../utils/filterUtils.js";
+import { matchConditionToYaml, parseDateValuesToYaml } from "../utils/filterUtils.js";
 import { parseGranularity } from "../utils/granularityUtils.js";
 import { createFilterItemKeyName, getIdentifier } from "../utils/yamlUtils.js";
 
@@ -554,7 +554,7 @@ function attributeElementValues(
     elements: IAttributeElements | undefined,
     field: "in" | "notIn",
     errorContext?: IErrorContext,
-): string[] {
+): (string | null)[] {
     if (!isAttributeElementsByValue(elements)) {
         throw newError(
             CoreErrorCode.ItemNotSupported,
@@ -562,8 +562,9 @@ function attributeElementValues(
             updateErrorContext(errorContext, { path: [field] }),
         );
     }
-    // An empty string is a valid attribute element value.
-    return elements.values.filter((v): v is string => v !== null && v !== undefined);
+    // An empty string is a valid attribute element value; null is the "(empty value)" element, which only
+    // a date label can express in YAML (see parseDateValuesToYaml).
+    return elements.values.filter((v): v is string | null => v !== undefined);
 }
 
 /** @internal */
@@ -586,7 +587,7 @@ export function declarativePositiveAttributeFilterToYaml(
     map.add(new Pair("using", id));
 
     const values = attributeElementValues(attributeFilter.in, "in", errorContext);
-    map.add(new Pair("state", new Pair("include", parseDateValues(entities, id, values))));
+    map.add(new Pair("state", new Pair("include", parseDateValuesToYaml(entities, id, values))));
 
     return map;
 }
@@ -615,9 +616,13 @@ export function declarativeNegativeAttributeFilterToYaml(
         isAttributeElementsByRef(attributeFilter.notIn) && attributeFilter.notIn.uris.length === 0;
     const values = excludesNothingByRef
         ? []
-        : attributeElementValues(attributeFilter.notIn, "notIn", errorContext);
+        : parseDateValuesToYaml(
+              entities,
+              id,
+              attributeElementValues(attributeFilter.notIn, "notIn", errorContext),
+          );
     if (values.length > 0) {
-        map.add(new Pair("state", new Pair("exclude", parseDateValues(entities, id, values))));
+        map.add(new Pair("state", new Pair("exclude", values)));
     }
 
     return map;

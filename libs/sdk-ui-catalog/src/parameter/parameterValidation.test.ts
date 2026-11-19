@@ -2,15 +2,18 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { ParameterType } from "@gooddata/sdk-model";
+import type { ScalarParameterType } from "@gooddata/sdk-model";
 
 import { type ParameterDraft, serializeParameterToYaml } from "./parameterSerialization.js";
 import { validateParameterYaml } from "./parameterValidation.js";
 
-const NUMBER_ONLY: ParameterType[] = ["NUMBER"];
-const ALL_TYPES: ParameterType[] = ["NUMBER", "STRING"];
+const NUMBER_ONLY: ScalarParameterType[] = ["NUMBER"];
+const ALL_TYPES: ScalarParameterType[] = ["NUMBER", "STRING"];
 
-function validate(yaml: string, options: { enabledTypes?: ParameterType[]; fixedIdentifier?: string } = {}) {
+function validate(
+    yaml: string,
+    options: { enabledTypes?: ScalarParameterType[]; fixedIdentifier?: string } = {},
+) {
     const { enabledTypes = NUMBER_ONLY, ...rest } = options;
     return validateParameterYaml(yaml, { enabledTypes, ...rest });
 }

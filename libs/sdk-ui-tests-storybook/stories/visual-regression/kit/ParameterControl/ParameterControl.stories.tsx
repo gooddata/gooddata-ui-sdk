@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react";
 
-import { type IParameterDefinition } from "@gooddata/sdk-model";
+import { type IScalarParameterDefinition } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { ParameterControl, ParameterControlButton } from "@gooddata/sdk-ui-kit";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -10,24 +10,24 @@ import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import { type IStoryParameters, State } from "../../../_infra/backstopScenario.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
 
-const numberDefinitionWithConstraints: IParameterDefinition = {
+const numberDefinitionWithConstraints: IScalarParameterDefinition = {
     type: "NUMBER",
     defaultValue: 25,
     constraints: { min: 0, max: 100 },
 };
 
-const numberDefinitionWithoutConstraints: IParameterDefinition = {
+const numberDefinitionWithoutConstraints: IScalarParameterDefinition = {
     type: "NUMBER",
     defaultValue: 25,
 };
 
-const stringDefinitionWithConstraints: IParameterDefinition = {
+const stringDefinitionWithConstraints: IScalarParameterDefinition = {
     type: "STRING",
     defaultValue: "Actual",
     constraints: { minLength: 1, maxLength: 20 },
 };
 
-const stringDefinitionWithoutConstraints: IParameterDefinition = {
+const stringDefinitionWithoutConstraints: IScalarParameterDefinition = {
     type: "STRING",
     defaultValue: "Actual",
 };

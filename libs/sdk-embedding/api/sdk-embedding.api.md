@@ -15,10 +15,10 @@ import { ObjRef } from '@gooddata/sdk-model';
 // @public (undocumented)
 export type AbsoluteType = "absolute";
 
-// @beta
+// @beta @deprecated
 export type AdAttributeHierarchyModifiedCommand = IGdcAdMessageEvent<GdcAdCommandType.AttributeHierarchyModified, undefined>;
 
-// @beta
+// @beta @deprecated
 export type AdAttributeHierarchyModifiedCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.AttributeHierarchyModified, undefined>;
 
 // @public
@@ -284,7 +284,7 @@ export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter |
 
 // @public
 export enum GdcAdCommandType {
-    // @beta
+    // @beta @deprecated
     AttributeHierarchyModified = "attributeHierarchyModified",
     Clear = "clear",
     ClearInsight = "clearInsight",
@@ -1177,7 +1177,7 @@ export function isArbitraryAttributeFilterItem(filter: unknown): filter is IArbi
 // @public (undocumented)
 export function isAttributeFilter(filter: unknown): filter is AttributeFilterItem;
 
-// @beta
+// @beta @deprecated
 export function isAttributeHierarchyModifiedCommandData(obj: unknown): obj is AdAttributeHierarchyModifiedCommandData;
 
 // @public

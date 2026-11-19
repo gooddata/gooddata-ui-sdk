@@ -20,6 +20,12 @@ section: AI & Modules
 
 Drive the AI Assistant from your application by dispatching actions to its store. The [list of actions](../ai-assistant/#available-actions) is on the reference page.
 
+If you use `useDashboardCopilot`, call its `sendMessage(message)` helper to send a message in the current
+conversation, or `generateDashboard(message)` to start a new dashboard conversation. The latter requires an
+initialized, empty dashboard in edit mode. See [Connect the assistant to a dashboard](../ai-assistant-layout/#connect-the-assistant-to-a-dashboard)
+for setup and [hook return values](../ai-assistant/#usedashboardcopilot-hook) for all helpers. To also access the
+dispatcher, pass `onDispatcher` through `genAiStoreProps({ onDispatcher })` on the outer `GenAiStore`.
+
 ## Get the dispatcher
 
 Take the dispatcher from the `onDispatcher` callback of `GenAIAssistant` or `GenAiStore`:

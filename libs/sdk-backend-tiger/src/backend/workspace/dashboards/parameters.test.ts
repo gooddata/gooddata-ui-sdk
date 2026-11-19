@@ -6,8 +6,8 @@ import {
     type IDashboard,
     type IDashboardParameter,
     type IDashboardTab,
-    type ParameterType,
     type ParameterValue,
+    type ScalarParameterType,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -16,7 +16,7 @@ import { patchDashboardParametersFromExport } from "./parameters.js";
 function makeParameter(
     id: string,
     value?: ParameterValue,
-    parameterType: ParameterType = "NUMBER",
+    parameterType: ScalarParameterType = "NUMBER",
 ): IDashboardParameter {
     return {
         ref: idRef(id, "parameter"),

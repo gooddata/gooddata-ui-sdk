@@ -126,6 +126,12 @@ type UserSettings = {
     settings: ISettings;
 };
 
+/**
+ * Resolves locale, separators and settings.
+ *
+ * When the config specifies all three, the backend is not called and `config.settings` replace the backend
+ * settings entirely. Otherwise `config.settings` are merged over the backend settings.
+ */
 function resolveUserSettings(ctx: DashboardContext, config: DashboardConfig): Promise<UserSettings> {
     if (config.settings && config.locale && config.separators) {
         return Promise.resolve({
@@ -138,7 +144,7 @@ function resolveUserSettings(ctx: DashboardContext, config: DashboardConfig): Pr
     return loadSettingsForCurrentUser(ctx).then((res) => ({
         locale: config.locale ?? resolveLocale(res.locale),
         separators: config.separators ?? res.separators,
-        settings: config.settings ?? stripUserAndWorkspaceProps(res),
+        settings: { ...stripUserAndWorkspaceProps(res), ...config.settings },
     }));
 }
 
@@ -168,6 +174,7 @@ export function* resolveDashboardConfig(
     if (isResolvedConfig(config)) {
         /*
          * Config coming in props is fully specified. There is nothing to do. Bail out immediately.
+         * No backend settings are loaded, so `config.settings` are the only settings in effect.
          */
         if (config.allowUnfinishedFeatures || !config.settings) {
             return applyConfigDefaults(config);

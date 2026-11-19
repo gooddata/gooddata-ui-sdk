@@ -21,6 +21,7 @@ describe("escapeMarkdown", () => {
         ["-", "\\-"],
         [".", "\\."],
         ["!", "\\!"],
+        [":", "\\:"],
     ])("escapes reserved markdown character %s", (input, expected) => {
         expect(escapeMarkdown(input)).toBe(expected);
     });
@@ -79,6 +80,7 @@ describe("removeMarkdown", () => {
 
     it("should unescape markdown escaped characters", () => {
         expect(removeMarkdown("http://www\\.seznam\\.cz")).toBe("http://www.seznam.cz");
+        expect(removeMarkdown(escapeMarkdown("https://example.com"))).toBe("https://example.com");
         expect(removeMarkdown("Escaped \\#header and \\_value\\_ and \\\\ slash")).toBe(
             "Escaped #header and _value_ and \\ slash",
         );

@@ -1,0 +1,155 @@
+// (C) 2026 GoodData Corporation
+
+// `UiMessage` reads only the `--gd-message-{variant}-*` theme variables (registered in
+// sdk-ui-theme-provider, defaulted in defaultTheme.scss), so it follows the same theming as the
+// legacy inline `<Message>`. The `info` variant maps to the `information` set.
+
+@mixin variant-vars($variant) {
+    --local-text-color: var(--gd-message-#{$variant}-textColor);
+    --local-background-color: var(--gd-message-#{$variant}-backgroundColor);
+    --local-border-color: var(--gd-message-#{$variant}-borderColor);
+    --local-border-width: var(--gd-message-#{$variant}-borderWidth);
+    --local-border-radius: var(--gd-message-#{$variant}-borderRadius);
+    --local-link-color: var(--gd-message-#{$variant}-linkButtonColor);
+    --local-close-color: var(--gd-message-#{$variant}-closeButtonColor);
+    --local-separator-color: var(--gd-message-#{$variant}-separatorLineColor);
+}
+
+.gd-ui-kit-message {
+    --local-font-size: 14px;
+    --local-line-height: 20px;
+    --local-link-font-size: 13px;
+    --local-detail-font-size: 13px;
+    --local-control-size: 20px;
+
+    display: inline-flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    max-width: 480px;
+    // `clip` rather than `hidden`: a non-visible overflow that makes a scroll container drops the
+    // flex item's automatic minimum size to 0, so a hug message in a tight flex row would shrink
+    // narrower than its text.
+    overflow: clip;
+    text-align: left;
+    color: var(--local-text-color);
+    background-color: var(--local-background-color);
+    border-style: solid;
+    border-color: var(--local-border-color);
+    border-width: var(--local-border-width);
+    border-radius: var(--local-border-radius);
+
+    &--variant-info {
+        @include variant-vars(information);
+    }
+
+    &--variant-success {
+        @include variant-vars(success);
+    }
+
+    &--variant-warning {
+        @include variant-vars(warning);
+    }
+
+    &--variant-error {
+        @include variant-vars(error);
+    }
+
+    &--size-small {
+        --local-font-size: 12px;
+        --local-line-height: 16px;
+        --local-link-font-size: 12px;
+        --local-detail-font-size: 12px;
+        --local-control-size: 16px;
+    }
+
+    &--width-fill {
+        display: flex;
+        width: 100%;
+        max-width: none;
+    }
+
+    &__row {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--gd-spacing-7px);
+        padding: 4px var(--gd-spacing-10px);
+    }
+
+    &__icon {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        height: var(--local-line-height);
+    }
+
+    &__text {
+        min-width: 0;
+        font-size: var(--local-font-size);
+        line-height: var(--local-line-height);
+        overflow-wrap: break-word;
+    }
+
+    &--width-hug &__text {
+        max-width: 380px;
+    }
+
+    &__toggle {
+        flex-shrink: 0;
+        padding: 0;
+        border: none;
+        background: transparent;
+        font: inherit;
+        font-size: var(--local-link-font-size);
+        line-height: var(--local-line-height);
+        color: var(--local-link-color);
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:focus-visible {
+            outline: 2px solid var(--gd-palette-primary-focus);
+            outline-offset: 2px;
+        }
+    }
+
+    &__close {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: var(--local-control-size);
+        height: var(--local-control-size);
+        margin-left: auto;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: var(--local-close-color);
+        cursor: pointer;
+        opacity: 0.85;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--gd-palette-primary-focus);
+            outline-offset: 0;
+        }
+    }
+
+    &__detail {
+        // `width: 0` keeps the detail out of the message's intrinsic width and `min-width: 100%`
+        // stretches it back, so an expanded hug message keeps the width of its row (as in Figma).
+        box-sizing: border-box;
+        width: 0;
+        min-width: 100%;
+        padding: var(--gd-spacing-5px) var(--gd-spacing-10px);
+        border-top: 1px solid var(--local-separator-color);
+        font-size: var(--local-detail-font-size);
+        line-height: normal;
+        overflow-wrap: break-word;
+
+        &[hidden] {
+            display: none;
+        }
+    }
+}

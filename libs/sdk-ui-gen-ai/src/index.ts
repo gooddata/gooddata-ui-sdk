@@ -40,6 +40,7 @@ export {
     CopilotInteractionComposingWithHandler,
     type ICopilotInteractionComposingWithHandlerProps,
 } from "./copilot/CopilotInteractionComposingWithHandler.js";
+export { useDashboardCopilot, type IUseDashboardCopilotResult } from "./copilot/useDashboardCopilot.js";
 
 export {
     GenAIChat,

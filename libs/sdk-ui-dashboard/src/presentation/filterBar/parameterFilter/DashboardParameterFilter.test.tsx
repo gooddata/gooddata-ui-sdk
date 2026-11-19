@@ -9,7 +9,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import {
     DashboardParameterModeValues,
     type IDashboardParameter,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     type ParameterValue,
     idRef,
 } from "@gooddata/sdk-model";
@@ -32,7 +32,7 @@ const paramRef = idRef("topN", "parameter");
 const scenarioRef = idRef("scenario", "parameter");
 const enumRef = idRef("scenarioEnum", "parameter");
 
-const workspaceParameter: IParameterMetadataObject = {
+const workspaceParameter: IScalarParameterMetadataObject = {
     type: "parameter",
     id: "topN",
     uri: "/topN",
@@ -45,7 +45,7 @@ const workspaceParameter: IParameterMetadataObject = {
     definition: { type: "NUMBER", defaultValue: 10, constraints: { min: 0, max: 100 } },
 };
 
-const stringWorkspaceParameter: IParameterMetadataObject = {
+const stringWorkspaceParameter: IScalarParameterMetadataObject = {
     ...workspaceParameter,
     id: "scenario",
     uri: "/scenario",
@@ -54,7 +54,7 @@ const stringWorkspaceParameter: IParameterMetadataObject = {
     definition: { type: "STRING", defaultValue: "Actual" },
 };
 
-const enumWorkspaceParameter: IParameterMetadataObject = {
+const enumWorkspaceParameter: IScalarParameterMetadataObject = {
     ...workspaceParameter,
     id: "scenarioEnum",
     uri: "/scenarioEnum",

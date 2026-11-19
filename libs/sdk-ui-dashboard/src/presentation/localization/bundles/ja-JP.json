@@ -447,6 +447,7 @@
     "layout.header.add.title.placeholder": "こちらにタイトルを追加します…",
     "layout.header.add.description.placeholder": "ここに説明を追加…",
     "controlButtons.options.tooltip": "その他のアクション",
+    "controlButtons.options.widgetLabel": "{title} のその他のアクション",
     "controlButtons.options.back": "前のステップに戻る",
     "controlButtons.options.closeMenu": "メニューを閉じる",
     "controlButtons.edit.value": "編集",

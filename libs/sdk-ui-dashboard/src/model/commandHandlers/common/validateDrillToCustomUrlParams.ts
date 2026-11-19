@@ -28,7 +28,10 @@ import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSele
 import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextAttributeFilterItems } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { selectWidgetParameterContext } from "../../store/tabs/parameters/parametersSelectors.js";
+import {
+    type IWidgetParameterValue,
+    selectWidgetParameterValues,
+} from "../../store/tabs/parameters/parametersSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { selectIsDrillRestricted } from "../../store/widgetDrills/drillRestrictionSelectors.js";
 import {
@@ -102,11 +105,8 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
         selectAttributeFilterConfigsOverrides,
     );
 
-    const parameterContext: ReturnType<ReturnType<typeof selectWidgetParameterContext>> = yield select(
-        selectWidgetParameterContext(widgetRef(widget)),
-    );
-    const dashboardParameterIdentifiers =
-        parameterContext?.entries.map((entry) => entry.parameter.ref.identifier) ?? [];
+    const parameters: IWidgetParameterValue[] = yield select(selectWidgetParameterValues(widgetRef(widget)));
+    const parameterIdentifiers = parameters.map(({ identifier }) => identifier);
 
     const readableUrlDrills = widget.drills
         .filter(isDrillToCustomUrl)
@@ -161,8 +161,7 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
             });
 
             const hasUnknownParameterPlaceholder =
-                getUnknownParameterIdentifiers(drillDefinition.target.url, dashboardParameterIdentifiers)
-                    .length > 0;
+                getUnknownParameterIdentifiers(drillDefinition.target.url, parameterIdentifiers).length > 0;
 
             if (
                 hasInvalidParam ||

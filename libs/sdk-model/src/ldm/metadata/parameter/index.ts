@@ -1,5 +1,6 @@
 // (C) 2026 GoodData Corporation
 
+import { type DateAttributeGranularity } from "../../../base/dateGranularities.js";
 import { type IAuditable } from "../../../base/metadata.js";
 import { assertNever } from "../../../base/typeUtils.js";
 import { type IMetadataObject, type IMetadataObjectDefinition, isMetadataObject } from "../types.js";
@@ -17,6 +18,15 @@ export interface IParameterMetadataObject extends IMetadataObject, IAuditable {
 }
 
 /**
+ * Parameter metadata object whose definition is a {@link IScalarParameterDefinition}.
+ *
+ * @alpha
+ */
+export interface IScalarParameterMetadataObject extends IParameterMetadataObject {
+    definition: IScalarParameterDefinition;
+}
+
+/**
  * Parameter metadata object definition.
  *
  * @public
@@ -31,7 +41,22 @@ export interface IParameterMetadataObjectDefinition extends IMetadataObjectDefin
  *
  * @public
  */
-export type IParameterDefinition = INumberParameterDefinition | IStringParameterDefinition;
+export type IParameterDefinition =
+    | INumberParameterDefinition
+    | IStringParameterDefinition
+    | IDateRangeParameterDefinition;
+
+/**
+ * Definition of a parameter that holds a single value, which can be overridden at runtime (for example
+ * in an execution, on a dashboard or in an automation).
+ *
+ * @remarks
+ * A {@link IDateRangeParameterDefinition} is not scalar: date filters reference it, and the backend
+ * resolves its period during execution.
+ *
+ * @alpha
+ */
+export type IScalarParameterDefinition = INumberParameterDefinition | IStringParameterDefinition;
 
 /**
  * @alpha
@@ -39,9 +64,18 @@ export type IParameterDefinition = INumberParameterDefinition | IStringParameter
 export type ParameterType = IParameterDefinition["type"];
 
 /**
+ * Type of a {@link IScalarParameterDefinition}.
+ *
  * @alpha
  */
-export type ParameterValue = IParameterDefinition["defaultValue"];
+export type ScalarParameterType = IScalarParameterDefinition["type"];
+
+/**
+ * Runtime value of a {@link IScalarParameterDefinition}.
+ *
+ * @alpha
+ */
+export type ParameterValue = IScalarParameterDefinition["defaultValue"];
 
 /**
  * Number parameter definition.
@@ -100,6 +134,57 @@ export interface IStringParameterConstraints {
 }
 
 /**
+ * Granularity of the period held by a {@link IDateRangeParameterDefinition}.
+ *
+ * @remarks
+ * The calendar granularities that date filters use (see {@link DateFilterGranularity}), except that a
+ * week is `GDC.time.week`: an ISO-8601 week, whose days the backend shifts by the week start. Fiscal
+ * granularities are not supported.
+ *
+ * @public
+ */
+export type DateRangeParameterGranularity = Extract<
+    DateAttributeGranularity,
+    | "GDC.time.year"
+    | "GDC.time.quarter"
+    | "GDC.time.month"
+    | "GDC.time.week"
+    | "GDC.time.date"
+    | "GDC.time.hour"
+    | "GDC.time.minute"
+    | "GDC.time.second"
+>;
+
+/**
+ * Period held by a {@link IDateRangeParameterDefinition}.
+ *
+ * @remarks
+ * `from` and `to` are inclusive backend period literals in the format of the granularity: `"2025"` for
+ * `GDC.time.year`, `"2025-3"` for `GDC.time.quarter`, `"2025-08"` for `GDC.time.month`, `"2025-33"` for
+ * `GDC.time.week` (the ISO-8601 week number), `"2025-08-14"` for `GDC.time.date`, `"2025-08-14 09"` for
+ * `GDC.time.hour`, `"2025-08-14 09:30"` for `GDC.time.minute` and `"2025-08-14 09:30:15"` for
+ * `GDC.time.second`. A missing end leaves the period unbounded on that side. The backend does not
+ * guarantee that at least one end is set.
+ *
+ * @public
+ */
+export interface IDateRangeParameterPeriod {
+    granularity: DateRangeParameterGranularity;
+    from?: string;
+    to?: string;
+}
+
+/**
+ * Date range parameter definition. It holds one named period that date filters reference.
+ *
+ * @public
+ */
+export interface IDateRangeParameterDefinition {
+    type: "DATE_RANGE";
+    defaultValue: IDateRangeParameterPeriod;
+}
+
+/**
  * Tests whether the provided object is of type {@link IParameterMetadataObject}.
  *
  * @param obj - object to test
@@ -140,11 +225,48 @@ export function isStringParameterDefinition(def: IParameterDefinition): def is I
 }
 
 /**
+ * Tests whether the provided parameter definition is a {@link IDateRangeParameterDefinition}.
+ *
+ * @param def - parameter definition to test
+ * @alpha
+ */
+export function isDateRangeParameterDefinition(
+    def: IParameterDefinition,
+): def is IDateRangeParameterDefinition {
+    return def.type === "DATE_RANGE";
+}
+
+/**
+ * Tests whether the provided parameter definition is a {@link IScalarParameterDefinition}.
+ *
+ * @param def - parameter definition to test
+ * @alpha
+ */
+export function isScalarParameterDefinition(def: IParameterDefinition): def is IScalarParameterDefinition {
+    return isNumberParameterDefinition(def) || isStringParameterDefinition(def);
+}
+
+/**
+ * Tests whether the provided parameter has a {@link IScalarParameterDefinition}.
+ *
+ * @param parameter - parameter to test
+ * @alpha
+ */
+export function isScalarParameterMetadataObject(
+    parameter: IParameterMetadataObject,
+): parameter is IScalarParameterMetadataObject {
+    return isScalarParameterDefinition(parameter.definition);
+}
+
+/**
  * Tests whether `value` is valid for the given parameter definition.
  *
  * @alpha
  */
-export function isValidParameterValue(definition: IParameterDefinition, value: ParameterValue): boolean {
+export function isValidParameterValue(
+    definition: IScalarParameterDefinition,
+    value: ParameterValue,
+): boolean {
     switch (definition.type) {
         case "NUMBER":
             return typeof value === "number" && isValidNumberParameterValue(value, definition.constraints);
@@ -162,7 +284,7 @@ export function isValidParameterValue(definition: IParameterDefinition, value: P
  * @alpha
  */
 export function sanitizeParameterValue(
-    definition: IParameterDefinition,
+    definition: IScalarParameterDefinition,
     value: ParameterValue,
 ): ParameterValue {
     return isValidParameterValue(definition, value) ? value : definition.defaultValue;
@@ -174,7 +296,10 @@ export function sanitizeParameterValue(
  *
  * @alpha
  */
-export function parameterValueMatchesType(definition: IParameterDefinition, value: ParameterValue): boolean {
+export function parameterValueMatchesType(
+    definition: IScalarParameterDefinition,
+    value: ParameterValue,
+): boolean {
     switch (definition.type) {
         case "NUMBER":
             return typeof value === "number";

@@ -165,7 +165,7 @@ interface IUrlInputPanelProps {
     insightMeasureValueFilters?: IMeasureValueFilter[];
     enableInsightMeasureValueFilters: boolean;
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
-    dashboardParameterIdentifiers: string[];
+    widgetParameterIdentifiers: string[];
     documentationLink?: string;
     intl: IntlShape;
 }
@@ -255,12 +255,12 @@ const buildValidInsightMvfFormattingRule = (measureIdentifiers: string[]) => {
     };
 };
 
-const buildValidParametersFormattingRule = (dashboardParameterIdentifiers: string[]) => {
-    if (dashboardParameterIdentifiers.length === 0) {
+const buildValidParametersFormattingRule = (widgetParameterIdentifiers: string[]) => {
+    if (widgetParameterIdentifiers.length === 0) {
         return undefined;
     }
 
-    const validParameterPlaceholders = dashboardParameterIdentifiers
+    const validParameterPlaceholders = widgetParameterIdentifiers
         .map((identifier) => escapeRegExp(parameterIdentifierToPlaceholder(identifier)))
         .join("|");
 
@@ -321,7 +321,7 @@ const buildFormattingRules = (
     insightFilters: IAttributeFilter[],
     dashboardMeasureIdentifiers: string[],
     insightMeasureIdentifiers: string[],
-    dashboardParameterIdentifiers: string[],
+    widgetParameterIdentifiers: string[],
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[],
 ): IFormattingRule[] => {
     const validDisplayFormsRule = buildValidDisplayFormsFormattingRule(attributeDisplayForms);
@@ -332,7 +332,7 @@ const buildFormattingRules = (
     );
     const validDashboardMvfRule = buildValidDashboardMvfFormattingRule(dashboardMeasureIdentifiers);
     const validInsightMvfRule = buildValidInsightMvfFormattingRule(insightMeasureIdentifiers);
-    const validParametersRule = buildValidParametersFormattingRule(dashboardParameterIdentifiers);
+    const validParametersRule = buildValidParametersFormattingRule(widgetParameterIdentifiers);
     return _compact([
         validDisplayFormsRule,
         validDashboardFiltersRule,
@@ -357,7 +357,7 @@ function UrlInputPanel({
     insightMeasureValueFilters,
     enableInsightMeasureValueFilters,
     attributeFilterConfigs,
-    dashboardParameterIdentifiers,
+    widgetParameterIdentifiers,
 }: IUrlInputPanelProps) {
     const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const catalogMeasuresMap = useDashboardSelector(selectAllCatalogMeasuresMap);
@@ -392,7 +392,7 @@ function UrlInputPanel({
                 insightFilters,
                 dashboardMeasureIdentifiers,
                 insightMeasureIdentifiers,
-                dashboardParameterIdentifiers,
+                widgetParameterIdentifiers,
                 attributeFilterConfigs,
             ),
         [
@@ -402,7 +402,7 @@ function UrlInputPanel({
             dashboardMeasureValueFilters,
             dashboardMeasureIdentifiers,
             insightMeasureIdentifiers,
-            dashboardParameterIdentifiers,
+            widgetParameterIdentifiers,
             attributeFilterConfigs,
         ],
     );
@@ -502,10 +502,10 @@ function CustomUrlEditorDialog({
     const dashboardFilters = useSanitizedDashboardFilters();
     const dashboardMeasureValueFilters = useDashboardSelector(selectFilterContextMeasureValueFilters);
     const attributeFilterConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
-    const dashboardParameters = useDashboardSelector(selectWidgetParameterValues(widgetRef));
-    const dashboardParameterIdentifiers = useMemo(
-        () => dashboardParameters.map(({ identifier }) => identifier),
-        [dashboardParameters],
+    const widgetParameters = useDashboardSelector(selectWidgetParameterValues(widgetRef));
+    const widgetParameterIdentifiers = useMemo(
+        () => widgetParameters.map(({ identifier }) => identifier),
+        [widgetParameters],
     );
     const invalidFilteringParametersIdentifiers = useInvalidFilteringParametersIdentifiers(
         urlDrillTarget,
@@ -515,7 +515,7 @@ function CustomUrlEditorDialog({
         enableInsightMeasureValueFilters ? insightMeasureValueFilters : undefined,
         enableInsightMeasureValueFilters,
         attributeFilterConfigs,
-        dashboardParameterIdentifiers,
+        widgetParameterIdentifiers,
     );
 
     const invalidParameters = useMemo(() => {
@@ -574,7 +574,7 @@ function CustomUrlEditorDialog({
                 insightMeasureValueFilters={insightMeasureValueFilters}
                 enableInsightMeasureValueFilters={enableInsightMeasureValueFilters}
                 attributeFilterConfigs={attributeFilterConfigs}
-                dashboardParameterIdentifiers={dashboardParameterIdentifiers}
+                widgetParameterIdentifiers={widgetParameterIdentifiers}
                 intl={intl}
             />
             <ParametersPanel
@@ -583,7 +583,7 @@ function CustomUrlEditorDialog({
                 dashboardMeasureValueFilters={dashboardMeasureValueFilters}
                 insightMeasureValueFilters={insightMeasureValueFilters}
                 attributeFilterConfigs={attributeFilterConfigs}
-                dashboardParameters={dashboardParameters}
+                widgetParameters={widgetParameters}
                 attributeDisplayForms={attributeDisplayForms}
                 loadingAttributeDisplayForms={loadingAttributeDisplayForms}
                 enableClientIdParameter={enableClientIdParameter}

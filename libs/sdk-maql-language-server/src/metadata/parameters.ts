@@ -1,7 +1,11 @@
 // (C) 2026 GoodData Corporation
 
 import { escapeString } from "@gooddata/maql-antlr4ts";
-import { type IParameterDefinition, isStringParameterDefinition } from "@gooddata/sdk-model";
+import {
+    type IParameterDefinition,
+    type IScalarParameterDefinition,
+    isStringParameterDefinition,
+} from "@gooddata/sdk-model";
 
 export function parameterTypeLabel(definition: IParameterDefinition): string {
     return definition.type.toLowerCase();
@@ -20,7 +24,7 @@ export function parameterSummary(definition: IParameterDefinition): string {
  * edited reaches us with a type it has not finished, or a default of the wrong kind for the type it
  * declares, neither of which the declared type admits.
  */
-export function isRenderableDefinition(definition: unknown): definition is IParameterDefinition {
+export function isRenderableDefinition(definition: unknown): definition is IScalarParameterDefinition {
     const candidate = definition as Partial<IParameterDefinition> | null | undefined;
     switch (candidate?.type) {
         case "STRING":
@@ -36,7 +40,7 @@ export function isRenderableDefinition(definition: unknown): definition is IPara
  * The parameter's default as it would be written in MAQL: string defaults quoted and escaped,
  * numeric ones bare.
  */
-export function parameterMaqlLiteral(definition: IParameterDefinition): string {
+export function parameterMaqlLiteral(definition: IScalarParameterDefinition): string {
     return isStringParameterDefinition(definition)
         ? escapeString(definition.defaultValue, '"')
         : String(definition.defaultValue);

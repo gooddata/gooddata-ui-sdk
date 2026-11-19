@@ -230,7 +230,8 @@ export interface IUiAsyncTableFilterProps extends IUiAsyncTableFilter {
 }
 
 export interface IUiAsyncTableRowProps<T extends { id: string } | { ref: ObjRef }> {
-    item?: T;
+    tableId: string;
+    item: T;
     itemIndex: number;
     columns: Array<IUiAsyncTableColumn<T>>;
     onSelect?: (item: T) => void;
@@ -298,6 +299,8 @@ export interface IUiAsyncTableIconRendererProps<T> {
 }
 
 export interface IUiAsyncTableBodyProps<T extends { id: string } | { ref: ObjRef }> {
+    tableId: string;
+    hasDefaultRows: boolean;
     items: T[];
     maxHeight: number;
     itemHeight: number;

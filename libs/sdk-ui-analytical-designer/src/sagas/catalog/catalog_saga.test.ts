@@ -12,6 +12,7 @@ import {
     type ICatalogAttributeHierarchy,
     type IInsightDefinition,
     type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     idRef,
     newInsightDefinition,
     newMeasure,
@@ -246,7 +247,7 @@ describe("Catalog sagas", () => {
     });
 
     describe("loadParameters", () => {
-        const topN: IParameterMetadataObject = {
+        const topN: IScalarParameterMetadataObject = {
             type: "parameter",
             id: "topN",
             uri: "/topN",
@@ -259,7 +260,7 @@ describe("Catalog sagas", () => {
             definition: { type: "NUMBER", defaultValue: 10 },
         };
 
-        const scenario: IParameterMetadataObject = {
+        const scenario: IScalarParameterMetadataObject = {
             ...topN,
             id: "scenario",
             uri: "/scenario",
@@ -299,6 +300,28 @@ describe("Catalog sagas", () => {
             expect(iterator.next([topN, scenario]).value).toEqual(
                 put(setCatalogParameters([topN, scenario])),
             );
+            expect(iterator.next().done).toBe(true);
+        });
+
+        it("never stores DATE_RANGE parameters", () => {
+            const lastHoldingMonth: IParameterMetadataObject = {
+                ...topN,
+                id: "lastHoldingMonth",
+                uri: "/lastHoldingMonth",
+                ref: idRef("lastHoldingMonth", "parameter"),
+                title: "Last holding month",
+                definition: {
+                    type: "DATE_RANGE",
+                    defaultValue: { granularity: "GDC.time.month", from: "2025-08" },
+                },
+            };
+            const iterator = loadParameters() as Generator<unknown, void, unknown>;
+
+            expect(iterator.next().value).toEqual(select(enableParameters));
+            expect(iterator.next(true).value).toEqual(select(enableStringParameters));
+            expect(iterator.next(true).value).toEqual(select(getProjectId));
+            expect(iterator.next("projectID").value).toMatchObject({ type: "CALL" });
+            expect(iterator.next([topN, lastHoldingMonth]).value).toEqual(put(setCatalogParameters([topN])));
             expect(iterator.next().done).toBe(true);
         });
     });

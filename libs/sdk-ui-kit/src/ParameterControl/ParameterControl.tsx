@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
-    type IParameterDefinition,
+    type IScalarParameterDefinition,
     type ParameterValue,
     getParameterAllowedValues,
     throwUnexpected,
@@ -19,7 +19,7 @@ import { type ParameterSubmitModeProps } from "./submitMode.js";
  */
 export type IParameterControlProps = {
     name: string;
-    definition: IParameterDefinition;
+    definition: IScalarParameterDefinition;
     value: ParameterValue;
     resetValue?: ParameterValue;
     inputId?: string;

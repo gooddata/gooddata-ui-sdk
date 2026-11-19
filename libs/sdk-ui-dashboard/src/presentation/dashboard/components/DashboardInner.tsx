@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type CSSProperties, useEffect, useRef } from "react";
+import { type CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 
 import cx from "classnames";
 
@@ -40,6 +40,7 @@ import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeA
 import { useResizableSidebarState } from "../DashboardSidebar/useResizableSidebarState.js";
 import { type IDashboardProps } from "../types.js";
 
+import { DashboardContentScrollContainer } from "./DashboardContentScrollContainer.js";
 import { DashboardInteractionLock } from "./DashboardInteractionLock.js";
 import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
 
@@ -55,12 +56,27 @@ export function DashboardInner(props: IDashboardProps) {
     const isInsightEditorOpen = !!useDashboardSelector(selectInsightEditorTarget);
     const settings = useDashboardSelector(selectSettings);
     const enableEnhancedInsightPicker = settings?.enableEnhancedInsightPicker ?? false;
+    const enableCanvasScroll = isEditMode && (settings?.enableDashboardCanvasScroll ?? false);
 
     const headerRef = useRef<HTMLDivElement | null>(null);
     const layoutRef = useRef<HTMLDivElement | null>(null);
     const bottomRef = useRef<HTMLDivElement | null>(null);
+    // State-backed so the drag layer re-renders once the resize layer is mounted.
+    const [resizeLayer, setResizeLayer] = useState<HTMLDivElement | null>(null);
 
-    useDashboardDragScroll(layoutRef, headerRef, bottomRef);
+    const onContentScrollGeometryChange = useCallback((width: number, scrollLeft: number) => {
+        headerRef.current?.style.setProperty("--dgd-dashboard-content-width", `${width}px`);
+        headerRef.current?.style.setProperty("--dgd-dashboard-content-offset", `${-scrollLeft}px`);
+    }, []);
+
+    useEffect(() => {
+        if (!enableCanvasScroll) {
+            headerRef.current?.style.removeProperty("--dgd-dashboard-content-width");
+            headerRef.current?.style.removeProperty("--dgd-dashboard-content-offset");
+        }
+    }, [enableCanvasScroll]);
+
+    useDashboardDragScroll(layoutRef, headerRef, bottomRef, enableCanvasScroll);
     const { initializeAutomations } = useDashboardAutomations();
 
     useEffect(() => {
@@ -97,6 +113,19 @@ export function DashboardInner(props: IDashboardProps) {
               } as CSSProperties)
             : undefined;
 
+    const bottomPosition = <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />;
+    const dashboardContent = (
+        <DashboardInteractionLock>
+            <div className="gd-flex-item-stretch dash-section dash-section-kpis" ref={layoutRef}>
+                <DashboardScreenSizeProvider>
+                    <DashboardContent {...props} />
+                </DashboardScreenSizeProvider>
+                {enableEnhancedInsightPicker ? <FilterDeleteOverlay /> : null}
+            </div>
+            {enableCanvasScroll ? null : bottomPosition}
+        </DashboardInteractionLock>
+    );
+
     return (
         <IntlWrapper locale={locale}>
             <ToastsCenterContextProvider skipAutomaticMessageRendering>
@@ -118,10 +147,15 @@ export function DashboardInner(props: IDashboardProps) {
                                 "is-insight-editor-open": isInsightEditorOpen,
                             })}
                         >
-                            <DragLayerComponent />
+                            <DragLayerComponent
+                                contentRef={layoutRef}
+                                resizeLayer={resizeLayer}
+                                enableCanvasScroll={enableCanvasScroll}
+                            />
                             <div
                                 className={cx("gd-dashboards-root gd-flex-container", {
                                     "gd-dashboards-root--floating-toolbar": enableEnhancedInsightPicker,
+                                    "gd-dashboards-root--canvas-scroll": enableCanvasScroll,
                                 })}
                                 style={dashboardsRootStyle}
                             >
@@ -142,18 +176,24 @@ export function DashboardInner(props: IDashboardProps) {
                                             <DashboardHeader />
                                         </OverlayControllerProvider>
                                     </div>
-                                    <DashboardInteractionLock>
-                                        <div
-                                            className="gd-flex-item-stretch dash-section dash-section-kpis"
-                                            ref={layoutRef}
-                                        >
-                                            <DashboardScreenSizeProvider>
-                                                <DashboardContent {...props} />
-                                            </DashboardScreenSizeProvider>
-                                            {enableEnhancedInsightPicker ? <FilterDeleteOverlay /> : null}
-                                        </div>
-                                        <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
-                                    </DashboardInteractionLock>
+                                    {enableCanvasScroll ? (
+                                        <>
+                                            <DashboardContentScrollContainer
+                                                contentRef={layoutRef}
+                                                isEditMode={isEditMode}
+                                                onScrollGeometryChange={onContentScrollGeometryChange}
+                                            >
+                                                {dashboardContent}
+                                            </DashboardContentScrollContainer>
+                                            <div
+                                                className="gd-dash-content-resize-layer"
+                                                ref={setResizeLayer}
+                                            />
+                                            {bottomPosition}
+                                        </>
+                                    ) : (
+                                        dashboardContent
+                                    )}
                                 </main>
                             </div>
                             <Toolbar />

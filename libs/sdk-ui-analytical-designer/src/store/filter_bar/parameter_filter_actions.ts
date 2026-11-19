@@ -2,7 +2,7 @@
 
 import { createAction } from "@reduxjs/toolkit";
 
-import { type IParameterMetadataObject } from "@gooddata/sdk-model";
+import { type IScalarParameterMetadataObject } from "@gooddata/sdk-model";
 
 import { type IParameterFilter } from "./parameter_filter_types.js";
 
@@ -16,7 +16,7 @@ export enum ParameterFilterActionTypeKeys {
 
 export const addParameterFilters = createAction(
     ParameterFilterActionTypeKeys.UI_ADD_PARAMETER_FILTERS,
-    (items: ReadonlyArray<IParameterMetadataObject>) => ({ payload: { items } }),
+    (items: ReadonlyArray<IScalarParameterMetadataObject>) => ({ payload: { items } }),
 );
 
 export type IAddParameterFiltersUiAction = ReturnType<typeof addParameterFilters>;

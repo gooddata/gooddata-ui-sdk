@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type Ref, useCallback, useContext, useMemo } from "react";
+import { type Ref, useCallback, useContext, useId, useMemo } from "react";
 
 import { IntlContext } from "react-intl";
 
@@ -20,6 +20,7 @@ import { getColumnWidth, getItemKey } from "./utils.js";
 
 function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAsyncTableProps<T>) {
     const {
+        tableId,
         width,
         itemHeight,
         isLargeRow,
@@ -76,10 +77,14 @@ function AsyncTableCore<T extends { id: string } | { ref: ObjRef }>(props: IUiAs
             />
 
             <UiAsyncTableBody
+                tableId={tableId}
+                hasDefaultRows={!props.renderItem}
                 gridAriaLabel={accessibilityConfig?.gridAriaLabel}
                 totalItemsCount={totalItemsCount}
                 header={hideHeader ? null : renderHeader()}
-                isHeaderNavigable={!hideHeader && !props.renderHeader}
+                isHeaderNavigable={
+                    !hideHeader && !props.renderHeader && (columns.length > 0 || !!bulkActions)
+                }
                 items={items}
                 maxHeight={maxHeight}
                 itemHeight={itemHeight}
@@ -121,6 +126,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
     accessibilityConfig,
     hideHeader,
 }: IUiAsyncTableProps<T>) => {
+    const tableId = useId();
     const isSmall = variant === "small";
 
     const handleItemClick = useCallback(
@@ -194,6 +200,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
                 renderItemProp(item)
             ) : (
                 <UiAsyncTableRow
+                    tableId={tableId}
                     item={item}
                     itemIndex={itemIndex + (hideHeader ? 0 : 1)}
                     columns={columns}
@@ -212,6 +219,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
             );
         },
         [
+            tableId,
             columns,
             renderItemProp,
             onItemSelect,
@@ -262,6 +270,7 @@ const useAsyncTable = <T extends { id: string } | { ref: ObjRef }>({
     }, []);
 
     return {
+        tableId,
         width,
         itemHeight,
         isLargeRow,

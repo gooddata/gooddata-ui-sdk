@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IParameterMetadataObject, idRef, uriRef } from "@gooddata/sdk-model";
+import { type IScalarParameterMetadataObject, idRef, uriRef } from "@gooddata/sdk-model";
 import { type OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { type IFilters } from "@gooddata/sdk-ui-ext/internal";
 
@@ -954,8 +954,8 @@ describe("filterBarService", () => {
 
     describe("parameterFilterFromMetadata", () => {
         function buildParameter(
-            definition: IParameterMetadataObject["definition"],
-        ): IParameterMetadataObject {
+            definition: IScalarParameterMetadataObject["definition"],
+        ): IScalarParameterMetadataObject {
             return {
                 ref: idRef("threshold", "parameter"),
                 id: "threshold",

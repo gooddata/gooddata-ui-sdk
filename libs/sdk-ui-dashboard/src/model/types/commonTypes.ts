@@ -120,6 +120,13 @@ export type DashboardConfig = {
 
     /**
      * Settings may influence how the dashboard behaves or what features it exposes.
+     *
+     * @remarks
+     * The settings are merged over the settings loaded from the backend: a key specified here overrides
+     * the backend value, every other key keeps the backend value.
+     *
+     * When `locale` and `separators` are specified as well, the dashboard does not load the settings
+     * from the backend and these settings replace them entirely.
      */
     settings?: ISettings;
 

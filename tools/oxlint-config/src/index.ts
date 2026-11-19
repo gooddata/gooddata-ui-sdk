@@ -18,6 +18,7 @@ import { regexp } from "./configurations/regexp.js";
 import { sonarjs } from "./configurations/sonarjs.js";
 import { storybook } from "./configurations/storybook.js";
 import { testingLibraryDom, testingLibraryReact } from "./configurations/testing-library.js";
+import { tsdoc } from "./configurations/tsdoc.js";
 import { typescript } from "./configurations/typescript.js";
 import { vitest } from "./configurations/vitest.js";
 import { type IConfiguration } from "./types.js";
@@ -33,6 +34,7 @@ export const common: IConfiguration[] = [
     jsdoc,
     regexp,
     sonarjs,
+    tsdoc,
 ];
 
 // please note, if you modify keys in the following array, please run `npm run update-package` in addition to `npm run build`

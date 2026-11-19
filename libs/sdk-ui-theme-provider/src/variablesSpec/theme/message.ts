@@ -1,4 +1,5 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { type ThemeDefinedCssVariable } from "../types.js";
 
 export const messageThemeVariables = [
@@ -46,13 +47,19 @@ export const messageThemeVariables = [
         type: "theme",
         variableName: "--gd-message-information-closeButtonColor",
         themePath: ["message", "information", "closeButtonColor"],
-        defaultValue: "var(--gd-palette-complementary-0, #fff)",
+        defaultValue: "currentColor",
     },
     {
         type: "theme",
         variableName: "--gd-message-information-linkButtonColor",
         themePath: ["message", "information", "linkButtonColor"],
         defaultValue: "currentColor",
+    },
+    {
+        type: "theme",
+        variableName: "--gd-message-information-separatorLineColor",
+        themePath: ["message", "information", "separatorLineColor"],
+        defaultValue: "color-mix(in srgb, currentColor 30%, transparent)",
     },
 
     // success
@@ -98,13 +105,19 @@ export const messageThemeVariables = [
         type: "theme",
         variableName: "--gd-message-success-closeButtonColor",
         themePath: ["message", "success", "closeButtonColor"],
-        defaultValue: "var(--gd-palette-complementary-0, #fff)",
+        defaultValue: "currentColor",
     },
     {
         type: "theme",
         variableName: "--gd-message-success-linkButtonColor",
         themePath: ["message", "success", "linkButtonColor"],
         defaultValue: "currentColor",
+    },
+    {
+        type: "theme",
+        variableName: "--gd-message-success-separatorLineColor",
+        themePath: ["message", "success", "separatorLineColor"],
+        defaultValue: "color-mix(in srgb, currentColor 30%, transparent)",
     },
 
     // warning
@@ -150,13 +163,19 @@ export const messageThemeVariables = [
         type: "theme",
         variableName: "--gd-message-warning-closeButtonColor",
         themePath: ["message", "warning", "closeButtonColor"],
-        defaultValue: "var(--gd-palette-complementary-0, #fff)",
+        defaultValue: "currentColor",
     },
     {
         type: "theme",
         variableName: "--gd-message-warning-linkButtonColor",
         themePath: ["message", "warning", "linkButtonColor"],
         defaultValue: "currentColor",
+    },
+    {
+        type: "theme",
+        variableName: "--gd-message-warning-separatorLineColor",
+        themePath: ["message", "warning", "separatorLineColor"],
+        defaultValue: "color-mix(in srgb, currentColor 30%, transparent)",
     },
 
     // error
@@ -202,12 +221,18 @@ export const messageThemeVariables = [
         type: "theme",
         variableName: "--gd-message-error-closeButtonColor",
         themePath: ["message", "error", "closeButtonColor"],
-        defaultValue: "var(--gd-palette-complementary-0, #fff)",
+        defaultValue: "currentColor",
     },
     {
         type: "theme",
         variableName: "--gd-message-error-linkButtonColor",
         themePath: ["message", "error", "linkButtonColor"],
         defaultValue: "currentColor",
+    },
+    {
+        type: "theme",
+        variableName: "--gd-message-error-separatorLineColor",
+        themePath: ["message", "error", "separatorLineColor"],
+        defaultValue: "color-mix(in srgb, currentColor 30%, transparent)",
     },
 ] satisfies ThemeDefinedCssVariable[];

@@ -39,7 +39,7 @@ export function useInvalidFilteringParametersIdentifiers(
     insightMeasureValueFilters: IMeasureValueFilter[] | undefined,
     enableInsightMeasureValueFilters: boolean,
     attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined,
-    dashboardParameterIdentifiers: string[],
+    widgetParameterIdentifiers: string[],
 ) {
     const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
     const measures = useDashboardSelector(selectAllCatalogMeasuresMap);
@@ -124,7 +124,7 @@ export function useInvalidFilteringParametersIdentifiers(
 
             const invalidParameterIdentifiers = getUnknownParameterIdentifiers(
                 urlDrillTarget.customUrl,
-                dashboardParameterIdentifiers,
+                widgetParameterIdentifiers,
             );
 
             return _uniq([
@@ -146,6 +146,6 @@ export function useInvalidFilteringParametersIdentifiers(
         insightMeasureValueFilters,
         enableInsightMeasureValueFilters,
         attributeFilterConfigs,
-        dashboardParameterIdentifiers,
+        widgetParameterIdentifiers,
     ]);
 }

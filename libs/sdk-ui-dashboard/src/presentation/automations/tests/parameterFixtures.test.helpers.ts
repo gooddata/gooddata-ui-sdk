@@ -3,8 +3,8 @@
 import {
     type IDashboardParameter,
     type INumberParameterConstraints,
-    type IParameterDefinition,
-    type IParameterMetadataObject,
+    type IScalarParameterDefinition,
+    type IScalarParameterMetadataObject,
     type IStringParameterConstraints,
     idRef,
 } from "@gooddata/sdk-model";
@@ -12,8 +12,8 @@ import {
 const workspaceParameterWithDefinition = (
     id: string,
     title: string,
-    definition: IParameterDefinition,
-): IParameterMetadataObject => ({
+    definition: IScalarParameterDefinition,
+): IScalarParameterMetadataObject => ({
     type: "parameter",
     id,
     title,
@@ -31,7 +31,7 @@ export const workspaceNumberParameter = (
     title: string,
     defaultValue: number,
     constraints?: INumberParameterConstraints,
-): IParameterMetadataObject =>
+): IScalarParameterMetadataObject =>
     workspaceParameterWithDefinition(id, title, { type: "NUMBER", defaultValue, constraints });
 
 export const workspaceStringParameter = (
@@ -39,7 +39,7 @@ export const workspaceStringParameter = (
     title: string,
     defaultValue: string,
     constraints?: IStringParameterConstraints,
-): IParameterMetadataObject =>
+): IScalarParameterMetadataObject =>
     workspaceParameterWithDefinition(id, title, { type: "STRING", defaultValue, constraints });
 
 export const dashboardParameter = (

@@ -130,12 +130,12 @@ function reasoning(summary: string, id = "reasoning-1", role: IChatConversationI
     return item({ type: "reasoning", summary }, id, role);
 }
 
-function setup() {
+function setup(text = "How are sales?") {
     const store = configureStore({
         reducer: { messages: messagesSliceReducer, chatWindow: chatWindowSliceReducer },
     });
     store.dispatch(setCurrentConversationAction({ conversation }));
-    const action = newMessageAction(makeUserItem({ type: "text", text: "How are sales?" }));
+    const action = newMessageAction(makeUserItem({ type: "text", text }));
     store.dispatch(action);
 
     let controller!: ReadableStreamDefaultController<StreamChunk>;
@@ -158,11 +158,14 @@ function setup() {
         withPublisherDocumentFormat: () => query,
         stream: () => stream,
     };
+    const queryContent = vi.fn<(content: IChatConversationContent) => IChatConversationThreadQuery>(
+        () => query,
+    );
     const backend = {
         workspace: () => ({
             genAI: () => ({
                 getChatConversations: () => ({
-                    getConversationThread: () => ({ query: () => query }),
+                    getConversationThread: () => ({ query: queryContent }),
                 }),
             }),
         }),
@@ -187,6 +190,7 @@ function setup() {
         store,
         task,
         actions,
+        queryContent,
         cancelStream,
         events: () => dispatchEvent.mock.calls.map(([event]) => event),
         async send(chunk: StreamChunk) {
@@ -213,6 +217,19 @@ const clearEvent = {
 function titleEvent(title: string, interactionId = "reasoning-1") {
     return { type: "chatReasoning", threadId: conversation.id, interactionId, title };
 }
+
+describe("onUserMessage raw content", () => {
+    it.each([
+        "What about the U.S. state?",
+        "(top 3) **bold** ~~struck~~ :rocket: C:\\data\\a_b.csv",
+        "quote:\n> quoted line\n# heading\n1. item\n- bullet",
+    ])("passes user text to the backend without Markdown escaping: %s", async (text) => {
+        const test = setup(text);
+        await test.finish();
+
+        expect(test.queryContent).toHaveBeenCalledExactlyOnceWith({ type: "text", text });
+    });
+});
 
 describe("onUserMessage with different publisher settings", () => {
     it.each<[string, IUserWorkspaceSettings | undefined, GenAIPublisherDocumentFormat]>([

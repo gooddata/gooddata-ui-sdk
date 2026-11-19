@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IParameterDefinition, type ObjRef, type ParameterValue } from "@gooddata/sdk-model";
+import { type IScalarParameterDefinition, type ObjRef, type ParameterValue } from "@gooddata/sdk-model";
 import { _isEmpty } from "@gooddata/util";
 
 /**
@@ -14,7 +14,7 @@ export interface IParameterFilter {
     readonly parameterRef: ObjRef;
     readonly name: string;
     readonly value: ParameterValue;
-    readonly definition: IParameterDefinition;
+    readonly definition: IScalarParameterDefinition;
 }
 
 export function isParameterFilter(item: unknown): item is IParameterFilter {

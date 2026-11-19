@@ -3,7 +3,7 @@
 import {
     type IDashboardExportParameter,
     type IInsightParameterValue,
-    type IParameterMetadataObject,
+    type IScalarParameterMetadataObject,
     isStringParameterDefinition,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -38,7 +38,7 @@ export function extractAutomationParameterChanges({
     enableStringParameters: boolean;
     alertParameters: IInsightParameterValue[] | undefined;
     exportParametersByTab: Record<string, IDashboardExportParameter[]> | undefined;
-    catalog: IParameterMetadataObject[];
+    catalog: IScalarParameterMetadataObject[];
     catalogIsLoaded: boolean;
     correlationId: string;
 }): ChangeParameterValuesParams[] {
