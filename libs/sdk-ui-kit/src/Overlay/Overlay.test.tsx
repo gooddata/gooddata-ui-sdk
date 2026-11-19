@@ -2,7 +2,7 @@
 
 import { type RefObject, createRef, forwardRef, useState } from "react";
 
-import { act, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { flushSync } from "react-dom";
 import { type Root, createRoot } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -152,6 +152,12 @@ describe("Overlay", () => {
     it("should render overlay with custom zIndex", () => {
         renderOverlayComponent({ zIndex: 5001 });
         expect(screen.getByText("Overlay")).toHaveStyle({ zIndex: 5001 });
+    });
+
+    it("should keep focus where it is when the modal mask is pressed", () => {
+        renderOverlayComponent({ isModal: true });
+        const mask = document.querySelector(".modalityPlugin-mask")!;
+        expect(fireEvent.mouseDown(mask)).toBe(false);
     });
 
     describe("containing overlay z-index", () => {

@@ -130,6 +130,27 @@ export class CopilotHandler<TBuild extends string = CopilotBuildType> {
         this.update({ kind: "cancelGeneration", type });
     };
 
+    /**
+     * Cancel generation and interrupt applications of this type when leaving a builder.
+     *
+     * @remarks
+     * Previously applied definitions do not prevent cancellation.
+     *
+     * @returns False without changes if the next object has an application in progress; true otherwise.
+     */
+    public cancelStaleBuild = (type: TBuild, nextObjectId?: string): boolean => {
+        const applications = this.state.applications.filter(({ target }) => target.type === type);
+        if (nextObjectId && applications.some(({ target }) => target.objectId === nextObjectId)) {
+            return false;
+        }
+
+        this.cancelGeneration(type);
+        for (const application of applications) {
+            this.definitionApplicationInterrupted(application.id);
+        }
+        return true;
+    };
+
     /** Clear foreground chat progress, preserving background requests and generation intent. */
     public resetInteraction = (): void => {
         this.update({ kind: "resetInteraction" });

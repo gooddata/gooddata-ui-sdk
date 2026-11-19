@@ -2,6 +2,180 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.69.0",
+            "tag": "@gooddata/sdk-ui-all_v11.69.0",
+            "date": "Thu, 19 Nov 2026 10:25:01 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-ext: The tooltip trigger in the list of scheduled exports and alerts is now a button with an accessible name that opens its details on keyboard focus as well as on hover"
+                    },
+                    {
+                        "comment": "sdk-ui-charts: Drillable chart data points are now exposed to assistive technology as buttons instead of images. Inside a drill menu host (the dashboard and the GenAI chat) they also expose `aria-haspopup=\"menu\"` and `aria-expanded`, which follows the state of the drill menu"
+                    },
+                    {
+                        "comment": "sdk-code-convertors: Insight parameter values survive the conversion to and from Analytics as Code, so AAC clone and deploy keep them. The AAC visualisation `query` gets an optional `parameters` list."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: `InsightView` applies the stored parameter overrides of the insight. A value in `execConfig.parameterValues` wins over the stored override of the same parameter. A stored override is not sent when its parameter does not exist or when the value is not valid for its parameter."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Add the `loadParameters` option to `IGetInsightOptions`. With it, `getInsight` returns the parameters that the insight references in `referencedParameters` of the insight."
+                    },
+                    {
+                        "comment": "sdk-model: Add `insightValidParameters`."
+                    },
+                    {
+                        "comment": "sdk-code-convertors: Refuse a visualisation `query.parameters` entry without a `value`"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Show a drill parameter that the target dashboard does not define as unticked and locked in the drill filters panel"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Offer parameters saved on the insight in Drill to URL custom URL editor"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add the `plusThin` icon."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add the `typedWhitespace` RichText feature, which keeps typed blank lines, and typed spaces and newlines where the host lays text out with `white-space: pre-wrap`."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix ARIA ownership and focus targets in virtualized async tables."
+                    },
+                    {
+                        "comment": "sdk-ui-charts: Fix scatter plot cluster labels and legend toggles when coordinates contain NULL values."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add `<UiMessage />`, an inline info, success, warning or error message with an optional icon, expandable detail and close button. The message close button now uses the message text color by default, and the new `separatorLineColor` theme property colors the line above the expanded detail."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Add the `DATE_RANGE` parameter type and the `enableDateRangeParameters` flag; parameter controls, automations and runtime values skip date range parameters"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Regenerate the tiger API client and read and write `DATE_RANGE` parameters in the tiger backend"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Preserve secondary axes in assistant line, column, and bar charts."
+                    },
+                    {
+                        "comment": "sdk-code-convertors: A dashboard filter on attribute/<id> now converts to that attribute's primary label, so the dashboard keeps it instead of dropping it on load"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: the static period calendar of the date filter can be opened and used with the keyboard through the \"Choose start date\" and \"Choose end date\" buttons or Alt+ArrowDown in the date inputs, and exposes its month, the selected day and today to screen readers."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: `UiAutofocus` moves focus into a dialog opened on top of an already open modal dialog."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: a searchable dropdown list announces when the search matches no items and describes its search combobox with the visible empty state; the header workspace picker announces \"No matching workspaces.\"."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: the date filter's \"Exclude current period\" and empty values checkboxes have an accessible name matching their visible label, and a disabled \"Exclude current period\" checkbox is described by the reason it is unavailable."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: `Button` renders `aria-current` from `accessibilityConfig.ariaCurrent`."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: the \"Create new\" button in the scheduled exports management dialog opens the create dialog when activated with the keyboard, returns focus to the button when that dialog closes, and when disabled is described by the reason it is unavailable."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: the options button of a dashboard widget has an accessible name that includes the widget title (\"More actions for <title>\") and announces that it opens a menu."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: the filter bar \"Reset filters\" button is reachable with Tab after the last filter, has a visible focus indicator, and after a reset focus moves to the first filter instead of being lost."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: closing a dashboard or widget export dialog (CSV, XLSX, tabular PDF, export template selection) by confirming, cancelling or pressing Escape returns keyboard focus to the \"More actions\" button that opened the export flow."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: the \"Save as new\" dialog returns focus to its opener or the \"More actions\" button when it closes, and stays open with a visible error and focus on the title input when the save fails."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: `IUiMenuContentItem` accepts `ariaAttributes`, applied to the content menu item."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: the Analytics Catalog announces the object list error state to screen readers, and the object type toggles no longer claim 0 objects while counts are unknown. sdk-ui: the ErrorComponent icon is hidden from assistive technology."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: The workspace picker search is a combobox that drives the workspaces listbox: ArrowDown and ArrowUp move the active option, Enter opens the highlighted workspace, and Escape clears the filter, then closes the picker. `DropdownList` accepts `getItemKey` to enable this pattern."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: the filter bar \"Reset\" button is no longer a separate Tab stop; like the filters, it is reached with the arrow keys inside the filter bar toolbar, which stays a single Tab stop."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Send a computed attribute dashboard filter to the AI assistant as `computed_attribute/<id>` in `using`, so the backend can tell it from a label"
+                    },
+                    {
+                        "comment": "Show (empty value) in the drill-down dialog title for null attribute values"
+                    },
+                    {
+                        "comment": "sdk-code-convertors: Write null of a date label attribute filter back as an empty string when converting declarative to YAML"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger, sdk-ui-analytical-designer: Analytical Designer can show the live progress of the visualization's computation (cache check, query preparation, data source queries) in place of the loading spinner, and keeps the stats of the last load behind a \"Live data\" / \"Saved result\" link. Behind the `enableExecutionProgress` feature flag (prototype)."
+                    },
+                    {
+                        "comment": "api-client-tiger: Regenerate the afm-rest-api client, adding the execution progress stream and the computation profile of the result metadata (exported from `endpoints/execution`). The AI workflow endpoints `cancelWorkflow`, `generateDashboardSummary` and `getWorkflowStatus` no longer exist in the backend, so their request and response types (`ActionsApiCancelWorkflowRequest`, `ActionsApiGenerateDashboardSummaryRequest`, `ActionsApiGetWorkflowStatusRequest`, `WorkflowDashboardSummaryRequestDto`, `WorkflowDashboardSummaryResponseDto`, `WorkflowStatusResponseDto`) are removed. This is a breaking change for callers of those endpoints."
+                    },
+                    {
+                        "comment": "sdk-ui-kit, sdk-ui-gen-ai: The animated \"AI thinking\" sparkle of the chat reasoning moved to sdk-ui-kit as the internal `UiAiThinkingIcon`, shared by the chat and the Analytical Designer loading view. It stays static under prefers-reduced-motion."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: settings passed in the Dashboard config are merged over the backend settings instead of replacing them. A config that also specifies locale and separators still skips the backend settings call and replaces them."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: outside edit mode, the dashboard definition sent to the AI assistant carries each tab's saved parameters instead of the values on screen, as it already does for filters."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: The toasts' screen reader region reads an error message assertively (role=\"alert\"), other messages stay polite, and a region never shows the previous message of another type. sdk-ui-metric-component: `useMetricListData` tells with `isLoaded` that its items are those of the current search, sort and reload, and with `isFailed` that loading them failed."
+                    },
+                    {
+                        "comment": "sdk-ui-analytical-designer: The embedded saveInsight and saveAsInsight commands reject an empty or blank title with appCommandFailed."
+                    },
+                    {
+                        "comment": "sdk-embedding: deprecate the attributeHierarchyModified command of Analytical Designer, as it is not handled, and do not list it in availableCommands."
+                    },
+                    {
+                        "comment": "sdk-ui-analytical-designer, sdk-ui-pluggable-host: Behind enableEmbeddingOriginValidation, a failed embedding origin check (for example a network error) now gives appCommandFailed with error:runtime instead of being reported as a denied origin, and the next command checks again."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: The host and embedded applications work when a reverse proxy serves them under a path prefix; the prefix is detected from the page URL and exposed by `getHostBasePath`."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Name the AI Assistant context toggle after its item and let Enter/Space toggle it."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: while the Reports app, Publisher v2 and catalog documents are all on, the AI Assistant chat also searches saved documents, and a document mentioned in an answer shows as a chip with its title. TextContentObject type accepts document. sdk-ui-kit: adds the file icon to the style icons."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: IPublisherDocumentsQueryV2 gets withMethod, so documents can be listed through the POST search endpoint. sdk-ui-catalog: the Analytics Catalog loads documents through POST search, so long filters no longer go into the URL."
+                    },
+                    {
+                        "comment": "sdk-ui-pluggable-host: the header Search menu finds Reports documents when enableBusinessBriefingReportsApp, enablePublisherV2 and enableCatalogDocuments are on."
+                    },
+                    {
+                        "comment": "sdk-ui-semantic-search, sdk-model, sdk-backend-spi: Promote semantic search APIs and their shared object type to public maturity."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Scroll only dashboard canvas horizontally in edit mode."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add the enableDashboardCanvasScroll feature flag to enable horizontal scrolling of only the dashboard canvas in edit mode."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add customizable AI assistant send button."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add dashboard copilot integration hook."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Cancel in the date filter's static and relative period forms now returns to the option list and discards only the changes made in the form, instead of closing the filter."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.68.0",
             "tag": "@gooddata/sdk-ui-all_v11.68.0",
             "date": "Thu, 12 Nov 2026 12:16:54 GMT",

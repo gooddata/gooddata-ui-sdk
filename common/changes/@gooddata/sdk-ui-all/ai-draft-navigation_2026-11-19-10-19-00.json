@@ -1,0 +1,15 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Cancel stale AI dashboard draft editing when browser navigation changes or removes the draft target, while preserving intentional draft opening and saving.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-gen-ai: Fix AI context remaining in a loading state when opening another dashboard draft.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

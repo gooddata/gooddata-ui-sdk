@@ -234,7 +234,8 @@ export interface IGenAIDashboardContext {
      */
     activeTabId?: string;
     /**
-     * Dashboard definition the assistant edits: the saved filters outside edit mode, the unsaved edits in edit mode.
+     * Dashboard definition the assistant edits: the saved filters and parameters outside edit mode, the unsaved
+     * edits in edit mode.
      */
     definition?: IDashboardDefinition;
     /**

@@ -368,6 +368,9 @@ intent; it doesn't stop an assistant response that is already streaming.
 The hook owns one `CopilotHandler` for the pair and manages its lifecycle. Remount the pair when changing the
 backend or workspace. See the [hook return values](../ai-assistant/#usedashboardcopilot-hook) for the other helpers.
 
+If the pair stays mounted while navigating between AI drafts, your application must also handle stale builds
+and exit stale editing sessions. See [Cancel stale dashboard builds on navigation](../control-ai-assistant/#cancel-stale-dashboard-builds-on-navigation).
+
 ### Provide dashboard context without copilot editing
 
 If you only need the assistant to read dashboard context, pass `dashboardSelector` directly instead of using
