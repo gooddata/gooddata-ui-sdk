@@ -8,6 +8,7 @@ import {
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardMeasureValueFilter,
+    type IDashboardParameter,
     areObjRefsEqual,
     isDashboardAttributeFilter,
     isDashboardMeasureValueFilter,
@@ -18,6 +19,8 @@ import { useDashboardSelector } from "../../../../../model/react/DashboardStoreP
 import { selectDashboardRef } from "../../../../../model/store/meta/metaSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextFilters } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectDashboardParametersByTab } from "../../../../../model/store/tabs/parameters/parametersSelectors.js";
+import { selectActiveOrDefaultTabLocalIdentifier } from "../../../../../model/store/tabs/tabsSelectors.js";
 import {
     DRILL_TARGET_TYPE,
     type IDrillConfigItem,
@@ -35,6 +38,7 @@ interface IUseFetchTargetDashboardFiltersResult {
     targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[];
     targetDashboardMeasureValueFilters: IDashboardMeasureValueFilter[];
     targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
+    targetDashboardParameters: IDashboardParameter[];
     isLoading: boolean;
 }
 
@@ -44,6 +48,8 @@ export function useFetchTargetDashboardFilters(
     const sourceDashboardRef = useDashboardSelector(selectDashboardRef);
     const sourceDashboardFilters = useDashboardSelector(selectFilterContextFilters);
     const sourceDashboardAttributeFilterConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
+    const sourceParametersByTab = useDashboardSelector(selectDashboardParametersByTab);
+    const activeTabId = useDashboardSelector(selectActiveOrDefaultTabLocalIdentifier);
     const { cache, fetchTargetDashboardFilters } = useTargetDashboardFiltersContext();
     const isDrillToDashboard = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD;
     const drillToDashboardItem = isDrillToDashboard ? (item as IDrillToDashboardConfig) : undefined;
@@ -86,6 +92,7 @@ export function useFetchTargetDashboardFilters(
             targetDashboardTextAttributeFilters: [],
             targetDashboardMeasureValueFilters: [],
             targetDashboardAttributeFilterConfigs: [],
+            targetDashboardParameters: [],
             isLoading: false,
         };
     }
@@ -99,6 +106,7 @@ export function useFetchTargetDashboardFilters(
             ),
             targetDashboardMeasureValueFilters: sourceDashboardFilters.filter(isDashboardMeasureValueFilter),
             targetDashboardAttributeFilterConfigs: sourceDashboardAttributeFilterConfigs,
+            targetDashboardParameters: sourceParametersByTab[targetDashboardTab ?? activeTabId] ?? [],
             isLoading: false,
         };
     }
@@ -113,6 +121,7 @@ export function useFetchTargetDashboardFilters(
             targetDashboardFiltersCacheEntry?.targetDashboardMeasureValueFilters ?? [],
         targetDashboardAttributeFilterConfigs:
             targetDashboardFiltersCacheEntry?.targetDashboardAttributeFilterConfigs ?? [],
+        targetDashboardParameters: targetDashboardFiltersCacheEntry?.targetDashboardParameters ?? [],
         isLoading: !targetDashboardFiltersCacheEntry || targetDashboardFiltersCacheEntry.status === "loading",
     };
 }

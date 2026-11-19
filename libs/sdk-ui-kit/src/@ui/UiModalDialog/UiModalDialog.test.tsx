@@ -90,6 +90,16 @@ describe("UiModalDialog", () => {
         expect(onClose).not.toHaveBeenCalled();
     });
 
+    it("prevents the focus change of a backdrop press but not of a press inside the card", () => {
+        render(
+            <UiModalDialog isOpen onClose={() => {}} dataTestId="modal">
+                <input aria-label="name" />
+            </UiModalDialog>,
+        );
+        expect(fireEvent.mouseDown(screen.getByTestId("modal"))).toBe(false);
+        expect(fireEvent.mouseDown(screen.getByLabelText("name"))).toBe(true);
+    });
+
     it("calls onClose when the backdrop is pressed and closeOnOutsideClick is set", () => {
         const onClose = vi.fn();
         render(

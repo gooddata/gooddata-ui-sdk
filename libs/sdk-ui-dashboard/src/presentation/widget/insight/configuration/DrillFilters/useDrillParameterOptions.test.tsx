@@ -14,11 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type IDashboardParameterEntry } from "../../../../../model/store/tabs/parameters/parametersState.js";
-import {
-    DRILL_TARGET_TYPE,
-    type IDrillConfigItem,
-    type IDrillToDashboardConfigTarget,
-} from "../../../../drill/types.js";
+import { DRILL_TARGET_TYPE, type IDrillConfigItem } from "../../../../drill/types.js";
 import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 
 const mockUseDashboardSelector = vi.fn();
@@ -35,13 +31,11 @@ vi.mock("../../../../../model/react/DashboardStoreProvider.js", () => ({
 
 const { selectCatalogRequestedParameterRoots } =
     await import("../../../../../model/store/catalog/catalogSelectors.js");
-const { selectDashboardRef } = await import("../../../../../model/store/meta/metaSelectors.js");
-const { selectDashboardParametersByTab, selectWidgetParameterContext } =
+const { selectWidgetParameterContext } =
     await import("../../../../../model/store/tabs/parameters/parametersSelectors.js");
 const { useDrillParameterOptions } = await import("./useDrillParameterOptions.js");
 
 const widgetRef = idRef("widget", "insight");
-const dashboardRef = idRef("dashboard", "analyticalDashboard");
 const sourceInsightRef = idRef("source", "insight");
 const targetInsightRef = idRef("target", "insight");
 const topNRef = idRef("topN", "parameter");
@@ -49,13 +43,13 @@ const regionRef = idRef("region", "parameter");
 const sampleSizeRef = idRef("sampleSize", "parameter");
 
 const TOOLTIP = "This parameter is always passed to the drill target.";
+const NOT_ON_TARGET_TOOLTIP = "Cannot be enabled. Add this parameter to the target dashboard first.";
 
 interface IGivenStore {
     entries?: IDashboardParameterEntry[];
     dependenciesByRoot?: Record<string, IdentifierRef[]>;
     filterRoots?: IdentifierRef[];
     requestedRoots?: Record<string, "pending" | "failed">;
-    parametersByTab?: Record<string, IDashboardParameter[]>;
 }
 
 function givenStore({
@@ -63,7 +57,6 @@ function givenStore({
     dependenciesByRoot = {},
     filterRoots = [],
     requestedRoots = {},
-    parametersByTab = {},
 }: IGivenStore) {
     const context = {
         entries,
@@ -83,12 +76,6 @@ function givenStore({
         }
         if (selector === selectCatalogRequestedParameterRoots) {
             return requestedRoots;
-        }
-        if (selector === selectDashboardRef) {
-            return dashboardRef;
-        }
-        if (selector === selectDashboardParametersByTab) {
-            return parametersByTab;
         }
         throw new Error(
             `Unexpected selector: ${typeof selector === "function" ? selector.name : String(selector)}`,
@@ -135,10 +122,7 @@ function insight(ref: IdentifierRef): IInsight {
     };
 }
 
-function drillItem(
-    drillTargetType: DRILL_TARGET_TYPE,
-    target: IDrillToDashboardConfigTarget = {},
-): IDrillConfigItem {
+function drillItem(drillTargetType: DRILL_TARGET_TYPE): IDrillConfigItem {
     return {
         type: "attribute",
         title: "Product",
@@ -148,12 +132,15 @@ function drillItem(
         complete: true,
         attributes: [],
         widgetRef,
-        ...target,
     };
 }
 
-function renderOptions(item: IDrillConfigItem, executedInsight?: IInsight) {
-    return renderHook(() => useDrillParameterOptions(item, executedInsight), {
+function renderOptions(
+    item: IDrillConfigItem,
+    executedInsight: IInsight | undefined,
+    targetDashboardParameters: IDashboardParameter[],
+) {
+    return renderHook(() => useDrillParameterOptions(item, executedInsight, targetDashboardParameters), {
         wrapper: IntlWrapper,
     }).result.current;
 }
@@ -170,7 +157,7 @@ describe("useDrillParameterOptions", () => {
         });
 
         expect(
-            renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_TO_INSIGHT), insight(targetInsightRef)),
+            renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_TO_INSIGHT), insight(targetInsightRef), []),
         ).toEqual({
             options: [
                 {
@@ -198,7 +185,7 @@ describe("useDrillParameterOptions", () => {
         });
 
         expect(
-            renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_DOWN), insight(sourceInsightRef)).options.map(
+            renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_DOWN), insight(sourceInsightRef), []).options.map(
                 (option) => option.title,
             ),
         ).toEqual(["Top N"]);
@@ -209,7 +196,12 @@ describe("useDrillParameterOptions", () => {
             entries: [entry(topNRef, 5), entry(regionRef, 3), entry(sampleSizeRef, undefined)],
         });
 
-        expect(renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD))).toEqual({
+        expect(
+            renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD), undefined, [
+                entry(topNRef, undefined).parameter,
+                entry(regionRef, undefined).parameter,
+            ]),
+        ).toEqual({
             options: [
                 { id: "parameter:topN", title: "Top N", disabled: { message: TOOLTIP, selected: true } },
                 { id: "parameter:region", title: "Region", disabled: { message: TOOLTIP, selected: true } },
@@ -218,43 +210,29 @@ describe("useDrillParameterOptions", () => {
         });
     });
 
-    it("omits a parameter that the target tab of the same dashboard does not define", () => {
-        givenStore({
-            entries: [entry(topNRef, 5), entry(regionRef, 3)],
-            parametersByTab: { second: [entry(regionRef, undefined).parameter] },
-        });
+    it("lists a disabled unchecked row for a parameter that the target dashboard does not define", () => {
+        givenStore({ entries: [entry(topNRef, 5), entry(regionRef, 3)] });
 
         expect(
-            renderOptions(
-                drillItem(DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD, {
-                    dashboard: dashboardRef,
-                    dashboardTab: "second",
-                }),
-            ).options.map((option) => option.title),
-        ).toEqual(["Region"]);
-    });
-
-    it("lists every applied parameter when the drill targets a tab of another dashboard", () => {
-        givenStore({
-            entries: [entry(topNRef, 5), entry(regionRef, 3)],
-            parametersByTab: { second: [entry(regionRef, undefined).parameter] },
-        });
-
-        expect(
-            renderOptions(
-                drillItem(DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD, {
-                    dashboard: idRef("other", "analyticalDashboard"),
-                    dashboardTab: "second",
-                }),
-            ).options.map((option) => option.title),
-        ).toEqual(["Top N", "Region"]);
+            renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD), undefined, [
+                entry(regionRef, undefined).parameter,
+            ]).options,
+        ).toEqual([
+            {
+                id: "parameter:topN",
+                title: "Top N",
+                disabled: { message: NOT_ON_TARGET_TOOLTIP, selected: false },
+            },
+            { id: "parameter:region", title: "Region", disabled: { message: TOOLTIP, selected: true } },
+        ]);
     });
 
     it("is loading while the target visualization's parameter dependencies are pending", () => {
         givenStore({ requestedRoots: { [serializeObjRef(targetInsightRef)]: "pending" } });
 
         expect(
-            renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_TO_INSIGHT), insight(targetInsightRef)).isLoading,
+            renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_TO_INSIGHT), insight(targetInsightRef), [])
+                .isLoading,
         ).toBe(true);
     });
 
@@ -266,7 +244,8 @@ describe("useDrillParameterOptions", () => {
         });
 
         expect(
-            renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_TO_INSIGHT), insight(targetInsightRef)).isLoading,
+            renderOptions(drillItem(DRILL_TARGET_TYPE.DRILL_TO_INSIGHT), insight(targetInsightRef), [])
+                .isLoading,
         ).toBe(true);
     });
 });

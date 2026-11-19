@@ -9,6 +9,7 @@ import {
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardMeasureValueFilter,
+    type IDashboardParameter,
     type ObjRef,
     isDashboardAttributeFilter,
     isDashboardMeasureValueFilter,
@@ -19,6 +20,7 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { dashboardFilterContextDefinition } from "../../../../../_staging/dashboard/dashboardFilterContext.js";
 import { defaultDateFilterConfig } from "../../../../../_staging/dateFilterConfig/defaultConfig.js";
 import { safeSerializeObjRef } from "../../../../../_staging/metadata/safeSerializeObjRef.js";
+import { pickDashboardTabParameters } from "../../../../../model/store/tabs/parameters/parametersState.js";
 
 type TTargetDashboardFiltersCacheStatus = "loading" | "success" | "error";
 
@@ -29,6 +31,7 @@ interface ITargetDashboardFiltersCacheEntry {
     targetDashboardTextAttributeFilters: DashboardTextAttributeFilter[];
     targetDashboardMeasureValueFilters: IDashboardMeasureValueFilter[];
     targetDashboardAttributeFilterConfigs: IDashboardAttributeFilterConfig[];
+    targetDashboardParameters: IDashboardParameter[];
 }
 
 interface ITargetDashboardFiltersContextValue {
@@ -68,6 +71,7 @@ function getTargetDashboardFilterData(
         targetDashboardTextAttributeFilters: targetDashboardFilters.filter(isDashboardTextAttributeFilter),
         targetDashboardMeasureValueFilters: targetDashboardFilters.filter(isDashboardMeasureValueFilter),
         targetDashboardAttributeFilterConfigs: targetDashboard.attributeFilterConfigs ?? [],
+        targetDashboardParameters: pickDashboardTabParameters(dashboard, targetTab),
     };
 }
 
@@ -81,6 +85,7 @@ function createEmptyCacheEntry(
         targetDashboardTextAttributeFilters: [],
         targetDashboardMeasureValueFilters: [],
         targetDashboardAttributeFilterConfigs: [],
+        targetDashboardParameters: [],
     };
 }
 

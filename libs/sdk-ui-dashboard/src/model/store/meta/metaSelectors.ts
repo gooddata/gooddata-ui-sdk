@@ -66,6 +66,7 @@ import {
 import { selectMeasureValueFilterConfigsOverridesByTab } from "../tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js";
 import {
     selectIsParametersChanged,
+    selectPersistedTabsParametersFromMeta,
     selectSmartPersistedTabsParameters,
 } from "../tabs/parameters/parametersSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabs/tabsSelectors.js";
@@ -1427,7 +1428,8 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
 
 /**
  * The dashboard definition the AI assistant edits: the working definition, except that outside edit
- * mode every filter context carries the persisted filters, as manual Edit does.
+ * mode every filter context carries the persisted filters and every tab the persisted parameters, as
+ * manual Edit does. A tab the persisted dashboard lacks keeps its working filters and parameters.
  *
  * @internal
  */
@@ -1437,7 +1439,14 @@ export const selectDashboardAiDefinition: DashboardSelector<IDashboardDefinition
         selectIsInEditMode,
         selectPersistedDashboardFilterContextAsFilterContextDefinition,
         selectPersistedDashboardFilterContextDefinitionsByTab,
-        (working, isEditMode, persistedRoot, persistedByTab): IDashboardDefinition<IDashboardWidget> => {
+        selectPersistedTabsParametersFromMeta,
+        (
+            working,
+            isEditMode,
+            persistedRoot,
+            persistedByTab,
+            persistedParametersByTab,
+        ): IDashboardDefinition<IDashboardWidget> => {
             if (isEditMode) {
                 return working;
             }
@@ -1454,15 +1463,19 @@ export const selectDashboardAiDefinition: DashboardSelector<IDashboardDefinition
                     ? {
                           tabs: working.tabs.map((tab) => {
                               const persisted = persistedByTab[tab.localIdentifier];
-                              return tab.filterContext && persisted
-                                  ? {
-                                        ...tab,
-                                        filterContext: {
-                                            ...tab.filterContext,
-                                            filters: savedFilters(persisted),
-                                        },
-                                    }
-                                  : tab;
+                              const persistedParameters = persistedParametersByTab[tab.localIdentifier];
+                              return {
+                                  ...tab,
+                                  ...(tab.filterContext && persisted
+                                      ? {
+                                            filterContext: {
+                                                ...tab.filterContext,
+                                                filters: savedFilters(persisted),
+                                            },
+                                        }
+                                      : {}),
+                                  ...(persistedParameters ? { parameters: persistedParameters } : {}),
+                              };
                           }),
                       }
                     : {}),
@@ -1472,8 +1485,8 @@ export const selectDashboardAiDefinition: DashboardSelector<IDashboardDefinition
 
 /**
  * The filters on screen outside edit mode, for the root filter context and each tab, so the AI assistant can
- * tell which of them differ from {@link selectDashboardAiDefinition}. They are the only part of the working
- * definition that one replaces. Undefined in edit mode, where the two are the same.
+ * tell which of them differ from {@link selectDashboardAiDefinition}. Filters only: the parameters on screen
+ * are not relayed. Undefined in edit mode, where the two are the same.
  *
  * @internal
  */

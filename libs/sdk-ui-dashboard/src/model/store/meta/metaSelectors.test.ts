@@ -9,6 +9,7 @@ import {
     DashboardAttributeFilterConfigModeValues,
     type FilterContextItem,
     type IDashboardDefinition,
+    type IDashboardParameter,
     type IGenAIDashboardLiveFilters,
     type IInsightWidgetDefinition,
     idRef,
@@ -357,15 +358,102 @@ describe("selectDashboardAiDefinition", () => {
             resultFunc: (...inputs: unknown[]) => IDashboardDefinition;
         };
 
-        const result = resultFunc({ ...working, tabs: [tab("first"), tab("second")] }, false, savedFirst, {
-            first: savedFirst,
-            second: savedSecond,
-        });
+        const result = resultFunc(
+            { ...working, tabs: [tab("first"), tab("second")] },
+            false,
+            savedFirst,
+            {
+                first: savedFirst,
+                second: savedSecond,
+            },
+            {},
+        );
 
         expect(result.tabs?.map((t) => t.filterContext?.filters)).toEqual([
             savedFirst.filters,
             savedSecond.filters,
         ]);
+    });
+
+    const parameter = (value?: number): IDashboardParameter => ({
+        ref: { identifier: "top_n", type: "parameter" },
+        parameterType: "NUMBER",
+        mode: "active",
+        ...(value === undefined ? {} : { value }),
+    });
+
+    it.each([
+        // view mode: the saved value replaces the one on screen
+        ["view mode, saved value", false, { first: [parameter(3)] }, [[parameter(3)], [parameter(8)]]],
+        // view mode: saved without a value (workspace default) wins over a value set on screen
+        ["view mode, saved default", false, { first: [parameter()] }, [[parameter()], [parameter(8)]]],
+        // view mode: a saved tab with no parameters relays none
+        ["view mode, saved none", false, { first: [] }, [[], [parameter(8)]]],
+        // must accept: a tab the saved dashboard lacks keeps its working list ("second" is not in the map)
+        ["view mode, tab not saved", false, {}, [[parameter(8)], [parameter(8)]]],
+    ])(
+        "relays the persisted parameters per tab: %s",
+        (_name, isEditMode, persistedParametersByTab, expected) => {
+            const working = Tester.select(selectDashboardWorkingDefinition);
+            const tab = (localIdentifier: string) => ({
+                localIdentifier,
+                title: localIdentifier,
+                layout: working.layout,
+                parameters: [parameter(8)],
+            });
+            const { resultFunc } = selectDashboardAiDefinition as unknown as {
+                resultFunc: (...inputs: unknown[]) => IDashboardDefinition;
+            };
+
+            const result = resultFunc(
+                { ...working, tabs: [tab("first"), tab("second")] },
+                isEditMode,
+                undefined,
+                {},
+                persistedParametersByTab,
+            );
+
+            expect(result.tabs?.map((t) => t.parameters)).toEqual(expected);
+        },
+    );
+
+    it("keeps the parameters on screen in edit mode", () => {
+        const working = Tester.select(selectDashboardWorkingDefinition);
+        const withTabs = {
+            ...working,
+            tabs: [
+                {
+                    localIdentifier: "first",
+                    title: "first",
+                    layout: working.layout,
+                    parameters: [parameter(8)],
+                },
+            ],
+        };
+        const { resultFunc } = selectDashboardAiDefinition as unknown as {
+            resultFunc: (...inputs: unknown[]) => IDashboardDefinition;
+        };
+
+        expect(resultFunc(withTabs, true, undefined, {}, { first: [parameter(3)] })).toBe(withTabs);
+    });
+
+    it("reads the persisted parameters from the saved dashboard in view mode, one saved without tabs", () => {
+        const state = Tester.state();
+        const persisted = state.meta.persistedDashboard!;
+        // The fixture is saved without tabs: its root parameters belong to the single default tab.
+        expect(persisted.tabs).toBeUndefined();
+        const withSavedParameters = {
+            ...state,
+            meta: { ...state.meta, persistedDashboard: { ...persisted, parameters: [parameter(3)] } },
+        };
+
+        const tabs = selectDashboardAiDefinition(withSavedParameters).tabs ?? [];
+
+        expect(Tester.select(selectDashboardWorkingDefinition).tabs?.map((tab) => tab.parameters)).toEqual(
+            tabs.map(() => []),
+        );
+        expect(tabs.map((tab) => tab.parameters)).toEqual(tabs.map(() => [parameter(3)]));
+        expect(tabs.length).toBeGreaterThan(0);
     });
 
     it("returns the working definition itself in edit mode, unsaved filter change included", async () => {
@@ -460,6 +548,7 @@ describe("selectDashboardAiDefinition", () => {
             workingWithLiveId,
             false,
             { filters: [ComplexDashboardFilters.Date, storedFilter] },
+            {},
             {},
         );
 
