@@ -342,6 +342,84 @@ describe("CopilotHandler", () => {
         expect(handler.hasDefinition(target)).toBe(false);
     });
 
+    describe("cancelStaleBuild", () => {
+        it.each([undefined, "next-object"])(
+            "cancels generation and interrupts applications when navigating to %s",
+            (nextObjectId) => {
+                const handler = new CopilotHandler({ registrations: [] });
+                handler.startGeneration(type);
+                const applicationIds = [target, { ...target, objectId: "another-object" }].map((target) =>
+                    handler.definitionApplicationStarted({ target }),
+                );
+
+                expect(handler.cancelStaleBuild(type, nextObjectId)).toBe(true);
+
+                expect(handler.isGenerationPending(type)).toBe(false);
+                expect(handler.getSnapshot().applications).toEqual([]);
+                const snapshot = handler.getSnapshot();
+                for (const id of applicationIds) {
+                    handler.definitionApplied(id, target);
+                }
+                expect(handler.getSnapshot()).toBe(snapshot);
+            },
+        );
+
+        it("preserves all work when the next object has a pending application", () => {
+            const handler = new CopilotHandler({ registrations: [] });
+            handler.startGeneration(type);
+            handler.definitionApplicationStarted({ target });
+            handler.definitionApplicationStarted({ target: { ...target, objectId: "next-object" } });
+            const snapshot = handler.getSnapshot();
+            const listener = vi.fn();
+            handler.subscribe(listener);
+
+            expect(handler.cancelStaleBuild(type, "next-object")).toBe(false);
+
+            expect(handler.getSnapshot()).toBe(snapshot);
+            expect(listener).not.toHaveBeenCalled();
+        });
+
+        it("does not mistake an applied definition or matching context for a pending application", () => {
+            const handler = new CopilotHandler({ registrations: [] });
+            const id = handler.definitionApplicationStarted({ target, conversationId: "origin" });
+            handler.definitionApplied(id, target);
+            handler.setContext({ ...target, builderTarget: target, isEditing: true });
+            handler.startGeneration(type);
+            expect(handler.hasDefinition(target)).toBe(true);
+            const { context, sources } = handler.getSnapshot();
+
+            expect(handler.cancelStaleBuild(type, target.objectId)).toBe(true);
+
+            expect(handler.isGenerationPending(type)).toBe(false);
+            expect(handler.getSnapshot().context).toBe(context);
+            expect(handler.getSnapshot().sources).toBe(sources);
+        });
+
+        it("does not treat an application of another type as an intentional destination", () => {
+            const handler = new CopilotHandler<string>({ registrations: [] });
+            handler.startGeneration(type);
+            handler.definitionApplicationStarted({ target: { ...target, objectId: "another-object" } });
+            const reportId = handler.definitionApplicationStarted({ target: { ...target, type: "report" } });
+
+            expect(handler.cancelStaleBuild(type, target.objectId)).toBe(true);
+
+            expect(handler.isGenerationPending(type)).toBe(false);
+            expect(handler.getSnapshot().applications.map(({ id }) => id)).toEqual([reportId]);
+        });
+
+        it("preserves generation and applications of another workflow type", () => {
+            const handler = new CopilotHandler<string>({ registrations: [] });
+            const reportId = handler.definitionApplicationStarted({ target: { ...target, type: "report" } });
+            handler.startGeneration("report");
+            handler.definitionApplicationStarted({ target });
+
+            expect(handler.cancelStaleBuild(type)).toBe(true);
+
+            expect(handler.isGenerationPending("report")).toBe(true);
+            expect(handler.getSnapshot().applications.map(({ id }) => id)).toEqual([reportId]);
+        });
+    });
+
     it("keeps snapshots stable for unchanged input and unsubscribes directly", () => {
         const { handler } = setup();
         const listener = vi.fn<() => void>();

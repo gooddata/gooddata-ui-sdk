@@ -916,8 +916,9 @@ function convertDashboardView(dashboard: IGenAIDashboardContext) {
 
 /**
  * The definition with the filters on the user's screen in place of its own. Outside edit mode the saved
- * definition differs from the one on screen only in its filter context items, so this rebuilds the screen's
- * definition and the convertor keys, configures and groups its filters the same way.
+ * definition differs from the one on screen in its filter context items and its parameters; this puts back
+ * the filters, which are all `convertViewFilters` compares, and the convertor keys, configures and groups
+ * them the same way.
  */
 function withLiveFilters(
     definition: IDashboardDefinition,

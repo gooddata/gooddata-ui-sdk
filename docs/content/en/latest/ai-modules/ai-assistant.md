@@ -15,6 +15,7 @@ api_symbols:
   - "@gooddata/sdk-ui-gen-ai:useDashboardCopilot"
   - "@gooddata/sdk-ui-gen-ai:IUseDashboardCopilotResult"
   - "@gooddata/sdk-ui-gen-ai:CopilotInteractionComposingWithHandler"
+  - "@gooddata/sdk-ui-gen-ai:CopilotHandler"
 source_files:
   - src/components/GenAIChat.tsx
   - src/components/GenAiConversations.tsx
@@ -22,6 +23,7 @@ source_files:
   - src/hooks/useGenAiDispatcher.ts
   - src/copilot/useDashboardCopilot.ts
   - src/copilot/CopilotInteractionComposingWithHandler.tsx
+  - src/copilot/CopilotHandler.ts
 related_pages:
   - /docs/ai-modules/ai-assistant-layout
   - /docs/ai-modules/customize-ai-assistant
@@ -654,12 +656,19 @@ removed without a major version bump.
 | `generateDashboard(message)` | Starts a new conversation and sends a non-blank generation request. Requires a ready shared store and an initialized, empty dashboard in edit mode, without a saved identifier. Does not navigate or save the result. |
 | `cancelGeneration()` | Clears creation intent. Does not cancel a response already streaming. |
 | `replyInChat()` | Selects the conversation that originated the waiting workflow so you can answer clarification questions. |
-| `copilot` | Hook-owned `CopilotHandler`, available for custom progress presentations. The hook manages its lifecycle. |
+| `copilot` | Hook-owned `CopilotHandler`, available for custom progress presentations and route-change cleanup with `cancelStaleBuild`. The hook manages its lifecycle. |
 
 The three prop getters accept optional application props; call them without arguments for defaults. Pass
 customizations into the getters rather than overriding the returned connection props in JSX. Definitions are
 applied only to an initialized dashboard in edit mode. Remount the dashboard and assistant pair when changing
 the backend or workspace.
+
+`copilot.cancelStaleBuild(type, nextObjectId?)` returns `false` without changes when a definition application of
+that type to the destination is pending. Otherwise, it clears generation intent, interrupts pending applications
+of that type, and returns `true`. Previously applied definitions don't prevent cancellation. It doesn't stop
+a streaming response or change dashboard content, edit mode, or navigation. See
+[Cancel stale dashboard builds on navigation](../control-ai-assistant/#cancel-stale-dashboard-builds-on-navigation)
+for the application's responsibilities.
 
 ## Props
 

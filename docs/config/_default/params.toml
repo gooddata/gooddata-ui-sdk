@@ -65,6 +65,8 @@ addSearchTab = "gd-ui-doc"
     projectColor    = "#ED26B7"
     projectLogo     = "https://www.gooddata.ai/img/generic/logo-g.svg"
     modalTitleColor = "#1c0d3f"
+    [askAI.extraAttrs]
+        user-analytics-cookie-enabled = "false"
 
 # gd-docs-theme-next feature switches. Breadcrumbs are wanted on; the theme defaults
 # them on, and this states it where the switch really lives.

@@ -1,6 +1,11 @@
 // (C) 2026 GoodData Corporation
 
-import { type IDashboardParameter, type IDashboardTab, type ParameterValue } from "@gooddata/sdk-model";
+import {
+    type IDashboard,
+    type IDashboardParameter,
+    type IDashboardTab,
+    type ParameterValue,
+} from "@gooddata/sdk-model";
 
 /**
  * Per-parameter state tracked by the dashboard store.
@@ -40,6 +45,19 @@ export interface IParametersState {
 export const parametersInitialState: IParametersState = {
     parameters: [],
 };
+
+/**
+ * @internal
+ */
+export function pickDashboardTabParameters(
+    dashboard: Pick<IDashboard, "tabs" | "parameters">,
+    tab: IDashboardTab | undefined,
+): IDashboardParameter[] {
+    if (!tab) {
+        return dashboard.parameters ?? [];
+    }
+    return pickTabParametersSource(tab, dashboard.tabs ?? [], dashboard.parameters) ?? [];
+}
 
 /**
  * Picks a tab's persisted parameter source under the V1 → per-tab migration rule.
