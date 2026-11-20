@@ -123,4 +123,22 @@ describe("useCatalogItemOpen", () => {
         expect(result.current.openedItem).toEqual(parameterItemB);
         expect(result.current.open).toBe(true);
     });
+
+    it("updates the open item, but keeps another item open when an update of the previous one arrives", () => {
+        const { result } = renderUseCatalogItemOpen(noOpenCatalogItemRef);
+        act(() => {
+            result.current.onOpenDetail(parameterItemB);
+        });
+
+        const renamedB = { ...parameterItemB, title: "Renamed B" };
+        act(() => {
+            result.current.updateOpenedItem(renamedB);
+        });
+        expect(result.current.openedItem).toEqual(renamedB);
+
+        act(() => {
+            result.current.updateOpenedItem({ ...parameterItemB, identifier: parameterRefA.identifier });
+        });
+        expect(result.current.openedItem).toEqual(renamedB);
+    });
 });

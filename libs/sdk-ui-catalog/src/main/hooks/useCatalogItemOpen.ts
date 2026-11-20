@@ -41,6 +41,11 @@ export function useCatalogItemOpen(
         [onCatalogDetailOpened],
     );
 
+    // An update can arrive after the user opened another item, so it replaces only the item still open.
+    const updateOpenedItem = useCallback((item: ICatalogItem) => {
+        setItemOpened((current) => (areObjRefsEqual(current, item) ? item : current));
+    }, []);
+
     const onCloseDetail = useCallback(() => {
         setOpen(false);
         onCatalogDetailClosed?.();
@@ -61,5 +66,6 @@ export function useCatalogItemOpen(
         open,
         openedItem,
         setItemOpened,
+        updateOpenedItem,
     };
 }

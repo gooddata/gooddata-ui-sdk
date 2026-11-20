@@ -589,7 +589,7 @@ export interface AiCertificationInfo {
 
 export interface AiChartFill {
     'pattern_name_mapping'?: { [key: string]: AiPatternNameMapping; } | null;
-    'type'?: AiType55 | null;
+    'type'?: AiType57 | null;
 }
 
 
@@ -1376,6 +1376,7 @@ export interface AiDashboardInput {
     'filter_views'?: boolean | null;
     'filters'?: object;
     'id': string;
+    'parameters'?: Array<AiDashboardParametersInner>;
     'permissions'?: AiPermissions | null;
     'persistent_filters_across_tabs'?: boolean | null;
     'plugins'?: Array<AiDashboardInputPluginsInner> | null;
@@ -1384,7 +1385,7 @@ export interface AiDashboardInput {
     'tags'?: Array<string>;
     'timezone_config'?: AiTimezoneConfig | null;
     'title'?: string;
-    'type': AiType56;
+    'type': AiType58;
     'user_filters_reset'?: boolean | null;
     'user_filters_save'?: boolean | null;
     'version'?: AiVersion4 | null;
@@ -1420,6 +1421,7 @@ export interface AiDashboardOutput {
     'filter_views'?: boolean | null;
     'filters'?: object;
     'id': string;
+    'parameters'?: Array<AiDashboardParametersInner>;
     'permissions'?: AiPermissions | null;
     'persistent_filters_across_tabs'?: boolean | null;
     'plugins'?: Array<AiDashboardOutputPluginsInner> | null;
@@ -1428,7 +1430,7 @@ export interface AiDashboardOutput {
     'tags'?: Array<string>;
     'timezone_config'?: AiTimezoneConfig | null;
     'title'?: string;
-    'type': AiType56;
+    'type': AiType58;
     'user_filters_reset'?: boolean | null;
     'user_filters_save'?: boolean | null;
     'version'?: AiVersion4 | null;
@@ -1439,6 +1441,18 @@ export interface AiDashboardOutputPluginsInner {
     'id': string;
     'parameters'?: AiParameters | null;
 }
+
+export interface AiDashboardParametersInner {
+    'id': string;
+    'mode'?: AiMode6;
+    'title'?: string;
+    /**
+     * The data type of the parameter. Must match the type in the parameter definition.
+     */
+    'type': AiType23;
+    'value'?: number;
+}
+
 
 export interface AiDashboardPart {
     'dashboard'?: AiDashboardOutput | null;
@@ -2360,7 +2374,7 @@ export interface AiLayerItem {
     'metrics'?: Array<AiBucketItem>;
     'segment_by'?: Array<AiBucketItem>;
     'title'?: string;
-    'type': AiType52;
+    'type': AiType54;
     'view_by'?: Array<string>;
 }
 
@@ -2385,7 +2399,7 @@ export interface AiLayerItemBase {
     'metrics'?: Array<AiBucketItem> | null;
     'segment_by'?: Array<AiBucketItem> | null;
     'title'?: string;
-    'type'?: AiType52 | null;
+    'type'?: AiType54 | null;
     'view_by'?: Array<string> | null;
 }
 
@@ -2752,6 +2766,18 @@ export interface AiNotificationChannelRef {
     'name'?: string | null;
 }
 
+export interface AiNumberDashboardParameter {
+    'id': string;
+    'mode'?: AiMode6 | null;
+    'title'?: string;
+    /**
+     * The data type of the parameter. Must match the type in the parameter definition.
+     */
+    'type': AiType23;
+    'value'?: number | null;
+}
+
+
 
 export const AiObjectType = {
     UNIDENTIFIED: 'unidentified',
@@ -3023,7 +3049,7 @@ export interface AiQueryAttributeSort {
      * Sort direction.
      */
     'direction': AiDirection;
-    'type': AiType46;
+    'type': AiType48;
 }
 
 
@@ -3102,7 +3128,7 @@ export interface AiQueryField {
     /**
      * Type of relative period metric related to another metric in list.
      */
-    'type': AiType45;
+    'type': AiType47;
     'period'?: number;
 }
 
@@ -3162,7 +3188,7 @@ export interface AiQueryField6 {
     /**
      * Type of relative period metric related to another metric in list.
      */
-    'type': AiType44;
+    'type': AiType46;
     /**
      * Identifier to use for this field.
      */
@@ -3180,7 +3206,7 @@ export interface AiQueryField7 {
     /**
      * Type of relative period metric related to another metric in list.
      */
-    'type': AiType45;
+    'type': AiType47;
     /**
      * Identifier to use for this field.
      */
@@ -3236,7 +3262,7 @@ export interface AiQueryMetricSort {
      */
     'direction': AiDirection;
     'metrics': Array<AiQueryMetricSortMetricsInner>;
-    'type': AiType47;
+    'type': AiType49;
 }
 
 
@@ -3383,7 +3409,7 @@ export interface AiQuerySort {
      * Sort direction.
      */
     'direction': AiDirection;
-    'type': AiType47;
+    'type': AiType49;
     'metrics': Array<AiQueryMetricSortMetricsInner>;
 }
 
@@ -4293,6 +4319,18 @@ export interface AiStepTokens {
     'total'?: number | null;
 }
 
+export interface AiStringDashboardParameter {
+    'id': string;
+    'mode'?: AiMode6 | null;
+    'title'?: string;
+    /**
+     * The data type of the parameter. Must match the type in the parameter definition.
+     */
+    'type': AiType22;
+    'value'?: string | null;
+}
+
+
 
 export const AiStyle = {
     SOLID: 'solid',
@@ -4407,6 +4445,7 @@ export interface AiSwitchAgentRequest {
 export interface AiTabInput {
     'filters'?: object;
     'id': string;
+    'parameters'?: Array<AiDashboardParametersInner>;
     /**
      * A list of sections in this tab.
      */
@@ -4417,6 +4456,7 @@ export interface AiTabInput {
 export interface AiTabOutput {
     'filters'?: object;
     'id': string;
+    'parameters'?: Array<AiDashboardParametersInner>;
     /**
      * A list of sections in this tab.
      */
@@ -4564,7 +4604,7 @@ export interface AiTo {
 
 export interface AiTotalItem {
     'title'?: string;
-    'type': AiType51;
+    'type': AiType53;
     /**
      * Local metric identifier to use for this total.
      */
@@ -4615,6 +4655,22 @@ export type AiType18 = typeof AiType18[keyof typeof AiType18];
 
 
 
+export const AiType22 = {
+    STRING: 'STRING'
+} as const;
+
+export type AiType22 = typeof AiType22[keyof typeof AiType22];
+
+
+
+export const AiType23 = {
+    NUMBER: 'NUMBER'
+} as const;
+
+export type AiType23 = typeof AiType23[keyof typeof AiType23];
+
+
+
 export const AiType3 = {
     ATTRIBUTE_FILTER: 'attribute_filter',
     ATTRIBUTE_FILTER2: 'attribute_filter'
@@ -4624,24 +4680,8 @@ export type AiType3 = typeof AiType3[keyof typeof AiType3];
 
 
 
-export const AiType44 = {
-    PREVIOUS_YEAR: 'PREVIOUS_YEAR'
-} as const;
-
-export type AiType44 = typeof AiType44[keyof typeof AiType44];
-
-
-
-export const AiType45 = {
-    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
-} as const;
-
-export type AiType45 = typeof AiType45[keyof typeof AiType45];
-
-
-
 export const AiType46 = {
-    ATTRIBUTE_SORT: 'attribute_sort'
+    PREVIOUS_YEAR: 'PREVIOUS_YEAR'
 } as const;
 
 export type AiType46 = typeof AiType46[keyof typeof AiType46];
@@ -4649,10 +4689,26 @@ export type AiType46 = typeof AiType46[keyof typeof AiType46];
 
 
 export const AiType47 = {
-    METRIC_SORT: 'metric_sort'
+    PREVIOUS_PERIOD: 'PREVIOUS_PERIOD'
 } as const;
 
 export type AiType47 = typeof AiType47[keyof typeof AiType47];
+
+
+
+export const AiType48 = {
+    ATTRIBUTE_SORT: 'attribute_sort'
+} as const;
+
+export type AiType48 = typeof AiType48[keyof typeof AiType48];
+
+
+
+export const AiType49 = {
+    METRIC_SORT: 'metric_sort'
+} as const;
+
+export type AiType49 = typeof AiType49[keyof typeof AiType49];
 
 
 
@@ -4664,7 +4720,7 @@ export type AiType5 = typeof AiType5[keyof typeof AiType5];
 
 
 
-export const AiType51 = {
+export const AiType53 = {
     SUM: 'SUM',
     AVG: 'AVG',
     MAX: 'MAX',
@@ -4673,34 +4729,34 @@ export const AiType51 = {
     NAT: 'NAT'
 } as const;
 
-export type AiType51 = typeof AiType51[keyof typeof AiType51];
+export type AiType53 = typeof AiType53[keyof typeof AiType53];
 
 
 
-export const AiType52 = {
+export const AiType54 = {
     PUSHPIN: 'pushpin',
     AREA: 'area'
 } as const;
 
-export type AiType52 = typeof AiType52[keyof typeof AiType52];
+export type AiType54 = typeof AiType54[keyof typeof AiType54];
 
 
 
-export const AiType55 = {
+export const AiType57 = {
     SOLID: 'solid',
     PATTERN: 'pattern',
     OUTLINE: 'outline'
 } as const;
 
-export type AiType55 = typeof AiType55[keyof typeof AiType55];
+export type AiType57 = typeof AiType57[keyof typeof AiType57];
 
 
 
-export const AiType56 = {
+export const AiType58 = {
     DASHBOARD: 'dashboard'
 } as const;
 
-export type AiType56 = typeof AiType56[keyof typeof AiType56];
+export type AiType58 = typeof AiType58[keyof typeof AiType58];
 
 
 
@@ -4712,24 +4768,8 @@ export type AiType7 = typeof AiType7[keyof typeof AiType7];
 
 
 
-export const AiType70 = {
-    TABLE: 'table'
-} as const;
-
-export type AiType70 = typeof AiType70[keyof typeof AiType70];
-
-
-
-export const AiType71 = {
-    BAR_CHART: 'bar_chart'
-} as const;
-
-export type AiType71 = typeof AiType71[keyof typeof AiType71];
-
-
-
 export const AiType72 = {
-    COLUMN_CHART: 'column_chart'
+    TABLE: 'table'
 } as const;
 
 export type AiType72 = typeof AiType72[keyof typeof AiType72];
@@ -4737,7 +4777,7 @@ export type AiType72 = typeof AiType72[keyof typeof AiType72];
 
 
 export const AiType73 = {
-    LINE_CHART: 'line_chart'
+    BAR_CHART: 'bar_chart'
 } as const;
 
 export type AiType73 = typeof AiType73[keyof typeof AiType73];
@@ -4745,7 +4785,7 @@ export type AiType73 = typeof AiType73[keyof typeof AiType73];
 
 
 export const AiType74 = {
-    AREA_CHART: 'area_chart'
+    COLUMN_CHART: 'column_chart'
 } as const;
 
 export type AiType74 = typeof AiType74[keyof typeof AiType74];
@@ -4753,7 +4793,7 @@ export type AiType74 = typeof AiType74[keyof typeof AiType74];
 
 
 export const AiType75 = {
-    SCATTER_CHART: 'scatter_chart'
+    LINE_CHART: 'line_chart'
 } as const;
 
 export type AiType75 = typeof AiType75[keyof typeof AiType75];
@@ -4761,7 +4801,7 @@ export type AiType75 = typeof AiType75[keyof typeof AiType75];
 
 
 export const AiType76 = {
-    BUBBLE_CHART: 'bubble_chart'
+    AREA_CHART: 'area_chart'
 } as const;
 
 export type AiType76 = typeof AiType76[keyof typeof AiType76];
@@ -4769,7 +4809,7 @@ export type AiType76 = typeof AiType76[keyof typeof AiType76];
 
 
 export const AiType77 = {
-    PIE_CHART: 'pie_chart'
+    SCATTER_CHART: 'scatter_chart'
 } as const;
 
 export type AiType77 = typeof AiType77[keyof typeof AiType77];
@@ -4777,7 +4817,7 @@ export type AiType77 = typeof AiType77[keyof typeof AiType77];
 
 
 export const AiType78 = {
-    DONUT_CHART: 'donut_chart'
+    BUBBLE_CHART: 'bubble_chart'
 } as const;
 
 export type AiType78 = typeof AiType78[keyof typeof AiType78];
@@ -4785,7 +4825,7 @@ export type AiType78 = typeof AiType78[keyof typeof AiType78];
 
 
 export const AiType79 = {
-    TREEMAP_CHART: 'treemap_chart'
+    PIE_CHART: 'pie_chart'
 } as const;
 
 export type AiType79 = typeof AiType79[keyof typeof AiType79];
@@ -4801,7 +4841,7 @@ export type AiType8 = typeof AiType8[keyof typeof AiType8];
 
 
 export const AiType80 = {
-    PYRAMID_CHART: 'pyramid_chart'
+    DONUT_CHART: 'donut_chart'
 } as const;
 
 export type AiType80 = typeof AiType80[keyof typeof AiType80];
@@ -4809,7 +4849,7 @@ export type AiType80 = typeof AiType80[keyof typeof AiType80];
 
 
 export const AiType81 = {
-    FUNNEL_CHART: 'funnel_chart'
+    TREEMAP_CHART: 'treemap_chart'
 } as const;
 
 export type AiType81 = typeof AiType81[keyof typeof AiType81];
@@ -4817,7 +4857,7 @@ export type AiType81 = typeof AiType81[keyof typeof AiType81];
 
 
 export const AiType82 = {
-    HEATMAP_CHART: 'heatmap_chart'
+    PYRAMID_CHART: 'pyramid_chart'
 } as const;
 
 export type AiType82 = typeof AiType82[keyof typeof AiType82];
@@ -4825,7 +4865,7 @@ export type AiType82 = typeof AiType82[keyof typeof AiType82];
 
 
 export const AiType83 = {
-    BULLET_CHART: 'bullet_chart'
+    FUNNEL_CHART: 'funnel_chart'
 } as const;
 
 export type AiType83 = typeof AiType83[keyof typeof AiType83];
@@ -4833,7 +4873,7 @@ export type AiType83 = typeof AiType83[keyof typeof AiType83];
 
 
 export const AiType84 = {
-    WATERFALL_CHART: 'waterfall_chart'
+    HEATMAP_CHART: 'heatmap_chart'
 } as const;
 
 export type AiType84 = typeof AiType84[keyof typeof AiType84];
@@ -4841,7 +4881,7 @@ export type AiType84 = typeof AiType84[keyof typeof AiType84];
 
 
 export const AiType85 = {
-    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart'
+    BULLET_CHART: 'bullet_chart'
 } as const;
 
 export type AiType85 = typeof AiType85[keyof typeof AiType85];
@@ -4849,7 +4889,7 @@ export type AiType85 = typeof AiType85[keyof typeof AiType85];
 
 
 export const AiType86 = {
-    SANKEY_CHART: 'sankey_chart'
+    WATERFALL_CHART: 'waterfall_chart'
 } as const;
 
 export type AiType86 = typeof AiType86[keyof typeof AiType86];
@@ -4857,7 +4897,7 @@ export type AiType86 = typeof AiType86[keyof typeof AiType86];
 
 
 export const AiType87 = {
-    HEADLINE_CHART: 'headline_chart'
+    DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart'
 } as const;
 
 export type AiType87 = typeof AiType87[keyof typeof AiType87];
@@ -4865,7 +4905,7 @@ export type AiType87 = typeof AiType87[keyof typeof AiType87];
 
 
 export const AiType88 = {
-    COMBO_CHART: 'combo_chart'
+    SANKEY_CHART: 'sankey_chart'
 } as const;
 
 export type AiType88 = typeof AiType88[keyof typeof AiType88];
@@ -4873,7 +4913,7 @@ export type AiType88 = typeof AiType88[keyof typeof AiType88];
 
 
 export const AiType89 = {
-    GEO_CHART: 'geo_chart'
+    HEADLINE_CHART: 'headline_chart'
 } as const;
 
 export type AiType89 = typeof AiType89[keyof typeof AiType89];
@@ -4889,7 +4929,7 @@ export type AiType9 = typeof AiType9[keyof typeof AiType9];
 
 
 export const AiType90 = {
-    GEO_AREA_CHART: 'geo_area_chart'
+    COMBO_CHART: 'combo_chart'
 } as const;
 
 export type AiType90 = typeof AiType90[keyof typeof AiType90];
@@ -4897,7 +4937,7 @@ export type AiType90 = typeof AiType90[keyof typeof AiType90];
 
 
 export const AiType91 = {
-    REPEATER_CHART: 'repeater_chart'
+    GEO_CHART: 'geo_chart'
 } as const;
 
 export type AiType91 = typeof AiType91[keyof typeof AiType91];
@@ -4905,10 +4945,26 @@ export type AiType91 = typeof AiType91[keyof typeof AiType91];
 
 
 export const AiType92 = {
-    RADAR_CHART: 'radar_chart'
+    GEO_AREA_CHART: 'geo_area_chart'
 } as const;
 
 export type AiType92 = typeof AiType92[keyof typeof AiType92];
+
+
+
+export const AiType93 = {
+    REPEATER_CHART: 'repeater_chart'
+} as const;
+
+export type AiType93 = typeof AiType93[keyof typeof AiType93];
+
+
+
+export const AiType94 = {
+    RADAR_CHART: 'radar_chart'
+} as const;
+
+export type AiType94 = typeof AiType94[keyof typeof AiType94];
 
 
 /**
@@ -5254,7 +5310,7 @@ export interface AiVisualisation {
     /**
      * Type of visualisation.
      */
-    'type': AiType92;
+    'type': AiType94;
     'view_by'?: Array<AiBucketItem>;
     'stack_by'?: Array<AiBucketItem>;
     'trend_by'?: Array<AiBucketItem>;
@@ -5285,7 +5341,7 @@ export interface AiVisualisation1 {
     /**
      * Type of visualisation.
      */
-    'type': AiType70;
+    'type': AiType72;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5307,7 +5363,7 @@ export interface AiVisualisation10 {
     /**
      * Type of visualisation.
      */
-    'type': AiType79;
+    'type': AiType81;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5329,7 +5385,7 @@ export interface AiVisualisation11 {
     /**
      * Type of visualisation.
      */
-    'type': AiType80;
+    'type': AiType82;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5351,7 +5407,7 @@ export interface AiVisualisation12 {
     /**
      * Type of visualisation.
      */
-    'type': AiType81;
+    'type': AiType83;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5375,7 +5431,7 @@ export interface AiVisualisation13 {
     /**
      * Type of visualisation.
      */
-    'type': AiType82;
+    'type': AiType84;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5397,7 +5453,7 @@ export interface AiVisualisation14 {
     /**
      * Type of visualisation.
      */
-    'type': AiType83;
+    'type': AiType85;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5419,7 +5475,7 @@ export interface AiVisualisation15 {
     /**
      * Type of visualisation.
      */
-    'type': AiType84;
+    'type': AiType86;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5443,7 +5499,7 @@ export interface AiVisualisation16 {
     /**
      * Type of visualisation.
      */
-    'type': AiType85;
+    'type': AiType87;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5467,7 +5523,7 @@ export interface AiVisualisation17 {
     /**
      * Type of visualisation.
      */
-    'type': AiType86;
+    'type': AiType88;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5489,7 +5545,7 @@ export interface AiVisualisation18 {
     /**
      * Type of visualisation.
      */
-    'type': AiType87;
+    'type': AiType89;
     'view_by'?: Array<any> | null;
 }
 
@@ -5511,7 +5567,7 @@ export interface AiVisualisation19 {
     /**
      * Type of visualisation.
      */
-    'type': AiType88;
+    'type': AiType90;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5534,7 +5590,7 @@ export interface AiVisualisation2 {
     /**
      * Type of visualisation.
      */
-    'type': AiType71;
+    'type': AiType73;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5557,7 +5613,7 @@ export interface AiVisualisation20 {
     /**
      * Type of visualisation.
      */
-    'type': AiType89;
+    'type': AiType91;
     'view_by'?: Array<string> | null;
 }
 
@@ -5580,7 +5636,7 @@ export interface AiVisualisation21 {
     /**
      * Type of visualisation.
      */
-    'type': AiType90;
+    'type': AiType92;
     'view_by'?: Array<string> | null;
 }
 
@@ -5604,7 +5660,7 @@ export interface AiVisualisation22 {
     /**
      * Type of visualisation.
      */
-    'type': AiType91;
+    'type': AiType93;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5626,7 +5682,7 @@ export interface AiVisualisation23 {
     /**
      * Type of visualisation.
      */
-    'type': AiType92;
+    'type': AiType94;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5649,7 +5705,7 @@ export interface AiVisualisation3 {
     /**
      * Type of visualisation.
      */
-    'type': AiType72;
+    'type': AiType74;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5672,7 +5728,7 @@ export interface AiVisualisation4 {
     /**
      * Type of visualisation.
      */
-    'type': AiType73;
+    'type': AiType75;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5695,7 +5751,7 @@ export interface AiVisualisation5 {
     /**
      * Type of visualisation.
      */
-    'type': AiType74;
+    'type': AiType76;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5718,7 +5774,7 @@ export interface AiVisualisation6 {
     /**
      * Type of visualisation.
      */
-    'type': AiType75;
+    'type': AiType77;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5741,7 +5797,7 @@ export interface AiVisualisation7 {
     /**
      * Type of visualisation.
      */
-    'type': AiType76;
+    'type': AiType78;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5763,7 +5819,7 @@ export interface AiVisualisation8 {
     /**
      * Type of visualisation.
      */
-    'type': AiType77;
+    'type': AiType79;
     'view_by'?: Array<AiBucketItem> | null;
 }
 
@@ -5785,7 +5841,7 @@ export interface AiVisualisation9 {
     /**
      * Type of visualisation.
      */
-    'type': AiType78;
+    'type': AiType80;
     'view_by'?: Array<AiBucketItem> | null;
 }
 

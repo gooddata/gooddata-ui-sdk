@@ -86,21 +86,26 @@ export function useEditInsightMenuItem(
     const dispatch = useDashboardDispatch();
     const isEnabled = useDashboardSelector(selectEnableInsightEditing);
     const workspacePermissions = useDashboardSelector(selectPermissions);
+    const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
     const visualizationPermissionsEnabled = useDashboardSelector(selectEnableVisualizationPermissions);
     const insightPermissions = useInsightEditorPermissions();
 
     return useMemo(() => {
-        // Editing a visualization follows the right to save it in place, not the right to create one.
-        const canEditInsight =
+        const permissions = insight && insightPermissions?.[insightId(insight)];
+        // Inherited visualizations are locked in the child workspace. Opening them lets users
+        // with the create permission save a copy there. The permissions query includes the lock
+        // state, which is missing from visualizations side-loaded with the dashboard.
+        const canOpenEditor =
             isEnabled &&
             !!insight &&
             !!workspacePermissions &&
-            canEditVisualization(
-                insightPermissions?.[insightId(insight)],
-                workspacePermissions,
-                visualizationPermissionsEnabled,
-            );
-        if (!canEditInsight) {
+            ((visualizationPermissionsEnabled && permissions?.isLocked && canCreateVisualization) ||
+                canEditVisualization(
+                    permissions?.permissions,
+                    workspacePermissions,
+                    visualizationPermissionsEnabled,
+                ));
+        if (!canOpenEditor) {
             return undefined;
         }
         return {
@@ -117,6 +122,7 @@ export function useEditInsightMenuItem(
         isEnabled,
         insight,
         workspacePermissions,
+        canCreateVisualization,
         insightPermissions,
         visualizationPermissionsEnabled,
         intl,

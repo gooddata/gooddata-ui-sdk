@@ -85,6 +85,11 @@ Use `copilot.hasDefinition(target)` to check whether the exact workflow type and
 pending or applied definition, independently of the current view or selected conversation. Hosts can
 use this query to restore chat for fresh builder URLs without switching chats after in-session applications.
 
+When leaving a builder, call `copilot.cancelStaleBuild(type, nextObjectId)` to cancel generation
+and interrupt applications of that type. It returns `false` without changes when an application
+to the next object is in progress, preserving intentional draft opening. Applied definitions do not
+prevent cancellation. The host still owns navigation, edit-mode checks, and exiting the editor.
+
 ```typescript
 import { CopilotBuildType, CopilotHandler } from "@gooddata/sdk-ui-gen-ai";
 

@@ -1,11 +1,18 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
+import { useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
-import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import type {
+    GenAIObjectType,
+    ISemanticSearchRelationship,
+    ISemanticSearchResultItem,
+} from "@gooddata/sdk-model";
 import { type OnLeveledSelectFn, type UiLeveledTreeView, UiLeveledTreeview } from "@gooddata/sdk-ui-kit";
 
 import { LeveledSearchTreeViewItemMemo } from "./LeveledSearchTreeViewItem.js";
+import { SearchLinkPolicyContext, isSearchItemLinkEnabled } from "./SearchLinkPolicyContext.js";
 
 export type SearchTreeViewLevels = [ISemanticSearchResultItem, ISemanticSearchRelationship];
 export type SearchTreeViewItem = UiLeveledTreeView<SearchTreeViewLevels>;
@@ -17,6 +24,7 @@ export type LeveledSearchTreeViewProps = {
     onSelect: OnLeveledSelectFn<SearchTreeViewLevels>;
     onFocus?: (nodeId?: string) => void;
     tabIndex?: number;
+    isLinkEnabled?: (type: GenAIObjectType) => boolean;
 };
 
 /**
@@ -24,26 +32,39 @@ export type LeveledSearchTreeViewProps = {
  * @internal
  */
 export function LeveledSearchTreeView(props: LeveledSearchTreeViewProps) {
-    const { id, items, maxHeight = 500, onSelect, onFocus, tabIndex = -1 } = props;
+    const { id, items, maxHeight = 500, onSelect, onFocus, tabIndex = -1, isLinkEnabled } = props;
     const intl = useIntl();
 
+    const handleSelect = useCallback<LeveledSearchTreeViewProps["onSelect"]>(
+        (item, modifiers, event) => {
+            if (!isSearchItemLinkEnabled(item.data, isLinkEnabled)) {
+                event.preventDefault();
+                return;
+            }
+            onSelect(item, modifiers, event);
+        },
+        [isLinkEnabled, onSelect],
+    );
+
     return (
-        <UiLeveledTreeview
-            items={items}
-            maxHeight={maxHeight}
-            ariaAttributes={{
-                id,
-                tabIndex,
-                "aria-label": intl.formatMessage({ id: "semantic-search.tree" }),
-            }}
-            expandedMode="default-collapsed"
-            selectionMode="leafs-only"
-            expansionMode="single"
-            onSelect={onSelect}
-            onFocus={onFocus}
-            ItemComponent={LeveledSearchTreeViewItemMemo}
-            shouldKeyboardActionPreventDefault={false}
-            isDisabledFocusable // For displaying locked items
-        />
+        <SearchLinkPolicyContext.Provider value={isLinkEnabled}>
+            <UiLeveledTreeview
+                items={items}
+                maxHeight={maxHeight}
+                ariaAttributes={{
+                    id,
+                    tabIndex,
+                    "aria-label": intl.formatMessage({ id: "semantic-search.tree" }),
+                }}
+                expandedMode="default-collapsed"
+                selectionMode="leafs-only"
+                expansionMode="single"
+                onSelect={handleSelect}
+                onFocus={onFocus}
+                ItemComponent={LeveledSearchTreeViewItemMemo}
+                shouldKeyboardActionPreventDefault={false}
+                isDisabledFocusable // For displaying locked items
+            />
+        </SearchLinkPolicyContext.Provider>
     );
 }

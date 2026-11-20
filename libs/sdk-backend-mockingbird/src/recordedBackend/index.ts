@@ -684,6 +684,8 @@ function recordedWorkspace(
                 createDocument: (publisherDocument) =>
                     Promise.resolve({ ...publisherDocument, ref: idRef("recordedDocument", "document") }),
                 updateDocument: (publisherDocument) => Promise.resolve(publisherDocument),
+                updateDocumentMeta: () =>
+                    Promise.reject(new UnexpectedResponseError("Document not found", 404, {})),
                 deleteDocument: () => Promise.resolve(),
                 exportDocumentToPdf: () =>
                     Promise.resolve({

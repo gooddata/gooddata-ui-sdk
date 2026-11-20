@@ -371,7 +371,9 @@ describe("convertLocalizationIssueWorkspaces", () => {
 });
 
 describe("convertLocalizationStatisticsWorkspaces", () => {
-    const statistics = (workspaces?: Array<{ id: string; name: string; parentId?: string | null }>) => ({
+    const statistics = (
+        workspaces?: Array<{ id: string; name?: string | null; parentId?: string | null }>,
+    ) => ({
         data: { locales: [] },
         metadata: {
             locales: [{ locale: "de-DE" }],
@@ -420,6 +422,17 @@ describe("convertLocalizationStatisticsWorkspaces", () => {
             convertLocalizationStatisticsWorkspaces(statistics([{ id: "retail", name: "Retail" }]))[0]
                 .parentId,
         ).toBeNull();
+    });
+
+    it("shows the id of a parent whose name the user may not see", () => {
+        expect(
+            convertLocalizationStatisticsWorkspaces(
+                statistics([
+                    { id: "retail", name: null },
+                    { id: "retail-bergmann", name: "Bergmann", parentId: "retail" },
+                ]),
+            ).map(({ name }) => name),
+        ).toEqual(["retail", "Bergmann"]);
     });
 
     it("returns nothing when the backend sent no counts", () => {

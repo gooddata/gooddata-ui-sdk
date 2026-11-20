@@ -139,15 +139,43 @@ describe("insight editor menu item hooks", () => {
             expect(renderItem()).toBeUndefined();
         });
 
-        it("follows the edit permission of the visualization when visualization permissions are on", () => {
+        it.each([
+            { isLocked: true, canCreate: true, offered: true },
+            { isLocked: true, canCreate: false, offered: false },
+            { isLocked: false, canCreate: true, offered: false },
+            { isLocked: false, canCreate: false, offered: false },
+        ])(
+            "offers Edit=$offered for a view-only visualization with isLocked=$isLocked and canCreate=$canCreate",
+            ({ isLocked, canCreate, offered }) => {
+                state.visualizationPermissionsEnabled = true;
+                state.canCreateVisualization = canCreate;
+                state.workspacePermissions = { canAnalyzeWorkspace: false, canManageProject: false };
+                vi.mocked(useInsightEditorPermissions).mockReturnValue({
+                    insight: { permissions: ["VIEW"], isLocked },
+                });
+
+                const item = renderItem();
+
+                expect(item !== undefined).toBe(offered);
+            },
+        );
+
+        it("follows the edit permission of the visualization for a user who may not create one", () => {
             state.visualizationPermissionsEnabled = true;
+            state.canCreateVisualization = false;
+            state.workspacePermissions = { canAnalyzeWorkspace: false, canManageProject: false };
+            vi.mocked(useInsightEditorPermissions).mockReturnValue({
+                insight: { permissions: ["VIEW"], isLocked: false },
+            });
             expect(renderItem()).toBeUndefined();
 
-            vi.mocked(useInsightEditorPermissions).mockReturnValue({ insight: ["VIEW", "EDIT"] } as never);
+            vi.mocked(useInsightEditorPermissions).mockReturnValue({
+                insight: { permissions: ["VIEW", "EDIT"], isLocked: false },
+            });
             expect(renderItem()).toBeDefined();
         });
 
-        it("is not offered without the analyze permission of the workspace", () => {
+        it("follows the analyze permission when visualization permissions are off", () => {
             state.workspacePermissions = { canAnalyzeWorkspace: false };
             expect(renderItem()).toBeUndefined();
         });

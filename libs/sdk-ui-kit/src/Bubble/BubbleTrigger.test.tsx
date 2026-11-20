@@ -46,6 +46,7 @@ describe("BubbleTrigger", () => {
         });
 
         afterEach(() => {
+            vi.runOnlyPendingTimers();
             vi.useRealTimers();
         });
 

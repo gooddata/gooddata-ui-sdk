@@ -121,6 +121,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         onLinkClick,
         mode,
         allowNativeLinks,
+        isLinkEnabled,
     } = props;
     const effectiveBackend = useBackendStrict(backend);
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -135,6 +136,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
                 mode={mode}
                 eventHandlers={eventHandlers}
                 allowNativeLinks={allowNativeLinks}
+                isLinkEnabled={isLinkEnabled}
                 onLinkClick={onLinkClick}
                 settings={settings}
                 objectTypes={objectTypes}

@@ -45,7 +45,7 @@ export interface AFM {
      */
     'measures': Array<MeasureItem>;
     /**
-     * (EXPERIMENTAL) Parameter values to use for this execution.
+     * Parameter values to use for this execution.
      */
     'parameters'?: Array<ParameterItem>;
 }
@@ -1324,7 +1324,7 @@ export type DashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 /**
  * @type DashboardFilter
  */
-export type DashboardFilter = DashboardArbitraryAttributeFilter | DashboardAttributeFilter | DashboardDateFilter | DashboardMatchAttributeFilter | DashboardMeasureValueFilter;
+export type DashboardFilter = DashboardArbitraryAttributeFilter | DashboardAttributeFilter | DashboardDateFilter | DashboardMatchAttributeFilter | DashboardMeasureValueFilter | DashboardParameterizedDateFilter;
 
 export interface DashboardMatchAttributeFilter {
     'matchAttributeFilter': DashboardMatchAttributeFilterMatchAttributeFilter;
@@ -1353,6 +1353,19 @@ export interface DashboardMeasureValueFilterDashboardMeasureValueFilter {
     'measure': IdentifierRef;
     'title'?: string;
 }
+
+export interface DashboardParameterizedDateFilter {
+    'dashboardParameterizedDateFilter': DashboardParameterizedDateFilterDashboardParameterizedDateFilter;
+}
+
+export interface DashboardParameterizedDateFilterDashboardParameterizedDateFilter {
+    'dataSet'?: IdentifierRef;
+    'emptyValueHandling'?: DashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum;
+    'localIdentifier'?: string;
+    'parameter': IdentifierRef;
+}
+
+export type DashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
 
 export interface DashboardPermissions {
     /**
@@ -1512,7 +1525,7 @@ export type DatasetWorkspaceDataFilterIdentifierTypeEnum = 'workspaceDataFilter'
  * @type DateFilter
  * Abstract filter definition type for dates.
  */
-export type DateFilter = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | RelativeDateFilter;
+export type DateFilter = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | ParameterizedDateFilter | RelativeDateFilter;
 
 export interface DateRangeParameterDefinition {
     'defaultValue': DateRangeParameterValue;
@@ -4099,7 +4112,7 @@ export interface DependentEntitiesNode {
     'type': DependentEntitiesNodeTypeEnum;
 }
 
-export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'document';
+export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'pageTemplate' | 'document' | 'documentTemplate';
 
 export interface DependentEntitiesRequest {
     'identifiers': Array<EntityIdentifier>;
@@ -4132,7 +4145,7 @@ export interface EntityIdentifier {
     'type': EntityIdentifierTypeEnum;
 }
 
-export type EntityIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'document';
+export type EntityIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'pageTemplate' | 'document' | 'documentTemplate';
 
 /**
  * Request body for entity search operations
@@ -4274,7 +4287,7 @@ export interface Features {
  * @type FilterDefinition
  * Abstract filter definition type
  */
-export type FilterDefinition = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
+export type FilterDefinition = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | ParameterizedDateFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
 
 /**
  * @type FilterDefinitionForSimpleMeasure
@@ -13595,7 +13608,7 @@ export interface JsonApiPublisherDocumentPageTemplateOutDocument {
     /**
      * Included resources
      */
-    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'included'?: Array<JsonApiPublisherDocumentOutIncludes>;
     'links'?: ObjectLinks;
     'meta'?: JsonApiPublisherDocumentPageTemplateOutDocumentMeta;
 }
@@ -13615,7 +13628,7 @@ export interface JsonApiPublisherDocumentPageTemplateOutList {
     /**
      * Included resources
      */
-    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'included'?: Array<JsonApiPublisherDocumentOutIncludes>;
     'links'?: ListLinks;
     'meta'?: JsonApiPublisherDocumentPageTemplateOutListMeta;
 }
@@ -13647,15 +13660,47 @@ export type JsonApiPublisherDocumentPageTemplateOutMetaOriginOriginTypeEnum = 'N
 
 export interface JsonApiPublisherDocumentPageTemplateOutRelationships {
     'createdBy'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsCreatedBy;
+    'datasets'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsDatasets;
+    'labels'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsLabels;
+    'metrics'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsMetrics;
     'modifiedBy'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsModifiedBy;
+    'visualizationObjects'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsVisualizationObjects;
 }
 
 export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsCreatedBy {
     'data': JsonApiUserIdentifierLinkage | null;
 }
 
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsDatasets {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsLabels {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiLabelLinkage>;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsMetrics {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiMetricLinkage>;
+}
+
 export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsModifiedBy {
     'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsVisualizationObjects {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiVisualizationObjectLinkage>;
 }
 
 export interface JsonApiPublisherDocumentPageTemplateOutWithLinks {
@@ -14062,7 +14107,7 @@ export interface JsonApiPublisherDocumentTemplateOutDocument {
     /**
      * Included resources
      */
-    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'included'?: Array<JsonApiPublisherDocumentOutIncludes>;
     'links'?: ObjectLinks;
     'meta'?: JsonApiPublisherDocumentTemplateOutDocumentMeta;
 }
@@ -14082,7 +14127,7 @@ export interface JsonApiPublisherDocumentTemplateOutList {
     /**
      * Included resources
      */
-    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'included'?: Array<JsonApiPublisherDocumentOutIncludes>;
     'links'?: ListLinks;
     'meta'?: JsonApiPublisherDocumentTemplateOutListMeta;
 }
@@ -14114,15 +14159,47 @@ export type JsonApiPublisherDocumentTemplateOutMetaOriginOriginTypeEnum = 'NATIV
 
 export interface JsonApiPublisherDocumentTemplateOutRelationships {
     'createdBy'?: JsonApiPublisherDocumentTemplateOutRelationshipsCreatedBy;
+    'datasets'?: JsonApiPublisherDocumentTemplateOutRelationshipsDatasets;
+    'labels'?: JsonApiPublisherDocumentTemplateOutRelationshipsLabels;
+    'metrics'?: JsonApiPublisherDocumentTemplateOutRelationshipsMetrics;
     'modifiedBy'?: JsonApiPublisherDocumentTemplateOutRelationshipsModifiedBy;
+    'visualizationObjects'?: JsonApiPublisherDocumentTemplateOutRelationshipsVisualizationObjects;
 }
 
 export interface JsonApiPublisherDocumentTemplateOutRelationshipsCreatedBy {
     'data': JsonApiUserIdentifierLinkage | null;
 }
 
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsDatasets {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsLabels {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiLabelLinkage>;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsMetrics {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiMetricLinkage>;
+}
+
 export interface JsonApiPublisherDocumentTemplateOutRelationshipsModifiedBy {
     'data': JsonApiUserIdentifierLinkage | null;
+}
+
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsVisualizationObjects {
+    /**
+     * References to other resource objects in a to-many (\\\"relationship\\\"). Relationships can be specified by including a member in a resource\'s links object.
+     */
+    'data': Array<JsonApiVisualizationObjectLinkage>;
 }
 
 export interface JsonApiPublisherDocumentTemplateOutWithLinks {
@@ -18147,7 +18224,11 @@ export interface LocalizationResolvedValues {
     'METADATA_LOCALE': LocalizationResolvedValue;
 }
 
+/**
+ * (BETA) `childWorkspaces` has the same counts for the workspaces below this workspace that the user can see. It does not count this workspace. Only the workspace usage has it.
+ */
 export interface LocalizationSettingUsage {
+    'childWorkspaces'?: LocalizationCount;
     'users': LocalizationCount;
     'workspaces': LocalizationCount;
 }
@@ -18200,7 +18281,7 @@ export interface LocalizationStatisticsTranslatedLocale {
 }
 
 /**
- * Metadata texts of one workspace. A row counts only the texts that the workspace owns. A child workspace sums its row and the rows of its parents.
+ * Metadata texts of one workspace. A row counts only the texts that the workspace owns. A parent\'s row counts only the texts that the workspaces below it inherit. A child workspace sums its row and the rows of its parents.
  */
 export interface LocalizationStatisticsWorkspace {
     /**
@@ -18212,9 +18293,9 @@ export interface LocalizationStatisticsWorkspace {
      */
     'locales': Array<LocalizationStatisticsTranslatedLocale>;
     /**
-     * Workspace name.
+     * Workspace name. Null for a parent that the user has no permission on. The name stays when the user can see the workspace right below it.
      */
-    'name': string;
+    'name'?: string | null;
     /**
      * Parent workspace ID, null for a root workspace.
      */
@@ -18255,10 +18336,11 @@ export interface LocalizationUsageUsers {
 }
 
 /**
- * One language. `workspaces` counts the workspaces that get it in any of the settings, once each. `users` counts the users who get it in any of the settings, once each. In the entry with a null value, `users` counts the users who get no language in any setting.
+ * One language. `workspaces` counts the workspaces that get it in any of the settings, once each. `users` counts the users who get it in any of the settings, once each. In the entry with a null value, `users` counts the users who get no language in any setting. (BETA) `childWorkspaces` has the same counts for the workspaces below this workspace that the user can see. It does not count this workspace. Only the workspace usage has it.
  */
 export interface LocalizationUsageValue {
     'bySetting': LocalizationSettingUsages;
+    'childWorkspaces'?: LocalizationCount;
     'content': LocalizationContent;
     'users': LocalizationCount;
     'workspaces': LocalizationCount;
@@ -18676,7 +18758,7 @@ export interface Parameter {
 export type ParameterDefinition = { type: 'DATE_RANGE' } & DateRangeParameterDefinition | { type: 'NUMBER' } & NumberParameterDefinition | { type: 'STRING' } & StringParameterDefinition;
 
 /**
- * (EXPERIMENTAL) Parameter value for this execution.
+ * Parameter value for this execution.
  */
 export interface ParameterItem {
     [key: string]: any;
@@ -18711,6 +18793,26 @@ export interface ParameterValue {
      */
     'valueTitle'?: string;
 }
+
+/**
+ * A date filter whose period comes from a DATE_RANGE parameter. Each execution uses the parameter\'s current granularity and range.
+ */
+export interface ParameterizedDateFilter {
+    'parameterizedDateFilter': ParameterizedDateFilterParameterizedDateFilter;
+}
+
+export interface ParameterizedDateFilterParameterizedDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': AfmObjectIdentifierDataset;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: ParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum;
+    'localIdentifier'?: string;
+    'parameter': AfmObjectIdentifierParameter;
+}
+
+export type ParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
  * Custom CSS styles for the table. (PDF, HTML)
@@ -24180,7 +24282,7 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsage(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. The list leaves out the users that the usage counts without a language.
  * @summary Users who set a language themselves.
  * @param {string} [value] Language tag that the user sets.
  * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
@@ -24251,7 +24353,7 @@ export async function ActionsApiAxiosParamCreator_OrganizationLocalizationUsageU
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
  * @summary Workspaces that use a language.
  * @param {string} [value] Language tag that the workspace gets.
  * @param {string} [name] Filter by workspace name. Note that the filter is case insensitive.
@@ -25816,7 +25918,7 @@ export async function ActionsApiAxiosParamCreator_VisualizationPermissions(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses.
+ * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses. It checks this only when the workspace has no workspaces below it or the user can see all of them.
  * @summary (BETA) Localization issues of the workspace.
  * @param {string} workspaceId 
  * @param {*} [options] Override http request option.
@@ -25911,7 +26013,7 @@ export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationStatistic
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. `childWorkspaces` counts the workspaces below it that the user can see, the same way.
  * @summary Languages used in the workspace.
  * @param {string} workspaceId 
  * @param {*} [options] Override http request option.
@@ -25956,7 +26058,82 @@ export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationUsage(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * (BETA) Lists the workspaces behind the `childWorkspaces` counts of the workspace localization usage. The list has the workspaces below the workspace that the user can see, sorted by name. Without the setting filter, a workspace matches when one of its three language settings matches. Its source is then the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
+ * @summary (BETA) Workspaces below the workspace that use a language.
+ * @param {string} workspaceId 
+ * @param {string} [value] Language tag that the workspace gets.
+ * @param {string} [name] Filter by workspace name. Note that the filter is case insensitive.
+ * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
+ * @param {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'} [source] Where the value comes from.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_WorkspaceLocalizationUsageChildWorkspaces(
+    workspaceId: string, value?: string, name?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('workspaceLocalizationUsageChildWorkspaces', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/localization/usage/childWorkspaces`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (value !== undefined) {
+        localVarQueryParameter['value'] = value;
+    }
+
+    if (name !== undefined) {
+        localVarQueryParameter['name'] = name;
+    }
+
+    if (setting !== undefined) {
+        localVarQueryParameter['setting'] = setting;
+    }
+
+    if (source !== undefined) {
+        localVarQueryParameter['source'] = source;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. The list leaves out the members that the usage counts without a language.
  * @summary Workspace members who get a language.
  * @param {string} workspaceId 
  * @param {string} [value] Language tag that the user gets.
@@ -27079,7 +27256,7 @@ export async function ActionsApi_OrganizationLocalizationUsage(
 
 // ActionsApi Api FP
 /**
- * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. The list leaves out the users that the usage counts without a language.
  * @summary Users who set a language themselves.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -27105,7 +27282,7 @@ export async function ActionsApi_OrganizationLocalizationUsageUsers(
 
 // ActionsApi Api FP
 /**
- * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
  * @summary Workspaces that use a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -27855,7 +28032,7 @@ export async function ActionsApi_VisualizationPermissions(
 
 // ActionsApi Api FP
 /**
- * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses.
+ * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses. It checks this only when the workspace has no workspaces below it or the user can see all of them.
  * @summary (BETA) Localization issues of the workspace.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -27907,7 +28084,7 @@ export async function ActionsApi_WorkspaceLocalizationStatistics(
 
 // ActionsApi Api FP
 /**
- * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. `childWorkspaces` counts the workspaces below it that the user can see, the same way.
  * @summary Languages used in the workspace.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -27933,7 +28110,33 @@ export async function ActionsApi_WorkspaceLocalizationUsage(
 
 // ActionsApi Api FP
 /**
- * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * (BETA) Lists the workspaces behind the `childWorkspaces` counts of the workspace localization usage. The list has the workspaces below the workspace that the user can see, sorted by name. Without the setting filter, a workspace matches when one of its three language settings matches. Its source is then the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
+ * @summary (BETA) Workspaces below the workspace that use a language.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_WorkspaceLocalizationUsageChildWorkspaces(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<LocalizationUsageWorkspaces> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_WorkspaceLocalizationUsageChildWorkspaces(
+        requestParameters.workspaceId, requestParameters.value, requestParameters.name, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. The list leaves out the members that the usage counts without a language.
  * @summary Workspace members who get a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -28370,7 +28573,7 @@ export interface ActionsApiInterface {
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
 
     /**
-     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. The list leaves out the users that the usage counts without a language.
      * @summary Users who set a language themselves.
      * @param {ActionsApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -28380,7 +28583,7 @@ export interface ActionsApiInterface {
     organizationLocalizationUsageUsers(requestParameters: ActionsApiOrganizationLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
 
     /**
-     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
      * @summary Workspaces that use a language.
      * @param {ActionsApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -28666,7 +28869,7 @@ export interface ActionsApiInterface {
     visualizationPermissions(requestParameters: ActionsApiVisualizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<VisualizationPermissions>;
 
     /**
-     * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses.
+     * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses. It checks this only when the workspace has no workspaces below it or the user can see all of them.
      * @summary (BETA) Localization issues of the workspace.
      * @param {ActionsApiWorkspaceLocalizationIssuesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -28686,7 +28889,7 @@ export interface ActionsApiInterface {
     workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
 
     /**
-     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. `childWorkspaces` counts the workspaces below it that the user can see, the same way.
      * @summary Languages used in the workspace.
      * @param {ActionsApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -28696,7 +28899,17 @@ export interface ActionsApiInterface {
     workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
 
     /**
-     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * (BETA) Lists the workspaces behind the `childWorkspaces` counts of the workspace localization usage. The list has the workspaces below the workspace that the user can see, sorted by name. Without the setting filter, a workspace matches when one of its three language settings matches. Its source is then the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
+     * @summary (BETA) Workspaces below the workspace that use a language.
+     * @param {ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    workspaceLocalizationUsageChildWorkspaces(requestParameters: ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageWorkspaces>;
+
+    /**
+     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. The list leaves out the members that the usage counts without a language.
      * @summary Workspace members who get a language.
      * @param {ActionsApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -30002,6 +30215,62 @@ export interface ActionsApiWorkspaceLocalizationUsageRequest {
 }
 
 /**
+ * Request parameters for workspaceLocalizationUsageChildWorkspaces operation in ActionsApi.
+ * @export
+ * @interface ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest
+ */
+export interface ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly workspaceId: string
+
+    /**
+     * Language tag that the workspace gets.
+     * @type {string}
+     * @memberof ActionsApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly value?: string
+
+    /**
+     * Filter by workspace name. Note that the filter is case insensitive.
+     * @type {string}
+     * @memberof ActionsApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly name?: string
+
+    /**
+     * One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
+     * @type {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'}
+     * @memberof ActionsApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'
+
+    /**
+     * Where the value comes from.
+     * @type {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'}
+     * @memberof ActionsApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof ActionsApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned.
+     * @type {number}
+     * @memberof ActionsApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly size?: number
+}
+
+/**
  * Request parameters for workspaceLocalizationUsageUsers operation in ActionsApi.
  * @export
  * @interface ActionsApiWorkspaceLocalizationUsageUsersRequest
@@ -30540,7 +30809,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. The list leaves out the users that the usage counts without a language.
      * @summary Users who set a language themselves.
      * @param {ActionsApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -30552,7 +30821,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
      * @summary Workspaces that use a language.
      * @param {ActionsApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -30896,7 +31165,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses.
+     * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses. It checks this only when the workspace has no workspaces below it or the user can see all of them.
      * @summary (BETA) Localization issues of the workspace.
      * @param {ActionsApiWorkspaceLocalizationIssuesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -30920,7 +31189,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. `childWorkspaces` counts the workspaces below it that the user can see, the same way.
      * @summary Languages used in the workspace.
      * @param {ActionsApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -30932,7 +31201,19 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * (BETA) Lists the workspaces behind the `childWorkspaces` counts of the workspace localization usage. The list has the workspaces below the workspace that the user can see, sorted by name. Without the setting filter, a workspace matches when one of its three language settings matches. Its source is then the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
+     * @summary (BETA) Workspaces below the workspace that use a language.
+     * @param {ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public workspaceLocalizationUsageChildWorkspaces(requestParameters: ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_WorkspaceLocalizationUsageChildWorkspaces(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. The list leaves out the members that the usage counts without a language.
      * @summary Workspace members who get a language.
      * @param {ActionsApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -67103,14 +67384,14 @@ export class DocumentControllerApi extends BaseAPI implements DocumentController
  * @summary Post Document Template
  * @param {string} workspaceId 
  * @param {JsonApiPublisherDocumentTemplatePostOptionalIdDocument} jsonApiPublisherDocumentTemplatePostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function DocumentTemplateControllerApiAxiosParamCreator_CreateEntityDocumentTemplates(
-    workspaceId: string, jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -67226,7 +67507,7 @@ export async function DocumentTemplateControllerApiAxiosParamCreator_DeleteEntit
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -67237,7 +67518,7 @@ export async function DocumentTemplateControllerApiAxiosParamCreator_DeleteEntit
  * @throws {RequiredError}
  */
 export async function DocumentTemplateControllerApiAxiosParamCreator_GetAllEntitiesDocumentTemplates(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -67311,7 +67592,7 @@ export async function DocumentTemplateControllerApiAxiosParamCreator_GetAllEntit
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -67319,7 +67600,7 @@ export async function DocumentTemplateControllerApiAxiosParamCreator_GetAllEntit
  * @throws {RequiredError}
  */
 export async function DocumentTemplateControllerApiAxiosParamCreator_GetEntityDocumentTemplates(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -67381,13 +67662,13 @@ export async function DocumentTemplateControllerApiAxiosParamCreator_GetEntityDo
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentTemplatePatchDocument} jsonApiPublisherDocumentTemplatePatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function DocumentTemplateControllerApiAxiosParamCreator_PatchEntityDocumentTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -67458,13 +67739,13 @@ export async function DocumentTemplateControllerApiAxiosParamCreator_PatchEntity
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentTemplateInDocument} jsonApiPublisherDocumentTemplateInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function DocumentTemplateControllerApiAxiosParamCreator_UpdateEntityDocumentTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -67774,10 +68055,10 @@ export interface DocumentTemplateControllerApiCreateEntityDocumentTemplatesReque
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof DocumentTemplateControllerApiCreateEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -67837,10 +68118,10 @@ export interface DocumentTemplateControllerApiGetAllEntitiesDocumentTemplatesReq
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof DocumentTemplateControllerApiGetAllEntitiesDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -67907,10 +68188,10 @@ export interface DocumentTemplateControllerApiGetEntityDocumentTemplatesRequest 
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof DocumentTemplateControllerApiGetEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * 
@@ -67963,10 +68244,10 @@ export interface DocumentTemplateControllerApiPatchEntityDocumentTemplatesReques
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof DocumentTemplateControllerApiPatchEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -68005,10 +68286,10 @@ export interface DocumentTemplateControllerApiUpdateEntityDocumentTemplatesReque
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof DocumentTemplateControllerApiUpdateEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -69003,14 +69284,14 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityDataSources(
  * @summary Post Document Template
  * @param {string} workspaceId 
  * @param {JsonApiPublisherDocumentTemplatePostOptionalIdDocument} jsonApiPublisherDocumentTemplatePostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_CreateEntityDocumentTemplates(
-    workspaceId: string, jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -70064,14 +70345,14 @@ export async function EntitiesApiAxiosParamCreator_CreateEntityOrganizationSetti
  * @summary Post Page Template
  * @param {string} workspaceId 
  * @param {JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument} jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_CreateEntityPageTemplates(
-    workspaceId: string, jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -75006,7 +75287,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesDatasets(
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -75017,7 +75298,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesDatasets(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetAllEntitiesDocumentTemplates(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -76606,7 +76887,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesOrganizationSet
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -76617,7 +76898,7 @@ export async function EntitiesApiAxiosParamCreator_GetAllEntitiesOrganizationSet
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetAllEntitiesPageTemplates(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -79322,7 +79603,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityDatasets(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -79330,7 +79611,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityDatasets(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetEntityDocumentTemplates(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -80636,7 +80917,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityOrganizations(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -80644,7 +80925,7 @@ export async function EntitiesApiAxiosParamCreator_GetEntityOrganizations(
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_GetEntityPageTemplates(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -82953,13 +83234,13 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityDatasets(
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentTemplatePatchDocument} jsonApiPublisherDocumentTemplatePatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_PatchEntityDocumentTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -84277,13 +84558,13 @@ export async function EntitiesApiAxiosParamCreator_PatchEntityOrganizations(
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentPageTemplatePatchDocument} jsonApiPublisherDocumentPageTemplatePatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_PatchEntityPageTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -88332,13 +88613,13 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityDataSources(
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentTemplateInDocument} jsonApiPublisherDocumentTemplateInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_UpdateEntityDocumentTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -89575,13 +89856,13 @@ export async function EntitiesApiAxiosParamCreator_UpdateEntityOrganizations(
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentPageTemplateInDocument} jsonApiPublisherDocumentPageTemplateInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function EntitiesApiAxiosParamCreator_UpdateEntityPageTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -103577,10 +103858,10 @@ export interface EntitiesApiCreateEntityDocumentTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof EntitiesApiCreateEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -103976,10 +104257,10 @@ export interface EntitiesApiCreateEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof EntitiesApiCreateEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -106426,10 +106707,10 @@ export interface EntitiesApiGetAllEntitiesDocumentTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof EntitiesApiGetAllEntitiesDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -107623,10 +107904,10 @@ export interface EntitiesApiGetAllEntitiesPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof EntitiesApiGetAllEntitiesPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -109457,10 +109738,10 @@ export interface EntitiesApiGetEntityDocumentTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof EntitiesApiGetEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * 
@@ -110234,10 +110515,10 @@ export interface EntitiesApiGetEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof EntitiesApiGetEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * 
@@ -111543,10 +111824,10 @@ export interface EntitiesApiPatchEntityDocumentTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof EntitiesApiPatchEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -112201,10 +112482,10 @@ export interface EntitiesApiPatchEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof EntitiesApiPatchEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -114196,10 +114477,10 @@ export interface EntitiesApiUpdateEntityDocumentTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof EntitiesApiUpdateEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -114805,10 +115086,10 @@ export interface EntitiesApiUpdateEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof EntitiesApiUpdateEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -150556,7 +150837,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. The list leaves out the users that the usage counts without a language.
  * @summary Users who set a language themselves.
  * @param {string} [value] Language tag that the user sets.
  * @param {string} [name] Filter by user name, email or login (user ID). Note that the filter is case insensitive.
@@ -150627,7 +150908,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
  * @summary Workspaces that use a language.
  * @param {string} [value] Language tag that the workspace gets.
  * @param {string} [name] Filter by workspace name. Note that the filter is case insensitive.
@@ -150698,7 +150979,7 @@ export async function LocalizationApiAxiosParamCreator_OrganizationLocalizationU
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses.
+ * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses. It checks this only when the workspace has no workspaces below it or the user can see all of them.
  * @summary (BETA) Localization issues of the workspace.
  * @param {string} workspaceId 
  * @param {*} [options] Override http request option.
@@ -150793,7 +151074,7 @@ export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationStat
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. `childWorkspaces` counts the workspaces below it that the user can see, the same way.
  * @summary Languages used in the workspace.
  * @param {string} workspaceId 
  * @param {*} [options] Override http request option.
@@ -150838,7 +151119,82 @@ export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsag
 
 // LocalizationApi FP - LocalizationApiAxiosParamCreator
 /**
- * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * (BETA) Lists the workspaces behind the `childWorkspaces` counts of the workspace localization usage. The list has the workspaces below the workspace that the user can see, sorted by name. Without the setting filter, a workspace matches when one of its three language settings matches. Its source is then the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
+ * @summary (BETA) Workspaces below the workspace that use a language.
+ * @param {string} workspaceId 
+ * @param {string} [value] Language tag that the workspace gets.
+ * @param {string} [name] Filter by workspace name. Note that the filter is case insensitive.
+ * @param {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'} [setting] One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
+ * @param {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'} [source] Where the value comes from.
+ * @param {number} [page] Zero-based page index (0..N)
+ * @param {number} [size] The size of the page to be returned.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsageChildWorkspaces(
+    workspaceId: string, value?: string, name?: string, setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE', source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT', page?: number, size?: number, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('workspaceLocalizationUsageChildWorkspaces', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/localization/usage/childWorkspaces`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (value !== undefined) {
+        localVarQueryParameter['value'] = value;
+    }
+
+    if (name !== undefined) {
+        localVarQueryParameter['name'] = name;
+    }
+
+    if (setting !== undefined) {
+        localVarQueryParameter['setting'] = setting;
+    }
+
+    if (source !== undefined) {
+        localVarQueryParameter['source'] = source;
+    }
+
+    if (page !== undefined) {
+        localVarQueryParameter['page'] = page;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// LocalizationApi FP - LocalizationApiAxiosParamCreator
+/**
+ * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. The list leaves out the members that the usage counts without a language.
  * @summary Workspace members who get a language.
  * @param {string} workspaceId 
  * @param {string} [value] Language tag that the user gets.
@@ -151015,7 +151371,7 @@ export async function LocalizationApi_OrganizationLocalizationUsage(
 
 // LocalizationApi Api FP
 /**
- * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. The list leaves out the users that the usage counts without a language.
  * @summary Users who set a language themselves.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -151041,7 +151397,7 @@ export async function LocalizationApi_OrganizationLocalizationUsageUsers(
 
 // LocalizationApi Api FP
 /**
- * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
  * @summary Workspaces that use a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -151067,7 +151423,7 @@ export async function LocalizationApi_OrganizationLocalizationUsageWorkspaces(
 
 // LocalizationApi Api FP
 /**
- * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses.
+ * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses. It checks this only when the workspace has no workspaces below it or the user can see all of them.
  * @summary (BETA) Localization issues of the workspace.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -151119,7 +151475,7 @@ export async function LocalizationApi_WorkspaceLocalizationStatistics(
 
 // LocalizationApi Api FP
 /**
- * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+ * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. `childWorkspaces` counts the workspaces below it that the user can see, the same way.
  * @summary Languages used in the workspace.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -151145,7 +151501,33 @@ export async function LocalizationApi_WorkspaceLocalizationUsage(
 
 // LocalizationApi Api FP
 /**
- * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+ * (BETA) Lists the workspaces behind the `childWorkspaces` counts of the workspace localization usage. The list has the workspaces below the workspace that the user can see, sorted by name. Without the setting filter, a workspace matches when one of its three language settings matches. Its source is then the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
+ * @summary (BETA) Workspaces below the workspace that use a language.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {LocalizationApiWorkspaceLocalizationUsageChildWorkspacesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function LocalizationApi_WorkspaceLocalizationUsageChildWorkspaces(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: LocalizationApiWorkspaceLocalizationUsageChildWorkspacesRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<LocalizationUsageWorkspaces> {
+    const localVarAxiosArgs = await LocalizationApiAxiosParamCreator_WorkspaceLocalizationUsageChildWorkspaces(
+        requestParameters.workspaceId, requestParameters.value, requestParameters.name, requestParameters.setting, requestParameters.source, requestParameters.page, requestParameters.size, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// LocalizationApi Api FP
+/**
+ * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. The list leaves out the members that the usage counts without a language.
  * @summary Workspace members who get a language.
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -151213,7 +151595,7 @@ export interface LocalizationApiInterface {
     organizationLocalizationUsage(options?: AxiosRequestConfig): AxiosPromise<LocalizationUsage>;
 
     /**
-     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. The list leaves out the users that the usage counts without a language.
      * @summary Users who set a language themselves.
      * @param {LocalizationApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -151223,7 +151605,7 @@ export interface LocalizationApiInterface {
     organizationLocalizationUsageUsers(requestParameters: LocalizationApiOrganizationLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
 
     /**
-     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
      * @summary Workspaces that use a language.
      * @param {LocalizationApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -151233,7 +151615,7 @@ export interface LocalizationApiInterface {
     organizationLocalizationUsageWorkspaces(requestParameters: LocalizationApiOrganizationLocalizationUsageWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageWorkspaces>;
 
     /**
-     * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses.
+     * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses. It checks this only when the workspace has no workspaces below it or the user can see all of them.
      * @summary (BETA) Localization issues of the workspace.
      * @param {LocalizationApiWorkspaceLocalizationIssuesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -151253,7 +151635,7 @@ export interface LocalizationApiInterface {
     workspaceLocalizationStatistics(requestParameters: LocalizationApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
 
     /**
-     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. `childWorkspaces` counts the workspaces below it that the user can see, the same way.
      * @summary Languages used in the workspace.
      * @param {LocalizationApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -151263,7 +151645,17 @@ export interface LocalizationApiInterface {
     workspaceLocalizationUsage(requestParameters: LocalizationApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
 
     /**
-     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * (BETA) Lists the workspaces behind the `childWorkspaces` counts of the workspace localization usage. The list has the workspaces below the workspace that the user can see, sorted by name. Without the setting filter, a workspace matches when one of its three language settings matches. Its source is then the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
+     * @summary (BETA) Workspaces below the workspace that use a language.
+     * @param {LocalizationApiWorkspaceLocalizationUsageChildWorkspacesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocalizationApiInterface
+     */
+    workspaceLocalizationUsageChildWorkspaces(requestParameters: LocalizationApiWorkspaceLocalizationUsageChildWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageWorkspaces>;
+
+    /**
+     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. The list leaves out the members that the usage counts without a language.
      * @summary Workspace members who get a language.
      * @param {LocalizationApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -151464,6 +151856,62 @@ export interface LocalizationApiWorkspaceLocalizationUsageRequest {
 }
 
 /**
+ * Request parameters for workspaceLocalizationUsageChildWorkspaces operation in LocalizationApi.
+ * @export
+ * @interface LocalizationApiWorkspaceLocalizationUsageChildWorkspacesRequest
+ */
+export interface LocalizationApiWorkspaceLocalizationUsageChildWorkspacesRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly workspaceId: string
+
+    /**
+     * Language tag that the workspace gets.
+     * @type {string}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly value?: string
+
+    /**
+     * Filter by workspace name. Note that the filter is case insensitive.
+     * @type {string}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly name?: string
+
+    /**
+     * One of LOCALE, METADATA_LOCALE and DATA_LOCALE.
+     * @type {'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE'
+
+    /**
+     * Where the value comes from.
+     * @type {'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT'
+
+    /**
+     * Zero-based page index (0..N)
+     * @type {number}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly page?: number
+
+    /**
+     * The size of the page to be returned.
+     * @type {number}
+     * @memberof LocalizationApiWorkspaceLocalizationUsageChildWorkspaces
+     */
+    readonly size?: number
+}
+
+/**
  * Request parameters for workspaceLocalizationUsageUsers operation in LocalizationApi.
  * @export
  * @interface LocalizationApiWorkspaceLocalizationUsageUsersRequest
@@ -151572,7 +152020,7 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. The list leaves out the users that the usage counts without a language.
      * @summary Users who set a language themselves.
      * @param {LocalizationApiOrganizationLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -151584,7 +152032,7 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
      * @summary Workspaces that use a language.
      * @param {LocalizationApiOrganizationLocalizationUsageWorkspacesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -151596,7 +152044,7 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses.
+     * (BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses. It checks this only when the workspace has no workspaces below it or the user can see all of them.
      * @summary (BETA) Localization issues of the workspace.
      * @param {LocalizationApiWorkspaceLocalizationIssuesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -151620,7 +152068,7 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.
+     * Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. `childWorkspaces` counts the workspaces below it that the user can see, the same way.
      * @summary Languages used in the workspace.
      * @param {LocalizationApiWorkspaceLocalizationUsageRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -151632,7 +152080,19 @@ export class LocalizationApi extends BaseAPI implements LocalizationApiInterface
     }
 
     /**
-     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.
+     * (BETA) Lists the workspaces behind the `childWorkspaces` counts of the workspace localization usage. The list has the workspaces below the workspace that the user can see, sorted by name. Without the setting filter, a workspace matches when one of its three language settings matches. Its source is then the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.
+     * @summary (BETA) Workspaces below the workspace that use a language.
+     * @param {LocalizationApiWorkspaceLocalizationUsageChildWorkspacesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LocalizationApi
+     */
+    public workspaceLocalizationUsageChildWorkspaces(requestParameters: LocalizationApiWorkspaceLocalizationUsageChildWorkspacesRequest, options?: AxiosRequestConfig) {
+        return LocalizationApi_WorkspaceLocalizationUsageChildWorkspaces(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. The list leaves out the members that the usage counts without a language.
      * @summary Workspace members who get a language.
      * @param {LocalizationApiWorkspaceLocalizationUsageUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -165537,14 +165997,14 @@ export class OrganizationSettingControllerApi extends BaseAPI implements Organiz
  * @summary Post Page Template
  * @param {string} workspaceId 
  * @param {JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument} jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PageTemplateControllerApiAxiosParamCreator_CreateEntityPageTemplates(
-    workspaceId: string, jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -165660,7 +166120,7 @@ export async function PageTemplateControllerApiAxiosParamCreator_DeleteEntityPag
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -165671,7 +166131,7 @@ export async function PageTemplateControllerApiAxiosParamCreator_DeleteEntityPag
  * @throws {RequiredError}
  */
 export async function PageTemplateControllerApiAxiosParamCreator_GetAllEntitiesPageTemplates(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -165745,7 +166205,7 @@ export async function PageTemplateControllerApiAxiosParamCreator_GetAllEntitiesP
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -165753,7 +166213,7 @@ export async function PageTemplateControllerApiAxiosParamCreator_GetAllEntitiesP
  * @throws {RequiredError}
  */
 export async function PageTemplateControllerApiAxiosParamCreator_GetEntityPageTemplates(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -165815,13 +166275,13 @@ export async function PageTemplateControllerApiAxiosParamCreator_GetEntityPageTe
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentPageTemplatePatchDocument} jsonApiPublisherDocumentPageTemplatePatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PageTemplateControllerApiAxiosParamCreator_PatchEntityPageTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -165892,13 +166352,13 @@ export async function PageTemplateControllerApiAxiosParamCreator_PatchEntityPage
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentPageTemplateInDocument} jsonApiPublisherDocumentPageTemplateInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PageTemplateControllerApiAxiosParamCreator_UpdateEntityPageTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -166208,10 +166668,10 @@ export interface PageTemplateControllerApiCreateEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PageTemplateControllerApiCreateEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -166271,10 +166731,10 @@ export interface PageTemplateControllerApiGetAllEntitiesPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PageTemplateControllerApiGetAllEntitiesPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -166341,10 +166801,10 @@ export interface PageTemplateControllerApiGetEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PageTemplateControllerApiGetEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * 
@@ -166397,10 +166857,10 @@ export interface PageTemplateControllerApiPatchEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PageTemplateControllerApiPatchEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -166439,10 +166899,10 @@ export interface PageTemplateControllerApiUpdateEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PageTemplateControllerApiUpdateEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -173240,14 +173700,14 @@ export class PluginsApi extends BaseAPI implements PluginsApiInterface {
  * @summary Post Document Template
  * @param {string} workspaceId 
  * @param {JsonApiPublisherDocumentTemplatePostOptionalIdDocument} jsonApiPublisherDocumentTemplatePostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PublisherDocumentsApiAxiosParamCreator_CreateEntityDocumentTemplates(
-    workspaceId: string, jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -173386,14 +173846,14 @@ export async function PublisherDocumentsApiAxiosParamCreator_CreateEntityDocumen
  * @summary Post Page Template
  * @param {string} workspaceId 
  * @param {JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument} jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument 
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PublisherDocumentsApiAxiosParamCreator_CreateEntityPageTemplates(
-    workspaceId: string, jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -173607,7 +174067,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_DeleteEntityPageTem
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -173618,7 +174078,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_DeleteEntityPageTem
  * @throws {RequiredError}
  */
 export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesDocumentTemplates(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -173777,7 +174237,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesDocum
  * @param {string} workspaceId 
  * @param {'ALL' | 'PARENTS' | 'NATIVE'} [origin] 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {number} [page] Zero-based page index (0..N)
  * @param {number} [size] The size of the page to be returned
  * @param {Array<string>} [sort] Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -173788,7 +174248,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesDocum
  * @throws {RequiredError}
  */
 export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesPageTemplates(
-    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
+    workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -173862,7 +174322,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesPageT
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -173870,7 +174330,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_GetAllEntitiesPageT
  * @throws {RequiredError}
  */
 export async function PublisherDocumentsApiAxiosParamCreator_GetEntityDocumentTemplates(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -174000,7 +174460,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_GetEntityDocuments(
  * @param {string} workspaceId 
  * @param {string} objectId 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {boolean} [xGDCVALIDATERELATIONS] 
  * @param {Array<'origin' | 'all' | 'ALL'>} [metaInclude] Include Meta objects.
  * @param {*} [options] Override http request option.
@@ -174008,7 +174468,7 @@ export async function PublisherDocumentsApiAxiosParamCreator_GetEntityDocuments(
  * @throws {RequiredError}
  */
 export async function PublisherDocumentsApiAxiosParamCreator_GetEntityPageTemplates(
-    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
+    workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -174070,13 +174530,13 @@ export async function PublisherDocumentsApiAxiosParamCreator_GetEntityPageTempla
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentTemplatePatchDocument} jsonApiPublisherDocumentTemplatePatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PublisherDocumentsApiAxiosParamCreator_PatchEntityDocumentTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -174224,13 +174684,13 @@ export async function PublisherDocumentsApiAxiosParamCreator_PatchEntityDocument
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentPageTemplatePatchDocument} jsonApiPublisherDocumentPageTemplatePatchDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PublisherDocumentsApiAxiosParamCreator_PatchEntityPageTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -174373,13 +174833,13 @@ export async function PublisherDocumentsApiAxiosParamCreator_SearchEntitiesDocum
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentTemplateInDocument} jsonApiPublisherDocumentTemplateInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PublisherDocumentsApiAxiosParamCreator_UpdateEntityDocumentTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -174527,13 +174987,13 @@ export async function PublisherDocumentsApiAxiosParamCreator_UpdateEntityDocumen
  * @param {string} objectId 
  * @param {JsonApiPublisherDocumentPageTemplateInDocument} jsonApiPublisherDocumentPageTemplateInDocument 
  * @param {string} [filter] Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title&#x3D;&#x3D;\&#39;Some Title\&#39;;description&#x3D;&#x3D;\&#39;desc\&#39;). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty&#x3D;&#x3D;\&#39;Value 123\&#39;).
- * @param {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
+ * @param {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>} [include] Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function PublisherDocumentsApiAxiosParamCreator_UpdateEntityPageTemplates(
-    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
+    workspaceId: string, objectId: string, jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument, filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -175311,10 +175771,10 @@ export interface PublisherDocumentsApiCreateEntityDocumentTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PublisherDocumentsApiCreateEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -175381,10 +175841,10 @@ export interface PublisherDocumentsApiCreateEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PublisherDocumentsApiCreateEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Include Meta objects.
@@ -175486,10 +175946,10 @@ export interface PublisherDocumentsApiGetAllEntitiesDocumentTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PublisherDocumentsApiGetAllEntitiesDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -175626,10 +176086,10 @@ export interface PublisherDocumentsApiGetAllEntitiesPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PublisherDocumentsApiGetAllEntitiesPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * Zero-based page index (0..N)
@@ -175696,10 +176156,10 @@ export interface PublisherDocumentsApiGetEntityDocumentTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PublisherDocumentsApiGetEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * 
@@ -175794,10 +176254,10 @@ export interface PublisherDocumentsApiGetEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PublisherDocumentsApiGetEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 
     /**
      * 
@@ -175850,10 +176310,10 @@ export interface PublisherDocumentsApiPatchEntityDocumentTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PublisherDocumentsApiPatchEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -175934,10 +176394,10 @@ export interface PublisherDocumentsApiPatchEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PublisherDocumentsApiPatchEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -176011,10 +176471,10 @@ export interface PublisherDocumentsApiUpdateEntityDocumentTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PublisherDocumentsApiUpdateEntityDocumentTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**
@@ -176095,10 +176555,10 @@ export interface PublisherDocumentsApiUpdateEntityPageTemplatesRequest {
 
     /**
      * Array of included collections or individual relationships. Includes are separated by commas (e.g. include&#x3D;entity1s,entity2s). Collection include represents the inclusion of every relationship between this entity and the given collection. Relationship include represents the inclusion of the particular relationships only. If single parameter \&quot;ALL\&quot; is present, all possible includes are used (include&#x3D;ALL).  __WARNING:__ Individual include types (collection, relationship or ALL) cannot be combined together.
-     * @type {Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>}
+     * @type {Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>}
      * @memberof PublisherDocumentsApiUpdateEntityPageTemplates
      */
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>
 }
 
 /**

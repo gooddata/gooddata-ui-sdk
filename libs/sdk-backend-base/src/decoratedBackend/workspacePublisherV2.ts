@@ -3,6 +3,8 @@
 import {
     type IExportResult,
     type IPublisherDocumentExportPdfOptions,
+    type IPublisherDocumentMetaV2,
+    type IPublisherDocumentSummaryV2,
     type IPublisherDocumentsQueryV2,
     type IWorkspacePublisherServiceV2,
     type PublisherDocumentListItemV2,
@@ -90,6 +92,10 @@ export abstract class DecoratedWorkspacePublisherServiceV2 implements IWorkspace
 
     public updateDocument(publisherDocument: IPublisherDocumentV2): Promise<IPublisherDocumentV2> {
         return this.decorated.updateDocument(publisherDocument);
+    }
+
+    public updateDocumentMeta(meta: IPublisherDocumentMetaV2): Promise<IPublisherDocumentSummaryV2> {
+        return this.decorated.updateDocumentMeta(meta);
     }
 
     public deleteDocument(ref: ObjRef): Promise<void> {

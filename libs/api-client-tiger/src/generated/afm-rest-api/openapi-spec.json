@@ -3439,6 +3439,131 @@
                     }
                 }
             }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/cancel": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "cancelWorkflow",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "runId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/workflow/dashboardSummary": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "generateDashboardSummary",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WorkflowDashboardSummaryRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WorkflowDashboardSummaryResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/status": {
+            "get": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "getWorkflowStatus",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "runId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WorkflowStatusResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -3488,7 +3613,7 @@
                     },
                     "parameters": {
                         "type": "array",
-                        "description": "(EXPERIMENTAL) Parameter values to use for this execution.",
+                        "description": "Parameter values to use for this execution.",
                         "items": {
                             "$ref": "#/components/schemas/ParameterItem"
                         }
@@ -5257,6 +5382,9 @@
                         "$ref": "#/components/schemas/AbsoluteGranularityDateFilter"
                     },
                     {
+                        "$ref": "#/components/schemas/ParameterizedDateFilter"
+                    },
+                    {
                         "$ref": "#/components/schemas/RelativeDateFilter"
                     },
                     {
@@ -5997,6 +6125,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/AbsoluteGranularityDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ParameterizedDateFilter"
                     },
                     {
                         "$ref": "#/components/schemas/RelativeDateFilter"
@@ -7818,7 +7949,47 @@
                     }
                 },
                 "additionalProperties": true,
-                "description": "(EXPERIMENTAL) Parameter value for this execution."
+                "description": "Parameter value for this execution."
+            },
+            "ParameterizedDateFilter": {
+                "required": [
+                    "parameterizedDateFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "parameterizedDateFilter": {
+                        "required": [
+                            "dataset",
+                            "parameter"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "dataset": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                            },
+                            "emptyValueHandling": {
+                                "type": "string",
+                                "description": "Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.",
+                                "default": "EXCLUDE",
+                                "enum": [
+                                    "INCLUDE",
+                                    "EXCLUDE",
+                                    "ONLY"
+                                ]
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "parameter": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierParameter"
+                            }
+                        }
+                    }
+                },
+                "description": "A date filter whose period comes from a DATE_RANGE parameter. Each execution uses the parameter's current granularity and range."
             },
             "PendingOperation": {
                 "required": [
@@ -9110,6 +9281,79 @@
                     },
                     "settings": {
                         "$ref": "#/components/schemas/ExecutionSettings"
+                    }
+                }
+            },
+            "WorkflowDashboardSummaryRequestDto": {
+                "required": [
+                    "dashboardId"
+                ],
+                "type": "object",
+                "properties": {
+                    "customUserPrompt": {
+                        "type": "string"
+                    },
+                    "dashboardId": {
+                        "type": "string"
+                    },
+                    "keyMetricIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "referenceQuarter": {
+                        "type": "string"
+                    }
+                }
+            },
+            "WorkflowDashboardSummaryResponseDto": {
+                "required": [
+                    "message",
+                    "runId",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string"
+                    },
+                    "runId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                }
+            },
+            "WorkflowStatusResponseDto": {
+                "required": [
+                    "message",
+                    "runId",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "currentPhase": {
+                        "type": "string"
+                    },
+                    "error": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "result": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    },
+                    "runId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
                     }
                 }
             }

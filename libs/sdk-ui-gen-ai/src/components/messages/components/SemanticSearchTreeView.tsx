@@ -48,7 +48,7 @@ export function SemanticSearchTreeViewImpl({
 }: SemanticSearchTreeViewProps) {
     const intl = useIntl();
     const backend = useBackendStrict();
-    const { canFullControl, canManage, canAnalyze, linkHandler } = useConfig();
+    const { canFullControl, canManage, canAnalyze, linkHandler, isLinkEnabled } = useConfig();
     const conversation = useSelector(conversationSelector);
 
     const canEdit = canFullControl || canManage || canAnalyze;
@@ -60,6 +60,7 @@ export function SemanticSearchTreeViewImpl({
         relationships,
         threshold: 0, // Keep all items for now
         canEdit,
+        isLinkEnabled,
         uiPathOptions: {
             useHostedMetricEditor: true,
             useHostedLdmModeler: true,
@@ -115,6 +116,7 @@ export function SemanticSearchTreeViewImpl({
                 items={items}
                 id={treeViewId}
                 onSelect={handleSelect}
+                isLinkEnabled={isLinkEnabled}
                 maxHeight={maxHeight}
                 tabIndex={0}
             />

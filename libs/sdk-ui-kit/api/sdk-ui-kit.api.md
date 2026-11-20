@@ -3404,6 +3404,8 @@ export interface IInputPureProps extends IDomNativeProps {
     // (undocumented)
     prefix?: string;
     // (undocumented)
+    propagateEscapeWhenEmpty?: boolean;
+    // (undocumented)
     readonly?: boolean;
     // (undocumented)
     required?: boolean;
@@ -3724,6 +3726,8 @@ export interface IInvertableSelectSearchBarProps {
     onKeyDown?: (e: KeyboardEvent_2) => void;
     // (undocumented)
     onSearch: (searchString: string) => void;
+    // (undocumented)
+    propagateEscapeWhenEmpty?: boolean;
     // (undocumented)
     searchPlaceholder?: string;
     // (undocumented)
@@ -10605,6 +10609,9 @@ export const useToastMessage: () => IUseToastMessageType;
 
 // @internal (undocumented)
 export const useToastsCenterValue: (onDismissMessage?: (id: IMessage["id"]) => void) => IToastsCenterContext;
+
+// @internal
+export const useUiAsyncTableCellControlTabIndex: () => 0 | -1 | undefined;
 
 // @internal
 export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>(input?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;

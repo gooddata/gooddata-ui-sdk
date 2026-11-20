@@ -37,7 +37,7 @@ function matches(document: IPublisherDocumentV2, filter: IFilterBaseOptions): bo
     return !search || document.title.toLowerCase().includes(search);
 }
 
-function toSummary(document: IPublisherDocumentV2): IPublisherDocumentSummaryV2 {
+export function toSummary(document: IPublisherDocumentV2): IPublisherDocumentSummaryV2 {
     const { ref, title, description, tags, version, isLocked, created, updated, createdBy, updatedBy } =
         document;
     return { ref, title, description, tags, version, isLocked, created, updated, createdBy, updatedBy };

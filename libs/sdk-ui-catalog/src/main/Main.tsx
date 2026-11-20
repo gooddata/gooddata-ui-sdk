@@ -30,6 +30,7 @@ type Props = {
     open: boolean;
     openedItem: ICatalogItemRef | ICatalogItem | null;
     setItemOpened: (item: ICatalogItemRef | ICatalogItem | null) => void;
+    updateOpenedItem: (item: ICatalogItem) => void;
     onOpenDetail: (item: ICatalogItemRef) => void;
     onCloseDetail: () => void;
     onOpenClick: (event: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
@@ -48,6 +49,7 @@ export function Main({
     open,
     openedItem,
     setItemOpened,
+    updateOpenedItem,
     onOpenDetail,
     onCloseDetail,
     onOpenClick,
@@ -101,7 +103,7 @@ export function Main({
                     refetchObjectType(item.type);
                 }}
                 onCatalogItemUpdate={(item) => {
-                    setItemOpened(item);
+                    updateOpenedItem(item);
                     updateItem(item);
                 }}
                 onCatalogItemDelete={(ref) => {

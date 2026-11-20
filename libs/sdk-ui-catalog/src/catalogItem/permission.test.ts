@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { AccessGranularPermission, ISettings, IWorkspacePermissions } from "@gooddata/sdk-model";
+import type { AccessGranularPermission, ISettings, IUser, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { canEditCatalogItem, canShareCatalogItem } from "./permission.js";
 import type { ICatalogItem } from "./types.js";
@@ -32,6 +32,7 @@ function buildItem(
         isLocked?: boolean;
         isEditable?: boolean;
         permissions?: AccessGranularPermission[];
+        creatorLogin?: string;
     } = {},
 ): ICatalogItem {
     return {
@@ -51,10 +52,57 @@ function buildItem(
     } as ICatalogItem;
 }
 
+const alice = { login: "alice" } as IUser;
+
 describe("canEditCatalogItem", () => {
-    it("returns false for a document even for a workspace manager", () => {
-        const item = buildItem({ type: "document", isEditable: false });
-        expect(canEditCatalogItem(buildPermissions({ canManageProject: true }), item)).toBe(false);
+    describe("document", () => {
+        const aliceDocument = buildItem({ type: "document", creatorLogin: "alice" });
+        const documentFlags: ISettings = {
+            enableBusinessBriefingReportsApp: true,
+            enablePublisherV2: true,
+            enableCatalogDocuments: true,
+        };
+
+        it.each(Object.keys(documentFlags))("keeps documents read-only for everyone without %s", (flag) => {
+            const flags = { ...documentFlags, [flag]: false };
+            const manager = buildPermissions({ canManageProject: true });
+            expect(canEditCatalogItem(manager, aliceDocument, flags, alice)).toBe(false);
+            expect(canEditCatalogItem(buildPermissions(), aliceDocument, flags, alice)).toBe(false);
+        });
+
+        it("lets a workspace manager edit another user's document", () => {
+            const manager = buildPermissions({ canManageProject: true });
+            expect(canEditCatalogItem(manager, aliceDocument, documentFlags, { login: "bob" } as IUser)).toBe(
+                true,
+            );
+        });
+
+        it("lets the creator edit their own document without any other permission", () => {
+            expect(canEditCatalogItem(buildPermissions(), aliceDocument, documentFlags, alice)).toBe(true);
+        });
+
+        it("keeps another user's document read-only for a user who may create documents", () => {
+            const perms = buildPermissions({ canCreateDocument: true, canCreateVisualization: true });
+            expect(canEditCatalogItem(perms, aliceDocument, documentFlags, { login: "bob" } as IUser)).toBe(
+                false,
+            );
+        });
+
+        it("keeps a document without a creator read-only for a non-manager", () => {
+            const item = buildItem({ type: "document" });
+            expect(canEditCatalogItem(buildPermissions(), item, documentFlags, alice)).toBe(false);
+        });
+
+        it("keeps a document read-only when the signed-in user is unknown", () => {
+            expect(canEditCatalogItem(buildPermissions(), aliceDocument, documentFlags)).toBe(false);
+        });
+
+        it("keeps a document from a parent workspace read-only, also for its creator and a manager", () => {
+            const item = buildItem({ type: "document", creatorLogin: "alice", isLocked: true });
+            const manager = buildPermissions({ canManageProject: true });
+            expect(canEditCatalogItem(buildPermissions(), item, documentFlags, alice)).toBe(false);
+            expect(canEditCatalogItem(manager, item, documentFlags, alice)).toBe(false);
+        });
     });
 
     it("returns false when workspace permissions are missing", () => {

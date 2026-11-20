@@ -40,6 +40,7 @@ export interface IInputPureAccessibilityConfig extends IAccessibilityConfigBase 
 export interface IInputPureProps extends IDomNativeProps {
     className?: string;
     clearOnEsc?: boolean;
+    propagateEscapeWhenEmpty?: boolean;
     disabled?: boolean;
     hasError?: boolean;
     hasWarning?: boolean;
@@ -124,6 +125,7 @@ export const InputPure = forwardRef<IInputPureHandle, IInputPureProps>(function 
         autofocus = false,
         className = "",
         clearOnEsc = false,
+        propagateEscapeWhenEmpty = false,
         dataTestId,
         disabled = false,
         hasError = false,
@@ -189,7 +191,7 @@ export const InputPure = forwardRef<IInputPureHandle, IInputPureProps>(function 
     const onKeyPress = (e: KeyboardEvent): void => {
         switch (e.keyCode) {
             case ENUM_KEY_CODE.KEY_CODE_ESCAPE as number:
-                if (clearOnEsc) {
+                if (clearOnEsc && !(propagateEscapeWhenEmpty && String(value ?? "") === "")) {
                     e.stopPropagation();
                     onClear();
                 }

@@ -53,6 +53,100 @@ export const getCellId = (tableId: string, itemId: string, columnIndex: number) 
     return `${ASYNC_TABLE_ID_PREFIX}${tableId}-cell-${itemId}-${columnIndex}`;
 };
 
+const EDITABLE_HOST_SELECTOR = "[contenteditable]:not([contenteditable='false'])";
+
+const CELL_CONTROLS_SELECTOR = `a[href], button, input, select, textarea, [tabindex], ${EDITABLE_HOST_SELECTOR}`;
+
+const FOCUS_TO_OPERATE_SELECTOR = [
+    "textarea",
+    "select",
+    "[role='slider']",
+    "[role='spinbutton']",
+    "[role='textbox']",
+    "[role='searchbox']",
+    "[role='combobox']",
+    "[role='listbox']",
+    EDITABLE_HOST_SELECTOR,
+    "input:not([type='button']):not([type='checkbox']):not([type='radio']):not([type='submit'])" +
+        ":not([type='reset']):not([type='image']):not([type='file']):not([type='color'])" +
+        ":not([type='hidden'])",
+].join(", ");
+
+const isRendered = (control: Element): boolean =>
+    (control as HTMLElement).checkVisibility?.({ visibilityProperty: true }) ?? true;
+
+const isDisabledByFieldset = (control: HTMLElement): boolean => {
+    if (control.matches(":disabled")) {
+        return true;
+    }
+    if (!control.matches("button, input, select, textarea")) {
+        return false;
+    }
+    let fieldset = control.closest("fieldset[disabled]");
+    while (fieldset) {
+        const legend = Array.from(fieldset.children).find((child) => child.tagName === "LEGEND");
+        if (!legend?.contains(control)) {
+            return true;
+        }
+        fieldset = fieldset.parentElement?.closest("fieldset[disabled]") ?? null;
+    }
+    return false;
+};
+
+export const getCellControls = (cell: HTMLElement): HTMLElement[] =>
+    Array.from(cell.querySelectorAll<HTMLElement>(CELL_CONTROLS_SELECTOR)).filter(
+        (control) =>
+            !control.hasAttribute("disabled") &&
+            !isDisabledByFieldset(control) &&
+            !control.closest("[aria-disabled='true']") &&
+            !control.matches("input[type='hidden']") &&
+            !control.closest("[hidden], [aria-hidden='true'], [inert]") &&
+            isRendered(control),
+    );
+
+export const isFromCellControl = (cell: HTMLElement, target: HTMLElement): boolean => {
+    const control = target.closest(CELL_CONTROLS_SELECTOR);
+    return !!control && cell.contains(control);
+};
+
+const hasContentBesidesControl = (cell: HTMLElement, control: HTMLElement): boolean => {
+    const walker = cell.ownerDocument.createTreeWalker(cell, NodeFilter.SHOW_TEXT);
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        const parent = node.parentElement;
+        if (
+            parent &&
+            !control.contains(node) &&
+            (node.textContent ?? "").trim() !== "" &&
+            !parent.closest("[hidden]") &&
+            isRendered(parent)
+        ) {
+            return true;
+        }
+    }
+    return false;
+};
+
+const needsFocusToOperate = (control: HTMLElement): boolean =>
+    !(control instanceof HTMLElement) || control.matches(FOCUS_TO_OPERATE_SELECTOR);
+
+export const getSoleCellControl = (cell: HTMLElement): HTMLElement | undefined => {
+    const controls = getCellControls(cell);
+    return controls.length === 1 &&
+        !needsFocusToOperate(controls[0]) &&
+        !hasContentBesidesControl(cell, controls[0])
+        ? controls[0]
+        : undefined;
+};
+
+export const isInteractionModeCell = (cell: HTMLElement): boolean => {
+    const controls = getCellControls(cell);
+    return (
+        controls.length > 1 ||
+        (controls.length === 1 &&
+            (needsFocusToOperate(controls[0]) || hasContentBesidesControl(cell, controls[0])))
+    );
+};
+
 export const getFilterDropdownId = (label: string) => {
     return `${ASYNC_TABLE_ID_PREFIX}filter-dropdown-${label}`;
 };

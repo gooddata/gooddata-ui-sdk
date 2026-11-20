@@ -2,6 +2,7 @@
 
 import {
     type ISettings,
+    type IUser,
     type IWorkspacePermissions,
     canEditMetric,
     canEditVisualization,
@@ -10,6 +11,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { COMPUTED_ATTRIBUTE_FEATURE_FLAG } from "../computedAttribute/gate.js";
+import { CATALOG_DOCUMENT_FLAGS } from "../document/flags.js";
 
 import {
     isCatalogItemAttribute,
@@ -26,6 +28,7 @@ export function canEditCatalogItem(
     workspacePermissions?: IWorkspacePermissions,
     item?: ICatalogItem | null,
     settings?: ISettings,
+    user?: IUser,
 ) {
     // If the workspace permissions or the item is not provided, the user cannot update it.
     if (!workspacePermissions || !item) {
@@ -37,9 +40,16 @@ export function canEditCatalogItem(
         return false;
     }
 
-    // Documents are edited in the Reports app only.
+    // A document is edited only while the catalog lists documents, by a manager or its creator, as in
+    // Reports.
     if (isCatalogItemDocument(item)) {
-        return false;
+        if (CATALOG_DOCUMENT_FLAGS.some((flag) => !settings?.[flag])) {
+            return false;
+        }
+        return (
+            workspacePermissions.canManageProject ||
+            (Boolean(user?.login) && item.creatorLogin === user?.login)
+        );
     }
 
     // If the user has WS.Manage project permission, they can update the item no matter what

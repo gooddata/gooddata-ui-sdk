@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -9,9 +9,12 @@ import { describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
+import { UiPopover } from "../../UiPopover/UiPopover.js";
 import { type IUiAsyncTableColumn } from "../types.js";
 
+import { useUiAsyncTableCellControlTabIndex } from "./asyncTableGridContext.js";
 import { UiAsyncTable } from "./UiAsyncTable.js";
+import { getCellControls } from "./utils.js";
 
 interface IItem {
     id: string;
@@ -103,7 +106,7 @@ describe("UiAsyncTable row click", () => {
 
     it("keeps DOM focus on the grid and navigates from a clicked non-actionable row", async () => {
         const user = userEvent.setup();
-        const onItemClick = vi.fn();
+        const onItemClick = vi.fn<() => void>();
         renderTable(onItemClick, [open, locked, { id: "third", title: "Third" }]);
 
         await user.click(screen.getByText("Locked"));
@@ -1022,7 +1025,7 @@ describe("UiAsyncTable grid focus", () => {
 
     it("steps back from the first cell to the whole row, which Enter opens", async () => {
         const user = userEvent.setup();
-        const onItemClick = vi.fn();
+        const onItemClick = vi.fn<() => void>();
         renderWithIntl(<UiAsyncTable items={[open]} columns={gridColumns} onItemClick={onItemClick} />);
         await user.tab();
         const grid = screen.getByRole("grid");
@@ -1152,5 +1155,888 @@ describe("UiAsyncTable grid focus", () => {
         expect(active()).not.toHaveTextContent("Item 0");
         fireEvent.keyDown(grid, { key: "PageUp", code: "PageUp" });
         expect(active()).toHaveTextContent("Item 0");
+    });
+});
+
+describe("UiAsyncTable dual-mode cell navigation", () => {
+    function CellButton({ label, onClick }: { label: string; onClick?: () => void }) {
+        const tabIndex = useUiAsyncTableCellControlTabIndex();
+        return (
+            <button type="button" tabIndex={tabIndex} onClick={onClick}>
+                {label}
+            </button>
+        );
+    }
+
+    const onLone = vi.fn<() => void>();
+    const dualModeColumns: IUiAsyncTableColumn<IItem>[] = [
+        {
+            key: "title",
+            getTextContent: (i) => i.title,
+            renderSuffixIcon: (i) => <CellButton label={`Details ${i.title}`} />,
+        },
+        {
+            key: "id",
+            renderButton: (i) => (
+                <>
+                    <CellButton label={`First ${i.title}`} />
+                    <CellButton label={`Second ${i.title}`} />
+                </>
+            ),
+        },
+        {
+            key: "id",
+            renderButton: (i) => <CellButton label={`Lone ${i.title}`} onClick={onLone} />,
+        },
+    ];
+
+    const setup = async () => {
+        const user = userEvent.setup();
+        renderWithIntl(<UiAsyncTable items={[open]} totalItemsCount={1} columns={dualModeColumns} />);
+        await user.tab();
+        const grid = screen.getByRole("grid");
+        const active = () => document.getElementById(grid.getAttribute("aria-activedescendant")!);
+        return { user, grid, active };
+    };
+
+    it("restores interaction mode when focus returns to its control after leaving the page", async () => {
+        const { user, grid } = await setup();
+        await user.keyboard("{ArrowRight}{Enter}");
+        const details = screen.getByRole("button", { name: "Details Open" });
+        expect(details).toHaveFocus();
+
+        fireEvent.focusOut(details, { relatedTarget: null });
+        fireEvent.focusIn(details);
+
+        expect(details).toHaveAttribute("tabindex", "0");
+        await user.keyboard("{Escape}");
+        expect(grid).toHaveFocus();
+    });
+
+    it("restores the row tooltip together with interaction mode when focus returns", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={dualModeColumns}
+                getItemTooltip={() => "Row hint"}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        const details = screen.getByRole("button", { name: "Details Open" });
+        expect(await screen.findByRole("tooltip")).toHaveTextContent("Row hint");
+
+        fireEvent.focusOut(details, { relatedTarget: null });
+        await waitFor(() => expect(screen.queryByRole("tooltip")).not.toBeInTheDocument());
+        fireEvent.focusIn(details);
+
+        expect(await screen.findByRole("tooltip")).toHaveTextContent("Row hint");
+    });
+
+    function PopoverControl() {
+        const tabIndex = useUiAsyncTableCellControlTabIndex();
+        const triggerRef = useRef<HTMLButtonElement>(null);
+        return (
+            <UiPopover
+                anchor={
+                    <button type="button" ref={triggerRef} tabIndex={tabIndex}>
+                        Tags +2
+                    </button>
+                }
+                content={() => (
+                    <>
+                        <button type="button">Inside popover</button>
+                        <button type="button">Second inside popover</button>
+                    </>
+                )}
+                enableFocusTrap
+                returnFocusTo={triggerRef}
+            />
+        );
+    }
+
+    it("restores interaction mode when a layer opened from a control returns focus to it", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "title",
+                        getTextContent: (i) => i.title,
+                        renderSuffixIcon: (i) => (
+                            <>
+                                <CellButton label={`Details ${i.title}`} />
+                                <PopoverControl />
+                            </>
+                        ),
+                    },
+                ]}
+            />,
+        );
+        await user.tab();
+        const grid = screen.getByRole("grid");
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "Details Open" })).toHaveFocus();
+        await user.keyboard("{Tab}");
+        const trigger = screen.getByRole("button", { name: "Tags +2" });
+        expect(trigger).toHaveFocus();
+
+        await user.keyboard("{Enter}");
+        expect(await screen.findByRole("button", { name: "Inside popover" })).toBeInTheDocument();
+        act(() => screen.getByRole("button", { name: "Second inside popover" }).focus());
+        expect(screen.getByRole("button", { name: "Second inside popover" })).toHaveFocus();
+        await user.keyboard("{Escape}");
+
+        await waitFor(() => expect(screen.queryByRole("button", { name: "Inside popover" })).toBeNull());
+        act(() => trigger.focus());
+        expect(trigger).toHaveFocus();
+        expect(trigger).toHaveAttribute("tabindex", "0");
+        await user.keyboard("{Escape}");
+        expect(grid).toHaveFocus();
+    });
+
+    it("does not enter interaction mode when focus lands on a control the mode did not leave", async () => {
+        const { user, grid } = await setup();
+        await user.keyboard("{ArrowRight}{Enter}");
+        await user.keyboard("{Escape}");
+        expect(grid).toHaveFocus();
+        const details = screen.getByRole("button", { name: "Details Open" });
+
+        fireEvent.focusIn(details);
+
+        expect(details).toHaveAttribute("tabindex", "-1");
+    });
+
+    it("keeps the controls of a cell out of the tab order while the grid is browsed", async () => {
+        await setup();
+
+        expect(screen.getByRole("button", { name: "Details Open" })).toHaveAttribute("tabindex", "-1");
+        expect(screen.getByRole("button", { name: "First Open" })).toHaveAttribute("tabindex", "-1");
+    });
+
+    it.each(["{Enter}", "{F2}"])(
+        "moves focus to the first control of a cell with text and a control on %s",
+        async (key) => {
+            const { user, grid, active } = await setup();
+            await user.keyboard("{ArrowRight}");
+            expect(active()).toHaveTextContent("Details Open");
+
+            await user.keyboard(key);
+
+            const control = screen.getByRole("button", { name: "Details Open" });
+            expect(control).toHaveFocus();
+            expect(control).toHaveAttribute("tabindex", "0");
+            expect(grid).not.toHaveFocus();
+        },
+    );
+
+    it("moves between the controls of the cell with Tab and Shift+Tab and never leaves it", async () => {
+        const { user } = await setup();
+        await user.keyboard("{ArrowRight}{ArrowRight}{Enter}");
+        const first = screen.getByRole("button", { name: "First Open" });
+        const second = screen.getByRole("button", { name: "Second Open" });
+        expect(first).toHaveFocus();
+
+        await user.tab();
+        expect(second).toHaveFocus();
+        await user.tab();
+        expect(first).toHaveFocus();
+        await user.tab({ shift: true });
+        expect(second).toHaveFocus();
+    });
+
+    it("returns focus to the grid on Escape and restores arrow navigation", async () => {
+        const { user, grid, active } = await setup();
+        await user.keyboard("{ArrowRight}{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "First Open" })).toHaveFocus();
+
+        await user.keyboard("{Escape}");
+
+        expect(grid).toHaveFocus();
+        expect(screen.getByRole("button", { name: "First Open" })).toHaveAttribute("tabindex", "-1");
+        expect(active()).toContainElement(screen.getByRole("button", { name: "First Open" }));
+        await user.keyboard("{ArrowRight}");
+        expect(active()).toContainElement(screen.getByRole("button", { name: "Lone Open" }));
+    });
+
+    it.each(["{Enter}", " "])(
+        "activates the only control of a cell directly with %s and without a mode change",
+        async (key) => {
+            onLone.mockClear();
+            const { user, grid } = await setup();
+            await user.keyboard("{ArrowRight}{ArrowRight}{ArrowRight}");
+
+            await user.keyboard(key);
+
+            expect(onLone).toHaveBeenCalledTimes(1);
+            expect(grid).toHaveFocus();
+            expect(screen.getByRole("button", { name: "Lone Open" })).toHaveAttribute("tabindex", "-1");
+        },
+    );
+
+    it("keeps interaction mode and skips the row action when a control in the cell is activated", async () => {
+        const onItemClick = vi.fn<() => void>();
+        const onDetails = vi.fn<() => void>();
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "title",
+                        getTextContent: (i) => i.title,
+                        renderSuffixIcon: () => <CellButton label="Details" onClick={onDetails} />,
+                    },
+                ]}
+                onItemClick={onItemClick}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        const control = screen.getByRole("button", { name: "Details" });
+        expect(control).toHaveFocus();
+
+        await user.keyboard("{Enter}");
+
+        expect(onDetails).toHaveBeenCalledTimes(1);
+        expect(onItemClick).not.toHaveBeenCalled();
+        expect(control).toHaveFocus();
+        expect(control).toHaveAttribute("tabindex", "0");
+    });
+
+    it("keeps interaction mode and the parent's Escape handling out of an IME composition", async () => {
+        const user = userEvent.setup();
+        const onParentKeyDown = vi.fn();
+        renderWithIntl(
+            <div onKeyDown={onParentKeyDown}>
+                <UiAsyncTable items={[open]} totalItemsCount={1} columns={dualModeColumns} />
+            </div>,
+        );
+        await user.tab();
+        const grid = screen.getByRole("grid");
+        await user.keyboard("{ArrowRight}{Enter}");
+        const details = screen.getByRole("button", { name: "Details Open" });
+        onParentKeyDown.mockClear();
+
+        fireEvent.keyDown(details, { key: "Escape", isComposing: true });
+
+        expect(onParentKeyDown).not.toHaveBeenCalled();
+        expect(details).toHaveFocus();
+        expect(details).toHaveAttribute("tabindex", "0");
+        await user.keyboard("{Escape}");
+        expect(grid).toHaveFocus();
+    });
+
+    it("returns focus to the grid on F2 and restores arrow navigation", async () => {
+        const { user, grid, active } = await setup();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "Details Open" })).toHaveFocus();
+
+        await user.keyboard("{F2}");
+
+        expect(grid).toHaveFocus();
+        const before = active();
+        await user.keyboard("{ArrowRight}");
+        expect(active()).not.toBe(before);
+    });
+
+    it("handles the keys in the table that has focus when two tables render the same items", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <>
+                <UiAsyncTable items={[open]} totalItemsCount={1} columns={dualModeColumns} />
+                <UiAsyncTable items={[open]} totalItemsCount={1} columns={dualModeColumns} />
+            </>,
+        );
+        const [, secondGrid] = screen.getAllByRole("grid");
+        act(() => secondGrid.focus());
+
+        await user.keyboard("{ArrowRight}{Enter}");
+
+        expect(within(secondGrid).getByRole("button", { name: "Details Open" })).toHaveFocus();
+        await user.keyboard("{Escape}");
+        expect(secondGrid).toHaveFocus();
+    });
+
+    it("does not run the row action or reset the active cell when a lone control is activated by keyboard", async () => {
+        const onItemClick = vi.fn<() => void>();
+        const onLoneControl = vi.fn<() => void>();
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "id",
+                        renderButton: () => <CellButton label="Lone" onClick={onLoneControl} />,
+                    },
+                ]}
+                onItemClick={onItemClick}
+            />,
+        );
+        await user.tab();
+        const grid = screen.getByRole("grid");
+        await user.keyboard("{ArrowRight}");
+        const cellId = grid.getAttribute("aria-activedescendant");
+
+        await user.keyboard("{Enter}");
+
+        expect(onLoneControl).toHaveBeenCalledTimes(1);
+        expect(onItemClick).not.toHaveBeenCalled();
+        expect(grid.getAttribute("aria-activedescendant")).toBe(cellId);
+    });
+
+    it("enters interaction mode on a lone text input and leaves Space to typing", async () => {
+        function CellInput() {
+            const tabIndex = useUiAsyncTableCellControlTabIndex();
+            return <input aria-label="Note" tabIndex={tabIndex} />;
+        }
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[{ key: "id", renderButton: () => <CellInput /> }]}
+            />,
+        );
+        await user.tab();
+        const grid = screen.getByRole("grid");
+        await user.keyboard("{ArrowRight}");
+
+        await user.keyboard(" ");
+        expect(screen.getByLabelText("Note")).not.toHaveFocus();
+
+        await user.keyboard("{Enter}");
+        expect(screen.getByLabelText("Note")).toHaveFocus();
+        await user.keyboard("a b");
+        expect(screen.getByLabelText("Note")).toHaveValue("a b");
+
+        await user.keyboard("{Escape}");
+        expect(grid).toHaveFocus();
+    });
+
+    it("skips controls that are not rendered when cycling with Tab", async () => {
+        const isDisplayed = (element: HTMLElement | null): boolean =>
+            !element || (element.style.display !== "none" && isDisplayed(element.parentElement));
+        const original = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "checkVisibility");
+        Object.defineProperty(HTMLElement.prototype, "checkVisibility", {
+            configurable: true,
+            value(this: HTMLElement) {
+                return isDisplayed(this);
+            },
+        });
+        try {
+            const user = userEvent.setup();
+            renderWithIntl(
+                <UiAsyncTable
+                    items={[open]}
+                    totalItemsCount={1}
+                    columns={[
+                        {
+                            key: "id",
+                            renderButton: () => (
+                                <>
+                                    <CellButton label="First" />
+                                    <input type="hidden" />
+                                    <span style={{ display: "none" }}>
+                                        <CellButton label="Not rendered" />
+                                    </span>
+                                    <CellButton label="Last" />
+                                </>
+                            ),
+                        },
+                    ]}
+                />,
+            );
+            await user.tab();
+            await user.keyboard("{ArrowRight}{Enter}");
+            expect(screen.getByRole("button", { name: "First" })).toHaveFocus();
+
+            await user.tab();
+            expect(screen.getByRole("button", { name: "Last" })).toHaveFocus();
+            await user.tab();
+            expect(screen.getByRole("button", { name: "First" })).toHaveFocus();
+        } finally {
+            if (original) {
+                Object.defineProperty(HTMLElement.prototype, "checkVisibility", original);
+            } else {
+                Reflect.deleteProperty(HTMLElement.prototype, "checkVisibility");
+            }
+        }
+    });
+
+    it("skips controls that a surrounding fieldset disables when cycling with Tab", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "id",
+                        renderButton: () => (
+                            <>
+                                <CellButton label="First" />
+                                <fieldset disabled>
+                                    <CellButton label="Disabled by fieldset" />
+                                </fieldset>
+                                <CellButton label="Last" />
+                            </>
+                        ),
+                    },
+                ]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "First" })).toHaveFocus();
+
+        await user.tab();
+        expect(screen.getByRole("button", { name: "Last" })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByRole("button", { name: "First" })).toHaveFocus();
+    });
+
+    it("keeps controls in the first legend of a disabled fieldset reachable", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "id",
+                        renderButton: () => (
+                            <>
+                                <CellButton label="First" />
+                                <fieldset disabled>
+                                    <legend>
+                                        <CellButton label="In legend" />
+                                    </legend>
+                                    <CellButton label="In body" />
+                                </fieldset>
+                                <CellButton label="Last" />
+                            </>
+                        ),
+                    },
+                ]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "First" })).toHaveFocus();
+
+        await user.tab();
+        expect(screen.getByRole("button", { name: "In legend" })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByRole("button", { name: "Last" })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByRole("button", { name: "First" })).toHaveFocus();
+    });
+
+    it("leaves a key that the focused control already handled alone", async () => {
+        function CellInput() {
+            const tabIndex = useUiAsyncTableCellControlTabIndex();
+            return (
+                <input
+                    aria-label="Suggest"
+                    tabIndex={tabIndex}
+                    onKeyDown={(event) => {
+                        if (event.key === "Escape") {
+                            event.preventDefault();
+                        }
+                    }}
+                />
+            );
+        }
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "id",
+                        renderButton: () => (
+                            <>
+                                <CellInput />
+                                <CellButton label="Other" />
+                            </>
+                        ),
+                    },
+                ]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByLabelText("Suggest")).toHaveFocus();
+
+        await user.keyboard("{Escape}");
+
+        expect(screen.getByLabelText("Suggest")).toHaveFocus();
+        expect(screen.getByRole("button", { name: "Other" })).toHaveAttribute("tabindex", "0");
+    });
+
+    it("keeps a link in the body of a disabled fieldset among the cell controls and leaves out its buttons", () => {
+        function CellLink() {
+            const tabIndex = useUiAsyncTableCellControlTabIndex();
+            return (
+                <a href="#details" tabIndex={tabIndex}>
+                    Link
+                </a>
+            );
+        }
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "id",
+                        renderButton: () => (
+                            <>
+                                <CellButton label="First" />
+                                <fieldset disabled>
+                                    <CellLink />
+                                    <CellButton label="In body" />
+                                </fieldset>
+                                <CellButton label="Last" />
+                            </>
+                        ),
+                    },
+                ]}
+            />,
+        );
+
+        const cell = screen.getAllByRole("gridcell")[0];
+
+        expect(getCellControls(cell).map((control) => control.textContent)).toEqual([
+            "First",
+            "Link",
+            "Last",
+        ]);
+    });
+
+    it("skips controls inside an aria-disabled group when cycling with Tab", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "id",
+                        renderButton: () => (
+                            <>
+                                <CellButton label="First" />
+                                <div role="group" aria-disabled="true">
+                                    <CellButton label="In disabled group" />
+                                </div>
+                                <CellButton label="Last" />
+                            </>
+                        ),
+                    },
+                ]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "First" })).toHaveFocus();
+
+        await user.tab();
+        expect(screen.getByRole("button", { name: "Last" })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByRole("button", { name: "First" })).toHaveFocus();
+    });
+
+    it("enters interaction mode on a lone custom slider, which has to be focused to be operated", async () => {
+        function CellSlider() {
+            const tabIndex = useUiAsyncTableCellControlTabIndex();
+            return <div role="slider" aria-label="Volume" aria-valuenow={1} tabIndex={tabIndex} />;
+        }
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[{ key: "id", renderButton: () => <CellSlider /> }]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+
+        expect(screen.getByRole("slider", { name: "Volume" })).toHaveFocus();
+    });
+
+    it("skips controls inside an inert subtree when cycling with Tab", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "id",
+                        renderButton: () => (
+                            <>
+                                <CellButton label="First" />
+                                <div ref={(element) => element?.setAttribute("inert", "")}>
+                                    <CellButton label="Inert" />
+                                </div>
+                                <CellButton label="Last" />
+                            </>
+                        ),
+                    },
+                ]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "First" })).toHaveFocus();
+
+        await user.tab();
+        expect(screen.getByRole("button", { name: "Last" })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByRole("button", { name: "First" })).toHaveFocus();
+    });
+
+    it("activates a lone control directly when the only other text in the cell is hidden", async () => {
+        const onLone = vi.fn<() => void>();
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "id",
+                        renderButton: () => (
+                            <>
+                                <CellButton label="Lone" onClick={onLone} />
+                                <span hidden>Help</span>
+                            </>
+                        ),
+                    },
+                ]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+
+        expect(onLone).toHaveBeenCalledTimes(1);
+    });
+
+    it("enters interaction mode on a lone range input, which has to be focused to be operated", async () => {
+        function CellRange() {
+            const tabIndex = useUiAsyncTableCellControlTabIndex();
+            return <input type="range" aria-label="Level" tabIndex={tabIndex} />;
+        }
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[{ key: "id", renderButton: () => <CellRange /> }]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+
+        expect(screen.getByLabelText("Level")).toHaveFocus();
+    });
+
+    it("enters interaction mode on a lone control that cannot be clicked, such as an SVG", async () => {
+        function CellSvg() {
+            const tabIndex = useUiAsyncTableCellControlTabIndex();
+            return <svg aria-label="Marker" tabIndex={tabIndex} width={12} height={12} />;
+        }
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[{ key: "id", renderButton: () => <CellSvg /> }]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+
+        expect(screen.getByLabelText("Marker")).toHaveFocus();
+    });
+
+    it("ends interaction mode when focus returns to the grid itself", async () => {
+        const { user, grid } = await setup();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "Details Open" })).toHaveAttribute("tabindex", "0");
+
+        act(() => grid.focus());
+
+        expect(screen.getByRole("button", { name: "Details Open" })).toHaveAttribute("tabindex", "-1");
+    });
+
+    it("ends interaction mode when a reorder puts another item in the active cell", async () => {
+        const user = userEvent.setup();
+        const table = (items: IItem[]) => (
+            <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
+                <UiAsyncTable items={items} totalItemsCount={items.length} columns={dualModeColumns} />
+            </IntlProvider>
+        );
+        const { rerender } = render(table([open, locked]));
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "Details Open" })).toHaveFocus();
+
+        rerender(table([locked, open]));
+
+        expect(screen.getByRole("button", { name: "Details Locked" })).toHaveAttribute("tabindex", "-1");
+        expect(screen.getByRole("grid")).toHaveFocus();
+    });
+
+    it("moves focus back to the grid when the item of the focused control is removed", async () => {
+        const user = userEvent.setup();
+        const table = (items: IItem[]) => (
+            <IntlProvider locale={DEFAULT_LANGUAGE} messages={DEFAULT_MESSAGES[DEFAULT_LANGUAGE]}>
+                <UiAsyncTable items={items} totalItemsCount={items.length} columns={dualModeColumns} />
+            </IntlProvider>
+        );
+        const { rerender } = render(table([open, locked]));
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "Details Open" })).toHaveFocus();
+
+        rerender(table([locked]));
+
+        expect(screen.getByRole("grid")).toHaveFocus();
+    });
+
+    it("keeps the focus of a control that is clicked in another cell while a cell is in interaction mode", async () => {
+        const { user } = await setup();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "Details Open" })).toHaveFocus();
+
+        await user.click(screen.getByRole("button", { name: "Lone Open" }));
+
+        expect(screen.getByRole("button", { name: "Lone Open" })).toHaveFocus();
+    });
+
+    it("hands focus back to the grid when non-focusable row text is clicked in interaction mode", async () => {
+        const { user } = await setup();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "Details Open" })).toHaveFocus();
+
+        fireEvent.click(screen.getByText("Open"));
+
+        expect(screen.getByRole("grid")).toHaveFocus();
+    });
+
+    it("runs the row action when the text beside a control is clicked in interaction mode", async () => {
+        const onItemClick = vi.fn<() => void>();
+        const onDetails = vi.fn<() => void>();
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "title",
+                        getTextContent: (i) => i.title,
+                        renderSuffixIcon: () => <CellButton label="Details" onClick={onDetails} />,
+                    },
+                ]}
+                onItemClick={onItemClick}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "Details" })).toHaveFocus();
+
+        fireEvent.click(screen.getByText("Open"));
+
+        expect(onItemClick).toHaveBeenCalledTimes(1);
+        expect(onDetails).not.toHaveBeenCalled();
+    });
+
+    it("reaches every button when a focusable wrapper surrounds them", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "id",
+                        renderButton: () => (
+                            <div tabIndex={-1} data-testid="wrapper">
+                                <CellButton label="Inner A" />
+                                <CellButton label="Inner B" />
+                            </div>
+                        ),
+                    },
+                ]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByTestId("wrapper")).toHaveFocus();
+
+        await user.tab();
+        expect(screen.getByRole("button", { name: "Inner A" })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByRole("button", { name: "Inner B" })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByTestId("wrapper")).toHaveFocus();
+    });
+
+    it("reaches an editable element that has no tabindex when cycling with Tab", async () => {
+        const user = userEvent.setup();
+        renderWithIntl(
+            <UiAsyncTable
+                items={[open]}
+                totalItemsCount={1}
+                columns={[
+                    {
+                        key: "id",
+                        renderButton: () => (
+                            <>
+                                <CellButton label="Before" />
+                                <div
+                                    contentEditable
+                                    suppressContentEditableWarning
+                                    role="textbox"
+                                    aria-label="Editor"
+                                />
+                                <CellButton label="After" />
+                            </>
+                        ),
+                    },
+                ]}
+            />,
+        );
+        await user.tab();
+        await user.keyboard("{ArrowRight}{Enter}");
+        expect(screen.getByRole("button", { name: "Before" })).toHaveFocus();
+
+        await user.tab();
+        expect(screen.getByRole("textbox", { name: "Editor" })).toHaveFocus();
+        await user.tab();
+        expect(screen.getByRole("button", { name: "After" })).toHaveFocus();
+    });
+
+    it("leaves interaction mode when focus leaves the grid", async () => {
+        const { user } = await setup();
+        await user.keyboard("{ArrowRight}{Enter}");
+        const control = screen.getByRole("button", { name: "Details Open" });
+        expect(control).toHaveAttribute("tabindex", "0");
+
+        act(() => control.blur());
+
+        expect(control).toHaveAttribute("tabindex", "-1");
     });
 });

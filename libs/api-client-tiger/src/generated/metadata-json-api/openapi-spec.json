@@ -29853,7 +29853,7 @@
                     "actions"
                 ],
                 "summary": "Workspaces that use a language.",
-                "description": "Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. No value selects the usage entry without a language.",
+                "description": "Lists the workspaces behind the counts of the organization localization usage, sorted by name. Without the setting filter, a workspace matches when any of the display, metadata and data language settings matches, and its source is the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.",
                 "operationId": "organizationLocalizationUsageWorkspaces",
                 "parameters": [
                     {
@@ -29991,7 +29991,7 @@
                     "actions"
                 ],
                 "summary": "Users who set a language themselves.",
-                "description": "Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. No value selects the usage entry without a language.",
+                "description": "Lists the users behind the counts of the organization localization usage, sorted by name. Users without a name come last. Users count under the value they get in the organization. That value depends on the workspace, so only the settings that users set themselves match. Only the source USER returns users. Without the setting filter, a user matches when any of the display, metadata and data language settings matches. An empty `value=` means no filter. The list leaves out the users that the usage counts without a language.",
                 "operationId": "organizationLocalizationUsageUsers",
                 "parameters": [
                     {
@@ -30249,7 +30249,7 @@
                     "actions"
                 ],
                 "summary": "Workspace members who get a language.",
-                "description": "Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. No value selects the usage entry without a language.",
+                "description": "Lists the workspace members behind the counts of the workspace localization usage, sorted by name. Users without a name come last. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. So every source can match. Without the setting filter, a member matches when any of the display, metadata and data language settings matches. Its source is then the strongest one. An empty `value=` means no filter. The list leaves out the members that the usage counts without a language.",
                 "operationId": "workspaceLocalizationUsageUsers",
                 "parameters": [
                     {
@@ -30366,7 +30366,7 @@
                     "actions"
                 ],
                 "summary": "Languages used in the workspace.",
-                "description": "Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. Child workspaces are not included.",
+                "description": "Returns the value the workspace gets for each of the display, metadata and data language settings. It also counts the workspace members per language. Members count under the value they get in the workspace: their own setting, otherwise the value of the workspace. `childWorkspaces` counts the workspaces below it that the user can see, the same way.",
                 "operationId": "workspaceLocalizationUsage",
                 "parameters": [
                     {
@@ -30453,7 +30453,7 @@
                     "actions"
                 ],
                 "summary": "(BETA) Localization issues of the workspace.",
-                "description": "(BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses.",
+                "description": "(BETA) Checks the display and metadata language of the workspace against the metadata translations of the workspace and its parents. It also reports translations the workspace owns that nobody uses. It checks this only when the workspace has no workspaces below it or the user can see all of them.",
                 "operationId": "workspaceLocalizationIssues",
                 "parameters": [
                     {
@@ -30540,13 +30540,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -30644,13 +30648,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     },
                     {
                         "name": "metaInclude",
@@ -30763,13 +30771,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -30874,13 +30886,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     }
                 ],
                 "requestBody": {
@@ -31007,13 +31023,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     }
                 ],
                 "requestBody": {
@@ -31703,13 +31723,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     },
                     {
                         "$ref": "#/components/parameters/page"
@@ -31807,13 +31831,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     },
                     {
                         "name": "metaInclude",
@@ -31926,13 +31954,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     },
                     {
                         "name": "X-GDC-VALIDATE-RELATIONS",
@@ -32037,13 +32069,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     }
                 ],
                 "requestBody": {
@@ -32170,13 +32206,17 @@
                                 "type": "string",
                                 "enum": [
                                     "userIdentifiers",
+                                    "visualizationObjects",
+                                    "labels",
+                                    "datasets",
+                                    "metrics",
                                     "createdBy",
                                     "modifiedBy",
                                     "ALL"
                                 ]
                             }
                         },
-                        "example": "createdBy,modifiedBy"
+                        "example": "createdBy,modifiedBy,visualizationObjects,labels,datasets,metrics"
                     }
                 ],
                 "requestBody": {
@@ -32254,42 +32294,49 @@
         },
         "/api/v1/entities/workspaces/{workspaceId}/documents/search": {
             "post": {
+                "tags": [
+                    "Publisher Documents",
+                    "entities",
+                    "document-controller"
+                ],
+                "summary": "The search endpoint",
                 "operationId": "searchEntities@Documents",
                 "parameters": [
                     {
-                        "in": "path",
                         "name": "workspaceId",
+                        "in": "path",
                         "required": true,
                         "schema": {
                             "type": "string"
                         }
                     },
                     {
-                        "in": "query",
                         "name": "origin",
+                        "in": "query",
                         "required": false,
                         "schema": {
-                            "default": "ALL",
+                            "type": "string",
                             "description": "Defines scope of origin of objects. All by default.",
+                            "default": "ALL",
                             "enum": [
                                 "ALL",
                                 "PARENTS",
                                 "NATIVE"
-                            ],
-                            "type": "string"
+                            ]
                         }
                     },
                     {
-                        "in": "header",
                         "name": "X-GDC-VALIDATE-RELATIONS",
+                        "in": "header",
                         "required": false,
                         "schema": {
-                            "default": false,
-                            "type": "boolean"
+                            "type": "boolean",
+                            "default": false
                         }
                     }
                 ],
                 "requestBody": {
+                    "description": "Search request body with filter, pagination, and sorting options",
                     "content": {
                         "application/json": {
                             "schema": {
@@ -32297,37 +32344,147 @@
                             }
                         }
                     },
-                    "description": "Search request body with filter, pagination, and sorting options",
                     "required": true
                 },
                 "responses": {
                     "200": {
+                        "description": "Request successfully processed",
                         "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutList"
-                                }
-                            },
                             "application/vnd.gooddata.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/JsonApiPublisherDocumentOutList"
                                 }
+                            },
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiPublisherDocumentOutList"
+                                }
                             }
-                        },
-                        "description": "Request successfully processed"
+                        }
                     }
                 },
-                "summary": "The search endpoint",
-                "tags": [
-                    "Publisher Documents",
-                    "entities",
-                    "document-controller"
-                ],
                 "x-gdc-security-info": {
-                    "description": "Contains minimal permission level required to view this object type.",
                     "permissions": [
                         "VIEW"
-                    ]
+                    ],
+                    "description": "Contains minimal permission level required to view this object type."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/localization/usage/childWorkspaces": {
+            "get": {
+                "tags": [
+                    "Localization",
+                    "actions"
+                ],
+                "summary": "(BETA) Workspaces below the workspace that use a language.",
+                "description": "(BETA) Lists the workspaces behind the `childWorkspaces` counts of the workspace localization usage. The list has the workspaces below the workspace that the user can see, sorted by name. Without the setting filter, a workspace matches when one of its three language settings matches. Its source is then the strongest one. Without the value filter, a setting without a language matches too. An empty `value=` means no filter. The `value` parameter cannot filter for a missing language.",
+                "operationId": "workspaceLocalizationUsageChildWorkspaces",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "query",
+                        "description": "Language tag that the workspace gets.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "de-DE"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Filter by workspace name. Note that the filter is case insensitive.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "berg"
+                    },
+                    {
+                        "name": "setting",
+                        "in": "query",
+                        "description": "One of LOCALE, METADATA_LOCALE and DATA_LOCALE.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "LOCALE",
+                                "METADATA_LOCALE",
+                                "DATA_LOCALE"
+                            ]
+                        },
+                        "example": "LOCALE"
+                    },
+                    {
+                        "name": "source",
+                        "in": "query",
+                        "description": "Where the value comes from.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "description": "Where the value comes from, from the strongest source to the weakest: USER - the user set it. WORKSPACE - the workspace sets it. PARENT - the workspace inherits it from a parent workspace. ORGANIZATION - the organization default. ENVIRONMENT - the default set for the whole deployment. DEFAULT - the built-in default.",
+                            "enum": [
+                                "USER",
+                                "WORKSPACE",
+                                "PARENT",
+                                "ORGANIZATION",
+                                "ENVIRONMENT",
+                                "DEFAULT"
+                            ]
+                        },
+                        "example": "PARENT"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        },
+                        "example": 0
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 20
+                        },
+                        "example": 20
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LocalizationUsageWorkspaces"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Minimal permission required to use this endpoint."
                 }
             }
         }
@@ -32379,7 +32536,7 @@
                     },
                     "parameters": {
                         "type": "array",
-                        "description": "(EXPERIMENTAL) Parameter values to use for this execution.",
+                        "description": "Parameter values to use for this execution.",
                         "items": {
                             "$ref": "#/components/schemas/ParameterItem"
                         }
@@ -35288,6 +35445,9 @@
                         "$ref": "#/components/schemas/DashboardDateFilter"
                     },
                     {
+                        "$ref": "#/components/schemas/DashboardParameterizedDateFilter"
+                    },
+                    {
                         "$ref": "#/components/schemas/DashboardArbitraryAttributeFilter"
                     },
                     {
@@ -35376,6 +35536,39 @@
                             },
                             "title": {
                                 "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "DashboardParameterizedDateFilter": {
+                "required": [
+                    "dashboardParameterizedDateFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "dashboardParameterizedDateFilter": {
+                        "required": [
+                            "parameter"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "dataSet": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "emptyValueHandling": {
+                                "type": "string",
+                                "enum": [
+                                    "include",
+                                    "exclude",
+                                    "only"
+                                ]
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "parameter": {
+                                "$ref": "#/components/schemas/IdentifierRef"
                             }
                         }
                     }
@@ -35719,6 +35912,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/AbsoluteGranularityDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ParameterizedDateFilter"
                     },
                     {
                         "$ref": "#/components/schemas/RelativeDateFilter"
@@ -40739,7 +40935,9 @@
                             "visualizationObject",
                             "filterContext",
                             "filterView",
-                            "document"
+                            "pageTemplate",
+                            "document",
+                            "documentTemplate"
                         ]
                     }
                 }
@@ -40863,7 +41061,9 @@
                             "visualizationObject",
                             "filterContext",
                             "filterView",
-                            "document"
+                            "pageTemplate",
+                            "document",
+                            "documentTemplate"
                         ]
                     }
                 }
@@ -41247,6 +41447,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/AbsoluteGranularityDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ParameterizedDateFilter"
                     },
                     {
                         "$ref": "#/components/schemas/RelativeDateFilter"
@@ -59266,6 +59469,39 @@
                                     }
                                 }
                             },
+                            "datasets": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiDatasetToManyLinkage"
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiLabelToManyLinkage"
+                                    }
+                                }
+                            },
+                            "metrics": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiMetricToManyLinkage"
+                                    }
+                                }
+                            },
                             "modifiedBy": {
                                 "required": [
                                     "data"
@@ -59274,6 +59510,17 @@
                                 "properties": {
                                     "data": {
                                         "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            },
+                            "visualizationObjects": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiVisualizationObjectToManyLinkage"
                                     }
                                 }
                             }
@@ -59304,7 +59551,7 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiPublisherDocumentOutIncludes"
                         }
                     },
                     "links": {
@@ -59343,7 +59590,7 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiPublisherDocumentOutIncludes"
                         }
                     },
                     "links": {
@@ -60869,6 +61116,39 @@
                                     }
                                 }
                             },
+                            "datasets": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiDatasetToManyLinkage"
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiLabelToManyLinkage"
+                                    }
+                                }
+                            },
+                            "metrics": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiMetricToManyLinkage"
+                                    }
+                                }
+                            },
                             "modifiedBy": {
                                 "required": [
                                     "data"
@@ -60877,6 +61157,17 @@
                                 "properties": {
                                     "data": {
                                         "$ref": "#/components/schemas/JsonApiUserIdentifierToOneLinkage"
+                                    }
+                                }
+                            },
+                            "visualizationObjects": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiVisualizationObjectToManyLinkage"
                                     }
                                 }
                             }
@@ -60907,7 +61198,7 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiPublisherDocumentOutIncludes"
                         }
                     },
                     "links": {
@@ -60946,7 +61237,7 @@
                         "type": "array",
                         "description": "Included resources",
                         "items": {
-                            "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                            "$ref": "#/components/schemas/JsonApiPublisherDocumentOutIncludes"
                         }
                     },
                     "links": {
@@ -71349,13 +71640,17 @@
                 ],
                 "type": "object",
                 "properties": {
+                    "childWorkspaces": {
+                        "$ref": "#/components/schemas/LocalizationCount"
+                    },
                     "users": {
                         "$ref": "#/components/schemas/LocalizationCount"
                     },
                     "workspaces": {
                         "$ref": "#/components/schemas/LocalizationCount"
                     }
-                }
+                },
+                "description": "(BETA) `childWorkspaces` has the same counts for the workspaces below this workspace that the user can see. It does not count this workspace. Only the workspace usage has it."
             },
             "LocalizationSettingUsages": {
                 "type": "object",
@@ -71455,7 +71750,6 @@
                 "required": [
                     "id",
                     "locales",
-                    "name",
                     "total"
                 ],
                 "type": "object",
@@ -71474,7 +71768,8 @@
                     },
                     "name": {
                         "type": "string",
-                        "description": "Workspace name.",
+                        "description": "Workspace name. Null for a parent that the user has no permission on. The name stays when the user can see the workspace right below it.",
+                        "nullable": true,
                         "example": "Bergmann"
                     },
                     "parentId": {
@@ -71490,7 +71785,7 @@
                         "example": 1000
                     }
                 },
-                "description": "Metadata texts of one workspace. A row counts only the texts that the workspace owns. A child workspace sums its row and the rows of its parents."
+                "description": "Metadata texts of one workspace. A row counts only the texts that the workspace owns. A parent's row counts only the texts that the workspaces below it inherit. A child workspace sums its row and the rows of its parents."
             },
             "LocalizationUsage": {
                 "required": [
@@ -71579,6 +71874,9 @@
                     "bySetting": {
                         "$ref": "#/components/schemas/LocalizationSettingUsages"
                     },
+                    "childWorkspaces": {
+                        "$ref": "#/components/schemas/LocalizationCount"
+                    },
                     "content": {
                         "$ref": "#/components/schemas/LocalizationContent"
                     },
@@ -71589,7 +71887,7 @@
                         "$ref": "#/components/schemas/LocalizationCount"
                     }
                 },
-                "description": "One language. `workspaces` counts the workspaces that get it in any of the settings, once each. `users` counts the users who get it in any of the settings, once each. In the entry with a null value, `users` counts the users who get no language in any setting."
+                "description": "One language. `workspaces` counts the workspaces that get it in any of the settings, once each. `users` counts the users who get it in any of the settings, once each. In the entry with a null value, `users` counts the users who get no language in any setting. (BETA) `childWorkspaces` has the same counts for the workspaces below this workspace that the user can see. It does not count this workspace. Only the workspace usage has it."
             },
             "LocalizationUsageWorkspace": {
                 "required": [
@@ -72365,7 +72663,7 @@
                     }
                 },
                 "additionalProperties": true,
-                "description": "(EXPERIMENTAL) Parameter value for this execution."
+                "description": "Parameter value for this execution."
             },
             "ParameterValue": {
                 "required": [
@@ -72398,6 +72696,46 @@
                 },
                 "additionalProperties": true,
                 "description": "Parameter value override applied to the export. The (id, value) pair drives the execution; the title is FE-supplied for info-sheet display."
+            },
+            "ParameterizedDateFilter": {
+                "required": [
+                    "parameterizedDateFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "parameterizedDateFilter": {
+                        "required": [
+                            "dataset",
+                            "parameter"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "dataset": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                            },
+                            "emptyValueHandling": {
+                                "type": "string",
+                                "description": "Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.",
+                                "default": "EXCLUDE",
+                                "enum": [
+                                    "INCLUDE",
+                                    "EXCLUDE",
+                                    "ONLY"
+                                ]
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "parameter": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierParameter"
+                            }
+                        }
+                    }
+                },
+                "description": "A date filter whose period comes from a DATE_RANGE parameter. Each execution uses the parameter's current granularity and range."
             },
             "PdfTableStyle": {
                 "required": [

@@ -108,6 +108,7 @@ export function GenAIChatConversations({ onClose, onSelect, wrapper }: GenAIChat
                                     setOpenedId(openedId ? undefined : conversation.localId);
                                 }}
                                 isOpen={openedId === conversation.localId}
+                                fullscreenOnMobile={false}
                                 alignPoints={[
                                     { align: "bl tl" },
                                     { align: "br tr" },

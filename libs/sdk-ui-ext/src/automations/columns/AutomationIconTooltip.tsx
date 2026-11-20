@@ -2,7 +2,7 @@
 
 import { useId } from "react";
 
-import { UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { UiIconButton, UiTooltip, useUiAsyncTableCellControlTabIndex } from "@gooddata/sdk-ui-kit";
 
 import { bem } from "../../notificationsPanel/bem.js";
 import { type IAutomationIconTooltipProps } from "../types.js";
@@ -56,6 +56,7 @@ export function AutomationIconTooltip({
     triggerAriaLabel,
 }: IAutomationIconTooltipProps) {
     const tooltipId = useId();
+    const tabIndex = useUiAsyncTableCellControlTabIndex();
     return (
         <UiTooltip
             id={tooltipId}
@@ -73,6 +74,7 @@ export function AutomationIconTooltip({
                     className={e("trigger")}
                     aria-label={triggerAriaLabel}
                     aria-describedby={tooltipId}
+                    tabIndex={tabIndex}
                 >
                     {children}
                 </button>

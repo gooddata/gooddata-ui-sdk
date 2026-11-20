@@ -45,5 +45,5 @@ export interface IAttributeFilterElementsSearchBarProps {
  * @beta
  */
 export function AttributeFilterElementsSearchBar(props: IAttributeFilterElementsSearchBarProps) {
-    return <InvertableSelectSearchBar {...props} />;
+    return <InvertableSelectSearchBar {...props} propagateEscapeWhenEmpty />;
 }

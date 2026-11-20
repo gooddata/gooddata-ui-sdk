@@ -1,24 +1,35 @@
 // (C) 2026 GoodData Corporation
 
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import type { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import type { IUser, IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { AnalyticsCatalogDetail, AnalyticsCatalogDetailContent } from "./AnalyticsCatalogDetail.js";
-import type { ICatalogItemMeasure, ICatalogItemParameter } from "./catalogItem/types.js";
+import type {
+    ICatalogItemDocument,
+    ICatalogItemMeasure,
+    ICatalogItemParameter,
+} from "./catalogItem/types.js";
+
+const access = vi.hoisted(() => ({
+    permissions: { canManageProject: true } as IWorkspacePermissions,
+}));
 
 vi.mock("./permission/usePermissionsQuery.js", () => ({
     usePermissionsQuery: () => ({
         status: "success",
         result: {
-            permissions: { canManageProject: true } as IWorkspacePermissions,
+            permissions: access.permissions,
             user: { login: "test" } as IUser,
             settings: {
                 enableAnalyticalCatalogMetricEditor: true,
                 enableParameters: true,
+                enableBusinessBriefingReportsApp: true,
+                enablePublisherV2: true,
+                enableCatalogDocuments: true,
             } as IUserWorkspaceSettings,
         },
     }),
@@ -129,5 +140,49 @@ describe("AnalyticsCatalogDetail smoke", () => {
         await openAsCodeDialog(editBtn);
 
         expect(screen.getByTestId("yaml-editor")).toBeInTheDocument();
+    });
+});
+
+describe("AnalyticsCatalogDetailContent document", () => {
+    const documentItem = (creatorLogin: string): ICatalogItemDocument => ({
+        identifier: "doc.id",
+        type: "document",
+        title: "Monthly report",
+        description: "",
+        tags: [],
+        createdBy: "Creator",
+        creatorLogin,
+        updatedBy: "",
+        createdAt: null,
+        updatedAt: null,
+        isLocked: false,
+        isEditable: true,
+    });
+
+    afterEach(() => {
+        access.permissions = { canManageProject: true } as IWorkspacePermissions;
+    });
+
+    it.each([
+        ["offers title editing to its creator without Manage", "test", true],
+        ["keeps it read-only for another user without Manage", "someone.else", false],
+    ])("%s", async (_, creatorLogin, editable) => {
+        access.permissions = { canManageProject: false } as IWorkspacePermissions;
+        const item = documentItem(creatorLogin);
+
+        const { container } = render(
+            <AnalyticsCatalogDetailContent
+                backend={backend}
+                workspace="test-ws"
+                objectId={item.identifier}
+                objectType={item.type}
+                objectDefinition={item}
+            />,
+        );
+
+        await screen.findByText("Monthly report");
+        const title = container.querySelector(".gd-analytics-catalog-detail__card__header__title__name");
+        expect(title).not.toBeNull();
+        expect(title!.querySelector(".gd-icon-pencil") !== null).toBe(editable);
     });
 });

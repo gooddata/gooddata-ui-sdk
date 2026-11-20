@@ -257,11 +257,12 @@ export function convertDocumentToCatalogItem(document: IPublisherDocumentSummary
         description: document.description ?? "",
         tags: document.tags ?? [],
         createdBy: getDisplayName(document.createdBy),
+        creatorLogin: document.createdBy?.login,
         createdAt: document.created ? parseBackendDate(document.created) : null,
         updatedBy: getDisplayName(document.updatedBy),
         updatedAt: updatedAt ? parseBackendDate(updatedAt) : null,
         isLocked: document.isLocked ?? false,
-        isEditable: false,
+        isEditable: true,
     };
 }
 

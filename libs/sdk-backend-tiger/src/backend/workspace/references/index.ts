@@ -28,6 +28,8 @@ const nodeTypeToObjectType: Record<DependentEntitiesNodeTypeEnum, ObjectType | u
     userDataFilter: "userDataFilter",
     memoryItem: "memoryItem",
     document: "document",
+    documentTemplate: "documentTemplate",
+    pageTemplate: "pageTemplate",
     // No sdk-model ObjectType exists for it.
     knowledgeRecommendation: undefined,
 };

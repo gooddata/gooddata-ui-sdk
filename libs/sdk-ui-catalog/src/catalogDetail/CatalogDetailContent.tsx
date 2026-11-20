@@ -131,7 +131,7 @@ export function CatalogDetailContent({
         onError: onCatalogItemUpdateError,
     });
 
-    const canEdit = canEditCatalogItem(permissions, item, settings);
+    const canEdit = canEditCatalogItem(permissions, item, settings, currentUser);
 
     const enableColumnLevelPermissions = Boolean(settings?.enableColumnLevelPermissions);
     const shareableItem =

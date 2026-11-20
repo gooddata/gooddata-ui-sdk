@@ -286,6 +286,7 @@ export enum CopilotBuildType {
 export class CopilotHandler<TBuild extends string = CopilotBuildType> {
     constructor(configuration: ICopilotConfiguration<TBuild>);
     cancelGeneration: (type: TBuild) => void;
+    cancelStaleBuild: (type: TBuild, nextObjectId?: string) => boolean;
     definitionApplicationInterrupted: (applicationId: string) => void;
     definitionApplicationStarted: (source: ICopilotApplicationSource<TBuild>) => string;
     definitionApplied: (applicationId: string, target: ICopilotTarget<TBuild>) => void;
@@ -524,6 +525,7 @@ export type GenAiStoreProps = {
     settings?: IUserWorkspaceSettings;
     onLinkClick?: (linkClickEvent: LinkHandlerEvent) => string | undefined;
     allowNativeLinks?: boolean;
+    isLinkEnabled?: (type: GenAIObjectType) => boolean;
     eventHandlers?: ChatEventHandler[];
     objectTypes?: GenAIObjectType[];
     includeTags?: string[];

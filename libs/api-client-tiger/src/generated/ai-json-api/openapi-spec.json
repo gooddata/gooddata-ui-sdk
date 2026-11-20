@@ -4012,7 +4012,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type55"
+                                "$ref": "#/components/schemas/Type57"
                             },
                             {
                                 "type": "null"
@@ -6956,6 +6956,17 @@
                         "$ref": "#/components/schemas/Identifier",
                         "description": "A unique identifier of the dashboard."
                     },
+                    "parameters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardParameters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Parameters shown in the filter bar of this dashboard."
+                    },
                     "permissions": {
                         "anyOf": [
                             {
@@ -7029,7 +7040,7 @@
                             }
                         ],
                         "title": "Tabs",
-                        "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level."
+                        "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, parameters, and filter configurations. Mutually exclusive with sections, filters and parameters at dashboard level."
                     },
                     "tags": {
                         "anyOf": [
@@ -7065,7 +7076,7 @@
                         "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type56"
+                        "$ref": "#/components/schemas/Type58"
                     },
                     "user_filters_reset": {
                         "anyOf": [
@@ -7100,7 +7111,7 @@
                                 "type": "null"
                             }
                         ],
-                        "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
+                        "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters/parameters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout, filters and parameters; root sections/filters/parameters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
                     }
                 },
                 "type": "object",
@@ -7172,6 +7183,17 @@
                     "id": {
                         "$ref": "#/components/schemas/Identifier",
                         "description": "A unique identifier of the dashboard."
+                    },
+                    "parameters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardParameters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Parameters shown in the filter bar of this dashboard."
                     },
                     "permissions": {
                         "anyOf": [
@@ -7246,7 +7268,7 @@
                             }
                         ],
                         "title": "Tabs",
-                        "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level."
+                        "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, parameters, and filter configurations. Mutually exclusive with sections, filters and parameters at dashboard level."
                     },
                     "tags": {
                         "anyOf": [
@@ -7282,7 +7304,7 @@
                         "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type56"
+                        "$ref": "#/components/schemas/Type58"
                     },
                     "user_filters_reset": {
                         "anyOf": [
@@ -7317,7 +7339,7 @@
                                 "type": "null"
                             }
                         ],
-                        "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout and filters; root sections/filters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
+                        "description": "Dashboard model version. \"2\" (default if omitted) — legacy shape: root-level sections/filters/parameters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. \"3\" — clean shape: tabs are the sole source of layout, filters and parameters; root sections/filters/parameters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use \"3\" for new dashboards; \"2\" exists to keep existing files round-trippable."
                     }
                 },
                 "type": "object",
@@ -7880,6 +7902,20 @@
                     "using"
                 ],
                 "title": "DashboardMetricValueFilter"
+            },
+            "DashboardParameters": {
+                "items": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/components/schemas/StringDashboardParameter"
+                        },
+                        {
+                            "$ref": "#/components/schemas/NumberDashboardParameter"
+                        }
+                    ]
+                },
+                "type": "array",
+                "title": "DashboardParameters"
             },
             "DashboardPart": {
                 "properties": {
@@ -9833,7 +9869,7 @@
                     "type": {
                         "anyOf": [
                             {
-                                "$ref": "#/components/schemas/Type52"
+                                "$ref": "#/components/schemas/Type54"
                             },
                             {
                                 "type": "null"
@@ -10722,6 +10758,58 @@
                 ],
                 "title": "NotificationChannelRef"
             },
+            "NumberDashboardParameter": {
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/Identifier",
+                        "description": "An identifier of the parameter."
+                    },
+                    "mode": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Mode6"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter."
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Title"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "The label shown in the filter bar instead of the parameter's title."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type23",
+                        "description": "The data type of the parameter. Must match the type in the parameter definition."
+                    },
+                    "value": {
+                        "anyOf": [
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Value",
+                        "description": "The value this dashboard uses instead of the parameter's default value."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "title": "NumberDashboardParameter"
+            },
             "ObjectType": {
                 "type": "string",
                 "enum": [
@@ -11446,7 +11534,7 @@
                         "description": "Sort direction."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type46"
+                        "$ref": "#/components/schemas/Type48"
                     }
                 },
                 "additionalProperties": false,
@@ -11909,7 +11997,7 @@
                         "description": "A field title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type44",
+                        "$ref": "#/components/schemas/Type46",
                         "description": "Type of relative period metric related to another metric in list."
                     },
                     "using": {
@@ -11959,7 +12047,7 @@
                         "description": "A field title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type45",
+                        "$ref": "#/components/schemas/Type47",
                         "description": "Type of relative period metric related to another metric in list."
                     },
                     "using": {
@@ -12037,7 +12125,7 @@
                         "title": "Metrics"
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type47"
+                        "$ref": "#/components/schemas/Type49"
                     }
                 },
                 "additionalProperties": false,
@@ -15098,6 +15186,58 @@
                 "title": "StepTokens",
                 "description": "What the step's LLM call spent; a field is null when the provider did not report it."
             },
+            "StringDashboardParameter": {
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/Identifier",
+                        "description": "An identifier of the parameter."
+                    },
+                    "mode": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Mode6"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter."
+                    },
+                    "title": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Title"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "The label shown in the filter bar instead of the parameter's title."
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type22",
+                        "description": "The data type of the parameter. Must match the type in the parameter definition."
+                    },
+                    "value": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Value",
+                        "description": "The value this dashboard uses instead of the parameter's default value."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "title": "StringDashboardParameter"
+            },
             "Style": {
                 "type": "string",
                 "enum": [
@@ -15485,6 +15625,17 @@
                         "$ref": "#/components/schemas/Identifier",
                         "description": "A unique identifier of the tab."
                     },
+                    "parameters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardParameters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Parameters shown in the filter bar of this tab."
+                    },
                     "sections": {
                         "items": {
                             "$ref": "#/components/schemas/Section-Input"
@@ -15522,6 +15673,17 @@
                     "id": {
                         "$ref": "#/components/schemas/Identifier",
                         "description": "A unique identifier of the tab."
+                    },
+                    "parameters": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/DashboardParameters"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Parameters shown in the filter bar of this tab."
                     },
                     "sections": {
                         "items": {
@@ -15969,7 +16131,7 @@
                         "description": "A total title."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type51"
+                        "$ref": "#/components/schemas/Type53"
                     },
                     "using": {
                         "type": "string",
@@ -16022,6 +16184,20 @@
                 ],
                 "title": "Type18"
             },
+            "Type22": {
+                "type": "string",
+                "enum": [
+                    "STRING"
+                ],
+                "title": "Type22"
+            },
+            "Type23": {
+                "type": "string",
+                "enum": [
+                    "NUMBER"
+                ],
+                "title": "Type23"
+            },
             "Type3": {
                 "type": "string",
                 "enum": [
@@ -16030,33 +16206,33 @@
                 ],
                 "title": "Type3"
             },
-            "Type44": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_YEAR"
-                ],
-                "title": "Type44"
-            },
-            "Type45": {
-                "type": "string",
-                "enum": [
-                    "PREVIOUS_PERIOD"
-                ],
-                "title": "Type45"
-            },
             "Type46": {
                 "type": "string",
                 "enum": [
-                    "attribute_sort"
+                    "PREVIOUS_YEAR"
                 ],
                 "title": "Type46"
             },
             "Type47": {
                 "type": "string",
                 "enum": [
-                    "metric_sort"
+                    "PREVIOUS_PERIOD"
                 ],
                 "title": "Type47"
+            },
+            "Type48": {
+                "type": "string",
+                "enum": [
+                    "attribute_sort"
+                ],
+                "title": "Type48"
+            },
+            "Type49": {
+                "type": "string",
+                "enum": [
+                    "metric_sort"
+                ],
+                "title": "Type49"
             },
             "Type5": {
                 "type": "string",
@@ -16065,7 +16241,7 @@
                 ],
                 "title": "Type5"
             },
-            "Type51": {
+            "Type53": {
                 "type": "string",
                 "enum": [
                     "SUM",
@@ -16075,31 +16251,31 @@
                     "MED",
                     "NAT"
                 ],
-                "title": "Type51"
+                "title": "Type53"
             },
-            "Type52": {
+            "Type54": {
                 "type": "string",
                 "enum": [
                     "pushpin",
                     "area"
                 ],
-                "title": "Type52"
+                "title": "Type54"
             },
-            "Type55": {
+            "Type57": {
                 "type": "string",
                 "enum": [
                     "solid",
                     "pattern",
                     "outline"
                 ],
-                "title": "Type55"
+                "title": "Type57"
             },
-            "Type56": {
+            "Type58": {
                 "type": "string",
                 "enum": [
                     "dashboard"
                 ],
-                "title": "Type56"
+                "title": "Type58"
             },
             "Type7": {
                 "type": "string",
@@ -16108,73 +16284,59 @@
                 ],
                 "title": "Type7"
             },
-            "Type70": {
-                "type": "string",
-                "enum": [
-                    "table"
-                ],
-                "title": "Type70"
-            },
-            "Type71": {
-                "type": "string",
-                "enum": [
-                    "bar_chart"
-                ],
-                "title": "Type71"
-            },
             "Type72": {
                 "type": "string",
                 "enum": [
-                    "column_chart"
+                    "table"
                 ],
                 "title": "Type72"
             },
             "Type73": {
                 "type": "string",
                 "enum": [
-                    "line_chart"
+                    "bar_chart"
                 ],
                 "title": "Type73"
             },
             "Type74": {
                 "type": "string",
                 "enum": [
-                    "area_chart"
+                    "column_chart"
                 ],
                 "title": "Type74"
             },
             "Type75": {
                 "type": "string",
                 "enum": [
-                    "scatter_chart"
+                    "line_chart"
                 ],
                 "title": "Type75"
             },
             "Type76": {
                 "type": "string",
                 "enum": [
-                    "bubble_chart"
+                    "area_chart"
                 ],
                 "title": "Type76"
             },
             "Type77": {
                 "type": "string",
                 "enum": [
-                    "pie_chart"
+                    "scatter_chart"
                 ],
                 "title": "Type77"
             },
             "Type78": {
                 "type": "string",
                 "enum": [
-                    "donut_chart"
+                    "bubble_chart"
                 ],
                 "title": "Type78"
             },
             "Type79": {
                 "type": "string",
                 "enum": [
-                    "treemap_chart"
+                    "pie_chart"
                 ],
                 "title": "Type79"
             },
@@ -16188,70 +16350,70 @@
             "Type80": {
                 "type": "string",
                 "enum": [
-                    "pyramid_chart"
+                    "donut_chart"
                 ],
                 "title": "Type80"
             },
             "Type81": {
                 "type": "string",
                 "enum": [
-                    "funnel_chart"
+                    "treemap_chart"
                 ],
                 "title": "Type81"
             },
             "Type82": {
                 "type": "string",
                 "enum": [
-                    "heatmap_chart"
+                    "pyramid_chart"
                 ],
                 "title": "Type82"
             },
             "Type83": {
                 "type": "string",
                 "enum": [
-                    "bullet_chart"
+                    "funnel_chart"
                 ],
                 "title": "Type83"
             },
             "Type84": {
                 "type": "string",
                 "enum": [
-                    "waterfall_chart"
+                    "heatmap_chart"
                 ],
                 "title": "Type84"
             },
             "Type85": {
                 "type": "string",
                 "enum": [
-                    "dependency_wheel_chart"
+                    "bullet_chart"
                 ],
                 "title": "Type85"
             },
             "Type86": {
                 "type": "string",
                 "enum": [
-                    "sankey_chart"
+                    "waterfall_chart"
                 ],
                 "title": "Type86"
             },
             "Type87": {
                 "type": "string",
                 "enum": [
-                    "headline_chart"
+                    "dependency_wheel_chart"
                 ],
                 "title": "Type87"
             },
             "Type88": {
                 "type": "string",
                 "enum": [
-                    "combo_chart"
+                    "sankey_chart"
                 ],
                 "title": "Type88"
             },
             "Type89": {
                 "type": "string",
                 "enum": [
-                    "geo_chart"
+                    "headline_chart"
                 ],
                 "title": "Type89"
             },
@@ -16265,23 +16427,37 @@
             "Type90": {
                 "type": "string",
                 "enum": [
-                    "geo_area_chart"
+                    "combo_chart"
                 ],
                 "title": "Type90"
             },
             "Type91": {
                 "type": "string",
                 "enum": [
-                    "repeater_chart"
+                    "geo_chart"
                 ],
                 "title": "Type91"
             },
             "Type92": {
                 "type": "string",
                 "enum": [
-                    "radar_chart"
+                    "geo_area_chart"
                 ],
                 "title": "Type92"
+            },
+            "Type93": {
+                "type": "string",
+                "enum": [
+                    "repeater_chart"
+                ],
+                "title": "Type93"
+            },
+            "Type94": {
+                "type": "string",
+                "enum": [
+                    "radar_chart"
+                ],
+                "title": "Type94"
             },
             "UploadDocumentResponse": {
                 "properties": {
@@ -17351,7 +17527,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type70",
+                        "$ref": "#/components/schemas/Type72",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17489,7 +17665,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type79",
+                        "$ref": "#/components/schemas/Type81",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17625,7 +17801,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type80",
+                        "$ref": "#/components/schemas/Type82",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17761,7 +17937,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type81",
+                        "$ref": "#/components/schemas/Type83",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -17929,7 +18105,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type82",
+                        "$ref": "#/components/schemas/Type84",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18072,7 +18248,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type83",
+                        "$ref": "#/components/schemas/Type85",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18208,7 +18384,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type84",
+                        "$ref": "#/components/schemas/Type86",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18366,7 +18542,7 @@
                         "description": "A to attribute in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type85",
+                        "$ref": "#/components/schemas/Type87",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18531,7 +18707,7 @@
                         "description": "A to attribute in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type86",
+                        "$ref": "#/components/schemas/Type88",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18674,7 +18850,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type87",
+                        "$ref": "#/components/schemas/Type89",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18808,7 +18984,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type88",
+                        "$ref": "#/components/schemas/Type90",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -18961,7 +19137,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type71",
+                        "$ref": "#/components/schemas/Type73",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19121,7 +19297,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type89",
+                        "$ref": "#/components/schemas/Type91",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19274,7 +19450,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type90",
+                        "$ref": "#/components/schemas/Type92",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19442,7 +19618,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type91",
+                        "$ref": "#/components/schemas/Type93",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19580,7 +19756,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type92",
+                        "$ref": "#/components/schemas/Type94",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19733,7 +19909,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type72",
+                        "$ref": "#/components/schemas/Type74",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -19886,7 +20062,7 @@
                         "description": "A list of trend by attributes in this visualisation."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type73",
+                        "$ref": "#/components/schemas/Type75",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20039,7 +20215,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type74",
+                        "$ref": "#/components/schemas/Type76",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20199,7 +20375,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type75",
+                        "$ref": "#/components/schemas/Type77",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20359,7 +20535,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type76",
+                        "$ref": "#/components/schemas/Type78",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20495,7 +20671,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type77",
+                        "$ref": "#/components/schemas/Type79",
                         "description": "Type of visualisation."
                     },
                     "view_by": {
@@ -20631,7 +20807,7 @@
                         "description": "An optional human readable title for the visualisation. Will be derived from id if not provided explicitly."
                     },
                     "type": {
-                        "$ref": "#/components/schemas/Type78",
+                        "$ref": "#/components/schemas/Type80",
                         "description": "Type of visualisation."
                     },
                     "view_by": {

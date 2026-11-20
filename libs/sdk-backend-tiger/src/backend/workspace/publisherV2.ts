@@ -16,6 +16,7 @@ import {
     EntitiesApi_GetEntityDocumentTemplates,
     EntitiesApi_GetEntityDocuments,
     EntitiesApi_GetEntityPageTemplates,
+    EntitiesApi_PatchEntityDocuments,
     EntitiesApi_UpdateEntityDocumentTemplates,
     EntitiesApi_UpdateEntityDocuments,
     EntitiesApi_UpdateEntityPageTemplates,
@@ -24,6 +25,8 @@ import { ExportApi_CreateDocumentExport } from "@gooddata/api-client-tiger/endpo
 import {
     type IExportResult,
     type IPublisherDocumentExportPdfOptions,
+    type IPublisherDocumentMetaV2,
+    type IPublisherDocumentSummaryV2,
     type IPublisherDocumentsQueryV2,
     type IWorkspacePublisherServiceV2,
     type PublisherDocumentListItemV2,
@@ -41,6 +44,7 @@ import {
 
 import {
     convertPublisherDocumentListItemV2,
+    convertPublisherDocumentSummaryV2,
     convertPublisherDocumentTemplateV2,
     convertPublisherDocumentV2,
     convertPublisherPageTemplateV2,
@@ -320,6 +324,34 @@ export class TigerWorkspacePublisherServiceV2 implements IWorkspacePublisherServ
                 response.data.included,
                 response.data.meta?.restricted,
             );
+        });
+    };
+
+    public updateDocumentMeta = async ({
+        ref,
+        title,
+        description,
+        tags,
+    }: IPublisherDocumentMetaV2): Promise<IPublisherDocumentSummaryV2> => {
+        const objectId = objRefToIdentifier(ref, this.authCall);
+        return this.authCall(async (client) => {
+            const response = await EntitiesApi_PatchEntityDocuments(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                objectId,
+                include: auditInclude,
+                jsonApiPublisherDocumentPatchDocument: {
+                    data: {
+                        type: "document",
+                        id: objectId,
+                        attributes: {
+                            ...(title === undefined ? {} : { title }),
+                            ...(description === undefined ? {} : { description }),
+                            ...(tags === undefined ? {} : { tags }),
+                        },
+                    },
+                },
+            });
+            return convertPublisherDocumentSummaryV2(response.data.data, response.data.included);
         });
     };
 

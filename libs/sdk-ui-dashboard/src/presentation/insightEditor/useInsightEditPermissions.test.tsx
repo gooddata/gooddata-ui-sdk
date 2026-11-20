@@ -24,12 +24,17 @@ vi.mock("../../model/react/DashboardStoreProvider.js", () => ({
     useDashboardSelector: vi.fn<() => unknown>(),
 }));
 
-const insight = (id: string, permissions?: IInsight["insight"]["permissions"]): IInsight => ({
+const insight = (
+    id: string,
+    permissions?: IInsight["insight"]["permissions"],
+    isLocked = false,
+): IInsight => ({
     insight: {
         ...newInsightDefinition("local:bar").insight,
         identifier: id,
         uri: `/${id}`,
         ref: idRef(id, "insight"),
+        isLocked,
         ...(permissions ? { permissions } : {}),
     },
 });
@@ -82,10 +87,10 @@ function wrapperFor(backend: IAnalyticalBackend, workspace: string) {
 }
 
 describe("indexInsightPermissions", () => {
-    it("keys each visualization's permissions by its id, empty when none came back", () => {
-        expect(indexInsightPermissions([insight("a", ["EDIT"]), insight("b")])).toEqual({
-            a: ["EDIT"],
-            b: [],
+    it("keeps permissions and inherited lock state, with empty permissions when none came back", () => {
+        expect(indexInsightPermissions([insight("a", ["VIEW"], true), insight("b")])).toEqual({
+            a: { permissions: ["VIEW"], isLocked: true },
+            b: { permissions: [], isLocked: false },
         });
     });
 });
@@ -97,7 +102,10 @@ describe("loadInsightPermissions", () => {
         const loaded = await loadInsightPermissions(backend, "ws", ["a", "b"]);
 
         expect(calls).toEqual([{ workspace: "ws", ids: ["a", "b"], method: "POST" }]);
-        expect(loaded).toEqual({ a: ["VIEW"], b: ["VIEW"] });
+        expect(loaded).toEqual({
+            a: { permissions: ["VIEW"], isLocked: false },
+            b: { permissions: ["VIEW"], isLocked: false },
+        });
     });
 });
 
@@ -131,7 +139,12 @@ describe("useInsightEditPermissions", () => {
         });
 
         expect(result.current).toBeUndefined();
-        await waitFor(() => expect(result.current).toEqual({ a: ["EDIT"], b: [] }));
+        await waitFor(() =>
+            expect(result.current).toEqual({
+                a: { permissions: ["EDIT"], isLocked: false },
+                b: { permissions: [], isLocked: false },
+            }),
+        );
     });
 
     it("reads again for another workspace and drops the previous map meanwhile", async () => {

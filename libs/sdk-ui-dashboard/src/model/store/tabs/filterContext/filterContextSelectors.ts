@@ -23,7 +23,6 @@ import {
     dashboardAttributeFilterItemTitle,
     dashboardFilterLocalIdentifier,
     getAttributeElementsItems,
-    idRef,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
@@ -31,11 +30,11 @@ import {
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isObjRef,
-    uriRef,
 } from "@gooddata/sdk-model";
 import { _compact, _isEmpty, _isEqual, _sortBy } from "@gooddata/util";
 
 import { type ObjRefMap, newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
+import { isDisplayFormMetadataReferencedBy } from "../../../utils/attributeFilterMatching.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import { selectSupportsCircularDependencyInFilters } from "../../backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../config/configSelectors.js";
@@ -385,11 +384,7 @@ export const selectAttributeFilterDisplayForms: DashboardSelector<IAttributeDisp
  * @internal
  */
 export function isDisplayFormRefOf(ref: ObjRef, displayForm: IAttributeDisplayFormMetadataObject): boolean {
-    return (
-        areObjRefsEqual(ref, displayForm.ref) ||
-        areObjRefsEqual(ref, idRef(displayForm.id, "displayForm")) ||
-        areObjRefsEqual(ref, uriRef(displayForm.uri))
-    );
+    return isDisplayFormMetadataReferencedBy(displayForm, ref);
 }
 
 /**

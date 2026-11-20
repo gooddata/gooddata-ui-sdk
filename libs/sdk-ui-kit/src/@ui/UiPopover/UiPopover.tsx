@@ -18,7 +18,7 @@ import { useIdPrefixed } from "../../utils/useId.js";
 import { bem } from "../@utils/bem.js";
 import { UiButton } from "../UiButton/UiButton.js";
 import { UiFocusManager } from "../UiFocusManager/UiFocusManager.js";
-import { defaultFocusCheckFn } from "../UiFocusManager/utils.js";
+import { defaultFocusCheckFn, resolveRef } from "../UiFocusManager/utils.js";
 import { type IUiTooltipProps } from "../UiTooltip/types.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
@@ -193,6 +193,7 @@ export function UiPopover({
                                 ? undefined
                                 : () => {
                                       onClose();
+                                      resolveRef(returnFocus)?.focus();
                                   }
                         }
                     >

@@ -170,6 +170,10 @@ const methodCases: Record<keyof IWorkspacePublisherServiceV2, IMethodCase> = {
         endpoints: ["EntitiesApi_UpdateEntityDocuments"],
         call: (service) => service.updateDocument(storedDocument),
     },
+    updateDocumentMeta: {
+        endpoints: ["EntitiesApi_PatchEntityDocuments"],
+        call: (service) => service.updateDocumentMeta({ ref: documentRef, title: "Renamed" }),
+    },
     deleteDocument: {
         endpoints: ["EntitiesApi_DeleteEntityDocuments"],
         call: (service) => service.deleteDocument(documentRef),
@@ -197,6 +201,7 @@ function respondToEveryEndpoint(): void {
             single(pageTemplateOutV2("layout1")),
         );
     }
+    endpoint("EntitiesApi_PatchEntityDocuments").mockResolvedValue(single(documentOutV2("doc1")));
     endpoint("ExportApi_CreateDocumentExport").mockResolvedValue({ data: { exportResult: "export1" } });
     endpoint("ExportApi_GetDocumentExport").mockResolvedValue({
         status: 200,
@@ -281,6 +286,40 @@ describe("TigerWorkspacePublisherServiceV2 requests", () => {
         await methodCases[method].call(newService());
 
         expectRequest(endpointName, request);
+    });
+
+    it("patches only the document metadata it is given", async () => {
+        await newService().updateDocumentMeta({ ref: documentRef, title: "Renamed", tags: ["finance"] });
+
+        expectRequest("EntitiesApi_PatchEntityDocuments", {
+            workspaceId: "ws1",
+            objectId: "doc1",
+            ...audit,
+            jsonApiPublisherDocumentPatchDocument: {
+                data: { type: "document", id: "doc1", attributes: { title: "Renamed", tags: ["finance"] } },
+            },
+        });
+    });
+
+    it("returns the patched document as a summary, whatever its content", async () => {
+        endpoint("EntitiesApi_PatchEntityDocuments").mockResolvedValue({
+            data: {
+                data: {
+                    ...documentOutV2("doc1", { title: "Renamed", version: "99" }),
+                    relationships: auditRelationshipsV2,
+                },
+                included: auditUsersV2,
+            },
+        });
+
+        const patched = await newService().updateDocumentMeta({ ref: documentRef, title: "Renamed" });
+
+        expect(patched.title).toBe("Renamed");
+        expect(patched.version).toBe("99");
+        expect(patched).not.toHaveProperty("content");
+        expect(patched).not.toHaveProperty("period");
+        expect(patched.createdBy?.login).toBe("alice");
+        expect(patched.updatedBy?.login).toBe("bob");
     });
 
     it("loads a document with its creator and its parent origin", async () => {

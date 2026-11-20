@@ -18,6 +18,7 @@ export interface IInvertableSelectSearchBarProps {
     onSearch: (searchString: string) => void;
     onEscKeyPress?: (e: KeyboardEvent) => void;
     onKeyDown?: (e: KeyboardEvent) => void;
+    propagateEscapeWhenEmpty?: boolean;
 }
 
 /**
@@ -31,6 +32,7 @@ export function InvertableSelectSearchBar({
     onEscKeyPress,
     searchPlaceholder,
     onKeyDown,
+    propagateEscapeWhenEmpty,
 }: IInvertableSelectSearchBarProps) {
     const intl = useIntl();
 
@@ -44,6 +46,7 @@ export function InvertableSelectSearchBar({
             placeholder={searchPlaceholder ?? intl.formatMessage({ id: "gs.list.search.placeholder" })}
             autofocus
             clearOnEsc
+            propagateEscapeWhenEmpty={propagateEscapeWhenEmpty}
             isSearch
             isSmall={isSmall}
             type="search"

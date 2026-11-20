@@ -97,6 +97,7 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         targetDashboardTextAttributeFilters,
         targetDashboardAttributeFilterConfigs,
         targetDashboardMeasureValueFilters,
+        targetDashboardParameters,
         isLoading: isTargetDashboardFiltersLoading,
     } = useFetchTargetDashboardFilters(item);
     // A drill-down executes the source insight with a different attribute.
@@ -104,6 +105,7 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
     const { options: parameterOptions, isLoading: isParameterOptionsLoading } = useDrillParameterOptions(
         item,
         executedInsight,
+        targetDashboardParameters,
     );
 
     const sourceInsightAttributes = useMemo(

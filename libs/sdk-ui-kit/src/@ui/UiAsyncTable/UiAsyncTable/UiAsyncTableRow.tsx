@@ -16,10 +16,21 @@ import {
     type UiAsyncTableMenuRenderer,
 } from "../types.js";
 
-import { useAsyncTableGridRef } from "./asyncTableGridContext.js";
+import {
+    AsyncTableCellProvider,
+    useAsyncTableGridRef,
+    useAsyncTableInteraction,
+} from "./asyncTableGridContext.js";
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
-import { getCellId, getColumnWidth, getItemKey, getRowId, getRowLabelId } from "./utils.js";
+import {
+    getCellId,
+    getColumnWidth,
+    getItemKey,
+    getRowId,
+    getRowLabelId,
+    isFromCellControl,
+} from "./utils.js";
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 
 export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
@@ -40,6 +51,7 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
     isTooltipOpen,
 }: IUiAsyncTableRowProps<T>) {
     const { renderCellContent } = useRenderCellContent<T>({ isLarge: isLarge ?? false });
+    const { isInteractionMode, activeCellId, isKeyboardActivationRef } = useAsyncTableInteraction();
     const isRowFocused = isFocused && focusedColumnIndex === undefined;
     const tooltipId = useId();
     const itemId = getItemKey(item);
@@ -69,9 +81,16 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
             if (target.closest('[data-id="menu-button"]')) {
                 return;
             }
+            if (isKeyboardActivationRef.current) {
+                return;
+            }
+            const cell = target.closest<HTMLElement>("[role='gridcell']");
+            if (isInteractionMode && cell && cell.id === activeCellId && isFromCellControl(cell, target)) {
+                return;
+            }
             onClick?.(item);
         },
-        [onClick, item],
+        [onClick, item, isInteractionMode, activeCellId, isKeyboardActivationRef],
     );
 
     const row = (
@@ -106,11 +125,13 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
                 const totalColumnIndex = index + (hasCheckbox ? 1 : 0);
                 const isCellFocused = isFocused && focusedColumnIndex === totalColumnIndex;
                 const labelId = index === 0 ? rowLabelId : undefined;
+                const cellId = getCellId(tableId, itemId, totalColumnIndex);
+                const isCellInteractive = isInteractionMode && cellId === activeCellId;
                 return (
                     <div
                         style={{ width }}
                         key={index}
-                        id={getCellId(tableId, itemId, totalColumnIndex)}
+                        id={cellId}
                         className={e("cell", {
                             bold: bold ?? false,
                             align: column.align ?? false,
@@ -118,14 +139,16 @@ export function UiAsyncTableRow<T extends { id: string } | { ref: ObjRef }>({
                         })}
                         role="gridcell"
                     >
-                        {renderCellContent(
-                            column,
-                            labelId,
-                            item,
-                            focusedElementRef ?? (() => {}),
-                            isCellFocused ?? false,
-                            multiLineTextContent,
-                        )}
+                        <AsyncTableCellProvider value={isCellInteractive}>
+                            {renderCellContent(
+                                column,
+                                labelId,
+                                item,
+                                focusedElementRef ?? (() => {}),
+                                isCellFocused ?? false,
+                                multiLineTextContent,
+                            )}
+                        </AsyncTableCellProvider>
                     </div>
                 );
             })}

@@ -15,6 +15,7 @@ export type SearchItemProps = {
     resultCounter?: ReactNode;
     href?: string;
     isFocused?: boolean;
+    isInteractive?: boolean;
     ariaAttributes: AriaAttributes & {
         id: string;
         role: AriaRole;
@@ -32,6 +33,7 @@ export function SearchItem({
     children,
     level,
     isFocused,
+    isInteractive = true,
     icon,
     details,
     resultCounter,
@@ -47,18 +49,19 @@ export function SearchItem({
         }
     };
 
-    const Tag = href ? "a" : "div";
-    const tabIndex = href ? -1 : undefined;
+    const Tag = isInteractive && href ? "a" : "div";
+    const tabIndex = isInteractive && href ? -1 : undefined;
     const wrapperClassName = classnames(className, {
         "gd-semantic-search__results-item": true,
         "gd-semantic-search__results-item--active": isFocused,
+        "gd-semantic-search__results-item--inactive": !isInteractive,
     });
 
     return (
         <div className={wrapperClassName} data-level={level} data-testid={semanticSearchItem}>
             <Tag
                 {...ariaAttributes}
-                href={href}
+                href={isInteractive ? href : undefined}
                 tabIndex={tabIndex}
                 className="gd-semantic-search__results-item__content"
                 onClick={handleClick}

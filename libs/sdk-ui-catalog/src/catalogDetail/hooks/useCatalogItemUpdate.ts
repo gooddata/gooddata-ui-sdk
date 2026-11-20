@@ -90,7 +90,8 @@ export function useCatalogItemUpdate({
             if (!mounted.current || !currentItem) {
                 return;
             }
-            setItem(currentItem);
+            // A save can fail after the user opened another item: restore the failed one only if still open.
+            setItem((open) => (areObjRefsEqual(open, currentItem) ? currentItem : open));
             onError?.(err);
             onUpdate?.(currentItem);
         },
@@ -294,7 +295,8 @@ function updateItem<TItem extends ICatalogItem>(
         options.touch === false ? { ...item, ...itemChanges } : makeUpdatedItem(user, item, itemChanges);
 
     onUpdate(newItem);
-    const persistFn = persist ?? ((nextItem: TItem) => updateCatalogItem(backend, workspace, nextItem));
+    const persistFn =
+        persist ?? ((nextItem: TItem) => updateCatalogItem(backend, workspace, nextItem, itemChanges));
     Promise.resolve(persistFn(newItem)).catch(onError);
 }
 

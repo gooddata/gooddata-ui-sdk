@@ -385,7 +385,7 @@
                     },
                     "parameters": {
                         "type": "array",
-                        "description": "(EXPERIMENTAL) Parameter values to use for this execution.",
+                        "description": "Parameter values to use for this execution.",
                         "items": {
                             "$ref": "#/components/schemas/ParameterItem"
                         }
@@ -2589,6 +2589,9 @@
                         "$ref": "#/components/schemas/DashboardDateFilter"
                     },
                     {
+                        "$ref": "#/components/schemas/DashboardParameterizedDateFilter"
+                    },
+                    {
                         "$ref": "#/components/schemas/DashboardArbitraryAttributeFilter"
                     },
                     {
@@ -2682,6 +2685,39 @@
                     }
                 }
             },
+            "DashboardParameterizedDateFilter": {
+                "required": [
+                    "dashboardParameterizedDateFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "dashboardParameterizedDateFilter": {
+                        "required": [
+                            "parameter"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "dataSet": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "emptyValueHandling": {
+                                "type": "string",
+                                "enum": [
+                                    "include",
+                                    "exclude",
+                                    "only"
+                                ]
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "parameter": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            }
+                        }
+                    }
+                }
+            },
             "DashboardTabularExportRequestV2": {
                 "required": [
                     "dashboardId",
@@ -2770,6 +2806,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/AbsoluteGranularityDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ParameterizedDateFilter"
                     },
                     {
                         "$ref": "#/components/schemas/RelativeDateFilter"
@@ -2988,6 +3027,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/AbsoluteGranularityDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ParameterizedDateFilter"
                     },
                     {
                         "$ref": "#/components/schemas/RelativeDateFilter"
@@ -3591,7 +3633,7 @@
                     }
                 },
                 "additionalProperties": true,
-                "description": "(EXPERIMENTAL) Parameter value for this execution."
+                "description": "Parameter value for this execution."
             },
             "ParameterValue": {
                 "required": [
@@ -3624,6 +3666,46 @@
                 },
                 "additionalProperties": true,
                 "description": "Parameter value override applied to the export. The (id, value) pair drives the execution; the title is FE-supplied for info-sheet display."
+            },
+            "ParameterizedDateFilter": {
+                "required": [
+                    "parameterizedDateFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "parameterizedDateFilter": {
+                        "required": [
+                            "dataset",
+                            "parameter"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "dataset": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                            },
+                            "emptyValueHandling": {
+                                "type": "string",
+                                "description": "Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.",
+                                "default": "EXCLUDE",
+                                "enum": [
+                                    "INCLUDE",
+                                    "EXCLUDE",
+                                    "ONLY"
+                                ]
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "parameter": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierParameter"
+                            }
+                        }
+                    }
+                },
+                "description": "A date filter whose period comes from a DATE_RANGE parameter. Each execution uses the parameter's current granularity and range."
             },
             "PdfTableStyle": {
                 "required": [

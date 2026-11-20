@@ -140,7 +140,9 @@ import { IPreparedExecutionOptions } from '@gooddata/sdk-backend-spi';
 import { IPublisherDocumentDefinitionV1 } from '@gooddata/sdk-model';
 import { IPublisherDocumentDefinitionV2 } from '@gooddata/sdk-model';
 import { IPublisherDocumentExportPdfOptions } from '@gooddata/sdk-backend-spi';
+import { IPublisherDocumentMetaV2 } from '@gooddata/sdk-backend-spi';
 import { IPublisherDocumentsQueryV2 } from '@gooddata/sdk-backend-spi';
+import { IPublisherDocumentSummaryV2 } from '@gooddata/sdk-backend-spi';
 import { IPublisherDocumentTemplateDefinitionV1 } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplateDefinitionV2 } from '@gooddata/sdk-model';
 import { IPublisherDocumentTemplateV1 } from '@gooddata/sdk-model';
@@ -951,6 +953,8 @@ export abstract class DecoratedWorkspacePublisherServiceV2 implements IWorkspace
     // (undocumented)
     updateDocument(publisherDocument: IPublisherDocumentV2): Promise<IPublisherDocumentV2>;
     // (undocumented)
+    updateDocumentMeta(meta: IPublisherDocumentMetaV2): Promise<IPublisherDocumentSummaryV2>;
+    // (undocumented)
     updateDocumentTemplate(template: IPublisherDocumentTemplateV2): Promise<IPublisherDocumentTemplateV2>;
     // (undocumented)
     updatePageTemplate(template: IPublisherPageTemplateV2): Promise<IPublisherPageTemplateV2>;
@@ -1350,6 +1354,8 @@ export class InMemoryWorkspacePublisherServiceV2 implements IWorkspacePublisherS
     getPageTemplates(): Promise<IPublisherPageTemplateV2[]>;
     // (undocumented)
     updateDocument(publisherDocument: IPublisherDocumentV2): Promise<IPublisherDocumentV2>;
+    // (undocumented)
+    updateDocumentMeta(input: IPublisherDocumentMetaV2): Promise<IPublisherDocumentSummaryV2>;
     // (undocumented)
     updateDocumentTemplate(template: IPublisherDocumentTemplateV2): Promise<IPublisherDocumentTemplateV2>;
     // (undocumented)
