@@ -165,7 +165,8 @@ export function convertLocalizationStatisticsWorkspaces(
 ): ILocalizationStatisticsWorkspace[] {
     return (statistics.metadata.workspaces ?? []).map((workspace) => ({
         id: workspace.id,
-        name: workspace.name,
+        // The backend leaves out the name of a parent the user has no permission on.
+        name: workspace.name ?? workspace.id,
         parentId: workspace.parentId ?? null,
         sourceLanguage: null,
         metadata: {

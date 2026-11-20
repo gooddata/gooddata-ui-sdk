@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { PublisherContentNotSupportedError } from "@gooddata/sdk-backend-spi";
+import { type IPublisherDocumentMetaV2, PublisherContentNotSupportedError } from "@gooddata/sdk-backend-spi";
 import {
     type IPublisherDocumentDefinitionV2,
     type IPublisherPageBodyV2,
@@ -47,6 +47,29 @@ describe("InMemoryWorkspacePublisherServiceV2", () => {
 
         await service.deleteDocument(created.ref);
         await expect(service.getDocuments()).resolves.toEqual([]);
+    });
+
+    it("changes only the document metadata it is given and keeps the content", async () => {
+        const service = new InMemoryWorkspacePublisherServiceV2();
+        const created = await service.createDocument({ ...publisherDocument, tags: ["sales"] });
+
+        const summary = await service.updateDocumentMeta({ ref: created.ref, title: "Renamed" });
+
+        expect(summary).toMatchObject({ ref: created.ref, title: "Renamed", tags: ["sales"] });
+        await expect(service.getDocument(created.ref)).resolves.toEqual({
+            ...created,
+            title: "Renamed",
+        });
+    });
+
+    it("changes no document field besides the metadata", async () => {
+        const service = new InMemoryWorkspacePublisherServiceV2();
+        const created = await service.createDocument(publisherDocument);
+        const withContent = { ref: created.ref, content: { pages: [] } } as IPublisherDocumentMetaV2;
+
+        await service.updateDocumentMeta(withContent);
+
+        await expect(service.getDocument(created.ref)).resolves.toEqual(created);
     });
 
     it("round-trips a valid page template", async () => {

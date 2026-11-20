@@ -725,3 +725,112 @@ describe("useCatalogItemUpdate – updateItemLabelConditionalFormatting", () => 
         expect(result.current.item).toEqual(itemBeforeEdit);
     });
 });
+
+describe("useCatalogItemUpdate – document", () => {
+    const documentItem: ICatalogItem = {
+        type: "document",
+        identifier: "doc.id",
+        title: "Northwind",
+        description: "Sales",
+        tags: ["sales"],
+        createdBy: "",
+        updatedBy: "",
+        createdAt: null,
+        updatedAt: null,
+        isLocked: false,
+        isEditable: true,
+    };
+
+    function documentWrapper(updateDocumentMeta: ReturnType<typeof vi.fn>) {
+        const backend = {
+            workspace: () => ({ publisherV2: () => ({ updateDocumentMeta }) }),
+        } as unknown as IAnalyticalBackend;
+        const permissionsState = { status: "success", result: { settings: {} } } as PermissionsState;
+        return ({ children }: PropsWithChildren) =>
+            createElement(
+                BackendProvider,
+                { backend },
+                createElement(
+                    WorkspaceProvider,
+                    { workspace: "test-workspace" },
+                    createElement(PermissionsProvider, { permissionsState }, children),
+                ),
+            );
+    }
+
+    function deferred() {
+        let reject!: (error: Error) => void;
+        const promise = new Promise((_, rej) => {
+            reject = rej;
+        });
+        return { promise, reject };
+    }
+
+    it("keeps the newly opened item and restores the previous one's row when its save fails", async () => {
+        const otherDocument = { ...documentItem, identifier: "doc.other", title: "Other" };
+        const titleSave = deferred();
+        const updateDocumentMeta = vi.fn().mockReturnValueOnce(titleSave.promise);
+        const onUpdate = vi.fn();
+        const onError = vi.fn();
+        const { result, rerender } = renderHook(
+            ({ objectDefinition }: { objectDefinition: ICatalogItem }) =>
+                useCatalogItemUpdate({ currentUser: null, objectDefinition, onUpdate, onError }),
+            {
+                initialProps: { objectDefinition: documentItem },
+                wrapper: documentWrapper(updateDocumentMeta),
+            },
+        );
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+            expect(result.current.item).toEqual(documentItem);
+        });
+
+        act(() => result.current.updateItemTitle("Renamed"));
+        rerender({ objectDefinition: otherDocument });
+        // Let the other document finish loading, so the revert is the last write to the open item.
+        await act(() => new Promise((resolve) => setTimeout(resolve, 0)));
+        expect(result.current.item).toEqual(otherDocument);
+        onUpdate.mockClear();
+        await act(async () => titleSave.reject(new Error("title failed")));
+
+        expect(onError).toHaveBeenCalled();
+        expect(result.current.item).toEqual(otherDocument);
+        expect(onUpdate).toHaveBeenCalledExactlyOnceWith(documentItem);
+    });
+
+    it("saves only the field the user changed", async () => {
+        const updateDocumentMeta = vi.fn().mockResolvedValue({});
+        const backend = {
+            workspace: () => ({ publisherV2: () => ({ updateDocumentMeta }) }),
+        } as unknown as IAnalyticalBackend;
+        const permissionsState = { status: "success", result: { settings: {} } } as PermissionsState;
+        const wrapper = ({ children }: PropsWithChildren) =>
+            createElement(
+                BackendProvider,
+                { backend },
+                createElement(
+                    WorkspaceProvider,
+                    { workspace: "test-workspace" },
+                    createElement(PermissionsProvider, { permissionsState }, children),
+                ),
+            );
+
+        const { result } = renderHook(
+            () => useCatalogItemUpdate({ currentUser: null, objectDefinition: documentItem }),
+            { wrapper },
+        );
+        await waitFor(() => {
+            expect(result.current.status).toBe("success");
+            expect(result.current.item).toEqual(documentItem);
+        });
+
+        act(() => result.current.updateItemTags(["sales", "finance"]));
+
+        expect(updateDocumentMeta).toHaveBeenCalledWith({
+            ref: idRef("doc.id", "document"),
+            title: undefined,
+            description: undefined,
+            tags: ["sales", "finance"],
+        });
+    });
+});

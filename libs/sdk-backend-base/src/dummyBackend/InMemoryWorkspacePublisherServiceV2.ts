@@ -3,6 +3,8 @@
 import {
     type IExportResult,
     type IPublisherDocumentExportPdfOptions,
+    type IPublisherDocumentMetaV2,
+    type IPublisherDocumentSummaryV2,
     type IPublisherDocumentsQueryV2,
     type IWorkspacePublisherServiceV2,
     NotSupported,
@@ -19,7 +21,7 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 
-import { InMemoryPublisherDocumentsQueryV2 } from "./InMemoryPublisherDocumentsQueryV2.js";
+import { InMemoryPublisherDocumentsQueryV2, toSummary } from "./InMemoryPublisherDocumentsQueryV2.js";
 import { InMemoryPublisherStore } from "./inMemoryPublisherStore.js";
 
 function withoutIsDefault<T extends IPublisherPageTemplateDefinitionV2>(
@@ -131,6 +133,23 @@ export class InMemoryWorkspacePublisherServiceV2 implements IWorkspacePublisherS
     public async updateDocument(publisherDocument: IPublisherDocumentV2): Promise<IPublisherDocumentV2> {
         assertPublisherEntitySupportedV2(publisherDocument);
         return this.documents.replace(publisherDocument);
+    }
+
+    public async updateDocumentMeta({
+        ref,
+        title,
+        description,
+        tags,
+    }: IPublisherDocumentMetaV2): Promise<IPublisherDocumentSummaryV2> {
+        const stored = this.documents.get(ref);
+        return toSummary(
+            this.documents.replace({
+                ...stored,
+                ...(title === undefined ? {} : { title }),
+                ...(description === undefined ? {} : { description }),
+                ...(tags === undefined ? {} : { tags }),
+            }),
+        );
     }
 
     public async deleteDocument(ref: ObjRef): Promise<void> {

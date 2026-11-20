@@ -105,6 +105,7 @@ export type {
     IPublisherDocumentExportPdfOptions,
     IWorkspacePublisherService,
     IWorkspacePublisherServiceV2,
+    IPublisherDocumentMetaV2,
     IPublisherDocumentSummaryV2,
     IPublisherDocumentsQueryV2,
     IPublisherDocumentsQueryResultV2,

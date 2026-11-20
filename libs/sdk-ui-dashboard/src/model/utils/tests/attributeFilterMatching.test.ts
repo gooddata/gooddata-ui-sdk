@@ -11,7 +11,11 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import { findAttributeFilterCounterpart } from "../attributeFilterMatching.js";
+import {
+    displayFormsEquivalent,
+    findAttributeFilterCounterpart,
+    isDisplayFormMetadataReferencedBy,
+} from "../attributeFilterMatching.js";
 
 const nameDisplayForm = idRef("region.name", "displayForm");
 const codeDisplayForm = idRef("region.code", "displayForm");
@@ -157,5 +161,38 @@ describe("findAttributeFilterCounterpart", () => {
                 allowListToText: false,
             }),
         ).toEqual({ status: "notFound" });
+    });
+});
+
+describe("computed attribute sharing its id with a label", () => {
+    const label = displayFormMetadata("region", "region");
+    const computedAttribute: IAttributeDisplayFormMetadataObject = {
+        ...displayFormMetadata("region", "region"),
+        uri: "region",
+        ref: idRef("region", "computedAttribute"),
+        attribute: idRef("region", "computedAttribute"),
+    };
+
+    it("should not treat the label ref as a reference to the computed attribute", () => {
+        expect(isDisplayFormMetadataReferencedBy(computedAttribute, idRef("region", "displayForm"))).toBe(
+            false,
+        );
+        expect(isDisplayFormMetadataReferencedBy(label, idRef("region", "displayForm"))).toBe(true);
+    });
+
+    it("should resolve the computed attribute by its own ref", () => {
+        expect(
+            isDisplayFormMetadataReferencedBy(computedAttribute, idRef("region", "computedAttribute")),
+        ).toBe(true);
+        expect(isDisplayFormMetadataReferencedBy(label, idRef("region", "computedAttribute"))).toBe(false);
+    });
+
+    it("should not consider the label and the computed attribute equivalent", () => {
+        expect(
+            displayFormsEquivalent(idRef("region", "displayForm"), idRef("region", "computedAttribute"), [
+                computedAttribute,
+                label,
+            ]),
+        ).toBe(false);
     });
 });

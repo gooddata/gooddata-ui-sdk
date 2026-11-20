@@ -6,6 +6,7 @@ import { type CatalogItem, type GenAIObjectType, type IDashboard, type IInsight 
 
 export type ConfigContext = {
     allowNativeLinks?: boolean;
+    isLinkEnabled?: (type: GenAIObjectType) => boolean;
     canManage?: boolean;
     canAnalyze?: boolean;
     canFullControl?: boolean;
@@ -112,6 +113,7 @@ const configContext = createContext<ConfigContext>({});
 export function ConfigProvider({
     children,
     allowNativeLinks,
+    isLinkEnabled,
     linkHandler,
     catalogItems,
     canManage,
@@ -125,6 +127,7 @@ export function ConfigProvider({
     const value = useMemo(
         () => ({
             allowNativeLinks: allowNativeLinks ?? parentConfig.allowNativeLinks,
+            isLinkEnabled: isLinkEnabled ?? parentConfig.isLinkEnabled,
             linkHandler: linkHandler
                 ? (event: LinkHandlerEvent) => {
                       const resultParent = parentConfig.linkHandler?.(event);
@@ -141,6 +144,7 @@ export function ConfigProvider({
         }),
         [
             allowNativeLinks,
+            isLinkEnabled,
             parentConfig,
             linkHandler,
             catalogItems,

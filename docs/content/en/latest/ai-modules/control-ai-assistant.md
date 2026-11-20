@@ -5,13 +5,16 @@ diataxis_type: howto
 api_symbols:
   - "@gooddata/sdk-ui-gen-ai:useGenAiDispatcher"
   - "@gooddata/sdk-ui-gen-ai:makeUserItem"
+  - "@gooddata/sdk-ui-gen-ai:CopilotHandler"
+  - "@gooddata/sdk-ui-gen-ai:CopilotBuildType"
 source_files:
   - src/hooks/useGenAiDispatcher.ts
+  - src/copilot/CopilotHandler.ts
 related_pages:
   - /docs/ai-modules/ai-assistant
   - /docs/ai-modules/ai-assistant-layout
   - /docs/ai-modules/customize-ai-assistant
-description: Get the AI Assistant store dispatcher, send messages, reset the thread, manage conversations, switch agents and context, and migrate from makeUserMessage to makeUserItem.
+description: Get the AI Assistant store dispatcher, manage conversations and context, cancel stale dashboard builds on navigation, and migrate from makeUserMessage to makeUserItem.
 ai_generated_body: true
 type: docs
 weight: 54
@@ -122,6 +125,35 @@ dispatcher(setAmbientUserContextAction({ userContext }));
 // Set or merge user context
 dispatcher(setUserContextAction({ userContext, replaceUserContext: true }));
 ```
+
+## Cancel stale dashboard builds on navigation
+
+If your application keeps a dashboard mounted across route changes, handle navigation away from an active,
+unsaved AI draft, including browser Back and Forward. Detect when the destination draft identifier changes or
+is removed; don't cancel for unrelated URL changes. `useDashboardCopilot` doesn't monitor your application's routes.
+
+Use the `copilot` returned by `useDashboardCopilot` to call
+`copilot.cancelStaleBuild(CopilotBuildType.Dashboard, nextDashboardId)`. Import `CopilotBuildType` from
+`@gooddata/sdk-ui-gen-ai`. Pass the destination draft identifier, or `undefined` when leaving the builder.
+This API is `@alpha`.
+
+- `false`: an application of a dashboard definition to the destination is in progress. Nothing changes;
+  preserve the intentional draft-opening flow.
+- `true`: dashboard generation intent is cleared and pending dashboard definition applications are interrupted.
+  Other build types are unaffected. Your application must still discard the stale editing session and either
+  leave the editor or load the destination before allowing Save.
+
+For a custom draft-opening flow, register the application with `definitionApplicationStarted` before changing
+the URL. After applying the definition, acknowledge it with `definitionApplied`, or call
+`definitionApplicationInterrupted` if application fails. This lets `cancelStaleBuild` distinguish an intentional
+Open from history navigation while application is pending.
+
+Previously applied definitions and a matching dashboard identifier in the handler context do not prevent
+cancellation. Don't use `hasDefinition` to check which draft is currently on the canvas: it remembers pending
+and previously applied definitions, not the current canvas identity.
+
+Like `cancelGeneration()`, this method doesn't stop an assistant response that is already streaming. It doesn't
+clear the dashboard canvas, exit edit mode, navigate, or restore the destination draft.
 
 ## Migrate from makeUserMessage to makeUserItem
 

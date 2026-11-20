@@ -221,6 +221,8 @@ export interface ICatalogItemDataSet extends ICatalogItemBase {
 
 // @public
 export interface ICatalogItemDocument extends ICatalogItemBase {
+    // @alpha
+    creatorLogin?: string;
     // (undocumented)
     type: "document";
 }

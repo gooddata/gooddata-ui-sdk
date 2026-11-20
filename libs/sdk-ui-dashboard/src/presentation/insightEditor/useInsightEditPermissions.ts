@@ -3,7 +3,12 @@
 import { useMemo } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type AccessGranularPermission, type IInsight, insightId } from "@gooddata/sdk-model";
+import {
+    type AccessGranularPermission,
+    type IInsight,
+    insightId,
+    insightIsLocked,
+} from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
@@ -12,13 +17,19 @@ import { selectInsights } from "../../model/store/insights/insightsSelectors.js"
 import { selectCanManageWorkspace } from "../../model/store/permissions/permissionsSelectors.js";
 
 /**
- * The current user's own permissions on each visualization of the dashboard, keyed by visualization id.
+ * The current user's permissions and lock state for each dashboard visualization, keyed by its id.
  */
-export type InsightPermissionsById = Record<string, AccessGranularPermission[]>;
+export type InsightPermissionsById = Record<
+    string,
+    { permissions: AccessGranularPermission[]; isLocked: boolean }
+>;
 
 export function indexInsightPermissions(insights: IInsight[]): InsightPermissionsById {
     return Object.fromEntries(
-        insights.map((insight) => [insightId(insight), insight.insight.permissions ?? []]),
+        insights.map((insight) => [
+            insightId(insight),
+            { permissions: insight.insight.permissions ?? [], isLocked: insightIsLocked(insight) },
+        ]),
     );
 }
 

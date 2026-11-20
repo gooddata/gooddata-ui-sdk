@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WASM_DIR="$SCRIPT_DIR"
 WASM_FILE="$WASM_DIR/convertors.wasm"
 
-WASMTIME_VERSION="30.0.2"
+WASMTIME_VERSION="50.0.1"
 WASMTIME_BIN="$WASM_DIR/.bin/wasmtime"
 
 if [ ! -f "$WASM_FILE" ]; then

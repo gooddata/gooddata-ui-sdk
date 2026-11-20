@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { memo } from "react";
+import { memo, useContext } from "react";
 
 import {
     type ISemanticSearchRelationship,
@@ -17,6 +17,7 @@ import { getAriaLabel } from "../utils/getAriaLabel.js";
 import { GroupResultCounter } from "./GroupResultCounter.js";
 import { SearchItemDetails } from "./SearchItemDetails.js";
 import { SearchItemIcon } from "./SearchItemIcon.js";
+import { SearchLinkPolicyContext, isSearchItemLinkEnabled } from "./SearchLinkPolicyContext.js";
 import { UpdatedDate } from "./UpdateDate.js";
 
 type Props = IUiTreeviewItemProps<ISemanticSearchResultItem | ISemanticSearchRelationship>;
@@ -27,6 +28,8 @@ type Props = IUiTreeviewItemProps<ISemanticSearchResultItem | ISemanticSearchRel
  */
 export const LeveledSearchTreeViewItemMemo = memo(function LeveledSearchTreeViewItem(props: Props) {
     const { item, type, level, isFocused, isExpanded, childCount, onSelect, onHover, ariaAttributes } = props;
+    const isLinkEnabled = useContext(SearchLinkPolicyContext);
+    const isInteractive = isSearchItemLinkEnabled(item.data, isLinkEnabled);
     const href = type === "leaf" ? item.url : undefined;
 
     return (
@@ -40,6 +43,7 @@ export const LeveledSearchTreeViewItemMemo = memo(function LeveledSearchTreeView
             onClick={onSelect}
             onHover={onHover}
             isFocused={isFocused}
+            isInteractive={isInteractive}
             icon={<SearchItemIcon item={item.data} icon={item.icon} />}
             details={<SearchItemDetails item={item.data} />}
             resultCounter={<GroupResultCounter count={childCount ?? 0} isExpanded={isExpanded ?? false} />}

@@ -1206,6 +1206,7 @@ export { UiAsyncTableFilter } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTable
 export { UiAsyncTableTitle } from "./@ui/UiAsyncTable/UiAsyncTableTitle/UiAsyncTableTitle.js";
 export { UiAsyncTableEmptyState } from "./@ui/UiAsyncTable/UiAsyncTable/UiAsyncTableEmptyState.js";
 export { useAsyncTableResponsiveColumns } from "./@ui/UiAsyncTable/UiAsyncTable/useAsyncTableResponsiveColumns.js";
+export { useUiAsyncTableCellControlTabIndex } from "./@ui/UiAsyncTable/UiAsyncTable/asyncTableGridContext.js";
 
 export { UiTags } from "./@ui/UiTags/UiTags.js";
 export type { IUiTagsProps, IUiTagDef } from "./@ui/UiTags/types.js";

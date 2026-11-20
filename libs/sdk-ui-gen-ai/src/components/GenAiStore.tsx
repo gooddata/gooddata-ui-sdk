@@ -73,6 +73,20 @@ export type GenAiStoreProps = {
      */
     allowNativeLinks?: boolean;
     /**
+     * Controls whether object references in answers and search results can be activated.
+     *
+     * @remarks
+     * Return `false` to render answer references as plain text and disable search-result navigation
+     * and Open/Edit actions. Supported types are `metric`, `visualization`, `dashboard`,
+     * and `document`. Related search destinations are evaluated independently;
+     * existing row expansion and hover behavior are preserved.
+     * When omitted, inherits the enclosing provider's policy or preserves existing link behavior.
+     * Returning `true` does not override permissions or existing link eligibility.
+     * This is a rendering policy, not authorization or search filtering; custom replacement
+     * renderers, settings links, and visualization action menus are unaffected.
+     */
+    isLinkEnabled?: (type: GenAIObjectType) => boolean;
+    /**
      * Event handlers to subscribe to chat events.
      */
     eventHandlers?: ChatEventHandler[];
@@ -172,7 +186,11 @@ export function GenAiStore(props: GenAiStoreProps) {
 
     if (externalStore) {
         return (
-            <ConfigProvider allowNativeLinks={props.allowNativeLinks} linkHandler={props.onLinkClick}>
+            <ConfigProvider
+                allowNativeLinks={props.allowNativeLinks}
+                isLinkEnabled={props.isLinkEnabled}
+                linkHandler={props.onLinkClick}
+            >
                 <ExternalStore {...props} currentStore={externalStore}>
                     {children}
                 </ExternalStore>
@@ -181,7 +199,11 @@ export function GenAiStore(props: GenAiStoreProps) {
     }
     if (injectedStore) {
         return (
-            <ConfigProvider allowNativeLinks={props.allowNativeLinks} linkHandler={props.onLinkClick}>
+            <ConfigProvider
+                allowNativeLinks={props.allowNativeLinks}
+                isLinkEnabled={props.isLinkEnabled}
+                linkHandler={props.onLinkClick}
+            >
                 <InjectedStore {...props} currentStore={injectedStore}>
                     {children}
                 </InjectedStore>
@@ -189,7 +211,11 @@ export function GenAiStore(props: GenAiStoreProps) {
         );
     }
     return (
-        <ConfigProvider allowNativeLinks={props.allowNativeLinks} linkHandler={props.onLinkClick}>
+        <ConfigProvider
+            allowNativeLinks={props.allowNativeLinks}
+            isLinkEnabled={props.isLinkEnabled}
+            linkHandler={props.onLinkClick}
+        >
             <InternalStore {...props}>{children}</InternalStore>
         </ConfigProvider>
     );

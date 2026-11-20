@@ -113,6 +113,70 @@ describe("Input", () => {
             expect(screen.queryByDisplayValue("test")).not.toBeInTheDocument();
         });
 
+        it("should keep Escape from the parent when the input is empty by default", () => {
+            const onParentKeyDown = vi.fn();
+            render(
+                <div onKeyDown={onParentKeyDown}>
+                    <Input placeholder="input placeholder" value="" clearOnEsc onChange={vi.fn()} />
+                </div>,
+            );
+
+            fireEvent.keyDown(screen.getByPlaceholderText("input placeholder"), {
+                key: "Escape",
+                keyCode: 27,
+                which: 27,
+            });
+
+            expect(onParentKeyDown).not.toHaveBeenCalled();
+        });
+
+        it("should let Escape reach the parent when the input is empty and propagateEscapeWhenEmpty is set", () => {
+            const onParentKeyDown = vi.fn();
+            render(
+                <div onKeyDown={onParentKeyDown}>
+                    <Input
+                        placeholder="input placeholder"
+                        value=""
+                        clearOnEsc
+                        propagateEscapeWhenEmpty
+                        onChange={vi.fn()}
+                    />
+                </div>,
+            );
+
+            fireEvent.keyDown(screen.getByPlaceholderText("input placeholder"), {
+                key: "Escape",
+                keyCode: 27,
+                which: 27,
+            });
+
+            expect(onParentKeyDown).toHaveBeenCalledTimes(1);
+        });
+
+        it("should keep Escape from the parent while propagateEscapeWhenEmpty clears a filled input", () => {
+            const onParentKeyDown = vi.fn();
+            render(
+                <div onKeyDown={onParentKeyDown}>
+                    <Input
+                        placeholder="input placeholder"
+                        value="test"
+                        clearOnEsc
+                        propagateEscapeWhenEmpty
+                        onChange={vi.fn()}
+                    />
+                </div>,
+            );
+
+            fireEvent.keyDown(screen.getByPlaceholderText("input placeholder"), {
+                key: "Escape",
+                keyCode: 27,
+                which: 27,
+            });
+
+            expect(screen.queryByDisplayValue("test")).not.toBeInTheDocument();
+            expect(onParentKeyDown).not.toHaveBeenCalled();
+        });
+
         it("should not call onChange when value stays empty", () => {
             const changedText = "";
             const onChange = vi.fn();

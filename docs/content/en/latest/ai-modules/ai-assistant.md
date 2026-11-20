@@ -15,6 +15,7 @@ api_symbols:
   - "@gooddata/sdk-ui-gen-ai:useDashboardCopilot"
   - "@gooddata/sdk-ui-gen-ai:IUseDashboardCopilotResult"
   - "@gooddata/sdk-ui-gen-ai:CopilotInteractionComposingWithHandler"
+  - "@gooddata/sdk-ui-gen-ai:CopilotHandler"
 source_files:
   - src/components/GenAIChat.tsx
   - src/components/GenAiConversations.tsx
@@ -22,6 +23,7 @@ source_files:
   - src/hooks/useGenAiDispatcher.ts
   - src/copilot/useDashboardCopilot.ts
   - src/copilot/CopilotInteractionComposingWithHandler.tsx
+  - src/copilot/CopilotHandler.ts
 related_pages:
   - /docs/ai-modules/ai-assistant-layout
   - /docs/ai-modules/customize-ai-assistant
@@ -456,7 +458,7 @@ Example usage:
 
 ## Link clicks
 
-`onLinkClick` handles clicks on the catalog items that the chat mentions. Without it, the items are rendered as plain text. The handler receives a `LinkHandlerEvent` with these properties:
+`onLinkClick` handles requests to open objects or copy their links. It is an event handler, not a control for rendering links. The handler receives a `LinkHandlerEvent` with these properties:
 
 | Property            | Type                                      | Description                                                                                            |
 | ------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -520,6 +522,52 @@ const handleLinkClick = (event: LinkHandlerEvent): string | undefined => {
 
 `navigate` stands for your application's router and `openDraftDashboard` for your dashboard runtime, which must
 initialize the dashboard from both the `dashboard` and its `insights`.
+
+### Object-link policy
+
+Set the optional `isLinkEnabled?: (type: GenAIObjectType) => boolean` prop on `GenAIAssistant` or `GenAiStore`
+to control which object references are interactive. The built-in answer references and search results use
+`metric`, `visualization`, `dashboard`, and `document` from `GenAIObjectType`.
+
+For example, allow only dashboard links, either on one assistant or through a shared store:
+
+```tsx
+import { type GenAIObjectType } from "@gooddata/sdk-model";
+import { GenAIAssistant, GenAiStore } from "@gooddata/sdk-ui-gen-ai";
+
+const dashboardsOnly = (type: GenAIObjectType) => type === "dashboard";
+
+<GenAIAssistant isLinkEnabled={dashboardsOnly} allowNativeLinks />;
+
+<GenAiStore isLinkEnabled={dashboardsOnly} allowNativeLinks>
+    <GenAIAssistant />
+</GenAiStore>;
+```
+
+Returning `false` renders answer references as plain text and prevents navigation or `onLinkClick` calls
+from mouse or keyboard activation. Search results stay visible with a default cursor and no Open/Edit
+action; existing row expansion, hover details, and keyboard navigation remain unchanged. Each related
+destination is evaluated independently: a disabled parent can have enabled children, and the reverse.
+
+When omitted, the prop inherits the enclosing provider's policy. An explicitly supplied predicate replaces
+the inherited policy. With no policy, or a predicate that always returns `true`, existing link behavior is
+unchanged. Updating the predicate updates existing references without recreating the store or resetting the
+conversation.
+
+Legacy `report` references are normalized to `document` only when calling `isLinkEnabled`.
+`onLinkClick` event types and payloads stay unchanged, including `type: "report"`.
+
+The policy is separate from other link and search controls:
+
+- `onLinkClick` handles allowed interactions; omitting it does not make references inactive.
+- `allowNativeLinks` enables native browser navigation where supported. Its default is `false`; it does not
+  bypass `isLinkEnabled`.
+- `objectTypes` filters the object types to search for. `isLinkEnabled` does not filter results.
+- Existing permissions and link eligibility still apply. Returning `true` does not grant access or bypass
+  authorization.
+
+This client-side policy applies only to built-in answer references and search results, not settings links,
+visualization action menus, or custom replacement renderers. It does not change backend behavior.
 
 ## Key Driver Analysis component
 
@@ -654,12 +702,19 @@ removed without a major version bump.
 | `generateDashboard(message)` | Starts a new conversation and sends a non-blank generation request. Requires a ready shared store and an initialized, empty dashboard in edit mode, without a saved identifier. Does not navigate or save the result. |
 | `cancelGeneration()` | Clears creation intent. Does not cancel a response already streaming. |
 | `replyInChat()` | Selects the conversation that originated the waiting workflow so you can answer clarification questions. |
-| `copilot` | Hook-owned `CopilotHandler`, available for custom progress presentations. The hook manages its lifecycle. |
+| `copilot` | Hook-owned `CopilotHandler`, available for custom progress presentations and route-change cleanup with `cancelStaleBuild`. The hook manages its lifecycle. |
 
 The three prop getters accept optional application props; call them without arguments for defaults. Pass
 customizations into the getters rather than overriding the returned connection props in JSX. Definitions are
 applied only to an initialized dashboard in edit mode. Remount the dashboard and assistant pair when changing
 the backend or workspace.
+
+`copilot.cancelStaleBuild(type, nextObjectId?)` returns `false` without changes when a definition application of
+that type to the destination is pending. Otherwise, it clears generation intent, interrupts pending applications
+of that type, and returns `true`. Previously applied definitions don't prevent cancellation. It doesn't stop
+a streaming response or change dashboard content, edit mode, or navigation. See
+[Cancel stale dashboard builds on navigation](../control-ai-assistant/#cancel-stale-dashboard-builds-on-navigation)
+for the application's responsibilities.
 
 ## Props
 

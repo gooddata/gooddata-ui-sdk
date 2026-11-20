@@ -7,17 +7,13 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { type ITheme, idRef } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import { useMediaQuery } from "../responsive/useMediaQuery.js";
+import { MOBILE_VIEWPORT } from "../../test/viewport.js";
 
 import { customItemsMock, defaultItemMock } from "./SettingWidget.test.helpers.js";
 import {
     type IStylingSettingWidgetProps,
     StylingSettingWidget,
 } from "./StylingSettingWidget/StylingSettingWidget.js";
-
-vi.mock("../responsive/useMediaQuery.js", () => ({
-    useMediaQuery: vi.fn(() => false),
-}));
 
 const expectedButtonsState = (buttons: HTMLElement[], disabled = true) => {
     return buttons.forEach((item) => {
@@ -211,13 +207,13 @@ describe("StylingPicker", () => {
     });
 
     it("should not render list action link on mobile device", () => {
-        vi.mocked(useMediaQuery).mockReturnValue(true);
+        window.happyDOM.setViewport(MOBILE_VIEWPORT);
         renderComponent({});
         expect(screen.queryByText("Create")).not.toBeInTheDocument();
     });
 
     it("should not render list item Actions menu on mobile device", () => {
-        vi.mocked(useMediaQuery).mockReturnValue(true);
+        window.happyDOM.setViewport(MOBILE_VIEWPORT);
         const onItemEdit = vi.fn();
         const onItemDelete = vi.fn();
         renderComponent({ onItemEdit, onItemDelete });

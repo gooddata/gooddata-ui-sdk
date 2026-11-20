@@ -430,6 +430,12 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
         }
     };
 
+    // The mask cannot take focus, so a press on it would move focus to <body>,
+    // out of reach of the dialog's Escape handler.
+    private onMaskMouseDown = (e: ReactMouseEvent<HTMLDivElement>) => {
+        e.preventDefault();
+    };
+
     protected getZIndex(): number | undefined {
         return this.context ? this.context.getZIndex(this.id) : this.props.zIndex;
     }
@@ -667,6 +673,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
             <div
                 className="modalityPlugin-mask modalityPlugin-mask-visible"
                 onClick={this.onMaskClick}
+                onMouseDown={this.onMaskMouseDown}
                 style={styles}
             />
         ) : (

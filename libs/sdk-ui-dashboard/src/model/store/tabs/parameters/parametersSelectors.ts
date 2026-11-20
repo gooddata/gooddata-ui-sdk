@@ -335,7 +335,7 @@ export const selectSmartPersistedTabsParameters: DashboardSelector<Record<string
  *
  * @internal
  */
-const selectPersistedTabsParametersFromMeta: DashboardSelector<Record<string, IDashboardParameter[]>> =
+export const selectPersistedTabsParametersFromMeta: DashboardSelector<Record<string, IDashboardParameter[]>> =
     createSelector(
         selectPersistedDashboardTabsRaw,
         selectPersistedParametersFromMeta,

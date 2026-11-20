@@ -8,7 +8,6 @@ import {
     type JsonApiPublisherDocumentPageTemplateOutWithLinks,
     type JsonApiPublisherDocumentTemplateOut,
     type JsonApiPublisherDocumentTemplateOutWithLinks,
-    type JsonApiUserIdentifierOutWithLinks,
     type RestrictedObject,
 } from "@gooddata/api-client-tiger";
 import {
@@ -190,7 +189,7 @@ export function convertPublisherDocumentListItemV2(
 
 export function convertPublisherDocumentTemplateV2(
     entity: JsonApiPublisherDocumentTemplateOut | JsonApiPublisherDocumentTemplateOutWithLinks,
-    included: JsonApiUserIdentifierOutWithLinks[] = [],
+    included: JsonApiPublisherDocumentOutIncludes[] = [],
 ): IPublisherDocumentTemplateV2 {
     return readValidated(entity, {
         type: "documentTemplate" as const,
@@ -202,7 +201,7 @@ export function convertPublisherDocumentTemplateV2(
 
 export function convertPublisherPageTemplateV2(
     entity: JsonApiPublisherDocumentPageTemplateOut | JsonApiPublisherDocumentPageTemplateOutWithLinks,
-    included: JsonApiUserIdentifierOutWithLinks[] = [],
+    included: JsonApiPublisherDocumentOutIncludes[] = [],
 ): IPublisherPageTemplateV2 {
     return readValidated(entity, {
         type: "pageTemplate" as const,

@@ -4,9 +4,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import { idRef, uriRef } from "@gooddata/sdk-model";
+import { type IAttributeDisplayFormMetadataObject, idRef, uriRef } from "@gooddata/sdk-model";
 
-import { newMapForObjectWithIdentity } from "./objRefMap.js";
+import { newDisplayFormMap, newMapForObjectWithIdentity } from "./objRefMap.js";
 
 const objWithBoth = (id: number, obj: number = id) => ({
     identifier: `id${id}`,
@@ -45,5 +45,55 @@ describe("ObjRefMap", () => {
             expect(map.get(idRef("id3"))).toBeDefined();
             expect(map.get(uriRef("uri3"))).toBeDefined();
         });
+    });
+
+    describe("for a computed attribute sharing its id with a label", () => {
+        const displayForm = (
+            id: string,
+            type: "displayForm" | "computedAttribute",
+        ): IAttributeDisplayFormMetadataObject => ({
+            type: "displayForm",
+            ref: idRef(id, type),
+            id,
+            uri: type === "displayForm" ? `/labels/${id}` : id,
+            title: `${type} ${id}`,
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            attribute: idRef(id, type === "displayForm" ? "attribute" : "computedAttribute"),
+        });
+        const label = displayForm("region", "displayForm");
+        const computedAttribute = displayForm("region", "computedAttribute");
+
+        describe.each([
+            ["label first, strict", [label, computedAttribute], true],
+            ["computed attribute first, strict", [computedAttribute, label], true],
+            ["label first, loose", [label, computedAttribute], false],
+            ["computed attribute first, loose", [computedAttribute, label], false],
+        ])("%s", (_, items, strict) => {
+            const map = newDisplayFormMap(items, strict);
+
+            it("should resolve the label by its displayForm-typed ref", () => {
+                expect(map.get(idRef("region", "displayForm"))).toBe(label);
+            });
+
+            it("should resolve the computed attribute by its computedAttribute-typed ref", () => {
+                expect(map.get(idRef("region", "computedAttribute"))).toBe(computedAttribute);
+            });
+
+            it("should keep both items", () => {
+                expect(Array.from(map.values())).toHaveLength(2);
+            });
+        });
+
+        it.each([true, false])(
+            "should not resolve a computed attribute by the map's type (strict: %s)",
+            (strict) => {
+                const map = newDisplayFormMap([computedAttribute], strict);
+
+                expect(map.get(idRef("region", "displayForm"))).toBeUndefined();
+            },
+        );
     });
 });

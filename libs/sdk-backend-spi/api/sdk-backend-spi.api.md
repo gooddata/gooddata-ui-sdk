@@ -2968,6 +2968,9 @@ export interface IPublisherDocumentExportPdfOptions {
 }
 
 // @alpha
+export type IPublisherDocumentMetaV2 = Pick<IPublisherDocumentV2, "ref"> & Partial<Pick<IPublisherDocumentV2, "title" | "description" | "tags">>;
+
+// @alpha
 export type IPublisherDocumentsQueryResultV2 = IPagedResource<IPublisherDocumentSummaryV2>;
 
 // @alpha
@@ -3773,6 +3776,7 @@ export interface IWorkspacePublisherServiceV2 {
     getPageTemplates(): Promise<IPublisherPageTemplateV2[]>;
     // (undocumented)
     updateDocument(publisherDocument: IPublisherDocumentV2): Promise<IPublisherDocumentV2>;
+    updateDocumentMeta(meta: IPublisherDocumentMetaV2): Promise<IPublisherDocumentSummaryV2>;
     // (undocumented)
     updateDocumentTemplate(template: IPublisherDocumentTemplateV2): Promise<IPublisherDocumentTemplateV2>;
     // (undocumented)

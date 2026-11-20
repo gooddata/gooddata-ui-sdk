@@ -1,8 +1,9 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type ObjRef, areObjRefsEqual, idRef, isComputedAttributeRef, uriRef } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual, isComputedAttributeRef } from "@gooddata/sdk-model";
 
 import { type DashboardContext } from "../../../../types/commonTypes.js";
+import { isDisplayFormMetadataReferencedBy } from "../../../../utils/attributeFilterMatching.js";
 
 export type AttributeFilterDisplayFormValidationResult =
     | "VALID"
@@ -34,14 +35,7 @@ export async function validateFilterDisplayForm(
 
     // validate if the display form is between attributes available display forms.
     // try matching both uri and id in case the type of ref is different from what is in the ref field
-    if (
-        attributeDisplayForms.some(
-            (df) =>
-                areObjRefsEqual(df.ref, displayForm) ||
-                areObjRefsEqual(idRef(df.id, "displayForm"), displayForm) ||
-                areObjRefsEqual(uriRef(df.uri), displayForm),
-        )
-    ) {
+    if (attributeDisplayForms.some((df) => isDisplayFormMetadataReferencedBy(df, displayForm))) {
         return "VALID";
     }
 

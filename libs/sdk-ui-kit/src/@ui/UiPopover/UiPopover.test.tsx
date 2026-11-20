@@ -217,6 +217,22 @@ describe("UiPopover", () => {
         });
     });
 
+    it("closes and focuses the anchor on Tab out, so Tab continues from the anchor", () => {
+        render(
+            <UiPopover
+                anchor={<button type="button">Anchor</button>}
+                content={() => <button type="button">Inside</button>}
+            />,
+        );
+        fireEvent.click(screen.getByText("Anchor"));
+        screen.getByText("Inside").focus();
+
+        fireEvent.keyDown(screen.getByText("Inside"), { key: "Tab", code: "Tab" });
+
+        expect(screen.queryByText("Inside")).not.toBeInTheDocument();
+        expect(screen.getByText("Anchor")).toHaveFocus();
+    });
+
     // Reproduces F1-2608: when a popover's anchor lives inside another
     // FloatingPortal (e.g. the OLP share dialog, a modal that portals its body),
     // floating-ui's React-tree-based dismiss treated every click in that tree as

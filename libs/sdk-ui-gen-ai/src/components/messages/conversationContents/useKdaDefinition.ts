@@ -21,6 +21,7 @@ import {
     isCatalogMeasure,
     isSimpleMeasure,
     objRefToString,
+    serializeObjRef,
 } from "@gooddata/sdk-model";
 import { type IDrillEvent } from "@gooddata/sdk-ui";
 import {
@@ -166,7 +167,7 @@ export function createKdaDefinitionFromDrill(
 export function getDashboardAttributeFilter(f: IFilter) {
     if (isAttributeFilter(f)) {
         const ref = filterObjRef(f);
-        const id = objRefToString(ref);
+        const id = serializeObjRef(ref);
         return attributeFilterToDashboardAttributeFilter(f, `local_${id}`, undefined);
     }
     return null;

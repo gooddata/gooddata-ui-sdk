@@ -16,6 +16,7 @@ import type {
 import type { IFeatureFlags, Identifier, ObjectOrigin } from "@gooddata/sdk-model";
 
 import { COMPUTED_ATTRIBUTE_FEATURE_FLAG } from "../computedAttribute/gate.js";
+import { CATALOG_DOCUMENT_FLAGS } from "../document/flags.js";
 import { ObjectTypes } from "../objectType/constants.js";
 import { type ObjectType } from "../objectType/types.js";
 import { useFeatureFlag, useFeatureFlags } from "../permission/PermissionsContext.js";
@@ -135,7 +136,7 @@ const ENDPOINTS: readonly ICatalogEndpoint[] = [
     {
         type: ObjectTypes.DOCUMENT,
         query: (opts, { documentOwner }) => queryDocuments(opts, documentOwner),
-        gatedBy: ["enableBusinessBriefingReportsApp", "enablePublisherV2", "enableCatalogDocuments"],
+        gatedBy: CATALOG_DOCUMENT_FLAGS,
         cannotFilterBy: ["certification"],
     },
     {

@@ -168,6 +168,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     workspaceLocalizationIssues(requestParameters: ActionsApiWorkspaceLocalizationIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationIssues>;
     workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
     workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
+    workspaceLocalizationUsageChildWorkspaces(requestParameters: ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageWorkspaces>;
     workspaceLocalizationUsageUsers(requestParameters: ActionsApiWorkspaceLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
     workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedSetting[]>;
     workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedSetting[]>;
@@ -508,6 +509,12 @@ export interface ActionsApiCancelFlowsRequest {
 }
 
 // @public
+export interface ActionsApiCancelWorkflowRequest {
+    readonly runId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiChangeAnalysisRequest {
     readonly changeAnalysisRequest: AfmChangeAnalysisRequest;
     readonly workspaceId: string;
@@ -672,6 +679,12 @@ export interface ActionsApiForecastResultRequest {
 }
 
 // @public
+export interface ActionsApiGenerateDashboardSummaryRequest {
+    readonly workflowDashboardSummaryRequestDto: WorkflowDashboardSummaryRequestDto;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiGenerateDescriptionRequest {
     readonly generateDescriptionRequest: GenerateDescriptionRequest;
     readonly workspaceId: string;
@@ -714,6 +727,12 @@ export { ActionsApiGetQualityIssuesRequest as GenAiApiGetQualityIssuesRequest }
 
 // @public
 export interface ActionsApiGetTranslationTagsRequest {
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiGetWorkflowStatusRequest {
+    readonly runId: string;
     readonly workspaceId: string;
 }
 
@@ -818,6 +837,7 @@ export interface ActionsApiInterface {
     workspaceLocalizationIssues(requestParameters: ActionsApiWorkspaceLocalizationIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationIssues>;
     workspaceLocalizationStatistics(requestParameters: ActionsApiWorkspaceLocalizationStatisticsRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationStatistics>;
     workspaceLocalizationUsage(requestParameters: ActionsApiWorkspaceLocalizationUsageRequest, options?: AxiosRequestConfig): AxiosPromise<WorkspaceLocalizationUsage>;
+    workspaceLocalizationUsageChildWorkspaces(requestParameters: ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageWorkspaces>;
     workspaceLocalizationUsageUsers(requestParameters: ActionsApiWorkspaceLocalizationUsageUsersRequest, options?: AxiosRequestConfig): AxiosPromise<LocalizationUsageUsers>;
     workspaceResolveAllSettings(requestParameters: ActionsApiWorkspaceResolveAllSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
     workspaceResolveSettings(requestParameters: ActionsApiWorkspaceResolveSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ResolvedSetting>>;
@@ -1279,6 +1299,17 @@ export interface ActionsApiWorkspaceLocalizationIssuesRequest {
 // @public
 export interface ActionsApiWorkspaceLocalizationStatisticsRequest {
     readonly includeCoverage?: boolean;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiWorkspaceLocalizationUsageChildWorkspacesRequest {
+    readonly name?: string;
+    readonly page?: number;
+    readonly setting?: 'LOCALE' | 'METADATA_LOCALE' | 'DATA_LOCALE';
+    readonly size?: number;
+    readonly source?: 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT';
+    readonly value?: string;
     readonly workspaceId: string;
 }
 
@@ -1761,6 +1792,10 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
     cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
     cancelFlows(requestParameters: ActionsApiCancelFlowsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
+    // (undocumented)
+    cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1774,10 +1809,14 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
+    // (undocumented)
+    generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
+    // (undocumented)
+    getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     listFlowOperations(requestParameters: ActionsApiListFlowOperationsRequest, options?: AxiosRequestConfig): AxiosPromise<FlowOperations>;
@@ -1827,6 +1866,10 @@ export interface AfmActionsApiInterface {
     anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
     cancelExecutions(requestParameters: ActionsApiCancelExecutionsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
     cancelFlows(requestParameters: ActionsApiCancelFlowsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmCancelTokens>;
+    // (undocumented)
+    cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1840,10 +1883,14 @@ export interface AfmActionsApiInterface {
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
+    // (undocumented)
+    generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     getQualityIssues(requestParameters: ActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
+    // (undocumented)
+    getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     listFlowOperations(requestParameters: ActionsApiListFlowOperationsRequest, options?: AxiosRequestConfig): AxiosPromise<FlowOperations>;
@@ -2118,7 +2165,7 @@ export interface AfmCompoundMeasureValueFilterCompoundMeasureValueFilter {
 }
 
 // @public
-export type AfmDateFilter = AfmAbsoluteDateFilter | AfmAbsoluteGranularityDateFilter | AfmAllTimeDateFilter | AfmRelativeDateFilter;
+export type AfmDateFilter = AfmAbsoluteDateFilter | AfmAbsoluteGranularityDateFilter | AfmAllTimeDateFilter | AfmParameterizedDateFilter | AfmRelativeDateFilter;
 
 // @public (undocumented)
 export interface AfmExecution {
@@ -2144,7 +2191,7 @@ export interface AfmExecutionSettings {
 }
 
 // @public
-export type AfmFilterDefinition = AfmAbsoluteDateFilter | AfmAbsoluteGranularityDateFilter | AfmAllTimeDateFilter | AfmComparisonMeasureValueFilter | AfmCompoundMeasureValueFilter | AfmInlineFilterDefinition | AfmMatchAttributeFilter | AfmNegativeAttributeFilter | AfmPositiveAttributeFilter | AfmRangeMeasureValueFilter | AfmRankingFilter | AfmRelativeDateFilter;
+export type AfmFilterDefinition = AfmAbsoluteDateFilter | AfmAbsoluteGranularityDateFilter | AfmAllTimeDateFilter | AfmComparisonMeasureValueFilter | AfmCompoundMeasureValueFilter | AfmInlineFilterDefinition | AfmMatchAttributeFilter | AfmNegativeAttributeFilter | AfmParameterizedDateFilter | AfmPositiveAttributeFilter | AfmRangeMeasureValueFilter | AfmRankingFilter | AfmRelativeDateFilter;
 
 // @public
 export type AfmFilterDefinitionForSimpleMeasure = AfmAttributeFilter | AfmDateFilter;
@@ -2546,6 +2593,28 @@ export interface AfmOpenAIProviderConfig {
 
 // @public (undocumented)
 export type AfmOpenAIProviderConfigTypeEnum = 'OPENAI';
+
+// @public
+export interface AfmParameterizedDateFilter {
+    // (undocumented)
+    'parameterizedDateFilter': AfmParameterizedDateFilterParameterizedDateFilter;
+}
+
+// @public (undocumented)
+export interface AfmParameterizedDateFilterParameterizedDateFilter {
+    // (undocumented)
+    'applyOnResult'?: boolean;
+    // (undocumented)
+    'dataset': AfmModelObjectIdentifierDataset;
+    'emptyValueHandling'?: AfmParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'parameter': AfmAfmObjectIdentifierParameter;
+}
+
+// @public (undocumented)
+export type AfmParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 // @public
 export interface AfmPopDataset {
@@ -3602,7 +3671,7 @@ export interface AiChartFill {
         [key: string]: AiPatternNameMapping;
     } | null;
     // (undocumented)
-    'type'?: AiType55 | null;
+    'type'?: AiType57 | null;
 }
 
 // @public (undocumented)
@@ -4557,6 +4626,8 @@ export interface AiDashboardInput {
     // (undocumented)
     'id': string;
     // (undocumented)
+    'parameters'?: Array<AiDashboardParametersInner>;
+    // (undocumented)
     'permissions'?: AiPermissions | null;
     // (undocumented)
     'persistent_filters_across_tabs'?: boolean | null;
@@ -4573,7 +4644,7 @@ export interface AiDashboardInput {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType56;
+    'type': AiType58;
     // (undocumented)
     'user_filters_reset'?: boolean | null;
     // (undocumented)
@@ -4626,6 +4697,8 @@ export interface AiDashboardOutput {
     // (undocumented)
     'id': string;
     // (undocumented)
+    'parameters'?: Array<AiDashboardParametersInner>;
+    // (undocumented)
     'permissions'?: AiPermissions | null;
     // (undocumented)
     'persistent_filters_across_tabs'?: boolean | null;
@@ -4642,7 +4715,7 @@ export interface AiDashboardOutput {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType56;
+    'type': AiType58;
     // (undocumented)
     'user_filters_reset'?: boolean | null;
     // (undocumented)
@@ -4657,6 +4730,19 @@ export interface AiDashboardOutputPluginsInner {
     'id': string;
     // (undocumented)
     'parameters'?: AiParameters | null;
+}
+
+// @public (undocumented)
+export interface AiDashboardParametersInner {
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'mode'?: AiMode6;
+    // (undocumented)
+    'title'?: string;
+    'type': AiType23;
+    // (undocumented)
+    'value'?: number;
 }
 
 // @public (undocumented)
@@ -5459,7 +5545,7 @@ export interface AiLayerItem {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType52;
+    'type': AiType54;
     // (undocumented)
     'view_by'?: Array<string>;
 }
@@ -5499,7 +5585,7 @@ export interface AiLayerItemBase {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type'?: AiType52 | null;
+    'type'?: AiType54 | null;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -5901,6 +5987,19 @@ export interface AiNotificationChannelRef {
 }
 
 // @public (undocumented)
+export interface AiNumberDashboardParameter {
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'mode'?: AiMode6 | null;
+    // (undocumented)
+    'title'?: string;
+    'type': AiType23;
+    // (undocumented)
+    'value'?: number | null;
+}
+
+// @public (undocumented)
 export const AiObjectType: {
     readonly UNIDENTIFIED: 'unidentified';
     readonly WORKSPACE: 'workspace';
@@ -6182,7 +6281,7 @@ export interface AiQueryAttributeSort {
     'by': AiBy1;
     'direction': AiDirection;
     // (undocumented)
-    'type': AiType46;
+    'type': AiType48;
 }
 
 // @public (undocumented)
@@ -6248,7 +6347,7 @@ export interface AiQueryField {
     'show_all_values'?: boolean;
     // (undocumented)
     'title'?: string;
-    'type': AiType45;
+    'type': AiType47;
     'using': string;
 }
 
@@ -6307,7 +6406,7 @@ export interface AiQueryField6 {
     'date_filter': string;
     // (undocumented)
     'title'?: string;
-    'type': AiType44;
+    'type': AiType46;
     'using': string;
 }
 
@@ -6318,7 +6417,7 @@ export interface AiQueryField7 {
     'period'?: number | null;
     // (undocumented)
     'title'?: string;
-    'type': AiType45;
+    'type': AiType47;
     'using': string;
 }
 
@@ -6366,7 +6465,7 @@ export interface AiQueryMetricSort {
     // (undocumented)
     'metrics': Array<AiQueryMetricSortMetricsInner>;
     // (undocumented)
-    'type': AiType47;
+    'type': AiType49;
 }
 
 // @public (undocumented)
@@ -6523,7 +6622,7 @@ export interface AiQuerySort {
     // (undocumented)
     'metrics': Array<AiQueryMetricSortMetricsInner>;
     // (undocumented)
-    'type': AiType47;
+    'type': AiType49;
 }
 
 // @public (undocumented)
@@ -7355,6 +7454,19 @@ export interface AiStepTokens {
 }
 
 // @public (undocumented)
+export interface AiStringDashboardParameter {
+    // (undocumented)
+    'id': string;
+    // (undocumented)
+    'mode'?: AiMode6 | null;
+    // (undocumented)
+    'title'?: string;
+    'type': AiType22;
+    // (undocumented)
+    'value'?: string | null;
+}
+
+// @public (undocumented)
 export const AiStyle: {
     readonly SOLID: 'solid';
     readonly DASHED: 'dashed';
@@ -7454,6 +7566,8 @@ export interface AiTabInput {
     'filters'?: object;
     // (undocumented)
     'id': string;
+    // (undocumented)
+    'parameters'?: Array<AiDashboardParametersInner>;
     'sections': Array<AiSectionInput>;
     // (undocumented)
     'title': string;
@@ -7465,6 +7579,8 @@ export interface AiTabOutput {
     'filters'?: object;
     // (undocumented)
     'id': string;
+    // (undocumented)
+    'parameters'?: Array<AiDashboardParametersInner>;
     'sections': Array<AiSectionOutput>;
     // (undocumented)
     'title': string;
@@ -7603,7 +7719,7 @@ export interface AiTotalItem {
     // (undocumented)
     'title'?: string;
     // (undocumented)
-    'type': AiType51;
+    'type': AiType53;
     'using': string;
 }
 
@@ -7650,6 +7766,22 @@ export const AiType18: {
 export type AiType18 = typeof AiType18[keyof typeof AiType18];
 
 // @public (undocumented)
+export const AiType22: {
+    readonly STRING: 'STRING';
+};
+
+// @public (undocumented)
+export type AiType22 = typeof AiType22[keyof typeof AiType22];
+
+// @public (undocumented)
+export const AiType23: {
+    readonly NUMBER: 'NUMBER';
+};
+
+// @public (undocumented)
+export type AiType23 = typeof AiType23[keyof typeof AiType23];
+
+// @public (undocumented)
 export const AiType3: {
     readonly ATTRIBUTE_FILTER: 'attribute_filter';
     readonly ATTRIBUTE_FILTER2: 'attribute_filter';
@@ -7659,24 +7791,8 @@ export const AiType3: {
 export type AiType3 = typeof AiType3[keyof typeof AiType3];
 
 // @public (undocumented)
-export const AiType44: {
-    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
-};
-
-// @public (undocumented)
-export type AiType44 = typeof AiType44[keyof typeof AiType44];
-
-// @public (undocumented)
-export const AiType45: {
-    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
-};
-
-// @public (undocumented)
-export type AiType45 = typeof AiType45[keyof typeof AiType45];
-
-// @public (undocumented)
 export const AiType46: {
-    readonly ATTRIBUTE_SORT: 'attribute_sort';
+    readonly PREVIOUS_YEAR: 'PREVIOUS_YEAR';
 };
 
 // @public (undocumented)
@@ -7684,11 +7800,27 @@ export type AiType46 = typeof AiType46[keyof typeof AiType46];
 
 // @public (undocumented)
 export const AiType47: {
-    readonly METRIC_SORT: 'metric_sort';
+    readonly PREVIOUS_PERIOD: 'PREVIOUS_PERIOD';
 };
 
 // @public (undocumented)
 export type AiType47 = typeof AiType47[keyof typeof AiType47];
+
+// @public (undocumented)
+export const AiType48: {
+    readonly ATTRIBUTE_SORT: 'attribute_sort';
+};
+
+// @public (undocumented)
+export type AiType48 = typeof AiType48[keyof typeof AiType48];
+
+// @public (undocumented)
+export const AiType49: {
+    readonly METRIC_SORT: 'metric_sort';
+};
+
+// @public (undocumented)
+export type AiType49 = typeof AiType49[keyof typeof AiType49];
 
 // @public (undocumented)
 export const AiType5: {
@@ -7699,7 +7831,7 @@ export const AiType5: {
 export type AiType5 = typeof AiType5[keyof typeof AiType5];
 
 // @public (undocumented)
-export const AiType51: {
+export const AiType53: {
     readonly SUM: 'SUM';
     readonly AVG: 'AVG';
     readonly MAX: 'MAX';
@@ -7709,34 +7841,34 @@ export const AiType51: {
 };
 
 // @public (undocumented)
-export type AiType51 = typeof AiType51[keyof typeof AiType51];
+export type AiType53 = typeof AiType53[keyof typeof AiType53];
 
 // @public (undocumented)
-export const AiType52: {
+export const AiType54: {
     readonly PUSHPIN: 'pushpin';
     readonly AREA: 'area';
 };
 
 // @public (undocumented)
-export type AiType52 = typeof AiType52[keyof typeof AiType52];
+export type AiType54 = typeof AiType54[keyof typeof AiType54];
 
 // @public (undocumented)
-export const AiType55: {
+export const AiType57: {
     readonly SOLID: 'solid';
     readonly PATTERN: 'pattern';
     readonly OUTLINE: 'outline';
 };
 
 // @public (undocumented)
-export type AiType55 = typeof AiType55[keyof typeof AiType55];
+export type AiType57 = typeof AiType57[keyof typeof AiType57];
 
 // @public (undocumented)
-export const AiType56: {
+export const AiType58: {
     readonly DASHBOARD: 'dashboard';
 };
 
 // @public (undocumented)
-export type AiType56 = typeof AiType56[keyof typeof AiType56];
+export type AiType58 = typeof AiType58[keyof typeof AiType58];
 
 // @public (undocumented)
 export const AiType7: {
@@ -7747,24 +7879,8 @@ export const AiType7: {
 export type AiType7 = typeof AiType7[keyof typeof AiType7];
 
 // @public (undocumented)
-export const AiType70: {
-    readonly TABLE: 'table';
-};
-
-// @public (undocumented)
-export type AiType70 = typeof AiType70[keyof typeof AiType70];
-
-// @public (undocumented)
-export const AiType71: {
-    readonly BAR_CHART: 'bar_chart';
-};
-
-// @public (undocumented)
-export type AiType71 = typeof AiType71[keyof typeof AiType71];
-
-// @public (undocumented)
 export const AiType72: {
-    readonly COLUMN_CHART: 'column_chart';
+    readonly TABLE: 'table';
 };
 
 // @public (undocumented)
@@ -7772,7 +7888,7 @@ export type AiType72 = typeof AiType72[keyof typeof AiType72];
 
 // @public (undocumented)
 export const AiType73: {
-    readonly LINE_CHART: 'line_chart';
+    readonly BAR_CHART: 'bar_chart';
 };
 
 // @public (undocumented)
@@ -7780,7 +7896,7 @@ export type AiType73 = typeof AiType73[keyof typeof AiType73];
 
 // @public (undocumented)
 export const AiType74: {
-    readonly AREA_CHART: 'area_chart';
+    readonly COLUMN_CHART: 'column_chart';
 };
 
 // @public (undocumented)
@@ -7788,7 +7904,7 @@ export type AiType74 = typeof AiType74[keyof typeof AiType74];
 
 // @public (undocumented)
 export const AiType75: {
-    readonly SCATTER_CHART: 'scatter_chart';
+    readonly LINE_CHART: 'line_chart';
 };
 
 // @public (undocumented)
@@ -7796,7 +7912,7 @@ export type AiType75 = typeof AiType75[keyof typeof AiType75];
 
 // @public (undocumented)
 export const AiType76: {
-    readonly BUBBLE_CHART: 'bubble_chart';
+    readonly AREA_CHART: 'area_chart';
 };
 
 // @public (undocumented)
@@ -7804,7 +7920,7 @@ export type AiType76 = typeof AiType76[keyof typeof AiType76];
 
 // @public (undocumented)
 export const AiType77: {
-    readonly PIE_CHART: 'pie_chart';
+    readonly SCATTER_CHART: 'scatter_chart';
 };
 
 // @public (undocumented)
@@ -7812,7 +7928,7 @@ export type AiType77 = typeof AiType77[keyof typeof AiType77];
 
 // @public (undocumented)
 export const AiType78: {
-    readonly DONUT_CHART: 'donut_chart';
+    readonly BUBBLE_CHART: 'bubble_chart';
 };
 
 // @public (undocumented)
@@ -7820,7 +7936,7 @@ export type AiType78 = typeof AiType78[keyof typeof AiType78];
 
 // @public (undocumented)
 export const AiType79: {
-    readonly TREEMAP_CHART: 'treemap_chart';
+    readonly PIE_CHART: 'pie_chart';
 };
 
 // @public (undocumented)
@@ -7836,7 +7952,7 @@ export type AiType8 = typeof AiType8[keyof typeof AiType8];
 
 // @public (undocumented)
 export const AiType80: {
-    readonly PYRAMID_CHART: 'pyramid_chart';
+    readonly DONUT_CHART: 'donut_chart';
 };
 
 // @public (undocumented)
@@ -7844,7 +7960,7 @@ export type AiType80 = typeof AiType80[keyof typeof AiType80];
 
 // @public (undocumented)
 export const AiType81: {
-    readonly FUNNEL_CHART: 'funnel_chart';
+    readonly TREEMAP_CHART: 'treemap_chart';
 };
 
 // @public (undocumented)
@@ -7852,7 +7968,7 @@ export type AiType81 = typeof AiType81[keyof typeof AiType81];
 
 // @public (undocumented)
 export const AiType82: {
-    readonly HEATMAP_CHART: 'heatmap_chart';
+    readonly PYRAMID_CHART: 'pyramid_chart';
 };
 
 // @public (undocumented)
@@ -7860,7 +7976,7 @@ export type AiType82 = typeof AiType82[keyof typeof AiType82];
 
 // @public (undocumented)
 export const AiType83: {
-    readonly BULLET_CHART: 'bullet_chart';
+    readonly FUNNEL_CHART: 'funnel_chart';
 };
 
 // @public (undocumented)
@@ -7868,7 +7984,7 @@ export type AiType83 = typeof AiType83[keyof typeof AiType83];
 
 // @public (undocumented)
 export const AiType84: {
-    readonly WATERFALL_CHART: 'waterfall_chart';
+    readonly HEATMAP_CHART: 'heatmap_chart';
 };
 
 // @public (undocumented)
@@ -7876,7 +7992,7 @@ export type AiType84 = typeof AiType84[keyof typeof AiType84];
 
 // @public (undocumented)
 export const AiType85: {
-    readonly DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart';
+    readonly BULLET_CHART: 'bullet_chart';
 };
 
 // @public (undocumented)
@@ -7884,7 +8000,7 @@ export type AiType85 = typeof AiType85[keyof typeof AiType85];
 
 // @public (undocumented)
 export const AiType86: {
-    readonly SANKEY_CHART: 'sankey_chart';
+    readonly WATERFALL_CHART: 'waterfall_chart';
 };
 
 // @public (undocumented)
@@ -7892,7 +8008,7 @@ export type AiType86 = typeof AiType86[keyof typeof AiType86];
 
 // @public (undocumented)
 export const AiType87: {
-    readonly HEADLINE_CHART: 'headline_chart';
+    readonly DEPENDENCY_WHEEL_CHART: 'dependency_wheel_chart';
 };
 
 // @public (undocumented)
@@ -7900,7 +8016,7 @@ export type AiType87 = typeof AiType87[keyof typeof AiType87];
 
 // @public (undocumented)
 export const AiType88: {
-    readonly COMBO_CHART: 'combo_chart';
+    readonly SANKEY_CHART: 'sankey_chart';
 };
 
 // @public (undocumented)
@@ -7908,7 +8024,7 @@ export type AiType88 = typeof AiType88[keyof typeof AiType88];
 
 // @public (undocumented)
 export const AiType89: {
-    readonly GEO_CHART: 'geo_chart';
+    readonly HEADLINE_CHART: 'headline_chart';
 };
 
 // @public (undocumented)
@@ -7924,7 +8040,7 @@ export type AiType9 = typeof AiType9[keyof typeof AiType9];
 
 // @public (undocumented)
 export const AiType90: {
-    readonly GEO_AREA_CHART: 'geo_area_chart';
+    readonly COMBO_CHART: 'combo_chart';
 };
 
 // @public (undocumented)
@@ -7932,7 +8048,7 @@ export type AiType90 = typeof AiType90[keyof typeof AiType90];
 
 // @public (undocumented)
 export const AiType91: {
-    readonly REPEATER_CHART: 'repeater_chart';
+    readonly GEO_CHART: 'geo_chart';
 };
 
 // @public (undocumented)
@@ -7940,11 +8056,27 @@ export type AiType91 = typeof AiType91[keyof typeof AiType91];
 
 // @public (undocumented)
 export const AiType92: {
-    readonly RADAR_CHART: 'radar_chart';
+    readonly GEO_AREA_CHART: 'geo_area_chart';
 };
 
 // @public (undocumented)
 export type AiType92 = typeof AiType92[keyof typeof AiType92];
+
+// @public (undocumented)
+export const AiType93: {
+    readonly REPEATER_CHART: 'repeater_chart';
+};
+
+// @public (undocumented)
+export type AiType93 = typeof AiType93[keyof typeof AiType93];
+
+// @public (undocumented)
+export const AiType94: {
+    readonly RADAR_CHART: 'radar_chart';
+};
+
+// @public (undocumented)
+export type AiType94 = typeof AiType94[keyof typeof AiType94];
 
 // @public
 export interface AiUploadDocumentResponse {
@@ -8335,7 +8467,7 @@ export interface AiVisualisation {
     'to'?: AiBucketItem;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem>;
-    'type': AiType92;
+    'type': AiType94;
     // (undocumented)
     'view_by'?: Array<AiBucketItem>;
 }
@@ -8365,7 +8497,7 @@ export interface AiVisualisation1 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType70;
+    'type': AiType72;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8391,7 +8523,7 @@ export interface AiVisualisation10 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType79;
+    'type': AiType81;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8417,7 +8549,7 @@ export interface AiVisualisation11 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType80;
+    'type': AiType82;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8443,7 +8575,7 @@ export interface AiVisualisation12 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType81;
+    'type': AiType83;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8473,7 +8605,7 @@ export interface AiVisualisation13 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType82;
+    'type': AiType84;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8499,7 +8631,7 @@ export interface AiVisualisation14 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType83;
+    'type': AiType85;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8525,7 +8657,7 @@ export interface AiVisualisation15 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType84;
+    'type': AiType86;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8555,7 +8687,7 @@ export interface AiVisualisation16 {
     'title'?: string;
     // (undocumented)
     'to'?: AiBucketItem | null;
-    'type': AiType85;
+    'type': AiType87;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8585,7 +8717,7 @@ export interface AiVisualisation17 {
     'title'?: string;
     // (undocumented)
     'to'?: AiBucketItem | null;
-    'type': AiType86;
+    'type': AiType88;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8611,7 +8743,7 @@ export interface AiVisualisation18 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType87;
+    'type': AiType89;
     // (undocumented)
     'view_by'?: Array<any> | null;
 }
@@ -8637,7 +8769,7 @@ export interface AiVisualisation19 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType88;
+    'type': AiType90;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8665,7 +8797,7 @@ export interface AiVisualisation2 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType71;
+    'type': AiType73;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8693,7 +8825,7 @@ export interface AiVisualisation20 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType89;
+    'type': AiType91;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -8721,7 +8853,7 @@ export interface AiVisualisation21 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType90;
+    'type': AiType92;
     // (undocumented)
     'view_by'?: Array<string> | null;
 }
@@ -8751,7 +8883,7 @@ export interface AiVisualisation22 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType91;
+    'type': AiType93;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8777,7 +8909,7 @@ export interface AiVisualisation23 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType92;
+    'type': AiType94;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8805,7 +8937,7 @@ export interface AiVisualisation3 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType72;
+    'type': AiType74;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8833,7 +8965,7 @@ export interface AiVisualisation4 {
     'title'?: string;
     // (undocumented)
     'trend_by'?: Array<AiBucketItem> | null;
-    'type': AiType73;
+    'type': AiType75;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8861,7 +8993,7 @@ export interface AiVisualisation5 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType74;
+    'type': AiType76;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8889,7 +9021,7 @@ export interface AiVisualisation6 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType75;
+    'type': AiType77;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8917,7 +9049,7 @@ export interface AiVisualisation7 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType76;
+    'type': AiType78;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8943,7 +9075,7 @@ export interface AiVisualisation8 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType77;
+    'type': AiType79;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -8969,7 +9101,7 @@ export interface AiVisualisation9 {
     'tags'?: Array<string>;
     // (undocumented)
     'title'?: string;
-    'type': AiType78;
+    'type': AiType80;
     // (undocumented)
     'view_by'?: Array<AiBucketItem> | null;
 }
@@ -11964,7 +12096,7 @@ export type AutomationDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 
 export type AutomationDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 // @public
-export type AutomationDashboardFilter = AutomationDashboardArbitraryAttributeFilter | AutomationDashboardAttributeFilter | AutomationDashboardDateFilter | AutomationDashboardMatchAttributeFilter | AutomationDashboardMeasureValueFilter;
+export type AutomationDashboardFilter = AutomationDashboardArbitraryAttributeFilter | AutomationDashboardAttributeFilter | AutomationDashboardDateFilter | AutomationDashboardMatchAttributeFilter | AutomationDashboardMeasureValueFilter | AutomationDashboardParameterizedDateFilter;
 
 // @public (undocumented)
 export interface AutomationDashboardMatchAttributeFilter {
@@ -12014,6 +12146,27 @@ export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilte
 }
 
 // @public (undocumented)
+export interface AutomationDashboardParameterizedDateFilter {
+    // (undocumented)
+    'dashboardParameterizedDateFilter': AutomationDashboardParameterizedDateFilterDashboardParameterizedDateFilter;
+}
+
+// @public (undocumented)
+export interface AutomationDashboardParameterizedDateFilterDashboardParameterizedDateFilter {
+    // (undocumented)
+    'dataSet'?: AutomationIdentifierRef;
+    // (undocumented)
+    'emptyValueHandling'?: AutomationDashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'parameter': AutomationIdentifierRef;
+}
+
+// @public (undocumented)
+export type AutomationDashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
+
+// @public (undocumented)
 export interface AutomationDashboardTabularExport {
     // (undocumented)
     'requestPayload': DashboardTabularExportRequestV2;
@@ -12043,7 +12196,7 @@ export interface AutomationDashboardTabularExportRequestV2 {
 export type AutomationDashboardTabularExportRequestV2FormatEnum = 'XLSX' | 'PDF';
 
 // @public
-export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationAbsoluteGranularityDateFilter | AutomationAllTimeDateFilter | AutomationRelativeDateFilter;
+export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationAbsoluteGranularityDateFilter | AutomationAllTimeDateFilter | AutomationParameterizedDateFilter | AutomationRelativeDateFilter;
 
 // @public (undocumented)
 export interface AutomationDateValue {
@@ -12128,7 +12281,7 @@ export interface AutomationExternalRecipient {
 }
 
 // @public
-export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | AutomationAbsoluteGranularityDateFilter | AutomationAllTimeDateFilter | AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationInlineFilterDefinition | AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter | AutomationRelativeDateFilter;
+export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | AutomationAbsoluteGranularityDateFilter | AutomationAllTimeDateFilter | AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationInlineFilterDefinition | AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationParameterizedDateFilter | AutomationPositiveAttributeFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter | AutomationRelativeDateFilter;
 
 // @public
 export type AutomationFilterDefinitionForSimpleMeasure = AutomationAttributeFilter | AutomationDateFilter;
@@ -12404,6 +12557,28 @@ export interface AutomationParameterItem {
     'parameter': AutomationAfmObjectIdentifierParameter;
     'value': string;
 }
+
+// @public
+export interface AutomationParameterizedDateFilter {
+    // (undocumented)
+    'parameterizedDateFilter': AutomationParameterizedDateFilterParameterizedDateFilter;
+}
+
+// @public (undocumented)
+export interface AutomationParameterizedDateFilterParameterizedDateFilter {
+    // (undocumented)
+    'applyOnResult'?: boolean;
+    // (undocumented)
+    'dataset': AutomationAfmObjectIdentifierDataset;
+    'emptyValueHandling'?: AutomationParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'parameter': AutomationAfmObjectIdentifierParameter;
+}
+
+// @public (undocumented)
+export type AutomationParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 // @public
 export interface AutomationParameterValue {
@@ -15095,7 +15270,7 @@ export type DashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE
 export type DashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 // @public
-export type DashboardFilter = DashboardArbitraryAttributeFilter | DashboardAttributeFilter | DashboardDateFilter | DashboardMatchAttributeFilter | DashboardMeasureValueFilter;
+export type DashboardFilter = DashboardArbitraryAttributeFilter | DashboardAttributeFilter | DashboardDateFilter | DashboardMatchAttributeFilter | DashboardMeasureValueFilter | DashboardParameterizedDateFilter;
 
 // @public (undocumented)
 export interface DashboardMatchAttributeFilter {
@@ -15143,6 +15318,27 @@ export interface DashboardMeasureValueFilterDashboardMeasureValueFilter {
     // (undocumented)
     'title'?: string;
 }
+
+// @public (undocumented)
+export interface DashboardParameterizedDateFilter {
+    // (undocumented)
+    'dashboardParameterizedDateFilter': DashboardParameterizedDateFilterDashboardParameterizedDateFilter;
+}
+
+// @public (undocumented)
+export interface DashboardParameterizedDateFilterDashboardParameterizedDateFilter {
+    // (undocumented)
+    'dataSet'?: IdentifierRef;
+    // (undocumented)
+    'emptyValueHandling'?: DashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'parameter': IdentifierRef;
+}
+
+// @public (undocumented)
+export type DashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
 
 // @public (undocumented)
 export interface DashboardPermissions {
@@ -16480,7 +16676,7 @@ export interface DataSourceTableIdentifier {
 export type DataSourceTableIdentifierTypeEnum = 'dataSource';
 
 // @public
-export type DateFilter = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | RelativeDateFilter;
+export type DateFilter = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | ParameterizedDateFilter | RelativeDateFilter;
 
 // @public (undocumented)
 export interface DateRangeParameterDefinition {
@@ -17955,7 +18151,7 @@ export interface DependentEntitiesNode {
 }
 
 // @public (undocumented)
-export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'document';
+export type DependentEntitiesNodeTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'pageTemplate' | 'document' | 'documentTemplate';
 
 // @public (undocumented)
 export interface DependentEntitiesRequest {
@@ -20150,7 +20346,7 @@ export interface EntitiesApiCreateEntityDocumentsRequest {
 
 // @public
 export interface EntitiesApiCreateEntityDocumentTemplatesRequest {
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiPublisherDocumentTemplatePostOptionalIdDocument: JsonApiPublisherDocumentTemplatePostOptionalIdDocument;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
@@ -20247,7 +20443,7 @@ export interface EntitiesApiCreateEntityOrgMemoryItemsRequest {
 
 // @public
 export interface EntitiesApiCreateEntityPageTemplatesRequest {
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiPublisherDocumentPageTemplatePostOptionalIdDocument: JsonApiPublisherDocumentPageTemplatePostOptionalIdDocument;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly workspaceId: string;
@@ -20862,7 +21058,7 @@ export interface EntitiesApiGetAllEntitiesDocumentsRequest {
 // @public
 export interface EntitiesApiGetAllEntitiesDocumentTemplatesRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
@@ -21083,7 +21279,7 @@ export interface EntitiesApiGetAllEntitiesOrgMemoryItemsRequest {
 // @public
 export interface EntitiesApiGetAllEntitiesPageTemplatesRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>;
     readonly origin?: 'ALL' | 'PARENTS' | 'NATIVE';
     readonly page?: number;
@@ -21464,7 +21660,7 @@ export interface EntitiesApiGetEntityDocumentsRequest {
 // @public
 export interface EntitiesApiGetEntityDocumentTemplatesRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -21631,7 +21827,7 @@ export interface EntitiesApiGetEntityOrgMemoryItemsRequest {
 // @public
 export interface EntitiesApiGetEntityPageTemplatesRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly metaInclude?: Array<'origin' | 'all' | 'ALL'>;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -22285,7 +22481,7 @@ export interface EntitiesApiPatchEntityDocumentsRequest {
 // @public
 export interface EntitiesApiPatchEntityDocumentTemplatesRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiPublisherDocumentTemplatePatchDocument: JsonApiPublisherDocumentTemplatePatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -22424,7 +22620,7 @@ export interface EntitiesApiPatchEntityOrgMemoryItemsRequest {
 // @public
 export interface EntitiesApiPatchEntityPageTemplatesRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiPublisherDocumentPageTemplatePatchDocument: JsonApiPublisherDocumentPageTemplatePatchDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -22886,7 +23082,7 @@ export interface EntitiesApiUpdateEntityDocumentsRequest {
 // @public
 export interface EntitiesApiUpdateEntityDocumentTemplatesRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiPublisherDocumentTemplateInDocument: JsonApiPublisherDocumentTemplateInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -23015,7 +23211,7 @@ export interface EntitiesApiUpdateEntityOrgMemoryItemsRequest {
 // @public
 export interface EntitiesApiUpdateEntityPageTemplatesRequest {
     readonly filter?: string;
-    readonly include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>;
+    readonly include?: Array<'userIdentifiers' | 'visualizationObjects' | 'labels' | 'datasets' | 'metrics' | 'createdBy' | 'modifiedBy' | 'ALL'>;
     readonly jsonApiPublisherDocumentPageTemplateInDocument: JsonApiPublisherDocumentPageTemplateInDocument;
     readonly objectId: string;
     readonly workspaceId: string;
@@ -23284,7 +23480,7 @@ export interface EntityIdentifier {
 }
 
 // @public (undocumented)
-export type EntityIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'document';
+export type EntityIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'computedAttribute' | 'userDataFilter' | 'parameter' | 'automation' | 'memoryItem' | 'knowledgeRecommendation' | 'visualizationObject' | 'filterContext' | 'filterView' | 'pageTemplate' | 'document' | 'documentTemplate';
 
 // @public
 export interface EntitySearchBody {
@@ -24053,7 +24249,7 @@ export type ExportDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LAN
 export type ExportDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 // @public
-export type ExportDashboardFilter = ExportDashboardArbitraryAttributeFilter | ExportDashboardAttributeFilter | ExportDashboardDateFilter | ExportDashboardMatchAttributeFilter | ExportDashboardMeasureValueFilter;
+export type ExportDashboardFilter = ExportDashboardArbitraryAttributeFilter | ExportDashboardAttributeFilter | ExportDashboardDateFilter | ExportDashboardMatchAttributeFilter | ExportDashboardMeasureValueFilter | ExportDashboardParameterizedDateFilter;
 
 // @public (undocumented)
 export interface ExportDashboardMatchAttributeFilter {
@@ -24102,6 +24298,27 @@ export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
     'title'?: string;
 }
 
+// @public (undocumented)
+export interface ExportDashboardParameterizedDateFilter {
+    // (undocumented)
+    'dashboardParameterizedDateFilter': ExportDashboardParameterizedDateFilterDashboardParameterizedDateFilter;
+}
+
+// @public (undocumented)
+export interface ExportDashboardParameterizedDateFilterDashboardParameterizedDateFilter {
+    // (undocumented)
+    'dataSet'?: ExportIdentifierRef;
+    // (undocumented)
+    'emptyValueHandling'?: ExportDashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'parameter': ExportIdentifierRef;
+}
+
+// @public (undocumented)
+export type ExportDashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
+
 // @public
 export interface ExportDashboardTabularExportRequest {
     'dashboardFiltersOverride'?: Array<ExportDashboardFilter>;
@@ -24125,7 +24342,7 @@ export interface ExportDashboardTabularExportRequest {
 export type ExportDashboardTabularExportRequestFormatEnum = 'XLSX' | 'PDF';
 
 // @public
-export type ExportDateFilter = ExportAbsoluteDateFilter | ExportAbsoluteGranularityDateFilter | ExportAllTimeDateFilter | ExportRelativeDateFilter;
+export type ExportDateFilter = ExportAbsoluteDateFilter | ExportAbsoluteGranularityDateFilter | ExportAllTimeDateFilter | ExportParameterizedDateFilter | ExportRelativeDateFilter;
 
 // @public (undocumented)
 export interface ExportDateValue {
@@ -24401,7 +24618,7 @@ export interface ExportExportResponse {
 }
 
 // @public
-export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportAbsoluteGranularityDateFilter | ExportAllTimeDateFilter | ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportInlineFilterDefinition | ExportMatchAttributeFilter | ExportNegativeAttributeFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
+export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportAbsoluteGranularityDateFilter | ExportAllTimeDateFilter | ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportInlineFilterDefinition | ExportMatchAttributeFilter | ExportNegativeAttributeFilter | ExportParameterizedDateFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
 
 // @public
 export type ExportFilterDefinitionForSimpleMeasure = ExportAttributeFilter | ExportDateFilter;
@@ -24642,6 +24859,28 @@ export interface ExportParameterItem {
     'parameter': ExportAfmObjectIdentifierParameter;
     'value': string;
 }
+
+// @public
+export interface ExportParameterizedDateFilter {
+    // (undocumented)
+    'parameterizedDateFilter': ExportParameterizedDateFilterParameterizedDateFilter;
+}
+
+// @public (undocumented)
+export interface ExportParameterizedDateFilterParameterizedDateFilter {
+    // (undocumented)
+    'applyOnResult'?: boolean;
+    // (undocumented)
+    'dataset': ExportAfmObjectIdentifierDataset;
+    'emptyValueHandling'?: ExportParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'parameter': ExportAfmObjectIdentifierParameter;
+}
+
+// @public (undocumented)
+export type ExportParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 // @public
 export interface ExportParameterValue {
@@ -25779,7 +26018,7 @@ export interface FilterContextControllerApiUpdateEntityFilterContextsRequest {
 }
 
 // @public
-export type FilterDefinition = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
+export type FilterDefinition = AbsoluteDateFilter | AbsoluteGranularityDateFilter | AllTimeDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | ParameterizedDateFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
 
 // @public
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
@@ -36399,7 +36638,7 @@ export type JsonApiPublisherDocumentPageTemplateOutAttributesContentPageSizeEnum
 export interface JsonApiPublisherDocumentPageTemplateOutDocument {
     // (undocumented)
     'data': JsonApiPublisherDocumentPageTemplateOut;
-    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'included'?: Array<JsonApiPublisherDocumentOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
     // (undocumented)
@@ -36415,7 +36654,7 @@ export interface JsonApiPublisherDocumentPageTemplateOutDocumentMeta {
 export interface JsonApiPublisherDocumentPageTemplateOutList {
     // (undocumented)
     'data': Array<JsonApiPublisherDocumentPageTemplateOutWithLinks>;
-    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'included'?: Array<JsonApiPublisherDocumentOutIncludes>;
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
@@ -36449,7 +36688,15 @@ export interface JsonApiPublisherDocumentPageTemplateOutRelationships {
     // (undocumented)
     'createdBy'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsCreatedBy;
     // (undocumented)
+    'datasets'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsDatasets;
+    // (undocumented)
+    'labels'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsLabels;
+    // (undocumented)
+    'metrics'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsMetrics;
+    // (undocumented)
     'modifiedBy'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsModifiedBy;
+    // (undocumented)
+    'visualizationObjects'?: JsonApiPublisherDocumentPageTemplateOutRelationshipsVisualizationObjects;
 }
 
 // @public (undocumented)
@@ -36459,9 +36706,29 @@ export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsCreatedBy {
 }
 
 // @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsDatasets {
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsLabels {
+    'data': Array<JsonApiLabelLinkage>;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsMetrics {
+    'data': Array<JsonApiMetricLinkage>;
+}
+
+// @public (undocumented)
 export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsModifiedBy {
     // (undocumented)
     'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentPageTemplateOutRelationshipsVisualizationObjects {
+    'data': Array<JsonApiVisualizationObjectLinkage>;
 }
 
 // @public (undocumented)
@@ -36793,7 +37060,7 @@ export interface JsonApiPublisherDocumentTemplateOutAttributesContent {
 export interface JsonApiPublisherDocumentTemplateOutDocument {
     // (undocumented)
     'data': JsonApiPublisherDocumentTemplateOut;
-    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'included'?: Array<JsonApiPublisherDocumentOutIncludes>;
     // (undocumented)
     'links'?: ObjectLinks;
     // (undocumented)
@@ -36809,7 +37076,7 @@ export interface JsonApiPublisherDocumentTemplateOutDocumentMeta {
 export interface JsonApiPublisherDocumentTemplateOutList {
     // (undocumented)
     'data': Array<JsonApiPublisherDocumentTemplateOutWithLinks>;
-    'included'?: Array<JsonApiUserIdentifierOutWithLinks>;
+    'included'?: Array<JsonApiPublisherDocumentOutIncludes>;
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
@@ -36843,7 +37110,15 @@ export interface JsonApiPublisherDocumentTemplateOutRelationships {
     // (undocumented)
     'createdBy'?: JsonApiPublisherDocumentTemplateOutRelationshipsCreatedBy;
     // (undocumented)
+    'datasets'?: JsonApiPublisherDocumentTemplateOutRelationshipsDatasets;
+    // (undocumented)
+    'labels'?: JsonApiPublisherDocumentTemplateOutRelationshipsLabels;
+    // (undocumented)
+    'metrics'?: JsonApiPublisherDocumentTemplateOutRelationshipsMetrics;
+    // (undocumented)
     'modifiedBy'?: JsonApiPublisherDocumentTemplateOutRelationshipsModifiedBy;
+    // (undocumented)
+    'visualizationObjects'?: JsonApiPublisherDocumentTemplateOutRelationshipsVisualizationObjects;
 }
 
 // @public (undocumented)
@@ -36853,9 +37128,29 @@ export interface JsonApiPublisherDocumentTemplateOutRelationshipsCreatedBy {
 }
 
 // @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsDatasets {
+    'data': Array<JsonApiDatasetLinkage>;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsLabels {
+    'data': Array<JsonApiLabelLinkage>;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsMetrics {
+    'data': Array<JsonApiMetricLinkage>;
+}
+
+// @public (undocumented)
 export interface JsonApiPublisherDocumentTemplateOutRelationshipsModifiedBy {
     // (undocumented)
     'data': JsonApiUserIdentifierLinkage | null;
+}
+
+// @public (undocumented)
+export interface JsonApiPublisherDocumentTemplateOutRelationshipsVisualizationObjects {
+    'data': Array<JsonApiVisualizationObjectLinkage>;
 }
 
 // @public (undocumented)
@@ -42340,8 +42635,10 @@ export interface LocalizationResolvedValues {
 // @public (undocumented)
 export type LocalizationResolvedValueSourceEnum = 'USER' | 'WORKSPACE' | 'PARENT' | 'ORGANIZATION' | 'ENVIRONMENT' | 'DEFAULT';
 
-// @public (undocumented)
+// @public
 export interface LocalizationSettingUsage {
+    // (undocumented)
+    'childWorkspaces'?: LocalizationCount;
     // (undocumented)
     'users': LocalizationCount;
     // (undocumented)
@@ -42397,7 +42694,7 @@ export interface LocalizationStatisticsTranslatedLocale {
 export interface LocalizationStatisticsWorkspace {
     'id': string;
     'locales': Array<LocalizationStatisticsTranslatedLocale>;
-    'name': string;
+    'name'?: string | null;
     'parentId'?: string | null;
     'total': number;
 }
@@ -42436,6 +42733,8 @@ export type LocalizationUsageUserSourceEnum = 'USER' | 'WORKSPACE' | 'PARENT' | 
 export interface LocalizationUsageValue {
     // (undocumented)
     'bySetting': LocalizationSettingUsages;
+    // (undocumented)
+    'childWorkspaces'?: LocalizationCount;
     // (undocumented)
     'content': LocalizationContent;
     // (undocumented)
@@ -44473,6 +44772,28 @@ interface ParameterItem_2 {
 }
 export { ParameterItem_2 as AfmParameterItem }
 export { ParameterItem_2 as LabelElementsParameterItem }
+
+// @public
+export interface ParameterizedDateFilter {
+    // (undocumented)
+    'parameterizedDateFilter': ParameterizedDateFilterParameterizedDateFilter;
+}
+
+// @public (undocumented)
+export interface ParameterizedDateFilterParameterizedDateFilter {
+    // (undocumented)
+    'applyOnResult'?: boolean;
+    // (undocumented)
+    'dataset': AfmObjectIdentifierDataset;
+    'emptyValueHandling'?: ParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'parameter': AfmObjectIdentifierParameter;
+}
+
+// @public (undocumented)
+export type ParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 // @public
 export class ParametersApi extends MetadataBaseApi implements ParametersApiInterface {
@@ -50258,6 +50579,46 @@ export interface WidgetSlidesTemplate {
 
 // @public (undocumented)
 export type WidgetSlidesTemplateAppliedOnEnum = 'PDF' | 'PPTX';
+
+// @public (undocumented)
+export interface WorkflowDashboardSummaryRequestDto {
+    // (undocumented)
+    'customUserPrompt'?: string;
+    // (undocumented)
+    'dashboardId': string;
+    // (undocumented)
+    'keyMetricIds'?: Array<string>;
+    // (undocumented)
+    'referenceQuarter'?: string;
+}
+
+// @public (undocumented)
+export interface WorkflowDashboardSummaryResponseDto {
+    // (undocumented)
+    'message': string;
+    // (undocumented)
+    'runId': string;
+    // (undocumented)
+    'status': string;
+}
+
+// @public (undocumented)
+export interface WorkflowStatusResponseDto {
+    // (undocumented)
+    'currentPhase'?: string;
+    // (undocumented)
+    'error'?: string;
+    // (undocumented)
+    'message': string;
+    // (undocumented)
+    'result'?: {
+        [key: string]: object;
+    };
+    // (undocumented)
+    'runId': string;
+    // (undocumented)
+    'status': string;
+}
 
 // @public (undocumented)
 export interface WorkspaceAutomationIdentifier {

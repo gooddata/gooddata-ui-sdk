@@ -178,7 +178,7 @@ describe("convertDocumentToCatalogItem", () => {
         },
     };
 
-    it("should convert document metadata as a read-only item", () => {
+    it("should convert document metadata with the creator's login", () => {
         const catalogItem = convertDocumentToCatalogItem(document);
 
         expect(catalogItem).toEqual({
@@ -188,11 +188,12 @@ describe("convertDocumentToCatalogItem", () => {
             description: "Sales by month",
             tags: ["sales"],
             createdBy: "Jane Doe",
+            creatorLogin: "user1",
             createdAt: expect.any(Date),
             updatedBy: "John Smith",
             updatedAt: expect.any(Date),
             isLocked: true,
-            isEditable: false,
+            isEditable: true,
         });
     });
 
@@ -207,6 +208,7 @@ describe("convertDocumentToCatalogItem", () => {
             description: "",
             tags: [],
             createdBy: "",
+            creatorLogin: undefined,
             createdAt: null,
             updatedBy: "",
             updatedAt: null,

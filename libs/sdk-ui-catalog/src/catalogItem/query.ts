@@ -21,9 +21,11 @@ import { convertDocumentToCatalogItem } from "./converter.js";
 import type {
     ICatalogItem,
     ICatalogItemAttribute,
+    ICatalogItemBase,
     ICatalogItemComputedAttribute,
     ICatalogItemDashboard,
     ICatalogItemDataSet,
+    ICatalogItemDocument,
     ICatalogItemFact,
     ICatalogItemInsight,
     ICatalogItemMeasure,
@@ -422,7 +424,18 @@ export function getDateDatasetsQuery({
     );
 }
 
-export function updateCatalogItem(backend: IAnalyticalBackend, workspace: string, item: ICatalogItem) {
+type ICatalogItemMetaChanges = Partial<Pick<ICatalogItemBase, "title" | "description" | "tags">>;
+
+/**
+ * Saves the item's metadata. A document saves only the fields in `changes`, so it does not write back
+ * values someone else changed since the item was loaded.
+ */
+export function updateCatalogItem(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: ICatalogItem,
+    changes: ICatalogItemMetaChanges,
+) {
     switch (item.type) {
         case "analyticalDashboard":
             return updateDashboardCatalogItemMeta(backend, workspace, item);
@@ -440,9 +453,28 @@ export function updateCatalogItem(backend: IAnalyticalBackend, workspace: string
             return updateParameterCatalogItemMeta(backend, workspace, item);
         case "computedAttribute":
             return updateComputedAttributeCatalogItemMeta(backend, workspace, item);
+        case "document":
+            return updateDocumentCatalogItemMeta(backend, workspace, item, changes);
         default:
             throw new Error(`Unsupported catalog item type`);
     }
+}
+
+function updateDocumentCatalogItemMeta(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: ICatalogItemDocument,
+    fields: ICatalogItemMetaChanges,
+) {
+    return backend
+        .workspace(workspace)
+        .publisherV2()
+        .updateDocumentMeta({
+            ref: idRef(item.identifier, "document"),
+            title: fields.title,
+            description: fields.description,
+            tags: fields.tags,
+        });
 }
 
 function updateDashboardCatalogItemMeta(

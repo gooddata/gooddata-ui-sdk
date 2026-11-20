@@ -1,13 +1,9 @@
 // (C) 2022-2026 GoodData Corporation
 
-import {
-    type IAttributeDisplayFormMetadataObject,
-    type ObjRef,
-    areObjRefsEqual,
-    idRef,
-    uriRef,
-} from "@gooddata/sdk-model";
+import { type IAttributeDisplayFormMetadataObject, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Dropdown, DropdownList, type IAlignPoint } from "@gooddata/sdk-ui-kit";
+
+import { isDisplayFormMetadataReferencedBy } from "../../../../../../model/utils/attributeFilterMatching.js";
 
 import { AttributeDisplayFormDropdownButton } from "./AttributeDisplayFormDropdownButton.js";
 import { AttributeDisplayFormDropDownItem } from "./AttributeDisplayFormDropDownItem.js";
@@ -37,11 +33,8 @@ export function AttributeDisplayFormsDropdown({
     onChange,
 }: IAttributeFilterDisplayFormDropdownProps) {
     // try matching both uri and id in case the type of ref is different from what is in the ref field
-    const selectedDisplayFormTitle = displayForms.find(
-        (df) =>
-            areObjRefsEqual(df.ref, selectedDisplayForm) ||
-            areObjRefsEqual(idRef(df.id, "displayForm"), selectedDisplayForm) ||
-            areObjRefsEqual(uriRef(df.uri), selectedDisplayForm),
+    const selectedDisplayFormTitle = displayForms.find((df) =>
+        isDisplayFormMetadataReferencedBy(df, selectedDisplayForm),
     )!.title;
 
     return (

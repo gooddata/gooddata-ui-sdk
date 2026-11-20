@@ -56,6 +56,10 @@
             background: kit-variables.$is-focused-background;
         }
 
+        &--inactive {
+            cursor: default;
+        }
+
         &__content {
             box-sizing: border-box;
             width: 100%;

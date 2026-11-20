@@ -10,6 +10,7 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     idRef,
+    isComputedAttributeRef,
     isDashboardAttributeFilter,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -211,7 +212,13 @@ export function displayFormsEquivalent(
     }
     const leftMetadata = findDisplayFormMetadata(left, displayForms);
     const rightMetadata = findDisplayFormMetadata(right, displayForms);
-    return !!leftMetadata && !!rightMetadata && leftMetadata.id === rightMetadata.id;
+    return (
+        !!leftMetadata &&
+        !!rightMetadata &&
+        leftMetadata.id === rightMetadata.id &&
+        // a computed attribute may share its id with a real label
+        isComputedAttributeRef(leftMetadata.ref) === isComputedAttributeRef(rightMetadata.ref)
+    );
 }
 
 /**
@@ -222,9 +229,12 @@ export function isDisplayFormMetadataReferencedBy(
     displayForm: IAttributeDisplayFormMetadataObject,
     ref: ObjRef,
 ): boolean {
+    // A computed attribute's fabricated display form is referenced by its computedAttribute-typed
+    // ref only - a displayForm-typed ref with the same id points to a real label, not to it.
     return (
         areObjRefsEqual(displayForm.ref, ref) ||
-        areObjRefsEqual(idRef(displayForm.id, "displayForm"), ref) ||
+        (!isComputedAttributeRef(displayForm.ref) &&
+            areObjRefsEqual(idRef(displayForm.id, "displayForm"), ref)) ||
         areObjRefsEqual(uriRef(displayForm.uri), ref)
     );
 }

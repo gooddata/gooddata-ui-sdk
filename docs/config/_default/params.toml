@@ -62,9 +62,23 @@ addSearchTab = "gd-ui-doc"
     enable          = true
     websiteId       = "321ae018-8175-44b4-b907-18d793521ab4"
     projectName     = "GoodData"
-    projectColor    = "#ED26B7"
+    projectColor    = "#164E87"
     projectLogo     = "https://www.gooddata.ai/img/generic/logo-g.svg"
-    modalTitleColor = "#1c0d3f"
+    modalTitleColor = "#09090c"
+    # Native param, not extraAttrs: extraAttrs renders values with %q, which would
+    # turn the newlines into a literal "\n".
+    modalDisclaimer = """Ask AI answers questions related to GoodData.UI and GoodData Cloud. For GoodData Cloud Native specific questions, please visit the [GoodData Cloud Native documentation](https://www.gooddata.ai/docs/cloud-native/latest/).
+
+[How Ask AI works](https://www.gooddata.ai/docs/cloud/getting-started/#ask-ai-about-gooddata)"""
+    # Same widget behaviour as the GoodData Cloud docs (L2-1941).
+    [askAI.extraAttrs]
+        user-analytics-cookie-enabled = "false"
+        view-mode                     = "sidebar"
+        modal-title                   = "Ask AI"
+        modal-title-font-family       = "Funnel Display SemiBold,Helvetica,Arial,sans-serif"
+        modal-disclaimer-text-color   = "#164E87"
+        mcp-enabled                   = "true"
+        mcp-server-url                = "https://gooddata-docs.mcp.kapa.ai"
 
 # gd-docs-theme-next feature switches. Breadcrumbs are wanted on; the theme defaults
 # them on, and this states it where the switch really lives.

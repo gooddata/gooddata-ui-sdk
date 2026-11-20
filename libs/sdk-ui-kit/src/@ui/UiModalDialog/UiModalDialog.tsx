@@ -2,6 +2,7 @@
 
 import {
     type KeyboardEvent as ReactKeyboardEvent,
+    type MouseEvent as ReactMouseEvent,
     type ReactNode,
     type RefObject,
     createContext,
@@ -33,6 +34,14 @@ import { UiModalOwnerProvider, modalOwnerAttributes } from "../UiFocusManager/Ui
 const { b, e } = bem("gd-ui-kit-modal-dialog");
 
 const markModalKeyDown = (event: ReactKeyboardEvent) => markModalOwnedEvent(event.nativeEvent);
+
+// The backdrop cannot take focus, so a press on it would move focus to <body>,
+// out of reach of the card's Escape handler.
+const keepFocusOnBackdropPress = (event: ReactMouseEvent) => {
+    if (event.target === event.currentTarget) {
+        event.preventDefault();
+    }
+};
 
 interface IUiDialogContext {
     titleId: string;
@@ -319,6 +328,7 @@ function OpenModalDialog({
                     // The card, the focus guards and the menus portaled from the card all bubble
                     // through here before reaching a focus trap around the opener.
                     onKeyDown={markModalKeyDown}
+                    onMouseDown={keepFocusOnBackdropPress}
                 >
                     <FloatingFocusManager
                         context={context}

@@ -15,7 +15,11 @@ import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTes
 import { isDashboardDrillToAttributeUrlResolved } from "../../events/drill.js";
 import { isDashboardCommandFailed } from "../../events/general.js";
 
-const hyperlink = vi.hoisted((): { value: string | undefined } => ({ value: "" }));
+// `isolate: false` shares one module graph per worker; drop it so the imports below resolve through the mocks.
+const hyperlink = vi.hoisted((): { value: string | undefined } => {
+    vi.resetModules();
+    return { value: "" };
+});
 
 vi.mock("./resolveDrillToAttributeUrl.js", () => ({
     resolveDrillToAttributeUrl: () => hyperlink.value,

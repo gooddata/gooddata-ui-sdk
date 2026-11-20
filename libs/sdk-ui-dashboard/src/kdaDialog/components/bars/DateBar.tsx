@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type RefObject, useMemo, useRef } from "react";
+import { type MutableRefObject, type RefObject, useMemo, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -21,6 +21,7 @@ interface IDateBarProps {
 export function DateBar(props: IDateBarProps) {
     const intl = useIntl();
     const ref = useRef<HTMLUListElement>(null);
+    const chipRef = useRef<HTMLButtonElement>(null);
     const { setState, state } = useKdaState();
     const listboxId = "kda-dialog-date-bar";
 
@@ -73,8 +74,10 @@ export function DateBar(props: IDateBarProps) {
                                     ariaHaspopup: "listbox",
                                     popupId: listboxId,
                                 }}
+                                buttonRef={chipRef as MutableRefObject<HTMLButtonElement>}
                             />
                         }
+                        returnFocusTo={chipRef}
                         title={intl.formatMessage({ id: "kdaDialog.dialog.bars.date.period.title" })}
                         initialFocus={ref as RefObject<HTMLElement>}
                         content={({ onClose }) => (

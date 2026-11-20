@@ -91,6 +91,12 @@ export class ObjRefMap<T> {
     constructor(private readonly config: IObjRefMapConfig<T>) {}
 
     private idRefToKey = (identifier: string, type?: ObjectType): string => {
+        // A ref of another type than the map's (a computed attribute stored among display forms or
+        // attributes) is always keyed with its type, even without strict type checking: a computed
+        // attribute may share its identifier with a real label or attribute.
+        if (type && this.config.type && type !== this.config.type) {
+            return `${identifier}#${type}`;
+        }
         return !this.config.strictTypeCheck || !type ? identifier : `${identifier}#${type}`;
     };
 
@@ -100,18 +106,10 @@ export class ObjRefMap<T> {
         const uri = uriExtract(item);
         const identifier = idExtract(item);
         const ref = refExtract(item);
+        const keyType = (isIdentifierRef(ref) && ref.type) || this.config.type;
 
         this.itemsByUri[uri] = item;
-        // The item is indexed under the map's canonical type AND under its own ref type when they
-        // differ. This matters for computed attributes: their fabricated display forms are stored
-        // among plain display forms but carry a `computedAttribute`-typed ref, and
-        // strict-type-checking lookups come in with that same type - while lookups by the map's
-        // canonical type must keep working for every other item.
-        this.itemsByIdentifier[this.idRefToKey(identifier, this.config.type)] = item;
-        const ownRefType = isIdentifierRef(ref) ? ref.type : undefined;
-        if (ownRefType && ownRefType !== this.config.type) {
-            this.itemsByIdentifier[this.idRefToKey(identifier, ownRefType)] = item;
-        }
+        this.itemsByIdentifier[this.idRefToKey(identifier, keyType)] = item;
         this.items.push([ref, item]);
         this.size++;
     };

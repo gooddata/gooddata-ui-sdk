@@ -9,6 +9,7 @@ import { type UIPathOptions, getUIPath } from "../utils/getUIPath.js";
 import { getItemRelationships, isItemLocked, isRelationshipLocked } from "../utils/searchItem.js";
 
 import { type SearchTreeViewItem } from "./LeveledSearchTreeView.js";
+import { type SearchLinkPolicy, isSearchItemLinkEnabled } from "./SearchLinkPolicyContext.js";
 
 type BuildSearchOverlayItemsProps = {
     intl: IntlShape;
@@ -17,6 +18,7 @@ type BuildSearchOverlayItemsProps = {
     workspace?: string;
     threshold?: number;
     canEdit?: boolean;
+    isLinkEnabled?: SearchLinkPolicy;
     uiPathOptions?: UIPathOptions;
 };
 
@@ -27,6 +29,7 @@ export function buildSemanticSearchTreeViewItems({
     relationships,
     threshold = 0.8,
     canEdit = false,
+    isLinkEnabled,
     uiPathOptions,
 }: BuildSearchOverlayItemsProps): SearchTreeViewItem[] {
     return searchResults
@@ -74,7 +77,7 @@ export function buildSemanticSearchTreeViewItems({
             });
 
             // Add artificial "Edit" action item when there are relationships to display
-            if (children.length > 0 && canEdit) {
+            if (children.length > 0 && canEdit && isSearchItemLinkEnabled(item, isLinkEnabled)) {
                 children.push({
                     item: {
                         id: item.id,

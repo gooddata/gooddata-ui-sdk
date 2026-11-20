@@ -45,7 +45,7 @@ export interface ExportAFM {
      */
     'measures': Array<ExportMeasureItem>;
     /**
-     * (EXPERIMENTAL) Parameter values to use for this execution.
+     * Parameter values to use for this execution.
      */
     'parameters'?: Array<ExportParameterItem>;
 }
@@ -738,7 +738,7 @@ export type ExportDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 /**
  * @type ExportDashboardFilter
  */
-export type ExportDashboardFilter = ExportDashboardArbitraryAttributeFilter | ExportDashboardAttributeFilter | ExportDashboardDateFilter | ExportDashboardMatchAttributeFilter | ExportDashboardMeasureValueFilter;
+export type ExportDashboardFilter = ExportDashboardArbitraryAttributeFilter | ExportDashboardAttributeFilter | ExportDashboardDateFilter | ExportDashboardMatchAttributeFilter | ExportDashboardMeasureValueFilter | ExportDashboardParameterizedDateFilter;
 
 export interface ExportDashboardMatchAttributeFilter {
     'matchAttributeFilter': ExportDashboardMatchAttributeFilterMatchAttributeFilter;
@@ -767,6 +767,19 @@ export interface ExportDashboardMeasureValueFilterDashboardMeasureValueFilter {
     'measure': ExportIdentifierRef;
     'title'?: string;
 }
+
+export interface ExportDashboardParameterizedDateFilter {
+    'dashboardParameterizedDateFilter': ExportDashboardParameterizedDateFilterDashboardParameterizedDateFilter;
+}
+
+export interface ExportDashboardParameterizedDateFilterDashboardParameterizedDateFilter {
+    'dataSet'?: ExportIdentifierRef;
+    'emptyValueHandling'?: ExportDashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum;
+    'localIdentifier'?: string;
+    'parameter': ExportIdentifierRef;
+}
+
+export type ExportDashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
 
 /**
  * Export request object describing the export properties for dashboard tabular exports.
@@ -810,7 +823,7 @@ export type ExportDashboardTabularExportRequestFormatEnum = 'XLSX' | 'PDF';
  * @type ExportDateFilter
  * Abstract filter definition type for dates.
  */
-export type ExportDateFilter = ExportAbsoluteDateFilter | ExportAbsoluteGranularityDateFilter | ExportAllTimeDateFilter | ExportRelativeDateFilter;
+export type ExportDateFilter = ExportAbsoluteDateFilter | ExportAbsoluteGranularityDateFilter | ExportAllTimeDateFilter | ExportParameterizedDateFilter | ExportRelativeDateFilter;
 
 export interface ExportDateValue {
     'value': string;
@@ -842,7 +855,7 @@ export interface ExportExportResponse {
  * @type ExportFilterDefinition
  * Abstract filter definition type
  */
-export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportAbsoluteGranularityDateFilter | ExportAllTimeDateFilter | ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportInlineFilterDefinition | ExportMatchAttributeFilter | ExportNegativeAttributeFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
+export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportAbsoluteGranularityDateFilter | ExportAllTimeDateFilter | ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportInlineFilterDefinition | ExportMatchAttributeFilter | ExportNegativeAttributeFilter | ExportParameterizedDateFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
 
 /**
  * @type ExportFilterDefinitionForSimpleMeasure
@@ -1069,7 +1082,7 @@ export interface ExportOver {
 }
 
 /**
- * (EXPERIMENTAL) Parameter value for this execution.
+ * Parameter value for this execution.
  */
 export interface ExportParameterItem {
     [key: string]: any;
@@ -1104,6 +1117,26 @@ export interface ExportParameterValue {
      */
     'valueTitle'?: string;
 }
+
+/**
+ * A date filter whose period comes from a DATE_RANGE parameter. Each execution uses the parameter\'s current granularity and range.
+ */
+export interface ExportParameterizedDateFilter {
+    'parameterizedDateFilter': ExportParameterizedDateFilterParameterizedDateFilter;
+}
+
+export interface ExportParameterizedDateFilterParameterizedDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': ExportAfmObjectIdentifierDataset;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: ExportParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum;
+    'localIdentifier'?: string;
+    'parameter': ExportAfmObjectIdentifierParameter;
+}
+
+export type ExportParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
  * Custom CSS styles for the table. (PDF, HTML)

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-kit, sdk-ui-filters: Pressing Escape in an empty search input of the attribute filter dropdown now closes it. Other inputs with clearOnEsc keep their behavior; the new propagateEscapeWhenEmpty prop lets one pass Escape on while it is empty",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

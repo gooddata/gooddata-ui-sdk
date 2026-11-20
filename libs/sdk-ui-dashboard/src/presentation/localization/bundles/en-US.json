@@ -2287,6 +2287,10 @@
         "text": "This parameter is always passed to the drill target.",
         "crowdinContext": "Tooltip shown for a disabled, always checked dashboard parameter row in the drill filters configuration. The drill always passes this parameter value to the target visualization or dashboard"
     },
+    "configurationPanel.drillConfig.filterSelection.drillToDashboardParameterNotOnTarget.tooltip": {
+        "text": "Cannot be enabled. Add this parameter to the target dashboard first.",
+        "crowdinContext": "Tooltip shown for a disabled, unchecked dashboard parameter row in drill-to-dashboard configuration when the target dashboard (or target tab) does not contain this parameter, so the target ignores its value"
+    },
     "configurationPanel.drillConfig.filterSelection.drillToDashboardDuplicateMetricFilter.tooltip": {
         "text": "Another filter for this metric is already being passed.",
         "crowdinContext": "Tooltip shown for a disabled dashboard or visualization metric filter in drill-to-dashboard configuration when another filter for the same metric is already selected"

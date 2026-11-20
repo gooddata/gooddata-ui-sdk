@@ -175,6 +175,15 @@ export interface IPublisherDocumentSummaryV2 extends IAuditableDates, IAuditable
 }
 
 /**
+ * The document metadata {@link IWorkspacePublisherServiceV2.updateDocumentMeta} changes. A field left out
+ * keeps its value.
+ *
+ * @alpha
+ */
+export type IPublisherDocumentMetaV2 = Pick<IPublisherDocumentV2, "ref"> &
+    Partial<Pick<IPublisherDocumentV2, "title" | "description" | "tags">>;
+
+/**
  * One document of the document list: a readable document, or the summary of one that is not.
  *
  * @alpha
@@ -305,6 +314,12 @@ export interface IWorkspacePublisherServiceV2 {
     createDocument(publisherDocument: IPublisherDocumentDefinitionV2): Promise<IPublisherDocumentV2>;
 
     updateDocument(publisherDocument: IPublisherDocumentV2): Promise<IPublisherDocumentV2>;
+
+    /**
+     * Changes only the given title, description or tags and keeps the content, so it also works for a
+     * document whose content cannot be read.
+     */
+    updateDocumentMeta(meta: IPublisherDocumentMetaV2): Promise<IPublisherDocumentSummaryV2>;
 
     deleteDocument(ref: ObjRef): Promise<void>;
 

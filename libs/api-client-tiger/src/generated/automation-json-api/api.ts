@@ -45,7 +45,7 @@ export interface AutomationAFM {
      */
     'measures': Array<AutomationMeasureItem>;
     /**
-     * (EXPERIMENTAL) Parameter values to use for this execution.
+     * Parameter values to use for this execution.
      */
     'parameters'?: Array<AutomationParameterItem>;
 }
@@ -936,7 +936,7 @@ export type AutomationDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTE
 /**
  * @type AutomationDashboardFilter
  */
-export type AutomationDashboardFilter = AutomationDashboardArbitraryAttributeFilter | AutomationDashboardAttributeFilter | AutomationDashboardDateFilter | AutomationDashboardMatchAttributeFilter | AutomationDashboardMeasureValueFilter;
+export type AutomationDashboardFilter = AutomationDashboardArbitraryAttributeFilter | AutomationDashboardAttributeFilter | AutomationDashboardDateFilter | AutomationDashboardMatchAttributeFilter | AutomationDashboardMeasureValueFilter | AutomationDashboardParameterizedDateFilter;
 
 export interface AutomationDashboardMatchAttributeFilter {
     'matchAttributeFilter': AutomationDashboardMatchAttributeFilterMatchAttributeFilter;
@@ -965,6 +965,19 @@ export interface AutomationDashboardMeasureValueFilterDashboardMeasureValueFilte
     'measure': AutomationIdentifierRef;
     'title'?: string;
 }
+
+export interface AutomationDashboardParameterizedDateFilter {
+    'dashboardParameterizedDateFilter': AutomationDashboardParameterizedDateFilterDashboardParameterizedDateFilter;
+}
+
+export interface AutomationDashboardParameterizedDateFilterDashboardParameterizedDateFilter {
+    'dataSet'?: AutomationIdentifierRef;
+    'emptyValueHandling'?: AutomationDashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum;
+    'localIdentifier'?: string;
+    'parameter': AutomationIdentifierRef;
+}
+
+export type AutomationDashboardParameterizedDateFilterDashboardParameterizedDateFilterEmptyValueHandlingEnum = 'include' | 'exclude' | 'only';
 
 /**
  * Export request object describing the export properties for dashboard tabular exports (v2 with dashboardId).
@@ -1012,7 +1025,7 @@ export type AutomationDashboardTabularExportRequestV2FormatEnum = 'XLSX' | 'PDF'
  * @type AutomationDateFilter
  * Abstract filter definition type for dates.
  */
-export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationAbsoluteGranularityDateFilter | AutomationAllTimeDateFilter | AutomationRelativeDateFilter;
+export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationAbsoluteGranularityDateFilter | AutomationAllTimeDateFilter | AutomationParameterizedDateFilter | AutomationRelativeDateFilter;
 
 export interface AutomationDateValue {
     'value': string;
@@ -1123,7 +1136,7 @@ export type AutomationExportResultStatusEnum = 'SUCCESS' | 'ERROR' | 'INTERNAL_E
  * @type AutomationFilterDefinition
  * Abstract filter definition type
  */
-export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | AutomationAbsoluteGranularityDateFilter | AutomationAllTimeDateFilter | AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationInlineFilterDefinition | AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter | AutomationRelativeDateFilter;
+export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | AutomationAbsoluteGranularityDateFilter | AutomationAllTimeDateFilter | AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationInlineFilterDefinition | AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationParameterizedDateFilter | AutomationPositiveAttributeFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter | AutomationRelativeDateFilter;
 
 /**
  * @type AutomationFilterDefinitionForSimpleMeasure
@@ -1376,7 +1389,7 @@ export interface AutomationOver {
 }
 
 /**
- * (EXPERIMENTAL) Parameter value for this execution.
+ * Parameter value for this execution.
  */
 export interface AutomationParameterItem {
     [key: string]: any;
@@ -1411,6 +1424,26 @@ export interface AutomationParameterValue {
      */
     'valueTitle'?: string;
 }
+
+/**
+ * A date filter whose period comes from a DATE_RANGE parameter. Each execution uses the parameter\'s current granularity and range.
+ */
+export interface AutomationParameterizedDateFilter {
+    'parameterizedDateFilter': AutomationParameterizedDateFilterParameterizedDateFilter;
+}
+
+export interface AutomationParameterizedDateFilterParameterizedDateFilter {
+    'applyOnResult'?: boolean;
+    'dataset': AutomationAfmObjectIdentifierDataset;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: AutomationParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum;
+    'localIdentifier'?: string;
+    'parameter': AutomationAfmObjectIdentifierParameter;
+}
+
+export type AutomationParameterizedDateFilterParameterizedDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
  * Custom CSS styles for the table. (PDF, HTML)

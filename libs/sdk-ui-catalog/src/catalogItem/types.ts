@@ -187,11 +187,16 @@ export interface ICatalogItemDataSet extends ICatalogItemBase {
 }
 
 /**
- * Catalog item for Reports documents. Read-only in the catalog.
+ * Catalog item for Reports documents.
  * @public
  */
 export interface ICatalogItemDocument extends ICatalogItemBase {
     type: "document";
+    /**
+     * Login of the user who created the document. Besides workspace managers, only they may edit it.
+     * @alpha
+     */
+    creatorLogin?: string;
 }
 
 /**

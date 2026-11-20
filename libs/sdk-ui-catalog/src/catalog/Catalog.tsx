@@ -50,12 +50,13 @@ export function Catalog({
     const isTrendingEnabled = useIsCatalogTrendingObjectsEnabled();
     const isQualityEnabled = useIsCatalogQualityEnabled();
 
-    const { open, openedItem, setItemOpened, onOpenDetail, onCloseDetail, onOpenClick } = useCatalogItemOpen(
-        onCatalogItemOpenClick,
-        onCatalogDetailOpened,
-        onCatalogDetailClosed,
-        openCatalogItemRef,
-    );
+    const { open, openedItem, setItemOpened, updateOpenedItem, onOpenDetail, onCloseDetail, onOpenClick } =
+        useCatalogItemOpen(
+            onCatalogItemOpenClick,
+            onCatalogDetailOpened,
+            onCatalogDetailClosed,
+            openCatalogItemRef,
+        );
 
     return (
         <Layout>
@@ -96,6 +97,7 @@ export function Catalog({
                         open={open}
                         openedItem={openedItem}
                         setItemOpened={setItemOpened}
+                        updateOpenedItem={updateOpenedItem}
                         onOpenDetail={onOpenDetail}
                         onCloseDetail={onCloseDetail}
                         onOpenClick={onOpenClick}

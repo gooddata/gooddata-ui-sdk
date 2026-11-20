@@ -219,9 +219,14 @@ function createDocumentWrapper(
 }
 
 describe("useCatalogItemLoad – document", () => {
-    it("loads a document by its id as a read-only item", async () => {
+    it("loads a document by its id", async () => {
         const { wrapper, documentsQuery } = createDocumentWrapper([
-            { ref: idRef("doc.id", "document"), title: "Monthly report", version: "2" },
+            {
+                ref: idRef("doc.id", "document"),
+                title: "Monthly report",
+                version: "2",
+                createdBy: { ref: idRef("alice"), login: "alice" },
+            },
         ]);
 
         const { result } = renderHook(
@@ -241,7 +246,7 @@ describe("useCatalogItemLoad – document", () => {
             identifier: "doc.id",
             type: "document",
             title: "Monthly report",
-            isEditable: false,
+            creatorLogin: "alice",
         });
     });
 

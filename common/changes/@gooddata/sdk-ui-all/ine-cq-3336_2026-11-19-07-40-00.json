@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Dashboards: an attribute filter can be added for an attribute that shares its id with a computed attribute.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

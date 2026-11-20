@@ -7,7 +7,7 @@ import cx from "classnames";
 import { describe, expect, it, vi } from "vitest";
 
 import { render } from "../../../test/render.js";
-import { useMediaQuery } from "../../responsive/useMediaQuery.js";
+import { MOBILE_VIEWPORT } from "../../../test/viewport.js";
 
 import { b, e } from "./listboxBem.js";
 import {
@@ -22,10 +22,6 @@ const requiredProps = {
     items: [],
     ariaAttributes: { id: "listbox" },
 } satisfies IUiListboxProps<string>;
-
-vi.mock("../../responsive/useMediaQuery.js", () => ({
-    useMediaQuery: vi.fn(() => false),
-}));
 
 describe("UiListbox", () => {
     const mockItems: IUiListboxItem<string>[] = [
@@ -346,7 +342,7 @@ describe("UiListbox", () => {
         { supportedViews: undefined, isMobile: true },
         { supportedViews: ["desktop"], isMobile: false },
     ])("should apply mobile layout on mobile device for $supportedViews", ({ supportedViews, isMobile }) => {
-        vi.mocked(useMediaQuery).mockReturnValue(true);
+        window.happyDOM.setViewport(MOBILE_VIEWPORT);
         renderListbox({ supportedViews });
 
         expect(document.querySelector(`.${b()}`)).toHaveClass(b({ mobile: isMobile }), { exact: true });
