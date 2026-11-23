@@ -48074,7 +48074,9 @@ export function SmartFunctionsAi_ResolveLlmProviders(axios: AxiosInstance, baseP
 export function SmartFunctionsAi_ResolveLlmProvidersV2(axios: AxiosInstance, basePath: string, requestParameters: SmartFunctionsAiResolveLlmProvidersV2Request, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiResolvedLlms>;
 
 // @public
-export function SmartFunctionsAi_SemanticSearch(axios: AxiosInstance, basePath: string, requestParameters: SmartFunctionsAiSemanticSearchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSearchResult>;
+function SmartFunctionsAi_SemanticSearch(axios: AxiosInstance, basePath: string, requestParameters: SmartFunctionsAiSemanticSearchRequest, options?: AxiosRequestConfig, configuration?: AiConfiguration): AxiosPromise<AiSearchResult>;
+export { SmartFunctionsAi_SemanticSearch as GenAiApi_SemanticSearch }
+export { SmartFunctionsAi_SemanticSearch }
 
 // @public
 interface SmartFunctionsAiAiSearchRequest {

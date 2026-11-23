@@ -41,6 +41,10 @@ import {
 } from "@gooddata/sdk-model";
 import { _isEqual, _omit } from "@gooddata/util";
 
+import {
+    ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED,
+    containsAbsoluteGranularityDateFilter,
+} from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { type RenderMode } from "../../../../types.js";
 import { filterLocalIdentifiers } from "../../../store/filtering/dashboardFilterSelectors.js";
 import { getRestrictedDashboardFilters } from "../../../store/filtering/restrictedFilterUtils.js";
@@ -538,9 +542,24 @@ export function findTabDefaultFilterView(
         (view) => view.isDefault && view.tabLocalIdentifier === tabLocalIdentifier,
     );
     if (tabDefaultView || !isFirstTab) {
-        return tabDefaultView;
+        return supportedDefaultFilterView(tabDefaultView);
     }
-    return filterViews.find((view) => view.isDefault && !view.tabLocalIdentifier);
+    return supportedDefaultFilterView(filterViews.find((view) => view.isDefault && !view.tabLocalIdentifier));
+}
+
+/**
+ * A default view the dashboard cannot apply in full is skipped, so the dashboard opens with its own filters.
+ */
+function supportedDefaultFilterView(
+    view: IDashboardFilterView | undefined,
+): IDashboardFilterView | undefined {
+    if (view && containsAbsoluteGranularityDateFilter(view.filterContext.filters)) {
+        console.warn(
+            `The default filter view "${view.name}" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED}`,
+        );
+        return undefined;
+    }
+    return view;
 }
 
 /**
@@ -602,7 +621,7 @@ export function applyDefaultFilterView(
     }
 
     // Legacy behavior: apply default view to root-level filter context
-    const defaultFilterView = filterViews.find((view) => view.isDefault);
+    const defaultFilterView = supportedDefaultFilterView(filterViews.find((view) => view.isDefault));
 
     if (defaultFilterView && isFilterContext(dashboard.filterContext)) {
         const { filterContext: updatedFilterContext, configUpdates } = changeFilterContextSelection(

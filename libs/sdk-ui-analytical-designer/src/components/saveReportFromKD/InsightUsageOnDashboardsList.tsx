@@ -102,7 +102,7 @@ export function Component({
                         {accessibleDocuments.length > 0 ? (
                             <ul>
                                 {accessibleDocuments.map((item) => (
-                                    <DocumentItem key={item.id} item={item} />
+                                    <DocumentItem key={`${item.type}/${item.id}`} item={item} />
                                 ))}
                             </ul>
                         ) : null}

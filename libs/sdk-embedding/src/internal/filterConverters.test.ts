@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
     type FilterItem,
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IArbitraryAttributeFilterItem,
     type IMatchAttributeFilterItem,
     type IMeasureValueFilter,
@@ -12,6 +13,8 @@ import {
     type IPositiveAttributeFilter,
     type IRankingFilter,
     type IRelativeDateFilter,
+    isDateFilter,
+    isDateFilterOfAnyType,
 } from "../iframe/EmbeddedGdc.js";
 
 import {
@@ -228,6 +231,76 @@ describe("filter convertors", () => {
 
     it("should return false when date filter has seconds but seconds are not supported", () => {
         expect(isValidFiltersFormat([absoluteDateFilterWithSeconds], true, true, false)).toBe(false);
+    });
+
+    describe("absolute granularity date filter", () => {
+        const granularityFilter = (
+            granularity: string,
+            from: string | undefined,
+            to: string | undefined,
+            withDataSet = true,
+        ): IAbsoluteGranularityDateFilter =>
+            // Filters come from untyped messages, so the helper builds invalid ones too.
+            ({
+                absoluteGranularityDateFilter: {
+                    granularity,
+                    ...(from === undefined ? {} : { from }),
+                    ...(to === undefined ? {} : { to }),
+                    ...(withDataSet ? { dataSet: { uri: "uri" } } : {}),
+                },
+            }) as IAbsoluteGranularityDateFilter;
+
+        it.each([
+            ["GDC.time.week", "2026-01", "2026-53"],
+            ["GDC.time.month", "2026-01", "2026-12"],
+            ["GDC.time.quarter", "2025-4", "2026-1"],
+            ["GDC.time.year", "2025", "2026"],
+        ])("should accept a valid %s range", (granularity, from, to) => {
+            expect(isValidFiltersFormat([granularityFilter(granularity, from, to)])).toBe(true);
+        });
+
+        it.each([
+            ["an invalid literal", "GDC.time.month", "2026-1", "2026-02"],
+            ["month 13", "GDC.time.month", "2026-01", "2026-13"],
+            ["week 54", "GDC.time.week", "2026-01", "2026-54"],
+            ["the US week granularity", "GDC.time.week_us", "2026-01", "2026-02"],
+            ["a day with day granularity", "GDC.time.date", "2026-01-01", "2026-01-31"],
+            ["a day with month granularity", "GDC.time.month", "2026-01-01", "2026-01-31"],
+            ["no edge", "GDC.time.month", undefined, undefined],
+            ["'from' after 'to'", "GDC.time.month", "2026-03", "2026-01"],
+        ])("should reject %s", (_desc, granularity, from, to) => {
+            expect(isValidFiltersFormat([granularityFilter(granularity, from, to)])).toBe(false);
+        });
+
+        it.each([
+            ["'from'", "2026-01", undefined],
+            ["'to'", undefined, "2026-03"],
+        ])("should accept a range with only %s", (_desc, from, to) => {
+            expect(isValidFiltersFormat([granularityFilter("GDC.time.month", from, to)])).toBe(true);
+        });
+
+        it("should be covered by isDateFilterOfAnyType but not by isDateFilter", () => {
+            const filter = granularityFilter("GDC.time.month", "2026-01", "2026-03");
+
+            expect(isDateFilterOfAnyType(filter)).toBe(true);
+            expect(isDateFilter(filter)).toBe(false);
+            expect(isDateFilterOfAnyType(absoluteDateFilter)).toBe(true);
+        });
+
+        it("should be rejected when transformed to the filter context", () => {
+            const filter = granularityFilter("GDC.time.month", "2026-01", "2026-03");
+
+            expect(() => transformFilterContext([filter])).toThrow(
+                "Absolute date filters with granularity are not supported.",
+            );
+        });
+
+        it("should validate the data set only when asked to", () => {
+            const filter = granularityFilter("GDC.time.month", "2026-01", "2026-03", false);
+
+            expect(isValidFiltersFormat([filter], true)).toBe(false);
+            expect(isValidFiltersFormat([filter], false)).toBe(true);
+        });
     });
 
     it("should return false when date filter is missing dataSet", () => {

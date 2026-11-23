@@ -14,6 +14,7 @@ import {
     idRef,
     isMeasureValueFilter,
     newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
     newMeasureValueFilter,
     newMeasureValueFilterWithOptions,
     newPositiveAttributeFilter,
@@ -26,6 +27,25 @@ import {
     convertTigerStoredToSdkFilter,
     convertTigerToSdkFilters,
 } from "./storedFilterConverter.js";
+
+const granularityDateFilterItem: FilterContextItem = {
+    dashboardAbsoluteGranularityDateFilter: {
+        granularity: "GDC.time.month",
+        from: "2026-01",
+        to: "2026-03",
+        dataSet: idRef("date1", "dataSet"),
+        localIdentifier: "granularityDateFilter",
+    },
+};
+
+const attributeFilterItem: FilterContextItem = {
+    attributeFilter: {
+        displayForm: idRef("attr1", "displayForm"),
+        negativeSelection: false,
+        attributeElements: { values: ["value1"] },
+        localIdentifier: "attributeFilter",
+    },
+};
 
 function expectTigerMeasureValueFilter(filter: unknown): asserts filter is ITigerMeasureValueFilter {
     expect(filter).toBeDefined();
@@ -251,6 +271,44 @@ describe("storedFilterConverter", () => {
             expectSdkMeasureValueFilter(sdkFilters[0]);
         });
 
+        it("converts a compound MVF next to an absolute date filter with granularity", () => {
+            const tigerFilters = [
+                {
+                    absoluteGranularityDateFilter: {
+                        dataSet: { identifier: { id: "date1", type: "dataset" } },
+                        granularity: "GDC.time.month",
+                        from: "2026-01",
+                        to: "2026-03",
+                    },
+                },
+                {
+                    measureValueFilter: {
+                        measure: { identifier: { id: "m1", type: "metric" } },
+                        condition: {
+                            compound: {
+                                conditions: [{ comparison: { operator: "GREATER_THAN", value: 10 } }],
+                            },
+                        },
+                    },
+                },
+            ] as unknown as ITigerMeasureValueFilter[];
+
+            const sdkFilters = convertTigerToSdkFilters(tigerFilters) ?? [];
+
+            expect(sdkFilters[0]).toEqual(
+                newAbsoluteGranularityDateFilter(
+                    idRef("date1", "dataSet"),
+                    "GDC.time.month",
+                    "2026-01",
+                    "2026-03",
+                ),
+            );
+            expectSdkMeasureValueFilter(sdkFilters[1]);
+            expect(sdkFilters[1].measureValueFilter.conditions).toEqual([
+                { comparison: { operator: "GREATER_THAN", value: 10 } },
+            ]);
+        });
+
         it("handles undefined input by returning undefined", () => {
             const sdkFilters = convertTigerToSdkFilters(undefined);
             expect(sdkFilters).toBeUndefined();
@@ -356,6 +414,24 @@ describe("storedFilterConverter", () => {
                     idRef("co2_band", "computedAttribute"),
                 );
             }
+        });
+
+        it.each<[string, FilterContextItem[]]>([
+            ["alone", [granularityDateFilterItem]],
+            ["among other filters", [attributeFilterItem, granularityDateFilterItem]],
+        ])("writes and reads an absolute date filter with granularity %s as it is", (_desc, sdkItems) => {
+            const tigerItems = convertSdkFiltersToTiger(sdkItems) ?? [];
+
+            expect(tigerItems).toContainEqual({
+                dashboardAbsoluteGranularityDateFilter: {
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                    dataSet: { identifier: { id: "date1", type: "dataset" } },
+                    localIdentifier: "granularityDateFilter",
+                },
+            });
+            expect(convertTigerToSdkFilters(tigerItems)).toEqual(sdkItems);
         });
 
         it("handles undefined FilterContextItem arrays", () => {

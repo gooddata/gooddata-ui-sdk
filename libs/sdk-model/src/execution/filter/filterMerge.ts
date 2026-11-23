@@ -7,8 +7,8 @@ import { _compact, _groupBy } from "@gooddata/util";
 import { objRefToString } from "../../objRef/index.js";
 
 import {
+    type DateFilterOfAnyType,
     type IAttributeFilter,
-    type IDateFilter,
     type IFilter,
     type IMeasureValueFilter,
     type INullableFilter,
@@ -16,7 +16,7 @@ import {
     filterLocalIdentifier,
     filterObjRef,
     isAttributeFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isMeasureValueFilter,
     isNoopAllTimeDateFilter,
     isRankingFilter,
@@ -24,7 +24,7 @@ import {
 
 type FilterByType = {
     attribute: IAttributeFilter[];
-    date: IDateFilter[];
+    date: DateFilterOfAnyType[];
     measureValue: IMeasureValueFilter[];
     ranking: IRankingFilter[];
 };
@@ -40,7 +40,7 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
     filters.forEach((f) => {
         if (isAttributeFilter(f)) {
             result.attribute.push(f);
-        } else if (isDateFilter(f)) {
+        } else if (isDateFilterOfAnyType(f)) {
             result.date.push(f);
         } else if (isMeasureValueFilter(f)) {
             result.measureValue.push(f);
@@ -117,13 +117,13 @@ export function mergeFilters(
 }
 
 function mergeDateFilters(
-    originalFilters: IDateFilter[],
-    addedFilters: IDateFilter[],
+    originalFilters: DateFilterOfAnyType[],
+    addedFilters: DateFilterOfAnyType[],
     commonDateFilterId?: string,
-): IDateFilter[] {
+): DateFilterOfAnyType[] {
     const allFilters = [...originalFilters, ...addedFilters];
     const grouped = _groupBy(allFilters, (f) => objRefToString(filterObjRef(f)));
-    const mergedFilters: IDateFilter[] = [];
+    const mergedFilters: DateFilterOfAnyType[] = [];
 
     Object.values(grouped).forEach((filtersForDimension) => {
         // use the last filter for the dimension specified.

@@ -18,13 +18,14 @@ const selected = propCombination("isSelected", [false, true]);
 const destructive = propCombination("isDestructive", [false, true]);
 const active = propCombination("isActive", [true]);
 const disabled = propCombination("isDisabled", [true]);
+const disabledDestructive = propCombination("isDestructive", [true], { isDisabled: true });
 
 function UiToolbarButtonTest({ showCode }: { showCode?: boolean }) {
     return (
         <ToolbarStoryFrame>
             <ComponentTable
                 columnsBy={selected}
-                rowsBy={[destructive, active, disabled]}
+                rowsBy={[destructive, active, disabled, disabledDestructive]}
                 Component={UiToolbarButton}
                 codeSnippet={showCode ? "UiToolbarButton" : undefined}
                 align="center"

@@ -19,7 +19,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 
 import { type IChatConversationVisualisationContent } from "@gooddata/sdk-backend-spi";
-import { type IDashboardAttributeFilter, type IFilter, insightVisualizationType } from "@gooddata/sdk-model";
+import { type IFilter, insightVisualizationType } from "@gooddata/sdk-model";
 import {
     type IDrillEvent,
     isClusteringNotReceived,
@@ -42,6 +42,7 @@ import {
     UiTooltip,
 } from "@gooddata/sdk-ui-kit";
 
+import { createKdaDefinitionFromDrill } from "../../../keyDriverAnalysis/drilling.js";
 import { type IChatConversationLocalItem, type IChatConversationMultipartLocalPart } from "../../../model.js";
 import {
     catalogItemsSelector,
@@ -62,7 +63,6 @@ import {
     type IGenAIAssistantConversationVisualizationContentProps,
     type IGenAIAssistantVisualizationMenuItem,
 } from "../../customized/types.js";
-import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
 import { DrillSelectDropdownMenu } from "../contents/drill/DrillSelectDropdownMenu.js";
 
@@ -70,12 +70,7 @@ import {
     ConversationVisualisation,
     type ConversationVisualisationProps,
 } from "./ConversationVisualisation.js";
-import {
-    ConversationVisualisation as ConversationVisualisationV2,
-    type ConversationVisualisationProps as ConversationVisualisationV2Props,
-} from "./ConversationVisualisationV2.js";
 import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
-import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "./useKdaDefinition.js";
 import { useKdaEnabled } from "./useKdaEnabled.js";
 import { useInsightSaveCheck } from "./useSaveCheck.js";
 import { isFatalError } from "./utils/errors.js";
@@ -144,8 +139,6 @@ export function ConversationVisualizationContent({
     const agGridToken = settings?.agGridToken;
     const enableAccessibleChartTooltip = settings?.enableAccessibleChartTooltip;
     const enableSecondGranularities = settings?.enableSecondGranularities;
-    const enableNewPivotTable = settings?.enableNewPivotTable;
-    const enableAiAssistantChartsV2 = settings?.enableAiAssistantChartsV2;
 
     const enableChangeAnalysis = useKdaEnabled(enableKeyDriverAnalysis);
 
@@ -230,43 +223,23 @@ export function ConversationVisualizationContent({
                         isLoading={part.reporting ?? false}
                     />
                     <Title id={moreButtonDescId} visualization={visualization} scenario={scenario} />
-                    {enableAiAssistantChartsV2 ? (
-                        <VisualisationWrapper2
-                            message={message}
-                            colorPalette={colorPalette}
-                            separators={separators}
-                            isTable={isTable}
-                            visualization={visualization}
-                            agGridToken={agGridToken}
-                            execConfig={scenario?.execConfig}
-                            settings={settings}
-                            enableChangeAnalysis={enableChangeAnalysis}
-                            enableSecondGranularities={!!enableSecondGranularities}
-                            enableAccessibleChartTooltip={enableAccessibleChartTooltip}
-                            enableDrilling={!scenario || scenario.isBaseline}
-                            onDrillFired={setDrillState}
-                            onVisualisationError={onVisualizationError}
-                            onVisualisationSuccess={onVisualizationSuccess}
-                        />
-                    ) : (
-                        <VisualisationWrapper
-                            message={message}
-                            colorPalette={colorPalette}
-                            separators={separators}
-                            isTable={isTable}
-                            visualization={visualization}
-                            agGridToken={agGridToken}
-                            execConfig={scenario?.execConfig}
-                            enableChangeAnalysis={enableChangeAnalysis}
-                            enableSecondGranularities={!!enableSecondGranularities}
-                            enableNewPivotTable={enableNewPivotTable}
-                            enableAccessibleChartTooltip={enableAccessibleChartTooltip}
-                            enableDrilling={!scenario || scenario.isBaseline}
-                            onDrillFired={setDrillState}
-                            onVisualisationError={onVisualizationError}
-                            onVisualisationSuccess={onVisualizationSuccess}
-                        />
-                    )}
+                    <VisualisationWrapper
+                        message={message}
+                        colorPalette={colorPalette}
+                        separators={separators}
+                        isTable={isTable}
+                        visualization={visualization}
+                        agGridToken={agGridToken}
+                        execConfig={scenario?.execConfig}
+                        settings={settings}
+                        enableChangeAnalysis={enableChangeAnalysis}
+                        enableSecondGranularities={!!enableSecondGranularities}
+                        enableAccessibleChartTooltip={enableAccessibleChartTooltip}
+                        enableDrilling={!scenario || scenario.isBaseline}
+                        onDrillFired={setDrillState}
+                        onVisualisationError={onVisualizationError}
+                        onVisualisationSuccess={onVisualizationSuccess}
+                    />
                     <SaveDialog />
                 </Wrapper>
             </DrillState>
@@ -488,21 +461,6 @@ function VisualisationWrapper(props: ConversationVisualisationProps) {
     );
 }
 
-function VisualisationWrapper2(props: ConversationVisualisationV2Props) {
-    return (
-        <div
-            className={cx(
-                "gd-gen-ai-chat__conversation__visualization__wrapper",
-                `gd-gen-ai-chat__conversation__visualization__wrapper--${props.isTable ? "table" : (props.visualization?.insight.visualizationUrl.replace("local:", "").toLowerCase() ?? "unknown")}`,
-            )}
-        >
-            <VisualizationErrorBoundary>
-                <ConversationVisualisationV2 {...props} />
-            </VisualizationErrorBoundary>
-        </div>
-    );
-}
-
 interface IVisualizationErrorReportProps {
     error?: Error | null;
 }
@@ -638,20 +596,16 @@ function DrillState({ containerRef, filters, children, drillState, setDrillState
                                 return;
                             }
 
-                            const allFilters = mergeFilters(
-                                convertIntersectionToAttributeFilters(event.drillContext.intersection ?? []),
-                                (filters?.map(getDashboardAttributeFilter).filter(Boolean) ??
-                                    []) as IDashboardAttributeFilter[],
-                            );
-
-                            const definition = createKdaDefinitionFromDrill(
+                            const definition = createKdaDefinitionFromDrill({
                                 catalogItems,
-                                intl.locale,
-                                data,
+                                locale: intl.locale,
+                                comparison: data,
                                 event,
-                                allFilters,
-                            );
-                            dispatch(setKeyDriverAnalysisAction({ keyDriverAnalysis: definition }));
+                                filters,
+                            });
+                            if (definition) {
+                                dispatch(setKeyDriverAnalysisAction({ keyDriverAnalysis: definition }));
+                            }
                         }}
                         onClose={() => {
                             setDrillState(null);

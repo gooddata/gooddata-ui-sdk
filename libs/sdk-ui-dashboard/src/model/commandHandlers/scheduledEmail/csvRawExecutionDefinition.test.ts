@@ -5,9 +5,15 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    type FilterContextItem,
     type IExecutionDefinition,
     type IExportDefinitionVisualizationObjectRequestPayload,
+    type IFilter,
+    type IInsight,
     idRef,
+    newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
+    newInsightDefinition,
 } from "@gooddata/sdk-model";
 
 import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
@@ -24,6 +30,7 @@ const executionDefinition: IExecutionDefinition = {
 
 function rawRequest(
     parametersByTab?: IExportDefinitionVisualizationObjectRequestPayload["content"]["parametersByTab"],
+    filters?: IExportDefinitionVisualizationObjectRequestPayload["content"]["filters"],
 ): IExportDefinitionVisualizationObjectRequestPayload {
     return {
         type: "visualizationObject",
@@ -34,6 +41,7 @@ function rawRequest(
             widget: "widgetId",
             dashboard: "dashboardId",
             ...(parametersByTab ? { parametersByTab } : {}),
+            ...(filters ? { filters } : {}),
         },
     };
 }
@@ -181,5 +189,47 @@ describe("prepareCsvRawExecutionDefinition", () => {
         });
 
         expect(result).toBeUndefined();
+    });
+});
+
+describe("prepareCsvRawExecutionDefinition filters", () => {
+    const closed = idRef("closed", "dataSet");
+    const granularityDateFilterItem: FilterContextItem = {
+        dashboardAbsoluteGranularityDateFilter: {
+            dataSet: closed,
+            granularity: "GDC.time.month",
+            from: "2026-03",
+            to: "2026-04",
+            localIdentifier: "closedFilter",
+        },
+    };
+    const granularityDateFilter = newAbsoluteGranularityDateFilter(
+        closed,
+        "GDC.time.month",
+        "2026-03",
+        "2026-04",
+        {
+            localIdentifier: "closedFilter",
+        },
+    );
+    const insightWithFilters = (filters: IFilter[]) =>
+        newInsightDefinition("local:table", (builder) => builder.filters(filters)) as IInsight;
+
+    it("converts an absolute date filter with granularity item to the execution filter", () => {
+        const result = prepare({
+            csvRawRequest: rawRequest(undefined, [granularityDateFilterItem]),
+            insight: insightWithFilters([]),
+        });
+
+        expect(result?.filters).toEqual([granularityDateFilter]);
+    });
+
+    it("replaces the insight date filter on the same data set with the absolute date filter with granularity item", () => {
+        const result = prepare({
+            csvRawRequest: rawRequest(undefined, [granularityDateFilterItem]),
+            insight: insightWithFilters([newAbsoluteDateFilter(closed, "2025-01-01", "2025-12-31")]),
+        });
+
+        expect(result?.filters).toEqual([granularityDateFilter]);
     });
 });

@@ -2,8 +2,8 @@
 
 import { type DateFilterItem } from "@gooddata/sdk-embedding";
 import {
+    type DateFilterOfAnyType,
     type IDashboardDateFilter,
-    type IDateFilter,
     type IFilter,
     type IInsight,
     type IRelativeDateFilter,
@@ -14,11 +14,14 @@ import {
     filterObjRef,
     insightFilters,
     isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isAllTimeDateFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isRelativeDateFilter,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
+import { _compact } from "@gooddata/util";
+
 const ALL_TIME_GRANULARITY = "ALL_TIME_GRANULARITY";
 
 function getDateFilterItem(
@@ -68,7 +71,7 @@ export function getWidgetDateFilterItem(
     return getDateFilterItem(widget.dateDataSet, dateFilterContextItem);
 }
 
-const sanitizeCorruptedAllTimeFilters = (appliedDateFilter: IDateFilter) => {
+const sanitizeCorruptedAllTimeFilters = (appliedDateFilter: DateFilterOfAnyType) => {
     if (!isRelativeDateFilter(appliedDateFilter)) {
         return appliedDateFilter;
     }
@@ -94,7 +97,7 @@ const sanitizeCorruptedAllTimeFilters = (appliedDateFilter: IDateFilter) => {
     }
 };
 
-function getDateFilterContext(dateFilter: IDateFilter): DateFilterItem {
+function getDateFilterContext(dateFilter: DateFilterOfAnyType): DateFilterItem | undefined {
     const includeDataSet = true;
     if (isAllTimeDateFilter(dateFilter)) {
         const { dataSet } = relativeDateFilterValues(dateFilter, includeDataSet);
@@ -117,7 +120,11 @@ function getDateFilterContext(dateFilter: IDateFilter): DateFilterItem {
                 to,
             },
         };
-    } else {
+    } else if (isAbsoluteGranularityDateFilter(dateFilter)) {
+        throw new Error(
+            "Absolute date filters with granularity are not supported in the insight editor yet.",
+        );
+    } else if (isRelativeDateFilter(dateFilter)) {
         const { dataSet, from, to, granularity, boundedFilter } = relativeDateFilterValues(
             dateFilter,
             includeDataSet,
@@ -132,20 +139,24 @@ function getDateFilterContext(dateFilter: IDateFilter): DateFilterItem {
             },
         };
     }
+
+    const unknownFilter: never = dateFilter;
+    console.warn("Skipping a date filter of an unknown type.", unknownFilter);
+    return undefined;
 }
 
 export function getDateFilterItems(appliedFilters: IFilter[], insight: IInsight): DateFilterItem[] {
     const sanitizedAppliedDateFilters = appliedFilters
-        .filter(isDateFilter)
+        .filter(isDateFilterOfAnyType)
         .map(sanitizeCorruptedAllTimeFilters);
-    const insightDateFilters = insightFilters(insight).filter(isDateFilter);
+    const insightDateFilters = insightFilters(insight).filter(isDateFilterOfAnyType);
 
     return getDateFilterItemsFromAppliedFilters(sanitizedAppliedDateFilters, insightDateFilters);
 }
 
 function getDateFilterItemsFromAppliedFilters(
-    appliedFilters: IDateFilter[],
-    insightDateFilters: IDateFilter[],
+    appliedFilters: DateFilterOfAnyType[],
+    insightDateFilters: DateFilterOfAnyType[],
 ): DateFilterItem[] {
     const uniqueInsightDateFilters = insightDateFilters.filter((insightDateFilter) => {
         return !appliedFilters.some((appliedFilter) => {
@@ -154,5 +165,5 @@ function getDateFilterItemsFromAppliedFilters(
     });
     const allDateFilters = [...appliedFilters, ...uniqueInsightDateFilters];
 
-    return allDateFilters.map((dateFilter): DateFilterItem => getDateFilterContext(dateFilter));
+    return _compact(allDateFilters.map(getDateFilterContext));
 }

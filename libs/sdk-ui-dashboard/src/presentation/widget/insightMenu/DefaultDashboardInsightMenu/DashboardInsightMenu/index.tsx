@@ -220,7 +220,11 @@ export function DashboardInsightMenuBody({
         }
     };
 
+    // the title of the opened submenu; the parent's label element is not rendered while a submenu is shown
+    const [submenuTitle, setSubmenuTitle] = useState<string | undefined>(undefined);
+
     const handleSubmenuOpen = (level: number, item?: IUiMenuItem<IMenuItemData>) => {
+        setSubmenuTitle(level > 0 && item && "stringTitle" in item ? item.stringTitle : undefined);
         if (level > 0) {
             const submenuItem = items.find((i) => i.itemId === item?.id);
             if (submenuItem) {
@@ -236,6 +240,8 @@ export function DashboardInsightMenuBody({
     const menuLabel = showTitle
         ? undefined
         : intl.formatMessage({ id: "insightMenu.restrictedWidget.options" });
+    // names both the dialog and the menu; a shown submenu is named by its own title
+    const label = submenuTitle ?? menuLabel;
 
     // The element that opened the menu, kept from before the menu took the focus.
     const openerRef = useRef(document.activeElement);
@@ -261,10 +267,7 @@ export function DashboardInsightMenuBody({
             enableReturnFocusOnUnmount
             tabOutHandler={handleTabOut}
         >
-            <DashboardInsightMenuContainer
-                ariaLabelledBy={menuLabel ? undefined : menuLabelId}
-                ariaLabel={menuLabel}
-            >
+            <DashboardInsightMenuContainer ariaLabelledBy={label ? undefined : menuLabelId} ariaLabel={label}>
                 <UiMenu<IMenuItemData, IMenuData>
                     maxHeight={getMaxHeight}
                     containerBottomPadding="small"
@@ -278,8 +281,8 @@ export function DashboardInsightMenuBody({
                     }
                     shouldCloseOnSelect
                     ariaAttributes={
-                        menuLabel
-                            ? { id: menuId, "aria-label": menuLabel }
+                        label
+                            ? { id: menuId, "aria-label": label }
                             : { id: menuId, "aria-labelledby": menuLabelId }
                     }
                     onSelect={handleSelect}

@@ -706,6 +706,8 @@ function getTooltipConfiguration({
     return tooltipAction
         ? {
               tooltip: {
+                  // the HTML tooltip paints its own background, the SVG box behind it must stay blank
+                  backgroundColor: "none",
                   borderWidth: 0,
                   borderRadius: 0,
                   shadow: false,

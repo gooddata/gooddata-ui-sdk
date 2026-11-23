@@ -16,9 +16,14 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
+import {
+    ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED,
+    dashboardContainsAbsoluteGranularityDateFilter,
+} from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { deriveAbsoluteFormGranularitiesFromRelativeForm } from "../../../_staging/dateFilterConfig/merge.js";
 import { type IChangeDashboardDefinition } from "../../commands/dashboard.js";
 import { type IDashboardDefinitionChanged, dashboardDefinitionChanged } from "../../events/dashboard.js";
+import { invalidArgumentsProvided } from "../../events/general.js";
 import {
     selectAllCatalogDisplayFormsMap,
     selectCatalogParameters,
@@ -103,6 +108,10 @@ export function* changeDashboardDefinitionHandler(
                   enablePersistentFiltersAcrossTabs: currentDescriptor.enablePersistentFiltersAcrossTabs,
               }
             : cmd.payload.dashboard;
+
+    if (dashboardContainsAbsoluteGranularityDateFilter(dashboard)) {
+        throw invalidArgumentsProvided(ctx, cmd, ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED);
+    }
 
     const effectiveReferences: Partial<IDashboardReferences> =
         providedReferences ?? (payloadInsights ? { insights: [...payloadInsights] } : {});

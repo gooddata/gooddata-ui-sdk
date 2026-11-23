@@ -8,7 +8,7 @@ import {
     type ObjRef,
     areObjRefsEqual,
     insightMeasures,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isSimpleMeasure,
     measureFilters,
 } from "@gooddata/sdk-model";
@@ -44,7 +44,7 @@ export function getUnrelatedDateDataset(
 function isDateFiltered(measure: IMeasure): boolean {
     if (isSimpleMeasure(measure)) {
         const filters = measureFilters(measure);
-        return !!filters?.some(isDateFilter);
+        return !!filters?.some(isDateFilterOfAnyType);
     }
     return true;
 }

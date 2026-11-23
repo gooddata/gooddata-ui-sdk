@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-ext: A Mekko chart with a Stack by attribute no longer offers sorting by its Width or Height metric, and offers the Total sort only when it has a single metric, so the chart and its exports show the columns in the same order. Insights saved with such a metric sort now show the columns in the default order.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

@@ -26,6 +26,7 @@ const defaultState: IKdaState = {
     selectedError: undefined,
     //root data
     attributeFilters: [],
+    attributeFilterToFocus: undefined,
     measureValueFilters: [],
     //attributes data
     selectedAttributes: [],

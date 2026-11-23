@@ -12,6 +12,9 @@ import type { Geometry } from 'geojson';
 export function absoluteDateFilterValues(filter: IAbsoluteDateFilter, includeDataSet?: boolean): IAbsoluteDateFilterValues;
 
 // @alpha
+export function absoluteGranularityDateFilterValues(filter: IAbsoluteGranularityDateFilter, includeDataSet?: boolean): IAbsoluteGranularityDateFilterValues;
+
+// @alpha
 export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUserAccess | IGranularUserGroupAccess | IGranularRulesAccess;
 
 // @public
@@ -391,6 +394,9 @@ export function colorPaletteToColors(palette: IColorPalette): string[];
 // @public
 export type ComparatorDirection = "asc" | "desc";
 
+// @alpha
+export function compareDatePeriodLiterals(granularity: DatePeriodGranularity, a: DatePeriodLiteral, b: DatePeriodLiteral): number;
+
 // @public (undocumented)
 export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
 
@@ -482,6 +488,9 @@ export type CsvDelimiterPresetId = keyof typeof CSV_DELIMITER_PRESETS;
 export type CsvDelimiterValidationError = "singleCharacter" | "unsupportedCharacter";
 
 // @alpha
+export function dashboardAbsoluteGranularityDateFilterToDateFilterByWidget(filter: IDashboardAbsoluteGranularityDateFilter, widget?: Partial<IFilterableWidget>): IAbsoluteGranularityDateFilter;
+
+// @alpha
 export type DashboardAttachmentType = "PDF" | "XLSX" | "PPTX" | "PDF_SLIDES";
 
 // @alpha
@@ -531,6 +540,9 @@ export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
 // @internal
 export const DashboardDateFilterConfigModeValues: Record<Uppercase<DashboardDateFilterConfigMode>, DashboardDateFilterConfigMode>;
+
+// @alpha
+export type DashboardDateFilterOfAnyType = IDashboardDateFilter | IDashboardAbsoluteGranularityDateFilter;
 
 // @public
 export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardDateFilter, dateDataSet: ObjRef): IDateFilter;
@@ -621,6 +633,9 @@ export type DateFilterAbsoluteType = "absolute";
 export type DateFilterGranularity = "GDC.time.second" | "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.fiscal_month" | "GDC.time.quarter" | "GDC.time.fiscal_quarter" | "GDC.time.year" | "GDC.time.fiscal_year";
 
 // @alpha
+export type DateFilterOfAnyType = IDateFilter | IAbsoluteGranularityDateFilter;
+
+// @alpha
 export type DateFilterOptionAbsoluteFormType = "absoluteForm";
 
 // @alpha
@@ -650,6 +665,21 @@ export type DateFilterType = DateFilterRelativeType | DateFilterAbsoluteType;
 // @public
 export const DateGranularity: {
     [short: string]: DateAttributeGranularity;
+};
+
+// @public
+export type DatePeriodGranularity = "GDC.time.week" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year";
+
+// @public
+export type DatePeriodLiteral = string;
+
+// @public
+export type DatePeriodRange = {
+    from: DatePeriodLiteral;
+    to?: DatePeriodLiteral;
+} | {
+    from?: DatePeriodLiteral;
+    to: DatePeriodLiteral;
 };
 
 // @public
@@ -945,7 +975,7 @@ export function filterAttributeElements(filter: IAttributeFilterWithSelection): 
 export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined;
 
 // @alpha
-export type FilterContextItem = DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter;
+export type FilterContextItem = DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardAbsoluteGranularityDateFilter | IDashboardMeasureValueFilter;
 
 // @alpha
 export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextItems: FilterContextItem[], dateDataSet: ObjRef): IDashboardFilter[];
@@ -972,7 +1002,7 @@ export function filterLocalIdentifier(filter: IFilter): string | undefined;
 export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined;
 
 // @public
-export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter): ObjRef;
+export function filterObjRef(filter: IAbsoluteDateFilter | IAbsoluteGranularityDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter): ObjRef;
 
 // @public
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
@@ -1205,6 +1235,7 @@ export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
     dataSet: ObjRef;
     emptyValueHandling?: EmptyValues;
     from: string;
+    // @deprecated
     granularity?: DateAttributeGranularity;
     to: string;
 }
@@ -1219,6 +1250,7 @@ export interface IAbsoluteDateFilterForm extends IDateFilterOption {
 // @public
 export interface IAbsoluteDateFilterOptions {
     emptyValueHandling?: EmptyValues;
+    // @deprecated
     granularity?: DateAttributeGranularity;
     localIdentifier?: string;
 }
@@ -1239,11 +1271,37 @@ export interface IAbsoluteDateFilterValues {
     emptyValueHandling?: EmptyValues;
     // (undocumented)
     from: string;
-    // (undocumented)
+    // @deprecated (undocumented)
     granularity?: DateAttributeGranularity;
     // (undocumented)
     to: string;
 }
+
+// @public
+export interface IAbsoluteGranularityDateFilter {
+    // (undocumented)
+    absoluteGranularityDateFilter: IAbsoluteGranularityDateFilterBody;
+}
+
+// @public
+export type IAbsoluteGranularityDateFilterBody = IIdentifiableFilter & {
+    dataSet: ObjRef;
+    granularity: DatePeriodGranularity;
+    emptyValueHandling?: EmptyValues;
+} & DatePeriodRange;
+
+// @alpha
+export interface IAbsoluteGranularityDateFilterOptions {
+    emptyValueHandling?: EmptyValues;
+    localIdentifier?: string;
+}
+
+// @alpha
+export type IAbsoluteGranularityDateFilterValues = {
+    dataSet?: ObjRef;
+    granularity: DatePeriodGranularity;
+    emptyValueHandling?: EmptyValues;
+} & DatePeriodRange;
 
 // @alpha
 export interface IAccessControlAware {
@@ -2344,6 +2402,14 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
 }
 
 // @alpha
+export interface IDashboardAbsoluteGranularityDateFilter {
+    // (undocumented)
+    dashboardAbsoluteGranularityDateFilter: IDashboardDateFilterBodyBase & {
+        granularity: DatePeriodGranularity;
+    } & DatePeriodRange;
+}
+
+// @alpha
 export interface IDashboardArbitraryAttributeFilter {
     // (undocumented)
     arbitraryAttributeFilter: {
@@ -2422,16 +2488,13 @@ export interface IDashboardBase {
 // @public
 export interface IDashboardDateFilter {
     // (undocumented)
-    dateFilter: {
+    dateFilter: IDashboardDateFilterBodyBase & {
         type: DateFilterType;
         granularity: DateFilterGranularity;
         from?: DateString | number;
         to?: DateString | number;
-        dataSet?: ObjRef;
         attribute?: ObjRef;
-        localIdentifier?: string;
         boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
-        emptyValueHandling?: EmptyValues;
     };
 }
 
@@ -2439,6 +2502,14 @@ export interface IDashboardDateFilter {
 export interface IDashboardDateFilterAddedPresets {
     absolutePresets?: IAbsoluteDateFilterPreset[];
     relativePresets?: IRelativeDateFilterPreset[];
+}
+
+// @public
+export interface IDashboardDateFilterBodyBase {
+    dataSet?: ObjRef;
+    // @alpha
+    emptyValueHandling?: EmptyValues;
+    localIdentifier?: string;
 }
 
 // @alpha
@@ -2496,7 +2567,7 @@ export interface IDashboardExportParameter {
 }
 
 // @public
-export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter | IMeasureValueFilter;
+export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter | IMeasureValueFilter | IAbsoluteGranularityDateFilter;
 
 // @alpha
 export interface IDashboardFilterGroup {
@@ -3980,7 +4051,6 @@ export interface IFeatureFlags {
     enableAgentInstructions?: boolean;
     enableAiAgenticMultiConversations?: boolean;
     enableAiAgenticSuggestions?: boolean;
-    enableAiAssistantChartsV2?: boolean;
     enableAiContextSetup?: boolean;
     enableAIDataSetting?: boolean;
     enableAiLlmAnthropicProvider?: boolean;
@@ -3999,7 +4069,6 @@ export interface IFeatureFlags {
     enableAutomationTrigger?: boolean;
     enableBusinessBriefingReportsApp?: boolean;
     enableCacheRetentionPolicy?: boolean;
-    enableCatalogDocuments?: boolean;
     enableCatalogSmartSearchResults?: boolean;
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
@@ -4133,7 +4202,7 @@ export interface IFeatureFlags {
 }
 
 // @public
-export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter | IRankingFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
+export type IFilter = IAbsoluteDateFilter | IAbsoluteGranularityDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter | IRankingFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
 
 // @public
 export interface IFilterableWidget {
@@ -5140,7 +5209,7 @@ export interface IMeasureDescriptorObject {
 }
 
 // @public
-export type IMeasureFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
+export type IMeasureFilter = IAbsoluteDateFilter | IAbsoluteGranularityDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
 
 // @public
 export interface IMeasureGroupDescriptor {
@@ -7198,6 +7267,9 @@ export const isAbsoluteDateFilterForm: (obj: unknown) => obj is IAbsoluteDateFil
 // @alpha
 export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateFilterPreset;
 
+// @alpha
+export function isAbsoluteGranularityDateFilter(obj: unknown): obj is IAbsoluteGranularityDateFilter;
+
 // @public
 export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
@@ -7493,6 +7565,9 @@ export function isCrossFiltering(obj: unknown): obj is ICrossFiltering;
 export function isDashboard(obj: unknown): obj is IDashboard;
 
 // @alpha
+export function isDashboardAbsoluteGranularityDateFilter(obj: unknown): obj is IDashboardAbsoluteGranularityDateFilter;
+
+// @alpha
 export function isDashboardArbitraryAttributeFilter(obj: unknown): obj is IDashboardArbitraryAttributeFilter;
 
 // @alpha
@@ -7514,6 +7589,9 @@ export function isDashboardCommonDateFilter(obj: unknown): obj is IDashboardDate
 export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter;
 
 // @alpha
+export function isDashboardDateFilterOfAnyType(obj: unknown): obj is DashboardDateFilterOfAnyType;
+
+// @alpha
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
 
 // @alpha
@@ -7523,7 +7601,10 @@ export function isDashboardDateFilterWithDimension(obj: unknown): obj is IDashbo
 export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
 
 // @public
-export function isDashboardFilter(obj: unknown): obj is IDashboardFilter;
+export function isDashboardFilter(obj: unknown): obj is Exclude<IDashboardFilter, IAbsoluteGranularityDateFilter>;
+
+// @alpha
+export function isDashboardFilterOfAnyType(obj: unknown): obj is IDashboardFilter;
 
 // @alpha
 export function isDashboardLayout<TWidget = IDashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
@@ -7567,6 +7648,9 @@ export function isDateFilter(obj: unknown): obj is IDateFilter;
 // @alpha
 export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranularity;
 
+// @alpha
+export function isDateFilterOfAnyType(obj: unknown): obj is DateFilterOfAnyType;
+
 // @public
 export function isDateFilterWithEmptyValueHandling(obj: unknown): obj is (IAbsoluteDateFilter & {
     absoluteDateFilter: IAbsoluteDateFilterBody & {
@@ -7580,6 +7664,9 @@ export function isDateFilterWithEmptyValueHandling(obj: unknown): obj is (IAbsol
 
 // @alpha
 export function isDateHierarchyReference(obj: unknown): obj is IDateHierarchyReference;
+
+// @alpha
+export function isDatePeriodGranularity(value: unknown): value is DatePeriodGranularity;
 
 // @alpha
 export function isDateRangeParameterDefinition(def: IParameterDefinition): def is IDateRangeParameterDefinition;
@@ -7739,7 +7826,7 @@ export function isExternalPluggableApplicationRegistryItem(app: PluggableApplica
 export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;
 
 // @public
-export function isFilter(obj: unknown): obj is IFilter;
+export function isFilter(obj: unknown): obj is Exclude<IFilter, IAbsoluteGranularityDateFilter>;
 
 // @alpha
 export function isFilterContext(obj: unknown): obj is IFilterContext;
@@ -7748,7 +7835,13 @@ export function isFilterContext(obj: unknown): obj is IFilterContext;
 export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
 
 // @alpha
-export function isFilterContextItem(obj: unknown): obj is FilterContextItem;
+export function isFilterContextItem(obj: unknown): obj is Exclude<FilterContextItem, IDashboardAbsoluteGranularityDateFilter>;
+
+// @alpha
+export function isFilterContextItemOfAnyType(obj: unknown): obj is FilterContextItem;
+
+// @alpha
+export function isFilterOfAnyType(obj: unknown): obj is IFilter;
 
 // @alpha (undocumented)
 export const isFiscalGranularity: (g: string | undefined) => boolean;
@@ -8327,7 +8420,10 @@ export const isSharedGranularity: (g: string | undefined) => boolean;
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
 // @public
-export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter;
+export function isSimpleMeasureFilter(obj: unknown): obj is Exclude<IMeasureFilter, IAbsoluteGranularityDateFilter>;
+
+// @alpha
+export function isSimpleMeasureFilterOfAnyType(obj: unknown): obj is IMeasureFilter;
 
 // @alpha
 export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): boolean;
@@ -8414,6 +8510,12 @@ export const isUserWorkspaceAccessGrantee: (obj: unknown) => obj is IUserWorkspa
 
 // @alpha
 export function isValidDashboardTimezoneId(timezoneId: DashboardTimezoneId): boolean;
+
+// @alpha
+export function isValidDatePeriodLiteral(granularity: DatePeriodGranularity, literal: unknown): boolean;
+
+// @alpha
+export function isValidDatePeriodRange(granularity: DatePeriodGranularity, from: unknown, to: unknown): boolean;
 
 // @alpha
 export function isValidIanaTimezoneId(timezoneId: string): boolean;
@@ -9878,6 +9980,12 @@ export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: st
 
 // @public
 export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string, localIdentifier?: string, emptyValueHandling?: EmptyValues): IAbsoluteDateFilter;
+
+// @alpha
+export function newAbsoluteGranularityDateFilter(dateDataSet: ObjRef | Identifier, granularity: DatePeriodGranularity, from: DatePeriodLiteral, to?: DatePeriodLiteral, options?: IAbsoluteGranularityDateFilterOptions): IAbsoluteGranularityDateFilter;
+
+// @alpha
+export function newAbsoluteGranularityDateFilter(dateDataSet: ObjRef | Identifier, granularity: DatePeriodGranularity, from: undefined, to: DatePeriodLiteral, options?: IAbsoluteGranularityDateFilterOptions): IAbsoluteGranularityDateFilter;
 
 // @alpha
 export const newAdHocPublisherDocumentDefinition: typeof newAdHocPublisherDocumentDefinitionV1;

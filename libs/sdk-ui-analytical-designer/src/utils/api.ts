@@ -60,6 +60,7 @@ import { indexValidElements } from "../services/report_service.js";
 import {
     canSeeAllDocuments,
     getAccessibleDocumentIds,
+    isDocument,
 } from "../store/insight_usage/insight_usage_helpers.js";
 import { getItemCacheState } from "../store/item_cache/item_cache_selectors.js";
 import { type IAppState } from "../store/types.js";
@@ -872,22 +873,21 @@ async function getDocumentSummaries(
 }
 
 /**
- * The ids of the documents the user may open. When their creators cannot be loaded, none of them count as
- * open, so no document the user may not see is named.
+ * The ids of the documents the user may open: the ones the backend returns. When they cannot be loaded,
+ * none of them count as open, so no document the user may not see is named.
  */
 export async function loadAccessibleDocumentIds(
     projectId: string,
     documents: IMetadataObject[],
-    userLogin: string | undefined,
     permissions: IWorkspacePermissions | null,
 ): Promise<string[]> {
-    const documentIds = documents.map(({ id }) => id);
+    const documentIds = documents.filter(isDocument).map(({ id }) => id);
     if (documentIds.length === 0 || canSeeAllDocuments(permissions)) {
         return documentIds;
     }
     try {
         const summaries = await getDocumentSummaries(projectId, documentIds);
-        return getAccessibleDocumentIds(summaries, userLogin, permissions);
+        return getAccessibleDocumentIds(summaries);
     } catch {
         return [];
     }

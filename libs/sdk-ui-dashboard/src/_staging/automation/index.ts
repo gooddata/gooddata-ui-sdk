@@ -23,10 +23,12 @@ import {
     idRef,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
-    isFilter,
     isFilterContextItem,
+    isFilterOfAnyType,
 } from "@gooddata/sdk-model";
 import { _isEqual, _omit } from "@gooddata/util";
+
+import { assertNoAbsoluteGranularityDateFilter } from "../dashboard/absoluteGranularityDateFilters.js";
 
 export const isDashboardAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
@@ -116,11 +118,15 @@ export const getAutomationDashboardFilters = (
         return undefined;
     }
 
-    return (
+    const filters = (
         automation.exportDefinitions?.find((exportDefinition) => {
             return isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
         })?.requestPayload as IExportDefinitionDashboardRequestPayload
-    )?.content.filters?.filter((f) => isFilterContextItem(f));
+    )?.content.filters;
+
+    // The filter below drops absolute date filters with granularity, so saving would lose them.
+    assertNoAbsoluteGranularityDateFilter(filters);
+    return filters?.filter((f) => isFilterContextItem(f));
 };
 
 /**
@@ -134,11 +140,15 @@ export const getAutomationDashboardFiltersByTab = (
         return undefined;
     }
 
-    return (
+    const filtersByTab = (
         automation.exportDefinitions?.find((exportDefinition) => {
             return isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
         })?.requestPayload as IExportDefinitionDashboardRequestPayload
     )?.content.filtersByTab;
+
+    // Tab filters go to the edit dialog as is, which cannot show absolute date filters with granularity.
+    Object.values(filtersByTab ?? {}).forEach((filters) => assertNoAbsoluteGranularityDateFilter(filters));
+    return filtersByTab;
 };
 
 /**
@@ -292,13 +302,16 @@ export const getAutomationVisualizationFilters = (
         automation.exportDefinitions?.find((exportDefinition) => {
             return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
         })?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
-    )?.content.filters?.filter((f) => isFilter(f)) as IFilter[] | undefined;
+    )?.content.filters?.filter((f) => isFilterOfAnyType(f)) as IFilter[] | undefined;
 
-    const filterContextItems = (
+    const visualizationFilters = (
         automation.exportDefinitions?.find((exportDefinition) => {
             return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
         })?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
-    )?.content.filters?.filter((f) => isFilterContextItem(f));
+    )?.content.filters;
+    // The filter below drops absolute date filters with granularity, so saving would lose them.
+    assertNoAbsoluteGranularityDateFilter(visualizationFilters);
+    const filterContextItems = visualizationFilters?.filter((f) => isFilterContextItem(f));
 
     return {
         executionFilters: (executionFilters ?? []).length > 0 ? executionFilters : undefined,
@@ -313,7 +326,7 @@ export const getAutomationAlertFilters = (
         return undefined;
     }
 
-    return automation.alert?.execution?.filters?.filter(isFilter);
+    return automation.alert?.execution?.filters?.filter(isFilterOfAnyType);
 };
 
 /**

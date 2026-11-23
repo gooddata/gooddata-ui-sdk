@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-gen-ai",
-    "version": "11.70.0-alpha.1",
+    "version": "11.70.0-alpha.2",
     "description": "GoodData GenAI SDK",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -74,7 +74,6 @@
         "@gooddata/sdk-ui-dashboard": "workspace:*",
         "@gooddata/sdk-ui-ext": "workspace:*",
         "@gooddata/sdk-ui-filters": "workspace:*",
-        "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
         "@gooddata/sdk-ui-semantic-search": "workspace:*",

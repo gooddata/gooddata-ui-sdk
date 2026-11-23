@@ -17,11 +17,18 @@ import {
     type IAttributeFilterButtonProps,
     type IAttributeFilterDropdownButtonProps,
 } from "@gooddata/sdk-ui-filters";
-import { type OverlayPositionType, UiChip, UiSkeleton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import {
+    type OverlayPositionType,
+    UiChip,
+    UiSkeleton,
+    UiTooltip,
+    useUiAutofocusConnectors,
+} from "@gooddata/sdk-ui-kit";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectAvailableAttributeFilterSelectionTypes } from "../../../model/store/config/configSelectors.js";
 import { StandaloneDashboardAttributeFilter } from "../../../presentation/filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
+import { useKdaState } from "../../providers/KdaState.js";
 
 interface IAttributeBarProps {
     attribute: DashboardAttributeFilterItem;
@@ -43,8 +50,19 @@ export function AttributeBar(props: IAttributeBarProps) {
     const config = props.attributeConfigs.find((attribute) => attribute.localIdentifier === localIdentifier);
     const displayAsLabel = config?.displayAsLabel;
 
+    const { state, setState } = useKdaState();
+    const isFocusDue = !!localIdentifier && state.attributeFilterToFocus?.localIdentifier === localIdentifier;
+    const autofocus = useUiAutofocusConnectors<HTMLDivElement>({
+        active: isFocusDue,
+        refocusKey: state.attributeFilterToFocus,
+    });
+
     return (
-        <div className={cx("gd-kda-dialog-bar__attribute")}>
+        <div
+            ref={autofocus.ref}
+            className={cx("gd-kda-dialog-bar__attribute")}
+            onFocus={isFocusDue ? () => setState({ attributeFilterToFocus: undefined }) : undefined}
+        >
             <KdaAttributeFilterWrapper
                 filter={props.attribute}
                 displayAsLabel={displayAsLabel}

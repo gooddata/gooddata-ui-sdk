@@ -3,7 +3,12 @@
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
 
-import { type DateAttributeGranularity } from "../../base/dateGranularities.js";
+import {
+    type DateAttributeGranularity,
+    type DatePeriodGranularity,
+    type DatePeriodLiteral,
+    type DatePeriodRange,
+} from "../../base/dateGranularities.js";
 import { idRef, localIdRef } from "../../objRef/factory.js";
 import {
     type Identifier,
@@ -26,6 +31,7 @@ import {
     type ComparisonConditionOperator,
     type EmptyValues,
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IArbitraryAttributeFilter,
     type IAttributeElements,
     type ILowerBoundedFilter,
@@ -221,10 +227,8 @@ export interface IAbsoluteDateFilterOptions {
     /**
      * Granularity of the selected periods; day is the default and is not stored.
      *
-     * @remarks
-     * On the Tiger backend, `GDC.time.month`, `GDC.time.quarter` and `GDC.time.year` select whole periods
-     * when 'from' and 'to' are days in the 'YYYY-MM-DD' format covering whole periods; any other range, and
-     * every other granularity, selects the days of the range as given.
+     * @deprecated For whole weeks, months, quarters and years use {@link IAbsoluteGranularityDateFilter}.
+     * This field will be removed in the next major version.
      */
     granularity?: DateAttributeGranularity;
 }
@@ -284,6 +288,90 @@ export function newAbsoluteDateFilter(
             ...(localIdentifier ? { localIdentifier } : {}),
             ...(emptyValueHandling ? { emptyValueHandling } : {}),
             ...(granularity && granularity !== "GDC.time.date" ? { granularity } : {}),
+        },
+    };
+}
+
+/**
+ * Options of a new absolute granularity date filter.
+ *
+ * @alpha
+ */
+export interface IAbsoluteGranularityDateFilterOptions {
+    /**
+     * Filter local identifier.
+     */
+    localIdentifier?: string;
+
+    /**
+     * How to treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
+}
+
+/**
+ * Creates a new absolute date filter with granularity that has a start.
+ *
+ * @param dateDataSet - ref or identifier of the date data set to filter on
+ * @param granularity - granularity of the periods in 'from' and 'to'
+ * @param from - first period of the range, see {@link DatePeriodLiteral}
+ * @param to - last period of the range, see {@link DatePeriodLiteral}; undefined for a range unbounded at the end
+ * @param options - local identifier and empty values handling of the filter
+ *
+ * @alpha
+ */
+export function newAbsoluteGranularityDateFilter(
+    dateDataSet: ObjRef | Identifier,
+    granularity: DatePeriodGranularity,
+    from: DatePeriodLiteral,
+    to?: DatePeriodLiteral,
+    options?: IAbsoluteGranularityDateFilterOptions,
+): IAbsoluteGranularityDateFilter;
+/**
+ * Creates a new absolute date filter with granularity that is unbounded at the start.
+ *
+ * @param dateDataSet - ref or identifier of the date data set to filter on
+ * @param granularity - granularity of the period in 'to'
+ * @param from - undefined, the range is unbounded at the start
+ * @param to - last period of the range, see {@link DatePeriodLiteral}
+ * @param options - local identifier and empty values handling of the filter
+ *
+ * @alpha
+ */
+export function newAbsoluteGranularityDateFilter(
+    dateDataSet: ObjRef | Identifier,
+    granularity: DatePeriodGranularity,
+    from: undefined,
+    to: DatePeriodLiteral,
+    options?: IAbsoluteGranularityDateFilterOptions,
+): IAbsoluteGranularityDateFilter;
+export function newAbsoluteGranularityDateFilter(
+    dateDataSet: ObjRef | Identifier,
+    granularity: DatePeriodGranularity,
+    from: DatePeriodLiteral | undefined,
+    to: DatePeriodLiteral | undefined,
+    options: IAbsoluteGranularityDateFilterOptions = {},
+): IAbsoluteGranularityDateFilter {
+    const { localIdentifier, emptyValueHandling } = options;
+    const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
+    let range: DatePeriodRange;
+    if (from === undefined) {
+        invariant(
+            to !== undefined,
+            "An absolute date filter with granularity needs at least one of 'from' and 'to'.",
+        );
+        range = { to };
+    } else {
+        range = to === undefined ? { from } : { from, to };
+    }
+
+    return {
+        absoluteGranularityDateFilter: {
+            dataSet,
+            granularity,
+            ...range,
+            ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
         },
     };
 }

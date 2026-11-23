@@ -2,7 +2,7 @@
 
 // @vitest-environment node
 
-import { describe, expect, it } from "vitest";
+import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type FilterContextItem,
@@ -17,7 +17,11 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
-import { applyDefaultFilterView, changeFilterContextSelection } from "./filterViews.js";
+import {
+    applyDefaultFilterView,
+    changeFilterContextSelection,
+    findTabDefaultFilterView,
+} from "./filterViews.js";
 
 const NO_RESTRICTED_FILTERS: ReadonlySet<string> = new Set();
 
@@ -378,6 +382,100 @@ describe("filterViews", () => {
                 });
 
                 expect(updated).toBe(dashboard);
+            });
+        });
+
+        describe("default view with an absolute date filter with granularity", () => {
+            const regionFilter = (uris: string[]): FilterContextItem => ({
+                attributeFilter: {
+                    displayForm: idRef("region", "displayForm"),
+                    attributeElements: { uris },
+                    negativeSelection: false,
+                    localIdentifier: "region",
+                },
+            });
+            const granularityDateFilter: FilterContextItem = {
+                dashboardAbsoluteGranularityDateFilter: {
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                },
+            };
+            const viewFilterContext = (filters: FilterContextItem[]) => ({
+                title: "",
+                description: "",
+                filters,
+            });
+            const tabbedDashboard = buildDashboard({
+                tabs: [
+                    {
+                        localIdentifier: "tab-A",
+                        title: "Tab A",
+                        filterContext: buildFilterContext([regionFilter(["stored-a"])]),
+                    },
+                    {
+                        localIdentifier: "tab-B",
+                        title: "Tab B",
+                        filterContext: buildFilterContext([regionFilter(["stored-b"])]),
+                    },
+                ],
+            });
+            const unsupportedTabView = buildFilterView({
+                tabLocalIdentifier: "tab-A",
+                filterContext: viewFilterContext([granularityDateFilter, regionFilter(["view"])]),
+            });
+            const legacyView = buildFilterView({
+                ref: idRef("filter-view-2", "filterView"),
+                filterContext: viewFilterContext([regionFilter(["legacy-view"])]),
+            });
+
+            let warn: MockInstance<typeof console.warn>;
+            beforeEach(() => {
+                warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+            });
+            afterEach(() => {
+                warn.mockRestore();
+            });
+
+            it("skips the view of a tab without falling back to the view saved without a tab", () => {
+                const updated = applyDefaultFilterView(
+                    tabbedDashboard,
+                    [unsupportedTabView, legacyView],
+                    undefined,
+                    [],
+                );
+
+                expect(updated.tabs).toEqual(tabbedDashboard.tabs);
+                expect(warn).toHaveBeenCalled();
+            });
+
+            it("skips the view when filters persist across tabs", () => {
+                const updated = applyDefaultFilterView(tabbedDashboard, [unsupportedTabView], undefined, [], {
+                    persistFiltersAcrossTabs: true,
+                    activeTabLocalIdentifier: "tab-A",
+                });
+
+                expect(updated).toBe(tabbedDashboard);
+                expect(warn).toHaveBeenCalled();
+            });
+
+            it("finds no default view for a tab whose view it cannot apply", () => {
+                expect(
+                    findTabDefaultFilterView([unsupportedTabView, legacyView], "tab-A", true),
+                ).toBeUndefined();
+                expect(warn).toHaveBeenCalled();
+            });
+
+            it("skips the view saved without a tab on a dashboard without tabs", () => {
+                const dashboard = buildDashboard({
+                    filterContext: buildFilterContext([regionFilter(["stored"])]),
+                });
+                const view = buildFilterView({
+                    filterContext: viewFilterContext([granularityDateFilter, regionFilter(["view"])]),
+                });
+
+                expect(applyDefaultFilterView(dashboard, [view], undefined, [])).toBe(dashboard);
+                expect(warn).toHaveBeenCalled();
             });
         });
 

@@ -4,8 +4,10 @@
 
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
-import { type IDashboard, idRef } from "@gooddata/sdk-model";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
+import { type FilterContextItem, type IDashboard, type IFilterContext, idRef } from "@gooddata/sdk-model";
 
+import { ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import {
     absoluteForm,
@@ -22,6 +24,7 @@ import { SimpleDashboardIdentifier } from "../../../../tests/SimpleDashboard.tes
 import { initializeDashboard } from "../../../commands/dashboard.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
 import { type DashboardInitialized } from "../../../events/dashboard.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
 import { selectConfig } from "../../../store/config/configSelectors.js";
 import {
     selectEnablePersistentFiltersAcrossTabs,
@@ -93,6 +96,66 @@ describe("initialize dashboard handler", () => {
         await tester.waitFor("GDC.DASH/EVT.INITIALIZED");
 
         expect(tester.emittedEventsDigest()).toMatchSnapshot();
+    });
+
+    describe("absolute date filter with granularity", () => {
+        const granularityDateFilter: FilterContextItem = {
+            dashboardAbsoluteGranularityDateFilter: {
+                granularity: "GDC.time.month",
+                from: "2026-01",
+                to: "2026-03",
+            },
+        };
+        const filterContextWithGranularityDateFilter = {
+            ...dashboardWithDefaults.filterContext,
+            filters: [...dashboardWithDefaults.filterContext!.filters, granularityDateFilter],
+        } as IFilterContext;
+
+        it.each<[string, IDashboard]>([
+            [
+                "its filter context",
+                { ...dashboardWithDefaults, filterContext: filterContextWithGranularityDateFilter },
+            ],
+            [
+                "the filter context of a tab",
+                {
+                    ...dashboardWithDefaults,
+                    tabs: [
+                        {
+                            localIdentifier: "tab-A",
+                            title: "Tab A",
+                            layout: EmptyDashboardLayout,
+                            filterContext: filterContextWithGranularityDateFilter,
+                        },
+                    ],
+                },
+            ],
+        ])("should fail to load a dashboard with the filter in %s", async (_desc, preloadedDashboard) => {
+            const customizationFns: PrivateDashboardContext = { preloadedDashboard };
+            const tester = DashboardTester.forRecording(EmptyDashboardIdentifier, { customizationFns });
+
+            const event: IDashboardCommandFailed<any> = await tester.dispatchAndWaitFor(
+                initializeDashboard(),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.error).toBeInstanceOf(NotSupported);
+            expect(event.payload.error?.message).toBe(ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED);
+        });
+
+        it("should fail to initialize a new dashboard with the filter in the default filter overrides", async () => {
+            const tester = DashboardTester.forNewDashboard(undefined, undefined, {
+                overrideDefaultFilters: [granularityDateFilter],
+            });
+
+            const event: IDashboardCommandFailed<any> = await tester.dispatchAndWaitFor(
+                initializeDashboard(),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.error).toBeInstanceOf(NotSupported);
+            expect(event.payload.error?.message).toBe(ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED);
+        });
     });
 
     describe("for any dashboard", () => {

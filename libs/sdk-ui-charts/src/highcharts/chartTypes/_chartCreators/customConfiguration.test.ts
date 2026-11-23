@@ -959,6 +959,27 @@ describe("getCustomizedConfiguration", () => {
         });
     });
 
+    describe("tooltip default box", () => {
+        it("should leave nothing of the default tooltip box to paint behind the HTML tooltip", () => {
+            const result = getCustomizedConfiguration(
+                makeCtx({
+                    chartOptions: {
+                        ...chartOptions,
+                        actions: { tooltip: () => "" },
+                        data: getData([{ y: 1 }]),
+                    },
+                }),
+            );
+
+            expect(result.tooltip).toMatchObject({
+                useHTML: true,
+                backgroundColor: "none",
+                borderWidth: 0,
+                shadow: false,
+            });
+        });
+    });
+
     describe("tooltip followPointer", () => {
         // convert [bar, column, combo] to [ [bar] , [column] , [combo] ]
         const CHART_TYPES = supportedTooltipFollowPointerChartTypes.map((chartType) => [chartType]);

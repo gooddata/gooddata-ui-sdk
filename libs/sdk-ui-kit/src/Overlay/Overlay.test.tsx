@@ -836,11 +836,13 @@ describe("Overlay", () => {
     describe("keep bottom on resize", () => {
         let overlayHeight: number;
         let viewportWidth: number;
+        let anchorTop: number;
         let notifyResize: (height: number) => void;
 
         beforeEach(() => {
             overlayHeight = 100;
             viewportWidth = 1000;
+            anchorTop = 300;
             vi.stubGlobal(
                 "ResizeObserver",
                 class {
@@ -865,7 +867,7 @@ describe("Overlay", () => {
                 const isBody = this === document.body;
                 const height = isOverlay ? overlayHeight : isBody ? window.innerHeight : 0;
                 const width = isOverlay ? 212 : isAnchor ? 16 : isBody ? viewportWidth : 0;
-                const top = isAnchor ? 300 : -window.scrollY;
+                const top = isAnchor ? anchorTop : -window.scrollY;
                 const left = isAnchor ? 450 : 0;
                 return { top, left, right: left + width, bottom: top + height, width, height } as DOMRect;
             });
@@ -878,7 +880,7 @@ describe("Overlay", () => {
 
         const renderAlignedOverlay = async (align: string | string[], positionType?: OverlayPositionType) => {
             render(
-                <div>
+                <div className="scroll-parent">
                     <button className="anchor" />
                     <Overlay
                         alignTo=".anchor"
@@ -886,6 +888,7 @@ describe("Overlay", () => {
                         positionType={positionType}
                         resizeObserverThreshold={0.01}
                         keepBottomOnResize
+                        alignOnParentScroll
                     >
                         <div />
                     </Overlay>
@@ -919,6 +922,20 @@ describe("Overlay", () => {
 
             act(() => notifyResize(100));
             expect(overlay.style.top).toBe("300px");
+        });
+
+        it("should keep the bottom edge when a parent scrolls", async () => {
+            const overlay = await renderAlignedOverlay(["bl tl", "tl bl"]);
+            act(() => notifyResize(400));
+            expect(overlay.style.top).toBe("400px");
+
+            anchorTop = 320;
+            await act(async () => {
+                document.querySelector(".scroll-parent")!.dispatchEvent(new Event("scroll"));
+                await new Promise((resolve) => setTimeout(resolve, 50));
+            });
+
+            expect(overlay.style.top).toBe("420px");
         });
 
         it("should keep a fixed overlay within the viewport when the page is scrolled", async () => {

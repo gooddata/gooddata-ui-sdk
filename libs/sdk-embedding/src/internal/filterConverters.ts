@@ -6,11 +6,13 @@ import {
     type ObjRef,
     type ObjectType,
     idRef,
+    isDatePeriodGranularity,
+    isValidDatePeriodRange,
 } from "@gooddata/sdk-model";
 import { _isEmpty } from "@gooddata/util";
 
 import {
-    type DateFilterItem,
+    type DateFilterItemOfAnyType,
     type FilterItem,
     type IArbitraryAttributeFilterItem,
     type IMatchAttributeFilterItem,
@@ -19,14 +21,16 @@ import {
     type IPositiveAttributeFilter,
     type IRankingFilter,
     isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isArbitraryAttributeFilterItem,
     isAttributeFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isMatchAttributeFilterItem,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
     isRankingFilter,
+    isRelativeDateFilter,
     isRemoveAttributeFilter,
     isRemoveDateFilter,
     isRemoveMeasureValueFilter,
@@ -153,7 +157,7 @@ function getAbsoluteDateValueFormatRegex(isTimeSupported: boolean, isSecondsSupp
 }
 
 function isValidDateFilterFormat(
-    filterItem: DateFilterItem,
+    filterItem: DateFilterItemOfAnyType,
     shouldValidateDataSet: boolean = true,
     isTimeSupported: boolean = false,
     isSecondsSupported: boolean = false,
@@ -172,7 +176,18 @@ function isValidDateFilterFormat(
             valueFormatRegex.test(from) &&
             valueFormatRegex.test(to)
         );
-    } else {
+    } else if (isAbsoluteGranularityDateFilter(filterItem)) {
+        const {
+            absoluteGranularityDateFilter: { from, to, dataSet, granularity },
+        } = filterItem;
+
+        const isValidDataSet = shouldValidateDataSet ? validateDataSet(dataSet) : true;
+        return (
+            isValidDataSet &&
+            isDatePeriodGranularity(granularity) &&
+            isValidDatePeriodRange(granularity, from, to)
+        );
+    } else if (isRelativeDateFilter(filterItem)) {
         const {
             relativeDateFilter: { from, to, dataSet },
         } = filterItem;
@@ -180,6 +195,8 @@ function isValidDateFilterFormat(
         const isValidDataSet = shouldValidateDataSet ? validateDataSet(dataSet) : true;
         return isValidDataSet && typeof from === "number" && typeof to === "number";
     }
+
+    return false;
 }
 
 function isValidAttributeFilterFormat(filterItem: unknown): boolean {
@@ -356,7 +373,7 @@ function isValidFilterItemFormat(
     isTimeSupported: boolean = false,
     isSecondsSupported: boolean = false,
 ): boolean {
-    if (isDateFilter(filterItem)) {
+    if (isDateFilterOfAnyType(filterItem)) {
         return isValidDateFilterFormat(
             filterItem,
             shouldValidateDataSet,
@@ -440,7 +457,9 @@ function getDfType(
     return identifier === undefined ? undefined : toDisplayFormRefType(type);
 }
 
-function transformDateFilterItem(dateFilterItem: DateFilterItem): ITransformedDateFilterItem {
+function transformDateFilterItem(
+    dateFilterItem: DateFilterItemOfAnyType,
+): ITransformedDateFilterItem | undefined {
     if (isAbsoluteDateFilter(dateFilterItem)) {
         const {
             absoluteDateFilter: { dataSet, from, to },
@@ -454,7 +473,9 @@ function transformDateFilterItem(dateFilterItem: DateFilterItem): ITransformedDa
             datasetIdentifier,
             ...(localIdentifier ? { localIdentifier } : {}),
         };
-    } else {
+    } else if (isAbsoluteGranularityDateFilter(dateFilterItem)) {
+        throw new Error("Absolute date filters with granularity are not supported.");
+    } else if (isRelativeDateFilter(dateFilterItem)) {
         const {
             relativeDateFilter: { granularity, dataSet, from, to, boundedFilter },
             localIdentifier,
@@ -470,6 +491,10 @@ function transformDateFilterItem(dateFilterItem: DateFilterItem): ITransformedDa
             ...(localIdentifier ? { localIdentifier } : {}),
         };
     }
+
+    const unknownFilter: never = dateFilterItem;
+    console.warn("Skipping a date filter of an unknown type.", unknownFilter);
+    return undefined;
 }
 
 function transformPositiveNegativeAttributeFilterItem(
@@ -588,9 +613,11 @@ export function transformFilterContext(filters: FilterItem[]): IExternalFiltersO
 
     return filters.reduce(
         (externalFilters: IExternalFiltersObject, filterItem: FilterItem): IExternalFiltersObject => {
-            if (isDateFilter(filterItem)) {
+            if (isDateFilterOfAnyType(filterItem)) {
                 const dateFilter = transformDateFilterItem(filterItem);
-                externalFilters.dateFilters.push(dateFilter);
+                if (dateFilter) {
+                    externalFilters.dateFilters.push(dateFilter);
+                }
             } else if (isAttributeFilter(filterItem)) {
                 if (isArbitraryAttributeFilterItem(filterItem)) {
                     const arbitraryFilter = transformArbitraryAttributeFilterItem(filterItem);

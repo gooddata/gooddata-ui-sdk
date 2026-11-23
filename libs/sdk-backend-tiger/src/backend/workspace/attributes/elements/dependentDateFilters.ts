@@ -13,10 +13,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import { toTigerGranularity } from "../../../../convertors/fromBackend/dateGranularityConversions.js";
-import {
-    hasPeriodLiteral,
-    toWholePeriodLiterals,
-} from "../../../../convertors/shared/absoluteGranularityLiterals.js";
 
 export function mapDashboardDateFilterToDependentDateFilter(
     dateFilter: IRelativeDateFilter | IAbsoluteDateFilter,
@@ -60,38 +56,21 @@ function newRelativeDependentDateFilter(dateFilter: IRelativeDateFilter): Depend
 }
 
 function newAbsoluteDependentDateFilter(dateFilter: IAbsoluteDateFilter): DependsOnDateFilter {
-    const { dataSet: localIdentifier, from, to, granularity } = dateFilter.absoluteDateFilter;
+    const localIdentifier = dateFilter.absoluteDateFilter.dataSet;
 
     invariant(!isUriRef(localIdentifier));
-
-    const dataset = {
-        identifier: {
-            id: localIdentifier.identifier,
-            type: "dataset" as const,
-        },
-    };
-
-    if (hasPeriodLiteral(granularity)) {
-        const literals = toWholePeriodLiterals(granularity, from, to);
-        if (literals) {
-            return {
-                dateFilter: {
-                    absoluteGranularityDateFilter: {
-                        dataset,
-                        granularity: toTigerGranularity(granularity),
-                        ...literals,
-                    },
-                },
-            };
-        }
-    }
 
     return {
         dateFilter: {
             absoluteDateFilter: {
-                dataset,
-                from,
-                to,
+                dataset: {
+                    identifier: {
+                        id: localIdentifier.identifier,
+                        type: "dataset",
+                    },
+                },
+                from: dateFilter.absoluteDateFilter.from,
+                to: dateFilter.absoluteDateFilter.to,
             },
         },
     };

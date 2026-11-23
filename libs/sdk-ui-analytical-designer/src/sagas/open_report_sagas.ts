@@ -35,7 +35,6 @@ import {
 import { backend } from "../backend.js";
 import { ActionTypeKeys } from "../constants/actions.js";
 import { generateBucketItemIdentifier } from "../models/bucket_item_identifier.js";
-import { getUserLoginMD5 } from "../selectors/bootstrap_selector.js";
 import {
     enableAnalyticalDesignerCatalogSideload,
     enableImprovedMetricDateFilter,
@@ -435,12 +434,10 @@ export function* fetchReport(projectId: string, reportId: string) {
 
         const userDashboards: SagaReturnType<typeof fetchDashboards> = yield call(fetchDashboards, projectId);
         const permissions: ReturnType<typeof workspacePermissions> = yield select(workspacePermissions);
-        const userLogin: ReturnType<typeof getUserLoginMD5> = yield select(getUserLoginMD5);
         const accessibleDocumentIds: SagaReturnType<typeof loadAccessibleDocumentIds> = yield call(
             loadAccessibleDocumentIds,
             projectId,
             insightReferencing.documents,
-            userLogin,
             permissions,
         );
 

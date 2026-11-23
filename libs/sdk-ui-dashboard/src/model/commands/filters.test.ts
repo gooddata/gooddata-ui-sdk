@@ -4,7 +4,13 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type DateAttributeGranularity, idRef, newAbsoluteDateFilter } from "@gooddata/sdk-model";
+import {
+    type DateAttributeGranularity,
+    type IDateFilter,
+    idRef,
+    newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
+} from "@gooddata/sdk-model";
 
 import { applyDateFilter } from "./filters.js";
 
@@ -24,4 +30,17 @@ describe("applyDateFilter", () => {
             expect(applyDateFilter(filter).payload.granularity).toBe(expected);
         },
     );
+
+    it("throws for an absolute granularity date filter passed without types", () => {
+        const filter = newAbsoluteGranularityDateFilter(
+            idRef("closed", "dataSet"),
+            "GDC.time.month",
+            "2026-03",
+            "2026-04",
+        );
+
+        expect(() => applyDateFilter(filter as unknown as IDateFilter)).toThrow(
+            "Absolute date filters with granularity are not supported yet.",
+        );
+    });
 });

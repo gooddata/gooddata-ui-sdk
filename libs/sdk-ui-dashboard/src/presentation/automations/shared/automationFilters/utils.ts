@@ -3,6 +3,7 @@
 import { type IntlShape } from "react-intl";
 
 import {
+    type DateFilterOfAnyType,
     type FilterContextItem,
     type ICatalogAttribute,
     type ICatalogDateDataset,
@@ -10,10 +11,10 @@ import {
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfigItem,
     type IDashboardMeasureValueFilterConfig,
-    type IDateFilter,
     type IFilter,
     type ObjRef,
     absoluteDateFilterValues,
+    absoluteGranularityDateFilterValues,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
@@ -24,6 +25,7 @@ import {
     filterObjRef,
     getAttributeElementsItems,
     isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isAllTimeDateFilter,
     isArbitraryAttributeFilter,
     isAttributeFilter,
@@ -34,7 +36,7 @@ import {
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isInsightWidget,
     isMatchAttributeFilter,
     isNegativeAttributeFilter,
@@ -386,17 +388,23 @@ export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
             );
         }
     } else if (isAbsoluteDateFilter(filter1) && isAbsoluteDateFilter(filter2)) {
-        // An automation does not store a granularity that has no period literal, so the granularity counts
-        // only when both filters have one.
-        const { granularity: granularity1, ...values1 } = dateFilterValues(filter1);
-        const { granularity: granularity2, ...values2 } = dateFilterValues(filter2);
+        // An alert does not store the granularity, so it counts only when both filters have one.
+        const filter1Values = dateFilterValues(filter1);
+        const filter2Values = dateFilterValues(filter2);
+        if (!filter1Values || !filter2Values) {
+            return false;
+        }
+        const { granularity: granularity1, ...values1 } = filter1Values;
+        const { granularity: granularity2, ...values2 } = filter2Values;
 
         return (
             _isEqual(values1, values2) &&
             (granularity1 === undefined || granularity2 === undefined || granularity1 === granularity2)
         );
-    } else if (isDateFilter(filter1) && isDateFilter(filter2)) {
-        return _isEqual(dateFilterValues(filter1), dateFilterValues(filter2));
+    } else if (isDateFilterOfAnyType(filter1) && isDateFilterOfAnyType(filter2)) {
+        const values1 = dateFilterValues(filter1);
+        const values2 = dateFilterValues(filter2);
+        return values1 !== undefined && values2 !== undefined && _isEqual(values1, values2);
     }
 
     // Filter types are different
@@ -407,16 +415,31 @@ export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
  * Values to compare date filters by. A bounded range never matches an empty date, so a missing
  * `emptyValueHandling` counts as "exclude" there; on an all-time filter it means no filtering at all.
  */
-export function dateFilterValues(filter: IDateFilter) {
-    const values = isAbsoluteDateFilter(filter)
-        ? absoluteDateFilterValues(filter)
-        : relativeDateFilterValues(filter);
+export function dateFilterValues(filter: DateFilterOfAnyType) {
+    const values = dateFilterTypeValues(filter);
+
+    if (!values) {
+        return undefined;
+    }
 
     if (values.emptyValueHandling !== undefined || isAllTimeDateFilterFixed(filter)) {
         return values;
     }
 
     return { ...values, emptyValueHandling: "exclude" as const };
+}
+
+function dateFilterTypeValues(filter: DateFilterOfAnyType) {
+    if (isAbsoluteDateFilter(filter)) {
+        return absoluteDateFilterValues(filter);
+    } else if (isAbsoluteGranularityDateFilter(filter)) {
+        return absoluteGranularityDateFilterValues(filter);
+    } else if (isRelativeDateFilter(filter)) {
+        return relativeDateFilterValues(filter);
+    }
+    const unknownFilter: never = filter;
+    console.warn("A date filter of an unknown type does not equal any filter.", unknownFilter);
+    return undefined;
 }
 
 export function isFilterIgnoredByWidget(filter: FilterContextItem, widget: ExtendedDashboardWidget): boolean {
@@ -460,7 +483,7 @@ export function isFilterMatch(filter1: IFilter, filter2: IFilter): boolean {
         return true;
     }
 
-    if (isDateFilter(filter1) && isDateFilter(filter2)) {
+    if (isDateFilterOfAnyType(filter1) && isDateFilterOfAnyType(filter2)) {
         return areObjRefsEqual(filterObjRef(filter1), filterObjRef(filter2));
     }
 

@@ -24,6 +24,8 @@ import {
     filterAttributeElements,
     filterLocalIdentifier,
     filterObjRef,
+    isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isAllTimeDateFilter,
     isArbitraryAttributeFilter,
     isAttributeFilterWithSelection,
@@ -33,6 +35,7 @@ import {
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
     relativeDateFilterValues,
+    throwUnexpected,
 } from "@gooddata/sdk-model";
 
 import { type IDashboardFilter } from "../../types.js";
@@ -201,6 +204,7 @@ export function changeDateFilterSelection(
  * update (e.g. hidden date filter option by dateFilterConfig).
  *
  * All parameters for {@link ChangeDateFilterSelection} command is derived from the provided date filter.
+ * An absolute date filter with granularity is not supported yet and throws an error.
  *
  * See {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
@@ -254,7 +258,9 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             boundedFilter,
             emptyValueHandling,
         );
-    } else {
+    } else if (isAbsoluteGranularityDateFilter(filter)) {
+        throw new Error("Absolute date filters with granularity are not supported yet.");
+    } else if (isAbsoluteDateFilter(filter)) {
         const values = absoluteDateFilterValues(filter, true);
         const emptyValueHandling = filter.absoluteDateFilter.emptyValueHandling;
         return changeDateFilterSelection(
@@ -271,6 +277,8 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             emptyValueHandling,
         );
     }
+
+    return throwUnexpected(filter);
 }
 /**
  * This convenience function will create ChangeDateFilterSelection configured so that the date filter will be

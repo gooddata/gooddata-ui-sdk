@@ -4,10 +4,12 @@ import { type IntlShape } from "react-intl";
 
 import {
     type DateFilterGranularity,
+    type DateFilterOfAnyType,
     type IAbsoluteDateFilterValues,
-    type IDateFilter,
     type IRelativeDateFilterValues,
     absoluteDateFilterValues,
+    isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isRelativeDateFilter,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
@@ -23,8 +25,16 @@ interface IAbsoluteDateFilterMeta extends IAbsoluteDateFilterValues {
 
 type DateFilterMeta = IRelativeDateFilterMeta | IAbsoluteDateFilterMeta;
 
-export function translateDateFilter(intl: IntlShape, filter: IDateFilter, dateFormat: string): string {
+export function translateDateFilter(
+    intl: IntlShape,
+    filter: DateFilterOfAnyType,
+    dateFormat: string,
+): string | undefined {
     const metadata = filterMetadata(filter);
+
+    if (!metadata) {
+        return undefined;
+    }
 
     // Keep consistent with `getDateFilterTitleUsingTranslator` in sdk-ui-filters:
     // - Special case for "All time" with excluded empty values.
@@ -69,10 +79,24 @@ export function translateDateFilter(intl: IntlShape, filter: IDateFilter, dateFo
     return base;
 }
 
-function filterMetadata(filter: IDateFilter): DateFilterMeta {
+function filterMetadata(filter: DateFilterOfAnyType): DateFilterMeta | undefined {
     if (isRelativeDateFilter(filter)) {
         return { ...relativeDateFilterValues(filter), type: "relative" };
     }
 
-    return { ...absoluteDateFilterValues(filter), type: "absolute" };
+    if (isAbsoluteGranularityDateFilter(filter)) {
+        console.warn(
+            "Notification titles do not support absolute date filters with granularity yet.",
+            filter,
+        );
+        return undefined;
+    }
+
+    if (isAbsoluteDateFilter(filter)) {
+        return { ...absoluteDateFilterValues(filter), type: "absolute" };
+    }
+
+    const unknownFilter: never = filter;
+    console.warn("Cannot name a date filter of an unknown type.", unknownFilter);
+    return undefined;
 }

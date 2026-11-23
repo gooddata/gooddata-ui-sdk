@@ -29,7 +29,6 @@ vi.mock("./permission/usePermissionsQuery.js", () => ({
                 enableParameters: true,
                 enableBusinessBriefingReportsApp: true,
                 enablePublisherV2: true,
-                enableCatalogDocuments: true,
             } as IUserWorkspaceSettings,
         },
     }),

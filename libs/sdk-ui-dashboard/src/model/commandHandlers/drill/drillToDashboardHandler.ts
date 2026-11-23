@@ -6,27 +6,29 @@ import { invariant } from "ts-invariant";
 
 import {
     type DashboardAttributeFilterItem,
+    type DateFilterOfAnyType,
     type FilterContextItem,
     type IAttributeFilter,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilter,
     type IDashboardMeasureValueFilter,
-    type IDateFilter,
     type IFilter,
     type IInsight,
     type IInsightWidget,
     type IMeasureValueFilter,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAbsoluteGranularityDateFilterToDateFilterByWidget,
     dashboardAttributeFilterItemToAttributeFilter,
     dashboardDateFilterToDateFilterByWidget,
     dashboardFilterLocalIdentifier,
     dashboardMeasureValueFilterToMeasureValueFilter,
     insightMeasures,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardMeasureValueFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isSimpleMeasure,
     measureFilters,
     newAllTimeDashboardDateFilter,
@@ -283,14 +285,22 @@ function selectAllDraggableFilters(state: DashboardState): FilterContextItem[] {
 function convertFilterItemsToFilters(
     filter: FilterContextItem,
     widget: IInsightWidget,
-): IAttributeFilter | IDateFilter | IMeasureValueFilter {
+): IAttributeFilter | DateFilterOfAnyType | IMeasureValueFilter | undefined {
     if ("dateFilter" in filter) {
         return dashboardDateFilterToDateFilterByWidget(filter, widget);
+    }
+    if ("dashboardAbsoluteGranularityDateFilter" in filter) {
+        return dashboardAbsoluteGranularityDateFilterToDateFilterByWidget(filter, widget);
     }
     if (isDashboardMeasureValueFilter(filter)) {
         return dashboardMeasureValueFilterToMeasureValueFilter(filter);
     }
-    return dashboardAttributeFilterItemToAttributeFilter(filter);
+    if (isDashboardAttributeFilterItem(filter)) {
+        return dashboardAttributeFilterItemToAttributeFilter(filter);
+    }
+    const unknownFilter: never = filter;
+    console.warn("Skipping a filter of an unknown type.", unknownFilter);
+    return undefined;
 }
 
 function removeIgnoredDashboardFilters<T extends FilterContextItem>(
@@ -316,10 +326,10 @@ function* getWidgetAwareDashboardFilters(
         selectAttributeFilterConfigsOverrides,
     );
 
-    const filtersPairs = filterContextItems.map((filter) => ({
-        filter: convertFilterItemsToFilters(filter, widget),
-        originalFilter: filter,
-    }));
+    const filtersPairs = filterContextItems.flatMap((originalFilter) => {
+        const filter = convertFilterItemsToFilters(originalFilter, widget);
+        return filter ? [{ filter, originalFilter }] : [];
+    });
 
     const widgetFilters = yield call(
         getResolvedFiltersForWidget,
@@ -341,7 +351,7 @@ function isDateFilterDisabled(insight: IInsight): boolean {
         : measures.every((measure) => {
               if (isSimpleMeasure(measure)) {
                   const filters = measureFilters(measure);
-                  return !!filters?.some(isDateFilter);
+                  return !!filters?.some(isDateFilterOfAnyType);
               }
               return true;
           });

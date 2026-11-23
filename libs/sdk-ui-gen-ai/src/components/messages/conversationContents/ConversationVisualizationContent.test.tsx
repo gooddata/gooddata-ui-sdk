@@ -43,6 +43,7 @@ const visualisationMock = vi.hoisted(() => ({
     props: undefined as
         | {
               enableChangeAnalysis?: boolean;
+              settings?: IUserWorkspaceSettings;
               onVisualisationError?: (error: Error) => void;
               onVisualisationSuccess?: () => void;
           }
@@ -137,6 +138,23 @@ describe("ConversationVisualizationContent - Key Driver Analysis enablement", ()
     beforeEach(() => {
         visualisationMock.props = undefined;
     });
+
+    it.each([undefined, { locale: "en-US", enableNewPivotTable: true } as IUserWorkspaceSettings])(
+        "passes workspace settings to the renderer without an opt-in",
+        (settings) => {
+            renderWithStore(
+                <ConversationVisualizationContent
+                    message={mockMessage}
+                    part={mockPart}
+                    visualization={mockVisualization}
+                />,
+                { settings },
+            );
+
+            expect(screen.getByTestId("mock-conversation-vis")).toBeInTheDocument();
+            expect(visualisationMock.props?.settings).toEqual(settings);
+        },
+    );
 
     it("should disable change analysis when KeyDriverAnalysis is not mounted", () => {
         renderWithStore(

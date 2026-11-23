@@ -1,8 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type DateFilterOfAnyType,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeFilter,
-    type IDateFilter,
     type IDrillToDashboard,
     type IDrillToInsight,
     type IFilter,
@@ -12,12 +13,14 @@ import {
     filterMeasureRef,
     insightFilters,
     insightMeasures,
+    isAbsoluteGranularityDateFilter,
     isAttributeFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isMeasureValueFilter,
     isRankingFilter,
 } from "@gooddata/sdk-model";
 
+import { ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import {
     getSourceMeasureFiltersForDrillDefinition,
     isMatchingSourceInsightFilter,
@@ -39,7 +42,7 @@ export function getIncludedSourceInsightFilters(
         ? insightFilters(sourceInsight).filter(
               (filter) =>
                   isAttributeFilter(filter) ||
-                  isDateFilter(filter) ||
+                  isDateFilterOfAnyType(filter) ||
                   isMeasureValueFilter(filter) ||
                   isRankingFilter(filter),
           )
@@ -51,7 +54,7 @@ export function getIncludedSourceInsightFilters(
 export function getIncludedSourceMeasureFilters(
     sourceInsight: IInsight | null,
     drillDefinition: IDrillDefinitionWithIncludedSourceFilters,
-): Array<IAttributeFilter | IDateFilter> {
+): Array<IAttributeFilter | DateFilterOfAnyType> {
     if (!sourceInsight) {
         return [];
     }
@@ -72,18 +75,34 @@ export function getIncludedSourceFiltersForDashboard(
     drillDefinition: IDrillDefinitionWithIncludedSourceFilters,
 ): Array<SourceFilter> {
     const sourceInsightMeasures = sourceInsight ? insightMeasures(sourceInsight) : [];
-    const sourceMeasureFilters = getIncludedSourceMeasureFilters(sourceInsight, drillDefinition);
+    const sourceMeasureFilters = getIncludedSourceMeasureFilters(sourceInsight, drillDefinition).filter(
+        isSourceFilterSupportedByDashboard,
+    );
     const sourceInsightFilters = getIncludedSourceInsightFilters(
         sourceInsight,
         drillDefinition.includedSourceInsightFiltersObjRefs ?? [],
     )
-        .filter((filter): filter is SourceFilter => {
-            return isAttributeFilter(filter) || isDateFilter(filter) || isMeasureValueFilter(filter);
+        .filter((filter): filter is SourceFilter | IAbsoluteGranularityDateFilter => {
+            return isAttributeFilter(filter) || isDateFilterOfAnyType(filter) || isMeasureValueFilter(filter);
         })
+        .filter(isSourceFilterSupportedByDashboard)
         .flatMap((filter) => normalizeSourceFilterForDashboard(filter, sourceInsightMeasures));
 
     // Keep the same precedence as drill-to-insight: measure filters win over source insight filters.
     return [...sourceMeasureFilters, ...sourceInsightFilters];
+}
+
+function isSourceFilterSupportedByDashboard<T extends IFilter>(
+    filter: T,
+): filter is Exclude<T, IAbsoluteGranularityDateFilter> {
+    if (isAbsoluteGranularityDateFilter(filter)) {
+        console.warn(
+            `Skipping a source insight filter. ${ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED}`,
+            filter,
+        );
+        return false;
+    }
+    return true;
 }
 
 function normalizeSourceFilterForDashboard(

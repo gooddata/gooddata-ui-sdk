@@ -7,7 +7,6 @@ import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { useSemanticSearch } from "@gooddata/sdk-ui-semantic-search";
 
 import { type AsyncStatus } from "../async/types.js";
-import { useDocumentOwner } from "../document/scope.js";
 import { mapGenAIObjectType } from "../objectType/mapping.js";
 import type { ObjectType } from "../objectType/types.js";
 import { useFeatureFlags } from "../permission/PermissionsContext.js";
@@ -49,8 +48,7 @@ export function useCatalogItemSemanticSearch({
             search: undefined,
         };
     }, [queryOptions, searchResults]);
-    const documentOwner = useDocumentOwner();
-    const endpoints = useCatalogEndpoints(types, updateQueryOptions, flags, documentOwner);
+    const endpoints = useCatalogEndpoints(types, updateQueryOptions, flags);
 
     const { status: promiseStatus, result: promiseItems } = useCancelablePromise(
         {

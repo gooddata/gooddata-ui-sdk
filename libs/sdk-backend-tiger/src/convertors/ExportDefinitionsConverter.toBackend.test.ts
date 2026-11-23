@@ -7,6 +7,7 @@ import {
     type TabularExportRequest,
     type VisualExportRequest,
 } from "@gooddata/api-client-tiger";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
     type IDashboardAttributeFilter,
@@ -415,6 +416,68 @@ describe("ExportDefinitionsConverter toBackend", () => {
         expect(result.dashboardFiltersOverride).toEqual([]);
     });
 
+    it("rejects the absolute date filter with granularity in a widget tabular export", () => {
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "xlsx-export",
+            format: "XLSX",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+                filters: [
+                    {
+                        dashboardAbsoluteGranularityDateFilter: {
+                            dataSet: idRef("date1", "dataSet"),
+                            granularity: "GDC.time.month",
+                            from: "2026-01",
+                            to: "2026-03",
+                        },
+                    },
+                ],
+            },
+        };
+
+        expect(() => convertVisualizationToDashboardTabularExportRequest(request)).toThrow(NotSupported);
+    });
+
+    it.each(["CSV", "XLSX"] as const)(
+        "keeps the absolute date filter with granularity in %s visualization tabular export custom filters",
+        (format) => {
+            const result = convertToTabularExportRequest({
+                type: "visualizationObject",
+                fileName: "tabular",
+                format,
+                content: {
+                    visualizationObject: "visId",
+                    widget: "widgetId",
+                    dashboard: "dashboardId",
+                    filters: [
+                        {
+                            dashboardAbsoluteGranularityDateFilter: {
+                                dataSet: idRef("date1", "dataSet"),
+                                granularity: "GDC.time.month",
+                                from: "2026-01",
+                                to: "2026-03",
+                            },
+                        },
+                    ],
+                },
+            });
+
+            expect(result.visualizationObjectCustomFilters).toEqual([
+                {
+                    dashboardAbsoluteGranularityDateFilter: {
+                        dataSet: { identifier: { id: "date1", type: "dataset" } },
+                        granularity: "GDC.time.month",
+                        from: "2026-01",
+                        to: "2026-03",
+                    },
+                },
+            ]);
+        },
+    );
+
     it("emits metadata.parametersByTab from dashboard content in visual export", () => {
         const parameter: IDashboardExportParameter = { id: "p1", value: "42", title: "Param 1" };
         const request: IExportDefinitionDashboardRequestPayload = {
@@ -596,6 +659,35 @@ describe("ExportDefinitionsConverter toBackend", () => {
         expect(result.dashboardFiltersOverride).toHaveLength(1);
     });
 
+    const granularityDateFilterItem: FilterContextItem = {
+        dashboardAbsoluteGranularityDateFilter: {
+            dataSet: idRef("date1", "dataSet"),
+            granularity: "GDC.time.month",
+            from: "2026-01",
+            to: "2026-03",
+        },
+    };
+
+    it.each<[string, IExportDefinitionDashboardRequestPayload["content"]]>([
+        ["the filters", { dashboard: "dashboardId", filters: [granularityDateFilterItem] }],
+        [
+            "the filters of a tab",
+            { dashboard: "dashboardId", filtersByTab: { tab1: [], tab2: [granularityDateFilterItem] } },
+        ],
+    ])(
+        "rejects the absolute date filter with granularity in %s of a dashboard tabular export",
+        (_desc, content) => {
+            const request: IExportDefinitionDashboardRequestPayload = {
+                type: "dashboard",
+                fileName: "dashboard-tabular",
+                format: "XLSX",
+                content,
+            };
+
+            expect(() => convertToDashboardTabularExportRequest(request)).toThrow(NotSupported);
+        },
+    );
+
     it("maps content.parametersByTab to dashboardTabsParametersOverrides in dashboard tabular export", () => {
         const request: IExportDefinitionDashboardRequestPayload = {
             type: "dashboard",
@@ -685,12 +777,19 @@ describe("ExportDefinitionsConverter toBackend", () => {
                 },
             );
 
-        it("keeps the granularity in raw export metadata and sends the execution filter by periods", () => {
+        it("keeps the granularity in raw export metadata and sends the execution filter as days", () => {
             const result = rawExport(monthFilter);
 
             expect((result.metadata as { filters?: unknown[] }).filters).toEqual([storedMonthFilter]);
-            expect(result.execution.filters).toMatchObject([
-                { absoluteGranularityDateFilter: { granularity: "MONTH", from: "2026-03", to: "2026-04" } },
+            expect(result.execution.filters).toEqual([
+                {
+                    absoluteDateFilter: {
+                        dataset: { identifier: { id: "date1", type: "dataset" } },
+                        from: "2026-03-01",
+                        to: "2026-04-30",
+                        localIdentifier: undefined,
+                    },
+                },
             ]);
         });
 

@@ -4,17 +4,19 @@ import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
+    type DateFilterOfAnyType,
     type IAttributeElement,
     type IAttributeFilter,
-    type IDateFilter,
     type IRelativeDateFilter,
     attributeElementsCount,
     filterAttributeElements,
     filterObjRef,
     isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isAttributeFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isObjRef,
+    isRelativeDateFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { _isEmpty } from "@gooddata/util";
@@ -55,13 +57,21 @@ export async function resolveFilterValues(
                 return Promise.resolve(resolved);
             }
 
+            // The drill event gets no days for this filter, because its periods are not resolved to days yet.
+            // The days of a week depend on the week start setting and an open range has no first or last day.
+            // Sending the periods instead would make the receiver read them as days.
+            if (isAbsoluteGranularityDateFilter(filter)) {
+                return Promise.resolve(undefined);
+            }
+
             invariant(backend, `backend needs to be provided for this type of filter: ${filter}`);
             invariant(workspace, `workspace needs to be provided for this type of filter: ${filter}`);
             if (isAttributeFilter(filter)) {
                 return resolveAttributeFilterValues(filter, backend, workspace);
-            } else {
+            } else if (isRelativeDateFilter(filter)) {
                 return resolveRelativeDateFilterValues(filter, backend, workspace);
             }
+            return Promise.resolve(undefined);
         });
     return Promise.all(promises).then((resolvedValues) => {
         const resolvedValuesMap: IResolvedFilterValues = {
@@ -72,7 +82,7 @@ export async function resolveFilterValues(
             const filter = filters[index];
             const ref = filterObjRef(filter);
             invariant(ref, `filter without reference not supported: ${filter}`);
-            if (isDateFilter(filter)) {
+            if (isDateFilterOfAnyType(filter)) {
                 const value = getResolvedFilterValues(resolvedValues, filter, index);
                 if (value) {
                     result.dateFilters.push(value);
@@ -178,15 +188,15 @@ function getResolvedFilterValues(
 ): IResolvedAttributeFilterValues | undefined;
 function getResolvedFilterValues(
     array: (IResolvedDateFilterValue | IResolvedAttributeFilterValues | undefined)[],
-    filter: IDateFilter,
+    filter: DateFilterOfAnyType,
     index: number,
 ): IResolvedDateFilterValue | undefined;
 function getResolvedFilterValues(
     array: (IResolvedDateFilterValue | IResolvedAttributeFilterValues | undefined)[],
-    filter: IAttributeFilter | IDateFilter,
+    filter: IAttributeFilter | DateFilterOfAnyType,
     index: number,
 ): IResolvedAttributeFilterValues | IResolvedDateFilterValue | undefined {
-    if (isDateFilter(filter)) {
+    if (isDateFilterOfAnyType(filter)) {
         return array[index];
     }
     return array[index];

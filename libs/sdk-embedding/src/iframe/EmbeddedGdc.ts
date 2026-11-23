@@ -3,6 +3,8 @@
 import {
     type DashboardAttributeFilterConfigMode,
     type DashboardDateFilterConfigMode,
+    type DatePeriodGranularity,
+    type DatePeriodRange,
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
 } from "@gooddata/sdk-model";
@@ -69,6 +71,40 @@ export interface IAbsoluteDateFilter {
         from: string;
         to: string;
     };
+    /**
+     * Configures the visibility mode of the date filter.
+     *
+     * @alpha
+     */
+    mode?: DashboardDateFilterConfigMode;
+    /**
+     * Local identifier of the date filter.
+     *
+     * @alpha
+     */
+    localIdentifier?: string;
+}
+
+/**
+ * Absolute date filter that selects whole weeks, months, quarters or years.
+ *
+ * @remarks
+ * Dashboards and Analytical Designer do not accept this filter yet and reject it with an error.
+ *
+ * @public
+ */
+export interface IAbsoluteGranularityDateFilter {
+    absoluteGranularityDateFilter: {
+        /**
+         * Date data set of the filter. Without it, the filter is the common date filter of a dashboard.
+         * Analytical Designer requires it.
+         */
+        dataSet?: ObjQualifier;
+        /**
+         * Granularity of the periods in 'from' and 'to'.
+         */
+        granularity: DatePeriodGranularity;
+    } & DatePeriodRange;
     /**
      * Configures the visibility mode of the date filter.
      *
@@ -186,14 +222,30 @@ export type AttributeFilterItem =
     | IMatchAttributeFilterItem;
 
 /**
+ * @remarks
+ * Does not cover the absolute date filter with granularity. {@link DateFilterItemOfAnyType} covers all date
+ * filters.
+ *
  * @public
  */
 export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
 
 /**
+ * Date filter item of any type, including the absolute date filter with granularity.
+ *
+ * @alpha
+ */
+export type DateFilterItemOfAnyType = DateFilterItem | IAbsoluteGranularityDateFilter;
+
+/**
  * @public
  */
-export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter | IMeasureValueFilter;
+export type FilterItem =
+    | DateFilterItem
+    | IAbsoluteGranularityDateFilter
+    | AttributeFilterItem
+    | IRankingFilter
+    | IMeasureValueFilter;
 
 /**
  * @public
@@ -245,10 +297,22 @@ export type RemoveFilterItem =
     | IRemoveMeasureValueFilterItem;
 
 /**
+ * @remarks
+ * Does not cover the absolute date filter with granularity, {@link isDateFilterOfAnyType} does.
+ *
  * @public
  */
 export function isDateFilter(filter: unknown): filter is DateFilterItem {
     return !_isEmpty(filter) && (isRelativeDateFilter(filter) || isAbsoluteDateFilter(filter));
+}
+
+/**
+ * Type guard checking whether the provided object is a date filter item of any type.
+ *
+ * @alpha
+ */
+export function isDateFilterOfAnyType(filter: unknown): filter is DateFilterItemOfAnyType {
+    return isDateFilter(filter) || isAbsoluteGranularityDateFilter(filter);
 }
 
 /**
@@ -263,6 +327,16 @@ export function isRelativeDateFilter(filter: unknown): filter is IRelativeDateFi
  */
 export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFilter {
     return !_isEmpty(filter) && (filter as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
+}
+
+/**
+ * @alpha
+ */
+export function isAbsoluteGranularityDateFilter(filter: unknown): filter is IAbsoluteGranularityDateFilter {
+    return (
+        !_isEmpty(filter) &&
+        (filter as IAbsoluteGranularityDateFilter).absoluteGranularityDateFilter !== undefined
+    );
 }
 
 /**

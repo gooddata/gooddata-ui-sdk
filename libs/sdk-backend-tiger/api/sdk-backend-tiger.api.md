@@ -1144,10 +1144,6 @@ export const TigerFeatureDefinitions: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };
-    readonly enableCatalogDocuments: {
-        type: "BOOLEAN";
-        defaultValue: boolean;
-    };
     readonly enableReportsSubsections: {
         type: "BOOLEAN";
         defaultValue: boolean;
@@ -1173,10 +1169,6 @@ export const TigerFeatureDefinitions: {
         defaultValue: boolean;
     };
     readonly enableLocalizationOverview: {
-        type: "BOOLEAN";
-        defaultValue: boolean;
-    };
-    readonly enableAiAssistantChartsV2: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };

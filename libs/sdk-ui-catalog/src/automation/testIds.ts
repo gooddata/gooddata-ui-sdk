@@ -6,6 +6,8 @@
 
 export const catalog = "analytics-catalog";
 export const objectType = `${catalog}-object-type`;
+export const createMenuItem = `${catalog}-create`;
+export const catalogSearch = `${catalog}-search`;
 export const filter = `${catalog}-filter`;
 export const filterCreatedBy = `${filter}/created-by`;
 export const filterOrigin = `${filter}/origin`;

@@ -3,12 +3,16 @@
 import { describe, expect, it } from "vitest";
 
 import { InvalidInputTestCases } from "../../__mocks__/typeGuards.js";
+import { idRef } from "../objRef/factory.js";
 import { type ObjRef } from "../objRef/index.js";
 
 import {
+    type IDashboardAbsoluteGranularityDateFilter,
     type IDashboardFilterReference,
     type IFilterContext,
     type ITempFilterContext,
+    dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     dashboardFilterReferenceObjRef,
     exportOverrideFilterContextIdentifier,
     isDashboardAttributeFilter,
@@ -18,6 +22,8 @@ import {
     isExportOverrideFilterContext,
     isFilterContext,
     isFilterContextDefinition,
+    isFilterContextItem,
+    isFilterContextItemOfAnyType,
     isTempFilterContext,
 } from "./filterContext.js";
 import {
@@ -188,5 +194,39 @@ describe("isExportOverrideFilterContext", () => {
         expect(isExportOverrideFilterContext(undefined, "export-1")).toBe(false);
         expect(isExportOverrideFilterContext(null, "export-1")).toBe(false);
         expect(isExportOverrideFilterContext({}, "export-1")).toBe(false);
+    });
+});
+
+describe("absolute date filter with granularity in the filter context", () => {
+    const dataSet = idRef("closed", "dataSet");
+    const granularityDateFilter: IDashboardAbsoluteGranularityDateFilter = {
+        dashboardAbsoluteGranularityDateFilter: {
+            granularity: "GDC.time.month",
+            from: "2026-01",
+            to: "2026-03",
+            dataSet,
+            localIdentifier: "granularityDateFilter",
+        },
+    };
+
+    it.each<[boolean, string, unknown]>([
+        ...InvalidInputTestCases,
+        [true, "absolute date filter with granularity", granularityDateFilter],
+        [true, "dashboard date filter", dashboardDateFilter],
+        [true, "dashboard attribute filter", dashboardAttributeFilter],
+    ])("isFilterContextItemOfAnyType should return %s when input is %s", (expectedResult, _desc, input) => {
+        expect(isFilterContextItemOfAnyType(input)).toBe(expectedResult);
+    });
+
+    it("is not covered by isFilterContextItem", () => {
+        expect(isFilterContextItem(granularityDateFilter)).toBe(false);
+    });
+
+    it("returns its data set as the object reference", () => {
+        expect(dashboardFilterObjRef(granularityDateFilter)).toEqual(dataSet);
+    });
+
+    it("returns its local identifier", () => {
+        expect(dashboardFilterLocalIdentifier(granularityDateFilter)).toBe("granularityDateFilter");
     });
 });

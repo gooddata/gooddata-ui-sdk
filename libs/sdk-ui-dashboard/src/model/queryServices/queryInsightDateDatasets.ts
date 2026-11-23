@@ -13,7 +13,7 @@ import {
     insightFilters,
     insightRef,
     isCatalogDateDataset,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isObjRef,
     objRefToString,
     serializeObjRef,
@@ -96,7 +96,7 @@ function lookupDatasetsUsedInDateFilters(
     insight: IInsightDefinition,
     datasets: ObjRefMap<ICatalogDateDataset>,
 ): ReadonlyArray<ICatalogDateDataset> {
-    const dateFilters = insightFilters(insight).filter(isDateFilter);
+    const dateFilters = insightFilters(insight).filter(isDateFilterOfAnyType);
 
     return dateFilters.map((filter) => {
         const datasetRef = filterObjRef(filter);

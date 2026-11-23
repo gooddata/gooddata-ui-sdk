@@ -63,6 +63,15 @@ describe("UiPopover", () => {
         expect(document.getElementById(labelledBy!)).toHaveTextContent("My title");
     });
 
+    it("passes the title id to content", () => {
+        renderPopover({
+            title: "My title",
+            content: ({ titleId }) => <ul role="listbox" aria-labelledby={titleId} />,
+        });
+        fireEvent.click(screen.getByText("Anchor"));
+        expect(screen.getByRole("listbox", { name: "My title" })).toBeInTheDocument();
+    });
+
     it("lets a caller's aria-labelledby win over the auto-wired title id", () => {
         const ariaLabelledBy = "external-title-id";
         renderPopover({ title: "Internal", accessibilityConfig: { ariaLabelledBy } });

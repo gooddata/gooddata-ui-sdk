@@ -92,7 +92,7 @@ describe("Test SaveReportFromKDDialog", () => {
                 return (id: string) => `/dashboard/${id}`;
             }
             if (selector === documentUriFactorySelector) {
-                return (id: string) => `/document/${id}`;
+                return ({ id }: { id: string }) => `/document/${id}`;
             }
             return undefined;
         });
@@ -283,7 +283,7 @@ describe("Test SaveReportFromKDDialog", () => {
             renderComponent({
                 insightUsedOnDashboards: dashboards,
                 insightUsedInDocuments: {
-                    accessibleDocuments: [{ id: "doc1", title: "Board pack" }],
+                    accessibleDocuments: [{ id: "doc1", title: "Board pack", type: "document" }],
                     inaccessibleDocumentsCount: 0,
                     allDocumentsCount: 1,
                 },

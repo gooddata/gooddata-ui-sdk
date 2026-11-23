@@ -8,9 +8,8 @@ import {
     STEP_REVEAL_GAP_MS,
     advanceStepReveal,
     buildExecutionLoadingViewModel,
-    formatStepDuration,
     initialStepRevealState,
-    loadingStepDuration,
+    loadingStepDurationMs,
     nextStepRevealAt,
     revealedLoadingSteps,
 } from "./execution_loading_view_model.js";
@@ -173,37 +172,29 @@ describe("buildExecutionLoadingViewModel", () => {
     });
 });
 
-describe("loadingStepDuration", () => {
+describe("loadingStepDurationMs", () => {
     const running = { startedAt: T0, state: "running" as const };
 
     it("shows nothing for a step running less than 1 s", () => {
-        expect(loadingStepDuration(running, T0 + 999)).toBeUndefined();
+        expect(loadingStepDurationMs(running, T0 + 999)).toBeUndefined();
     });
 
-    it("shows the live whole seconds of a running step from 1 s on", () => {
-        expect(loadingStepDuration(running, T0 + 1000)).toBe("1s");
-        expect(loadingStepDuration(running, T0 + 7999)).toBe("7s");
+    it("shows the live duration of a running step from 1 s on", () => {
+        expect(loadingStepDurationMs(running, T0 + 1000)).toBe(1000);
+        expect(loadingStepDurationMs(running, T0 + 7999)).toBe(7999);
     });
 
-    it("shows every finished step: milliseconds under 1 s, whole seconds from it", () => {
-        expect(loadingStepDuration({ ...running, state: "done", finishedAt: T0 + 100 }, T0 + 9000)).toBe(
-            "100ms",
+    it("shows the duration of every finished step", () => {
+        expect(loadingStepDurationMs({ ...running, state: "done", finishedAt: T0 + 100 }, T0 + 9000)).toBe(
+            100,
         );
-        expect(loadingStepDuration({ ...running, state: "done", finishedAt: T0 + 7400 }, T0 + 9000)).toBe(
-            "7s",
+        expect(loadingStepDurationMs({ ...running, state: "done", finishedAt: T0 + 7400 }, T0 + 9000)).toBe(
+            7400,
         );
     });
 
     it("shows nothing for a pending step", () => {
-        expect(loadingStepDuration({ state: "pending" }, T0 + 9000)).toBeUndefined();
-    });
-
-    it("formats like the design", () => {
-        expect(formatStepDuration(0)).toBe("0ms");
-        expect(formatStepDuration(150.4)).toBe("150ms");
-        expect(formatStepDuration(999)).toBe("999ms");
-        expect(formatStepDuration(1000)).toBe("1s");
-        expect(formatStepDuration(7999)).toBe("7s");
+        expect(loadingStepDurationMs({ state: "pending" }, T0 + 9000)).toBeUndefined();
     });
 });
 

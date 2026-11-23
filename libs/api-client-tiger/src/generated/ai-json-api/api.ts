@@ -11649,8 +11649,8 @@ export class ObservabilityAi extends BaseAPI implements ObservabilityAiInterface
 
 // SmartFunctionsAi FP - SmartFunctionsAiAxiosParamCreator
 /**
- * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
- * @summary (BETA) Semantic Search in Metadata
+ * Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary Search Workspace Metadata
  * @param {string} workspaceId 
  * @param {AiSearchRequest} aiSearchRequest 
  * @param {*} [options] Override http request option.
@@ -11801,8 +11801,8 @@ export async function SmartFunctionsAiAxiosParamCreator_ResolveLlmProvidersV2(
 
 // SmartFunctionsAi FP - SmartFunctionsAiAxiosParamCreator
 /**
- * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
- * @summary (BETA) Semantic Search in Metadata
+ * Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary Search Workspace Metadata
  * @param {string} workspaceId 
  * @param {AiSearchRequest} aiSearchRequest 
  * @param {*} [options] Override http request option.
@@ -11864,8 +11864,8 @@ export async function SmartFunctionsAiAxiosParamCreator_SemanticSearch(
 
 // SmartFunctionsAi Api FP
 /**
- * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
- * @summary (BETA) Semantic Search in Metadata
+ * Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary Search Workspace Metadata
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {SmartFunctionsAiAiSearchRequest} requestParameters Request parameters.
@@ -11942,8 +11942,8 @@ export async function SmartFunctionsAi_ResolveLlmProvidersV2(
 
 // SmartFunctionsAi Api FP
 /**
- * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
- * @summary (BETA) Semantic Search in Metadata
+ * Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+ * @summary Search Workspace Metadata
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
  * @param {SmartFunctionsAiSemanticSearchRequest} requestParameters Request parameters.
@@ -11973,8 +11973,8 @@ export async function SmartFunctionsAi_SemanticSearch(
  */
 export interface SmartFunctionsAiInterface {
     /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata
+     * Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary Search Workspace Metadata
      * @param {SmartFunctionsAiAiSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @deprecated
@@ -12005,8 +12005,8 @@ export interface SmartFunctionsAiInterface {
     resolveLlmProvidersV2(requestParameters: SmartFunctionsAiResolveLlmProvidersV2Request, options?: AxiosRequestConfig): AxiosPromise<AiResolvedLlms>;
 
     /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata
+     * Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary Search Workspace Metadata
      * @param {SmartFunctionsAiSemanticSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -12094,8 +12094,8 @@ export interface SmartFunctionsAiSemanticSearchRequest {
  */
 export class SmartFunctionsAi extends BaseAPI implements SmartFunctionsAiInterface {
     /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata
+     * Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary Search Workspace Metadata
      * @param {SmartFunctionsAiAiSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @deprecated
@@ -12132,8 +12132,8 @@ export class SmartFunctionsAi extends BaseAPI implements SmartFunctionsAiInterfa
     }
 
     /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata
+     * Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary Search Workspace Metadata
      * @param {SmartFunctionsAiSemanticSearchRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

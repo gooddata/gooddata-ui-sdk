@@ -2,7 +2,7 @@
 
 // @vitest-environment node
 
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import {
     type DateAttributeGranularity,
@@ -23,6 +23,7 @@ import {
 import {
     applyFilterChange,
     areFiltersEqual,
+    dateFilterValues,
     isAllTimeDateFilterFixed,
     removeFilterFrom,
     resolveFilterToAdd,
@@ -300,6 +301,20 @@ describe("automationFilters/utils", () => {
             });
 
             expect(areFiltersEqual(filter1, filter2)).toBe(false);
+        });
+    });
+
+    describe("dateFilterValues", () => {
+        it("should return undefined with a warning for a date filter of an unknown type", () => {
+            const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+            const unknownFilter = { futureDateFilter: { dataSet: idRef("date", "dataSet") } };
+
+            expect(dateFilterValues(unknownFilter as never)).toBeUndefined();
+            expect(warn).toHaveBeenCalledWith(
+                "A date filter of an unknown type does not equal any filter.",
+                unknownFilter,
+            );
+            warn.mockRestore();
         });
     });
 

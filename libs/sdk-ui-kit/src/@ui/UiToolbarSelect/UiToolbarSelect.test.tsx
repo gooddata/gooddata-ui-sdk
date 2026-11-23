@@ -26,7 +26,8 @@ describe("UiToolbarSelect", () => {
 
         const button = screen.getByRole("button", { name: "Inter" });
         expect(button).toHaveAttribute("aria-expanded", "true");
-        expect(button).toHaveClass("gd-ui-kit-toolbar-select--isActive");
+        expect(button).toHaveClass("gd-ui-kit-toolbar-select--isOpen");
+        expect(button).not.toHaveClass("gd-ui-kit-toolbar-select--isActive");
         expect(button.querySelector(".gd-ui-kit-toolbar-chevron--isOpen")).not.toBeNull();
     });
 

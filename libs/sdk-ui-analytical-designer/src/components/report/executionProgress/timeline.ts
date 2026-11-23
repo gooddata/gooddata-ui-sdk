@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type IntlShape } from "react-intl";
+
 /**
  * Bar geometry of the execution progress panel. Adapted from the gen-ai interaction timeline
  * (sdk-ui-gen-ai components/intelligence/data/timeline.ts): a floor keeps very short items visible
@@ -73,9 +75,32 @@ function normalizeToTotal(weights: number[], target: number): number[] {
     return weights.map((weight) => (weight / sum) * target);
 }
 
-export function formatDuration(ms: number): string {
+/** "123ms" under a second, "1.2s" from it; units and decimals follow the locale */
+export function formatDuration(intl: IntlShape, ms: number): string {
     if (ms < 1000) {
-        return `${Math.max(Math.round(ms), 0)} ms`;
+        return formatUnit(intl, Math.max(Math.round(ms), 0), "millisecond");
     }
-    return `${(ms / 1000).toFixed(1)} s`;
+    return formatUnit(intl, ms / 1000, "second", 1);
+}
+
+/** "100ms" under a second, whole seconds rounded down from it ("7s"), as in the design */
+export function formatStepDuration(intl: IntlShape, ms: number): string {
+    return ms < 1000
+        ? formatUnit(intl, Math.max(Math.round(ms), 0), "millisecond")
+        : formatUnit(intl, Math.floor(ms / 1000), "second");
+}
+
+function formatUnit(
+    intl: IntlShape,
+    value: number,
+    unit: "millisecond" | "second",
+    fractionDigits = 0,
+): string {
+    return intl.formatNumber(value, {
+        style: "unit",
+        unit,
+        unitDisplay: "narrow",
+        minimumFractionDigits: fractionDigits,
+        maximumFractionDigits: fractionDigits,
+    });
 }

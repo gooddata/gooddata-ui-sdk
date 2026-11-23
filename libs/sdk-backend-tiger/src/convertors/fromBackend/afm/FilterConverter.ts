@@ -1,5 +1,7 @@
 // (C) 2024-2026 GoodData Corporation
 
+import { isValid } from "date-fns";
+
 import {
     type AbsoluteDateFilter,
     type AbsoluteGranularityDateFilter,
@@ -23,6 +25,8 @@ import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type ComparisonConditionOperator,
     type EmptyValues,
+    type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IFilter,
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
@@ -30,15 +34,13 @@ import {
     type MeasureValueFilterCondition,
     type ObjRefInScope,
     type RangeConditionOperator,
+    isValidDatePeriodRange,
+    newAbsoluteGranularityDateFilter,
     newArbitraryAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import {
-    fromPeriodLiteral,
-    isWireAbsoluteGranularity,
-    toPeriodLiteral,
-} from "../../shared/absoluteGranularityLiterals.js";
-import { toSdkGranularity } from "../dateGranularityConversions.js";
+import { parseDateValue } from "../dateFormatting/dateValueParser.js";
+import { toSdkDatePeriodGranularity, toSdkGranularity } from "../dateGranularityConversions.js";
 import { toLocalRef, toObjRef } from "../ObjRefConverter.js";
 
 const isPositiveAttributeFilter = (filter: unknown): filter is PositiveAttributeFilter => {
@@ -157,6 +159,60 @@ function convertTigerMeasureValueConditionsToSdk(
     });
 }
 
+/**
+ * Tells whether the value is a day in the YYYY-MM-DD format.
+ */
+function isDay(value: string): boolean {
+    return /^\d{4}-\d{2}-\d{2}$/.test(value) && isValid(parseDateValue(value, "GDC.time.date"));
+}
+
+function convertAbsoluteGranularityDateFilter(
+    filter: AbsoluteGranularityDateFilter,
+): IAbsoluteDateFilter | IAbsoluteGranularityDateFilter {
+    const { dataset, granularity, localIdentifier } = filter.absoluteGranularityDateFilter;
+    const from = filter.absoluteGranularityDateFilter.from ?? undefined;
+    const to = filter.absoluteGranularityDateFilter.to ?? undefined;
+    const periodGranularity = toSdkDatePeriodGranularity(granularity);
+    const emptyValueHandling = toSdkEmptyValues(filter.absoluteGranularityDateFilter.emptyValueHandling);
+
+    if (periodGranularity !== undefined) {
+        if (!isValidDatePeriodRange(periodGranularity, from, to)) {
+            throw new NotSupported(
+                `The absolute date filter range from ${from} to ${to} is not a valid range of the ${granularity} granularity.`,
+            );
+        }
+
+        const dateDataSet = toObjRef(dataset);
+        const options = { localIdentifier, emptyValueHandling };
+        return from === undefined
+            ? newAbsoluteGranularityDateFilter(dateDataSet, periodGranularity, undefined, to!, options)
+            : newAbsoluteGranularityDateFilter(dateDataSet, periodGranularity, from, to, options);
+    }
+
+    if (toSdkGranularity(granularity) !== "GDC.time.date") {
+        throw new NotSupported(`Absolute date filters at the ${granularity} granularity are not supported.`);
+    }
+    if (from === undefined || to === undefined) {
+        throw new NotSupported("Open-ended absolute date filters are not supported.");
+    }
+
+    if (!isDay(from) || !isDay(to)) {
+        throw new NotSupported(
+            `The absolute date filter range ${from} - ${to} is not in the format of the ${granularity} granularity.`,
+        );
+    }
+
+    return {
+        absoluteDateFilter: {
+            dataSet: toObjRef(dataset),
+            localIdentifier,
+            from,
+            to,
+            ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
+        },
+    };
+}
+
 export const convertFilter = (filter: FilterDefinition): IFilter => {
     if (isPositiveAttributeFilter(filter) && isAfmObjectIdentifier(filter.positiveAttributeFilter.label)) {
         if (filter.positiveAttributeFilter.usesArbitraryValues) {
@@ -229,51 +285,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
             },
         };
     } else if (isAbsoluteGranularityDateFilter(filter)) {
-        const { dataset, granularity, from, to, localIdentifier } = filter.absoluteGranularityDateFilter;
-        const sdkGranularity = toSdkGranularity(granularity);
-
-        if (from === undefined || from === null || to === undefined || to === null) {
-            throw new NotSupported("Open-ended absolute date filters are not supported.");
-        }
-        if (!isWireAbsoluteGranularity(sdkGranularity)) {
-            throw new NotSupported(
-                `Absolute date filters at the ${granularity} granularity are not supported.`,
-            );
-        }
-
-        const emptyValueHandling = toSdkEmptyValues(filter.absoluteGranularityDateFilter.emptyValueHandling);
-
-        // The range covers whole periods, so it ends on the last day of the period 'to' names,
-        // not on its first day.
-        let range: { from: string; to: string };
-        try {
-            range = {
-                from: fromPeriodLiteral(sdkGranularity, from).first,
-                to: fromPeriodLiteral(sdkGranularity, to).last,
-            };
-            // Parsing accepts a literal that is not zero-padded or has a short year, so the literal must
-            // also come back unchanged when its period is converted to a literal again.
-            if (
-                toPeriodLiteral(sdkGranularity, range.from) !== from ||
-                toPeriodLiteral(sdkGranularity, range.to) !== to
-            ) {
-                throw new Error(`Not ${granularity} literals: ${from} - ${to}`);
-            }
-        } catch {
-            throw new NotSupported(
-                `The absolute date filter range ${from} - ${to} is not in the format of the ${granularity} granularity.`,
-            );
-        }
-
-        return {
-            absoluteDateFilter: {
-                dataSet: toObjRef(dataset),
-                localIdentifier,
-                ...range,
-                ...(sdkGranularity === "GDC.time.date" ? {} : { granularity: sdkGranularity }),
-                ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
-            },
-        };
+        return convertAbsoluteGranularityDateFilter(filter);
     } else if (isAllTimeDateFilter(filter)) {
         const emptyValueHandling = toSdkEmptyValues(filter.allTimeDateFilter.emptyValueHandling);
         return {

@@ -60,7 +60,6 @@ describe("canEditCatalogItem", () => {
         const documentFlags: ISettings = {
             enableBusinessBriefingReportsApp: true,
             enablePublisherV2: true,
-            enableCatalogDocuments: true,
         };
 
         it.each(Object.keys(documentFlags))("keeps documents read-only for everyone without %s", (flag) => {

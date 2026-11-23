@@ -35,6 +35,7 @@ import {
     createDisplayFormMap,
     createDisplayFormMapFromCatalog,
 } from "../../../../_staging/catalog/displayFormMap.js";
+import { assertNoAbsoluteGranularityDateFilterInDashboards } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { deriveAbsoluteFormGranularitiesFromRelativeForm } from "../../../../_staging/dateFilterConfig/merge.js";
 import { type RenderMode } from "../../../../types.js";
 import { type InitializeDashboard } from "../../../commands/dashboard.js";
@@ -345,6 +346,10 @@ function* loadExistingDashboard(
         dashboard: loadedDashboard,
         references: { insights, unavailable },
     } = dashboardWithReferences;
+    assertNoAbsoluteGranularityDateFilterInDashboards(
+        [loadedDashboard, cmd.payload.persistedDashboard],
+        ctx.config?.overrideDefaultFilters,
+    );
 
     // must be in the store before filter sanitization/resolution so they can keep forbidden refs;
     // FF off => nothing is ever marked unavailable and behavior is unchanged
@@ -497,6 +502,7 @@ function* initializeNewDashboard(
     cmd: InitializeDashboard,
 ): SagaIterator<DashboardLoadResult> {
     const { backend } = ctx;
+    assertNoAbsoluteGranularityDateFilterInDashboards([], ctx.config?.overrideDefaultFilters);
 
     const [
         {

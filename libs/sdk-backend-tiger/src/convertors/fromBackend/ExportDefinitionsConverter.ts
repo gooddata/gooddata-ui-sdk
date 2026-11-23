@@ -16,7 +16,6 @@ import {
     type JsonApiExportDefinitionOutWithLinks,
     type TabularExportRequest,
     type VisualExportRequest,
-    isTigerFilters,
 } from "@gooddata/api-client-tiger";
 import {
     type FilterContextItem,
@@ -31,7 +30,7 @@ import {
 } from "@gooddata/sdk-model";
 import { _isEmpty } from "@gooddata/util";
 
-import { convertTigerToSdkFilters } from "../shared/storedFilterConverter.js";
+import { convertTigerToSdkFilters, isTigerStoredFilters } from "../shared/storedFilterConverter.js";
 
 import { convertFilter } from "./afm/FilterConverter.js";
 import { type IIncludedWithUserIdentifier, convertUserIdentifier } from "./UsersConverter.js";
@@ -333,7 +332,7 @@ export const convertTabularExportRequest = (
     const metadata = metadataObj as MetadataObjectDefinition<ITigerFilter> | undefined;
     const timezoneId = exportRequest.requestPayload.executionSettings?.timezone ?? undefined;
 
-    if (visualizationObjectCustomFilters && !isTigerFilters(visualizationObjectCustomFilters)) {
+    if (visualizationObjectCustomFilters && !isTigerStoredFilters(visualizationObjectCustomFilters)) {
         throw new Error("Invalid visualizationObjectCustomFilters format");
     }
 

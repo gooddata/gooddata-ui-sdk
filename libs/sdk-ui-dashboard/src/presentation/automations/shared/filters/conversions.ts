@@ -25,8 +25,8 @@ import {
     isAttributeFilterWithSelection,
     isDashboardDateFilter,
     isDashboardMeasureValueFilter,
-    isDateFilter,
     isDateFilterGranularity,
+    isDateFilterOfAnyType,
     isInsightWidget,
     isLocalIdRef,
     isMatchAttributeFilter,
@@ -376,7 +376,7 @@ function resolveDimensionalityItems(
 /** A filter with no effect on a widget execution: all-time date, condition-less MVF, all-values attribute. */
 export function isNoopExecutionFilter(filter: IFilter): boolean {
     // Strip noop "All time" date filters (implicit default with no extra configuration).
-    if (isDateFilter(filter)) {
+    if (isDateFilterOfAnyType(filter)) {
         return isNoopAllTimeDateFilterFixed(filter);
     }
     // Strip noop "All" measure value filters (no conditions).

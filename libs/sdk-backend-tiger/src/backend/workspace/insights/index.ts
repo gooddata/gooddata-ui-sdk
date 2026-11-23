@@ -71,7 +71,7 @@ import {
 import { convertCertificationFromBackend } from "../../../convertors/fromBackend/CertificationConverter.js";
 import {
     convertGraphEntityNodeToAnalyticalDashboard,
-    convertGraphEntityNodeToDocument,
+    convertGraphEntityNodesToDocuments,
 } from "../../../convertors/fromBackend/GraphConverter.js";
 import {
     convertVisualizationObjectsToInsights,
@@ -422,9 +422,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const analyticalDashboards = entitiesGraph.nodes
             .filter(({ type }) => type === "analyticalDashboard")
             .map(convertGraphEntityNodeToAnalyticalDashboard);
-        const documents = entitiesGraph.nodes
-            .filter(({ type }) => type === "document")
-            .map(convertGraphEntityNodeToDocument);
+        const documents = convertGraphEntityNodesToDocuments(entitiesGraph.nodes);
 
         return { analyticalDashboards, documents };
     };

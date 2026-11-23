@@ -10,6 +10,7 @@ import {
     type IRemoveAttributeFilterItem,
     type IRemoveDateFilterItem,
     type IRemoveRankingFilterItem,
+    isAbsoluteGranularityDateFilter,
     isPositiveAttributeFilter,
     isRemoveAttributeFilter,
     isRemoveDateFilter,
@@ -167,6 +168,8 @@ const ERROR_DUPLICATED_ATTRIBUTE_FILTER_IDENTIFIERS = "ERROR_DUPLICATED_ATTRIBUT
 const ERROR_INVALID_DATE_DATASET_URI = "ERROR_INVALID_DATE_DATASET_URI";
 const ERROR_HAS_NON_DEFAULT_ATTRIBUTE_DISPLAY_FORM = "ERROR_HAS_NON_DEFAULT_ATTRIBUTE_DISPLAY_FORM";
 const ERROR_INVALID_FILTER_DATA_FORMAT = "ERROR_INVALID_FILTER_DATA_FORMAT";
+const ERROR_UNSUPPORTED_ABSOLUTE_GRANULARITY_DATE_FILTER =
+    "ERROR_UNSUPPORTED_ABSOLUTE_GRANULARITY_DATE_FILTER";
 const ERROR_INVALID_ATTRIBUTE_FILTER_ID = "ERROR_INVALID_ATTRIBUTE_FILTER_ID";
 const ERROR_INVALID_ATTRIBUTE_FILTER_VALUE = "ERROR_INVALID_ATTRIBUTE_FILTER_VALUE";
 const ERROR_BAD_ATTRIBUTE_FILTER_DISPLAY_FORM = "ERROR_BAD_ATTRIBUTE_FILTER_DISPLAY_FORM";
@@ -201,6 +204,8 @@ function getAttributeFilterErrorMessage(error: unknown): ICommandFailedBody {
             return CONTROL_FILTERING_ERRORS.invalidDateDatasetUri;
         case ERROR_INVALID_FILTER_DATA_FORMAT:
             return CONTROL_FILTERING_ERRORS.invalidFilterDataFormat;
+        case ERROR_UNSUPPORTED_ABSOLUTE_GRANULARITY_DATE_FILTER:
+            return CONTROL_FILTERING_ERRORS.unsupportedAbsoluteGranularityDateFilter;
         case ERROR_INVALID_FILTER_ITEMS_COUNT:
             return CONTROL_FILTERING_ERRORS.invalidFilterItemsCount;
         case ERROR_INVALID_REMOVE_FILTER_CONTEXT_COUNT:
@@ -728,6 +733,10 @@ export function* handleSetFilterContextRequested({
 
         if (hasInvalidFilters || hasSingleSelectionFilters) {
             throw new Error(ERROR_INVALID_FILTER_DATA_FORMAT);
+        }
+
+        if (filters.some(isAbsoluteGranularityDateFilter)) {
+            throw new Error(ERROR_UNSUPPORTED_ABSOLUTE_GRANULARITY_DATE_FILTER);
         }
 
         const {

@@ -4,7 +4,6 @@ import { describe, expect, it } from "vitest";
 
 import {
     getNormalizedAnomalyDetectionValues,
-    mapVisualizationAnomalyDetectionToBackendConfig,
     mapVisualizationAnomalyDetectionToChartConfig,
 } from "./anomalyDetectionMapping.js";
 
@@ -114,22 +113,6 @@ describe("anomalyDetectionMapping", () => {
                     anomalyDetection: { sensitivity: "INVALID" as any },
                 }),
             ).toBeUndefined();
-        });
-    });
-
-    describe("mapVisualizationAnomalyDetectionToBackendConfig", () => {
-        it("should return undefined if anomalyDetection is missing", () => {
-            expect(mapVisualizationAnomalyDetectionToBackendConfig(baseVisualization)).toBeUndefined();
-        });
-
-        it("should map sensitivity correctly", () => {
-            expect(
-                mapVisualizationAnomalyDetectionToBackendConfig({
-                    anomalyDetection: { sensitivity: "MEDIUM" },
-                }),
-            ).toEqual({
-                sensitivity: "medium",
-            });
         });
     });
 });

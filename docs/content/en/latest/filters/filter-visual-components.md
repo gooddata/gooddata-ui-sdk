@@ -6,6 +6,7 @@ diataxis_type: howto
 api_symbols:
   - "@gooddata/sdk-model:newPositiveAttributeFilter"
   - "@gooddata/sdk-model:newNegativeAttributeFilter"
+  - "@gooddata/sdk-model:newAbsoluteGranularityDateFilter"
 source_files:
   - src/execution/filter/factory.ts
 related_pages:
@@ -92,6 +93,42 @@ where:
 -  `dateDataSet` is the identifier of the date dataset to filter by.
 -  `from` is the start date in the format `YYYY-MM-DD`.
 -  `to` is the end date in the format `YYYY-MM-DD`.
+
+### Absolute date filter with granularity
+
+An **absolute date filter with granularity** shows data from a range of whole weeks, months, quarters, or years. Only
+GoodData Cloud and GoodData.CN support it.
+
+{{% alert color="warning" title="Alpha API" %}}
+`newAbsoluteGranularityDateFilter` is `@alpha` and can change in any release. See
+[API maturity](../../integrations/platform/api-maturity/).
+{{% /alert %}}
+
+Use the `newAbsoluteGranularityDateFilter` factory function to create a new absolute date filter with granularity:
+
+```ts
+newAbsoluteGranularityDateFilter(dateDataSet, granularity, from, to);
+```
+
+where:
+
+-  `dateDataSet` is the identifier of the date dataset to filter by.
+-  `granularity` is one of `"GDC.time.week"`, `"GDC.time.month"`, `"GDC.time.quarter"`, and `"GDC.time.year"`.
+-  `from` is the first period of the range, included. Pass `undefined` for a range open at the start.
+-  `to` is the last period of the range, included. Pass `undefined` for a range open at the end.
+
+Set at least one of `from` and `to`. Write each period in the format of the granularity:
+
+| Granularity | Format | Example |
+| :--- | :--- | :--- |
+| `"GDC.time.week"` | `YYYY-WW` | `2026-05` |
+| `"GDC.time.month"` | `YYYY-MM` | `2026-03` |
+| `"GDC.time.quarter"` | `YYYY-Q` | `2026-1` |
+| `"GDC.time.year"` | `YYYY` | `2026` |
+
+Weeks use the ISO-8601 week number and the ISO-8601 week-numbering year. Week 53 is valid only in the years that have
+it. When weeks start on Monday, a week is the ISO-8601 week from Monday to Sunday. When weeks start on Sunday, the same
+week starts one day earlier and runs from Sunday to Saturday.
 
 ### Relative date filter
 

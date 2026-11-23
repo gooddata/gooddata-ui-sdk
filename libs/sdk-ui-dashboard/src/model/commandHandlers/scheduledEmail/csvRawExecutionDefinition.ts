@@ -8,8 +8,8 @@ import {
     type IInsight,
     type IInsightParameterValue,
     filterContextItemsToDashboardFiltersByWidget,
-    isFilter,
-    isFilterContextItem,
+    isFilterContextItemOfAnyType,
+    isFilterOfAnyType,
     isWidget,
     mergeFilters,
     objRefToString,
@@ -121,8 +121,8 @@ function exportRequestFiltersToExecutionFilters(
     filters: (FilterContextItem | IFilter)[],
     widget: ExtendedDashboardWidget | undefined,
 ): IFilter[] {
-    const executionFilters = filters.filter(isFilter);
-    const filterContextItems = filters.filter(isFilterContextItem);
+    const executionFilters = filters.filter(isFilterOfAnyType);
+    const filterContextItems = filters.filter(isFilterContextItemOfAnyType);
 
     if (!filterContextItems.length) {
         return executionFilters;

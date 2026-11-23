@@ -25,8 +25,8 @@ import {
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     isComparisonCondition,
-    isDateFilter,
-    isFilter,
+    isDateFilterOfAnyType,
+    isFilterOfAnyType,
     isLocalIdRef,
     isMatchAttributeFilter,
     isMeasureValueFilter,
@@ -111,8 +111,8 @@ function groupFiltersByDateFilter(filters: IFilter[]): {
     };
     rest: [IFilter, number][];
 } {
-    const dateFilters = [...filters].filter(isDateFilter);
-    const nonDateFilters = [...filters].filter((f) => !isDateFilter(f));
+    const dateFilters = [...filters].filter(isDateFilterOfAnyType);
+    const nonDateFilters = [...filters].filter((f) => !isDateFilterOfAnyType(f));
 
     const result: ReturnType<typeof groupFiltersByDateFilter> = { grouped: {}, rest: [] };
 
@@ -277,7 +277,7 @@ function declarativeFilterToYaml(
     errorContext?: IErrorContext,
     readLegacyEmptyValuesFilter = false,
 ): WrittenDateFilter | null {
-    if (!isFilter(filter)) {
+    if (!isFilterOfAnyType(filter)) {
         return null;
     }
 

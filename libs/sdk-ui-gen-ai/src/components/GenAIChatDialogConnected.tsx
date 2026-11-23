@@ -273,7 +273,7 @@ export interface IGenAIChatDialogConnectedProps {
     excludeTags?: string[];
     /**
      * Override the derived object types (default: dashboard, visualization, + metric when `canManage`,
-     * + document when the Reports app, Publisher v2 and catalog documents are on).
+     * + document when the Reports app and Publisher v2 are on).
      */
     objectTypes?: GenAIObjectType[];
 
@@ -295,7 +295,7 @@ export interface IGenAIChatDialogConnectedProps {
 
 /**
  * Object types the chat searches when the host gives none. Saved documents are searched only
- * while the Reports app, Publisher v2 and catalog documents are all on, the same as the catalog.
+ * while the Reports app and Publisher v2 are both on, the same as the catalog.
  *
  * @internal
  */
@@ -306,10 +306,7 @@ export function getChatObjectTypes({
 }: {
     override?: GenAIObjectType[];
     canManage?: boolean;
-    settings?: Pick<
-        IUserWorkspaceSettings,
-        "enableBusinessBriefingReportsApp" | "enablePublisherV2" | "enableCatalogDocuments"
-    >;
+    settings?: Pick<IUserWorkspaceSettings, "enableBusinessBriefingReportsApp" | "enablePublisherV2">;
 }): GenAIObjectType[] {
     if (override) {
         return override;
@@ -318,11 +315,7 @@ export function getChatObjectTypes({
     if (canManage) {
         types.push("metric");
     }
-    if (
-        settings?.enableBusinessBriefingReportsApp &&
-        settings.enablePublisherV2 &&
-        settings.enableCatalogDocuments
-    ) {
+    if (settings?.enableBusinessBriefingReportsApp && settings.enablePublisherV2) {
         types.push("document");
     }
     return types;
@@ -420,7 +413,6 @@ export function GenAIChatDialogConnected({
 
     const enableReportsApp = settings?.enableBusinessBriefingReportsApp;
     const enablePublisherV2 = settings?.enablePublisherV2;
-    const enableCatalogDocuments = settings?.enableCatalogDocuments;
     const objectTypes = useMemo<GenAIObjectType[]>(
         () =>
             getChatObjectTypes({
@@ -429,10 +421,9 @@ export function GenAIChatDialogConnected({
                 settings: {
                     enableBusinessBriefingReportsApp: enableReportsApp,
                     enablePublisherV2,
-                    enableCatalogDocuments,
                 },
             }),
-        [objectTypesOverride, canManage, enableReportsApp, enablePublisherV2, enableCatalogDocuments],
+        [objectTypesOverride, canManage, enableReportsApp, enablePublisherV2],
     );
 
     const [chatDispatcher, setDispatcher] = useState<Dispatch | null>(null);

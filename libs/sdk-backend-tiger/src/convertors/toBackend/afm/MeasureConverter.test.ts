@@ -6,6 +6,7 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     DateGranularity,
     newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
     newArithmeticMeasure,
     newMeasure,
     newPopMeasure,
@@ -56,6 +57,33 @@ describe("measure converter", () => {
 
     it.each(Scenarios)("should return %s", (_desc, input) => {
         expect(convertMeasure(input)).toMatchSnapshot();
+    });
+
+    it("should convert an absolute granularity date filter of a measure", () => {
+        const measure = newMeasure("foo", (m) =>
+            m.filters(
+                newAbsoluteGranularityDateFilter(
+                    ReferenceMd.DateDatasets.Closed.ref,
+                    "GDC.time.month",
+                    "2026-01",
+                    "2026-03",
+                ),
+            ),
+        );
+
+        expect(convertMeasure(measure).definition).toEqual({
+            measure: expect.objectContaining({
+                filters: [
+                    {
+                        absoluteGranularityDateFilter: expect.objectContaining({
+                            granularity: "MONTH",
+                            from: "2026-01",
+                            to: "2026-03",
+                        }),
+                    },
+                ],
+            }),
+        });
     });
 
     it("should throw an error when measure definition is not supported", () => {

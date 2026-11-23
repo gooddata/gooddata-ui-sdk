@@ -69,6 +69,7 @@ export interface IKdaState {
     selectedStatus: KdaAsyncStatus;
     selectedError: Error | undefined;
     attributeFilters: DashboardAttributeFilterItem[];
+    attributeFilterToFocus: { localIdentifier: string | undefined } | undefined;
     /**
      * Dashboard measure value filters propagated to the change analysis computation.
      * Not editable in the dialog UI — these flow through from the dashboard filter context.

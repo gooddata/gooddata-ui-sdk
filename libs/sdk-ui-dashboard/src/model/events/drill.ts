@@ -36,14 +36,35 @@ import { eventGuard } from "./util.js";
 export type DashboardKeyDriverCombinationRangeItem = { normalizedValue: string } & IAttributeDescriptor;
 
 /**
+ * Describes a metric and a pair of periods available for comparison in a key driver analysis drill interaction.
+ *
  * @internal
  */
 export interface IDashboardKeyDriverCombinationItem {
+    /**
+     * Whether the comparison uses the period before or after the drilled data point, or neither for a
+     * year-to-year comparison.
+     */
     where: "before" | "after" | "none";
+    /**
+     * Whether to compare adjacent periods or the same period across consecutive years.
+     */
     type: "comparative" | "year-to-year";
+    /**
+     * Descriptor of the metric to analyze.
+     */
     measure: IMeasureDescriptor;
+    /**
+     * Metric value difference associated with the comparison.
+     */
     difference: number;
+    /**
+     * Metric values for the reference period and the analyzed period, in that order.
+     */
     values: [number, number];
+    /**
+     * Date attribute scopes for the reference period and the analyzed period, matching the order of values.
+     */
     range: [ITableDataAttributeScope, ITableDataAttributeScope];
 }
 

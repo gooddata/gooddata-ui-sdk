@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IListedDashboard, type IMetadataObject } from "@gooddata/sdk-model";
+import { type IListedDashboard, type IMetadataObject, type ObjectType } from "@gooddata/sdk-model";
 
 /**
  * `data.insightUsagesOnDashboards` — the raw "which dashboards use this insight" answer stored by
@@ -19,7 +19,7 @@ export const insightUsageInitialState: IInsightUsageState = null;
 export interface IInsightUsage {
     allUserDashboards: IListedDashboard[];
     referencedDashboards: IMetadataObject[];
-    /** Publisher documents that show the insight. */
+    /** Documents, document templates and page templates that show the insight. */
     referencedDocuments: IMetadataObject[];
     /** Ids of the referenced documents the user may open. */
     accessibleDocumentIds: string[];
@@ -45,6 +45,8 @@ export interface IInsightUsageOnDashboardItem {
 export interface IInsightUsageInDocumentItem {
     title: string;
     id: string;
+    /** `document`, or `documentTemplate` / `pageTemplate` for a template. */
+    type: ObjectType;
 }
 
 /** Derived like {@link IInsightUsageOnDashboard}: the documents the user may open, and how many they may not. */

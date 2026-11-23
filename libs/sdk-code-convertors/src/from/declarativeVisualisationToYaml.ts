@@ -28,7 +28,7 @@ import {
     isAttributeLocator,
     isAttributeSort,
     isBucket,
-    isFilter,
+    isFilterOfAnyType,
     isInlineMeasureDefinition,
     isInsight,
     isMeasure,
@@ -1783,7 +1783,7 @@ type UnrepresentableLayerField = "filters" | "sorts" | "attributeFilterConfigs";
 // Each check matches what the emitter would have written, so a value it would have ignored anyway (an
 // unrecognized filter, a config carrying no label) is not refused.
 function unrepresentableLayerField(layer: IInsightLayerDefinition): UnrepresentableLayerField | null {
-    if (layer.filters?.some(isFilter)) {
+    if (layer.filters?.some(isFilterOfAnyType)) {
         return "filters";
     }
     if (layer.sorts?.length) {

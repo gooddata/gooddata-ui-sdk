@@ -1,6 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import type { IOutliersConfig } from "@gooddata/sdk-backend-spi";
 import { type IColor } from "@gooddata/sdk-model";
 import type { IAnomalies } from "@gooddata/sdk-ui-charts";
 
@@ -30,23 +29,6 @@ export function mapVisualizationAnomalyDetectionToChartConfig(config?: Config): 
         sensitivity: anomalyValues.sensitivity,
         color: anomalyValues.color,
         size: anomalyValues.size,
-    };
-}
-
-/**
- * @internal
- */
-export function mapVisualizationAnomalyDetectionToBackendConfig(
-    config?: Config,
-): IOutliersConfig | undefined {
-    const anomalyValues = getNormalizedAnomalyDetectionValues(config);
-
-    if (!anomalyValues) {
-        return undefined;
-    }
-
-    return {
-        sensitivity: anomalyValues.sensitivity,
     };
 }
 

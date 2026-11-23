@@ -3,8 +3,8 @@
 import {
     type ITigerFilter,
     type ITigerFilterContextItem,
+    isTigerFilter,
     isTigerFilterContextItems,
-    isTigerFilters,
 } from "@gooddata/api-client-tiger";
 import {
     type FilterContextItem,
@@ -12,6 +12,7 @@ import {
     type IFilter,
     type MeasureValueFilterCondition,
     isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isComparisonCondition,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
@@ -60,8 +61,8 @@ export function convertSdkFilterToTigerStored(
     return convertMeasureValueFilterSdkToTiger(sanitized);
 }
 
-// Insights store absolute date filters without the granularity. Dropping it cannot change what the
-// filter selects, because from/to already are the first and the last day of the selected periods.
+// Insights store absolute date filters without the deprecated granularity. Dropping it cannot change what the
+// filter selects, because the filter is executed by its days.
 function dropAbsoluteDateFilterGranularity(filter: IFilter): IFilter {
     if (!isAbsoluteDateFilter(filter) || filter.absoluteDateFilter.granularity === undefined) {
         return filter;
@@ -165,6 +166,17 @@ function convertDashboardFilterToSdk(item: ITigerFilterContextItem): FilterConte
     return cloneWithSanitizedIdsTypedFromBackend<ITigerFilterContextItem, FilterContextItem>(item);
 }
 
+/**
+ * Checks that all items are Tiger stored filters, including the absolute date filter with granularity,
+ * which the Tiger stored filter types do not list.
+ *
+ * @param filters - items to check
+ * @returns true if every item is a Tiger stored filter
+ */
+export function isTigerStoredFilters(filters: unknown[]): filters is ITigerFilter[] {
+    return filters.every((filter) => isTigerFilter(filter) || isAbsoluteGranularityDateFilter(filter));
+}
+
 // BATCH CONVERSIONS
 // SDK -> Tiger
 
@@ -224,7 +236,7 @@ export function convertTigerToSdkFilters<T extends TigerToSdkFiltersInput>(
         return filters.map(convertDashboardFilterToSdk) as TigerToSdkFiltersOutput<T>;
     }
 
-    if (isTigerFilters(filters)) {
+    if (isTigerStoredFilters(filters)) {
         return filters.map(convertTigerStoredToSdkFilter) as TigerToSdkFiltersOutput<T>;
     }
 

@@ -38,6 +38,8 @@ const usageGroupLabelByType = new Map<ObjectType, MessageDescriptor>([
         return label ? types.map((type): [ObjectType, MessageDescriptor] => [type, label]) : [];
     }),
     ["document", messages.documents],
+    ["documentTemplate", messages.documents],
+    ["pageTemplate", messages.documents],
 ]);
 
 // Mirrors the catalog filter bar order, with documents right after dashboards.

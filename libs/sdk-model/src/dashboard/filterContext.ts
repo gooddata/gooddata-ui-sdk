@@ -2,6 +2,7 @@
 
 import { _isEmpty } from "@gooddata/util";
 
+import { type DatePeriodGranularity, type DatePeriodRange } from "../base/dateGranularities.js";
 import { type DateFilterGranularity, type DateString } from "../dateFilterConfig/index.js";
 import {
     type EmptyValues,
@@ -353,11 +354,34 @@ export function isDashboardAttributeFilterItem(obj: unknown): obj is DashboardAt
 }
 
 /**
+ * Properties shared by the bodies of the date filters of the filter context.
+ * @public
+ */
+export interface IDashboardDateFilterBodyBase {
+    /**
+     * DateDataSet object ref
+     */
+    dataSet?: ObjRef;
+
+    /**
+     * Identifier of the filter which is valid in the scope of the filter context
+     */
+    localIdentifier?: string;
+
+    /**
+     * How to treat empty date values.
+     *
+     * @alpha
+     */
+    emptyValueHandling?: EmptyValues;
+}
+
+/**
  * Date filter of the filter context
  * @public
  */
 export interface IDashboardDateFilter {
-    dateFilter: {
+    dateFilter: IDashboardDateFilterBodyBase & {
         /**
          * Date filter type - relative or absolute
          * @beta
@@ -366,6 +390,10 @@ export interface IDashboardDateFilter {
 
         /**
          * Date filter granularity
+         *
+         * @remarks
+         * For an absolute filter, a granularity other than day is deprecated, whole weeks, months, quarters
+         * and years are expressed by {@link IDashboardAbsoluteGranularityDateFilter}.
          * @beta
          */
         granularity: DateFilterGranularity;
@@ -383,34 +411,37 @@ export interface IDashboardDateFilter {
         to?: DateString | number;
 
         /**
-         * DateDataSet object ref
-         */
-        dataSet?: ObjRef;
-
-        /**
          * Date attribute object ref
          */
         attribute?: ObjRef;
-
-        /**
-         * Identifier of the filter which is valid in the scope of the filter context
-         */
-        localIdentifier?: string;
 
         /**
          * Additional bounded filter
          * @alpha
          */
         boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
-
-        /**
-         * How to treat empty date values.
-         *
-         * @alpha
-         */
-        emptyValueHandling?: EmptyValues;
     };
 }
+
+/**
+ * Absolute date filter of the filter context that selects whole weeks, months, quarters or years.
+ *
+ * @alpha
+ */
+export interface IDashboardAbsoluteGranularityDateFilter {
+    dashboardAbsoluteGranularityDateFilter: IDashboardDateFilterBodyBase & {
+        /**
+         * Granularity of the periods in 'from' and 'to'
+         */
+        granularity: DatePeriodGranularity;
+    } & DatePeriodRange;
+}
+
+/**
+ * Date filter of the filter context of any type.
+ * @alpha
+ */
+export type DashboardDateFilterOfAnyType = IDashboardDateFilter | IDashboardAbsoluteGranularityDateFilter;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilter}.
@@ -418,6 +449,27 @@ export interface IDashboardDateFilter {
  */
 export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter {
     return !_isEmpty(obj) && !!(obj as IDashboardDateFilter).dateFilter;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardAbsoluteGranularityDateFilter}.
+ * @alpha
+ */
+export function isDashboardAbsoluteGranularityDateFilter(
+    obj: unknown,
+): obj is IDashboardAbsoluteGranularityDateFilter {
+    return (
+        !_isEmpty(obj) &&
+        !!(obj as IDashboardAbsoluteGranularityDateFilter).dashboardAbsoluteGranularityDateFilter
+    );
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link DashboardDateFilterOfAnyType}.
+ * @alpha
+ */
+export function isDashboardDateFilterOfAnyType(obj: unknown): obj is DashboardDateFilterOfAnyType {
+    return isDashboardDateFilter(obj) || isDashboardAbsoluteGranularityDateFilter(obj);
 }
 
 /**
@@ -511,7 +563,9 @@ export function newRelativeDashboardDateFilter(
  * @param dataSet - optional ref of the date data set to filter on
  * @param localIdentifier - optional local identifier of the filter
  * @param emptyValueHandling - optional handling of empty date values
- * @param granularity - optional granularity of the filter; defaults to GDC.time.date
+ * @param granularity - granularity of the selected periods, day when omitted. Other granularities are
+ *  deprecated, whole weeks, months, quarters and years are expressed by
+ *  {@link IDashboardAbsoluteGranularityDateFilter}.
  * @alpha
  */
 export function newAbsoluteDashboardDateFilter(
@@ -819,6 +873,9 @@ export function dashboardFilterObjRef(filter: FilterContextItem): ObjRef | undef
     if (isDashboardDateFilter(filter)) {
         return filter.dateFilter.dataSet;
     }
+    if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+        return filter.dashboardAbsoluteGranularityDateFilter.dataSet;
+    }
     if (isDashboardMeasureValueFilter(filter)) {
         return filter.dashboardMeasureValueFilter.measure;
     }
@@ -837,6 +894,9 @@ export function dashboardFilterLocalIdentifier(filter: FilterContextItem): strin
     if (isDashboardDateFilter(filter)) {
         return filter.dateFilter.localIdentifier;
     }
+    if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+        return filter.dashboardAbsoluteGranularityDateFilter.localIdentifier;
+    }
     if (isDashboardMeasureValueFilter(filter)) {
         return filter.dashboardMeasureValueFilter.localIdentifier;
     }
@@ -851,18 +911,35 @@ export function dashboardFilterLocalIdentifier(filter: FilterContextItem): strin
 export type FilterContextItem =
     | DashboardAttributeFilterItem
     | IDashboardDateFilter
+    | IDashboardAbsoluteGranularityDateFilter
     | IDashboardMeasureValueFilter;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link FilterContextItem}.
+ *
+ * @remarks
+ * Does not cover the absolute date filter with granularity, {@link isFilterContextItemOfAnyType} does.
+ *
  * @alpha
  */
-export function isFilterContextItem(obj: unknown): obj is FilterContextItem {
+export function isFilterContextItem(
+    obj: unknown,
+): obj is Exclude<FilterContextItem, IDashboardAbsoluteGranularityDateFilter> {
     return (
         isDashboardDateFilter(obj) ||
         isDashboardAttributeFilterItem(obj) ||
         isDashboardMeasureValueFilter(obj)
     );
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link FilterContextItem}, including
+ * the absolute date filter with granularity.
+ *
+ * @alpha
+ */
+export function isFilterContextItemOfAnyType(obj: unknown): obj is FilterContextItem {
+    return isFilterContextItem(obj) || isDashboardAbsoluteGranularityDateFilter(obj);
 }
 
 /**

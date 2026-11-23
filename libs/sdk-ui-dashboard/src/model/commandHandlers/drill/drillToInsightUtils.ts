@@ -13,7 +13,7 @@ import {
     insightFilters,
     insightMeasures,
     insightSetFilters,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isLocalIdRef,
     isMeasureValueFilter,
     isRankingFilter,
@@ -176,7 +176,7 @@ function mergeInsightFilters(sourceFiltersToApply: IFilter[], targetFilters: IFi
     const sourceContainsMeasureValueFilter = sourceFiltersToApply.some(
         (filter) => isMeasureValueFilter(filter) || isRankingFilter(filter),
     );
-    const sourceDateFilters = sourceFiltersToApply.filter(isDateFilter);
+    const sourceDateFilters = sourceFiltersToApply.filter(isDateFilterOfAnyType);
     const sourceDateFilterRefs = sourceDateFilters.flatMap((sourceFilter) => {
         const sourceRef = filterObjRef(sourceFilter);
         return sourceRef ? [sourceRef] : [];
@@ -189,7 +189,7 @@ function mergeInsightFilters(sourceFiltersToApply: IFilter[], targetFilters: IFi
             return false;
         }
 
-        if (!isDateFilter(targetFilter)) {
+        if (!isDateFilterOfAnyType(targetFilter)) {
             return true;
         }
 

@@ -7,6 +7,10 @@ api_symbols:
   - "@gooddata/sdk-ui-gen-ai:GenAIAssistant"
   - "@gooddata/sdk-ui-gen-ai:GenAIConversations"
   - "@gooddata/sdk-ui-gen-ai:GenAiStore"
+  - "@gooddata/sdk-ui-gen-ai:GenAiKeyDriverAnalysis"
+  - "@gooddata/sdk-ui-gen-ai:useDrillKeyDriverAnalysis"
+  - "@gooddata/sdk-ui-gen-ai:IUseDrillKeyDriverAnalysisOptions"
+  - "@gooddata/sdk-ui-gen-ai:IUseDrillKeyDriverAnalysisResult"
   - "@gooddata/sdk-ui-gen-ai:IGenAIAssistantSlots"
   - "@gooddata/sdk-ui-gen-ai:useGenAiDispatcher"
   - "@gooddata/sdk-ui-gen-ai:GenAiInteractionIntelligence"
@@ -64,7 +68,7 @@ check the GoodData.CN documentation for your version.
 | `GenAIAssistant` | The chat: message history and the input. It fills its parent element and doesn't manage an overlay, so put it in a container of the size you want. |
 | `GenAIConversations` | The conversations list, for layouts that show it next to the chat. |
 | `GenAiStore` | No UI. Shares one state and dispatcher between the AI Assistant components inside it. |
-| `GenAiKeyDriverAnalysis` | The Key Driver Analysis dialog for charts in the chat. See [Key Driver Analysis component](#key-driver-analysis-component). |
+| `GenAiKeyDriverAnalysis` | The Key Driver Analysis dialog for chat charts and custom chart drill integrations. See [Key Driver Analysis component](#key-driver-analysis-component). |
 | `GenAiInteractionIntelligence` | The Interaction Intelligence panel, for custom layouts inside `GenAiStore`. See [Interaction Intelligence](#interaction-intelligence). |
 | `CopilotInteractionComposingWithHandler` | Alpha. Wraps a connected dashboard with progress and clarification UI driven by a `CopilotHandler`. See [useDashboardCopilot hook](#usedashboardcopilot-hook). |
 
@@ -575,20 +579,27 @@ visualization action menus, or custom replacement renderers. It does not change 
 on visualizations the assistant generates. When a user asks to explain a data point in the chat, the request goes to
 the shared store, and the dialog mounted under that store opens with the analysis.
 
-Mount it next to `GenAIAssistant` inside a shared `GenAiStore`:
+Mount exactly one dialog next to `GenAIAssistant` inside a shared `GenAiStore`. Supply an authenticated backend
+and workspace through `BackendProvider` and `WorkspaceProvider` around both:
 
 ```tsx
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { GenAiStore, GenAIAssistant, GenAiKeyDriverAnalysis } from "@gooddata/sdk-ui-gen-ai";
 
 import "@gooddata/sdk-ui-gen-ai/styles/css/main.css";
 
-const App = () => (
-    <GenAiStore>
-        <div style={{ width: 500, height: 600, display: "flex" }}>
-            <GenAIAssistant />
-        </div>
-        <GenAiKeyDriverAnalysis />
-    </GenAiStore>
+const App = ({ backend, workspace }: { backend: IAnalyticalBackend; workspace: string }) => (
+    <BackendProvider backend={backend}>
+        <WorkspaceProvider workspace={workspace}>
+            <GenAiStore>
+                <div style={{ width: 500, height: 600, display: "flex" }}>
+                    <GenAIAssistant />
+                </div>
+                <GenAiKeyDriverAnalysis />
+            </GenAiStore>
+        </WorkspaceProvider>
+    </BackendProvider>
 );
 ```
 
@@ -597,6 +608,25 @@ Explain actions on charts are available when `GenAiKeyDriverAnalysis` is mounted
 without it, they are disabled. To turn them on or off explicitly, set `enableKeyDriverAnalysis` on the
 `ConversationVisualizationContent` or `ConversationKdaContent` slot (see
 [Customize message content](../customize-ai-assistant/#customize-message-content)).
+
+For your own chart, `useDrillKeyDriverAnalysis` returns `{ drillableItems, onDrill, drillMenu }`. Pass the first
+two to the chart and render `{drillMenu}` inside its ref-backed wrapper; `drillMenu` is a `ReactNode`, not a
+component. The hook owns comparison selection, the positioned overlay, dismissal, expanded-state notification,
+building and opening the analysis, and capturing and restoring the original focus. All supported comparisons
+are shown, even when there's only one; unsupported or disabled drills are no-ops.
+
+Keep the chart and exactly one dialog under the same `GenAiStore`, with `BackendProvider` and `WorkspaceProvider`
+supplying both. Catalog items come from that store, not a hook option. If `filters` is omitted, the hook uses
+the insight's filters; if supplied, it must contain the complete effective filters used by the chart. The
+application-owned `enabled` flag defaults to `true` but doesn't grant backend permissions or entitlements.
+See [Add Explain to a custom chart](../key-driver-analysis/#add-explain-to-a-custom-chart) for the full example
+and options, including the required `anchorRef`.
+
+The hook and its exported `IUseDrillKeyDriverAnalysisOptions` and `IUseDrillKeyDriverAnalysisResult` types are
+`@beta`. The API targets SDK **11.70.0** (checkout **11.70.0-alpha.0**), not a guarantee of current publication
+or a backport. No separate programmatic opener or shared KDA type re-exports are exposed by
+`@gooddata/sdk-ui-gen-ai`; shared KDA types remain dashboard-internal. The backend analysis service remains
+`@internal` and isn't exposed by this API.
 
 ## Slots
 

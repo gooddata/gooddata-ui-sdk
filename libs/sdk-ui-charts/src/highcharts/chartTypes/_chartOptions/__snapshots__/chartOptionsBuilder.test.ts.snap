@@ -663,6 +663,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
     "legendIndex": 0,
     "name": "CompuSci",
     "value": 27222899.64,
+    "x": 0,
   },
   {
     "borderColor": "rgb(0,193,141)",
@@ -671,6 +672,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
     "legendIndex": 1,
     "name": "Educationly",
     "value": 22946895.47,
+    "x": 1,
   },
   {
     "borderColor": "rgb(229,77,66)",
@@ -679,6 +681,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
     "legendIndex": 2,
     "name": "Explorer",
     "value": 38596194.86,
+    "x": 2,
   },
   {
     "borderColor": "rgb(241,134,0)",
@@ -687,6 +690,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
     "legendIndex": 3,
     "name": "Grammar Plus",
     "value": 8042031.92,
+    "x": 3,
   },
   {
     "borderColor": "rgb(171,85,163)",
@@ -695,6 +699,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
     "legendIndex": 4,
     "name": "PhoenixSoft",
     "value": 9525857.91,
+    "x": 4,
   },
   {
     "borderColor": "rgb(244,213,33)",
@@ -703,6 +708,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
     "legendIndex": 5,
     "name": "WonderKid",
     "value": 10291576.74,
+    "x": 5,
   },
 ]
 `;
@@ -719,6 +725,7 @@ exports[`chartOptionsBuilder > outline chart fill > getSeries > in use case of t
   "legendIndex": 0,
   "name": "Amount",
   "value": 116625456.54,
+  "x": 0,
 }
 `;
 
@@ -1484,6 +1491,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
     "legendIndex": 0,
     "name": "CompuSci",
     "value": 27222899.64,
+    "x": 0,
   },
   {
     "borderColor": "rgb(0,193,141)",
@@ -1503,6 +1511,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
     "legendIndex": 1,
     "name": "Educationly",
     "value": 22946895.47,
+    "x": 1,
   },
   {
     "borderColor": "rgb(229,77,66)",
@@ -1522,6 +1531,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
     "legendIndex": 2,
     "name": "Explorer",
     "value": 38596194.86,
+    "x": 2,
   },
   {
     "borderColor": "rgb(241,134,0)",
@@ -1541,6 +1551,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
     "legendIndex": 3,
     "name": "Grammar Plus",
     "value": 8042031.92,
+    "x": 3,
   },
   {
     "borderColor": "rgb(171,85,163)",
@@ -1560,6 +1571,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
     "legendIndex": 4,
     "name": "PhoenixSoft",
     "value": 9525857.91,
+    "x": 4,
   },
   {
     "borderColor": "rgb(244,213,33)",
@@ -1579,6 +1591,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
     "legendIndex": 5,
     "name": "WonderKid",
     "value": 10291576.74,
+    "x": 5,
   },
 ]
 `;
@@ -1619,6 +1632,7 @@ exports[`chartOptionsBuilder > pattern chart fill > getSeries > in use case of t
   "legendIndex": 0,
   "name": "Amount",
   "value": 116625456.54,
+  "x": 0,
 }
 `;
 
@@ -2592,6 +2606,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
     "legendIndex": 0,
     "name": "CompuSci",
     "value": 27222899.64,
+    "x": 0,
   },
   {
     "borderColor": undefined,
@@ -2600,6 +2615,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
     "legendIndex": 1,
     "name": "Educationly",
     "value": 22946895.47,
+    "x": 1,
   },
   {
     "borderColor": undefined,
@@ -2608,6 +2624,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
     "legendIndex": 2,
     "name": "Explorer",
     "value": 38596194.86,
+    "x": 2,
   },
   {
     "borderColor": undefined,
@@ -2616,6 +2633,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
     "legendIndex": 3,
     "name": "Grammar Plus",
     "value": 8042031.92,
+    "x": 3,
   },
   {
     "borderColor": undefined,
@@ -2624,6 +2642,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
     "legendIndex": 4,
     "name": "PhoenixSoft",
     "value": 9525857.91,
+    "x": 4,
   },
   {
     "borderColor": undefined,
@@ -2632,6 +2651,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
     "legendIndex": 5,
     "name": "WonderKid",
     "value": 10291576.74,
+    "x": 5,
   },
 ]
 `;
@@ -2648,6 +2668,7 @@ exports[`chartOptionsBuilder > solid chart fill > getSeries > in use case of tre
   "legendIndex": 0,
   "name": "Amount",
   "value": 116625456.54,
+  "x": 0,
 }
 `;
 

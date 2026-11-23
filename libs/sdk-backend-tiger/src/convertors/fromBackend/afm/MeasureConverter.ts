@@ -12,7 +12,7 @@ import {
     type ArithmeticMeasureOperator,
     type IMeasure,
     type MeasureAggregation,
-    isSimpleMeasureFilter,
+    isSimpleMeasureFilterOfAnyType,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -102,7 +102,9 @@ export const convertMeasure = (measure: MeasureItem): IMeasure => {
                     measureDefinition: {
                         item: toObjRef(definition.measure.item),
                         aggregation: definition.measure.aggregation?.toLowerCase() as MeasureAggregation,
-                        filters: definition.measure.filters?.map(convertFilter).filter(isSimpleMeasureFilter),
+                        filters: definition.measure.filters
+                            ?.map(convertFilter)
+                            .filter(isSimpleMeasureFilterOfAnyType),
                         computeRatio: definition.measure.computeRatio,
                     },
                 },

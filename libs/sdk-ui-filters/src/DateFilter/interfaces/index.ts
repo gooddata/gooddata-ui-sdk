@@ -28,6 +28,8 @@ import { _isEmpty } from "@gooddata/util";
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     /**
      * Selected global absolute date filter granularity. Absent means "Day", for backward compatibility.
+     *
+     * @deprecated This field will be removed in the next major version.
      */
     granularity?: DateFilterGranularity;
     /**

@@ -1491,6 +1491,10 @@
         "text": "Execution stats",
         "crowdinContext": "Title of the popover with the statistics of how the visualization's data was loaded."
     },
+    "executionStats.close": {
+        "text": "Close execution stats",
+        "crowdinContext": "Accessible label of the button that closes the popover with the statistics of how the visualization's data was loaded."
+    },
     "executionStats.thisLoad": {
         "text": "This load",
         "crowdinContext": "Popover section about the last load of the visualization's data."

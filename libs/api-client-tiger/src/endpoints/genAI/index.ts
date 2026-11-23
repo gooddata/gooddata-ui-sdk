@@ -114,6 +114,7 @@ import {
     ObservabilityAi_GetObservabilityOverview,
     type SmartFunctionsAiAiSearchRequest,
     SmartFunctionsAi_AiSearch,
+    SmartFunctionsAi_SemanticSearch,
 } from "../../generated/ai-json-api/index.js";
 // Analytics-catalog createdBy/tags operations moved from the AFM API to the metadata API.
 import {
@@ -223,6 +224,7 @@ export {
     type KnowledgeAiSearchKnowledgeRequest as GenAiApiSearchKnowledgeRequest,
     SmartFunctionsAi_AiSearch as GenAiApi_AiSearch,
     type SmartFunctionsAiAiSearchRequest as GenAiApiAiSearchRequest,
+    SmartFunctionsAi_SemanticSearch as GenAiApi_SemanticSearch,
     type AiPatchDocumentRequest as GenAiApiPatchDocumentRequestBody,
     // Organization-scoped Knowledge Documents
     KnowledgeAi_CreateOrgDocument as GenAiApi_CreateOrgKnowledgeDocument,

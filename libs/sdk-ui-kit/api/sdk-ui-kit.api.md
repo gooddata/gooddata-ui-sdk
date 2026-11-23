@@ -772,6 +772,12 @@ export const getPreviousSiblings: <T extends IUiMenuItemData = object>(items: IU
 // @internal (undocumented)
 export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T | null;
 
+// @internal
+export function getRichTextCharacters(value: string, features: readonly RichTextFeature[]): IRichTextCharacters;
+
+// @internal
+export function getRichTextFormatsInRange(value: string, range: IRichTextRange, features: readonly RichTextFeature[]): IRichTextFormatsInRange;
+
 // @internal (undocumented)
 export const getSelectedMenuId: <T extends IUiMenuItemData = object, M = object>(context: IUiMenuContext<T, M>) => string | undefined;
 
@@ -1935,7 +1941,7 @@ export function IconTrash(input: IIconProps): JSX.Element;
 export function IconTreeMap(input: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "duplicate" | "rain" | "earth" | "globe" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "columnGroup" | "visualizationStack" | "richText" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "lineage" | "report" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4" | "linear" | "spline" | "stepped" | "heading1" | "heading2" | "heading3" | "heading4" | "heading5" | "heading6" | "paragraphLarge" | "paragraphMedium" | "paragraphSmall" | "regenerateWithAi" | "directionHorizontal" | "directionVertical" | "levelUpArrow" | "plusThin";
+export type IconType = "aiAgent" | "aiAgentDisabled" | "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "edit" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "infoCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "duplicate" | "rain" | "earth" | "globe" | "geoCollection" | "geoCollectionUpload" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderSmall" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "levelUp" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "building" | "printer" | "picture" | "visualization" | "columnGroup" | "visualizationStack" | "richText" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "ldmKey" | "ldmLabel" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "alignLeft" | "alignCenter" | "alignRight" | "alignTop" | "alignMiddle" | "alignBottom" | "bold" | "italic" | "imageContain" | "imageCover" | "imageFill" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "numberList" | "bulletList" | "drillTo" | "hierarchy" | "lineage" | "report" | "history" | "history2" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "externalLink" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "aiDocument" | "recommendation" | "streamUp" | "streamDown" | "stream" | "density" | "parameter" | "pin" | "unpin" | "speechBubble" | "pieChart" | "timezone" | "sidePanelCollapse" | "sidePanel" | "sidePanelExpand" | "lineStyle" | "lineStyleSolid" | "lineStyleDashed" | "lineStyleDotted" | "lineWidth1" | "lineWidth2" | "lineWidth3" | "lineWidth4" | "linear" | "spline" | "stepped" | "heading1" | "heading2" | "heading3" | "heading4" | "heading5" | "heading6" | "paragraphLarge" | "paragraphMedium" | "paragraphSmall" | "regenerateWithAi" | "directionHorizontal" | "directionVertical" | "levelUpArrow" | "plusThin";
 
 // @internal (undocumented)
 export function IconUndo(input: IIconProps): JSX.Element;
@@ -4955,6 +4961,75 @@ export interface IResponsiveTextProps {
     windowResizeRefreshDelay?: number;
 }
 
+// @internal
+export interface IRichTextCharacter extends IRichTextFormatsInRange {
+    listDepth: number;
+    // (undocumented)
+    offset: number;
+}
+
+// @internal (undocumented)
+export interface IRichTextCharacters {
+    // (undocumented)
+    characters: IRichTextCharacter[];
+    // (undocumented)
+    elements: IRichTextElementSpan[];
+    // (undocumented)
+    entities: IRichTextEntity[];
+    // (undocumented)
+    spans: IRichTextEmphasisSpan[];
+}
+
+// @internal
+export interface IRichTextElementSpan {
+    // (undocumented)
+    contentEnd: number;
+    // (undocumented)
+    contentStart: number;
+    // (undocumented)
+    element: "link" | "highlight" | "strikethrough";
+    // (undocumented)
+    end: number;
+    // (undocumented)
+    start: number;
+}
+
+// @internal
+export interface IRichTextEmphasisSpan {
+    // (undocumented)
+    contentEnd: number;
+    // (undocumented)
+    contentStart: number;
+    // (undocumented)
+    end: number;
+    // (undocumented)
+    format: "strong" | "emphasis";
+    // (undocumented)
+    start: number;
+}
+
+// @internal
+export interface IRichTextEntity {
+    // (undocumented)
+    end: number;
+    // (undocumented)
+    start: number;
+    // (undocumented)
+    text: string;
+}
+
+// @internal (undocumented)
+export interface IRichTextFormatsInRange {
+    // (undocumented)
+    bulletList: boolean;
+    // (undocumented)
+    emphasis: boolean;
+    // (undocumented)
+    orderedList: boolean;
+    // (undocumented)
+    strong: boolean;
+}
+
 // @internal (undocumented)
 export interface IRichTextProps {
     allowedMarkdown?: readonly RichTextFeature[];
@@ -4992,6 +5067,14 @@ export interface IRichTextProps {
     separators?: ISeparators_3;
     // (undocumented)
     value: string;
+}
+
+// @internal (undocumented)
+export interface IRichTextRange {
+    // (undocumented)
+    end: number;
+    // (undocumented)
+    start: number;
 }
 
 // @internal (undocumented)
@@ -7908,6 +7991,7 @@ export interface IUiPopoverProps {
     // (undocumented)
     content?: ReactNode | ((args: {
         onClose: () => void;
+        titleId?: string;
     }) => ReactNode);
     contentPadding?: "default" | "none";
     // (undocumented)

@@ -73,6 +73,8 @@ export function getSeriesItemData(
         if (isTreemap(type)) {
             valueProp = {
                 value: parseValue(pointValue),
+                // the tooltip reads x as the View by index, and Highcharts sets a missing x to the tree level
+                x: viewByIndex,
             };
         }
 

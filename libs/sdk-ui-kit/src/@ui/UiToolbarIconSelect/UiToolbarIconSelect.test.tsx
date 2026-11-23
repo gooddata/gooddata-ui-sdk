@@ -26,6 +26,8 @@ describe("UiToolbarIconSelect", () => {
         expect(button).toHaveAttribute("aria-haspopup", "menu");
         expect(button).toHaveAttribute("aria-expanded", "true");
         expect(button).toHaveClass("gd-ui-kit-toolbar-icon-select--isSelected");
+        expect(button).toHaveClass("gd-ui-kit-toolbar-icon-select--isOpen");
+        expect(button).not.toHaveClass("gd-ui-kit-toolbar-icon-select--isActive");
         expect(button.querySelector(".gd-ui-kit-toolbar-chevron--isOpen")).not.toBeNull();
     });
 });

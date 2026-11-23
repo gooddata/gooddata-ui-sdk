@@ -2,10 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import {
-    mapVisualizationForecastToBackendConfig,
-    mapVisualizationForecastToChartConfig,
-} from "./forecastMapping.js";
+import { mapVisualizationForecastToChartConfig } from "./forecastMapping.js";
 
 describe("forecast mapping", () => {
     it("maps forecast to chart config", () => {
@@ -42,7 +39,7 @@ describe("forecast mapping", () => {
         });
     });
 
-    it("normalizes confidence from percentage for chart and backend mapping", () => {
+    it("normalizes confidence from percentage for chart mapping", () => {
         expect(
             mapVisualizationForecastToChartConfig({
                 forecast: {
@@ -55,19 +52,6 @@ describe("forecast mapping", () => {
             enabled: true,
             period: 4,
             confidence: 0.95,
-            seasonal: false,
-        });
-        expect(
-            mapVisualizationForecastToBackendConfig({
-                forecast: {
-                    forecastPeriod: 4,
-                    confidenceLevel: 95,
-                    seasonal: false,
-                },
-            }),
-        ).toEqual({
-            forecastPeriod: 4,
-            confidenceLevel: 0.95,
             seasonal: false,
         });
     });
@@ -84,24 +68,6 @@ describe("forecast mapping", () => {
         ).toBeUndefined();
         expect(
             mapVisualizationForecastToChartConfig({
-                forecast: {
-                    forecastPeriod: 3,
-                    confidenceLevel: 120,
-                    seasonal: false,
-                },
-            }),
-        ).toBeUndefined();
-        expect(
-            mapVisualizationForecastToBackendConfig({
-                forecast: {
-                    forecastPeriod: 0,
-                    confidenceLevel: 0.95,
-                    seasonal: false,
-                },
-            }),
-        ).toBeUndefined();
-        expect(
-            mapVisualizationForecastToBackendConfig({
                 forecast: {
                     forecastPeriod: 3,
                     confidenceLevel: 120,

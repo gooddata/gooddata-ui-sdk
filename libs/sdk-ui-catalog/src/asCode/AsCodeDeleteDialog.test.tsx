@@ -333,6 +333,27 @@ describe("AsCodeDeleteDialog with a blocking referencing lookup (computed attrib
         expect(screen.queryByText("Other objects (1)")).toBeNull();
     });
 
+    it("lists document templates and page templates under documents, without a link", async () => {
+        renderComputedAttribute(
+            computedAttributeDescriptorWithReferences(
+                vi.fn().mockResolvedValue([
+                    { identifier: "doc.a", type: "document", title: "Board pack" },
+                    { identifier: "tpl.a", type: "documentTemplate", title: "Monthly review" },
+                    { identifier: "tpl.b", type: "pageTemplate", title: "KPI page" },
+                ]),
+            ),
+            vi.fn(),
+        );
+
+        fireEvent.click(await screen.findByText("Show more"));
+
+        expect(screen.getByText("Documents (3)")).toBeTruthy();
+        expect(screen.queryByText(/Other objects/)).toBeNull();
+        expect(screen.getByText("Board pack").closest("button")).not.toBeNull();
+        expect(screen.getByText("Monthly review").closest("button")).toBeNull();
+        expect(screen.getByText("KPI page").closest("button")).toBeNull();
+    });
+
     it("lists each referencing object even when two share a title", async () => {
         const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
         renderComputedAttribute(

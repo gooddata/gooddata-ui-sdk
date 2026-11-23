@@ -2,6 +2,7 @@
 
 import {
     newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
     newAllTimeFilter,
     newArbitraryAttributeFilter,
     newMatchAttributeFilter,
@@ -11,6 +12,7 @@ import {
 } from "../execution/filter/factory.js";
 import {
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IArbitraryAttributeFilter,
     type IAttributeElements,
     type IAttributeElementsByRef,
@@ -23,6 +25,7 @@ import {
     type IRelativeDateFilter,
     filterAttributeElements,
     filterObjRef,
+    isAbsoluteGranularityDateFilter,
     isArbitraryAttributeFilter,
     isAttributeFilter,
     isAttributeFilterWithSelection,
@@ -39,6 +42,7 @@ import {
     type DashboardAttributeFilterItem,
     type DashboardAttributeFilterSelectionMode,
     type FilterContextItem,
+    type IDashboardAbsoluteGranularityDateFilter,
     type IDashboardArbitraryAttributeFilter,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
@@ -48,11 +52,12 @@ import {
     type IFilterContextDefinition,
     type ITempFilterContext,
     isAllTimeDashboardDateFilter,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilterItem,
-    isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
+    isFilterContextItemOfAnyType,
 } from "./filterContext.js";
 import { type IWidgetDefinition } from "./widget.js";
 
@@ -69,15 +74,31 @@ export type IDashboardFilter =
     | INegativeAttributeFilter
     | IArbitraryAttributeFilter
     | IMatchAttributeFilter
-    | IMeasureValueFilter;
+    | IMeasureValueFilter
+    | IAbsoluteGranularityDateFilter;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardFilter}.
  *
+ * @remarks
+ * Does not cover the absolute date filter with granularity, {@link isDashboardFilterOfAnyType} does.
+ *
  * @public
  */
-export function isDashboardFilter(obj: unknown): obj is IDashboardFilter {
+export function isDashboardFilter(
+    obj: unknown,
+): obj is Exclude<IDashboardFilter, IAbsoluteGranularityDateFilter> {
     return isAttributeFilter(obj) || isDateFilter(obj) || isMeasureValueFilter(obj);
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardFilter}, including
+ * the absolute date filter with granularity.
+ *
+ * @alpha
+ */
+export function isDashboardFilterOfAnyType(obj: unknown): obj is IDashboardFilter {
+    return isDashboardFilter(obj) || isAbsoluteGranularityDateFilter(obj);
 }
 
 /**
@@ -307,6 +328,26 @@ export function dashboardDateFilterToDateFilterByWidget(
 }
 
 /**
+ * Converts {@link IDashboardAbsoluteGranularityDateFilter} to {@link IAbsoluteGranularityDateFilter} instance.
+ *
+ * @param filter - filter context absolute date filter with granularity to convert
+ * @param widget - widget to use to get dateDataSet for date filters
+ * @alpha
+ */
+export function dashboardAbsoluteGranularityDateFilterToDateFilterByWidget(
+    filter: IDashboardAbsoluteGranularityDateFilter,
+    widget?: Partial<IFilterableWidget>,
+): IAbsoluteGranularityDateFilter {
+    const { dataSet, granularity, from, to, localIdentifier, emptyValueHandling } =
+        filter.dashboardAbsoluteGranularityDateFilter;
+    const dateDataSet = widget ? dataSet || widget.dateDataSet! : dataSet!;
+    const options = { localIdentifier, emptyValueHandling };
+    return from === undefined
+        ? newAbsoluteGranularityDateFilter(dateDataSet, granularity, undefined, to!, options)
+        : newAbsoluteGranularityDateFilter(dateDataSet, granularity, from, to, options);
+}
+
+/**
  * Converts {@link IDashboardDateFilter} to {@link IDateFilter} instance.
  *
  * @param filter - filter context attribute filter to convert
@@ -349,6 +390,18 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
     }
 }
 
+function dashboardAbsoluteGranularityDateFilterToDateFilterByDateDataSet(
+    filter: IDashboardAbsoluteGranularityDateFilter,
+    dateDataSet: ObjRef,
+): IAbsoluteGranularityDateFilter {
+    const { granularity, from, to, localIdentifier, emptyValueHandling } =
+        filter.dashboardAbsoluteGranularityDateFilter;
+    const options = { localIdentifier, emptyValueHandling };
+    return from === undefined
+        ? newAbsoluteGranularityDateFilter(dateDataSet, granularity, undefined, to!, options)
+        : newAbsoluteGranularityDateFilter(dateDataSet, granularity, from, to, options);
+}
+
 /**
  * Converts {@link IDashboardMeasureValueFilter} to {@link IMeasureValueFilter} instance.
  *
@@ -386,24 +439,18 @@ export function filterContextItemsToDashboardFiltersByWidget(
     filterContextItems: FilterContextItem[],
     widget?: Partial<IFilterableWidget>,
 ): IDashboardFilter[] {
-    return filterContextItems
-        .filter(
-            (
-                filter,
-            ): filter is DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter =>
-                isDashboardAttributeFilterItem(filter) ||
-                isDashboardDateFilter(filter) ||
-                isDashboardMeasureValueFilter(filter),
-        )
-        .map((filter) => {
-            if (isDashboardAttributeFilterItem(filter)) {
-                return dashboardAttributeFilterItemToAttributeFilter(filter);
-            }
-            if (isDashboardMeasureValueFilter(filter)) {
-                return dashboardMeasureValueFilterToMeasureValueFilter(filter);
-            }
-            return dashboardDateFilterToDateFilterByWidget(filter, widget);
-        });
+    return filterContextItems.filter(isFilterContextItemOfAnyType).map((filter) => {
+        if (isDashboardAttributeFilterItem(filter)) {
+            return dashboardAttributeFilterItemToAttributeFilter(filter);
+        }
+        if (isDashboardMeasureValueFilter(filter)) {
+            return dashboardMeasureValueFilterToMeasureValueFilter(filter);
+        }
+        if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+            return dashboardAbsoluteGranularityDateFilterToDateFilterByWidget(filter, widget);
+        }
+        return dashboardDateFilterToDateFilterByWidget(filter, widget);
+    });
 }
 
 /**
@@ -418,20 +465,16 @@ export function filterContextItemsToDashboardFiltersByRichTextWidget(
     widget?: Partial<IFilterableWidget>,
 ): IDashboardFilter[] {
     return filterContextItems
-        .filter(
-            (
-                filter,
-            ): filter is DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter =>
-                isDashboardAttributeFilterItem(filter) ||
-                isDashboardDateFilter(filter) ||
-                isDashboardMeasureValueFilter(filter),
-        )
+        .filter(isFilterContextItemOfAnyType)
         .map((filter) => {
             if (isDashboardAttributeFilterItem(filter)) {
                 return dashboardAttributeFilterItemToAttributeFilter(filter);
             }
             if (isDashboardMeasureValueFilter(filter)) {
                 return dashboardMeasureValueFilterToMeasureValueFilter(filter);
+            }
+            if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+                return dashboardAbsoluteGranularityDateFilterToDateFilterByWidget(filter, widget);
             }
             return dashboardDateFilterToDateFilterByWidget(filter, widget);
         })
@@ -449,24 +492,18 @@ export function filterContextItemsToDashboardFiltersByDateDataSet(
     filterContextItems: FilterContextItem[],
     dateDataSet: ObjRef,
 ): IDashboardFilter[] {
-    return filterContextItems
-        .filter(
-            (
-                filter,
-            ): filter is DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter =>
-                isDashboardAttributeFilterItem(filter) ||
-                isDashboardDateFilter(filter) ||
-                isDashboardMeasureValueFilter(filter),
-        )
-        .map((filter) => {
-            if (isDashboardAttributeFilterItem(filter)) {
-                return dashboardAttributeFilterItemToAttributeFilter(filter);
-            }
-            if (isDashboardMeasureValueFilter(filter)) {
-                return dashboardMeasureValueFilterToMeasureValueFilter(filter);
-            }
-            return dashboardDateFilterToDateFilterByDateDataSet(filter, dateDataSet);
-        });
+    return filterContextItems.filter(isFilterContextItemOfAnyType).map((filter) => {
+        if (isDashboardAttributeFilterItem(filter)) {
+            return dashboardAttributeFilterItemToAttributeFilter(filter);
+        }
+        if (isDashboardMeasureValueFilter(filter)) {
+            return dashboardMeasureValueFilterToMeasureValueFilter(filter);
+        }
+        if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+            return dashboardAbsoluteGranularityDateFilterToDateFilterByDateDataSet(filter, dateDataSet);
+        }
+        return dashboardDateFilterToDateFilterByDateDataSet(filter, dateDataSet);
+    });
 }
 
 function numberOrStringToNumber(input: number | string): number {

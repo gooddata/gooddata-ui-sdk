@@ -6,9 +6,11 @@ import {
     type ObjRef,
     absoluteDateFilterValues,
     idRef,
+    isAbsoluteDateFilter,
     isAbsoluteDateFilterForm,
     isEmptyValuesDateFilterOption,
     isRelativeDateFilter,
+    newAllTimeDashboardDateFilter,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers, type DateFilterOption } from "@gooddata/sdk-ui-filters";
@@ -65,7 +67,7 @@ export function dateFilterOptionToDashboardDateFilter(
                 ...(emptyValueHandling ? { emptyValueHandling } : {}),
             },
         };
-    } else {
+    } else if (isAbsoluteDateFilter(afmFilter)) {
         const { from, to } = absoluteDateFilterValues(afmFilter);
         return {
             dateFilter: {
@@ -81,4 +83,8 @@ export function dateFilterOptionToDashboardDateFilter(
             },
         };
     }
+
+    const unknownFilter: never = afmFilter;
+    console.warn("A date filter of an unknown type is replaced by All time.", unknownFilter);
+    return newAllTimeDashboardDateFilter(dataSet, localIdentifier, emptyValueHandling);
 }

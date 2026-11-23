@@ -7,7 +7,7 @@ import {
     type RelativeDateFilterRelativeDateFilterGranularityEnum,
 } from "@gooddata/api-client-tiger";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
-import { type DateAttributeGranularity } from "@gooddata/sdk-model";
+import { type DateAttributeGranularity, type DatePeriodGranularity } from "@gooddata/sdk-model";
 
 /**
  * Extended fiscal-calendar granularities the backend exposes but the sdk-model granularity registry does not
@@ -133,6 +133,29 @@ export function toSdkGranularity(
         `Unsupported tiger date granularity "${granularity}" — falling back to "${FALLBACK_SDK_GRANULARITY}".`,
     );
     return FALLBACK_SDK_GRANULARITY;
+}
+
+const TigerToSdkDatePeriodGranularityMap: Partial<
+    Record<JsonApiAttributeOutAttributesGranularityEnum, DatePeriodGranularity>
+> = {
+    ["YEAR"]: "GDC.time.year",
+    ["QUARTER"]: "GDC.time.quarter",
+    ["MONTH"]: "GDC.time.month",
+    ["WEEK"]: "GDC.time.week",
+};
+
+/**
+ * Converts the granularity of an absolute date filter over whole periods to the SDK period granularity.
+ * Its week is the ISO-8601 week, so it reads as `GDC.time.week`.
+ *
+ * @param granularity - tiger granularity
+ * @returns the SDK period granularity, or undefined for a granularity that is not a week, month, quarter
+ *  or year
+ */
+export function toSdkDatePeriodGranularity(
+    granularity: JsonApiAttributeOutAttributesGranularityEnum,
+): DatePeriodGranularity | undefined {
+    return TigerToSdkDatePeriodGranularityMap[granularity];
 }
 
 /**

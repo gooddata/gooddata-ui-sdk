@@ -14,6 +14,10 @@ import {
 } from "@gooddata/sdk-model";
 import { defaultErrorHandler } from "@gooddata/sdk-ui";
 
+import {
+    ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED,
+    containsAbsoluteGranularityDateFilter,
+} from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { type IDashboardCommand } from "../../commands/base.js";
 import {
     type IApplyFilterView,
@@ -186,7 +190,12 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: IApplyFilter
         cmd.payload.ref,
     );
 
-    if (filterView) {
+    if (filterView && containsAbsoluteGranularityDateFilter(filterView.filterContext.filters)) {
+        console.warn(
+            `The filter view "${filterView.name}" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED}`,
+        );
+        yield put(filterViewApplicationFailed(ctx));
+    } else if (filterView) {
         yield call(applyFilterViewSelection, ctx, cmd, filterView);
         yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));
     } else {

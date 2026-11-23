@@ -323,6 +323,43 @@ describe("control filtering saga", () => {
             ]);
         });
 
+        it.each([
+            [
+                "a valid absolute granularity date filter",
+                "2026-01",
+                "unsupportedAbsoluteGranularityDateFilter",
+            ],
+            ["an absolute granularity date filter with a day", "2026-01-01", "invalidFilterDataFormat"],
+        ] as const)("should reject %s", async (_desc, from, error) => {
+            const action: ISetFilterContextRequestedAction = {
+                type: PostEventActionTypeKeys.SET_FILTER_CONTEXT_REQUESTED,
+                payload: {
+                    filters: [
+                        {
+                            absoluteGranularityDateFilter: {
+                                dataSet: { identifier: "date.id" },
+                                granularity: "GDC.time.month",
+                                from,
+                            },
+                        },
+                    ],
+                    postMessageContext: { contextId },
+                },
+            };
+
+            const saga: RunResult = await expectSaga(handleSetFilterContextRequested, action)
+                .provide([
+                    [select(isReportSaving), false],
+                    [select(isReportOpening), false],
+                    [select(enableSecondGranularities), false],
+                ])
+                .run();
+
+            expect(saga.effects.put).toEqual([
+                put(setFilterContextFailedAction(CONTROL_FILTERING_ERRORS[error], contextId)),
+            ]);
+        });
+
         it("should return setFilterContextFailedAction when relative date has invalid granularity", async () => {
             const action: ISetFilterContextRequestedAction = {
                 type: PostEventActionTypeKeys.SET_FILTER_CONTEXT_REQUESTED,

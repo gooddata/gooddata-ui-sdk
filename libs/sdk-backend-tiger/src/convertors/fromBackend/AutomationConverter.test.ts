@@ -8,6 +8,7 @@ import {
     type IMeasureValueFilter,
     idRef,
     localIdRef,
+    newAbsoluteGranularityDateFilter,
 } from "@gooddata/sdk-model";
 
 import { convertAlert, convertExecutionFilterToFilterContextItem } from "./AutomationConverter.js";
@@ -99,6 +100,46 @@ describe("convertExecutionFilterToFilterContextItem — MVF branch", () => {
         expect(result).toBeUndefined();
         expect(warn).toHaveBeenCalledWith(expect.stringContaining("LocalIdRef"), filter);
         warn.mockRestore();
+    });
+});
+
+describe("convertExecutionFilterToFilterContextItem — absolute granularity date filter", () => {
+    it("keeps the periods of a closed range", () => {
+        const filter = newAbsoluteGranularityDateFilter(
+            idRef("date", "dataSet"),
+            "GDC.time.week",
+            "2026-05",
+            "2026-08",
+            { localIdentifier: "date1", emptyValueHandling: "exclude" },
+        );
+
+        expect(convertExecutionFilterToFilterContextItem(filter, "fallback")).toEqual({
+            dashboardAbsoluteGranularityDateFilter: {
+                dataSet: idRef("date", "dataSet"),
+                granularity: "GDC.time.week",
+                from: "2026-05",
+                to: "2026-08",
+                localIdentifier: "date1",
+                emptyValueHandling: "exclude",
+            },
+        });
+    });
+
+    it("keeps an open range open", () => {
+        const filter = newAbsoluteGranularityDateFilter(
+            idRef("date", "dataSet"),
+            "GDC.time.year",
+            undefined,
+            "2026",
+        );
+
+        expect(convertExecutionFilterToFilterContextItem(filter, "fallback")).toEqual({
+            dashboardAbsoluteGranularityDateFilter: {
+                dataSet: idRef("date", "dataSet"),
+                granularity: "GDC.time.year",
+                to: "2026",
+            },
+        });
     });
 });
 

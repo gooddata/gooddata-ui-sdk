@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model, sdk-backend-tiger, sdk-embedding: Add `IAbsoluteGranularityDateFilter`, an absolute date filter over whole weeks, months, quarters or years given as `DatePeriodLiteral` values, and its alpha filter context item `IDashboardAbsoluteGranularityDateFilter`. The range can be open at one end. `IFilter`, `IMeasureFilter`, `IDashboardFilter`, `FilterContextItem` and the embedding `FilterItem` now include the new types, while `IDateFilter`, `IDashboardDateFilter` and the embedding `DateFilterItem` do not. The existing guards, such as `isFilter`, `isDateFilter` and `isFilterContextItem`, do not match the new types. The new alpha guards `isFilterOfAnyType`, `isDateFilterOfAnyType`, `isDashboardFilterOfAnyType`, `isSimpleMeasureFilterOfAnyType`, `isDashboardDateFilterOfAnyType`, `isFilterContextItemOfAnyType` and the embedding `isDateFilterOfAnyType` match them too. The `granularity` added to the absolute date filter types in 11.62.0 is deprecated. The Tiger backend sends and reads the new filter and filter context item as they are, except that dashboard tabular exports reject the filter context item, reads an `absoluteGranularityDateFilter` over weeks, months, quarters or years as `IAbsoluteGranularityDateFilter`, and sends `IAbsoluteDateFilter` as its days, ignoring the deprecated granularity. Dashboards and Analytical Designer do not support the new filter yet: a dashboard fails to load when its filter context or default filters hold it, `changeFilterContextSelection` and `changeDashboardDefinition` reject it, postMessage commands reject it, and the `filterContextChanged` event, drill postMessages and drills to a dashboard leave it out.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

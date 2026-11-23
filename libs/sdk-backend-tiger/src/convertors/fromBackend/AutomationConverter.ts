@@ -46,14 +46,14 @@ import {
     filterObjRef,
     idRef,
     isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isAllTimeDateFilter,
     isArbitraryAttributeFilter,
     isAttributeFilterWithSelection,
     isAutomationUserRecipient,
-    isDateFilterGranularity,
     isExportDefinitionVisualizationObjectRequestPayload,
-    isFilter,
-    isFilterContextItem,
+    isFilterContextItemOfAnyType,
+    isFilterOfAnyType,
     isMatchAttributeFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
@@ -476,13 +476,13 @@ function convertLegacyTabularFiltersToFilterContext(
 
     const filters = exportDefinition.requestPayload.content.filters;
 
-    if (!filters?.length || filters.some(isFilterContextItem)) {
+    if (!filters?.length || filters.some(isFilterContextItemOfAnyType)) {
         return exportDefinition;
     }
 
     const convertedFilters = filters
         .map((filter, index) =>
-            isFilter(filter)
+            isFilterOfAnyType(filter)
                 ? convertExecutionFilterToFilterContextItem(filter, `legacy-mvf-${index}`)
                 : undefined,
         )
@@ -559,10 +559,11 @@ export function convertExecutionFilterToFilterContextItem(
             filter.absoluteDateFilter.dataSet,
             filter.absoluteDateFilter.localIdentifier,
             filter.absoluteDateFilter.emptyValueHandling,
-            isDateFilterGranularity(filter.absoluteDateFilter.granularity)
-                ? filter.absoluteDateFilter.granularity
-                : "GDC.time.date",
         );
+    }
+
+    if (isAbsoluteGranularityDateFilter(filter)) {
+        return { dashboardAbsoluteGranularityDateFilter: { ...filter.absoluteGranularityDateFilter } };
     }
 
     if (isAllTimeDateFilter(filter)) {

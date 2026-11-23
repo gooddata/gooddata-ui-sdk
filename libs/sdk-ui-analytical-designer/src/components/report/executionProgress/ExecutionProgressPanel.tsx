@@ -13,7 +13,7 @@ import {
     advanceStepReveal,
     buildExecutionLoadingViewModel,
     initialStepRevealState,
-    loadingStepDuration,
+    loadingStepDurationMs,
     nextStepRevealAt,
     revealedLoadingSteps,
 } from "../../../store/execution_progress/execution_loading_view_model.js";
@@ -21,7 +21,7 @@ import { getExecutionProgressViewModel } from "../../../store/execution_progress
 import { ReportComputing } from "../ReportComputing.js";
 
 import { dataSourceLabel } from "./ExecutionProgressSteps.js";
-import { computeGanttBars } from "./timeline.js";
+import { computeGanttBars, formatStepDuration } from "./timeline.js";
 
 /** no progress event by then: the generic spinner is shown instead */
 const NO_EVENT_FALLBACK_MS = 1500;
@@ -195,7 +195,8 @@ function LoadingSteps({ steps, serverNow }: { steps: IExecutionLoadingStepViewMo
 
 function LoadingStep({ step, serverNow }: { step: IExecutionLoadingStepViewModel; serverNow: number }) {
     const intl = useIntl();
-    const duration = loadingStepDuration(step, serverNow);
+    const durationMs = loadingStepDurationMs(step, serverNow);
+    const duration = durationMs === undefined ? undefined : formatStepDuration(intl, durationMs);
     const label = loadingStepLabel(intl, step);
     return (
         <li
@@ -286,7 +287,9 @@ function LoadingSources({ step, serverNow }: { step: IExecutionLoadingStepViewMo
             <ul className="adi-execution-progress-sources">
                 {sources.map((source) => {
                     const bar = bars.get(source.resultId);
-                    const duration = loadingStepDuration(source, serverNow);
+                    const durationMs = loadingStepDurationMs(source, serverNow);
+                    const duration =
+                        durationMs === undefined ? undefined : formatStepDuration(intl, durationMs);
                     const name = source.dataSourceId
                         ? dataSourceLabel(source.dataSourceId, source.dataSourceName)
                         : source.resultId;

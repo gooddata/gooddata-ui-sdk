@@ -31,7 +31,7 @@ import {
     isCatalogComputedAttribute,
     isCatalogFact,
     isCatalogMeasure,
-    isFilter,
+    isFilterOfAnyType,
     isLocalIdRef,
     isMeasure,
     isMeasureValueFilter,
@@ -187,7 +187,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             : items;
         const attributes = relevantItems.filter(isAttribute);
         const measures = relevantItems.filter(isMeasure);
-        const filters = relevantItems.filter(isFilter);
+        const filters = relevantItems.filter(isFilterOfAnyType);
 
         const attributeLocalIds = new Set(attributes.map((attribute) => attributeLocalId(attribute)));
         const measureLocalIds = new Set(measures.map((measure) => measureLocalId(measure)));
