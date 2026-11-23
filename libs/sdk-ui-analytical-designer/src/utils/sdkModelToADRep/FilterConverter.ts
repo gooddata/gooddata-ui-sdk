@@ -16,6 +16,7 @@ import {
     filterLocalIdentifier,
     filterObjRef,
     isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isArbitraryAttributeFilter,
     isAttributeElementsByRef,
     isMatchAttributeFilter,
@@ -23,10 +24,12 @@ import {
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
     isRankingFilter,
+    isRelativeDateFilter,
     measureValueFilterConditions,
     measureValueFilterDimensionality,
     measureValueFilterMeasure,
     relativeDateFilterValues,
+    throwUnexpected,
 } from "@gooddata/sdk-model";
 
 import { generateBucketItemIdentifier } from "../../models/bucket_item_identifier.js";
@@ -223,7 +226,11 @@ export const convertFilter = (
         return convertMatchAttributeFilter(filter, autoGenerateFilterLocalIdentifier);
     } else if (isAbsoluteDateFilter(filter)) {
         return convertAbsoluteDateFilter(filter);
-    } else {
+    } else if (isAbsoluteGranularityDateFilter(filter)) {
+        throw new Error("Absolute date filters with granularity are not supported in insights yet.");
+    } else if (isRelativeDateFilter(filter)) {
         return convertRelativeDateFilter(filter);
     }
+
+    return throwUnexpected(filter);
 };

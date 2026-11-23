@@ -38,6 +38,10 @@ export const convertGraphEntityNodeToAnalyticalDashboard = (node: IGraphNode): I
     return convertGraphEntityNode(node, "analyticalDashboard");
 };
 
-export const convertGraphEntityNodeToDocument = (node: IGraphNode): IMetadataObject => {
-    return convertGraphEntityNode(node, "document");
-};
+const documentTypes: ObjectType[] = ["document", "documentTemplate", "pageTemplate"];
+
+export const convertGraphEntityNodesToDocuments = (nodes: IGraphNode[]): IMetadataObject[] =>
+    nodes.flatMap((node) => {
+        const type = documentTypes.find((documentType) => documentType === node.type);
+        return type ? [convertGraphEntityNode(node, type)] : [];
+    });

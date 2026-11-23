@@ -19,6 +19,7 @@ import {
     type IRelativeDateFilter,
     attributeDisplayFormRef,
     newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     uriRef,
@@ -35,6 +36,17 @@ describe("resolveFilterValues", () => {
         );
         const result = await resolveFilterValues([absoluteDateFilter]);
         expect(result).toMatchSnapshot();
+    });
+
+    it("should skip an absolute granularity date filter without a backend", async () => {
+        const filter = newAbsoluteGranularityDateFilter(
+            uriRef("gdc/md/dfuri"),
+            "GDC.time.month",
+            "2020-01",
+            "2020-02",
+        );
+        const result = await resolveFilterValues([filter]);
+        expect(result).toEqual({ dateFilters: [], attributeFilters: {} });
     });
 
     it("should return resolved attribute filter elements by value", async () => {

@@ -42,7 +42,7 @@ export interface IUiToolbarSelectProps {
      */
     isPlaceholder?: boolean;
     /**
-     * Held while the popup is on screen. Flips the chevron and keeps the pressed look.
+     * Held while the popup is on screen. Flips the chevron and keeps the hover look.
      * @defaultValue false
      */
     isOpen?: boolean;
@@ -100,7 +100,7 @@ export const UiToolbarSelect = forwardRef<HTMLButtonElement, IUiToolbarSelectPro
             ref={ref}
             id={id}
             type="button"
-            className={b({ width, isPlaceholder, isActive: isOpen })}
+            className={b({ width, isPlaceholder, isOpen })}
             style={maxWidth === undefined ? undefined : { maxWidth }}
             {...accessibilityConfigToAttributes(accessibilityConfig)}
             title={isTruncatable && tooltip === undefined ? label : undefined}

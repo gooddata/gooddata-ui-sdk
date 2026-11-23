@@ -5278,19 +5278,13 @@ export interface IDashboardKeyDriverAnalysisResolvedPayload {
     readonly keyDriveDefinition: IKdaDefinition;
 }
 
-// @internal (undocumented)
+// @internal
 export interface IDashboardKeyDriverCombinationItem {
-    // (undocumented)
     difference: number;
-    // (undocumented)
     measure: IMeasureDescriptor;
-    // (undocumented)
     range: [ITableDataAttributeScope, ITableDataAttributeScope];
-    // (undocumented)
     type: "comparative" | "year-to-year";
-    // (undocumented)
     values: [number, number];
-    // (undocumented)
     where: "before" | "after" | "none";
 }
 
@@ -7329,14 +7323,14 @@ export interface IItemWithWidth {
     width: number;
 }
 
-// @internal (undocumented)
+// @internal
 export interface IKdaDataPoint {
     date: string;
     format?: IAttributeDescriptorBody["format"];
     value: number | undefined;
 }
 
-// @internal (undocumented)
+// @internal
 export interface IKdaDefinition {
     dateAttribute: ObjRef;
     filters?: DashboardAttributeFilterItem[];
@@ -10926,7 +10920,7 @@ export interface IXlsxExportConfig {
 // @internal (undocumented)
 export function KdaDialog(props: IKdaDialogProps): JSX.Element;
 
-// @internal (undocumented)
+// @internal
 export type KdaPeriodType = "same_period_previous_year" | "previous_period";
 
 // @internal

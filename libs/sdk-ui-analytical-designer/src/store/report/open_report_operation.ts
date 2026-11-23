@@ -7,7 +7,7 @@ import {
     areObjRefsEqual,
     filterObjRef,
     insightFilters,
-    isDateFilter as isSdkDateFilter,
+    isDateFilterOfAnyType as isSdkDateFilter,
 } from "@gooddata/sdk-model";
 
 import { DATE } from "../../constants/bucket.js";

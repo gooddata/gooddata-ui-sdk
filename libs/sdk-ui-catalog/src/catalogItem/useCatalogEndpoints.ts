@@ -113,17 +113,9 @@ export function useCatalogQueryOptions(
 
 export interface ICatalogEndpoint {
     type: ObjectType;
-    query: (opts: ICatalogItemQueryOptions, context: ICatalogEndpointContext) => Promise<EndpointResult>;
+    query: (opts: ICatalogItemQueryOptions) => Promise<EndpointResult>;
     gatedBy?: readonly (keyof IFeatureFlags)[];
     cannotFilterBy?: readonly FilterSlot[];
-}
-
-/**
- * What the endpoints need to know about the user.
- */
-export interface ICatalogEndpointContext {
-    /** Whose documents the user sees; undefined means all. */
-    documentOwner?: string;
 }
 
 type FilterSlot = "createdBy" | "excludeCreatedBy" | "certification";
@@ -135,7 +127,7 @@ const ENDPOINTS: readonly ICatalogEndpoint[] = [
     },
     {
         type: ObjectTypes.DOCUMENT,
-        query: (opts, { documentOwner }) => queryDocuments(opts, documentOwner),
+        query: (opts) => queryDocuments(opts),
         gatedBy: CATALOG_DOCUMENT_FLAGS,
         cannotFilterBy: ["certification"],
     },
@@ -178,15 +170,12 @@ export function useCatalogEndpoints(
     types: ObjectType[],
     queryOptions: ICatalogItemQueryOptions,
     flags: IFeatureFlags | undefined,
-    documentOwner?: string,
 ): FeedEndpoint[] {
     return useMemo(
-        () => selectCatalogEndpoints(types, queryOptions, flags, ENDPOINTS, { documentOwner }),
-        [flags, queryOptions, types, documentOwner],
+        () => selectCatalogEndpoints(types, queryOptions, flags, ENDPOINTS),
+        [flags, queryOptions, types],
     );
 }
-
-const NO_CONTEXT: ICatalogEndpointContext = {};
 
 export function useEnabledObjectTypes(): ObjectType[] {
     const flags = useFeatureFlags();
@@ -201,7 +190,6 @@ export function selectCatalogEndpoints(
     options: ICatalogItemQueryOptions,
     flags: IFeatureFlags | undefined,
     endpoints: readonly ICatalogEndpoint[] = ENDPOINTS,
-    context: ICatalogEndpointContext = NO_CONTEXT,
 ): FeedEndpoint[] {
     const result: FeedEndpoint[] = [];
     for (const endpoint of endpoints) {
@@ -222,7 +210,7 @@ export function selectCatalogEndpoints(
         if (!endpointOptions || endpointOptions.id?.length === 0) {
             continue;
         }
-        result.push({ type: endpoint.type, query: () => endpoint.query(endpointOptions, context) });
+        result.push({ type: endpoint.type, query: () => endpoint.query(endpointOptions) });
     }
     return result;
 }

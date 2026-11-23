@@ -9,7 +9,6 @@ import { canSearchDocuments, getSearchObjectTypes } from "./searchObjectTypes.js
 const DOCUMENT_FLAGS = {
     enableBusinessBriefingReportsApp: true,
     enablePublisherV2: true,
-    enableCatalogDocuments: true,
 };
 
 describe("canSearchDocuments", () => {
@@ -20,7 +19,6 @@ describe("canSearchDocuments", () => {
     it.each([
         ["reports app off", { ...DOCUMENT_FLAGS, enableBusinessBriefingReportsApp: false }],
         ["publisher v2 off", { ...DOCUMENT_FLAGS, enablePublisherV2: false }],
-        ["catalog documents off", { ...DOCUMENT_FLAGS, enableCatalogDocuments: false }],
         ["no flags", {}],
     ])("is false when %s", (_, settings) => {
         expect(canSearchDocuments(settings as IEffectiveSettings)).toBe(false);

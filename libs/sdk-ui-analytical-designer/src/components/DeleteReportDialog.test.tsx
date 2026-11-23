@@ -26,7 +26,7 @@ import { withIntl } from "../utils/with_intl.js";
 import { DeleteReportDialog } from "./DeleteReportDialog.js";
 
 function metadataObject(
-    type: "analyticalDashboard" | "document",
+    type: "analyticalDashboard" | "document" | "documentTemplate" | "pageTemplate",
     id: string,
     title: string,
 ): IMetadataObject {
@@ -147,12 +147,8 @@ describe("DeleteReportDialog", () => {
         useBackend(
             { analyticalDashboards: [], documents: [metadataObject("document", "pack", "Q3 board pack")] },
             [],
-            Promise.resolve([
-                {
-                    ref: idRef("pack", "document"),
-                    createdBy: { login: "someone" },
-                } as IPublisherDocumentSummaryV2,
-            ]),
+            // The backend does not return a document the user may not see.
+            Promise.resolve([]),
         );
         renderDialog({ canCreateDocument: false, canManageProject: false });
 
@@ -163,6 +159,27 @@ describe("DeleteReportDialog", () => {
         fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
         expect(screen.getByText("Report is not shared with you.")).toBeTruthy();
         expect(screen.queryByText("Q3 board pack")).toBeNull();
+    });
+
+    it("names the user's own report inherited from a parent workspace", async () => {
+        useBackend(
+            { analyticalDashboards: [], documents: [metadataObject("document", "pack", "Q3 board pack")] },
+            [],
+            Promise.resolve([
+                {
+                    ref: idRef("pack", "document"),
+                    createdBy: { login: "me" },
+                    isLocked: true,
+                } as IPublisherDocumentSummaryV2,
+            ]),
+        );
+        renderDialog({ canCreateDocument: false, canManageProject: false });
+
+        expect(await screen.findByText(/used in some reports\. To delete/)).toBeTruthy();
+        fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
+
+        expect(screen.getByText("Q3 board pack")).toBeTruthy();
+        expect(screen.queryByText("Report is not shared with you.")).toBeNull();
     });
 
     it("counts the reports as not shared when their creators cannot be loaded", async () => {
@@ -179,6 +196,26 @@ describe("DeleteReportDialog", () => {
         fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
         expect(screen.queryByText("Q3 board pack")).toBeNull();
     });
+
+    it.each(["documentTemplate", "pageTemplate"] as const)(
+        "blocks the delete of a visualization only a %s uses, and names it without a link",
+        async (type) => {
+            useBackend(
+                { analyticalDashboards: [], documents: [metadataObject(type, "monthly", "Monthly review")] },
+                [],
+                Promise.resolve([]),
+            );
+            renderDialog({ canCreateDocument: false, canManageProject: false });
+
+            expect(await screen.findByText(/used in some reports\. To delete/)).toBeTruthy();
+            expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 report");
+            expect(isDeleteDisabled()).toBe(true);
+
+            fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
+            expect(screen.getByText("Monthly review").closest("a")).toBeNull();
+            expect(screen.queryByText("Report is not shared with you.")).toBeNull();
+        },
+    );
 
     it("allows the delete of a visualization nothing uses", async () => {
         useBackend({ analyticalDashboards: [], documents: [] });

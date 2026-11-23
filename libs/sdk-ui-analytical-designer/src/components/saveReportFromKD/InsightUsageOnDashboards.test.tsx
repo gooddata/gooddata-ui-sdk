@@ -67,7 +67,7 @@ describe("InsightUsageOnDashboards", () => {
     it("should render the document items after the dashboards", () => {
         const { container } = renderComponent({
             insightUsedInDocuments: {
-                accessibleDocuments: [{ id: "doc1", title: "Board pack" }],
+                accessibleDocuments: [{ id: "doc1", title: "Board pack", type: "document" }],
                 inaccessibleDocumentsCount: 0,
                 allDocumentsCount: 1,
             },
@@ -89,8 +89,8 @@ describe("InsightUsageOnDashboards", () => {
             },
             insightUsedInDocuments: {
                 accessibleDocuments: [
-                    { id: "doc1", title: "Board pack" },
-                    { id: "doc2", title: "Weekly review" },
+                    { id: "doc1", title: "Board pack", type: "document" },
+                    { id: "doc2", title: "Weekly review", type: "document" },
                 ],
                 inaccessibleDocumentsCount: 0,
                 allDocumentsCount: 2,
@@ -104,7 +104,7 @@ describe("InsightUsageOnDashboards", () => {
     it("should count the reports the user may not open without naming them", () => {
         const { container } = renderComponent({
             insightUsedInDocuments: {
-                accessibleDocuments: [{ id: "doc1", title: "Board pack" }],
+                accessibleDocuments: [{ id: "doc1", title: "Board pack", type: "document" }],
                 inaccessibleDocumentsCount: 2,
                 allDocumentsCount: 3,
             },

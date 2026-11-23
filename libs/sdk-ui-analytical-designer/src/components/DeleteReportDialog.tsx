@@ -11,7 +11,6 @@ import { ConfirmDialog as ConfirmDialogComponent } from "@gooddata/sdk-ui-kit";
 
 import { deleteReport } from "../actions/delete_actions.js";
 import { hideDialog } from "../actions/dialogs_actions.js";
-import { getUserLoginMD5 } from "../selectors/bootstrap_selector.js";
 import { deleteReportDialogSelector } from "../selectors/dialogs_selector.js";
 import { workspacePermissions } from "../selectors/permissions_selector.js";
 import {
@@ -53,7 +52,6 @@ export interface IDeleteReportDialogProps {
 
 const useReferencingObjects = (projectId: string, insightRef: ObjRef, isActive: boolean) => {
     const permissions = useSelector(workspacePermissions);
-    const userLogin = useSelector(getUserLoginMD5);
 
     return useCancelablePromise(
         {
@@ -70,7 +68,6 @@ const useReferencingObjects = (projectId: string, insightRef: ObjRef, isActive: 
                 const accessibleDocumentIds = await loadAccessibleDocumentIds(
                     projectId,
                     documents,
-                    userLogin,
                     permissions,
                 );
 
@@ -80,7 +77,7 @@ const useReferencingObjects = (projectId: string, insightRef: ObjRef, isActive: 
                 };
             },
         },
-        [projectId, insightRef, isActive, userLogin, permissions],
+        [projectId, insightRef, isActive, permissions],
     );
 };
 

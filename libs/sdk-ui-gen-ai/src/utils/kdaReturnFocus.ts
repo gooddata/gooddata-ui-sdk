@@ -24,7 +24,11 @@ export function storeKdaReturnFocusFromDrillContext(drillContext: IDrillEventCon
 }
 
 export function storeKdaReturnFocusFromActiveElement(): void {
-    pendingReturnFocus = { type: "table", element: document.activeElement as HTMLElement };
+    storeKdaReturnFocusFromElement(document.activeElement as HTMLElement);
+}
+
+export function storeKdaReturnFocusFromElement(element: HTMLElement): void {
+    pendingReturnFocus = { type: "table", element };
 }
 
 export function returnFocusToKdaTrigger(): void {

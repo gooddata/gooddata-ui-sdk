@@ -38,7 +38,6 @@ function makeQueryOptions(overrides: Partial<ICatalogItemQueryOptions> = {}): IC
 const DOCUMENT_FLAGS: IFeatureFlags = {
     enableBusinessBriefingReportsApp: true,
     enablePublisherV2: true,
-    enableCatalogDocuments: true,
 };
 
 function makeRow(type: ObjectType, extra: Partial<ICatalogEndpoint> = {}): ICatalogEndpoint {
@@ -77,14 +76,13 @@ describe("useCatalogEndpoints", () => {
         ["all flags off", {}],
         ["the Reports app off", { ...DOCUMENT_FLAGS, enableBusinessBriefingReportsApp: false }],
         ["Publisher v2 off", { ...DOCUMENT_FLAGS, enablePublisherV2: false }],
-        ["catalog documents off", { ...DOCUMENT_FLAGS, enableCatalogDocuments: false }],
     ])("excludes the documents endpoint with %s", (_, flags) => {
         const { result } = renderHook(() => useCatalogEndpoints([], makeQueryOptions(), flags));
 
         expect(result.current.map((e) => e.type)).not.toContain(ObjectTypes.DOCUMENT);
     });
 
-    it("includes the documents endpoint when the Reports app, Publisher v2 and catalog documents flags are on", () => {
+    it("includes the documents endpoint when the Reports app and Publisher v2 flags are on", () => {
         const { result } = renderHook(() =>
             useCatalogEndpoints([ObjectTypes.DOCUMENT], makeQueryOptions(), DOCUMENT_FLAGS),
         );
@@ -134,18 +132,23 @@ describe("useCatalogEndpoints", () => {
         );
     });
 
-    it("keeps a user without the create grant to their own native documents", async () => {
+    it("passes the origin and creator filters to the backend as they are", async () => {
         const stub = createCatalogBackendStub();
-        const options = makeQueryOptions({ backend: stub.backend });
+        const options = makeQueryOptions({
+            backend: stub.backend,
+            origin: "PARENTS",
+            createdBy: ["other"],
+            excludeCreatedBy: ["third"],
+        });
         const { result } = renderHook(() =>
-            useCatalogEndpoints([ObjectTypes.DOCUMENT], options, DOCUMENT_FLAGS, "me"),
+            useCatalogEndpoints([ObjectTypes.DOCUMENT], options, DOCUMENT_FLAGS),
         );
 
         await result.current[0].query();
 
-        expect(stub.builders[ObjectTypes.DOCUMENT].withOrigin).toHaveBeenCalledWith("NATIVE");
+        expect(stub.builders[ObjectTypes.DOCUMENT].withOrigin).toHaveBeenCalledWith("PARENTS");
         expect(stub.builders[ObjectTypes.DOCUMENT].withFilter).toHaveBeenCalledWith(
-            expect.objectContaining({ createdBy: ["me"], excludeCreatedBy: undefined }),
+            expect.objectContaining({ createdBy: ["other"], excludeCreatedBy: ["third"] }),
         );
     });
 
@@ -159,24 +162,6 @@ describe("useCatalogEndpoints", () => {
         await result.current[0].query();
 
         expect(stub.builders[ObjectTypes.DOCUMENT].withMethod).toHaveBeenCalledWith("POST");
-    });
-
-    it.each<[string, Partial<ICatalogItemQueryOptions>]>([
-        ["only someone else's documents are asked for", { createdBy: ["other"] }],
-        ["the user's own documents are left out", { excludeCreatedBy: ["me"] }],
-        ["only inherited documents are asked for", { origin: "PARENTS" }],
-    ])("returns no documents to a user without the create grant when %s", async (_, overrides) => {
-        const stub = createCatalogBackendStub();
-        const options = makeQueryOptions({ backend: stub.backend, ...overrides });
-        const { result } = renderHook(() =>
-            useCatalogEndpoints([ObjectTypes.DOCUMENT], options, DOCUMENT_FLAGS, "me"),
-        );
-
-        const page = await result.current[0].query();
-
-        expect(page).toMatchObject({ items: [], totalCount: 0 });
-        expect(await page.next()).toMatchObject({ items: [] });
-        expect(stub.queries[ObjectTypes.DOCUMENT]).not.toHaveBeenCalled();
     });
 
     it("with a types subset, returns only the selected endpoints in default order", () => {
@@ -456,14 +441,14 @@ describe("selectCatalogEndpoints", () => {
         });
     });
 
-    it("binds opts and the user context to each row.query closure", async () => {
+    it("binds opts to each row.query closure", async () => {
         const dashboardQuery = vi.fn(noopQuery);
         const endpoints: ICatalogEndpoint[] = [makeRow(ObjectTypes.DASHBOARD, { query: dashboardQuery })];
         const opts = makeQueryOptions({ search: "hello" });
 
-        const feed = selectCatalogEndpoints([], opts, flagsOff, endpoints, { documentOwner: "me" });
+        const feed = selectCatalogEndpoints([], opts, flagsOff, endpoints);
         await feed[0].query();
-        expect(dashboardQuery).toHaveBeenCalledWith(opts, { documentOwner: "me" });
+        expect(dashboardQuery).toHaveBeenCalledWith(opts);
     });
 });
 

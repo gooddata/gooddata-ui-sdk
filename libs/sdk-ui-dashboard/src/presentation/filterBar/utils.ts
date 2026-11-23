@@ -9,6 +9,7 @@ import {
     DashboardDateFilterConfigModeValues,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    isDashboardDateFilter,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import { type IFilterButtonCustomIcon, type VisibilityMode } from "@gooddata/sdk-ui-filters";
@@ -23,6 +24,10 @@ import {
     isFilterBarFilterPlaceholder,
     isFilterBarMeasureValueFilter,
 } from "./filterBar/useFiltersWithAddedPlaceholder.js";
+
+// callers without types can pass another date filter type, which the filter bar cannot apply
+export const isUnsupportedDateFilterChange = (filter: unknown): boolean =>
+    filter !== undefined && !isDashboardDateFilter(filter);
 
 const VISIBILITY_BUBBLE_SETTINGS = {
     bubbleClassNames: "gd-filter-button-custom-icon-bubble s-gd-filter-button-custom-icon-bubble",

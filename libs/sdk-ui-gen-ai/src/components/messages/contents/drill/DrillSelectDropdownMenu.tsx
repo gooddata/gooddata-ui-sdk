@@ -4,7 +4,6 @@ import { useMemo } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type IDrillEvent } from "@gooddata/sdk-ui";
 import {
     type IDashboardKeyDriverCombinationItem,
     getKeyDriverCombinationItemTitle,
@@ -14,7 +13,6 @@ import { type IUiMenuInteractiveItem, UiIcon, UiMenu } from "@gooddata/sdk-ui-ki
 export type DrillSelectDropdownMenuProps = {
     drillState: {
         keyDriverData: IDashboardKeyDriverCombinationItem[];
-        event: IDrillEvent;
     } | null;
     onClose: () => void;
     onSelect: (item: IUiMenuInteractiveItem<IDrillSelectDropdownMenuItemData>) => void;

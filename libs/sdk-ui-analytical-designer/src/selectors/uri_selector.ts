@@ -2,10 +2,15 @@
 
 import { createSelector } from "reselect";
 
+import { type ObjectType } from "@gooddata/sdk-model";
+
+import { isDocument } from "../store/insight_usage/insight_usage_helpers.js";
+
 import { getProjectId } from "./bootstrap_selector.js";
 
 export type AnalyticalDashboardUriFactory = (dashboardId: string) => string;
-export type DocumentUriFactory = (documentId: string) => string;
+/** Returns no path for an object Reports cannot open, such as a template. */
+export type DocumentUriFactory = (item: { id: string; type: ObjectType }) => string | undefined;
 
 export const analyticalDashboardUriFactorySelector = createSelector(
     getProjectId,
@@ -17,6 +22,8 @@ export const analyticalDashboardUriFactorySelector = createSelector(
 export const documentUriFactorySelector = createSelector(
     getProjectId,
     (projectId): DocumentUriFactory =>
-        (documentId: string) =>
-            `/workspace/${projectId}/reports/document/${encodeURIComponent(documentId)}`,
+        (item) =>
+            isDocument(item)
+                ? `/workspace/${projectId}/reports/document/${encodeURIComponent(item.id)}`
+                : undefined,
 );

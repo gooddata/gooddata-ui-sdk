@@ -11,23 +11,18 @@ export interface IDocumentItemProps {
 }
 
 export function DocumentItem({ item }: IDocumentItemProps) {
-    const isLinkable = useSelector(isAllowedDashboardLinks);
+    const isLinkAllowed = useSelector(isAllowedDashboardLinks);
     const documentUriFactory = useSelector(documentUriFactorySelector);
 
-    const { id, title } = item;
+    const href = isLinkAllowed ? documentUriFactory(item) : undefined;
     return (
         <li className="s-insight-usage-document-item">
-            {isLinkable ? (
-                <a
-                    className="dashboard-item"
-                    href={documentUriFactory(id)}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                >
-                    <span>{title}</span>
+            {href ? (
+                <a className="dashboard-item" href={href} rel="noopener noreferrer" target="_blank">
+                    <span>{item.title}</span>
                 </a>
             ) : (
-                <span>{title}</span>
+                <span>{item.title}</span>
             )}
         </li>
     );

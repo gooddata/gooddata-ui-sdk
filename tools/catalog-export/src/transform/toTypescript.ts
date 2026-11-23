@@ -1,12 +1,12 @@
 // (C) 2007-2026 GoodData Corporation
 
 import {
+    type CodeBlockWriter,
     type ImportDeclarationStructure,
     type OptionalKind,
     Project,
     type SourceFile,
-    VariableDeclarationKind,
-    type VariableStatementStructure,
+    type WriterFunction,
 } from "ts-morph";
 
 import { type MeasureAggregation } from "@gooddata/sdk-model";
@@ -25,6 +25,20 @@ import { type TakenNamesSet, createUniqueVariableName, stringToVariableName } fr
 export type TypescriptOutput = {
     project: Project;
     sourceFile: SourceFile;
+};
+
+/**
+ * A value in the generated code: either code text, or an object literal with these properties.
+ */
+type GeneratedValue = string | GeneratedProperty[];
+
+/**
+ * A property of a generated object literal, or an exported constant at the top level of the file.
+ */
+type GeneratedProperty = {
+    docs?: string[];
+    name: string;
+    value: GeneratedValue;
 };
 
 //
@@ -76,7 +90,63 @@ function uniqueVariable(title: string, nameScope: TakenNamesSet = GlobalNameScop
 }
 
 //
-// Transformation to ts-morph structures
+// Writing the generated code
+//
+
+function writeDocs(writer: CodeBlockWriter, docs: string[]): void {
+    const lines = docs.flatMap((doc) => doc.split(/\r?\n/));
+
+    if (lines.length === 1) {
+        writer.writeLine(`/** ${lines[0]} */`);
+        return;
+    }
+
+    writer.writeLine("/**");
+    lines.forEach((line) => writer.writeLine(` * ${line}`));
+    writer.writeLine(" */");
+}
+
+function writeValue(writer: CodeBlockWriter, value: GeneratedValue): void {
+    if (typeof value === "string") {
+        writer.write(value);
+    } else if (value.length === 0) {
+        writer.write("{}");
+    } else {
+        // one property per line, indented by the writer
+        writer.inlineBlock(() => {
+            value.forEach(({ docs, name, value: propertyValue }) => {
+                if (docs) {
+                    writeDocs(writer, docs);
+                }
+                writer.write(`${name}: `);
+                writeValue(writer, propertyValue);
+                writer.write(",").newLine();
+            });
+        });
+    }
+}
+
+/**
+ * Writes the exported constants with a blank line before each of them. The constants are written as statements
+ * rather than ts-morph variable structures: ts-morph writes an initializer with a hanging indent, which would
+ * push every line of a multi-line object literal one level too deep.
+ */
+function writeConstants(constants: GeneratedProperty[]): WriterFunction {
+    return (writer) => {
+        constants.forEach(({ docs, name, value }) => {
+            writer.blankLineIfLastNot();
+            if (docs) {
+                writeDocs(writer, docs);
+            }
+            writer.write(`export const ${name} = `);
+            writeValue(writer, value);
+            writer.write(";").newLine();
+        });
+    };
+}
+
+//
+// Transformation to the generated code
 //
 
 function initialize(outputFile: string): TypescriptOutput {
@@ -97,9 +167,6 @@ function initialize(outputFile: string): TypescriptOutput {
 
 function generateSdkModelImports(projectMeta: WorkspaceMetadata): OptionalKind<ImportDeclarationStructure> {
     const hasAttributeConstants = projectMeta.catalog.attributes.length > 0;
-    const hasSingleDisplayFormAttribute = projectMeta.catalog.attributes.some(
-        (attribute) => attribute.attribute.content.displayForms.length === 1,
-    );
     const hasDateDataSetAttributes = projectMeta.dateDataSets.some(
         (dateDataSet) => dateDataSet.dateDataSet.content.attributes.length > 0,
     );
@@ -107,17 +174,6 @@ function generateSdkModelImports(projectMeta: WorkspaceMetadata): OptionalKind<I
     const hasFacts = projectMeta.catalog.facts.length > 0;
 
     const namedImports: Array<string | { name: string; isTypeOnly: true }> = [];
-
-    if (hasSingleDisplayFormAttribute) {
-        namedImports.push({ name: "IAttribute", isTypeOnly: true });
-    }
-
-    if (hasMetrics) {
-        namedImports.push(
-            { name: "IMeasure", isTypeOnly: true },
-            { name: "IMeasureDefinition", isTypeOnly: true },
-        );
-    }
 
     if (hasAttributeConstants || hasDateDataSetAttributes || hasMetrics || hasFacts) {
         namedImports.push("idRef");
@@ -142,7 +198,7 @@ function generateAttributeDisplayForm(
     attributeVariableName: string,
     nameScope: TakenNamesSet,
     naming: NamingStrategies,
-): string {
+): GeneratedProperty {
     const { meta } = displayForm;
     const dfVariableName = naming.displayForm(meta.title, nameScope);
     let variableName = attributeVariableName === dfVariableName ? "Default" : dfVariableName;
@@ -153,7 +209,11 @@ function generateAttributeDisplayForm(
         variableName = stringToVariableName(variableName.substr(attributeVariableName.length));
     }
 
-    return `/** \n* Display Form Title: ${meta.title}  \n* Display Form ID: ${meta.identifier}\n*/\n${variableName}: newAttribute('${meta.identifier}')`;
+    return {
+        docs: [`Display Form Title: ${meta.title}`, `Display Form ID: ${meta.identifier}`],
+        name: variableName,
+        value: `newAttribute('${meta.identifier}')`,
+    };
 }
 
 /**
@@ -173,7 +233,7 @@ function generateDisplayFormPropertyInitializers(
     attribute: Attribute,
     attributeVariableName: string,
     naming: NamingStrategies = DefaultNaming,
-): string[] {
+): GeneratedProperty[] {
     const localNameScope: TakenNamesSet = {};
     return attribute.attribute.content.displayForms.map((df) =>
         generateAttributeDisplayForm(df, attributeVariableName, localNameScope, naming),
@@ -197,13 +257,11 @@ function generateDisplayFormPropertyInitializers(
 function generateAttributeConstant(
     attribute: Attribute,
     naming: NamingStrategies = DefaultNaming,
-): OptionalKind<VariableStatementStructure> {
+): GeneratedProperty {
     const { meta } = attribute.attribute;
     const variableName = naming.attribute(meta.title, GlobalNameScope);
     const { displayForms } = attribute.attribute.content;
-    const comments = [`Attribute Title: ${meta.title}`, `Attribute ID: ${meta.identifier}`];
-
-    const docs = [comments.join("\n")];
+    const docs = [`Attribute Title: ${meta.title}`, `Attribute ID: ${meta.identifier}`];
 
     if (displayForms.length === 1) {
         /*
@@ -212,92 +270,59 @@ function generateAttributeConstant(
         const displayForm = displayForms[0];
 
         return {
-            declarationKind: VariableDeclarationKind.Const,
-            isExported: true,
             docs,
-            declarations: [
-                {
-                    name: variableName,
-                    type: "IAttribute",
-                    initializer: `newAttribute('${displayForm.meta.identifier}')`,
-                },
-            ],
+            name: variableName,
+            value: `newAttribute('${displayForm.meta.identifier}')`,
         };
     } else {
         /*
          * If there are multiple DFs, have mapping of const AttrName = { DfName: newAttribute(), OtherDfName: newAttribute()}
          */
-        const displayFormInits: string[] = generateDisplayFormPropertyInitializers(
-            attribute,
-            variableName,
-            naming,
-        );
-
         return {
-            declarationKind: VariableDeclarationKind.Const,
-            isExported: true,
             docs,
-            declarations: [
-                {
-                    name: variableName,
-                    initializer: `{ ${displayFormInits.join(",")} }`,
-                },
-            ],
+            name: variableName,
+            value: generateDisplayFormPropertyInitializers(attribute, variableName, naming),
         };
     }
 }
 
-function generateAttributes(
-    projectMeta: WorkspaceMetadata,
-): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
+function generateAttributes(projectMeta: WorkspaceMetadata): GeneratedProperty[] {
     return projectMeta.catalog.attributes.map((a) => generateAttributeConstant(a));
 }
 
-function generateMeasureFromMetric(metric: Metric): OptionalKind<VariableStatementStructure> {
+function generateMeasureFromMetric(metric: Metric): GeneratedProperty {
     const { meta } = metric.metric;
     const variableName = uniqueVariable(meta.title);
 
     return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: true,
-        docs: [`Metric Title: ${meta.title}\nMetric ID: ${meta.identifier}\nMetric Type: MAQL Metric`],
-        declarations: [
-            {
-                name: variableName,
-                type: "IMeasure<IMeasureDefinition>",
-                initializer: `newMeasure(idRef('${meta.identifier}', "measure"))`,
-            },
-        ],
+        docs: [`Metric Title: ${meta.title}`, `Metric ID: ${meta.identifier}`, "Metric Type: MAQL Metric"],
+        name: variableName,
+        value: `newMeasure(idRef('${meta.identifier}', "measure"))`,
     };
 }
 
-function generateFactAggregations(fact: Fact): string[] {
+function generateFactAggregations(fact: Fact): GeneratedProperty[] {
     const { meta } = fact.fact;
 
-    return FACT_AGGREGATIONS.map((aggregation) => {
-        const jsDoc = `/** \n* Fact Title: ${meta.title}  \n* Fact ID: ${meta.identifier}\n * Fact Aggregation: ${aggregation}\n*/`;
-        const name = aggregation.charAt(0).toUpperCase() + aggregation.substr(1);
-
-        return `${jsDoc}\n${name}: newMeasure(idRef('${meta.identifier}', "fact"), m => m.aggregation('${aggregation}'))`;
-    });
+    return FACT_AGGREGATIONS.map((aggregation) => ({
+        docs: [
+            `Fact Title: ${meta.title}`,
+            `Fact ID: ${meta.identifier}`,
+            `Fact Aggregation: ${aggregation}`,
+        ],
+        name: aggregation.charAt(0).toUpperCase() + aggregation.substr(1),
+        value: `newMeasure(idRef('${meta.identifier}', "fact"), m => m.aggregation('${aggregation}'))`,
+    }));
 }
 
-function generateMeasuresFromFacts(fact: Fact): OptionalKind<VariableStatementStructure> {
+function generateMeasuresFromFacts(fact: Fact): GeneratedProperty {
     const { meta } = fact.fact;
     const variableName = uniqueVariable(meta.title);
 
-    const aggregationInits: string[] = generateFactAggregations(fact);
-
     return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: true,
-        docs: [`Fact Title: ${meta.title}\nFact ID: ${meta.identifier}`],
-        declarations: [
-            {
-                name: variableName,
-                initializer: `{ ${aggregationInits.join(",")} } `,
-            },
-        ],
+        docs: [`Fact Title: ${meta.title}`, `Fact ID: ${meta.identifier}`],
+        name: variableName,
+        value: generateFactAggregations(fact),
     };
 }
 
@@ -308,16 +333,14 @@ function generateMeasuresFromFacts(fact: Fact): OptionalKind<VariableStatementSt
  * - For facts, this will generate constant initialized to an object which defines all possible
  *   aggregations of the measure.
  */
-function generateMeasures(
-    projectMeta: WorkspaceMetadata,
-): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
+function generateMeasures(projectMeta: WorkspaceMetadata): GeneratedProperty[] {
     const fromMetrics = projectMeta.catalog.metrics.map(generateMeasureFromMetric);
     const fromFacts = projectMeta.catalog.facts.map(generateMeasuresFromFacts);
 
     return fromMetrics.concat(fromFacts);
 }
 
-function generateDateDataSetAttributes(dd: DateDataSet, naming: NamingStrategies): string[] {
+function generateDateDataSetAttributes(dd: DateDataSet, naming: NamingStrategies): GeneratedProperty[] {
     const ddScope = {};
 
     return dd.dateDataSet.content.attributes.map((a) => {
@@ -325,12 +348,17 @@ function generateDateDataSetAttributes(dd: DateDataSet, naming: NamingStrategies
         const { title, identifier } = meta;
 
         const attributePropertyName = naming.dataSetAttributeProperty(meta.title, ddScope);
-        const jsDoc = `/** \n* Date Attribute: ${title}  \n* Date Attribute ID: ${identifier}\n*/`;
         const displayFormProps = generateDisplayFormPropertyInitializers(a, attributePropertyName, naming);
 
-        return `${jsDoc}\n${attributePropertyName}: { ref: idRef('${identifier}', 'attribute'), identifier: '${identifier}', ${displayFormProps.join(
-            ",",
-        )} }`;
+        return {
+            docs: [`Date Attribute: ${title}`, `Date Attribute ID: ${identifier}`],
+            name: attributePropertyName,
+            value: [
+                { name: "ref", value: `idRef('${identifier}', 'attribute')` },
+                { name: "identifier", value: `'${identifier}'` },
+                ...displayFormProps,
+            ],
+        };
     });
 }
 
@@ -338,15 +366,18 @@ function generateDateDataSetInitialzier(
     dd: DateDataSet,
     naming: NamingStrategies,
     namingScope: TakenNamesSet,
-): string {
+): GeneratedProperty {
     const { title, identifier } = dd.dateDataSet.meta;
-    const propName = naming.dataSetProperty(title, namingScope);
-    const jsDoc = `/** \n* Date Data Set Title: ${title}  \n* Date Data Set ID: ${identifier}\n*/`;
-    const attributes = generateDateDataSetAttributes(dd, naming);
 
-    return `${jsDoc}\n${propName}: { ref: idRef('${identifier}', 'dataSet'), identifier: '${identifier}', ${attributes.join(
-        ", ",
-    )} }`;
+    return {
+        docs: [`Date Data Set Title: ${title}`, `Date Data Set ID: ${identifier}`],
+        name: naming.dataSetProperty(title, namingScope),
+        value: [
+            { name: "ref", value: `idRef('${identifier}', 'dataSet')` },
+            { name: "identifier", value: `'${identifier}'` },
+            ...generateDateDataSetAttributes(dd, naming),
+        ],
+    };
 }
 
 /**
@@ -359,29 +390,17 @@ function generateDateDataSetInitialzier(
  * @param dds - date data sets
  * @param naming - naming strategy
  */
-function generateDateDataSetMapping(
-    dds: DateDataSet[],
-    naming: NamingStrategies,
-): OptionalKind<VariableStatementStructure> {
+function generateDateDataSetMapping(dds: DateDataSet[], naming: NamingStrategies): GeneratedProperty {
     const mappingScope = {};
-    const ddMappings = dds.map((dd) => generateDateDataSetInitialzier(dd, naming, mappingScope));
 
     return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: true,
         docs: ["Available Date Data Sets"],
-        declarations: [
-            {
-                name: DATE_DATASETS_MAP_VARNAME,
-                initializer: `{ ${ddMappings.join(", ")} }`,
-            },
-        ],
+        name: DATE_DATASETS_MAP_VARNAME,
+        value: dds.map((dd) => generateDateDataSetInitialzier(dd, naming, mappingScope)),
     };
 }
 
-function generateDateDataSets(
-    projectMeta: WorkspaceMetadata,
-): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
+function generateDateDataSets(projectMeta: WorkspaceMetadata): GeneratedProperty[] {
     return [generateDateDataSetMapping(projectMeta.dateDataSets, DefaultNaming)];
 }
 
@@ -390,23 +409,14 @@ function generateDateDataSets(
  *
  * @param projectMeta - project metadata containing the insights
  */
-function generateInsights(projectMeta: WorkspaceMetadata): OptionalKind<VariableStatementStructure> {
-    const insightInitializer: string[] = projectMeta.insights.map((insight) => {
-        const propName = uniqueVariable(insight.title);
-        const jsDoc = `/** \n* Insight Title: ${insight.title}  \n* Insight ID: ${insight.identifier}\n*/`;
-
-        return `${jsDoc}\n${propName}: '${insight.identifier}'`;
-    });
-
+function generateInsights(projectMeta: WorkspaceMetadata): GeneratedProperty {
     return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: true,
-        declarations: [
-            {
-                name: INSIGHT_MAP_VARNAME,
-                initializer: `{ ${insightInitializer.join(",")} }`,
-            },
-        ],
+        name: INSIGHT_MAP_VARNAME,
+        value: projectMeta.insights.map((insight) => ({
+            docs: [`Insight Title: ${insight.title}`, `Insight ID: ${insight.identifier}`],
+            name: uniqueVariable(insight.title),
+            value: `'${insight.identifier}'`,
+        })),
     };
 }
 
@@ -415,25 +425,14 @@ function generateInsights(projectMeta: WorkspaceMetadata): OptionalKind<Variable
  *
  * @param projectMeta - project metadata containing the analyticalDashboards
  */
-function generateAnalyticalDashboards(
-    projectMeta: WorkspaceMetadata,
-): OptionalKind<VariableStatementStructure> {
-    const analyticalDashboardInitializer: string[] = projectMeta.analyticalDashboards.map((dashboard) => {
-        const propName = uniqueVariable(dashboard.title);
-        const jsDoc = `/** \n* Dashboard Title: ${dashboard.title}  \n* Dashboard ID: ${dashboard.identifier}\n*/`;
-
-        return `${jsDoc}\n${propName}: '${dashboard.identifier}'`;
-    });
-
+function generateAnalyticalDashboards(projectMeta: WorkspaceMetadata): GeneratedProperty {
     return {
-        declarationKind: VariableDeclarationKind.Const,
-        isExported: true,
-        declarations: [
-            {
-                name: ANALYTICAL_DASHBOARD_MAP_VARNAME,
-                initializer: `{ ${analyticalDashboardInitializer.join(",")} }`,
-            },
-        ],
+        name: ANALYTICAL_DASHBOARD_MAP_VARNAME,
+        value: projectMeta.analyticalDashboards.map((dashboard) => ({
+            docs: [`Dashboard Title: ${dashboard.title}`, `Dashboard ID: ${dashboard.identifier}`],
+            name: uniqueVariable(dashboard.title),
+            value: `'${dashboard.identifier}'`,
+        })),
     };
 }
 
@@ -459,11 +458,15 @@ export function transformToTypescript(projectMeta: WorkspaceMetadata, outputFile
     const { sourceFile } = output;
 
     sourceFile.addImportDeclaration(generateSdkModelImports(projectMeta));
-    sourceFile.addVariableStatements(generateAttributes(projectMeta));
-    sourceFile.addVariableStatements(generateMeasures(projectMeta));
-    sourceFile.addVariableStatements(generateDateDataSets(projectMeta));
-    sourceFile.addVariableStatement(generateInsights(projectMeta));
-    sourceFile.addVariableStatement(generateAnalyticalDashboards(projectMeta));
+    sourceFile.addStatements(
+        writeConstants([
+            ...generateAttributes(projectMeta),
+            ...generateMeasures(projectMeta),
+            ...generateDateDataSets(projectMeta),
+            generateInsights(projectMeta),
+            generateAnalyticalDashboards(projectMeta),
+        ]),
+    );
 
     return output;
 }

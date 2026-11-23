@@ -1,6 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { isFilterContextItem } from "@gooddata/sdk-model";
+import { isFilterContextItemOfAnyType } from "@gooddata/sdk-model";
 
 import { type FiltersByTab, type IExportMetadata } from "../../types/index.js";
 import { convertTigerToSdkFilters } from "../shared/storedFilterConverter.js";
@@ -11,7 +11,9 @@ export const convertExportMetadata = (exportMetadata: any): Partial<IExportMetad
         ...(exportMetadata?.filters
             ? {
                   filters:
-                      convertTigerToSdkFilters(exportMetadata.filters)?.filter(isFilterContextItem) ?? [],
+                      convertTigerToSdkFilters(exportMetadata.filters)?.filter(
+                          isFilterContextItemOfAnyType,
+                      ) ?? [],
               }
             : {}),
 
@@ -20,7 +22,7 @@ export const convertExportMetadata = (exportMetadata: any): Partial<IExportMetad
                   filtersByTab: Object.keys(exportMetadata?.filtersByTab).reduce((acc, tabId) => {
                       acc[tabId] =
                           convertTigerToSdkFilters(exportMetadata?.filtersByTab[tabId])?.filter(
-                              isFilterContextItem,
+                              isFilterContextItemOfAnyType,
                           ) ?? [];
                       return acc;
                   }, {} as FiltersByTab),

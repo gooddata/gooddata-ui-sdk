@@ -29,7 +29,7 @@ export interface IUiToolbarIconSelectProps {
      */
     label: string;
     /**
-     * Held while the popup is on screen. Flips the chevron and keeps the pressed look.
+     * Held while the popup is on screen. Flips the chevron and keeps the hover look.
      * @defaultValue false
      */
     isOpen?: boolean;
@@ -94,7 +94,7 @@ export const UiToolbarIconSelect = forwardRef<HTMLButtonElement, IUiToolbarIconS
                 ref={ref}
                 id={id}
                 type="button"
-                className={b({ isSelected: isChecked, isActive: isOpen })}
+                className={b({ isSelected: isChecked, isOpen })}
                 {...accessibilityConfigToAttributes(accessibilityConfig)}
                 aria-label={accessibilityConfig?.ariaLabel ?? label}
                 aria-haspopup={accessibilityConfig?.ariaHaspopup ?? popupType}

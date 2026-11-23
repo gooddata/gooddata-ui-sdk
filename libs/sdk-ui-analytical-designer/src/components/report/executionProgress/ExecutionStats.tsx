@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +35,7 @@ export function ExecutionStats({ isExecutionRunning }: IExecutionStatsProps) {
     const dispatch = useDispatch();
     const stats = useSelector(getExecutionStatsViewModel);
     const [isOpen, setIsOpen] = useState(false);
+    const summaryId = useId();
 
     if (isExecutionRunning || !stats.available || !stats.reportExecutionId || stats.load === "unknown") {
         return null;
@@ -55,6 +56,7 @@ export function ExecutionStats({ isExecutionRunning }: IExecutionStatsProps) {
                         <UiPopover
                             title={label}
                             closeVisible
+                            closeText={intl.formatMessage({ id: "executionStats.close" })}
                             arrowPlacement="bottom-end"
                             width={360}
                             onOpen={() => {
@@ -68,7 +70,7 @@ export function ExecutionStats({ isExecutionRunning }: IExecutionStatsProps) {
                                 <button
                                     type="button"
                                     className="adi-execution-stats-trigger s-execution-stats-trigger"
-                                    aria-label={`${label}: ${summary}`}
+                                    aria-describedby={summaryId}
                                     data-load={stats.load}
                                 >
                                     {stats.load === "fresh" ? (
@@ -87,6 +89,10 @@ export function ExecutionStats({ isExecutionRunning }: IExecutionStatsProps) {
                             }
                             content={<ExecutionStatsContent stats={stats} summary={summary} />}
                         />
+                        {/* the description of the trigger; its name stays the visible text */}
+                        <span id={summaryId} className="sr-only">
+                            {summary}
+                        </span>
                     </span>
                 }
             />
@@ -95,7 +101,7 @@ export function ExecutionStats({ isExecutionRunning }: IExecutionStatsProps) {
 }
 
 function formatSummary(intl: IntlShape, stats: IExecutionStatsViewModel): string {
-    const duration = stats.totalMs === undefined ? "" : formatDuration(stats.totalMs);
+    const duration = stats.totalMs === undefined ? "" : formatDuration(intl, stats.totalMs);
     if (stats.failed) {
         return intl.formatMessage({ id: "executionStats.summary.failed" }, { duration });
     }
@@ -182,7 +188,7 @@ function OriginalComputationStats({
     const duration =
         totalDurationMs === undefined
             ? undefined
-            : formatOriginalTotal(totalDurationMs, computation.totalApproximate);
+            : formatOriginalTotal(intl, totalDurationMs, computation.totalApproximate);
     const approximateTitle = computation.totalApproximate
         ? intl.formatMessage({ id: "executionProgress.original.approximate" })
         : undefined;
@@ -242,7 +248,7 @@ function OriginalComputationStats({
                                 <td>
                                     {source.queryingMs === undefined
                                         ? "–"
-                                        : formatDuration(source.queryingMs)}
+                                        : formatDuration(intl, source.queryingMs)}
                                 </td>
                             </tr>
                         ))}
@@ -265,8 +271,8 @@ function formatSourceBreakdown(
     return intl.formatMessage(
         { id: "executionStats.original.breakdown" },
         {
-            database: source.dbDurationMs === undefined ? "–" : formatDuration(source.dbDurationMs),
-            upload: source.totalDurationMs === undefined ? "–" : formatDuration(source.totalDurationMs),
+            database: source.dbDurationMs === undefined ? "–" : formatDuration(intl, source.dbDurationMs),
+            upload: source.totalDurationMs === undefined ? "–" : formatDuration(intl, source.totalDurationMs),
         },
     );
 }
@@ -296,7 +302,7 @@ function OriginalSourceLine({ source }: { source: IExecutionProgressOriginalSour
             ) : (
                 <FormattedMessage
                     id="executionStats.original.queryingSource"
-                    values={{ dataSource, duration: formatDuration(source.queryingMs) }}
+                    values={{ dataSource, duration: formatDuration(intl, source.queryingMs) }}
                 />
             )}
         </div>

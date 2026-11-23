@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model, sdk-backend-tiger: Remove the enableCatalogDocuments feature flag. sdk-ui-catalog, sdk-ui-gen-ai, sdk-ui-pluggable-host: Reports documents show in the Analytics Catalog and search whenever enableBusinessBriefingReportsApp and enablePublisherV2 are on.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "roman.rakus@gooddata.com"
+}

@@ -6,7 +6,7 @@ import {
     type IFilter,
     filterLocalIdentifier,
     isAttributeFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isDrillToInsight,
     isMeasureValueFilter,
 } from "@gooddata/sdk-model";
@@ -28,7 +28,11 @@ export function useExcludedDrillDefinitionFilters(
     return useMemo(
         () =>
             filtersForInsight?.filter((filter) => {
-                if (!isAttributeFilter(filter) && !isDateFilter(filter) && !isMeasureValueFilter(filter)) {
+                if (
+                    !isAttributeFilter(filter) &&
+                    !isDateFilterOfAnyType(filter) &&
+                    !isMeasureValueFilter(filter)
+                ) {
                     return true;
                 }
 

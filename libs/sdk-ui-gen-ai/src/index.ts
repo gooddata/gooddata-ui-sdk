@@ -55,6 +55,11 @@ export {
     type GenAiKeyDriverAnalysisProps,
 } from "./components/GenAiKeyDriverAnalysis.js";
 export {
+    useDrillKeyDriverAnalysis,
+    type IUseDrillKeyDriverAnalysisOptions,
+    type IUseDrillKeyDriverAnalysisResult,
+} from "./keyDriverAnalysis/useDrillKeyDriverAnalysis.js";
+export {
     makeUserItem,
     makeAssistantItem,
     type TextContentObject,

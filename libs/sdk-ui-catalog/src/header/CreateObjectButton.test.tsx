@@ -227,7 +227,6 @@ describe("CreateObjectButton", () => {
         const documentSettings = {
             enableBusinessBriefingReportsApp: true,
             enablePublisherV2: true,
-            enableCatalogDocuments: true,
         } as Partial<IUserWorkspaceSettings>;
         const documentWrapper =
             (permissions: Partial<IWorkspacePermissions>, settings: Partial<IUserWorkspaceSettings>) =>
@@ -257,11 +256,6 @@ describe("CreateObjectButton", () => {
 
         it.each<[string, Partial<IWorkspacePermissions>, Partial<IUserWorkspaceSettings>]>([
             ["the user may not create documents", { canCreateDocument: false }, documentSettings],
-            [
-                "catalog documents are off",
-                { canCreateDocument: true },
-                { ...documentSettings, enableCatalogDocuments: false },
-            ],
             [
                 "the Reports app is off",
                 { canCreateDocument: true },

@@ -99,12 +99,12 @@ interface IDocumentItemProps {
 }
 
 function DocumentItem({ item, isEmbedded, documentUriFactory }: IDocumentItemProps) {
-    const { title, id } = item;
+    const uri = isEmbedded ? undefined : documentUriFactory(item);
     return (
         <UsageItem
-            title={title}
+            title={item.title}
             icon="report"
-            href={isEmbedded ? undefined : `${window.location.origin}${documentUriFactory(id)}`}
+            href={uri ? `${window.location.origin}${uri}` : undefined}
             className="s-usage-document-item"
         />
     );
@@ -276,7 +276,7 @@ function DashboardItemsDialog({
                                     <ul className="gd-usages-group-items" role="list">
                                         {documents.accessibleDocuments.map((item) => (
                                             <DocumentItem
-                                                key={item.id}
+                                                key={`${item.type}/${item.id}`}
                                                 item={item}
                                                 isEmbedded={isEmbedded}
                                                 documentUriFactory={documentUriFactory}

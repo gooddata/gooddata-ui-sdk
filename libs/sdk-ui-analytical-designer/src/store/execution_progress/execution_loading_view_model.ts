@@ -144,27 +144,22 @@ export function buildExecutionLoadingViewModel(
     };
 }
 
-/** "100ms" under a second, whole seconds rounded down from it ("7s"), as in the design */
-export function formatStepDuration(ms: number): string {
-    return ms < 1000 ? `${Math.max(0, Math.round(ms))}ms` : `${Math.floor(ms / 1000)}s`;
-}
-
 /**
- * The duration a sub-step (or a federated source) shows: a finished one always its duration; a
- * running one a live whole-second timer from 1 s on, nothing before.
+ * The duration in ms a sub-step (or a federated source) shows: a finished one always its duration; a
+ * running one a live timer from 1 s on, nothing before. The view formats it with the locale.
  */
-export function loadingStepDuration(
+export function loadingStepDurationMs(
     step: { startedAt?: number; finishedAt?: number; state: ExecutionProgressStepState },
     serverNow: number,
-): string | undefined {
+): number | undefined {
     if (step.startedAt === undefined || step.state === "pending") {
         return undefined;
     }
     if (step.finishedAt !== undefined) {
-        return formatStepDuration(step.finishedAt - step.startedAt);
+        return step.finishedAt - step.startedAt;
     }
     const runningMs = serverNow - step.startedAt;
-    return runningMs >= 1000 ? formatStepDuration(runningMs) : undefined;
+    return runningMs >= 1000 ? runningMs : undefined;
 }
 
 /** consecutive steps appear at least this far apart, even when their events arrive together */

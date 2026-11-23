@@ -148,6 +148,33 @@ describe("TigerReferencesService", () => {
         expect(result.edges).toEqual([{ from: metricRef, to: automationRef }]);
     });
 
+    it("keeps document template and page template nodes", async () => {
+        const documentTemplateNode = { id: "dt1", type: "documentTemplate", title: "DT1" };
+        const pageTemplateNode = { id: "pt1", type: "pageTemplate", title: "PT1" };
+        mockGraph(
+            [metricNode, documentTemplateNode, pageTemplateNode],
+            [
+                [metricNode, documentTemplateNode],
+                [metricNode, pageTemplateNode],
+            ],
+        );
+        const service = makeService();
+
+        const result = await service.getReferences(metricRef, { direction: "up" });
+
+        const documentTemplateRef = idRef("dt1", "documentTemplate");
+        const pageTemplateRef = idRef("pt1", "pageTemplate");
+        expect(result.nodes).toEqual([
+            { ...metricRef, title: "M1", isRoot: true },
+            { ...documentTemplateRef, title: "DT1", isRoot: false },
+            { ...pageTemplateRef, title: "PT1", isRoot: false },
+        ]);
+        expect(result.edges).toEqual([
+            { from: metricRef, to: documentTemplateRef },
+            { from: metricRef, to: pageTemplateRef },
+        ]);
+    });
+
     it("keeps user data filters that depend on a parameter", async () => {
         const userDataFilterNode = { id: "udf1", type: "userDataFilter", title: "UDF1" };
         mockGraph([parameterNode, userDataFilterNode], [[parameterNode, userDataFilterNode]]);

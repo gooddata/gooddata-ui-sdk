@@ -3,11 +3,11 @@ Copyright (c) 2017-2026 GoodData Corporation
 This product includes a number of subcomponents with separate copyright notices and license terms below. Your use of these subcomponents is subject to the terms and conditions of the subcomponent's license. This GoodData project does not necessarily use all the open source software referred to below and may also only use portions of a given package. With respect to the open source software listed in this document, if you (i) have any questions, (ii) wish to receive source code for packages under licenses that require their source code to be made available (such as the GNU Lesser Public License), or (iii) discover any errors or omissions in the licensing information provided, please contact us at legal@gooddata.com. Please identify in source code requests: (i) the packages for which you are requesting corresponding source, (ii) the GoodData product (including any available version) with which the package was provided; and (iii) an email address (if available) or postal address at which GoodData may contact you.
 
 --------------------------------------------------------------------------------
-Attribution Notice for @gooddata/sdk-ui-vis-commons (11.70.0-alpha.1)
+Attribution Notice for @gooddata/sdk-ui-vis-commons (11.70.0-alpha.2)
 Package License: MIT
 Own License File: LICENSE
-Date generated: 2026-11-18
-Revision ID: 800edca02ea3ab0e6fd381c97649de758ce3be11
+Date generated: 2026-11-20
+Revision ID: ef6fed3dd5fa9c43ff7a6af3634fdc17c5cfc677
 
 This notice lists the components that @gooddata/sdk-ui-vis-commons depends on, directly or through other
 packages, with the license and copyright information reported for each of them.
@@ -19,13 +19,13 @@ change those terms.
 Dependencies
 
 Local GoodData SDK components
-- @gooddata/sdk-backend-spi (11.70.0-alpha.1) [MIT] — Direct
-- @gooddata/sdk-code-schemas (11.70.0-alpha.1) [MIT] — Transitive
-- @gooddata/sdk-model (11.70.0-alpha.1) [MIT] — Direct
-- @gooddata/sdk-ui (11.70.0-alpha.1) [MIT] — Direct
-- @gooddata/sdk-ui-kit (11.70.0-alpha.1) [MIT] — Direct
-- @gooddata/sdk-ui-theme-provider (11.70.0-alpha.1) [MIT] — Direct
-- @gooddata/util (11.70.0-alpha.1) [MIT] — Direct
+- @gooddata/sdk-backend-spi (11.70.0-alpha.2) [MIT] — Direct
+- @gooddata/sdk-code-schemas (11.70.0-alpha.2) [MIT] — Transitive
+- @gooddata/sdk-model (11.70.0-alpha.2) [MIT] — Direct
+- @gooddata/sdk-ui (11.70.0-alpha.2) [MIT] — Direct
+- @gooddata/sdk-ui-kit (11.70.0-alpha.2) [MIT] — Direct
+- @gooddata/sdk-ui-theme-provider (11.70.0-alpha.2) [MIT] — Direct
+- @gooddata/util (11.70.0-alpha.2) [MIT] — Direct
 
 External components
 - @aaronhayes/react-use-hubspot-form (2.1.2) [MIT] — Transitive
@@ -70,7 +70,7 @@ External components
 - @formatjs/icu-messageformat-parser (3.5.17) [MIT] — Transitive
 - @formatjs/icu-skeleton-parser (2.1.11) [MIT] — Transitive
 - @formatjs/intl (4.1.20) [MIT] — Transitive
-- @gooddata/number-formatter (2.0.0) [MIT, ISC, 0BSD] — Direct
+- @gooddata/number-formatter (2.0.0) [MIT] — Direct
 - @isaacs/nonrecursive-glob-match (1.0.3) [blueoak-1.0.0] — Transitive
 - @jridgewell/gen-mapping (0.3.13) [MIT] — Transitive
 - @jridgewell/resolve-uri (3.1.2) [MIT] — Transitive
@@ -299,7 +299,7 @@ Local GoodData SDK components
 ================================================================================
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-backend-spi (11.70.0-alpha.1)
+Package Title: @gooddata/sdk-backend-spi (11.70.0-alpha.2)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -317,7 +317,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-code-schemas (11.70.0-alpha.1)
+Package Title: @gooddata/sdk-code-schemas (11.70.0-alpha.2)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -347,7 +347,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-model (11.70.0-alpha.1)
+Package Title: @gooddata/sdk-model (11.70.0-alpha.2)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -365,7 +365,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui (11.70.0-alpha.1)
+Package Title: @gooddata/sdk-ui (11.70.0-alpha.2)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -383,7 +383,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-kit (11.70.0-alpha.1)
+Package Title: @gooddata/sdk-ui-kit (11.70.0-alpha.2)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -401,7 +401,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-theme-provider (11.70.0-alpha.1)
+Package Title: @gooddata/sdk-ui-theme-provider (11.70.0-alpha.2)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -419,7 +419,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/util (11.70.0-alpha.1)
+Package Title: @gooddata/util (11.70.0-alpha.2)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -1912,42 +1912,9 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-* Other Licenses *
-ISC, 0BSD
-
-* ISC *
-
-* License Header *
-ISC License
-Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
-Copyright (c) 1995-2003 by Internet Software Consortium
-Permission to use, copy, modify, and /or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
-THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-* 0BSD *
-
-* License Header *
-Copyright (C) 2006 by Rob Landley <rob@landley.net>
-Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
 * Copyrights *
-ISC
-- Copyright (c) 2006 Baron Schwartz <baron at sequent dot org>
-- Copyright (c) 2010-2023 Isaac Z. Schlueter and Contributors
-- Copyright (c) 2019 Apollo GraphQL
-- Copyright (c) Microsoft Corporation.
 MIT
 - Copyright (c) 2020-2026 GoodData Corporation
-- Copyright (c) 2006 Baron Schwartz <baron at sequent dot org>
-- Copyright (c) 2010-2023 Isaac Z. Schlueter and Contributors
-- Copyright (c) 2019 Apollo GraphQL
-- Copyright (c) Microsoft Corporation.
-0BSD
-- Copyright (c) 2006 Baron Schwartz <baron at sequent dot org>
-- Copyright (c) 2010-2023 Isaac Z. Schlueter and Contributors
-- Copyright (c) 2019 Apollo GraphQL
-- Copyright (c) Microsoft Corporation.
 
 * Package Info *
 

@@ -50,7 +50,6 @@ const smartSearchWithDocuments = createWrapper({
     enableCatalogSmartSearchResults: true,
     enableBusinessBriefingReportsApp: true,
     enablePublisherV2: true,
-    enableCatalogDocuments: true,
 });
 const smartSearchOff = createWrapper({ enableCatalogSmartSearchResults: false });
 
@@ -255,10 +254,9 @@ describe("useCatalogItemSemanticSearch", () => {
         });
 
         expect(stub.semanticSearchBuilder.withObjectTypes).toHaveBeenCalledWith(["document"]);
-        // the default test user may not create documents, so only their own native ones come back
-        expect(stub.builders[ObjectTypes.DOCUMENT].withOrigin).toHaveBeenCalledWith("NATIVE");
+        expect(stub.builders[ObjectTypes.DOCUMENT].withOrigin).toHaveBeenCalledWith("ALL");
         expect(stub.builders[ObjectTypes.DOCUMENT].withFilter).toHaveBeenCalledWith(
-            expect.objectContaining({ id: ["doc1"], search: undefined, createdBy: ["test"] }),
+            expect.objectContaining({ id: ["doc1"], search: undefined, createdBy: undefined }),
         );
         expect(result.current.relatedItems).toEqual([
             expect.objectContaining({ identifier: "doc1", type: ObjectTypes.DOCUMENT }),

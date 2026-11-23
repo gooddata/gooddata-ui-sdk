@@ -11,6 +11,7 @@ import {
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    isDashboardFilterOfAnyType,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
     newAllTimeDashboardDateFilter,
@@ -18,7 +19,7 @@ import {
 
 import { type ExtendedDashboardWidget } from "../../../../../model/types/layoutTypes.js";
 import { removeIgnoredWidgetFilters } from "../../../../../model/utils/widgetFilters.js";
-import { type IDashboardFilter, isDashboardFilter } from "../../../../../types.js";
+import { type IDashboardFilter } from "../../../../../types.js";
 import { useAutomationsContext } from "../../../contexts/AutomationsContext.js";
 import { dashboardFilterToFilterContextItem } from "../../filters/index.js";
 import {
@@ -67,7 +68,7 @@ export function useDefaultSelectedFiltersForExistingAutomation(
     const savedFilterContextItems = useMemo(() => {
         const savedAutomationWidgetFilters = savedWidgetAlertFilters ?? savedWidgetScheduleFilters;
         const convertedSavedWidgetFilters = savedAutomationWidgetFilters
-            ?.filter(isDashboardFilter)
+            ?.filter(isDashboardFilterOfAnyType)
             .map((filter) => convertAndSanitizeFilter(filter, availableVisibleFilters))
             .filter((item): item is FilterContextItem => item !== undefined);
 

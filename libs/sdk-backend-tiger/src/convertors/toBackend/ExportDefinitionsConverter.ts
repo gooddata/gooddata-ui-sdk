@@ -14,13 +14,16 @@ import {
     type VisualExportRequest,
     isTigerFilterContextItem,
 } from "@gooddata/api-client-tiger";
-import { type IRawExportCustomOverrides, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { type IRawExportCustomOverrides, NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
+    type FilterContextItem,
     type IExecutionDefinition,
     type IExportDefinitionDashboardRequestPayload,
     type IExportDefinitionMetadataObjectDefinition,
     type IExportDefinitionRequestPayload,
     type IExportDefinitionVisualizationObjectRequestPayload,
+    type IFilter,
+    isDashboardAbsoluteGranularityDateFilter,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
@@ -53,6 +56,19 @@ import { convertMeasureDefinitionOverrides, convertParameterValues } from "./afm
  *
  * Sites mirroring the value into `metadata` reference this note as "Export timezone channels".
  */
+
+// The backend filters of tabular exports cannot hold this filter, and dropping it would widen the export.
+export function rejectAbsoluteGranularityDateFilters(
+    filters?: (IFilter | FilterContextItem)[],
+    filtersByTab?: Record<string, FilterContextItem[]>,
+): void {
+    const allFilters = [...(filters ?? []), ...Object.values(filtersByTab ?? {}).flat()];
+    if (allFilters.some(isDashboardAbsoluteGranularityDateFilter)) {
+        throw new NotSupported(
+            "Dashboard tabular exports do not support absolute date filters with granularity yet.",
+        );
+    }
+}
 
 export const convertExportDefinitionMdObjectDefinition = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,
@@ -319,6 +335,8 @@ export const convertToDashboardTabularExportRequest = (
         isExportDefinitionDashboardRequestPayload(exportRequest) &&
         dashboard != null
     ) {
+        rejectAbsoluteGranularityDateFilters(filters, filtersByTab);
+
         const { mergeHeaders, exportInfo } = exportRequest.settings ?? {};
 
         // Convert filtersByTab to API format (dashboardTabsFiltersOverrides)
@@ -423,6 +441,8 @@ export const convertVisualizationToDashboardTabularExportRequest = (
     if (exportRequest.format !== "XLSX" && exportRequest.format !== "PDF_TABULAR") {
         throw new UnexpectedError("Only XLSX and PDF_TABULAR formats are supported for tabular exports");
     }
+
+    rejectAbsoluteGranularityDateFilters(filters);
 
     const { mergeHeaders, exportInfo, pageSize, orientation } = exportRequest.settings ?? {};
     const resolvedPageOrientation: "PORTRAIT" | "LANDSCAPE" =

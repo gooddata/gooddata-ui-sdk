@@ -3,12 +3,7 @@
 import { type IntlShape } from "react-intl";
 
 import { type GenAIPublisherDocumentFormat, type IChatConversationItem } from "@gooddata/sdk-backend-spi";
-import {
-    type GenAIObjectReferenceType,
-    type IAttributeOrMeasure,
-    type ObjRef,
-    isIdentifierRef,
-} from "@gooddata/sdk-model";
+import { type GenAIObjectReferenceType, type ObjRef, isIdentifierRef } from "@gooddata/sdk-model";
 
 import { REFERENCE_REGEX } from "./components/completion/references.js";
 import { type IChatConversationLocal, type IChatConversationLocalItem } from "./model.js";
@@ -154,14 +149,6 @@ export function getAbsoluteShellAppWorkspaceSettingHref(
     action?: string,
 ) {
     return `${window.location.origin}${getShellAppWorkspaceSettingHref(workspaceId, section, action)}`;
-}
-
-export function getHeadlineComparison(metrics: IAttributeOrMeasure[]) {
-    return {
-        comparison: {
-            enabled: metrics.filter(Boolean).length > 1,
-        },
-    };
 }
 
 export function generateTemporaryTitle(intl: IntlShape, data: IChatConversationLocal): string {

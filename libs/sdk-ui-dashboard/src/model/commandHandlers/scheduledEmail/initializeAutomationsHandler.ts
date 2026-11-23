@@ -21,12 +21,14 @@ import {
     idRef,
     insightFilters,
     isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
-    isDateFilter,
+    isDashboardFilterOfAnyType,
+    isDateFilterOfAnyType,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
     isFilterContextItem,
@@ -44,8 +46,12 @@ import {
     getAutomationAlertParameters,
     getAutomationExportParametersByTab,
 } from "../../../_staging/automation/index.js";
+import {
+    ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED,
+    automationContainsAbsoluteGranularityDateFilter,
+} from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
-import { type IDashboardFilter, isDashboardFilter } from "../../../types.js";
+import { type IDashboardFilter } from "../../../types.js";
 import {
     changeFilterContextSelection,
     changeFilterContextSelectionByParams,
@@ -167,9 +173,16 @@ export function* initializeAutomationsHandler(
             call(loadNotificationChannels, ctx, enableNotificationChannelIdentifiers),
         ]);
 
+        const targetAutomation = automationId ? automations.find((a) => a.id === automationId) : undefined;
+        const skipTargetAutomationContext = automationContainsAbsoluteGranularityDateFilter(targetAutomation);
+        if (skipTargetAutomationContext) {
+            console.warn(
+                `Skipping the context of automation ${automationId}. ${ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED}`,
+            );
+        }
+
         // Set filters according to provided automationId
-        if (automationId) {
-            const targetAutomation = automations.find((a) => a.id === automationId);
+        if (automationId && !skipTargetAutomationContext) {
             const targetWidget = targetAutomation?.metadata?.widget;
             const targetTabIdentifier = targetAutomation?.metadata?.targetTabIdentifier;
 
@@ -450,7 +463,7 @@ function extractRelevantFilters(
     const sanitizedTargetAlertFilters =
         // Remove filters that are applied in the insight
         targetAlertFilters && insight
-            ? removeInsightAttributeFilters(targetAlertFilters, insight).filter(isDashboardFilter)
+            ? removeInsightAttributeFilters(targetAlertFilters, insight).filter(isDashboardFilterOfAnyType)
             : undefined;
 
     //export definition
@@ -518,7 +531,7 @@ function extractExportDefinitionFilters(
                 if (isFilterContextItem(filter)) {
                     return filter;
                 }
-                if (isDashboardFilter(filter)) {
+                if (isDashboardFilterOfAnyType(filter)) {
                     return dashboardFilterToFilterContextItem(filter, true);
                 }
                 return undefined;
@@ -596,7 +609,7 @@ function getDashboardFiltersOnly(
     const withoutInsightDateFilters = removeDateFiltersIfDateFilterIsIgnored(withoutInsightMVFs, widget);
 
     // Find common date filter by local id or by absence of dataset
-    const dateFilters = withoutInsightDateFilters.filter(isDateFilter);
+    const dateFilters = withoutInsightDateFilters.filter(isDateFilterOfAnyType);
     const foundCommonFilter = dateFilters.find((f) => {
         if (isRelativeDateFilter(f)) {
             const matchesByLocalId =
@@ -604,10 +617,20 @@ function getDashboardFiltersOnly(
             const hasNoDataset = !f.relativeDateFilter.dataSet;
             return matchesByLocalId || hasNoDataset;
         }
-        const matchesByLocalId =
-            commonDateFilterLocalId && f.absoluteDateFilter.localIdentifier === commonDateFilterLocalId;
-        const hasNoDataset = !f.absoluteDateFilter.dataSet;
-        return matchesByLocalId || hasNoDataset;
+        if (isAbsoluteGranularityDateFilter(f)) {
+            const matchesByLocalId =
+                commonDateFilterLocalId &&
+                f.absoluteGranularityDateFilter.localIdentifier === commonDateFilterLocalId;
+            const hasNoDataset = !f.absoluteGranularityDateFilter.dataSet;
+            return matchesByLocalId || hasNoDataset;
+        }
+        if (isAbsoluteDateFilter(f)) {
+            const matchesByLocalId =
+                commonDateFilterLocalId && f.absoluteDateFilter.localIdentifier === commonDateFilterLocalId;
+            const hasNoDataset = !f.absoluteDateFilter.dataSet;
+            return matchesByLocalId || hasNoDataset;
+        }
+        return false;
     });
 
     // Remove dataSet from date filters, as it's not relevant for the dashboard date filter.
@@ -615,6 +638,8 @@ function getDashboardFiltersOnly(
         if (f === foundCommonFilter) {
             if (isRelativeDateFilter(f)) {
                 return _omit(f, "relativeDateFilter.dataSet");
+            } else if (isAbsoluteGranularityDateFilter(f)) {
+                return _omit(f, "absoluteGranularityDateFilter.dataSet");
             } else if (isAbsoluteDateFilter(f)) {
                 return _omit(f, "absoluteDateFilter.dataSet");
             }
@@ -681,7 +706,7 @@ function removeDateFiltersIfDateFilterIsIgnored(filters: IFilter[], widget: IIns
     const isDateIgnored = !widget.dateDataSet;
 
     // If widget has ignored date filter, remove it
-    return isDateIgnored ? filters.filter((f) => !isDateFilter(f)) : filters;
+    return isDateIgnored ? filters.filter((f) => !isDateFilterOfAnyType(f)) : filters;
 }
 
 function isFilterContextItemCompatibleWithSelectionType(

@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "api-client-tiger, sdk-backend-tiger: Use the current semantic search endpoint. On GoodData.CN, semantic search requires 4.14 or newer.",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.tychtl@gooddata.com"
+}

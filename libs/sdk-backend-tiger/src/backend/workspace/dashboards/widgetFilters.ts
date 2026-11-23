@@ -3,6 +3,7 @@
 import { zip } from "lodash-es";
 
 import {
+    type DateFilterOfAnyType,
     type IAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDateFilter,
@@ -13,7 +14,7 @@ import {
     filterLocalIdentifier,
     filterObjRef,
     isAttributeFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isNoopAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -41,11 +42,11 @@ export function resolveWidgetFilters(
     normalizeIds: NormalizeIds,
     attributeFilterConfigs: IDashboardAttributeFilterConfig[] = [],
 ): IFilter[] {
-    const dateFilters = filters.filter(isDateFilter);
+    const dateFilters = filters.filter(isDateFilterOfAnyType);
     const attributeFilters = filters.filter(isAttributeFilter);
 
-    const isIgnorableFilter = (obj: unknown): obj is IDateFilter | IAttributeFilter =>
-        isDateFilter(obj) || isAttributeFilter(obj);
+    const isIgnorableFilter = (obj: unknown): obj is DateFilterOfAnyType | IAttributeFilter =>
+        isDateFilterOfAnyType(obj) || isAttributeFilter(obj);
 
     if (!dateFilters.length && !attributeFilters.length) {
         return filters;
@@ -89,11 +90,11 @@ export function resolveWidgetFiltersWithMultipleDateFilters(
     normalizeIds: NormalizeIds,
     attributeFilterConfigs: IDashboardAttributeFilterConfig[],
 ): IFilter[] {
-    const dateFilters = otherFilters.filter(isDateFilter);
+    const dateFilters = otherFilters.filter(isDateFilterOfAnyType);
     const attributeFilters = otherFilters.filter(isAttributeFilter);
 
-    const isIgnorableFilter = (obj: unknown): obj is IDateFilter | IAttributeFilter =>
-        isDateFilter(obj) || isAttributeFilter(obj);
+    const isIgnorableFilter = (obj: unknown): obj is DateFilterOfAnyType | IAttributeFilter =>
+        isDateFilterOfAnyType(obj) || isAttributeFilter(obj);
 
     if (!dateFilters.length && !attributeFilters.length) {
         return otherFilters;
@@ -130,10 +131,10 @@ export function resolveWidgetFiltersWithMultipleDateFilters(
 }
 
 function getRelevantDateFiltersForWidget(
-    filters: IDateFilter[],
+    filters: DateFilterOfAnyType[],
     dateDataSet: IWidget["dateDataSet"],
     normalizeIds: NormalizeIds,
-): IDateFilter[] {
+): DateFilterOfAnyType[] {
     if (!dateDataSet || !filters.length || filters.every(isNoopAllTimeDateFilter)) {
         return [];
     }
@@ -152,10 +153,10 @@ function getRelevantDateFiltersForWidget(
 }
 
 function getRelevantDateFiltersWithDimensionForWidget(
-    filters: IDateFilter[],
+    filters: DateFilterOfAnyType[],
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
     normalizeIds: NormalizeIds,
-): IDateFilter[] {
+): DateFilterOfAnyType[] {
     if (!ignoreDashboardFilters.length) {
         return filters;
     }

@@ -2,9 +2,9 @@
 
 import {
     type DashboardAttributeFilterItem,
+    type DateFilterOfAnyType,
     type FilterContextItem,
     type IAttributeFilter,
-    type IDateFilter,
     type IFilter,
     type IMeasureValueFilter,
     type ObjRef,
@@ -21,7 +21,7 @@ import {
     isDashboardDateFilterReference,
     isDashboardMeasureValueFilter,
     isDashboardMeasureValueFilterReference,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isInsightWidget,
     isMeasureValueFilter,
     isRankingFilter,
@@ -83,7 +83,7 @@ export function getAttributeFilters(filters: FilterContextItem[]): DashboardAttr
  * @internal
  */
 export interface IFilterDateDatasetPair {
-    filter: IDateFilter;
+    filter: DateFilterOfAnyType;
     dateDatasetLink: ObjRef | undefined;
 }
 
@@ -92,7 +92,7 @@ export interface IFilterDateDatasetPair {
  *
  * @internal
  */
-export function selectDateDatasetsForDateFilters(filters: IDateFilter[]): IFilterDateDatasetPair[] {
+export function selectDateDatasetsForDateFilters(filters: DateFilterOfAnyType[]): IFilterDateDatasetPair[] {
     return filters.map((filter): IFilterDateDatasetPair => {
         return {
             dateDatasetLink: filterObjRef(filter),
@@ -131,8 +131,8 @@ function resolveWidgetFilterIgnore(
 // the dashboard date filters the widget does not ignore, with their date datasets
 function selectResolveWidgetDateFilterIgnore(
     widget: FilterableDashboardWidget,
-    dashboardCommonDateFilters: IDateFilter[],
-    dashboardDateFiltersWithDimensions: IDateFilter[],
+    dashboardCommonDateFilters: DateFilterOfAnyType[],
+    dashboardDateFiltersWithDimensions: DateFilterOfAnyType[],
 ): IFilterDateDatasetPair[] {
     const commonDateFilterDateDatasetPairs = selectDateDatasetsForDateFilters(dashboardCommonDateFilters);
 
@@ -224,8 +224,8 @@ export function resolveWidgetDashboardFilters(
     return {
         dateFilters: selectResolveWidgetDateFilterIgnore(
             widget,
-            commonDateFilters.filter(isDateFilter),
-            otherFilters.filter(isDateFilter),
+            commonDateFilters.filter(isDateFilterOfAnyType),
+            otherFilters.filter(isDateFilterOfAnyType),
         ),
         attributeFilters: resolveWidgetFilterIgnore(
             widget,

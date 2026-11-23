@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { GenAiApi_AiSearch } from "@gooddata/api-client-tiger/endpoints/genAI";
+import { GenAiApi_SemanticSearch } from "@gooddata/api-client-tiger/endpoints/genAI";
 import { type ISemanticSearchQuery, type ISemanticSearchResult } from "@gooddata/sdk-backend-spi";
 import { type GenAIObjectType, type IAllowedRelationshipType } from "@gooddata/sdk-model";
 
@@ -81,7 +81,7 @@ export class SemanticSearchQuery implements ISemanticSearchQuery {
 
     async query(options?: { signal?: AbortSignal }): Promise<ISemanticSearchResult> {
         const response = await this.authCall((client) =>
-            GenAiApi_AiSearch(
+            GenAiApi_SemanticSearch(
                 client.axios,
                 client.basePath,
                 {

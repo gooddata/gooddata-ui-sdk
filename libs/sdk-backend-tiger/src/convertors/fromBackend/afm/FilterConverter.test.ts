@@ -5,12 +5,12 @@ import { describe, expect, it } from "vitest";
 import { type AbsoluteGranularityDateFilter, type RankingFilter } from "@gooddata/api-client-tiger";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
-    type DateAttributeGranularity,
-    type IAbsoluteDateFilter,
+    type DatePeriodGranularity,
     type IRankingFilter,
     idRef,
     isRankingFilter,
     newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
 } from "@gooddata/sdk-model";
 
 import { convertFilter as convertFilterToBackend } from "../../toBackend/afm/FilterConverter.js";
@@ -73,75 +73,88 @@ describe("tiger filter converter from AFM to model", () => {
         });
     });
     describe("absolute granularity date filter", () => {
+        const dataSet = idRef("closed", "dataSet");
+
         it.each([
-            ["MONTH", "2026-03", "2026-04", "GDC.time.month", "2026-03-01", "2026-04-30"],
-            ["QUARTER", "2026-1", "2026-2", "GDC.time.quarter", "2026-01-01", "2026-06-30"],
-            ["YEAR", "2025", "2026", "GDC.time.year", "2025-01-01", "2026-12-31"],
-        ] as const)(
-            "expands %s %s - %s to whole periods",
-            (granularity, from, to, sdkGranularity, expectedFrom, expectedTo) => {
-                const result = convertFilter(granularityFilter(granularity, from, to));
-
-                expect(result).toEqual({
-                    absoluteDateFilter: {
-                        dataSet: idRef("closed", "dataSet"),
-                        localIdentifier: undefined,
-                        from: expectedFrom,
-                        to: expectedTo,
-                        granularity: sdkGranularity,
-                    },
-                });
-            },
-        );
-
-        it("drops the day granularity, which is the default", () => {
-            const result = convertFilter(
-                granularityFilter("DAY", "2026-03-15", "2026-03-20"),
-            ) as IAbsoluteDateFilter;
-
-            expect(result.absoluteDateFilter.granularity).toBeUndefined();
-            expect(result.absoluteDateFilter.from).toBe("2026-03-15");
-            expect(result.absoluteDateFilter.to).toBe("2026-03-20");
+            ["WEEK", "2026-05", "2026-08", "GDC.time.week"],
+            ["MONTH", "2026-03", "2026-04", "GDC.time.month"],
+            ["QUARTER", "2026-1", "2026-2", "GDC.time.quarter"],
+            ["YEAR", "2025", "2026", "GDC.time.year"],
+        ] as const)("reads %s %s - %s with its granularity", (granularity, from, to, sdkGranularity) => {
+            expect(convertFilter(granularityFilter(granularity, from, to))).toEqual(
+                newAbsoluteGranularityDateFilter(dataSet, sdkGranularity, from, to),
+            );
         });
 
         it.each([
-            ["an open-ended range", granularityFilter("MONTH", "2026-03", null)],
-            ["a periodical granularity", granularityFilter("MONTH_OF_YEAR", "3", "4")],
+            ["2026-03", null, newAbsoluteGranularityDateFilter(dataSet, "GDC.time.month", "2026-03")],
             [
-                "a literal that does not match the granularity",
-                granularityFilter("MONTH", "2026-03-01", "2026-04"),
+                null,
+                "2026-04",
+                newAbsoluteGranularityDateFilter(dataSet, "GDC.time.month", undefined, "2026-04"),
             ],
-        ])("throws for %s", (_desc, filter) => {
-            expect(() => convertFilter(filter)).toThrow();
+        ] as const)("reads an open range %s - %s", (from, to, expected) => {
+            expect(convertFilter(granularityFilter("MONTH", from, to))).toEqual(expected);
+        });
+
+        it("reads days as an absolute date filter without granularity", () => {
+            expect(convertFilter(granularityFilter("DAY", "2026-03-15", "2026-03-20"))).toEqual(
+                newAbsoluteDateFilter(dataSet, "2026-03-15", "2026-03-20"),
+            );
         });
 
         it.each([
-            ["MONTH", "2026-3", "2026-4"],
-            ["YEAR", "26", "26"],
-            ["DAY", "2026-3-1", "2026-3-5"],
-        ] as const)(
-            "throws NotSupported for %s literals %s - %s that are not in the backend format",
+            ["an open range of days", granularityFilter("DAY", "2026-03-15", null)],
+            ["a range without edges", granularityFilter("MONTH", null, null)],
+            ["a periodical granularity", granularityFilter("MONTH_OF_YEAR", "3", "4")],
+            ["a day at the month granularity", granularityFilter("MONTH", "2026-03-01", "2026-04")],
+            ["a range that ends before it starts", granularityFilter("MONTH", "2026-04", "2026-03")],
+            ["a week 53 in a year with 52 weeks", granularityFilter("WEEK", "2025-53", "2025-53")],
+            ["a month that is not zero-padded", granularityFilter("MONTH", "2026-3", "2026-4")],
+            ["a short year", granularityFilter("YEAR", "26", "26")],
+            ["a day that is not zero-padded", granularityFilter("DAY", "2026-3-1", "2026-3-5")],
+        ])("throws NotSupported for %s", (_desc, filter) => {
+            expect(() => convertFilter(filter)).toThrow(NotSupported);
+        });
+
+        it.each([
+            ["GDC.time.week", "2026-05", "2026-08"],
+            ["GDC.time.week", "2026-53", "2026-53"],
+            ["GDC.time.month", "2026-03", "2026-04"],
+            ["GDC.time.quarter", "2026-1", "2026-2"],
+            ["GDC.time.year", "2025", "2026"],
+            ["GDC.time.month", "2026-03", undefined],
+            ["GDC.time.month", undefined, "2026-04"],
+        ] as [DatePeriodGranularity, string | undefined, string | undefined][])(
+            "survives a round trip through the backend at %s %s - %s",
             (granularity, from, to) => {
-                expect(() => convertFilter(granularityFilter(granularity, from, to))).toThrow(NotSupported);
+                const options = { localIdentifier: "date", emptyValueHandling: "exclude" } as const;
+                const filter =
+                    from === undefined
+                        ? newAbsoluteGranularityDateFilter(dataSet, granularity, undefined, to!, options)
+                        : newAbsoluteGranularityDateFilter(dataSet, granularity, from, to, options);
+
+                expect(convertFilter(convertFilterToBackend(filter)!)).toEqual(filter);
             },
         );
 
+        it("keeps days as days in a round trip through the backend", () => {
+            const filter = newAbsoluteDateFilter(dataSet, "2026-03-15", "2026-04-10");
+
+            expect(convertFilter(convertFilterToBackend(filter)!)).toEqual(filter);
+        });
+
         it.each([
+            ["GDC.time.week_us", "2026-03-01", "2026-03-14"],
             ["GDC.time.month", "2026-03-01", "2026-04-30"],
             ["GDC.time.quarter", "2026-01-01", "2026-06-30"],
             ["GDC.time.year", "2025-01-01", "2026-12-31"],
-            [undefined, "2026-03-15", "2026-04-10"],
-        ] as [DateAttributeGranularity | undefined, string, string][])(
-            "survives a round trip through the backend format at %s",
-            (granularity, from, to) => {
-                const filter = newAbsoluteDateFilter(idRef("closed", "dataSet"), from, to, { granularity });
+        ] as const)("reads days at the %s granularity back as days", (granularity, from, to) => {
+            const filter = newAbsoluteDateFilter(dataSet, from, to, { granularity });
 
-                const converted = convertFilter(convertFilterToBackend(filter)!) as IAbsoluteDateFilter;
-
-                expect(converted.absoluteDateFilter.from).toBe(from);
-                expect(converted.absoluteDateFilter.to).toBe(to);
-                expect(converted.absoluteDateFilter.granularity).toBe(granularity);
-            },
-        );
+            expect(convertFilter(convertFilterToBackend(filter)!)).toEqual(
+                newAbsoluteDateFilter(dataSet, from, to),
+            );
+        });
     });
 });

@@ -23,6 +23,7 @@ import {
     isDashboardMatchAttributeFilter,
     isMeasureValueFilter,
     newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
 } from "@gooddata/sdk-model";
 
 import {
@@ -73,6 +74,36 @@ describe("ExportDefinitionsConverter fromBackend", () => {
         expect(mvf.measureValueFilter.conditions).toEqual([
             { comparison: { operator: "GREATER_THAN", value: 10, treatNullValuesAs: 5 } },
             { range: { operator: "BETWEEN", from: 1, to: 9, treatNullValuesAs: 5 } },
+        ]);
+    });
+
+    it("reads the absolute date filter with granularity in visualizationObjectCustomFilters", () => {
+        const exportRequest = {
+            requestPayload: {
+                fileName: "tabular",
+                format: "CSV",
+                visualizationObject: "visId",
+                relatedDashboardId: "dashboardId",
+                visualizationObjectCustomFilters: [
+                    {
+                        absoluteGranularityDateFilter: {
+                            dataSet: { identifier: { id: "date1", type: "dataset" } },
+                            granularity: "GDC.time.week",
+                            from: "2026-05",
+                        },
+                    },
+                ],
+                metadata: { widget: "widgetId" },
+            },
+        } as unknown as AutomationAutomationTabularExport;
+
+        expect(convertTabularExportRequest(exportRequest).content.filters).toEqual([
+            newAbsoluteGranularityDateFilter(
+                idRef("date1", "dataSet"),
+                "GDC.time.week",
+                "2026-05",
+                undefined,
+            ),
         ]);
     });
 

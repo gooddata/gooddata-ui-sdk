@@ -110,10 +110,8 @@ function ReferencedDashboardsList({
                     {accessibleDashboards.map(({ id, title }) => (
                         <DeleteReportDialogUsageListItem
                             key={id}
-                            id={id}
                             title={title}
-                            isEmbedded={isEmbedded}
-                            uriFactory={analyticalDashboardUriFactory}
+                            href={isEmbedded ? undefined : analyticalDashboardUriFactory(id)}
                         />
                     ))}
                 </ul>
@@ -172,13 +170,11 @@ function ReferencedDocumentsList({
         <>
             {accessibleDocuments.length > 0 ? (
                 <ul className="gd-delete-report-dialog-usage-list">
-                    {accessibleDocuments.map(({ id, title }) => (
+                    {accessibleDocuments.map((item) => (
                         <DeleteReportDialogUsageListItem
-                            key={id}
-                            id={id}
-                            title={title}
-                            isEmbedded={isEmbedded}
-                            uriFactory={documentUriFactory}
+                            key={`${item.type}/${item.id}`}
+                            title={item.title}
+                            href={isEmbedded ? undefined : documentUriFactory(item)}
                         />
                     ))}
                 </ul>

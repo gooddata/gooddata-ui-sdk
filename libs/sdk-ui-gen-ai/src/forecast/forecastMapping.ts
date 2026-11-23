@@ -1,6 +1,5 @@
 // (C) 2026 GoodData Corporation
 
-import type { IForecastConfig } from "@gooddata/sdk-backend-spi";
 import type { IForecast } from "@gooddata/sdk-ui-charts";
 
 import { type Config } from "../types.js";
@@ -22,20 +21,6 @@ export function mapVisualizationForecastToChartConfig(config?: Config): IForecas
         enabled: true,
         period: forecastValues.period,
         confidence: forecastValues.confidence,
-        seasonal: forecastValues.seasonal,
-    };
-}
-
-export function mapVisualizationForecastToBackendConfig(config?: Config): IForecastConfig | undefined {
-    const forecastValues = getNormalizedForecastValues(config);
-
-    if (!forecastValues) {
-        return undefined;
-    }
-
-    return {
-        forecastPeriod: forecastValues.period,
-        confidenceLevel: forecastValues.confidence,
         seasonal: forecastValues.seasonal,
     };
 }

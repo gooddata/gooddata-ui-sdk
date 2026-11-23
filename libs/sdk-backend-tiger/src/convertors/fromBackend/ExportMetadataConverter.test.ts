@@ -29,3 +29,24 @@ describe("convertExportMetadata — timezone", () => {
         expect(result).not.toHaveProperty("timezoneId");
     });
 });
+
+describe("convertExportMetadata — filters", () => {
+    const granularityDateFilter = {
+        dashboardAbsoluteGranularityDateFilter: {
+            granularity: "GDC.time.quarter",
+            from: "2026-1",
+            to: "2026-2",
+            localIdentifier: "granularityDateFilter",
+        },
+    };
+
+    it("keeps an absolute date filter with granularity in the filters", () => {
+        const result = convertExportMetadata({ filters: [granularityDateFilter] });
+        expect(result?.filters).toEqual([granularityDateFilter]);
+    });
+
+    it("keeps an absolute date filter with granularity in the filters of a tab", () => {
+        const result = convertExportMetadata({ filtersByTab: { "tab-A": [granularityDateFilter] } });
+        expect(result?.filtersByTab).toEqual({ "tab-A": [granularityDateFilter] });
+    });
+});

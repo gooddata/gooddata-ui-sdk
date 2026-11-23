@@ -7,6 +7,8 @@ import { useIntl } from "react-intl";
 import { useDebounce } from "@gooddata/sdk-ui";
 import { Input } from "@gooddata/sdk-ui-kit";
 
+import { catalogSearch } from "../automation/testIds.js";
+
 import { useFullTextSearchActions } from "./FullTextSearchContext.js";
 
 const initialSearchTerm = "";
@@ -40,6 +42,7 @@ export function FullTextSearchInput() {
             value={value}
             onChange={handleChange}
             clearOnEsc
+            dataTestId={catalogSearch}
         />
     );
 }

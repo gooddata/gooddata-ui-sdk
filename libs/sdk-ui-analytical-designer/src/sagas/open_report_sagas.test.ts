@@ -33,7 +33,6 @@ import {
 import { ATTRIBUTE } from "../constants/bucket.js";
 import { combinedRootReducer } from "../reducers/combined_root_reducer.js";
 import { buildInitialState } from "../reducers/initial_state.js";
-import { getUserLoginMD5 } from "../selectors/bootstrap_selector.js";
 import {
     enableAnalyticalDesignerCatalogSideload,
     enableParameters,
@@ -397,8 +396,7 @@ describe("Open report sagas", () => {
                         [call(getDuration, startTime), duration],
                         [call(fetchDashboards, projectId), publicDashboards],
                         [select(workspacePermissions), null],
-                        [select(getUserLoginMD5), "me"],
-                        [call(loadAccessibleDocumentIds, projectId, documents, "me", null), ["doc1"]],
+                        [call(loadAccessibleDocumentIds, projectId, documents, null), ["doc1"]],
                         [call(logVisualizationOpen, { time: duration, state }), {}],
                         [
                             call(
@@ -471,8 +469,7 @@ describe("Open report sagas", () => {
                     [call(getDuration, startTime), duration],
                     [call(fetchDashboards, projectId), publicDashboards],
                     [select(workspacePermissions), null],
-                    [select(getUserLoginMD5), "me"],
-                    [call(loadAccessibleDocumentIds, projectId, documents, "me", null), ["doc1"]],
+                    [call(loadAccessibleDocumentIds, projectId, documents, null), ["doc1"]],
                     [call(logVisualizationOpen, { time: duration, state }), {}],
                     [
                         call(

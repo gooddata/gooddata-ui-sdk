@@ -3,7 +3,7 @@
 import { type ReactNode } from "react";
 
 import classNames from "classnames";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import {
     type ExecutionCacheSaving,
@@ -68,6 +68,7 @@ export function ExecutionProgressSteps({
 }
 
 function Step({ step, serverNow }: { step: IExecutionProgressStepViewModel; serverNow: number }) {
+    const intl = useIntl();
     const durationMs =
         step.startedAt === undefined ? undefined : (step.finishedAt ?? serverNow) - step.startedAt;
 
@@ -89,7 +90,7 @@ function Step({ step, serverNow }: { step: IExecutionProgressStepViewModel; serv
                 </span>
                 {step.state === "running" && step.kind === "federation" ? <WaitingOn step={step} /> : null}
                 <span className="adi-execution-progress-step-duration">
-                    {durationMs === undefined ? "" : formatDuration(durationMs)}
+                    {durationMs === undefined ? "" : formatDuration(intl, durationMs)}
                 </span>
             </div>
             {step.kind === "federation" && step.sources ? (
@@ -238,12 +239,12 @@ function FederationSources({
                                 ? intl.formatMessage({ id: "executionProgress.source.cacheHit" })
                                 : durationMs === undefined
                                   ? ""
-                                  : formatDuration(durationMs)}
+                                  : formatDuration(intl, durationMs)}
                             {source.queuedMs === undefined
                                 ? ""
                                 : ` · ${intl.formatMessage(
                                       { id: "executionProgress.source.queued" },
-                                      { duration: formatDuration(source.queuedMs) },
+                                      { duration: formatDuration(intl, source.queuedMs) },
                                   )}`}
                         </span>
                     </li>
@@ -259,8 +260,8 @@ export function dataSourceLabel(dataSourceId: string, dataSourceName?: string): 
 }
 
 /** the original end-to-end time; "~" when it ends before the post-processing */
-export function formatOriginalTotal(totalDurationMs: number, approximate?: boolean): string {
-    return `${approximate ? "~" : ""}${formatDuration(totalDurationMs)}`;
+export function formatOriginalTotal(intl: IntlShape, totalDurationMs: number, approximate?: boolean): string {
+    return `${approximate ? "~" : ""}${formatDuration(intl, totalDurationMs)}`;
 }
 
 const QUERY_PARTS: Array<{ part: string; key: keyof IExecutionProgressQueryBreakdown; label: ReactNode }> = [
@@ -279,6 +280,7 @@ const QUERY_PARTS: Array<{ part: string; key: keyof IExecutionProgressQueryBreak
 
 /** where the time of the finished query went: the parts add up to the step's duration */
 function QueryBreakdown({ breakdown }: { breakdown: IExecutionProgressQueryBreakdown }) {
+    const intl = useIntl();
     const totalMs = breakdown.waitingMs + breakdown.databaseMs + breakdown.transferMs;
     let offsetMs = 0;
     return (
@@ -303,7 +305,7 @@ function QueryBreakdown({ breakdown }: { breakdown: IExecutionProgressQueryBreak
                             />
                         </span>
                         <span className="adi-execution-progress-source-duration">
-                            {formatDuration(durationMs)}
+                            {formatDuration(intl, durationMs)}
                         </span>
                     </li>
                 );
@@ -314,6 +316,7 @@ function QueryBreakdown({ breakdown }: { breakdown: IExecutionProgressQueryBreak
 
 /** what a cache hit saved: the time when it is meaningful, otherwise the queries not run */
 export function CacheSaving({ saving, className }: { saving: ExecutionCacheSaving; className: string }) {
+    const intl = useIntl();
     return (
         <div
             className={classNames("adi-execution-progress-original-saved", className)}
@@ -322,7 +325,7 @@ export function CacheSaving({ saving, className }: { saving: ExecutionCacheSavin
             {saving.kind === "time" ? (
                 <FormattedMessage
                     id="executionProgress.original.saved"
-                    values={{ duration: formatOriginalTotal(saving.savedMs, saving.approximate) }}
+                    values={{ duration: formatOriginalTotal(intl, saving.savedMs, saving.approximate) }}
                 />
             ) : (
                 <FormattedMessage

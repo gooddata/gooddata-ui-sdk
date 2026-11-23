@@ -112,6 +112,11 @@ const invalidFilterDataFormat: ICommandFailedBody = {
     errorMessage: "The command has invalid filter format",
 };
 
+const unsupportedAbsoluteGranularityDateFilter: ICommandFailedBody = {
+    errorCode: GdcErrorType.InvalidArgument,
+    errorMessage: "The command has absolute date filter with granularity which is not supported yet",
+};
+
 const invalidFilterItemsCount: ICommandFailedBody = {
     errorCode: GdcErrorType.InvalidArgument,
     errorMessage: "The app cannot be applied more than 20 items on filter bar",
@@ -198,6 +203,7 @@ export const CONTROL_FILTERING_ERRORS = {
     invalidDateFilterGranularity,
     invalidDateFilterFromToValue,
     invalidFilterDataFormat,
+    unsupportedAbsoluteGranularityDateFilter,
     invalidFilterItemsCount,
     invalidRemoveFilterItemsCount,
     notExistedDateDataset,

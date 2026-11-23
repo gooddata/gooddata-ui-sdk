@@ -5,7 +5,7 @@ import { call, select } from "redux-saga/effects";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
-    type IDateFilter,
+    type DateFilterOfAnyType,
     type IFilter,
     type IInsightDefinition,
     type IKpiWidget,
@@ -15,7 +15,7 @@ import {
     filterObjRef,
     insightFilters,
     isAttributeFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isInsightWidget,
     isMeasureValueFilter,
     isNoopAllTimeDateFilter,
@@ -48,7 +48,7 @@ function resolveDateFilters(
     insightDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
     dashboardDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
     supportsMultipleDateFilters: boolean,
-): IDateFilter[] {
+): DateFilterOfAnyType[] {
     // prioritize dashboard filters over insight ones
     // and strip useless all time filters at the end
     const init = dashboardDateFilterDateDatasetPairs
@@ -56,7 +56,7 @@ function resolveDateFilters(
         .map((item) => item.filter);
     return insightDateFilterDateDatasetPairs
         .filter((item) => !!item.dateDatasetLink)
-        .reduceRight((acc: IDateFilter[], curr) => {
+        .reduceRight((acc: DateFilterOfAnyType[], curr) => {
             const alreadyPresent = acc.some((item) =>
                 areObjRefsEqual(filterObjRef(item), curr.dateDatasetLink),
             );
@@ -107,7 +107,7 @@ export function* queryWithInsight(
         effectiveInsightFilters,
     );
     const dateFilters = resolveDateFilters(
-        selectDateDatasetsForDateFilters(effectiveInsightFilters.filter(isDateFilter)),
+        selectDateDatasetsForDateFilters(effectiveInsightFilters.filter(isDateFilterOfAnyType)),
         dashboardFilters.dateFilters,
         supportsMultipleDateFilters,
     );

@@ -9,6 +9,7 @@ import { type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
 import { useLocalStorage } from "@gooddata/sdk-ui";
 import { type IUiTab, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit";
 
+import { catalogDetail } from "../automation/testIds.js";
 import { canEditCatalogItem, canShareCatalogItem } from "../catalogItem/permission.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
 import { useIsCertificationAllowed } from "../certification/gate.js";
@@ -212,7 +213,7 @@ export function CatalogDetailContent({
     const [selectedTabId, setSelectedTabId] = useSelectedTabId(tabs);
     return (
         <CatalogItemShareProvider shareableItem={shareableItem} target={shareTarget} labels={shareLabels}>
-            <div className="gd-analytics-catalog-detail">
+            <div className="gd-analytics-catalog-detail" data-testid={catalogDetail}>
                 <CatalogDetailStatus status={status} error={error}>
                     {item ? (
                         <div

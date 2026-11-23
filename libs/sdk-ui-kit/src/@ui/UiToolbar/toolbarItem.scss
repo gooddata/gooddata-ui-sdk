@@ -54,7 +54,8 @@ $toolbar-field-padding: 8px;
     @include toolbar-focus-ring;
 
     &:not([aria-disabled="true"]) {
-        &:hover {
+        &:hover,
+        &#{$root}--isOpen {
             --gd-icon-fill-color: var(--gd-palette-complementary-8);
 
             color: var(--gd-palette-complementary-8);
@@ -66,7 +67,7 @@ $toolbar-field-padding: 8px;
             --gd-icon-fill-color: var(--gd-palette-complementary-8);
 
             color: var(--gd-palette-complementary-8);
-            background-color: var(--gd-palette-complementary-4);
+            background-color: var(--gd-palette-complementary-3);
         }
 
         &#{$root}--isSelected {
@@ -75,7 +76,8 @@ $toolbar-field-padding: 8px;
             color: var(--gd-palette-primary-base);
             background-color: transparent;
 
-            &:hover {
+            &:hover,
+            &#{$root}--isOpen {
                 --gd-icon-fill-color: var(--gd-palette-primary-base-d12);
 
                 color: var(--gd-palette-primary-base-d12);
@@ -137,5 +139,11 @@ $toolbar-field-padding: 8px;
         color: var(--gd-palette-complementary-5);
         background-color: transparent;
         cursor: default;
+
+        &#{$root}--isDestructive {
+            --gd-icon-fill-color: var(--gd-palette-error-disabled);
+
+            color: var(--gd-palette-error-disabled);
+        }
     }
 }

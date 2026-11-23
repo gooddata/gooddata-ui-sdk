@@ -80,7 +80,7 @@ export function DateBar(props: IDateBarProps) {
                         returnFocusTo={chipRef}
                         title={intl.formatMessage({ id: "kdaDialog.dialog.bars.date.period.title" })}
                         initialFocus={ref as RefObject<HTMLElement>}
-                        content={({ onClose }) => (
+                        content={({ onClose, titleId }) => (
                             <div className={cx("gd-kda-dialog-bar__date-select")}>
                                 <UiListbox
                                     reference={ref}
@@ -88,6 +88,7 @@ export function DateBar(props: IDateBarProps) {
                                     items={items}
                                     ariaAttributes={{
                                         id: listboxId,
+                                        "aria-labelledby": titleId,
                                     }}
                                     onClose={onClose}
                                     onSelect={(item) => {

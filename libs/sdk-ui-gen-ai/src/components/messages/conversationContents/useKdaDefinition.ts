@@ -128,7 +128,7 @@ export function createKdaDefinitionFromDrill(
     data: IDashboardKeyDriverCombinationItem,
     event: IDrillEvent,
     filters?: IDashboardAttributeFilter[],
-) {
+): IKdaDefinition | undefined {
     const from = data.range[0];
     const to = data.range[1];
 

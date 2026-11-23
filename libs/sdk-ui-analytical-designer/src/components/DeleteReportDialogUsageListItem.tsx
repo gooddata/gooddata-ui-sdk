@@ -1,19 +1,12 @@
 // (C) 2021-2026 GoodData Corporation
 
 interface IDeleteReportDialogUsageListItemProps {
-    id: string;
     title: string;
-    isEmbedded: boolean;
-    uriFactory: (id: string) => string;
+    href?: string;
 }
 
-export function DeleteReportDialogUsageListItem({
-    id,
-    title,
-    isEmbedded,
-    uriFactory,
-}: IDeleteReportDialogUsageListItemProps) {
-    if (isEmbedded) {
+export function DeleteReportDialogUsageListItem({ title, href }: IDeleteReportDialogUsageListItemProps) {
+    if (!href) {
         return (
             <li>
                 <div className="gd-delete-report-dialog-usage-list-item s-delete-report-dialog-usage-list-item">
@@ -28,7 +21,7 @@ export function DeleteReportDialogUsageListItem({
         <li>
             <a
                 className="gd-delete-report-dialog-usage-list-item s-delete-report-dialog-usage-list-item"
-                href={uriFactory(id)}
+                href={href}
                 rel="noopener noreferrer"
                 target="_blank"
             >

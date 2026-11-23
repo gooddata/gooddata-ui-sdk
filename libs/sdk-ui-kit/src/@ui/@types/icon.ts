@@ -143,6 +143,8 @@ export type IconType =
     | "box"
     | "ellipsisVertical"
     | "list"
+    | "numberList"
+    | "bulletList"
     | "drillTo"
     | "hierarchy"
     | "lineage"

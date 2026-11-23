@@ -4,7 +4,12 @@ import { invariant } from "ts-invariant";
 
 import { _isEmpty } from "@gooddata/util";
 
-import { type AllTimeGranularity, type DateAttributeGranularity } from "../../base/dateGranularities.js";
+import {
+    type AllTimeGranularity,
+    type DateAttributeGranularity,
+    type DatePeriodGranularity,
+    type DatePeriodRange,
+} from "../../base/dateGranularities.js";
 import { type Identifier, type ObjRef, type ObjRefInScope, isObjRef } from "../../objRef/index.js";
 
 /**
@@ -258,10 +263,8 @@ export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
      * 'from' and 'to' stay day-level even when this is set: they are the first day of the first
      * selected period and the last day of the last selected period.
      *
-     * @remarks
-     * On the Tiger backend, `GDC.time.month`, `GDC.time.quarter` and `GDC.time.year` select whole periods
-     * when 'from' and 'to' are days in the 'YYYY-MM-DD' format covering whole periods; any other range, and
-     * every other granularity, selects the days of the range as given.
+     * @deprecated For whole weeks, months, quarters and years use {@link IAbsoluteGranularityDateFilter}.
+     * This field will be removed in the next major version.
      */
     granularity?: DateAttributeGranularity;
 
@@ -270,6 +273,40 @@ export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
      */
     emptyValueHandling?: EmptyValues;
 }
+
+/**
+ * Filters results to a range of whole weeks, months, quarters or years, from one fixed period to another.
+ *
+ * @remarks
+ * Use {@link IAbsoluteDateFilter} to filter days.
+ *
+ * @public
+ */
+export interface IAbsoluteGranularityDateFilter {
+    absoluteGranularityDateFilter: IAbsoluteGranularityDateFilterBody;
+}
+
+/**
+ * Object defining the {@link IAbsoluteGranularityDateFilter} object body.
+ *
+ * @public
+ */
+export type IAbsoluteGranularityDateFilterBody = IIdentifiableFilter & {
+    /**
+     * Date data set for filtering
+     */
+    dataSet: ObjRef;
+
+    /**
+     * Granularity of the periods in 'from' and 'to'.
+     */
+    granularity: DatePeriodGranularity;
+
+    /**
+     * How to treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
+} & DatePeriodRange;
 
 /**
  * Filters results to a relative date range.
@@ -390,9 +427,19 @@ export type TextAttributeFilter = IArbitraryAttributeFilter | IMatchAttributeFil
 /**
  * Date filters limit the range of results to data within relative or absolute date range.
  *
+ * @remarks
+ * Does not cover the absolute date filter with granularity. {@link DateFilterOfAnyType} covers all date filters.
+ *
  * @public
  */
 export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
+
+/**
+ * Date filter of any type, including the absolute date filter with granularity.
+ *
+ * @alpha
+ */
+export type DateFilterOfAnyType = IDateFilter | IAbsoluteGranularityDateFilter;
 
 /**
  * @public
@@ -524,6 +571,7 @@ export interface IRankingFilter {
  */
 export type IFilter =
     | IAbsoluteDateFilter
+    | IAbsoluteGranularityDateFilter
     | IRelativeDateFilter
     | IPositiveAttributeFilter
     | INegativeAttributeFilter
@@ -556,6 +604,7 @@ export type INullableFilter = IFilter | undefined | null;
  */
 export type IMeasureFilter =
     | IAbsoluteDateFilter
+    | IAbsoluteGranularityDateFilter
     | IRelativeDateFilter
     | IPositiveAttributeFilter
     | INegativeAttributeFilter
@@ -569,15 +618,30 @@ export type IMeasureFilter =
 /**
  * Type guard checking whether the provided object is a positive attribute filter.
  *
+ * @remarks
+ * Does not cover the absolute date filter with granularity, {@link isSimpleMeasureFilterOfAnyType} does.
+ *
  * @public
  */
-export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter {
+export function isSimpleMeasureFilter(
+    obj: unknown,
+): obj is Exclude<IMeasureFilter, IAbsoluteGranularityDateFilter> {
     return (
         isPositiveAttributeFilter(obj) ||
         isNegativeAttributeFilter(obj) ||
         isAbsoluteDateFilter(obj) ||
         isRelativeDateFilter(obj)
     );
+}
+
+/**
+ * Type guard checking whether the provided object is a measure filter, including the absolute date filter
+ * with granularity.
+ *
+ * @alpha
+ */
+export function isSimpleMeasureFilterOfAnyType(obj: unknown): obj is IMeasureFilter {
+    return isSimpleMeasureFilter(obj) || isAbsoluteGranularityDateFilter(obj);
 }
 
 /**
@@ -658,6 +722,17 @@ export function isTextAttributeFilter(obj: unknown): obj is TextAttributeFilter 
  */
 export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter {
     return !_isEmpty(obj) && (obj as IAbsoluteDateFilter).absoluteDateFilter !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided object is an absolute granularity date filter.
+ *
+ * @alpha
+ */
+export function isAbsoluteGranularityDateFilter(obj: unknown): obj is IAbsoluteGranularityDateFilter {
+    return (
+        !_isEmpty(obj) && (obj as IAbsoluteGranularityDateFilter).absoluteGranularityDateFilter !== undefined
+    );
 }
 
 /**
@@ -859,10 +934,22 @@ export function isAttributeFilterWithSelection(obj: unknown): obj is IAttributeF
 /**
  * Type guard checking whether the provided object is a date filter.
  *
+ * @remarks
+ * Does not cover the absolute date filter with granularity, {@link isDateFilterOfAnyType} does.
+ *
  * @public
  */
 export function isDateFilter(obj: unknown): obj is IDateFilter {
     return isRelativeDateFilter(obj) || isAbsoluteDateFilter(obj);
+}
+
+/**
+ * Type guard checking whether the provided object is a date filter of any type.
+ *
+ * @alpha
+ */
+export function isDateFilterOfAnyType(obj: unknown): obj is DateFilterOfAnyType {
+    return isDateFilter(obj) || isAbsoluteGranularityDateFilter(obj);
 }
 
 /**
@@ -886,10 +973,22 @@ export function isRankingFilter(obj: unknown): obj is IRankingFilter {
 /**
  * Type guard checking whether the provided object is a filter.
  *
+ * @remarks
+ * Does not cover the absolute date filter with granularity, {@link isFilterOfAnyType} does.
+ *
  * @public
  */
-export function isFilter(obj: unknown): obj is IFilter {
+export function isFilter(obj: unknown): obj is Exclude<IFilter, IAbsoluteGranularityDateFilter> {
     return isDateFilter(obj) || isAttributeFilter(obj) || isMeasureValueFilter(obj) || isRankingFilter(obj);
+}
+
+/**
+ * Type guard checking whether the provided object is a filter of any type.
+ *
+ * @alpha
+ */
+export function isFilterOfAnyType(obj: unknown): obj is IFilter {
+    return isFilter(obj) || isAbsoluteGranularityDateFilter(obj);
 }
 
 /**
@@ -1120,6 +1219,7 @@ export function filterAttributeElements(filter: IFilter): IAttributeElements | u
 export function filterObjRef(
     filter:
         | IAbsoluteDateFilter
+        | IAbsoluteGranularityDateFilter
         | IRelativeDateFilter
         | IPositiveAttributeFilter
         | INegativeAttributeFilter
@@ -1150,6 +1250,9 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined {
     }
     if (isAbsoluteDateFilter(filter)) {
         return filter.absoluteDateFilter.dataSet;
+    }
+    if (isAbsoluteGranularityDateFilter(filter)) {
+        return filter.absoluteGranularityDateFilter.dataSet;
     }
     if (isRelativeDateFilter(filter)) {
         return filter.relativeDateFilter.dataSet;
@@ -1186,6 +1289,9 @@ export function filterLocalIdentifier(filter: IFilter): string | undefined {
     if (isAbsoluteDateFilter(filter)) {
         return filter.absoluteDateFilter.localIdentifier;
     }
+    if (isAbsoluteGranularityDateFilter(filter)) {
+        return filter.absoluteGranularityDateFilter.localIdentifier;
+    }
     if (isRelativeDateFilter(filter)) {
         return filter.relativeDateFilter.localIdentifier;
     }
@@ -1218,6 +1324,46 @@ export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined {
 }
 
 /**
+ * Represents values of an absolute filter with granularity.
+ *
+ * @alpha
+ */
+export type IAbsoluteGranularityDateFilterValues = {
+    dataSet?: ObjRef;
+    granularity: DatePeriodGranularity;
+    emptyValueHandling?: EmptyValues;
+} & DatePeriodRange;
+
+/**
+ * Gets effective values of an absolute date filter with granularity.
+ *
+ * @param filter - date filter to work with
+ * @param includeDataSet - whether to include data set in the returned values
+ * @returns filter values
+ * @alpha
+ */
+export function absoluteGranularityDateFilterValues(
+    filter: IAbsoluteGranularityDateFilter,
+    includeDataSet = false,
+): IAbsoluteGranularityDateFilterValues {
+    invariant(filter, "filter must be specified");
+    const {
+        dataSet,
+        granularity,
+        emptyValueHandling,
+        localIdentifier: _localIdentifier,
+        ...range
+    } = filter.absoluteGranularityDateFilter;
+
+    return {
+        granularity,
+        ...range,
+        ...(includeDataSet ? { dataSet } : {}),
+        ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
+    };
+}
+
+/**
  * Represents values of an absolute filter.
  *
  * @public
@@ -1226,6 +1372,10 @@ export interface IAbsoluteDateFilterValues {
     from: string;
     to: string;
     dataSet?: ObjRef;
+    /**
+     * @deprecated For whole weeks, months, quarters and years use {@link IAbsoluteGranularityDateFilter}.
+     * This field will be removed in the next major version.
+     */
     granularity?: DateAttributeGranularity;
     emptyValueHandling?: EmptyValues;
 }

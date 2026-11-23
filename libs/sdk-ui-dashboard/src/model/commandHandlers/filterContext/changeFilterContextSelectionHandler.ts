@@ -25,12 +25,15 @@ import {
     dashboardFilterObjRef,
     dashboardMeasureValueFilterLocalIdentifier,
     getAttributeElementsItems,
+    isAbsoluteGranularityDateFilter,
     isAllTimeDashboardDateFilter,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isDashboardDateFilterOfAnyType,
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isSingleSelectionFilter,
@@ -41,6 +44,7 @@ import {
 } from "@gooddata/sdk-model";
 import { _compact, _partition, _uniqBy } from "@gooddata/util";
 
+import { ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -337,6 +341,18 @@ export function* changeFilterContextSelectionHandler(
         }
     }
 
+    if (
+        filters.some(
+            (filter) =>
+                isDashboardAbsoluteGranularityDateFilter(filter) || isAbsoluteGranularityDateFilter(filter),
+        )
+    ) {
+        yield dispatchDashboardEvent(
+            invalidArgumentsProvided(ctx, cmd, ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED),
+        );
+        return;
+    }
+
     // Cross-filtering is always compatible with dashboard tabs now
     // (removed the check that prevented cross-filtering without tabs)
 
@@ -380,7 +396,7 @@ export function* changeFilterContextSelectionHandler(
         filters.map((filter): FilterContextItem | undefined => {
             if (
                 isDashboardAttributeFilterItem(filter) ||
-                isDashboardDateFilter(filter) ||
+                isDashboardDateFilterOfAnyType(filter) ||
                 isDashboardMeasureValueFilter(filter)
             ) {
                 return filter;

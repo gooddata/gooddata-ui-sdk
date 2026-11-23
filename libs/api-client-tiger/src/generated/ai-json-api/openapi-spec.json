@@ -2137,8 +2137,8 @@
                 "tags": [
                     "Smart Functions"
                 ],
-                "summary": "(BETA) Semantic Search in Metadata",
-                "description": "(BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.",
+                "summary": "Search Workspace Metadata",
+                "description": "Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.",
                 "operationId": "semanticSearch",
                 "parameters": [
                     {
@@ -2190,8 +2190,8 @@
                 "tags": [
                     "Smart Functions"
                 ],
-                "summary": "(BETA) Semantic Search in Metadata",
-                "description": "(BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.",
+                "summary": "Search Workspace Metadata",
+                "description": "Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.",
                 "operationId": "aiSearch",
                 "deprecated": true,
                 "parameters": [

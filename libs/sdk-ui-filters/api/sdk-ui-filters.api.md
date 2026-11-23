@@ -1644,6 +1644,7 @@ export interface ITextFilterStateSummaryProps {
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     emptyValueHandling?: EmptyValues;
     from?: DateString;
+    // @deprecated
     granularity?: DateFilterGranularity;
     to?: DateString;
 }

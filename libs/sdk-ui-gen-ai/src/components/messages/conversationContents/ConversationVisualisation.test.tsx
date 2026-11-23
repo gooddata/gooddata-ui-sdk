@@ -3,30 +3,21 @@
 import { type ReactNode } from "react";
 
 import { configureStore } from "@reduxjs/toolkit";
-import { act, render } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import {
-    type IAttribute,
-    type IExecutionConfig,
-    type IInsight,
-    type ISeparators,
-    attributeDisplayFormRef,
-    attributeLocalId,
-    idRef,
-    newAttribute,
-    newAttributeSort,
-    newBucket,
-    newMeasure,
-    newMeasureSort,
-} from "@gooddata/sdk-model";
-import { type IAxisConfig } from "@gooddata/sdk-ui-charts";
+import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { type IInsight, type ISeparators, idRef, newBucket, newMeasure } from "@gooddata/sdk-model";
+import { type GoodDataSdkError, NegativeValuesSdkError, NoDataSdkError } from "@gooddata/sdk-ui";
 
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 import { type IChatConversationLocalItem } from "../../../model.js";
 
-import { ConversationVisualisation } from "./ConversationVisualisation.js";
+import {
+    ConversationVisualisation,
+    type ConversationVisualisationProps,
+} from "./ConversationVisualisation.js";
 
 // With `isolate: false`, earlier test files may have cached the component with real dependencies.
 // Reset before imports so the visualization mocks below are used regardless of file order.
@@ -35,111 +26,77 @@ vi.hoisted(() => {
 });
 
 type RecordedProps = {
+    insight?: IInsight["insight"];
+    locale?: string;
+    settings?: unknown;
+    colorPalette?: unknown;
+    theme?: unknown;
     config?: {
         separators?: ISeparators;
-        total?: unknown;
+        enableChartSorting?: boolean;
+        enableReversedStacking?: boolean;
+        enableSeparateTotalLabels?: boolean;
+        enableAccessibleTooltip?: boolean;
+        cooperativeGestures?: boolean;
+        tooltip?: unknown;
         legend?: unknown;
-        stackMeasures?: unknown;
-        stackMeasuresToPercent?: unknown;
-        dualAxis?: unknown;
-        primaryChartType?: unknown;
-        secondaryChartType?: unknown;
-        inlineVisualizations?: unknown;
-        secondary_xaxis?: IAxisConfig;
-        secondary_yaxis?: IAxisConfig;
+        agGridToken?: string;
+        forecast?: unknown;
+        anomalies?: unknown;
+        clustering?: unknown;
     };
-    execConfig?: IExecutionConfig;
-    attribute?: unknown;
-    measures?: unknown[];
-    primaryMeasures?: unknown[];
-    secondaryMeasures?: unknown[];
-    xAxisMeasure?: unknown;
-    yAxisMeasure?: unknown;
-    size?: unknown;
-    primaryMeasure?: unknown;
-    targetMeasure?: unknown;
-    comparativeMeasure?: unknown;
-    attributeFrom?: unknown;
-    attributeTo?: unknown;
-    viewBy?: unknown;
-    sortBy?: unknown;
-    stackBy?: unknown;
-    trendBy?: unknown;
-    segmentBy?: unknown;
-    measure?: unknown;
-    rows?: unknown;
-    columns?: unknown;
-    location?: unknown;
-    color?: unknown;
-    latitude?: unknown;
-    longitude?: unknown;
-    area?: unknown;
+    filters?: unknown;
+    drillableItems?: unknown;
+    onDrill?: unknown;
+    onError?: (error: GoodDataSdkError) => void;
+    onLoadingChanged?: (loadingState: { isLoading: boolean }) => void;
     onExportReady?: () => void;
+    execConfig?: unknown;
 };
 
-const rendered: { component: string; separators: ISeparators | undefined }[] = [];
-const lastProps = new Map<string, RecordedProps>();
+const rendered: { component: string; props: RecordedProps }[] = [];
+const scopedThemes: unknown[] = [];
 
 function recorder(component: string) {
     return function Recorder(props: RecordedProps) {
-        rendered.push({ component, separators: props.config?.separators });
-        lastProps.set(component, props);
+        rendered.push({ component, props });
         return null;
     };
 }
 
-vi.mock("@gooddata/sdk-ui-charts", () => ({
-    AreaChart: recorder("AreaChart"),
-    BarChart: recorder("BarChart"),
-    BubbleChart: recorder("BubbleChart"),
-    BulletChart: recorder("BulletChart"),
-    ColumnChart: recorder("ColumnChart"),
-    ComboChart: recorder("ComboChart"),
-    LineChart: recorder("LineChart"),
-    PieChart: recorder("PieChart"),
-    DonutChart: recorder("DonutChart"),
-    PyramidChart: recorder("PyramidChart"),
-    FunnelChart: recorder("FunnelChart"),
-    RadarChart: recorder("RadarChart"),
-    Repeater: recorder("Repeater"),
-    SankeyChart: recorder("SankeyChart"),
-    DependencyWheelChart: recorder("DependencyWheelChart"),
-    ScatterPlot: recorder("ScatterPlot"),
-    Treemap: recorder("Treemap"),
-    Headline: recorder("Headline"),
-    Heatmap: recorder("Heatmap"),
-    WaterfallChart: recorder("WaterfallChart"),
+vi.mock("@gooddata/sdk-ui-ext", () => ({
+    InsightRenderer: recorder("InsightRenderer"),
+    convertInsightToTableDefinition: (insight: IInsight) => ({
+        insight: { ...insight.insight, visualizationUrl: "local:table" },
+    }),
 }));
 
-vi.mock("@gooddata/sdk-ui-pivot", () => ({
-    PivotTable: recorder("PivotTable"),
-}));
-
-vi.mock("@gooddata/sdk-ui-pivot/next", () => ({
-    PivotTableNext: recorder("PivotTableNext"),
-    useAgGridToken: (token?: string) => token,
-}));
-
-vi.mock("@gooddata/sdk-ui-geo", () => ({
-    GeoPushpinChart: recorder("GeoPushpinChart"),
-    GeoAreaChart: recorder("GeoAreaChart"),
-}));
-
-vi.mock("@gooddata/sdk-ui-dashboard", () => ({
-    getKdaKeyDriverCombinations: () => [],
-}));
+vi.mock("@gooddata/sdk-ui-pivot/next", () => ({ useAgGridToken: (token?: string) => token }));
 
 vi.mock("@gooddata/sdk-ui-theme-provider", () => ({
-    ScopedThemeProvider: ({ children }: { children?: ReactNode }) => children,
-    useTheme: () => undefined,
+    ScopedThemeProvider: ({ children, theme }: { children: ReactNode; theme: unknown }) => {
+        scopedThemes.push(theme);
+        return children;
+    },
+    useTheme: () => ({ palette: { complementary: { c8: "#123456" } } }),
 }));
 
-const separators: ISeparators = { thousand: ".", decimal: "," };
+const separators: ISeparators = { decimal: ",", thousand: " " };
+const settings = {
+    userId: "user-1",
+    locale: "en-US",
+    workspace: "workspace-1",
+    separators,
+    enableNewPivotTable: true,
+    customSetting: true,
+} as IUserWorkspaceSettings;
+const colorPalette = [{ guid: "1", fill: { r: 18, g: 52, b: 86 } }];
+const execConfig = { dataSamplingPercentage: 50 };
 
 const message: IChatConversationLocalItem = {
-    id: "1",
-    localId: "1",
-    responseId: "1",
+    id: "message-1",
+    localId: "message-1",
+    responseId: "response-1",
     role: "assistant",
     type: "item",
     createdAt: 0,
@@ -162,19 +119,14 @@ function visualizationOf(visualizationUrl: string): IInsight {
     };
 }
 
-function renderVisualisation(
+function visualisationElement(
     visualizationUrl: string,
-    props: {
-        isTable?: boolean;
-        enableNewPivotTable?: boolean;
-        onVisualisationSuccess?: () => void;
-        execConfig?: IExecutionConfig;
-    } = {},
+    props: Partial<ConversationVisualisationProps> = {},
     insight: Partial<IInsight["insight"]> = {},
 ) {
     const base = visualizationOf(visualizationUrl);
 
-    return render(
+    return (
         <Provider store={configureStore({ reducer: () => ({}) })}>
             <IntlWrapper>
                 <ConversationVisualisation
@@ -184,887 +136,193 @@ function renderVisualisation(
                     {...props}
                 />
             </IntlWrapper>
-        </Provider>,
+        </Provider>
     );
+}
+
+function renderVisualisation(
+    visualizationUrl: string,
+    props: Partial<ConversationVisualisationProps> = {},
+    insight: Partial<IInsight["insight"]> = {},
+) {
+    return render(visualisationElement(visualizationUrl, props, insight));
 }
 
 describe("ConversationVisualisation", () => {
     beforeEach(() => {
         rendered.length = 0;
-        lastProps.clear();
+        scopedThemes.length = 0;
     });
 
     it.each([
-        ["local:area", "AreaChart"],
-        ["local:bar", "BarChart"],
-        ["local:bubble", "BubbleChart"],
-        ["local:bullet", "BulletChart"],
-        ["local:column", "ColumnChart"],
-        ["local:combo2", "ComboChart"],
-        ["local:line", "LineChart"],
-        ["local:pie", "PieChart"],
-        ["local:donut", "DonutChart"],
-        ["local:pyramid", "PyramidChart"],
-        ["local:funnel", "FunnelChart"],
-        ["local:radar", "RadarChart"],
-        ["local:repeater", "Repeater"],
-        ["local:treemap", "Treemap"],
-        ["local:sankey", "SankeyChart"],
-        ["local:dependencywheel", "DependencyWheelChart"],
-        ["local:scatter", "ScatterPlot"],
-        ["local:headline", "Headline"],
-        ["local:waterfall", "WaterfallChart"],
-        ["local:heatmap", "Heatmap"],
-        ["local:table", "PivotTableNext"],
-    ])("passes the workspace separators to %s", (visualizationUrl, component) => {
-        renderVisualisation(visualizationUrl);
+        "area",
+        "bar",
+        "bubble",
+        "bullet",
+        "column",
+        "combo",
+        "dependencywheel",
+        "donut",
+        "funnel",
+        "headline",
+        "heatmap",
+        "line",
+        "pie",
+        "pushpin",
+        "geo",
+        "pyramid",
+        "radar",
+        "repeater",
+        "sankey",
+        "scatter",
+        "table",
+        "treemap",
+        "waterfall",
+    ])("renders a %s insight through InsightRenderer", (visualizationType) => {
+        const visualizationUrl = `local:${visualizationType}`;
+        const insight = visualizationOf(visualizationUrl).insight;
 
-        expect(rendered).toEqual([{ component, separators }]);
+        renderVisualisation(visualizationUrl, {
+            settings,
+            colorPalette: [...colorPalette],
+            execConfig,
+            enableAccessibleChartTooltip: true,
+        });
+
+        expect(rendered).toHaveLength(1);
+        expect(rendered[0].component).toBe("InsightRenderer");
+        expect(rendered[0].props).toMatchObject({
+            insight: { insight },
+            settings,
+            colorPalette,
+            execConfig,
+            locale: "en-US",
+            config: {
+                separators,
+                enableChartSorting: true,
+                enableReversedStacking: true,
+                enableSeparateTotalLabels: true,
+                enableAccessibleTooltip: true,
+                cooperativeGestures: true,
+                tooltip: { className: "gd-gen-ai-chat__vis_tooltip" },
+                legend: { responsive: "autoPositionWithPopup" },
+            },
+        });
+        expect(rendered[0].props).not.toHaveProperty("filters");
+        expect(rendered[0].props.onDrill).toEqual(expect.any(Function));
+        expect(rendered[0].props.onError).toEqual(expect.any(Function));
+        expect(rendered[0].props.onExportReady).toEqual(expect.any(Function));
     });
 
-    it("passes the workspace separators to the table shown by the chart-to-table toggle", () => {
-        renderVisualisation("local:bar", { isTable: true });
+    it("maps forecast and anomaly detection controls for line insights", () => {
+        renderVisualisation(
+            "local:line",
+            {},
+            {
+                properties: {
+                    controls: {
+                        forecast: { period: 5, confidence: 0.8, seasonal: true },
+                        anomalyDetection: { sensitivity: "high", color: "#123456", size: "medium" },
+                    },
+                },
+            },
+        );
 
-        expect(rendered).toEqual([{ component: "PivotTableNext", separators }]);
+        expect(rendered[0].props.config).toMatchObject({
+            forecast: { enabled: true, period: 5, confidence: 0.8, seasonal: true },
+            anomalies: {
+                enabled: true,
+                sensitivity: "high",
+                color: { type: "rgb", value: { r: 18, g: 52, b: 86 } },
+                size: "medium",
+            },
+        });
     });
 
     it("notifies when a visualization renders successfully", () => {
         const onVisualisationSuccess = vi.fn();
         renderVisualisation("local:bar", { onVisualisationSuccess });
 
-        act(() => lastProps.get("BarChart")?.onExportReady?.());
+        act(() => rendered[0].props.onExportReady?.());
 
         expect(onVisualisationSuccess).toHaveBeenCalledTimes(1);
     });
 
-    it("passes the workspace separators to the legacy pivot table", () => {
-        renderVisualisation("local:table", { enableNewPivotTable: false });
+    it("accepts a successful repeater render after an earlier insight failed", () => {
+        const onVisualisationSuccess = vi.fn();
+        const { rerender } = renderVisualisation("local:repeater", { onVisualisationSuccess });
 
-        expect(rendered).toEqual([{ component: "PivotTable", separators }]);
-    });
-
-    it.each([
-        ["local:area", "AreaChart"],
-        ["local:bar", "BarChart"],
-        ["local:bubble", "BubbleChart"],
-        ["local:bullet", "BulletChart"],
-        ["local:column", "ColumnChart"],
-        ["local:combo2", "ComboChart"],
-        ["local:line", "LineChart"],
-        ["local:pie", "PieChart"],
-        ["local:donut", "DonutChart"],
-        ["local:pyramid", "PyramidChart"],
-        ["local:funnel", "FunnelChart"],
-        ["local:radar", "RadarChart"],
-        ["local:repeater", "Repeater"],
-        ["local:treemap", "Treemap"],
-        ["local:sankey", "SankeyChart"],
-        ["local:dependencywheel", "DependencyWheelChart"],
-        ["local:scatter", "ScatterPlot"],
-        ["local:headline", "Headline"],
-        ["local:waterfall", "WaterfallChart"],
-        ["local:heatmap", "Heatmap"],
-    ])("applies default chart options to %s", (visualizationUrl, component) => {
-        renderVisualisation(visualizationUrl);
-
-        expect(lastProps.get(component)?.config).toMatchObject({
-            enableChartSorting: true,
-            enableReversedStacking: true,
-            enableSeparateTotalLabels: true,
-        });
-    });
-
-    it.each([
-        ["local:pie", "PieChart"],
-        ["local:donut", "DonutChart"],
-        ["local:pyramid", "PyramidChart"],
-        ["local:funnel", "FunnelChart"],
-    ])("lets the legend of %s collapse into a popup in the narrow chat panel", (url, component) => {
-        renderVisualisation(url);
-
-        expect(lastProps.get(component)?.config?.legend).toEqual({
-            responsive: "autoPositionWithPopup",
-        });
-    });
-
-    it("leaves the area stacking to the chart when the insight does not configure it", () => {
-        renderVisualisation("local:area");
-
-        expect(lastProps.get("AreaChart")?.config).toMatchObject({
-            stackMeasures: undefined,
-            stackMeasuresToPercent: undefined,
-        });
-    });
-
-    it("carries over the area stacking the insight configures", () => {
-        renderVisualisation(
-            "local:area",
-            {},
-            { properties: { controls: { stackMeasures: true, stackMeasuresToPercent: true } } },
+        act(() => rendered[0].props.onError?.(new NoDataSdkError()));
+        rerender(
+            visualisationElement(
+                "local:repeater",
+                { onVisualisationSuccess },
+                { identifier: "vis-2", uri: "/vis-2", ref: idRef("vis-2") },
+            ),
         );
+        act(() => rendered[1].props.onLoadingChanged?.({ isLoading: false }));
 
-        expect(lastProps.get("AreaChart")?.config).toMatchObject({
-            stackMeasures: true,
-            stackMeasuresToPercent: true,
-        });
+        expect(onVisualisationSuccess).toHaveBeenCalledTimes(1);
     });
 
-    it("renders a stacked bar with only the first measure", () => {
-        const viewAttribute = newAttribute("category");
-        const stackAttribute = newAttribute("region");
+    it("maps clustering controls only for scatter insights", () => {
+        const controls = { clustering: { numberOfClusters: 5, threshold: 0.1 } };
 
-        renderVisualisation(
-            "local:bar",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
-                    newBucket("view", viewAttribute),
-                    newBucket("stack", stackAttribute),
-                ],
+        renderVisualisation("local:scatter", {}, { properties: { controls } });
+        renderVisualisation("local:bar", {}, { properties: { controls } });
+
+        expect(rendered[0].props.config).toMatchObject({
+            clustering: { enabled: true, numberOfClusters: 5, threshold: 0.1 },
+        });
+        expect(rendered[1].props.config).not.toHaveProperty("clustering");
+    });
+
+    it("uses the custom KPI theme for generic rendering", () => {
+        renderVisualisation("local:headline");
+
+        expect(scopedThemes).toHaveLength(1);
+        expect(scopedThemes[0]).toMatchObject({
+            kpi: {
+                primaryMeasureColor: "#123456",
+                secondaryInfoColor: "#123456",
             },
-        );
-
-        expect(lastProps.get("BarChart")).toMatchObject({
-            measures: [newMeasure("m1")],
-            viewBy: [viewAttribute],
-            stackBy: stackAttribute,
         });
+        expect(rendered[0].props).not.toHaveProperty("theme");
     });
 
-    it("renders an unstacked bar with all measures", () => {
-        const viewAttribute = newAttribute("category");
+    it("renders the table toggle as a converted insight", () => {
+        renderVisualisation("local:bar", { isTable: true, settings, agGridToken: "token" });
 
-        renderVisualisation(
-            "local:bar",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
-                    newBucket("view", viewAttribute),
-                ],
-            },
-        );
-
-        expect(lastProps.get("BarChart")).toMatchObject({
-            measures: [newMeasure("m1"), newMeasure("m2")],
-            viewBy: [viewAttribute],
-            stackBy: undefined,
-        });
-    });
-
-    it("renders a bar sliced by both attributes of its view bucket", () => {
-        const firstView = newAttribute("region");
-        const secondView = newAttribute("category");
-        const sorts = [newAttributeSort(secondView, "asc")];
-
-        renderVisualisation(
-            "local:bar",
-            {},
-            {
-                buckets: [newBucket("measures", newMeasure("m1")), newBucket("view", firstView, secondView)],
-                sorts,
-            },
-        );
-
-        expect(lastProps.get("BarChart")).toMatchObject({
-            viewBy: [firstView, secondView],
-            sortBy: sorts,
-        });
-    });
-
-    it.each([
-        ["local:bar", "BarChart"],
-        ["local:column", "ColumnChart"],
-    ])("drops the %s sorts on the measures a stacked chart leaves out", (url, component) => {
-        const viewAttribute = newAttribute("category");
-        const keptSort = newAttributeSort(viewAttribute, "asc");
-
-        renderVisualisation(
-            url,
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
-                    newBucket("view", viewAttribute),
-                    newBucket("stack", newAttribute("region")),
-                ],
-                sorts: [keptSort, newMeasureSort(newMeasure("m2"), "desc")],
-            },
-        );
-
-        expect(lastProps.get(component)?.sortBy).toEqual([keptSort]);
-    });
-
-    it("renders a stacked column with only the first measure", () => {
-        const stackAttribute = newAttribute("region");
-
-        renderVisualisation(
-            "local:column",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
-                    newBucket("view", newAttribute("category")),
-                    newBucket("stack", stackAttribute),
-                ],
-            },
-        );
-
-        expect(lastProps.get("ColumnChart")).toMatchObject({
-            measures: [newMeasure("m1")],
-            stackBy: stackAttribute,
-        });
-    });
-
-    it("renders an unstacked column with all measures", () => {
-        renderVisualisation(
-            "local:column",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
-                    newBucket("view", newAttribute("category")),
-                ],
-            },
-        );
-
-        expect(lastProps.get("ColumnChart")).toMatchObject({
-            measures: [newMeasure("m1"), newMeasure("m2")],
-            stackBy: undefined,
-        });
-    });
-
-    // The local IDs deliberately differ from the catalog IDs: the chart matches axes by local ID.
-    const sales = newMeasure("net_sales", (m) => m.localId("m_sales"));
-    const orders = newMeasure("net_orders", (m) => m.localId("m_orders"));
-    const extra = newMeasure("net_extra", (m) => m.localId("m_extra"));
-
-    describe.each([
-        ["local:line", "LineChart", "secondary_yaxis", "trend"],
-        ["local:column", "ColumnChart", "secondary_yaxis", "view"],
-        ["local:bar", "BarChart", "secondary_xaxis", "view"],
-    ] as const)("secondary axis of %s", (url, component, axisKey, attributeBucket) => {
-        const otherAxisKey = axisKey === "secondary_xaxis" ? "secondary_yaxis" : "secondary_xaxis";
-
-        function renderWith(
-            properties: Record<string, unknown>,
-            measures = [sales, orders],
-            props: { execConfig?: IExecutionConfig } = {},
-        ) {
-            renderVisualisation(url, props, {
-                buckets: [
-                    newBucket("measures", ...measures),
-                    newBucket(attributeBucket, newAttribute("date.month")),
-                ],
-                properties,
-            });
-            return lastProps.get(component);
-        }
-
-        it("forwards the saved membership without the stored axis styling or input changes", () => {
-            const controls = {
-                [axisKey]: { measures: ["m_orders"], min: "0", name: { position: "left" } },
-            };
-            const before = structuredClone(controls);
-
-            const props = renderWith({ controls });
-
-            expect(props?.config?.[axisKey]).toEqual({ measures: ["m_orders"] });
-            expect(props?.config).not.toHaveProperty(otherAxisKey);
-            expect(props?.measures).toEqual([sales, orders]);
-            expect(props?.secondaryMeasures).toBeUndefined();
-            expect(controls).toEqual(before);
-        });
-
-        it.each([
-            [
-                "only displayed local IDs, once each",
-                [null, 1, "net_orders", "metric/net_orders", "m_order", "removed", "m_orders", "m_orders"],
-                [sales, orders],
-                ["m_orders"],
-            ],
-            [
-                "every marked metric in display order",
-                ["m_extra", "m_orders"],
-                [sales, orders, extra],
-                ["m_orders", "m_extra"],
-            ],
-            [
-                "every metric when all are secondary",
-                ["m_sales", "m_orders"],
-                [sales, orders],
-                ["m_sales", "m_orders"],
-            ],
-        ])("keeps %s", (_, membership, measures, expected) => {
-            const props = renderWith({ controls: { [axisKey]: { measures: membership } } }, measures);
-
-            expect(props?.config?.[axisKey]).toEqual({ measures: expected });
-            expect(props?.measures).toEqual(measures);
-        });
-
-        it.each([
-            ["no controls", {}],
-            ["null controls", { controls: null }],
-            ["no axis", { controls: {} }],
-            ["a null axis", { controls: { [axisKey]: null } }],
-            ["an axis without measures", { controls: { [axisKey]: {} } }],
-            ["null measures", { controls: { [axisKey]: { measures: null } } }],
-            ["empty measures", { controls: { [axisKey]: { measures: [] } } }],
-            ["string measures", { controls: { [axisKey]: { measures: "m_orders" } } }],
-            ["object measures", { controls: { [axisKey]: { measures: {} } } }],
-            ["number measures", { controls: { [axisKey]: { measures: 1 } } }],
-            ["boolean measures", { controls: { [axisKey]: { measures: true } } }],
-            ["only stale IDs", { controls: { [axisKey]: { measures: ["removed", "metric/net_orders"] } } }],
-            [
-                "membership saved on the other axis",
-                { controls: { [otherAxisKey]: { measures: ["m_orders"] } } },
-            ],
-        ])("draws one axis for %s", (_, properties) => {
-            const props = renderWith(properties);
-
-            expect(props?.config).not.toHaveProperty(axisKey);
-            expect(props?.config).not.toHaveProperty(otherAxisKey);
-            expect(props?.measures).toEqual([sales, orders]);
-        });
-
-        it("passes the execution config through beside the axis", () => {
-            const execConfig: IExecutionConfig = { dataSamplingPercentage: 50 };
-
-            const props = renderWith({ controls: { [axisKey]: { measures: ["m_orders"] } } }, undefined, {
-                execConfig,
-            });
-
-            expect(props?.execConfig).toBe(execConfig);
-            expect(props?.config?.[axisKey]).toEqual({ measures: ["m_orders"] });
-        });
-
-        it("reads shared controls without changing them across renders", () => {
-            const controls = Object.freeze({
-                [axisKey]: Object.freeze({ measures: Object.freeze(["m_orders"]) }),
-            });
-
-            expect(renderWith({ controls })?.config?.[axisKey]).toEqual({ measures: ["m_orders"] });
-            expect(renderWith({ controls }, [sales])?.config).not.toHaveProperty(axisKey);
-            expect(controls).toEqual({ [axisKey]: { measures: ["m_orders"] } });
-        });
-    });
-
-    describe.each([
-        ["local:column", "ColumnChart", "secondary_yaxis"],
-        ["local:bar", "BarChart", "secondary_xaxis"],
-    ] as const)("secondary axis of a stacked %s", (url, component, axisKey) => {
-        const category = newAttribute("category");
-        const keptSort = newAttributeSort(category, "asc");
-
-        function renderStacked(membership: string[]) {
-            renderVisualisation(
-                url,
-                {},
-                {
-                    buckets: [
-                        newBucket("measures", sales, orders),
-                        newBucket("view", category),
-                        newBucket("stack", newAttribute("region")),
-                    ],
-                    sorts: [keptSort, newMeasureSort(orders, "desc")],
-                    properties: { controls: { [axisKey]: { measures: membership } } },
-                },
-            );
-            return lastProps.get(component);
-        }
-
-        it("drops the axis of a metric the stacked chart leaves out", () => {
-            const props = renderStacked(["m_orders"]);
-
-            expect(props?.measures).toEqual([sales]);
-            expect(props?.sortBy).toEqual([keptSort]);
-            expect(props?.config).not.toHaveProperty(axisKey);
-        });
-
-        it("keeps the axis of the metric the stacked chart shows", () => {
-            const props = renderStacked(["m_sales", "m_orders"]);
-
-            expect(props?.measures).toEqual([sales]);
-            expect(props?.config?.[axisKey]).toEqual({ measures: ["m_sales"] });
-        });
-    });
-
-    it("maps the radar trend bucket to trendBy and the segment bucket to segmentBy", () => {
-        const trendAttribute = newAttribute("category");
-        const segmentAttribute = newAttribute("campaign");
-
-        renderVisualisation(
-            "local:radar",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1")),
-                    newBucket("trend", trendAttribute),
-                    newBucket("segment", segmentAttribute),
-                ],
-            },
-        );
-
-        expect(lastProps.get("RadarChart")).toMatchObject({
-            measures: [newMeasure("m1")],
-            trendBy: trendAttribute,
-            segmentBy: segmentAttribute,
-        });
-    });
-
-    it("renders a radar of several measures with neither trend nor segment", () => {
-        renderVisualisation(
-            "local:radar",
-            {},
-            { buckets: [newBucket("measures", newMeasure("m1"), newMeasure("m2"))] },
-        );
-
-        expect(lastProps.get("RadarChart")).toMatchObject({
-            measures: [newMeasure("m1"), newMeasure("m2")],
-            trendBy: undefined,
-            segmentBy: undefined,
-        });
-    });
-
-    it("maps the treemap buckets and leaves its sorting to the chart", () => {
-        const viewAttribute = newAttribute("category");
-        const segmentAttribute = newAttribute("campaign");
-
-        renderVisualisation(
-            "local:treemap",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1")),
-                    newBucket("view", viewAttribute),
-                    newBucket("segment", segmentAttribute),
-                ],
-                sorts: [newAttributeSort(viewAttribute, "desc")],
-            },
-        );
-
-        expect(lastProps.get("Treemap")).toMatchObject({
-            measures: [newMeasure("m1")],
-            viewBy: viewAttribute,
-            segmentBy: segmentAttribute,
-        });
-        expect(lastProps.get("Treemap")).not.toHaveProperty("sortBy");
-    });
-
-    it("omits the treemap viewBy when the insight carries several measures", () => {
-        renderVisualisation(
-            "local:treemap",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1"), newMeasure("m2")),
-                    newBucket("view", newAttribute("category")),
-                ],
-            },
-        );
-
-        expect(lastProps.get("Treemap")).toMatchObject({
-            measures: [newMeasure("m1"), newMeasure("m2")],
-            viewBy: undefined,
-        });
-    });
-
-    it("renders a treemap of several measures with no attribute bucket", () => {
-        renderVisualisation(
-            "local:treemap",
-            {},
-            { buckets: [newBucket("measures", newMeasure("m1"), newMeasure("m2"))] },
-        );
-
-        expect(lastProps.get("Treemap")).toMatchObject({
-            measures: [newMeasure("m1"), newMeasure("m2")],
-            viewBy: undefined,
-            segmentBy: undefined,
-        });
-    });
-
-    it("spreads the bubble measure buckets across its axes and bubble size", () => {
-        const viewAttribute = newAttribute("channel");
-
-        renderVisualisation(
-            "local:bubble",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1")),
-                    newBucket("secondary_measures", newMeasure("m2")),
-                    newBucket("tertiary_measures", newMeasure("m3")),
-                    newBucket("view", viewAttribute),
-                ],
-            },
-        );
-
-        expect(lastProps.get("BubbleChart")).toMatchObject({
-            xAxisMeasure: newMeasure("m1"),
-            yAxisMeasure: newMeasure("m2"),
-            size: newMeasure("m3"),
-            viewBy: viewAttribute,
-        });
-    });
-
-    it("renders a bubble whose insight only sizes the bubbles", () => {
-        renderVisualisation(
-            "local:bubble",
-            {},
-            { buckets: [newBucket("tertiary_measures", newMeasure("m3"))] },
-        );
-
-        expect(lastProps.get("BubbleChart")).toMatchObject({
-            xAxisMeasure: undefined,
-            yAxisMeasure: undefined,
-            size: newMeasure("m3"),
-        });
-    });
-
-    it("maps the bullet measure buckets to its primary, target and comparative measures", () => {
-        const firstView = newAttribute("product");
-        const secondView = newAttribute("region");
-
-        renderVisualisation(
-            "local:bullet",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1")),
-                    newBucket("secondary_measures", newMeasure("m2")),
-                    newBucket("tertiary_measures", newMeasure("m3")),
-                    newBucket("view", firstView, secondView),
-                ],
-            },
-        );
-
-        expect(lastProps.get("BulletChart")).toMatchObject({
-            primaryMeasure: newMeasure("m1"),
-            targetMeasure: newMeasure("m2"),
-            comparativeMeasure: newMeasure("m3"),
-            viewBy: [firstView, secondView],
-        });
-    });
-
-    it("splits the combo measures between its two axes", () => {
-        const viewAttribute = newAttribute("category");
-
-        renderVisualisation(
-            "local:combo2",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1")),
-                    newBucket("secondary_measures", newMeasure("m2")),
-                    newBucket("view", viewAttribute),
-                ],
-            },
-        );
-
-        expect(lastProps.get("ComboChart")).toMatchObject({
-            primaryMeasures: [newMeasure("m1")],
-            secondaryMeasures: [newMeasure("m2")],
-            viewBy: viewAttribute,
-        });
-    });
-
-    it("leaves the combo axis types to the chart when the insight does not configure them", () => {
-        renderVisualisation("local:combo2");
-
-        expect(lastProps.get("ComboChart")?.config).toMatchObject({
-            dualAxis: undefined,
-            primaryChartType: undefined,
-            secondaryChartType: undefined,
-        });
-    });
-
-    it("carries over the combo axis types the insight configures", () => {
-        renderVisualisation(
-            "local:combo2",
-            {},
-            {
-                properties: {
-                    controls: {
-                        dualAxis: false,
-                        primaryChartType: "area",
-                        secondaryChartType: "column",
+        expect(rendered).toHaveLength(1);
+        expect(rendered[0]).toMatchObject({
+            component: "InsightRenderer",
+            props: {
+                insight: {
+                    insight: {
+                        visualizationUrl: "local:table",
                     },
                 },
+                settings,
+                config: { agGridToken: "token", separators },
             },
-        );
-
-        expect(lastProps.get("ComboChart")?.config).toMatchObject({
-            dualAxis: false,
-            primaryChartType: "area",
-            secondaryChartType: "column",
         });
     });
 
-    it.each([
-        ["local:sankey", "SankeyChart"],
-        ["local:dependencywheel", "DependencyWheelChart"],
-    ])("maps the %s endpoint buckets to attributeFrom and attributeTo", (url, component) => {
-        const fromAttribute = newAttribute("campaign");
-        const toAttribute = newAttribute("state");
+    it.each([false, true])("renders the no-data error for chart and table mode", (isTable) => {
+        renderVisualisation("local:bar", { isTable });
 
-        renderVisualisation(
-            url,
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1")),
-                    newBucket("attribute_from", fromAttribute),
-                    newBucket("attribute_to", toAttribute),
-                ],
-            },
-        );
+        act(() => rendered[0].props.onError?.(new NoDataSdkError()));
 
-        expect(lastProps.get(component)).toMatchObject({
-            measure: newMeasure("m1"),
-            attributeFrom: fromAttribute,
-            attributeTo: toAttribute,
-        });
+        expect(screen.getByText("No data")).toBeInTheDocument();
+        expect(screen.getByText("No data for your filter selection.")).toBeInTheDocument();
     });
 
-    it("renders a sankey whose insight carries only the target endpoint", () => {
-        const toAttribute = newAttribute("state");
+    it("renders the generic error for a chart that cannot be displayed", () => {
+        renderVisualisation("local:pie");
 
-        renderVisualisation(
-            "local:sankey",
-            {},
-            {
-                buckets: [newBucket("measures", newMeasure("m1")), newBucket("attribute_to", toAttribute)],
-            },
-        );
+        act(() => rendered[0].props.onError?.(new NegativeValuesSdkError()));
 
-        expect(lastProps.get("SankeyChart")).toMatchObject({
-            measure: newMeasure("m1"),
-            attributeFrom: undefined,
-            attributeTo: toAttribute,
-        });
-    });
-
-    it("renders a waterfall broken down by an attribute and carries over its total config", () => {
-        const viewAttribute = newAttribute("category");
-
-        renderVisualisation(
-            "local:waterfall",
-            {},
-            {
-                buckets: [newBucket("measures", newMeasure("m1")), newBucket("view", viewAttribute)],
-                properties: { controls: { total: { name: "Total" } } },
-            },
-        );
-
-        expect(lastProps.get("WaterfallChart")).toMatchObject({
-            measures: [newMeasure("m1")],
-            viewBy: viewAttribute,
-            config: { total: { name: "Total" } },
-        });
-    });
-
-    it("maps the heatmap view bucket to rows and the stack bucket to columns", () => {
-        const rowAttribute = newAttribute("type");
-        const columnAttribute = newAttribute("campaign");
-
-        renderVisualisation(
-            "local:heatmap",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1")),
-                    newBucket("view", rowAttribute),
-                    newBucket("stack", columnAttribute),
-                ],
-            },
-        );
-
-        expect(lastProps.get("Heatmap")).toMatchObject({
-            measure: newMeasure("m1"),
-            rows: rowAttribute,
-            columns: columnAttribute,
-        });
-    });
-
-    it("renders a waterfall of several measures with no viewBy", () => {
-        renderVisualisation(
-            "local:waterfall",
-            {},
-            { buckets: [newBucket("measures", newMeasure("m1"), newMeasure("m2"))] },
-        );
-
-        expect(lastProps.get("WaterfallChart")).toMatchObject({
-            measures: [newMeasure("m1"), newMeasure("m2")],
-            viewBy: undefined,
-        });
-    });
-
-    it("keeps both the attributes and the measures of the repeater columns bucket", () => {
-        const rowAttribute = newAttribute("campaign_name");
-        const columnAttribute = newAttribute("campaign_name_cloned");
-        const viewAttribute = newAttribute("type");
-
-        renderVisualisation(
-            "local:repeater",
-            {},
-            {
-                buckets: [
-                    newBucket("attribute", rowAttribute),
-                    newBucket("columns", columnAttribute, newMeasure("m1")),
-                    newBucket("view", viewAttribute),
-                ],
-            },
-        );
-
-        expect(lastProps.get("Repeater")).toMatchObject({
-            attribute: rowAttribute,
-            columns: [columnAttribute, newMeasure("m1")],
-            viewBy: viewAttribute,
-        });
-    });
-
-    it("passes the inline visualizations of the repeater to the chart", () => {
-        const inlineVisualizations = { m1: { type: "line" } };
-
-        renderVisualisation(
-            "local:repeater",
-            {},
-            {
-                buckets: [newBucket("attribute", newAttribute("campaign_name"))],
-                properties: { inlineVisualizations },
-            },
-        );
-
-        expect(lastProps.get("Repeater")?.config?.inlineVisualizations).toEqual(inlineVisualizations);
-    });
-
-    const pushpinInsight = {
-        buckets: [
-            newBucket(
-                "location",
-                newAttribute("customer_city_latitude", (a) => a.localId("loc")),
-            ),
-            newBucket("size", newMeasure("m1")),
-            newBucket("color", newMeasure("m2")),
-            newBucket("segment", newAttribute("order_id")),
-        ],
-        properties: {
-            controls: { latitude: "customer_city_latitude", longitude: "customer_city_longitude" },
-        },
-    };
-
-    it("rebuilds the pushpin latitude and longitude from the location bucket and the controls", () => {
-        renderVisualisation("local:pushpin", {}, pushpinInsight);
-
-        const latitude = lastProps.get("GeoPushpinChart")?.latitude as IAttribute;
-        const longitude = lastProps.get("GeoPushpinChart")?.longitude as IAttribute;
-
-        expect(attributeDisplayFormRef(latitude)).toEqual(idRef("customer_city_latitude", "displayForm"));
-        expect(attributeLocalId(latitude)).toBe("loc");
-        expect(attributeDisplayFormRef(longitude)).toEqual(idRef("customer_city_longitude", "displayForm"));
-        expect(attributeLocalId(longitude)).toBe("longitude_df");
-    });
-
-    it("maps the remaining pushpin buckets to size, color and segment", () => {
-        renderVisualisation("local:pushpin", {}, pushpinInsight);
-
-        expect(lastProps.get("GeoPushpinChart")).toMatchObject({
-            size: newMeasure("m1"),
-            color: newMeasure("m2"),
-            segmentBy: newAttribute("order_id"),
-        });
-    });
-
-    it("renders a pushpin whose size bucket the insight leaves empty", () => {
-        renderVisualisation(
-            "local:pushpin",
-            {},
-            {
-                ...pushpinInsight,
-                buckets: pushpinInsight.buckets.filter((b) => b.localIdentifier !== "size"),
-            },
-        );
-
-        expect(lastProps.get("GeoPushpinChart")).toMatchObject({
-            size: undefined,
-            color: newMeasure("m2"),
-        });
-    });
-
-    it("renders no pushpin when the dataset carries only one of the two geo labels", () => {
-        renderVisualisation(
-            "local:pushpin",
-            {},
-            { ...pushpinInsight, properties: { controls: { latitude: "", longitude: "" } } },
-        );
-
-        expect(rendered).toEqual([]);
-    });
-
-    it("renders a choropleth from the area bucket", () => {
-        renderVisualisation(
-            "local:choropleth",
-            {},
-            {
-                buckets: [
-                    newBucket(
-                        "area",
-                        newAttribute("customer_country", (a) => a.localId("country")),
-                    ),
-                    newBucket("color", newMeasure("m1")),
-                ],
-            },
-        );
-
-        expect(rendered).toEqual([{ component: "GeoAreaChart", separators }]);
-        expect(attributeLocalId(lastProps.get("GeoAreaChart")?.area as IAttribute)).toBe("country");
-    });
-
-    it("leaves the measures of the columns bucket out of the table columns", () => {
-        const columnAttribute = newAttribute("region");
-
-        renderVisualisation(
-            "local:table",
-            {},
-            {
-                buckets: [
-                    newBucket("measures", newMeasure("m1")),
-                    newBucket("columns", columnAttribute, newMeasure("m2")),
-                ],
-            },
-        );
-
-        expect(lastProps.get("PivotTableNext")).toMatchObject({
-            measures: [newMeasure("m1")],
-            columns: [columnAttribute],
-        });
-    });
-
-    it("shows the repeater as a table of its row attribute and measures", () => {
-        const rowAttribute = newAttribute("product");
-        const viewAttribute = newAttribute("closed_month");
-
-        renderVisualisation(
-            "local:repeater",
-            { isTable: true },
-            {
-                buckets: [
-                    newBucket("attribute", rowAttribute),
-                    newBucket(
-                        "columns",
-                        newAttribute("product", (a) => a.localId("product_cloned")),
-                        newMeasure("m1"),
-                    ),
-                    newBucket("view", viewAttribute),
-                ],
-            },
-        );
-
-        expect(lastProps.get("PivotTableNext")).toMatchObject({
-            measures: [newMeasure("m1")],
-            rows: [rowAttribute, viewAttribute],
-            columns: [],
-        });
+        expect(screen.getByText("Sorry, we can't display this visualization")).toBeInTheDocument();
+        expect(screen.getByText("Contact your administrator.")).toBeInTheDocument();
     });
 });

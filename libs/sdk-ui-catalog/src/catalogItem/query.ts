@@ -1,10 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type {
-    IAnalyticalBackend,
-    IPagedResource,
-    IPublisherDocumentsQueryResultV2,
-} from "@gooddata/sdk-backend-spi";
+import type { IAnalyticalBackend, IPublisherDocumentsQueryResultV2 } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeDisplayFormMetadataObject,
     type IMeasureMetadataObject,
@@ -14,8 +10,6 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 import { NotFoundSdkError } from "@gooddata/sdk-ui";
-
-import { getDocumentOwner, scopeDocumentFilter } from "../document/scope.js";
 
 import { convertDocumentToCatalogItem } from "./converter.js";
 import type {
@@ -194,30 +188,23 @@ export function getParametersQuery({
 }
 
 /**
- * The documents the user sees, as Reports shows them; see `getDocumentOwner`.
+ * The documents that match the filters. The backend returns only the documents the user may see.
  */
-export function queryDocuments(
-    {
-        backend,
-        workspace,
-        search,
-        origin,
-        id,
-        excludeId,
-        createdBy,
-        excludeCreatedBy,
-        tags,
-        excludeTags,
-        isHidden,
-        certification,
-        pageSize = PAGE_SIZE,
-    }: ICatalogItemQueryOptions,
-    owner: string | undefined,
-): Promise<IPublisherDocumentsQueryResultV2> {
-    const scoped = scopeDocumentFilter({ origin, createdBy, excludeCreatedBy }, owner);
-    if (!scoped) {
-        return Promise.resolve(emptyPage(pageSize));
-    }
+export function queryDocuments({
+    backend,
+    workspace,
+    search,
+    origin,
+    id,
+    excludeId,
+    createdBy,
+    excludeCreatedBy,
+    tags,
+    excludeTags,
+    isHidden,
+    certification,
+    pageSize = PAGE_SIZE,
+}: ICatalogItemQueryOptions): Promise<IPublisherDocumentsQueryResultV2> {
     return backend
         .workspace(workspace)
         .publisherV2()
@@ -225,15 +212,15 @@ export function queryDocuments(
         .withPage(0)
         .withSize(pageSize)
         .withSorting(["title,asc"])
-        .withOrigin(scoped.origin)
+        .withOrigin(origin)
         .withFilter({
             search,
             id,
             excludeId,
             tags,
             excludeTags,
-            createdBy: scoped.createdBy,
-            excludeCreatedBy: scoped.excludeCreatedBy,
+            createdBy,
+            excludeCreatedBy,
             isHidden,
             certification,
         })
@@ -242,42 +229,20 @@ export function queryDocuments(
 }
 
 /**
- * One document the user sees, as {@link queryDocuments} lists it. Loads the user's permissions itself, so
- * the detail can open before the catalog has them.
+ * One document the user sees, as {@link queryDocuments} lists it.
  */
 export async function getDocumentCatalogItem(
     backend: IAnalyticalBackend,
     workspace: string,
     id: string,
 ): Promise<ICatalogItem> {
-    const [user, permissions] = await Promise.all([
-        backend.currentUser().getUser(),
-        backend.workspace(workspace).permissions().getPermissionsForCurrentUser(),
-    ]);
     const {
         items: [document],
-    } = await queryDocuments(
-        { backend, workspace, origin: "ALL", id: [id], pageSize: 1 },
-        getDocumentOwner(user, permissions),
-    );
+    } = await queryDocuments({ backend, workspace, origin: "ALL", id: [id], pageSize: 1 });
     if (!document) {
         throw new NotFoundSdkError(`Document ${id} not found`);
     }
     return convertDocumentToCatalogItem(document);
-}
-
-function emptyPage<T>(limit: number): IPagedResource<T> {
-    const page: IPagedResource<T> = {
-        items: [],
-        limit,
-        offset: 0,
-        totalCount: 0,
-        next: () => Promise.resolve(page),
-        goTo: () => Promise.resolve(page),
-        all: () => Promise.resolve([]),
-        allSorted: () => Promise.resolve([]),
-    };
-    return page;
 }
 
 export function getComputedAttributesQuery({

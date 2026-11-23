@@ -75,7 +75,7 @@ import { HiddenDashboardDateFilter } from "../dateFilter/HiddenDashboardDateFilt
 import { type IDashboardDateFilterConfig } from "../dateFilter/types.js";
 import { AddFilterMenu } from "../parameterFilter/AddFilterMenu.js";
 import { DashboardParameterFilter } from "../parameterFilter/DashboardParameterFilter.js";
-import { areAllFiltersHidden } from "../utils.js";
+import { areAllFiltersHidden, isUnsupportedDateFilterChange } from "../utils.js";
 
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
 import { DefaultFilterBarItem } from "./DefaultFilterBarItem.js";
@@ -241,6 +241,13 @@ export const useFilterBarProps = (): IFilterBarProps => {
             dateFilterOptionLocalId?: string,
             isWorkingSelectionChange?: boolean,
         ) => {
+            if (isUnsupportedDateFilterChange(filter)) {
+                console.warn(
+                    "The filter bar ignores a date filter that is not a dashboard date filter.",
+                    filter,
+                );
+                return;
+            }
             if (!filter) {
                 dispatch(
                     clearDateFilterSelection(

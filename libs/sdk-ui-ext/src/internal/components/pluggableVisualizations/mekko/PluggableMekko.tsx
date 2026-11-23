@@ -6,12 +6,10 @@ import {
     type ISortItem,
     bucketIsEmpty,
     insightBucket,
-    insightSorts,
     isMeasureSort,
     newAttributeSort,
 } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { type IChartConfig } from "@gooddata/sdk-ui-charts";
 import { _cloneDeep, _isEmpty, _set } from "@gooddata/util";
 
 import { BUCKETS } from "../../../constants/bucket.js";
@@ -23,7 +21,6 @@ import {
     type IReferencePoint,
     type IVisConstruct,
     type IVisProps,
-    type IVisualizationProperties,
 } from "../../../interfaces/Visualization.js";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 import {
@@ -103,24 +100,11 @@ export class PluggableMekko extends PluggableBaseChart {
         if (!isStacked) {
             return execution;
         }
-        // the stacked execution cannot express a measure sort of the columns — it applies
-        // client-side via config.sortBy (sortMekkoColumnsByMeasure in sdk-ui-charts)
+        // insights saved while stacked Mekko offered measure sorts still carry one the execution cannot express
         const executionSorts = execution.definition.sortBy.filter((sort) => !isMeasureSort(sort));
         return executionSorts.length === execution.definition.sortBy.length
             ? execution
             : execution.withSorting(...executionSorts);
-    }
-
-    // config.sortBy feeds the client-side column ordering (measure sorts stay out of the execution)
-    protected override buildVisualizationConfig(
-        options: IVisProps,
-        supportedControls?: IVisualizationProperties,
-    ): IChartConfig {
-        const sortBy = insightSorts(this.currentInsight) ?? [];
-        return {
-            ...super.buildVisualizationConfig(options, supportedControls),
-            ...(sortBy.length ? { sortBy } : {}),
-        };
     }
 
     public override getExtendedReferencePoint(
@@ -156,8 +140,7 @@ export class PluggableMekko extends PluggableBaseChart {
         const { buckets, properties, availableSorts: previousAvailableSorts } = referencePoint;
 
         const viewBy = getBucketItems(buckets, BucketNames.VIEW);
-        const stackBy = getBucketItems(buckets, BucketNames.STACK);
-        // Both metric buckets can drive a measure sort of the columns.
+        const isStacked = !_isEmpty(getBucketItems(buckets, BucketNames.STACK));
         const measures = [
             ...getBucketItems(buckets, BucketNames.MEASURES),
             ...getBucketItems(buckets, BucketNames.SECONDARY_MEASURES),
@@ -176,11 +159,11 @@ export class PluggableMekko extends PluggableBaseChart {
             : [
                   newAvailableSortsGroup(
                       viewBy[0].localIdentifier,
-                      // when stacked these apply client-side — see getExecution above
-                      measures.map((m) => m.localIdentifier),
+                      // the stacked execution cannot sort its columns by a single measure
+                      isStacked ? [] : measures.map((m) => m.localIdentifier),
                       true,
-                      // area sort (by the stacked total) only makes sense with stacked segments
-                      !_isEmpty(stackBy),
+                      // the stacked total adds up every measure, so it orders by one only when there is one
+                      isStacked && measures.length === 1,
                   ),
               ];
 

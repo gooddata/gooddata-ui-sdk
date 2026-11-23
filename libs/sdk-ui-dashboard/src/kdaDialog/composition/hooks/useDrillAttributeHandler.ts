@@ -6,6 +6,7 @@ import {
     type IResultAttributeHeader,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
     isAttributeDescriptor,
     isResultAttributeHeader,
 } from "@gooddata/sdk-model";
@@ -67,14 +68,23 @@ export function useDrillAttributeHandler() {
                 });
                 setState({
                     attributeFilters: newFilters,
+                    attributeFilterToFocus: {
+                        localIdentifier: dashboardAttributeFilterItemLocalIdentifier(found),
+                    },
                     ...clearSummaryValue(state.definition),
                 });
             } else {
+                const newFilter = createNewAttributeFilter(
+                    catalogAttribute,
+                    attribute.attributeHeader.ref,
+                    id,
+                    value,
+                );
                 setState({
-                    attributeFilters: [
-                        ...state.attributeFilters,
-                        createNewAttributeFilter(catalogAttribute, attribute.attributeHeader.ref, id, value),
-                    ],
+                    attributeFilters: [...state.attributeFilters, newFilter],
+                    attributeFilterToFocus: {
+                        localIdentifier: dashboardAttributeFilterItemLocalIdentifier(newFilter),
+                    },
                     ...clearSummaryValue(state.definition),
                 });
             }

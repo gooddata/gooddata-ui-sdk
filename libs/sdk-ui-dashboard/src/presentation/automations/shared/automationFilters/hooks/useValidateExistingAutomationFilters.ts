@@ -7,6 +7,7 @@ import {
     DashboardParameterModeValues,
     type FilterContextItem,
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IAutomationMetadataObject,
     type IAutomationVisibleFilter,
     type IDashboardExportParameter,
@@ -19,6 +20,8 @@ import {
     dashboardFilterLocalIdentifier,
     filterContextItemsToDashboardFiltersByWidget,
     filterLocalIdentifier,
+    isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isAllDashboardMeasureValueFilter,
     isAllValuesAttributeFilter,
     isAllValuesDashboardAttributeFilter,
@@ -26,7 +29,7 @@ import {
     isAttributeFilterWithSelection,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isInsightWidget,
     isLocalIdRef,
     isNegativeAttributeFilter,
@@ -57,10 +60,17 @@ import { areFiltersEqual, isFilterIgnoredByWidget, isFilterMatch } from "../util
 
 function sanitizeCommonDateFilter(filter: IDashboardFilter, commonDateFilterId?: string): IDashboardFilter {
     // Sanitize common date filters by removing date dataSet
-    if (isDateFilter(filter) && filterLocalIdentifier(filter) === commonDateFilterId) {
-        return isRelativeDateFilter(filter)
-            ? (_omit(filter, "relativeDateFilter.dataSet") as IRelativeDateFilter)
-            : (_omit(filter, "absoluteDateFilter.dataSet") as IAbsoluteDateFilter);
+    if (!isDateFilterOfAnyType(filter) || filterLocalIdentifier(filter) !== commonDateFilterId) {
+        return filter;
+    }
+    if (isRelativeDateFilter(filter)) {
+        return _omit(filter, "relativeDateFilter.dataSet") as IRelativeDateFilter;
+    }
+    if (isAbsoluteGranularityDateFilter(filter)) {
+        return _omit(filter, "absoluteGranularityDateFilter.dataSet") as IAbsoluteGranularityDateFilter;
+    }
+    if (isAbsoluteDateFilter(filter)) {
+        return _omit(filter, "absoluteDateFilter.dataSet") as IAbsoluteDateFilter;
     }
     return filter;
 }

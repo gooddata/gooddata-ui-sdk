@@ -131,6 +131,7 @@ import {
     convertFilterContextToBackend,
     convertFilterViewContextToBackend,
 } from "../../../convertors/toBackend/AnalyticalDashboardConverter.js";
+import { rejectAbsoluteGranularityDateFilters } from "../../../convertors/toBackend/ExportDefinitionsConverter.js";
 import { convertExportMetadata as convertToBackendExportMetadata } from "../../../convertors/toBackend/ExportMetadataConverter.js";
 import { cloneWithSanitizedIds } from "../../../convertors/toBackend/IdSanitization.js";
 import { type FiltersByTab, type TigerAuthenticatedCallGuard } from "../../../types/index.js";
@@ -869,6 +870,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         dashboardRef: ObjRef,
         options?: IDashboardExportTabularOptions,
     ): Promise<IExportResult> => {
+        rejectAbsoluteGranularityDateFilters(
+            options?.dashboardFiltersOverride,
+            options?.dashboardTabsFiltersOverrides,
+        );
         const dashboardId = objRefToIdentifier(dashboardRef, this.authCall);
 
         return this.authCall(async (client) => {

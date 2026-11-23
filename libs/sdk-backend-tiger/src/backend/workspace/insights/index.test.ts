@@ -73,19 +73,31 @@ describe("TigerWorkspaceInsights.getInsightReferencingObjects", () => {
         vi.clearAllMocks();
     });
 
-    it("splits the dependents graph into dashboards and documents", async () => {
+    it("splits the dependents graph into dashboards and documents with templates", async () => {
         const insightNode = { id: "insight", type: "visualizationObject", title: "Insight" };
         const dashboardNode = { id: "board", type: "analyticalDashboard", title: "Board" };
         const documentNode = { id: "pack", type: "document", title: "Q3 board pack" };
         const untitledDocumentNode = { id: "untitled-doc", type: "document" };
+        const documentTemplateNode = { id: "monthly", type: "documentTemplate", title: "Monthly review" };
+        const pageTemplateNode = { id: "kpi-page", type: "pageTemplate", title: "KPI page" };
         const metricNode = { id: "revenue", type: "metric", title: "Revenue" };
         vi.mocked(actions.ActionsApi_GetDependentEntitiesGraphFromEntryPoints).mockResolvedValue(
             graphResponse(
-                [insightNode, dashboardNode, documentNode, untitledDocumentNode, metricNode],
+                [
+                    insightNode,
+                    dashboardNode,
+                    documentNode,
+                    untitledDocumentNode,
+                    documentTemplateNode,
+                    pageTemplateNode,
+                    metricNode,
+                ],
                 [
                     [insightNode, dashboardNode],
                     [insightNode, documentNode],
                     [insightNode, untitledDocumentNode],
+                    [insightNode, documentTemplateNode],
+                    [insightNode, pageTemplateNode],
                 ],
             ),
         );
@@ -98,6 +110,8 @@ describe("TigerWorkspaceInsights.getInsightReferencingObjects", () => {
             documents: [
                 metadataObject("document", "pack", "Q3 board pack"),
                 metadataObject("document", "untitled-doc", "untitled-doc"),
+                metadataObject("documentTemplate", "monthly", "Monthly review"),
+                metadataObject("pageTemplate", "kpi-page", "KPI page"),
             ],
         });
         expect(actions.ActionsApi_GetDependentEntitiesGraphFromEntryPoints).toHaveBeenCalledWith(

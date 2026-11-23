@@ -5,6 +5,7 @@ import {
     type IListedDashboard,
     type IMetadataObject,
     type IWorkspacePermissions,
+    type ObjectType,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { _sortBy } from "@gooddata/util";
@@ -54,43 +55,27 @@ export const canSeeAllDocuments = (permissions: IWorkspacePermissions | null): b
     !permissions || permissions.canCreateDocument;
 
 /**
- * Whether Publisher shows the user a document. A user who may create documents sees all of them. Anyone
- * else sees only the ones they can still edit: their own, unless inherited from a parent workspace.
- * Unknown permissions show the document, as Publisher does.
+ * The ids of the documents the user may open. The backend returns only the documents the user may see.
  */
-export const isDocumentShown = (
-    document: Pick<IPublisherDocumentSummaryV2, "isLocked" | "createdBy">,
-    userLogin: string | undefined,
-    permissions: IWorkspacePermissions | null,
-): boolean => {
-    if (canSeeAllDocuments(permissions)) {
-        return true;
-    }
-    if (document.isLocked) {
-        return false;
-    }
-    if (permissions.canManageProject) {
-        return true;
-    }
-    return userLogin !== undefined && document.createdBy?.login === userLogin;
-};
+export const getAccessibleDocumentIds = (documents: IPublisherDocumentSummaryV2[]): string[] =>
+    documents.map((document) => objRefToString(document.ref));
 
-export const getAccessibleDocumentIds = (
-    documents: IPublisherDocumentSummaryV2[],
-    userLogin: string | undefined,
-    permissions: IWorkspacePermissions | null,
-): string[] =>
-    documents
-        .filter((document) => isDocumentShown(document, userLogin, permissions))
-        .map((document) => objRefToString(document.ref));
+const templateTypes: ObjectType[] = ["documentTemplate", "pageTemplate"];
 
+export const isDocument = ({ type }: { type: ObjectType }): boolean => type === "document";
+
+export const isTemplate = ({ type }: { type: ObjectType }): boolean => templateTypes.includes(type);
+
+/**
+ * Every user sees every template, so only documents can be hidden from the user.
+ */
 export const getInsightUsageInDocuments = (
     referencedDocuments: IMetadataObject[],
     accessibleDocumentIds: string[],
 ): IInsightUsageInDocuments => {
     const accessibleDocuments = referencedDocuments
-        .filter(({ id }) => accessibleDocumentIds.includes(id))
-        .map(({ id, title }) => ({ id, title }));
+        .filter((item) => isTemplate(item) || accessibleDocumentIds.includes(item.id))
+        .map(({ id, title, type }) => ({ id, title, type }));
     return {
         accessibleDocuments: _sortBy(accessibleDocuments, (item) => item.title.trim().toLowerCase()),
         inaccessibleDocumentsCount: referencedDocuments.length - accessibleDocuments.length,

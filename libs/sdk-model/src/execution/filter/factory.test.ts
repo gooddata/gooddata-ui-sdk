@@ -9,6 +9,7 @@ import { attributeLocalId } from "../attribute/index.js";
 
 import {
     newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
     newMeasureValueFilter,
     newMeasureValueFilterWithOptions,
     newNegativeAttributeFilter,
@@ -54,6 +55,46 @@ describe("filter factory", () => {
     describe("newAbsoluteDateFilter", () => {
         it("should generate correct filter", () => {
             expect(newAbsoluteDateFilter("foo", "2018-01-01", "2018-12-31", "testLocalId")).toMatchSnapshot();
+        });
+    });
+
+    describe("newAbsoluteGranularityDateFilter", () => {
+        it("should keep both edges", () => {
+            expect(newAbsoluteGranularityDateFilter("foo", "GDC.time.month", "2026-01", "2026-03")).toEqual({
+                absoluteGranularityDateFilter: {
+                    dataSet: idRef("foo"),
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                },
+            });
+        });
+
+        it("should keep only 'from' when 'to' is missing", () => {
+            expect(newAbsoluteGranularityDateFilter("foo", "GDC.time.month", "2026-01")).toEqual({
+                absoluteGranularityDateFilter: {
+                    dataSet: idRef("foo"),
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                },
+            });
+        });
+
+        it("should keep only 'to' when 'from' is missing", () => {
+            expect(newAbsoluteGranularityDateFilter("foo", "GDC.time.month", undefined, "2026-03")).toEqual({
+                absoluteGranularityDateFilter: {
+                    dataSet: idRef("foo"),
+                    granularity: "GDC.time.month",
+                    to: "2026-03",
+                },
+            });
+        });
+
+        it("should throw when both edges are missing", () => {
+            expect(() =>
+                // @ts-expect-error a call without both edges does not compile
+                newAbsoluteGranularityDateFilter("foo", "GDC.time.month", undefined, undefined),
+            ).toThrow();
         });
     });
 

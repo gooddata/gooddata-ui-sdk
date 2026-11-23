@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@gooddata/sdk-ui-all",
+      "comment": "sdk-ui-kit: Toolbar press, open and disabled destructive colours match the design library; new `bold` and `italic` icons and the `numberList` and `bulletList` icons.",
+      "type": "none"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all"
+}

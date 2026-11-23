@@ -7,9 +7,11 @@ import {
     type IInsightDefinition,
     type ISortItem,
     isMeasureLocator,
+    newAttributeAreaSort,
     newAttributeSort,
     newMeasureSort,
 } from "@gooddata/sdk-model";
+import { type ICoreChartProps } from "@gooddata/sdk-ui-charts";
 
 import { type IReferencePoint, type IVisConstruct } from "../../../interfaces/Visualization.js";
 import {
@@ -221,6 +223,18 @@ describe("PluggableMekko", () => {
     });
 
     describe("getSortConfig", () => {
+        const singleMetricStacked = referencePoint({
+            measures: [masterMeasureItems[0]],
+            view: [attributeItems[0]],
+            stack: [attributeItems[1]],
+        });
+        const bothMetricsStacked = referencePoint({
+            measures: [masterMeasureItems[0]],
+            secondaryMeasures: [masterMeasureItems[1]],
+            view: [attributeItems[0]],
+            stack: [attributeItems[1]],
+        });
+
         it("should be disabled without a viewBy attribute", async () => {
             const sortConfig = await createComponent().getSortConfig(
                 referencePoint({ measures: [masterMeasureItems[0]] }),
@@ -245,26 +259,12 @@ describe("PluggableMekko", () => {
             expect(sortConfig.availableSorts[0].metricSorts).toHaveLength(1);
         });
 
-        it("should enable area sort and keep measure sorts when a stackBy attribute is present", async () => {
-            const sortConfig = await createComponent().getSortConfig(
-                referencePoint({
-                    measures: [masterMeasureItems[0]],
-                    view: [attributeItems[0]],
-                    stack: [attributeItems[1]],
-                }),
-            );
-
-            expect(sortConfig.availableSorts[0].attributeSort!.areaSortEnabled).toBe(true);
-            expect(sortConfig.availableSorts[0].metricSorts).toHaveLength(1);
-        });
-
-        it("should offer a measure sort per metric bucket item when stacked", async () => {
+        it("should offer a measure sort per metric bucket item when there is no stackBy", async () => {
             const sortConfig = await createComponent().getSortConfig(
                 referencePoint({
                     measures: [masterMeasureItems[0]],
                     secondaryMeasures: [masterMeasureItems[1]],
                     view: [attributeItems[0]],
-                    stack: [attributeItems[1]],
                 }),
             );
 
@@ -275,6 +275,50 @@ describe("PluggableMekko", () => {
                 ),
             ).toEqual([masterMeasureItems[0].localIdentifier, masterMeasureItems[1].localIdentifier]);
         });
+
+        it("should offer the viewBy and area sorts but no measure sort when stacked with one metric", async () => {
+            const sortConfig = await createComponent().getSortConfig(singleMetricStacked);
+
+            expect(sortConfig.disabled).toBe(false);
+            expect(sortConfig.availableSorts[0].attributeSort).toEqual({
+                normalSortEnabled: true,
+                areaSortEnabled: true,
+            });
+            expect(sortConfig.availableSorts[0].metricSorts).toBeUndefined();
+        });
+
+        it("should offer only the viewBy sort when stacked with both metrics", async () => {
+            const sortConfig = await createComponent().getSortConfig(bothMetricsStacked);
+
+            expect(sortConfig.disabled).toBe(false);
+            expect(sortConfig.availableSorts[0].attributeSort).toEqual({
+                normalSortEnabled: true,
+                areaSortEnabled: false,
+            });
+            expect(sortConfig.availableSorts[0].metricSorts).toBeUndefined();
+        });
+
+        it("should turn a saved measure sort into the area sort when stacked with one metric", async () => {
+            const sortConfig = await createComponent().getSortConfig({
+                ...singleMetricStacked,
+                properties: { sortItems: [newMeasureSort(masterMeasureItems[0].localIdentifier, "desc")] },
+            });
+
+            expect(sortConfig.appliedSort).toEqual([
+                newAttributeAreaSort(attributeItems[0].localIdentifier, "desc"),
+            ]);
+        });
+
+        it("should turn a saved measure sort into the default sort when stacked with both metrics", async () => {
+            const sortConfig = await createComponent().getSortConfig({
+                ...bothMetricsStacked,
+                properties: { sortItems: [newMeasureSort(masterMeasureItems[1].localIdentifier, "desc")] },
+            });
+
+            expect(sortConfig.appliedSort).toEqual([
+                newAttributeSort(attributeItems[0].localIdentifier, "asc"),
+            ]);
+        });
     });
 
     describe("getExecution", () => {
@@ -283,7 +327,7 @@ describe("PluggableMekko", () => {
             insight: { ...insight.insight, sorts },
         });
 
-        it("should strip measure sorts from the stacked execution (they apply client-side)", () => {
+        it("should strip measure sorts from the stacked execution", () => {
             const execution = createComponent().getExecution(
                 { messages },
                 withSorts(insightWithSingleMeasureAndViewByAndStack, insightSortItems),
@@ -291,6 +335,19 @@ describe("PluggableMekko", () => {
             );
 
             expect(execution.definition.sortBy).toEqual([newAttributeSort("a1", "asc")]);
+        });
+
+        it("should not hand the stripped measure sort to the chart to apply on the client", () => {
+            createComponent().update(
+                { messages },
+                withSorts(insightWithSingleMeasureAndViewByAndStack, insightSortItems),
+                {},
+                executionFactory,
+            );
+
+            const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
+            expect(renderEl!.props.config).toBeDefined();
+            expect(renderEl!.props.config!.sortBy).toBeUndefined();
         });
 
         it("should keep measure sorts in the execution without a stackBy attribute", () => {

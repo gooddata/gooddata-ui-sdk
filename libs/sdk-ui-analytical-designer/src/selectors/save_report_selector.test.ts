@@ -626,7 +626,7 @@ describe("Save selectors", () => {
                         allDashboards: [{ title: "dashboard 1", id: "dashboardId1" }],
                     } as IInsightUsageOnDashboard,
                     {
-                        accessibleDocuments: [{ title: "Board pack", id: "doc1" }],
+                        accessibleDocuments: [{ title: "Board pack", id: "doc1", type: "document" }],
                         inaccessibleDocumentsCount: 0,
                         allDocumentsCount: 1,
                     },

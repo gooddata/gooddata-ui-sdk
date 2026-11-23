@@ -63,7 +63,7 @@ export interface IUiPopoverProps {
     tabIndex?: number;
     accessibilityConfig?: IAccessibilityConfigBase;
     title?: string | ReactNode;
-    content?: ReactNode | ((args: { onClose: () => void }) => ReactNode);
+    content?: ReactNode | ((args: { onClose: () => void; titleId?: string }) => ReactNode);
     /**
      * Padding around the content surface. Defaults to `"default"`. Use `"none"`
      * for edge-to-edge content whose own children carry their inset (e.g. a list
@@ -242,7 +242,9 @@ export function UiPopover({
                             ) : null}
                             {content ? (
                                 <div className={e("content", { padding: contentPadding })}>
-                                    {typeof content === "function" ? content({ onClose }) : content}
+                                    {typeof content === "function"
+                                        ? content({ onClose, titleId: titleLabelledBy })
+                                        : content}
                                 </div>
                             ) : null}
                             {footer ? (

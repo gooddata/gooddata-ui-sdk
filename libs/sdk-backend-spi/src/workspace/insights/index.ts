@@ -220,7 +220,8 @@ export interface IInsightReferencing {
     analyticalDashboards?: IMetadataObject[];
 
     /**
-     * Publisher documents that show this insight.
+     * Documents, document templates and page templates that show this insight.
+     * Each item keeps its own `type`; only a `document` item opens in Reports.
      */
     documents?: IMetadataObject[];
 }

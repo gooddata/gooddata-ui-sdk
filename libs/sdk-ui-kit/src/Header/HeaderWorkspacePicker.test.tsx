@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
@@ -38,6 +38,21 @@ const openPicker = async () => {
     combobox.focus();
     return combobox;
 };
+
+function FilteringPicker({ isLoading = false }: { isLoading?: boolean }) {
+    const [search, setSearch] = useState("");
+    const filtered = workspaces.filter((ws) => ws.title.includes(search));
+    return (
+        <Wrapped
+            workspaces={filtered}
+            totalWorkspacesCount={filtered.length}
+            selectedWorkspace={workspaces[2]}
+            isLoading={isLoading}
+            showSearch
+            onSearch={setSearch}
+        />
+    );
+}
 
 describe("HeaderWorkspacePicker", () => {
     it("exposes the search input as a combobox controlling the workspaces listbox", async () => {
@@ -76,35 +91,58 @@ describe("HeaderWorkspacePicker", () => {
     });
 
     it("announces and describes the empty state when no workspace matches the search", async () => {
-        function FilteringPicker() {
-            const [search, setSearch] = useState("");
-            const filtered = workspaces.filter((ws) => ws.title.includes(search));
-            return (
-                <Wrapped
-                    workspaces={filtered}
-                    totalWorkspacesCount={filtered.length}
-                    selectedWorkspace={workspaces[2]}
-                    showSearch
-                    onSearch={setSearch}
-                />
-            );
-        }
         render(<FilteringPicker />);
         const combobox = await openPicker();
         const status = screen.getByRole("status");
+        expect(status).toHaveAttribute("aria-live", "polite");
+        expect(status).toHaveAttribute("aria-atomic", "true");
+        expect(status).toBeEmptyDOMElement();
 
         await userEvent.keyboard("xyz");
 
         await waitFor(() => expect(status).toHaveTextContent("No matching workspaces."), { timeout: 2000 });
         expect(screen.getByRole("status")).toBe(status);
+        // the visible empty state and the live region expose the same text
+        expect(screen.getAllByText("No matching workspaces.")).toHaveLength(2);
         expect(combobox).toHaveFocus();
+        expect(combobox).toHaveAttribute("aria-expanded", "false");
         expect(combobox).toHaveAccessibleDescription("No matching workspaces.");
         expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
 
         await userEvent.clear(combobox);
+        await waitFor(() => expect(status).toBeEmptyDOMElement(), { timeout: 2000 });
         await userEvent.keyboard("{ArrowDown}");
         expect(combobox).not.toHaveAttribute("aria-describedby");
-        expect(combobox).toHaveAttribute("aria-activedescendant", screen.getAllByRole("option")[0].id);
+        const firstOption = screen.getAllByRole("option")[0];
+        expect(combobox).toHaveAttribute("aria-activedescendant", firstOption.id);
+        expect(firstOption).toHaveAttribute("aria-posinset", "1");
+        expect(firstOption).toHaveAttribute("aria-setsize", "3");
+    });
+
+    it("announces the number of matching workspaces", async () => {
+        render(<FilteringPicker />);
+        await openPicker();
+
+        await userEvent.keyboard("sales");
+
+        await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("1 result: KD sales"), {
+            timeout: 2000,
+        });
+    });
+
+    it("does not announce or describe no results while the results are loading", async () => {
+        render(<FilteringPicker isLoading />);
+        await userEvent.click(screen.getByRole("button", { name: "KD finance" }));
+        vi.useFakeTimers();
+        try {
+            fireEvent.change(screen.getByPlaceholderText("Search workspaces"), { target: { value: "xyz" } });
+            await act(() => vi.advanceTimersByTimeAsync(1000));
+
+            expect(screen.getByRole("status")).toBeEmptyDOMElement();
+            expect(screen.getByPlaceholderText("Search workspaces")).not.toHaveAttribute("aria-describedby");
+        } finally {
+            vi.useRealTimers();
+        }
     });
 
     it("clears a typed filter on the first Escape and closes the picker on the next one", async () => {

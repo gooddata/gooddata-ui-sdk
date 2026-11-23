@@ -30,8 +30,11 @@ import { IChatSuggestions } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardProps } from '@gooddata/sdk-ui-dashboard';
+import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
+import { IFilter } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
+import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
@@ -46,6 +49,7 @@ import { JSX } from 'react/jsx-runtime';
 import { KeyboardEvent as KeyboardEvent_2 } from 'react';
 import { MouseEvent as MouseEvent_2 } from 'react';
 import { ReactNode } from 'react';
+import { RefObject } from 'react';
 import { SdkErrorType } from '@gooddata/sdk-ui';
 import { Store } from '@reduxjs/toolkit';
 
@@ -1109,6 +1113,23 @@ export interface IUseDashboardCopilotResult {
     sendMessage: (message: string) => void;
 }
 
+// @beta
+export interface IUseDrillKeyDriverAnalysisOptions {
+    anchorRef: RefObject<HTMLElement | null>;
+    enabled?: boolean;
+    enableSecondGranularities?: boolean;
+    filters?: IFilter[];
+    insight: IInsight;
+    locale?: string;
+}
+
+// @beta
+export interface IUseDrillKeyDriverAnalysisResult {
+    drillableItems: IHeaderPredicate[];
+    drillMenu: ReactNode;
+    onDrill: (event: IDrillEvent) => void;
+}
+
 // @alpha
 export interface IWhatIfRenderableScenario {
     execConfig?: IExecutionConfig;
@@ -1229,6 +1250,9 @@ export function useCopilotSnapshot<TBuild extends string = CopilotBuildType>(han
 
 // @alpha
 export function useDashboardCopilot(): IUseDashboardCopilotResult;
+
+// @beta
+export function useDrillKeyDriverAnalysis(input: IUseDrillKeyDriverAnalysisOptions): IUseDrillKeyDriverAnalysisResult;
 
 // @internal (undocumented)
 export function useGenAiChatAvailability(backend: IAnalyticalBackend, workspaceId?: string, enabled?: boolean, canManage?: boolean): boolean;

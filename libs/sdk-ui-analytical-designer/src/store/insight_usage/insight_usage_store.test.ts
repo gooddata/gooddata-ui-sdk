@@ -2,6 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
+import { type IMetadataObject, type ObjectType } from "@gooddata/sdk-model";
+
 import { resetInsightUsageOnDashboards, updateInsightUsageOnDashboards } from "../../actions/data_actions.js";
 import { combinedRootReducer } from "../../reducers/combined_root_reducer.js";
 import { initialState } from "../../reducers/initial_state.js";
@@ -44,16 +46,21 @@ describe("insightUsage store", () => {
         });
     });
 
-    it("serves the referencing documents the user may open sorted by title, and counts the rest", () => {
+    it("serves the referencing documents the user may open and every template sorted by title, and counts the rest", () => {
+        const referenced = (title: string, id: string, type: ObjectType): IMetadataObject => ({
+            ...createAnalyticalDashboard(title, id, 0),
+            type,
+        });
         const state = combinedRootReducer(
             getInitializedState(),
             updateInsightUsageOnDashboards(
                 REFERENCED,
                 USER_DASHBOARDS,
                 [
-                    createAnalyticalDashboard("zeta report", "doc2", 2),
-                    createAnalyticalDashboard("Alpha report", "doc1", 1),
-                    createAnalyticalDashboard("Hidden report", "doc3", 3),
+                    referenced("zeta report", "doc2", "document"),
+                    referenced("Alpha report", "doc1", "document"),
+                    referenced("Hidden report", "doc3", "document"),
+                    referenced("Monthly review", "tpl1", "documentTemplate"),
                 ],
                 ["doc1", "doc2"],
             ),
@@ -61,11 +68,12 @@ describe("insightUsage store", () => {
 
         expect(getInsightUsageInDocumentsSelector(state)).toEqual({
             accessibleDocuments: [
-                { id: "doc1", title: "Alpha report" },
-                { id: "doc2", title: "zeta report" },
+                { id: "doc1", title: "Alpha report", type: "document" },
+                { id: "tpl1", title: "Monthly review", type: "documentTemplate" },
+                { id: "doc2", title: "zeta report", type: "document" },
             ],
             inaccessibleDocumentsCount: 1,
-            allDocumentsCount: 3,
+            allDocumentsCount: 4,
         });
     });
 

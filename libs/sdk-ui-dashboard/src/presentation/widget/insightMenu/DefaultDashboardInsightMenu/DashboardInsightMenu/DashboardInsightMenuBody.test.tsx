@@ -180,4 +180,51 @@ describe("DashboardInsightMenuBody", () => {
         const item = screen.getByRole("menuitem", { name: "Explore from here" });
         expect(item).not.toHaveAttribute("aria-describedby");
     });
+
+    it("names a submenu by its own title", async () => {
+        const user = userEvent.setup();
+        const exportSubmenu: IInsightMenuItem = {
+            type: "submenu",
+            itemId: "Exports",
+            itemName: "Export",
+            icon: "gd-icon-download",
+            items: [
+                {
+                    type: "button",
+                    itemId: "ExportPng",
+                    itemName: "Snapshot (.png)",
+                    onClick: vi.fn(),
+                },
+            ],
+        };
+        render(
+            <IntlProvider
+                locale="en-US"
+                messages={{
+                    "menu.close": "Close",
+                    "menu.back": "Back",
+                    "insightMenu.restrictedWidget.options": "Widget options",
+                }}
+            >
+                <DashboardInsightMenuBody
+                    items={[exportSubmenu]}
+                    widget={widget}
+                    isOpen
+                    onClose={vi.fn()}
+                    renderMode="view"
+                    showTitle={false}
+                />
+            </IntlProvider>,
+        );
+        screen.getByRole("menu", { name: "Widget options" }).focus();
+
+        await user.keyboard("{ArrowRight}");
+
+        const submenu = screen.getByRole("menu", { name: "Export" });
+        expect(submenu).not.toHaveAttribute("aria-labelledby");
+        const dialog = screen.getByRole("dialog", { name: "Export" });
+        expect(dialog).not.toHaveAttribute("aria-labelledby");
+        const item = screen.getByRole("menuitem", { name: "Snapshot (.png)" });
+        expect(submenu).toHaveAttribute("aria-activedescendant", item.id);
+    });
 });

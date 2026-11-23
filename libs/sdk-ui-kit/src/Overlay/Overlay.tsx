@@ -240,7 +240,7 @@ export class Overlay<T = HTMLElement> extends Component<IOverlayProps<T>, IOverl
                     closeOnAnchorHidden={this.props.closeOnAnchorHidden}
                     anchorKey={this.props.alignTo}
                     getAnchor={this.getAlignAnchor}
-                    onParentScroll={this.realign}
+                    onParentScroll={this.align}
                     onAnchorHidden={this.closeOnAnchorHidden}
                 />
                 <Portal node={this.portalNode}>

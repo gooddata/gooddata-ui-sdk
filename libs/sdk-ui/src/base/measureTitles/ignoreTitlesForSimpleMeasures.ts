@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import {
     type IAttributeOrMeasure,
     type IInsightDefinition,
@@ -6,7 +7,7 @@ import {
     insightMeasures,
     insightModifyItems,
     isAdhocMeasure,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isSimpleMeasure,
     measureFilters,
     modifyMeasure,
@@ -26,7 +27,7 @@ import {
 export function ignoreTitlesForSimpleMeasures<T extends IInsightDefinition>(insight: T): T {
     const measuresWithDateFilter = insightMeasures(
         insight,
-        (measure: IMeasure): boolean => measureFilters(measure)?.some(isDateFilter) ?? false,
+        (measure: IMeasure): boolean => measureFilters(measure)?.some(isDateFilterOfAnyType) ?? false,
     );
     if (measuresWithDateFilter.length > 0) {
         // If the insight contains a measure with a date filter, all other measures are considered adhoc measures

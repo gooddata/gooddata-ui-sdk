@@ -1233,14 +1233,6 @@ export interface IFeatureFlags {
     enableBusinessBriefingReportsApp?: boolean;
 
     /**
-     * Enable Reports documents in the Analytics Catalog and its search.
-     *
-     * @remarks
-     * Needs enableBusinessBriefingReportsApp too. Disabled by default.
-     */
-    enableCatalogDocuments?: boolean;
-
-    /**
      * Enable the templates and page layouts screens of the Business Briefing reports application.
      */
     enableReportsSubsections?: boolean;
@@ -1303,14 +1295,6 @@ export interface IFeatureFlags {
      * Enabled by default.
      */
     enableLocalizationOverview?: boolean;
-
-    /**
-     * Enable the new rendering of charts in the AI Assistant.
-     *
-     * @remarks
-     * Disabled by default.
-     */
-    enableAiAssistantChartsV2?: boolean;
 
     /**
      * Enable the option of setting user language in the user menu.

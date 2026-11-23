@@ -50,6 +50,8 @@ export interface IKdaDialogProps {
 }
 
 /**
+ * Metric value and date identifying one of the periods compared in key driver analysis.
+ *
  * @internal
  */
 export interface IKdaDataPoint {
@@ -63,7 +65,7 @@ export interface IKdaDataPoint {
      */
     date: string;
     /**
-     * Valuer of metric for given range
+     * Metric value for the period, or undefined if the value is unavailable.
      */
     value: number | undefined;
     /**
@@ -73,6 +75,8 @@ export interface IKdaDataPoint {
 }
 
 /**
+ * Defines the metric, filters, and periods to compare in key driver analysis.
+ *
  * @internal
  */
 export interface IKdaDefinition {
@@ -108,12 +112,15 @@ export interface IKdaDefinition {
      */
     type: KdaPeriodType;
     /**
-     * Ranges
+     * Data points for the reference period and the analyzed period, in that order.
      */
     range: [IKdaDataPoint, IKdaDataPoint];
 }
 
 /**
+ * Determines whether key driver analysis compares the analyzed period with the same period in the previous
+ * year or with the immediately preceding period.
+ *
  * @internal
  */
 export type KdaPeriodType = "same_period_previous_year" | "previous_period";

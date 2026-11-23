@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-catalog, sdk-ui-analytical-designer: Show the documents the backend returns. A user who may not create documents now also sees their own documents inherited from a parent workspace, in the catalog and in a visualization's report usage.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

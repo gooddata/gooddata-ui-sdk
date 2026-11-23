@@ -30,8 +30,6 @@ import {
 
 import { cloneWithSanitizedIdsTyped } from "./IdSanitization.js";
 
-// TODO: Analytical Designer does not support the granularity of an absolute date filter yet,
-// so the insight and layer filters store only its days; measure filters in buckets keep it.
 const insightFilterConversionOptions: IStoredFilterConversionOptions = { dropAbsoluteDateGranularity: true };
 
 function removeIdentifiers(insight: IInsight): IInsightDefinition {

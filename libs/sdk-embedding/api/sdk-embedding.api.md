@@ -6,6 +6,8 @@
 
 import { DashboardAttributeFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
+import { DatePeriodGranularity } from '@gooddata/sdk-model';
+import { DatePeriodRange } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ILowerBoundedFilter } from '@gooddata/sdk-model';
 import { IUpperBoundedFilter } from '@gooddata/sdk-model';
@@ -276,11 +278,14 @@ export type DateFilterGranularity = "GDC.time.second" | "GDC.time.minute" | "GDC
 // @public (undocumented)
 export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
 
+// @alpha
+export type DateFilterItemOfAnyType = DateFilterItem | IAbsoluteGranularityDateFilter;
+
 // @public (undocumented)
 export type DateString = string;
 
 // @public (undocumented)
-export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter | IMeasureValueFilter;
+export type FilterItem = DateFilterItem | IAbsoluteGranularityDateFilter | AttributeFilterItem | IRankingFilter | IMeasureValueFilter;
 
 // @public
 export enum GdcAdCommandType {
@@ -420,6 +425,19 @@ export interface IAbsoluteDateFilter {
         from: string;
         to: string;
     };
+    // @alpha
+    localIdentifier?: string;
+    // @alpha
+    mode?: DashboardDateFilterConfigMode;
+}
+
+// @public
+export interface IAbsoluteGranularityDateFilter {
+    // (undocumented)
+    absoluteGranularityDateFilter: {
+        dataSet?: ObjQualifier;
+        granularity: DatePeriodGranularity;
+    } & DatePeriodRange;
     // @alpha
     localIdentifier?: string;
     // @alpha
@@ -1096,6 +1114,9 @@ export interface IResolvedFilterValues {
 // @public (undocumented)
 export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFilter;
 
+// @alpha (undocumented)
+export function isAbsoluteGranularityDateFilter(filter: unknown): filter is IAbsoluteGranularityDateFilter;
+
 // @public
 export function isAdCatalogLoadedData(obj: unknown): obj is AdCatalogLoadedData;
 
@@ -1206,6 +1227,9 @@ export function isDashboardRelativeDateFilter(filter: unknown): filter is IDashb
 
 // @public (undocumented)
 export function isDateFilter(filter: unknown): filter is DateFilterItem;
+
+// @alpha
+export function isDateFilterOfAnyType(filter: unknown): filter is DateFilterItemOfAnyType;
 
 // @public
 export interface ISimpleDrillableItemsCommandBody {

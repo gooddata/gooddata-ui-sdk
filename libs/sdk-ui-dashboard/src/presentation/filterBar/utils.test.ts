@@ -8,12 +8,15 @@ import {
     DashboardAttributeFilterConfigModeValues,
     type DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
+    type IDashboardAbsoluteGranularityDateFilter,
     dashboardAttributeFilterItemLocalIdentifier,
+    newAbsoluteDashboardDateFilter,
+    newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { _cloneDeep } from "@gooddata/util";
 
 import { filterBarAttributeFilterIndexes } from "./filterBar.test.helpers.js";
-import { areAllFiltersHidden, getVisibilityIcon } from "./utils.js";
+import { areAllFiltersHidden, getVisibilityIcon, isUnsupportedDateFilterChange } from "./utils.js";
 
 describe("utils", () => {
     describe("getVisibilityIcon", () => {
@@ -158,6 +161,25 @@ describe("utils", () => {
                     {} as unknown as Map<string, DashboardDateFilterConfigMode>,
                 ),
             ).toBe(false);
+        });
+    });
+
+    describe("isUnsupportedDateFilterChange", () => {
+        const granularityDateFilter: IDashboardAbsoluteGranularityDateFilter = {
+            dashboardAbsoluteGranularityDateFilter: {
+                granularity: "GDC.time.month",
+                from: "2026-01",
+                to: "2026-03",
+            },
+        };
+
+        it.each<[boolean, string, unknown]>([
+            [false, "no filter", undefined],
+            [false, "an all time date filter", newAllTimeDashboardDateFilter()],
+            [false, "an absolute date filter", newAbsoluteDashboardDateFilter("2026-01-01", "2026-03-31")],
+            [true, "an absolute date filter with granularity", granularityDateFilter],
+        ])("should return %s for %s", (expected, _desc, filter) => {
+            expect(isUnsupportedDateFilterChange(filter)).toBe(expected);
         });
     });
 });

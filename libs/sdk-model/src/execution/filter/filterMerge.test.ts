@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import {
     newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
     newAllTimeFilter,
     newMeasureValueFilter,
     newPositiveAttributeFilter,
@@ -52,6 +53,26 @@ describe("mergeFilters", () => {
     it("should append ranking filters the same measure", () => {
         const insightFilters = [newRankingFilter("foo", "TOP", 5)];
         const addedFilters = [newRankingFilter("foo", "BOTTOM", 3)];
+
+        const actual = mergeFilters(insightFilters, addedFilters);
+
+        expect(actual).toEqual([...insightFilters, ...addedFilters]);
+    });
+
+    it("should use the added date filter with granularity for the same dimension", () => {
+        const insightFilters = [newAbsoluteDateFilter("foo", "2019-01-01", "2019-12-31")];
+        const addedFilters = [
+            newAbsoluteGranularityDateFilter("foo", "GDC.time.month", "2026-01", "2026-03"),
+        ];
+
+        const actual = mergeFilters(insightFilters, addedFilters);
+
+        expect(actual).toEqual(addedFilters);
+    });
+
+    it("should keep the original date filter with granularity of another dimension", () => {
+        const insightFilters = [newAbsoluteGranularityDateFilter("foo", "GDC.time.year", "2025", undefined)];
+        const addedFilters = [newAbsoluteDateFilter("bar", "2019-01-01", "2019-12-31")];
 
         const actual = mergeFilters(insightFilters, addedFilters);
 

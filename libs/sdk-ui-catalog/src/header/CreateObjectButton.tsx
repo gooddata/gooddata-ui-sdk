@@ -16,6 +16,7 @@ import {
 
 import { AsCodeCreateDialog } from "../asCode/AsCodeCreateDialog.js";
 import { getAsCodeDescriptor, useCreatableObjectTypes } from "../asCodeRegistry.js";
+import { createMenuItem } from "../automation/testIds.js";
 import { useCatalogFeedActions } from "../catalogItem/CatalogFeedContext.js";
 import { useCanCreateDocument } from "../document/gate.js";
 import { useCanCreateVisualization } from "../insight/gate.js";
@@ -127,6 +128,7 @@ export function CreateObjectButton({ onCreateObject }: Props) {
                 renderBody={({ closeDropdown, ariaAttributes }) => (
                     <UiMenu
                         items={items}
+                        itemDataTestId={(item) => ("id" in item ? `${createMenuItem}/${item.id}` : undefined)}
                         minWidth={180}
                         onClose={closeDropdown}
                         onSelect={handleSelect}

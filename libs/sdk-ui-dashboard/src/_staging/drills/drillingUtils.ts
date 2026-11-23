@@ -1,9 +1,9 @@
 // (C) 2020-2026 GoodData Corporation
 
 import {
+    type DateFilterOfAnyType,
     type IAttributeDescriptor,
     type IAttributeFilter,
-    type IDateFilter,
     type IDrillDownIntersectionIgnoredAttributes,
     type IDrillToDashboard,
     type IDrillToInsight,
@@ -19,7 +19,7 @@ import {
     filterObjRef,
     isAttributeFilter,
     isCrossFiltering,
-    isDateFilter,
+    isDateFilterOfAnyType,
     isDrillFromAttribute,
     isDrillFromMeasure,
     isDrillToLegacyDashboard,
@@ -136,7 +136,7 @@ export function getLocalIdentifierOrDie(ref: ObjRefInScope): string {
 export function getSourceMeasureFiltersForDrillDefinition(
     drillDefinition: Pick<IDrillToDashboard | IDrillToInsight, "origin">,
     sourceInsightMeasures: IMeasure[],
-): Array<IAttributeFilter | IDateFilter> {
+): Array<IAttributeFilter | DateFilterOfAnyType> {
     const { origin } = drillDefinition;
 
     if (!isDrillFromMeasure(origin)) {
@@ -156,7 +156,7 @@ export function getSourceMeasureFiltersForDrillDefinition(
     }
 
     return (measureFilters(sourceMeasure) ?? []).filter(
-        (filter) => isAttributeFilter(filter) || isDateFilter(filter),
+        (filter) => isAttributeFilter(filter) || isDateFilterOfAnyType(filter),
     );
 }
 
@@ -264,7 +264,7 @@ export function sourceInsightFilterObjRef(filter: IFilter): SourceInsightFilterO
             : undefined;
     }
 
-    if (isDateFilter(filter)) {
+    if (isDateFilterOfAnyType(filter)) {
         const dataSetRef = filterObjRef(filter);
         return dataSetRef
             ? {

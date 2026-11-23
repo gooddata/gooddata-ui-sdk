@@ -148,7 +148,6 @@ describe("buildSeedActions", () => {
 const ALL_DOCUMENT_FLAGS = {
     enableBusinessBriefingReportsApp: true,
     enablePublisherV2: true,
-    enableCatalogDocuments: true,
 };
 
 describe("getChatObjectTypes", () => {
@@ -159,7 +158,7 @@ describe("getChatObjectTypes", () => {
         expect(getChatObjectTypes({ canManage, settings: ALL_DOCUMENT_FLAGS })).toEqual(expected);
     });
 
-    it.each(["enableBusinessBriefingReportsApp", "enablePublisherV2", "enableCatalogDocuments"] as const)(
+    it.each(["enableBusinessBriefingReportsApp", "enablePublisherV2"] as const)(
         "does not search documents while %s is off",
         (flag) => {
             expect(

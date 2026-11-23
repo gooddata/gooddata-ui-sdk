@@ -132,7 +132,7 @@ describe("InsightUsageOnDashboards", () => {
             isAllowedDashboardLinks: true,
             analyticalDashboardUriFactory: (id: string) => `/${id}`,
             documents: NO_DOCUMENTS,
-            documentUriFactory: (id: string) => `/document/${id}`,
+            documentUriFactory: ({ id, type }) => (type === "document" ? `/document/${id}` : undefined),
             ...userValues,
         };
         mockGetInsightUsageOnDashboardsSelector.mockReturnValue(values.insightUsageOnDashboard);
@@ -342,8 +342,8 @@ describe("InsightUsageOnDashboards", () => {
     describe("documents", () => {
         const documents: IInsightUsageInDocuments = {
             accessibleDocuments: [
-                { id: "doc1", title: "Board pack" },
-                { id: "doc2", title: "Weekly review" },
+                { id: "doc1", title: "Board pack", type: "document" },
+                { id: "doc2", title: "Weekly review", type: "document" },
             ],
             inaccessibleDocumentsCount: 0,
             allDocumentsCount: 2,
@@ -409,6 +409,23 @@ describe("InsightUsageOnDashboards", () => {
             expect(link.target).toEqual("_blank");
         });
 
+        it("should name a template without linking it", () => {
+            renderComponent({
+                insightUsageOnDashboard: NO_DASHBOARDS,
+                documents: {
+                    accessibleDocuments: [
+                        { id: "monthly", title: "Monthly review", type: "documentTemplate" },
+                    ],
+                    inaccessibleDocumentsCount: 0,
+                    allDocumentsCount: 1,
+                },
+            });
+            fireEvent.click(screen.getByRole("button", { name: "Used in 1 report" }));
+
+            expect(document.querySelector(".s-usage-document-item").textContent).toEqual("Monthly review");
+            expect(document.querySelector(".s-usage-document-item a")).toBeNull();
+        });
+
         it("should not link the report in embedded mode", () => {
             renderComponent({ insightUsageOnDashboard: NO_DASHBOARDS, documents, isEmbedded: true });
             fireEvent.click(screen.getByRole("button", { name: "Used in 2 reports" }));
@@ -420,7 +437,7 @@ describe("InsightUsageOnDashboards", () => {
             renderComponent({
                 insightUsageOnDashboard: NO_DASHBOARDS,
                 documents: {
-                    accessibleDocuments: [{ id: "doc1", title: "Board pack" }],
+                    accessibleDocuments: [{ id: "doc1", title: "Board pack", type: "document" }],
                     inaccessibleDocumentsCount: 2,
                     allDocumentsCount: 3,
                 },

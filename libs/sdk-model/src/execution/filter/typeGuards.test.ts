@@ -5,9 +5,11 @@ import { describe, expect, it } from "vitest";
 import { Account, Activity, Won } from "../../../__mocks__/model.js";
 import { InvalidInputTestCases } from "../../../__mocks__/typeGuards.js";
 import { DateGranularity } from "../../base/dateGranularities.js";
+import { isDashboardFilter, isDashboardFilterOfAnyType } from "../../dashboard/filterConverters.js";
 
 import {
     newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
     newAllTimeFilter,
     newMeasureValueFilter,
     newNegativeAttributeFilter,
@@ -23,8 +25,11 @@ import {
     isAttributeElementsByValue,
     isComparisonCondition,
     isComparisonConditionOperator,
+    isDateFilter,
+    isDateFilterOfAnyType,
     isDateFilterWithEmptyValueHandling,
     isFilter,
+    isFilterOfAnyType,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
@@ -32,6 +37,8 @@ import {
     isRangeConditionOperator,
     isRankingFilter,
     isRelativeDateFilter,
+    isSimpleMeasureFilter,
+    isSimpleMeasureFilterOfAnyType,
 } from "./index.js";
 
 describe("filter type guards", () => {
@@ -50,6 +57,55 @@ describe("filter type guards", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isFilter(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("guards with and without the absolute date filter with granularity", () => {
+        const absoluteFilter = newAbsoluteDateFilter("dd1", "2019-01-01", "2019-10-10", {
+            emptyValueHandling: "include",
+        });
+        const granularityFilter = newAbsoluteGranularityDateFilter(
+            "dd1",
+            "GDC.time.month",
+            "2026-01",
+            "2026-03",
+            { emptyValueHandling: "include" },
+        );
+        const Guards: Array<[string, (obj: unknown) => boolean, boolean]> = [
+            ["isDateFilter", isDateFilter, false],
+            ["isDateFilterOfAnyType", isDateFilterOfAnyType, true],
+            ["isFilter", isFilter, false],
+            ["isFilterOfAnyType", isFilterOfAnyType, true],
+            ["isDashboardFilter", isDashboardFilter, false],
+            ["isDashboardFilterOfAnyType", isDashboardFilterOfAnyType, true],
+            ["isSimpleMeasureFilter", isSimpleMeasureFilter, false],
+            ["isSimpleMeasureFilterOfAnyType", isSimpleMeasureFilterOfAnyType, true],
+        ];
+
+        it.each(Guards)("%s should return %s for the filter with granularity", (_name, guard, expected) => {
+            expect(guard(granularityFilter)).toBe(expected);
+        });
+
+        it.each<[string, (obj: unknown) => boolean, boolean?]>([
+            ...Guards,
+            ["isDateFilterWithEmptyValueHandling", isDateFilterWithEmptyValueHandling],
+        ])("%s should return true for an absolute date filter", (_name, guard) => {
+            expect(guard(absoluteFilter)).toBe(true);
+        });
+
+        it("isDateFilterWithEmptyValueHandling should return false for the filter with granularity even with empty value handling", () => {
+            expect(isDateFilterWithEmptyValueHandling(granularityFilter)).toBe(false);
+        });
+
+        it.each(InvalidInputTestCases)(
+            "isDateFilterOfAnyType should return %s when input is %s",
+            (expected, _desc, input) => {
+                expect(isDateFilterOfAnyType(input)).toBe(expected);
+            },
+        );
+
+        it("isFilterOfAnyType should return false for a measure", () => {
+            expect(isFilterOfAnyType(Won)).toBe(false);
         });
     });
 

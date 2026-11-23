@@ -21,9 +21,8 @@ import { type CatalogExportConfig, type WorkspaceMetadata, isCatalogExportError 
 import { clearTerminal } from "./cli/clear.js";
 import { log, logBox, logError, logSuccess, printHeader } from "./cli/loggers.js";
 import { promptHostname, requestFilePath } from "./cli/prompts.js";
-import { exportMetadataToJavascript } from "./exports/metaToJavascript.js";
-import { exportMetadataToTypescript } from "./exports/metaToTypescript.js";
 import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger/index.js";
+import { transformToTypescript } from "./transform/toTypescript.js";
 
 dotenv.config();
 
@@ -89,11 +88,8 @@ async function run() {
 
         checkFolderExists(filePath);
 
-        if (filePath.endsWith(".js")) {
-            await exportMetadataToJavascript(projectMetadata, filePath);
-        } else {
-            await exportMetadataToTypescript(projectMetadata, filePath);
-        }
+        const output = transformToTypescript(projectMetadata, filePath);
+        fs.writeFileSync(filePath, output.sourceFile.getFullText(), { encoding: "utf-8" });
 
         logSuccess("All data have been successfully exported");
         logBox(

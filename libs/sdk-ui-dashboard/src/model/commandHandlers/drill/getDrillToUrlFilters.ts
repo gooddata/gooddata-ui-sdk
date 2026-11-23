@@ -7,11 +7,11 @@ import {
     type IFilter,
     type ObjRef,
     isAttributeFilter,
-    isDateFilter,
+    isDashboardFilterOfAnyType,
+    isDateFilterOfAnyType,
     isMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
-import { isDashboardFilter } from "../../../types.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
 import { selectEnableFilterValuesResolutionInDrillEvents } from "../../store/config/configSelectors.js";
@@ -30,7 +30,9 @@ export function* getDrillToUrlFiltersWithResolvedValues(
     // know about attribute and date filters and throw on anything else.
     // TODO INE: revisit when MVFs become part of the drill payload in
     // https://gooddata.atlassian.net/browse/CQ-2286.
-    const filters = effectiveFilters.filter(isDashboardFilter).filter((f) => !isMeasureValueFilter(f));
+    const filters = effectiveFilters
+        .filter(isDashboardFilterOfAnyType)
+        .filter((f) => !isMeasureValueFilter(f));
 
     const enableFilterValuesResolutionInDrillEvents: SagaReturnType<
         typeof selectEnableFilterValuesResolutionInDrillEvents
@@ -38,7 +40,7 @@ export function* getDrillToUrlFiltersWithResolvedValues(
 
     if (enableFilterValuesResolutionInDrillEvents) {
         const resolvableFilters: ResolvableFilter[] = filters.filter(
-            (f): f is ResolvableFilter => isAttributeFilter(f) || isDateFilter(f),
+            (f): f is ResolvableFilter => isAttributeFilter(f) || isDateFilterOfAnyType(f),
         );
         try {
             const resolvedFilterValues: SagaReturnType<typeof resolveFilterValues> = yield call(

@@ -17,6 +17,7 @@ import {
 import { changeDashboardDefinition, initializeDashboard } from "../../commands/dashboard.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardDefinitionChanged } from "../../events/dashboard.js";
+import { type IDashboardCommandFailed } from "../../events/general.js";
 import {
     selectDashboardDescription,
     selectDashboardDescriptor,
@@ -83,6 +84,33 @@ describe("change dashboard definition handler", () => {
             const newState = Tester.state();
             expect(selectDashboardTitle(newState)).toEqual(NewDashboardTitle);
             expect(selectLayout(newState).sections).toEqual(SimpleDashboardLayout.sections);
+        });
+
+        it("should reject a definition with an absolute date filter with granularity", async () => {
+            const titleBefore = selectDashboardTitle(Tester.state());
+
+            const event: IDashboardCommandFailed<any> = await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition({
+                    ...UpdatedDashboardDefinition,
+                    filterContext: {
+                        ...SimpleDashboardFilterContext,
+                        filters: [
+                            ...SimpleDashboardFilterContext.filters,
+                            {
+                                dashboardAbsoluteGranularityDateFilter: {
+                                    granularity: "GDC.time.month",
+                                    from: "2026-01",
+                                    to: "2026-03",
+                                },
+                            },
+                        ],
+                    },
+                }),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(selectDashboardTitle(Tester.state())).toEqual(titleBefore);
         });
 
         it("should apply incoming metadata to the working descriptor while preserving persisted dashboard baseline", async () => {
