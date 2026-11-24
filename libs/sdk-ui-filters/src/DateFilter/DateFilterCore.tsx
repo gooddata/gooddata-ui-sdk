@@ -129,6 +129,13 @@ export interface IDateFilterCoreProps {
      * @alpha
      */
     customRangeHint?: ReactNode;
+
+    /**
+     * Render the relative period from/to select menus in an overlay.
+     *
+     * @alpha
+     */
+    shouldOverlayRelativeRangeMenu?: boolean;
 }
 
 export const verifyDateFormat = (dateFormat: string): string => {

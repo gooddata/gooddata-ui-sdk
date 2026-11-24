@@ -9,6 +9,7 @@ import {
     type IFilter,
     type IInsight,
     type IMeasure,
+    type IParameterizedDateFilter,
     type SourceInsightFilterObjRef,
     filterMeasureRef,
     insightFilters,
@@ -17,10 +18,12 @@ import {
     isAttributeFilter,
     isDateFilterOfAnyType,
     isMeasureValueFilter,
+    isParameterizedDateFilter,
     isRankingFilter,
 } from "@gooddata/sdk-model";
 
 import { ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+import { PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED } from "../../../../_staging/dashboard/parameterizedDateFilters.js";
 import {
     getSourceMeasureFiltersForDrillDefinition,
     isMatchingSourceInsightFilter,
@@ -82,9 +85,13 @@ export function getIncludedSourceFiltersForDashboard(
         sourceInsight,
         drillDefinition.includedSourceInsightFiltersObjRefs ?? [],
     )
-        .filter((filter): filter is SourceFilter | IAbsoluteGranularityDateFilter => {
-            return isAttributeFilter(filter) || isDateFilterOfAnyType(filter) || isMeasureValueFilter(filter);
-        })
+        .filter(
+            (filter): filter is SourceFilter | IAbsoluteGranularityDateFilter | IParameterizedDateFilter => {
+                return (
+                    isAttributeFilter(filter) || isDateFilterOfAnyType(filter) || isMeasureValueFilter(filter)
+                );
+            },
+        )
         .filter(isSourceFilterSupportedByDashboard)
         .flatMap((filter) => normalizeSourceFilterForDashboard(filter, sourceInsightMeasures));
 
@@ -94,12 +101,16 @@ export function getIncludedSourceFiltersForDashboard(
 
 function isSourceFilterSupportedByDashboard<T extends IFilter>(
     filter: T,
-): filter is Exclude<T, IAbsoluteGranularityDateFilter> {
+): filter is Exclude<T, IAbsoluteGranularityDateFilter | IParameterizedDateFilter> {
     if (isAbsoluteGranularityDateFilter(filter)) {
         console.warn(
             `Skipping a source insight filter. ${ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED}`,
             filter,
         );
+        return false;
+    }
+    if (isParameterizedDateFilter(filter)) {
+        console.warn(`Skipping a source insight filter. ${PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED}`, filter);
         return false;
     }
     return true;

@@ -14,12 +14,14 @@ import {
     type ICatalogFact,
     type ICatalogMeasure,
     type IDateHierarchyTemplate,
+    type IDateRangeParameterMetadataObject,
     type IScalarParameterMetadataObject,
     type IdentifierRef,
     type ObjRef,
     areObjRefsEqual,
     getHierarchyAttributes,
     getHierarchyRef,
+    getParameterTitle,
     idRef,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -94,7 +96,7 @@ export const selectCatalogAttributesWithComputed: DashboardSelector<ICatalogAttr
 );
 
 /**
- * Returns the workspace parameters loaded into the dashboard catalog.
+ * Returns the workspace number and string parameters loaded into the dashboard catalog.
  *
  * @alpha
  */
@@ -104,8 +106,9 @@ export const selectCatalogParameters: DashboardSelector<IScalarParameterMetadata
 );
 
 /**
- * Returns a selector that yields the workspace parameter for a given ref, or `undefined`
- * if the catalog does not contain it.
+ * Returns a selector that yields the number or string parameter for a given ref, or `undefined`
+ * if the catalog does not contain it. Date range parameters are in
+ * {@link selectCatalogDateRangeParameters}.
  *
  * @alpha
  */
@@ -118,7 +121,51 @@ export const selectCatalogParameterByRef: (
 );
 
 /**
- * Returns the load status of catalog parameters.
+ * Returns the workspace date range parameters (named periods) loaded into the dashboard catalog.
+ *
+ * @remarks
+ * Empty until they load, when the `enableDateRangeParameters` setting is off, and when they failed to load.
+ * The load status is {@link selectCatalogDateRangeParametersStatus}.
+ *
+ * @alpha
+ */
+export const selectCatalogDateRangeParameters: DashboardSelector<IDateRangeParameterMetadataObject[]> =
+    createSelector(selectSelf, (state) => state.parameters.dateRangeParameters);
+
+/**
+ * Returns a selector that yields the date range parameter for a given ref, or `undefined` when the catalog
+ * does not contain it: deleted, not accessible, or not loaded (read
+ * {@link selectCatalogDateRangeParametersStatus} to tell these apart). A ref to a scalar parameter yields
+ * `undefined`.
+ *
+ * @internal
+ */
+export const selectCatalogDateRangeParameterByRef: (
+    ref: ObjRef,
+) => DashboardSelector<IDateRangeParameterMetadataObject | undefined> = createMemoizedSelector(
+    (ref: ObjRef) =>
+        createSelector(selectCatalogDateRangeParameters, (parameters) =>
+            parameters.find((parameter) => areObjRefsEqual(parameter.ref, ref)),
+        ),
+);
+
+/**
+ * Returns a selector that yields the title to show for the date range parameter `ref` points to: its
+ * title, its id when the title is empty, or the identifier of `ref` when the catalog does not contain it.
+ * See {@link @gooddata/sdk-model#getParameterTitle}.
+ *
+ * @internal
+ */
+export const selectCatalogDateRangeParameterTitle: (ref: ObjRef) => DashboardSelector<string> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(selectCatalogDateRangeParameterByRef(ref), (parameter) =>
+            getParameterTitle(ref, parameter),
+        ),
+    );
+
+/**
+ * Returns the load status of the number and string parameters in {@link selectCatalogParameters}. It is
+ * `gated-off` when the `enableParameters` setting is off.
  *
  * @alpha
  */
@@ -128,7 +175,7 @@ export const selectCatalogParametersStatus: DashboardSelector<CatalogParametersS
 );
 
 /**
- * Returns true once the catalog parameters loader has succeeded.
+ * Returns true once the number and string parameters in {@link selectCatalogParameters} have loaded.
  *
  * @alpha
  */
@@ -136,6 +183,15 @@ export const selectCatalogParametersIsLoaded: DashboardSelector<boolean> = creat
     selectCatalogParametersStatus,
     (status) => status === "loaded",
 );
+
+/**
+ * Returns the load status of the date range parameters in {@link selectCatalogDateRangeParameters}. It is
+ * `gated-off` when the `enableDateRangeParameters` setting is off.
+ *
+ * @alpha
+ */
+export const selectCatalogDateRangeParametersStatus: DashboardSelector<CatalogParametersStatus> =
+    createSelector(selectSelf, (state) => state.parameters.dateRangeParametersStatus);
 
 /**
  * Returns the dashboard-wide map from serialized root ref to the parameter refs that root depends on.

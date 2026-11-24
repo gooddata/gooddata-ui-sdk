@@ -51,6 +51,7 @@ export interface IDateFilterFormContentProps {
     withoutApply?: boolean;
     enableEmptyDateValues?: boolean;
     customRangeHint?: ReactNode;
+    shouldOverlayRelativeRangeMenu?: boolean;
     onPeriodRangeValidityChange?: (isValid: boolean) => void;
 
     activeForm: DateFilterRoute;
@@ -81,6 +82,7 @@ export function DateFilterFormContent({
     withoutApply,
     enableEmptyDateValues,
     customRangeHint,
+    shouldOverlayRelativeRangeMenu,
     onPeriodRangeValidityChange,
     activeForm,
     onBackNavigation,
@@ -193,6 +195,7 @@ export function DateFilterFormContent({
                                 }
                                 availableGranularities={availableGranularities}
                                 isMobile={isMobile}
+                                shouldOverlaySelectMenu={shouldOverlayRelativeRangeMenu}
                                 ref={tabGranularityRef}
                                 relativeDateFilterId={relativeDateFilterId}
                                 onKeyDown={(event) =>

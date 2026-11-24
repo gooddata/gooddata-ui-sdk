@@ -32,6 +32,16 @@ const areSameMeasuresSelected = (
     originalComparisonMeasures: string[],
 ) => _isEqual(selectedComparisonMeasures.slice().sort(), originalComparisonMeasures.slice().sort());
 
+/**
+ * Include with a period works only as the date filter's own empty values handling; the legacy
+ * representation supports it with All time alone.
+ */
+const isEmptyValuesIncludeInvalid = (
+    filterOption: DateFilterOption,
+    mode: EmptyDateValuesFilterMode | undefined,
+    isIncludeWithPeriodAllowed: boolean,
+) => mode === "include" && !isIncludeWithPeriodAllowed && !isAllTimeDateFilterOption(filterOption);
+
 const isEndTimeAfterOrAtStartTime = (start: string, end: string) => moment(start) <= moment(end);
 
 const isValidAbsoluteDateRange = (selectedFilter: DateFilterOption) =>
@@ -43,6 +53,16 @@ const isValidAbsoluteDateRange = (selectedFilter: DateFilterOption) =>
 const isValidFloatingDateRange = (selectedFilter: DateFilterOption) =>
     !isRelativeDateFilterOption(selectedFilter) ||
     (selectedFilter.from !== undefined && selectedFilter.to !== undefined);
+
+/**
+ * The mode as it is saved: include on All time is the default and is not stored, so it equals no mode.
+ * Any other mode is stored as chosen, so choosing it is a change even when it matches the backend default.
+ */
+const getStoredEmptyDateValuesFilterMode = (
+    mode: EmptyDateValuesFilterMode | undefined,
+    filterOption: DateFilterOption,
+): EmptyDateValuesFilterMode | undefined =>
+    mode === "include" && isAllTimeDateFilterOption(filterOption) ? undefined : mode;
 
 const isDialogStateChanged = (
     selectedFilter: IDateFilterOption,
@@ -68,7 +88,8 @@ const isDialogStateChanged = (
     );
     const areAdditionalFiltersSame = _isEqual(additionalDateFilters, originalAdditionalDateFilters);
     const isEmptyDateValuesFilterModeSame =
-        (selectedEmptyDateValuesFilterMode || "include") === (originalEmptyDateValuesFilterMode || "include");
+        getStoredEmptyDateValuesFilterMode(selectedEmptyDateValuesFilterMode, selectedFilter.filterOption) ===
+        getStoredEmptyDateValuesFilterMode(originalEmptyDateValuesFilterMode, originalFilter.filterOption);
 
     return (
         !isFilterSame ||
@@ -94,6 +115,7 @@ export const useApplyButtonEnabled = (
     isValidDateDataset: boolean,
     selectedEmptyDateValuesFilterMode?: EmptyDateValuesFilterMode,
     originalEmptyDateValuesFilterMode?: EmptyDateValuesFilterMode,
+    isIncludeWithPeriodAllowed = false,
 ) => {
     const { filterOption } = selectedFilter;
     const isSelectionDifferent = isDialogStateChanged(
@@ -115,9 +137,11 @@ export const useApplyButtonEnabled = (
         filterOption,
         selectedTimeComparisonType,
     );
-    const isAllTime = isAllTimeDateFilterOption(filterOption);
-    // "Include" empty values is only allowed when period is "All time"
-    const isInvalidEmptyValuesInclude = selectedEmptyDateValuesFilterMode === "include" && !isAllTime;
+    const isInvalidEmptyValuesInclude = isEmptyValuesIncludeInvalid(
+        filterOption,
+        selectedEmptyDateValuesFilterMode,
+        isIncludeWithPeriodAllowed,
+    );
     return (
         isSelectionDifferent &&
         isValidAbsoluteDateRange(filterOption) &&
@@ -133,14 +157,20 @@ export const useDisabledApplyButtonTooltip = (
     selectedTimeComparisonType: OverTimeComparisonType,
     isValidDateDataset: boolean,
     selectedEmptyDateValuesFilterMode?: EmptyDateValuesFilterMode,
+    isIncludeWithPeriodAllowed = false,
 ) => {
     const intl = useIntl();
 
     const ignoreTimeComparison = selectedTimeComparisonType === OverTimeComparisonTypes.NOTHING;
     const isAllTime = isAllTimeDateFilterOption(selectedFilter);
 
-    // "Include" empty values is only allowed when period is "All time"
-    if (selectedEmptyDateValuesFilterMode === "include" && !isAllTime) {
+    if (
+        isEmptyValuesIncludeInvalid(
+            selectedFilter,
+            selectedEmptyDateValuesFilterMode,
+            isIncludeWithPeriodAllowed,
+        )
+    ) {
         return intl.formatMessage({ id: "filter.date.empty_values.include.disabled_apply_tooltip" });
     }
     if (!isValidDateDataset && !ignoreTimeComparison) {

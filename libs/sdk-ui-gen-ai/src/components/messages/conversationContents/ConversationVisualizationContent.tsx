@@ -159,11 +159,7 @@ export function ConversationVisualizationContent({
         event: IDrillEvent;
     } | null>(null);
 
-    const { setSaveDialogOpen, SaveDialog } = useSaveDialog({
-        message,
-        part,
-        visualization,
-    });
+    const [saveDialogOpen, setSaveDialogOpen] = useState<"save" | "explore" | null>(null);
     const { visualisationCheckLoading, visualisationSaved } = useInsightSaveCheck(
         part,
         visualization,
@@ -240,7 +236,15 @@ export function ConversationVisualizationContent({
                         onVisualisationError={onVisualizationError}
                         onVisualisationSuccess={onVisualizationSuccess}
                     />
-                    <SaveDialog />
+                    {saveDialogOpen ? (
+                        <SaveVisualizationDialog
+                            message={message}
+                            part={part}
+                            type={saveDialogOpen}
+                            visualization={visualization}
+                            onClose={() => setSaveDialogOpen(null)}
+                        />
+                    ) : null}
                 </Wrapper>
             </DrillState>
             <VisualizationErrorReport error={activeVisError?.error} />
@@ -648,38 +652,6 @@ function getRelativeOffset(child?: HTMLElement, ancestor?: HTMLDivElement | null
     return {
         x: c.left - a.left,
         y: c.top - a.top,
-    };
-}
-
-interface IUseSaveDialogProps {
-    message: IChatConversationLocalItem;
-    part: IChatConversationMultipartLocalPart;
-    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
-}
-
-function useSaveDialog({ message, part, visualization }: IUseSaveDialogProps) {
-    const [saveDialogOpen, setSaveDialogOpen] = useState<"save" | "explore" | null>(null);
-
-    const SaveDialog = useCallback(() => {
-        return (
-            <>
-                {saveDialogOpen ? (
-                    <SaveVisualizationDialog
-                        message={message}
-                        part={part}
-                        type={saveDialogOpen}
-                        visualization={visualization}
-                        onClose={() => setSaveDialogOpen(null)}
-                    />
-                ) : null}
-            </>
-        );
-    }, [message, saveDialogOpen, part, visualization]);
-
-    return {
-        SaveDialog,
-        saveDialogOpen,
-        setSaveDialogOpen,
     };
 }
 

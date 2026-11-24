@@ -36,6 +36,7 @@ import {
     isDashboardDateFilterOfAnyType,
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
+    isParameterizedDateFilter,
     isSingleSelectionFilter,
     isUriRef,
     objRefToString,
@@ -46,6 +47,7 @@ import { _compact, _partition, _uniqBy } from "@gooddata/util";
 
 import { ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
+import { PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED } from "../../../_staging/dashboard/parameterizedDateFilters.js";
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
@@ -349,6 +351,13 @@ export function* changeFilterContextSelectionHandler(
     ) {
         yield dispatchDashboardEvent(
             invalidArgumentsProvided(ctx, cmd, ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED),
+        );
+        return;
+    }
+
+    if (filters.some(isParameterizedDateFilter)) {
+        yield dispatchDashboardEvent(
+            invalidArgumentsProvided(ctx, cmd, PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED),
         );
         return;
     }

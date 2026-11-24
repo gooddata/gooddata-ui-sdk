@@ -29,6 +29,11 @@ interface IEmptyDateValuesFilterProps {
     onRemove: () => void;
     openOnInit?: boolean;
     isAllTime?: boolean;
+    /**
+     * Include sent as the date filter's own empty values handling is executed with any period; the legacy
+     * representation supports it only with All time.
+     */
+    isIncludeWithPeriodAllowed?: boolean;
     canRemove?: boolean;
 }
 
@@ -52,6 +57,7 @@ export function EmptyDateValuesFilter({
     onRemove,
     openOnInit = false,
     isAllTime = true,
+    isIncludeWithPeriodAllowed = false,
     canRemove = true,
 }: IEmptyDateValuesFilterProps) {
     const intl = useIntl();
@@ -73,7 +79,7 @@ export function EmptyDateValuesFilter({
         [intl],
     );
 
-    const isIncludeDisabled = !isAllTime;
+    const isIncludeDisabled = !isAllTime && !isIncludeWithPeriodAllowed;
     const listboxItems: IUiListboxInteractiveItem<EmptyDateValuesFilterMode>[] = useMemo(
         () => [
             {

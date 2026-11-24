@@ -60,7 +60,7 @@ export function getNormalizedAnomalyDetectionValues(
 }
 
 function parseColor(color: string): IColor {
-    if (color.startsWith("#")) {
+    if (/^#[\da-f]{6}$/i.test(color)) {
         const hex = color.substring(1);
         const r = parseInt(hex.substring(0, 2), 16);
         const g = parseInt(hex.substring(2, 4), 16);
@@ -70,17 +70,17 @@ function parseColor(color: string): IColor {
             value: { r, g, b },
         };
     } else if (color.startsWith("rgb")) {
-        const match = color.match(/rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/);
+        const match = color.match(/^rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)$/);
         if (match) {
             const [, r, g, b] = match;
-            return {
-                type: "rgb",
-                value: {
-                    r: parseInt(r, 10),
-                    g: parseInt(g, 10),
-                    b: parseInt(b, 10),
-                },
+            const value = {
+                r: parseInt(r, 10),
+                g: parseInt(g, 10),
+                b: parseInt(b, 10),
             };
+            if (Object.values(value).every((channel) => channel >= 0 && channel <= 255)) {
+                return { type: "rgb", value };
+            }
         }
     }
 

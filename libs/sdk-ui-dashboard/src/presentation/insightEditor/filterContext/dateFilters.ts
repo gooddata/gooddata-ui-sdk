@@ -17,6 +17,7 @@ import {
     isAbsoluteGranularityDateFilter,
     isAllTimeDateFilter,
     isDateFilterOfAnyType,
+    isParameterizedDateFilter,
     isRelativeDateFilter,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
@@ -124,6 +125,8 @@ function getDateFilterContext(dateFilter: DateFilterOfAnyType): DateFilterItem |
         throw new Error(
             "Absolute date filters with granularity are not supported in the insight editor yet.",
         );
+    } else if (isParameterizedDateFilter(dateFilter)) {
+        throw new Error("Parameterized date filters are not supported in the insight editor yet.");
     } else if (isRelativeDateFilter(dateFilter)) {
         const { dataSet, from, to, granularity, boundedFilter } = relativeDateFilterValues(
             dateFilter,

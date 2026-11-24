@@ -358,7 +358,11 @@ read props or state. Replace the array when handlers change instead of mutating 
 
 For a new dashboard, omit the `dashboard` prop and mount an empty `Dashboard` in edit mode. After the dashboard
 has initialized and the shared chat store is ready, call `generateDashboard(message)` from the hook. It starts
-a new conversation and sends the generation request. Use an agent with the dashboard building skill enabled.
+a new conversation and sends the generation request. Your application must ensure that dashboard building is
+enabled (`enableGenAiDashboardBuilderSkill`). Use an agent with the `dashboard_builder` skill. If an assistant
+message identifies an agent without any registered dashboard skills (`dashboard_builder` or `dashboard_editor`),
+`CopilotHandler` clears generation progress while letting the assistant respond normally. Missing agent details
+do not cancel generation.
 
 `generateDashboard` doesn't navigate, replace a saved dashboard, or save the generated result. It ignores calls
 when the dashboard is still loading, isn't in edit mode, or has a saved dashboard identifier. Use

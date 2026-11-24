@@ -30,6 +30,46 @@ export function getEffectiveSelectedAgentId({
     return undefined;
 }
 
+export function getAgentSelectionUpdate({
+    agents,
+    conversations,
+    conversationAgentId,
+    selectedAgentId,
+}: {
+    agents: GenAIAgent[];
+    conversations?: IChatConversationLocal[];
+    conversationAgentId?: string;
+    selectedAgentId?: string;
+}): { agentId: string | undefined } | undefined {
+    const effectiveSelectedAgentId = getEffectiveSelectedAgentId({
+        agents,
+        conversationAgentId,
+        selectedAgentId,
+    });
+
+    if (conversationAgentId && effectiveSelectedAgentId === conversationAgentId) {
+        return conversationAgentId === selectedAgentId ? undefined : { agentId: conversationAgentId };
+    }
+
+    // An unavailable conversation agent still requires reaffirming an otherwise valid selection.
+    if (agents.length && (conversationAgentId || effectiveSelectedAgentId === undefined)) {
+        // Resolve defaults before history loads; available history is only a best-effort heuristic.
+        return { agentId: effectiveSelectedAgentId ?? selectDefaultAgentId(agents, conversations) };
+    }
+
+    return undefined;
+}
+
+export function getStandaloneSelectedAgentId({
+    agents,
+    selectedAgentId,
+}: {
+    agents: GenAIAgent[] | undefined;
+    selectedAgentId?: string;
+}): string | undefined {
+    return agents?.find((agent) => agent.id === selectedAgentId) ? selectedAgentId : agents?.[0]?.id;
+}
+
 export function getAgentSelectionStatus({
     agentSwitchingActive,
     assistantLoading = false,

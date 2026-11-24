@@ -76,6 +76,8 @@ describe("switchDashboardTab handler", () => {
         Tester.dispatch(
             catalogActions.setCatalogParameters({
                 status: "loaded",
+                dateRangeParametersStatus: "gated-off",
+                dateRangeParameters: [],
                 parameters: [
                     {
                         type: "parameter",

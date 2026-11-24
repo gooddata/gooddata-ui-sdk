@@ -6,9 +6,7 @@ import { invariant } from "ts-invariant";
 
 import {
     type DashboardAttributeFilterItem,
-    type DateFilterOfAnyType,
     type FilterContextItem,
-    type IAttributeFilter,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilter,
@@ -16,7 +14,6 @@ import {
     type IFilter,
     type IInsight,
     type IInsightWidget,
-    type IMeasureValueFilter,
     type ObjRef,
     areObjRefsEqual,
     dashboardAbsoluteGranularityDateFilterToDateFilterByWidget,
@@ -285,7 +282,7 @@ function selectAllDraggableFilters(state: DashboardState): FilterContextItem[] {
 function convertFilterItemsToFilters(
     filter: FilterContextItem,
     widget: IInsightWidget,
-): IAttributeFilter | DateFilterOfAnyType | IMeasureValueFilter | undefined {
+): IDashboardFilter | undefined {
     if ("dateFilter" in filter) {
         return dashboardDateFilterToDateFilterByWidget(filter, widget);
     }

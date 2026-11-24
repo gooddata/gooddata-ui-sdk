@@ -69,6 +69,7 @@ import {
 } from "@gooddata/sdk-model";
 import { _compact } from "@gooddata/util";
 
+import { convertSkippingNotSupported } from "../../utils/convertSkippingNotSupported.js";
 import { fixNumber } from "../../utils/fixNumber.js";
 
 import { convertFilter } from "./afm/FilterConverter.js";
@@ -342,8 +343,15 @@ export function convertAutomation(
 export const convertAutomationListToAutomations = (
     automationList: JsonApiAutomationOutList,
 ): IAutomationMetadataObject[] => {
-    return automationList.data.map((automationObject) =>
-        convertAutomation(automationObject, automationList.included ?? [], automationList.meta?.restricted),
+    return convertSkippingNotSupported(
+        automationList.data,
+        (automationObject) =>
+            convertAutomation(
+                automationObject,
+                automationList.included ?? [],
+                automationList.meta?.restricted,
+            ),
+        "Automation",
     );
 };
 

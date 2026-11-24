@@ -224,6 +224,12 @@ describe("DecoratedDateFilter", () => {
                     expect(titleOf({ name: ALL_TIME }, "include")).toEqual("test title: All time");
                 });
 
+                it("should add the empty values when they are included with a period", () => {
+                    expect(titleOf({ name: LAST_7_DAYS }, "include")).toEqual(
+                        `${titleOf({ name: LAST_7_DAYS }, "exclude")}, empty values`,
+                    );
+                });
+
                 it("should keep the period title when the empty values are excluded from a period", () => {
                     expect(titleOf({ name: LAST_7_DAYS }, "exclude")).not.toContain("Empty values");
                 });

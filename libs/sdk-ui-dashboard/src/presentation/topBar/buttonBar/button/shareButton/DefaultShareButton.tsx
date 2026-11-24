@@ -14,7 +14,10 @@ import {
 import { selectIsAiBuilding, selectIsAiLoading } from "../../../../../model/store/config/configSelectors.js";
 import { selectIsShareButtonVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
-import { selectDashboardDensity } from "../../../../../model/store/ui/uiSelectors.js";
+import {
+    selectDashboardDensity,
+    selectIsShareDialogOpen,
+} from "../../../../../model/store/ui/uiSelectors.js";
 
 import { HiddenShareButton } from "./HiddenShareButton.js";
 import { type IShareButtonProps } from "./types.js";
@@ -45,6 +48,7 @@ export function DefaultShareButton({
     onShareButtonClick,
 }: IShareButtonProps): ReactElement | null {
     const density = useDashboardSelector(selectDashboardDensity);
+    const isShareDialogOpen = useDashboardSelector(selectIsShareDialogOpen);
     const intl = useIntl();
     const tooltipText = intl.formatMessage({ id: "share.button.tooltip" });
 
@@ -71,6 +75,7 @@ export function DefaultShareButton({
                         ariaLabel: tooltipText,
                         popupType: "dialog",
                         popupId: "share-dialog",
+                        isExpanded: isShareDialogOpen,
                     }}
                 />
             }

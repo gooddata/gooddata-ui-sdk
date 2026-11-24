@@ -133,7 +133,8 @@ export interface ILocalizationUsageListQuery extends ILocalizationPageQuery {
     name?: string;
     /**
      * Lists the workspaces behind one localization issue of the language in `value`.
-     * `available` selects `METADATA_LANGUAGE_MISMATCH`, and `missing` and `variant` select `METADATA_MISSING_TRANSLATION`.
+     * `available` selects `METADATA_LANGUAGE_MISMATCH`, `missing` and `variant` select `METADATA_MISSING_TRANSLATION`,
+     * and `unused` selects `METADATA_UNUSED_TRANSLATION`.
      * The people behind an issue are not reported, so a people list with this filter is empty.
      *
      * @remarks
@@ -227,10 +228,11 @@ export type LocalizationTranslatedSettingType = "METADATA_LOCALE" | "DATA_LOCALE
  * `available`: the display language has a translation, but the metadata language is not set to it.
  * `variant`: like `missing`, and a translation to another code of the same language exists.
  * The backend reports `missing` and `variant` as one issue, so their lists hold the same workspaces.
+ * `unused`: a workspace owns a translation that nobody uses. The list holds the workspaces that own it.
  *
  * @alpha
  */
-export type LocalizationTranslationState = "missing" | "available" | "variant";
+export type LocalizationTranslationState = "missing" | "available" | "variant" | "unused";
 
 /**
  * Kind of a localization issue.

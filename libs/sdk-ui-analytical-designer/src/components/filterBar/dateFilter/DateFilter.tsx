@@ -12,6 +12,7 @@ import { _isEqual } from "@gooddata/util";
 
 import { type IDecoratedDateDataset } from "../../../models/decorated_date_dataset.js";
 import { loadDateDatasetsToDateDropdown } from "../../../sagas/date_datasets/date_datasets_actions.js";
+import { enableImprovedMetricDateFilter } from "../../../selectors/feature_flag_selector.js";
 import { setMigratedAdditionalFilters } from "../../../store/filter_bar/filter_bar_actions.js";
 import { type EmptyDateValuesFilterMode } from "../../../store/filter_bar/filter_bar_types.js";
 import { type AppDispatch, type IAppState } from "../../../store/types.js";
@@ -73,6 +74,10 @@ export function DateFilter(ownProps: IDateFilterProps) {
         isFirstDateFilter,
         activeCalendars,
     } = useSelector((state: IAppState) => selectDateFilterProps(state, ownProps), shallowEqual);
+
+    // the flag writes the empty values mode as the date filter's own handling, which supports include
+    // with any period
+    const isIncludeWithPeriodAllowed = useSelector(enableImprovedMetricDateFilter);
 
     const dispatch = useDispatch<AppDispatch>();
     const loadDateDatasets = useCallback(
@@ -138,6 +143,7 @@ export function DateFilter(ownProps: IDateFilterProps) {
         selectedTimeComparison,
         isValidDateDataset,
         selectedEmptyDateValuesFilterMode,
+        isIncludeWithPeriodAllowed,
     );
 
     const isApplyEnabled = useApplyButtonEnabled(
@@ -154,6 +160,7 @@ export function DateFilter(ownProps: IDateFilterProps) {
         isValidDateDataset,
         selectedEmptyDateValuesFilterMode,
         storedEmptyDateValuesFilter,
+        isIncludeWithPeriodAllowed,
     );
 
     const handleOnOpen = () => {
@@ -243,6 +250,12 @@ export function DateFilter(ownProps: IDateFilterProps) {
         }
     };
 
+    // Without the flag the legacy representation drops include, so the button must not word it
+    const buttonEmptyDateValuesFilterMode =
+        storedEmptyDateValuesFilter === "include" && !isIncludeWithPeriodAllowed
+            ? undefined
+            : storedEmptyDateValuesFilter;
+
     const filterDropdownDateFormat = formatLocale ? dateFormat : STATIC_DATE_RANGE_BUTTON_LABEL_FORMAT;
 
     return (
@@ -265,7 +278,7 @@ export function DateFilter(ownProps: IDateFilterProps) {
                     : null
             }
             additionalDateFilterLabels={additionalDateFilterLabels}
-            emptyDateValuesFilterMode={storedEmptyDateValuesFilter}
+            emptyDateValuesFilterMode={buttonEmptyDateValuesFilterMode}
             isDragged={isDragged}
             datasetTitle={dateDataset?.title} // can be undefined when filter is dragged to trash
             isUsedByInsight={isUsedByInsight}
@@ -313,6 +326,7 @@ export function DateFilter(ownProps: IDateFilterProps) {
                         onEmptyDateValuesFilterModeChange={handleEmptyDateValuesFilterModeChange}
                         isDisabled={isOtherFiltersDisabled}
                         isAllTime={isAllTime}
+                        isIncludeWithPeriodAllowed={isIncludeWithPeriodAllowed}
                         showDateGranularities={isFirstDateFilter}
                     />
                 ) : null}

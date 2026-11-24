@@ -33,7 +33,19 @@ vi.hoisted(() => {
     vi.resetModules();
 });
 
-const { selectDateFilterPropsMock } = vi.hoisted(() => ({ selectDateFilterPropsMock: vi.fn() }));
+const { selectDateFilterPropsMock, improvedMetricDateFilterMock } = vi.hoisted(() => ({
+    selectDateFilterPropsMock: vi.fn(),
+    improvedMetricDateFilterMock: vi.fn(() => false),
+}));
+
+vi.mock("../../../selectors/feature_flag_selector.js", async (importOriginal) => {
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../../../selectors/feature_flag_selector.js")>();
+    return {
+        ...actual,
+        enableImprovedMetricDateFilter: () => improvedMetricDateFilterMock(),
+    };
+});
 
 // the additional date filter rows render the attribute filter, which loads elements
 vi.mock("../../AttributeFilter/AttributeFilter", () => {
@@ -163,6 +175,30 @@ describe("DateFilter", () => {
 
             expect(onClose).toHaveBeenCalledTimes(1);
             expect(presetSection()).not.toBeInTheDocument();
+        });
+    });
+
+    describe("Button title with included empty values", () => {
+        const lastFourQuarters: IDateFilterOption = {
+            filterOption: RELATIVE_DATE_FILTER_PRESETS["GDC.time.quarter"].find(
+                (preset) => preset.localIdentifier === "LAST_4_QUARTERS",
+            ),
+            excludeCurrentPeriod: false,
+        };
+        const buttonTitle = () => document.querySelector(".s-global-filter-label-bottom")?.textContent;
+
+        it("should add the empty values to the period with the improved metric date filter", () => {
+            improvedMetricDateFilterMock.mockReturnValue(true);
+            renderDateFilter({ filter: lastFourQuarters, storedEmptyDateValuesFilter: "include" });
+
+            expect(buttonTitle()).toBe("Last 4 quarters, empty values");
+        });
+
+        it("should keep the period title without the improved metric date filter", () => {
+            improvedMetricDateFilterMock.mockReturnValue(false);
+            renderDateFilter({ filter: lastFourQuarters, storedEmptyDateValuesFilter: "include" });
+
+            expect(buttonTitle()).toBe("Last 4 quarters");
         });
     });
 

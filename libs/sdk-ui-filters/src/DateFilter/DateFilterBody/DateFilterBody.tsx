@@ -119,6 +119,13 @@ export interface IDateFilterBodyProps {
      * @alpha
      */
     customRangeHint?: ReactNode;
+
+    /**
+     * Render the relative period from/to select menus in an overlay.
+     *
+     * @alpha
+     */
+    shouldOverlayRelativeRangeMenu?: boolean;
 }
 
 export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {
@@ -451,6 +458,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                         withoutApply={withoutApply}
                         enableEmptyDateValues={props.enableEmptyDateValues}
                         customRangeHint={props.customRangeHint}
+                        shouldOverlayRelativeRangeMenu={props.shouldOverlayRelativeRangeMenu}
                         onPeriodRangeValidityChange={setIsPeriodRangeValid}
                         activeForm={route}
                         onBackNavigation={handleBackNavigation}

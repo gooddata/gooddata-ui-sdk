@@ -22,6 +22,7 @@ import {
     isMatchAttributeFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
+    isParameterizedDateFilter,
     isPositiveAttributeFilter,
     isRankingFilter,
     isRelativeDateFilter,
@@ -228,6 +229,8 @@ export const convertFilter = (
         return convertAbsoluteDateFilter(filter);
     } else if (isAbsoluteGranularityDateFilter(filter)) {
         throw new Error("Absolute date filters with granularity are not supported in insights yet.");
+    } else if (isParameterizedDateFilter(filter)) {
+        throw new Error("Parameterized date filters are not supported in insights yet.");
     } else if (isRelativeDateFilter(filter)) {
         return convertRelativeDateFilter(filter);
     }

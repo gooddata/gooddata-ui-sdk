@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: UiMenu items that open a submenu, such as \"Export\" in the widget \"More actions\" menu, expose aria-expanded=\"false\" so screen readers announce them as collapsed.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

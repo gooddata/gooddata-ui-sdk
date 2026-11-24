@@ -3,7 +3,7 @@
 import { defineMessages } from "react-intl";
 import { call, put, select, take, takeEvery } from "redux-saga/effects";
 
-import { type IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
+import { type IWorkspaceCatalog, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { isCatalogMeasure } from "@gooddata/sdk-model";
 import { _isEmpty, _isEqual, _omit } from "@gooddata/util";
 
@@ -29,6 +29,7 @@ import { type IAppState } from "../types.js";
 import {
     type IMetricEditorMetricDeletedAction,
     type IMetricEditorMetricSaveAction,
+    type IMetricEditorMetricSaveErrorAction,
     type IMetricEditorOpenAction,
     MetricEditorActionTypeKeys,
     metricEditorCloseTabs,
@@ -46,6 +47,7 @@ const metricEditorMessages = defineMessages({
     deleteMetricFailed: { id: "messages.deleteMetricFailed" },
     saveMetric: { id: "messages.saveMetric" },
     metricSaveError: { id: "messages.metricSaveError" },
+    metricSaveIdConflict: { id: "messages.metricSaveIdConflict" },
 });
 
 enum CatalogItemType {
@@ -169,11 +171,17 @@ function* removeMetricFromBucketWithRefresh() {
     yield call(removeMetricFromBucket);
 }
 
-function* handleMetricSaveError() {
+function* handleMetricSaveError(action: IMetricEditorMetricSaveErrorAction) {
+    // The backend refuses an ID that is already in use (in this workspace or a parent one) with
+    // HTTP 409. A retry fails the same way, so the message names the cause instead.
+    const { error } = action.payload;
+    const isIdConflict = isUnexpectedResponseError(error) && error.httpStatus === 409;
     yield put(
         addMessage({
             type: "error",
-            translationKey: metricEditorMessages.metricSaveError.id,
+            translationKey: isIdConflict
+                ? metricEditorMessages.metricSaveIdConflict.id
+                : metricEditorMessages.metricSaveError.id,
             durationInMs: HIDE_ERROR_MESSAGE_AFTER,
         }),
     );

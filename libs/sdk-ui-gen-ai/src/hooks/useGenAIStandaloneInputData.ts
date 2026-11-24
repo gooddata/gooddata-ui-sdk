@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { type AgentCustomSkill } from "@gooddata/sdk-model";
 
+import { getStandaloneSelectedAgentId } from "../components/utils/agentSelection.js";
 import {
     agentsSelector,
     conversationsLoadedSelector,
@@ -40,9 +41,7 @@ export function useGenAIStandaloneInputData(requiredSkills?: AgentCustomSkill[])
         return agentsList;
     }, [requiredSkills, agentsList]);
 
-    const selectedAgentId = agents?.find((agent) => agent.id === currentAgentId)
-        ? currentAgentId
-        : agents?.[0]?.id;
+    const selectedAgentId = getStandaloneSelectedAgentId({ agents, selectedAgentId: currentAgentId });
 
     return {
         agents,

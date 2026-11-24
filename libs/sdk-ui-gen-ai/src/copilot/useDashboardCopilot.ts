@@ -50,7 +50,8 @@ export interface IUseDashboardCopilotResult {
     /**
      * Get props for Dashboard. Appends application event handlers after internal handlers and calls
      * the internal onStateChange before the application callback. Merges config while keeping aiMode
-     * controlled by the copilot; other props pass through unchanged. Call without arguments for defaults.
+     * controlled by the copilot. AI mode stays active until a successful save, cancellation, or dashboard
+     * disconnection; other props pass through unchanged. Call without arguments for defaults.
      */
     dashboardProps: (props?: IDashboardProps) => IDashboardProps;
     /**
@@ -63,9 +64,13 @@ export interface IUseDashboardCopilotResult {
     composingProps: Omit<ICopilotInteractionComposingWithHandlerProps, "children">;
     /** Send a message in the current conversation. Ignored until the shared store is ready. */
     sendMessage: (message: string) => void;
-    /** Start a new conversation and generate into a new, empty dashboard in edit mode. */
+    /**
+     * Start a new conversation and generate into a new, empty dashboard in edit mode.
+     * Dashboard building must be enabled by the integrator. Generation progress is cancelled if an
+     * assistant message identifies an agent without any registered dashboard skills; chat continues normally.
+     */
     generateDashboard: (message: string) => void;
-    /** Clear creation intent; this does not cancel an assistant response already streaming. */
+    /** Clear creation intent and persistent AI mode; does not cancel an assistant response already streaming. */
     cancelGeneration: () => void;
     /** Select the waiting workflow's originating conversation in the shared assistant. */
     replyInChat: () => void;
@@ -89,7 +94,8 @@ export interface IUseDashboardCopilotResult {
  */
 export function useDashboardCopilot(): IUseDashboardCopilotResult {
     const [dashboardSelector, setDashboardSelector] = useState<DashboardSelectorEvaluator | null>(null);
-    const connection = useMemo(() => createDashboardConnection(setDashboardSelector), []);
+    const [isAiMode, setIsAiMode] = useState(false);
+    const connection = useMemo(() => createDashboardConnection(setDashboardSelector, setIsAiMode), []);
     const getDashboardEventHandlers = useMemo(
         () => createEventHandlersGetter(connection.dashboardProps.eventHandlers),
         [connection],
@@ -131,9 +137,12 @@ export function useDashboardCopilot(): IUseDashboardCopilotResult {
                       props.onStateChange?.(state, dispatch);
                   }
                 : connection.dashboardProps.onStateChange,
-            config: { ...props.config, aiMode: status === "idle" ? undefined : status },
+            config: {
+                ...props.config,
+                aiMode: status === "idle" ? (isAiMode ? "active" : undefined) : status,
+            },
         }),
-        [connection, getDashboardEventHandlers, status],
+        [connection, getDashboardEventHandlers, isAiMode, status],
     );
 
     const assistantProps = useCallback<IUseDashboardCopilotResult["assistantProps"]>(
@@ -176,9 +185,11 @@ function createEventHandlersGetter<T>(internalHandlers: T[]) {
 
 function createDashboardConnection(
     onSelectorChange: (selector: () => DashboardSelectorEvaluator | null) => void,
+    onAiModeChange: (isAiMode: boolean) => void,
 ) {
     const type = CopilotBuildType.Dashboard;
     let active = true;
+    let wasWorking = false;
     let dashboardDispatch: DashboardDispatch | undefined;
     let chatDispatch: EnhancedStore["dispatch"] | undefined;
     const applications = new Map<string, ICopilotTarget>();
@@ -229,6 +240,16 @@ function createDashboardConnection(
         onClarificationQuestions: () => replyInChat(),
     });
 
+    copilot.subscribe(() => {
+        const { context } = copilot.getSnapshot();
+        const isWorking = copilot.getStatus({ ...context, type }) !== "idle";
+        // After cancellation, ongoing work must not reactivate AI mode.
+        if (active && isWorking && !wasWorking) {
+            onAiModeChange(true);
+        }
+        wasWorking = isWorking;
+    });
+
     function interruptApplications() {
         for (const id of applications.keys()) {
             copilot.definitionApplicationInterrupted(id);
@@ -242,6 +263,7 @@ function createDashboardConnection(
         copilot.resetInteraction();
         copilot.cancelGeneration(type);
         copilot.setContext({});
+        onAiModeChange(false);
         onSelectorChange(() => null);
     }
 
@@ -323,6 +345,7 @@ function createDashboardConnection(
                         }
                     }
                     if (isDashboardSaved(event)) {
+                        onAiModeChange(false);
                         const { dashboard, originalDashboardId, savedInsights } = event.payload;
                         const source = copilot.getAppliedSource({
                             type,
@@ -355,7 +378,13 @@ function createDashboardConnection(
             chatDispatch(startNewConversationAction());
             sendMessage(message);
         },
-        cancelGeneration: () => copilot.cancelGeneration(type),
+        cancelGeneration: () => {
+            if (!active) {
+                return;
+            }
+            copilot.cancelGeneration(type);
+            onAiModeChange(false);
+        },
         replyInChat,
         activate: () => {
             active = true;

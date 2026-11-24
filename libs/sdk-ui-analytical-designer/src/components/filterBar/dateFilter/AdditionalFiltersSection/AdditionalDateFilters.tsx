@@ -29,6 +29,7 @@ export interface IAdditionalDateFiltersProps {
     onEmptyDateValuesFilterModeChange: (mode: EmptyDateValuesFilterMode | undefined) => void;
     isDisabled?: boolean;
     isAllTime?: boolean;
+    isIncludeWithPeriodAllowed?: boolean;
     showDateGranularities?: boolean;
     isEmptyDateValuesFilterAvailable?: boolean;
 }
@@ -44,6 +45,7 @@ export function AdditionalDateFilters({
     onEmptyDateValuesFilterModeChange,
     isDisabled,
     isAllTime,
+    isIncludeWithPeriodAllowed,
     showDateGranularities,
     isEmptyDateValuesFilterAvailable,
 }: IAdditionalDateFiltersProps) {
@@ -124,6 +126,7 @@ export function AdditionalDateFilters({
             isEmptyDateValuesFilterOpenOnInit={isEmptyDateValuesFilterOpenOnInit}
             isDisabled={isDisabled}
             isAllTime={isAllTime}
+            isIncludeWithPeriodAllowed={isIncludeWithPeriodAllowed}
             showDateGranularities={showDateGranularities}
             isEmptyDateValuesFilterAvailable={isEmptyDateValuesFilterAvailable}
         />

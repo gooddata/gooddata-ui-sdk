@@ -3,6 +3,7 @@
 import { type DateAttributeGranularity } from "../../../base/dateGranularities.js";
 import { type IAuditable } from "../../../base/metadata.js";
 import { assertNever } from "../../../base/typeUtils.js";
+import { type ObjRef, objRefToString } from "../../../objRef/index.js";
 import { type IMetadataObject, type IMetadataObjectDefinition, isMetadataObject } from "../types.js";
 
 /**
@@ -24,6 +25,16 @@ export interface IParameterMetadataObject extends IMetadataObject, IAuditable {
  */
 export interface IScalarParameterMetadataObject extends IParameterMetadataObject {
     definition: IScalarParameterDefinition;
+}
+
+/**
+ * Parameter metadata object whose definition is a {@link IDateRangeParameterDefinition}: a named period
+ * that date filters reference.
+ *
+ * @alpha
+ */
+export interface IDateRangeParameterMetadataObject extends IParameterMetadataObject {
+    definition: IDateRangeParameterDefinition;
 }
 
 /**
@@ -259,6 +270,18 @@ export function isScalarParameterMetadataObject(
 }
 
 /**
+ * Tests whether the provided parameter has a {@link IDateRangeParameterDefinition}.
+ *
+ * @param parameter - parameter to test
+ * @alpha
+ */
+export function isDateRangeParameterMetadataObject(
+    parameter: IParameterMetadataObject,
+): parameter is IDateRangeParameterMetadataObject {
+    return isDateRangeParameterDefinition(parameter.definition);
+}
+
+/**
  * Tests whether `value` is valid for the given parameter definition.
  *
  * @alpha
@@ -345,6 +368,24 @@ export function isValidStringParameterValue(
             allowedValues.length === 0 ||
             allowedValues.some((allowed) => allowed.value === value))
     );
+}
+
+/**
+ * Returns the title to show for the parameter that `ref` points to: its title, its id when the title is
+ * empty, or the identifier of `ref` when the parameter is not known.
+ *
+ * @remarks
+ * Backends send a missing title as an empty string, so an empty title counts as missing. Pass what the
+ * caller's catalog holds for `ref`, or `undefined` when it holds nothing (the parameter was deleted, is
+ * not accessible, or was not loaded). It takes any parameter kind, so every place that uses it shows a
+ * parameter under the same name.
+ *
+ * @param ref - reference to the parameter, as stored by the object that uses it
+ * @param parameter - the parameter `ref` resolves to, or `undefined`
+ * @alpha
+ */
+export function getParameterTitle(ref: ObjRef, parameter: IParameterMetadataObject | undefined): string {
+    return parameter?.title || parameter?.id || objRefToString(ref);
 }
 
 /**

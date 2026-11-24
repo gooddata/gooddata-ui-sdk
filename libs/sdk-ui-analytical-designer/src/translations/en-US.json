@@ -679,6 +679,10 @@
         "text": "Metric save failed, try again later…",
         "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
     },
+    "messages.metricSaveIdConflict": {
+        "text": "A metric with this ID already exists. Change the ID and save again.",
+        "crowdinContext": "Error message shown when a metric cannot be saved because another object already uses its ID."
+    },
     "messages.exportResultError": {
         "text": "Failed to export the data. Try again later.",
         "crowdinContext": "Error message when data export fails"
@@ -1242,6 +1246,10 @@
     "filter.date.empty_values.include.disabled_option_tooltip": {
         "text": "Select All time in period to include empty values",
         "crowdinContext": "Tooltip on disabled Include option in empty values dropdown."
+    },
+    "filter.date.empty_values.include.title": {
+        "text": "{title}, empty values",
+        "crowdinContext": "Date filter button label when a period (not All time) also includes empty (missing) date values. {title} is the period label, e.g. 'Last 12 months'."
     },
     "filter.compare.apply_on": {
         "text": "Apply on",

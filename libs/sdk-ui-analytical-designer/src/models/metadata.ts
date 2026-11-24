@@ -166,16 +166,20 @@ function numberOrUndefined(value: string | number | undefined): number | undefin
 const ALL_TIME_GRANULARITY: AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 /**
- * The `emptyValueHandling` a date filter stores for the empty date values mode. Like the legacy `""`
- * attribute filter, only exclude and only are stored: include is the backend default for All time and
- * the picker does not offer it with a period.
+ * The `emptyValueHandling` a date filter stores for the empty date values mode. Exclude and only are
+ * always stored. Include is stored only with a period, where the backend default is exclude; on All time
+ * it is the backend default, so it is dropped to keep a single stored shape.
  */
-export function emptyValueHandlingToMd(emptyDateValuesFilter: EmptyDateValuesFilterMode | undefined): {
+export function emptyValueHandlingToMd(
+    emptyDateValuesFilter: EmptyDateValuesFilterMode | undefined,
+    isAllTime: boolean,
+): {
     emptyValueHandling?: EmptyValues;
 } {
-    return emptyDateValuesFilter === "exclude" || emptyDateValuesFilter === "only"
-        ? { emptyValueHandling: emptyDateValuesFilter }
-        : {};
+    if (emptyDateValuesFilter === "exclude" || emptyDateValuesFilter === "only") {
+        return { emptyValueHandling: emptyDateValuesFilter };
+    }
+    return emptyDateValuesFilter === "include" && !isAllTime ? { emptyValueHandling: "include" } : {};
 }
 
 function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObjectFilter | null {
@@ -189,7 +193,7 @@ function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObject
 
         const from = filter.interval?.interval?.[0];
         const to = filter.interval?.interval?.[1];
-        const emptyValueHandlingProp = emptyValueHandlingToMd(filter.original?.emptyDateValuesFilter);
+        const emptyDateValuesFilter = filter.original?.emptyDateValuesFilter;
         const absoluteDateFilter = filter.interval?.isStatic ?? false;
         if (absoluteDateFilter) {
             // a static (absolute) preset interval is the [string, string] side of the tuple union
@@ -198,7 +202,7 @@ function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObject
                     dataSet,
                     from: from as string,
                     to: to as string,
-                    ...emptyValueHandlingProp,
+                    ...emptyValueHandlingToMd(emptyDateValuesFilter, false),
                 },
             };
         }
@@ -206,6 +210,10 @@ function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObject
         const boundedFilter = filter.interval?.boundedFilter;
         const relativeFrom = numberOrUndefined(from);
         const relativeTo = numberOrUndefined(to);
+        const emptyValueHandlingProp = emptyValueHandlingToMd(
+            emptyDateValuesFilter,
+            relativeFrom === undefined || relativeTo === undefined,
+        );
         // All time is stored without bounds, a no-op the execution drops; to carry the empty date values
         // mode it has to be the real All time filter, the one the execution sends (as on the filter bar)
         if ((relativeFrom === undefined || relativeTo === undefined) && !_isEmpty(emptyValueHandlingProp)) {
@@ -302,9 +310,13 @@ function dateFilterToMd(
     useEmptyValueHandling: boolean,
 ): IVisualizationObjectAbsoluteDateFilter | IVisualizationObjectRelativeDateFilter {
     const [from, to] = filterConfig?.interval || [undefined, undefined];
-    const emptyValueHandlingProp = useEmptyValueHandling ? emptyValueHandlingToMd(emptyDateValuesFilter) : {};
+    const isAbsolute = filterConfig?.type === "absolute";
+    const isAllTime = !isAbsolute && (from === undefined || to === undefined);
+    const emptyValueHandlingProp = useEmptyValueHandling
+        ? emptyValueHandlingToMd(emptyDateValuesFilter, isAllTime)
+        : {};
 
-    if (filterConfig?.type === "absolute") {
+    if (isAbsolute) {
         return {
             absoluteDateFilter: {
                 dataSet: dateDatasetRef,
@@ -317,7 +329,7 @@ function dateFilterToMd(
 
     // All time is stored without bounds, a no-op the execution drops. To carry the empty date values mode
     // it has to be the real All time filter, the one the execution sends.
-    if ((from === undefined || to === undefined) && !_isEmpty(emptyValueHandlingProp)) {
+    if (isAllTime && !_isEmpty(emptyValueHandlingProp)) {
         return {
             relativeDateFilter: {
                 dataSet: dateDatasetRef,
@@ -1605,13 +1617,20 @@ function collectLegacyEmptyDateValuesFilters(
  * - a legacy `""` attribute filter becomes the empty values mode of its date filter, as when the insight
  *   is loaded,
  * - every All time filter becomes `ALL_TIME_GRANULARITY` from 0 to 0, however it is stored,
- * - the default `include` mode is dropped, as when the insight is saved.
+ * - the `include` mode is dropped on All time, where it is the default, as when the insight is saved,
+ *   and also with a period when the writer cannot store it there (`isIncludeWithPeriodKept` is false).
  *
  * Used only to compare stored content; the result is never saved.
+ *
+ * @param visualizationFilters - the stored filters
+ * @param dateDatasets - date datasets, used to recognize the legacy `""` attribute filter
+ * @param isIncludeWithPeriodKept - whether the writer keeps `include` with a period: the filter bar only
+ *  with the `enableImprovedMetricDateFilter` flag, metric date filters always.
  */
 export function normalizeEmptyDateValuesFilters(
     visualizationFilters: ReadonlyArray<VisualizationObjectExtendedFilter>,
     dateDatasets: IDateDatasets | undefined,
+    isIncludeWithPeriodKept: boolean,
 ): VisualizationObjectExtendedFilter[] {
     const { emptyDateValuesFilters, emptyDateValuesFilterIndices } = collectLegacyEmptyDateValuesFilters(
         visualizationFilters,
@@ -1625,21 +1644,21 @@ export function normalizeEmptyDateValuesFilters(
                 return filter;
             }
             const dataSet = getDateFilterDataSet(filter);
-            const storedMode = getDateFilterEmptyValueHandling(filter);
-            const mode = emptyValueHandlingToMd(
-                storedMode ?? emptyDateValuesFilters[objRefToString(dataSet)]?.mode,
-            );
+            const storedMode =
+                getDateFilterEmptyValueHandling(filter) ??
+                emptyDateValuesFilters[objRefToString(dataSet)]?.mode;
 
             if (isVisualizationObjectAbsoluteDateFilter(filter)) {
                 return {
                     absoluteDateFilter: {
                         ..._omit(filter.absoluteDateFilter, "emptyValueHandling"),
-                        ...mode,
+                        ...emptyValueHandlingToMd(storedMode, !isIncludeWithPeriodKept),
                     },
                 };
             }
             const { granularity, from, to } = filter.relativeDateFilter;
             const isAllTime = granularity === ALL_TIME_GRANULARITY || from === undefined || to === undefined;
+            const mode = emptyValueHandlingToMd(storedMode, isAllTime || !isIncludeWithPeriodKept);
             // AD saves All time as GDC.time.year without from/to, or as ALL_TIME_GRANULARITY 0..0 when it has
             // an empty values mode. API clients can store either shape, e.g. ALL_TIME_GRANULARITY with "include".
             if (isAllTime) {

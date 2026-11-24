@@ -30,7 +30,11 @@ import { type IDateDatasets } from "../typings/datasets.js";
 import { type IReportContent } from "../typings/report.js";
 import { getVisualizationPropertiesWithDefaultValues } from "../utils/visualization_properties.js";
 
-import { enableGeoArea, enableNewGeoPushpin } from "./feature_flag_selector.js";
+import {
+    enableGeoArea,
+    enableImprovedMetricDateFilter,
+    enableNewGeoPushpin,
+} from "./feature_flag_selector.js";
 import {
     hasDataSelector,
     hasEmptyAfmSelector,
@@ -95,13 +99,14 @@ function convertToBooleans(
 const MEASURE_FILTERS_PATH = ["measure", "definition", "measureDefinition", "filters"];
 
 // the date filters of a metric have the same stored shapes as the insight date filters; a metric has no
-// legacy "" attribute filter (its reader does not fold one), so no date datasets are passed
+// legacy "" attribute filter (its reader does not fold one), so no date datasets are passed; their writer
+// keeps include with a period whether the flag is on or off
 function normalizeMeasureDateFilters(item: IVisualizationObjectBucketItem): IVisualizationObjectBucketItem {
     const filters = getAtPath(item, MEASURE_FILTERS_PATH);
     if (!Array.isArray(filters)) {
         return item;
     }
-    return setAtPath(item, MEASURE_FILTERS_PATH, normalizeEmptyDateValuesFilters(filters, undefined));
+    return setAtPath(item, MEASURE_FILTERS_PATH, normalizeEmptyDateValuesFilters(filters, undefined, true));
 }
 
 function deleteTitle(item: IVisualizationObjectBucketItem): IVisualizationObjectBucketItem {
@@ -186,6 +191,7 @@ function stripLocalIdsInFilters(reportContent: IComparableReportContent): ICompa
 function normalizeEmptyDateValues(
     reportContent: IComparableReportContent,
     dateDatasets: IDateDatasets | undefined,
+    isIncludeWithPeriodKept: boolean,
 ): IComparableReportContent {
     if (!has(reportContent, "filters")) {
         return reportContent;
@@ -193,7 +199,11 @@ function normalizeEmptyDateValues(
 
     return {
         ...reportContent,
-        filters: normalizeEmptyDateValuesFilters(reportContent.filters ?? [], dateDatasets),
+        filters: normalizeEmptyDateValuesFilters(
+            reportContent.filters ?? [],
+            dateDatasets,
+            isIncludeWithPeriodKept,
+        ),
     };
 }
 
@@ -201,6 +211,8 @@ type PrepareForComparisonOptions = {
     ignoreGeoTooltipText?: boolean;
     /** needed to recognize the legacy empty date values attribute filter */
     dateDatasets?: IDateDatasets;
+    /** the filter bar writer keeps include with a period only with `enableImprovedMetricDateFilter` */
+    isIncludeWithPeriodKept?: boolean;
 };
 
 function shouldIgnoreGeoTooltipTextInSaveComparison(state: IAppState): boolean {
@@ -248,7 +260,11 @@ export function prepareForComparison(
     updatedReportContent = reorderBuckets(updatedReportContent);
     updatedReportContent = sanitizeMeasureValueFilters(updatedReportContent);
     updatedReportContent = stripLocalIdsInFilters(updatedReportContent);
-    updatedReportContent = normalizeEmptyDateValues(updatedReportContent, options.dateDatasets);
+    updatedReportContent = normalizeEmptyDateValues(
+        updatedReportContent,
+        options.dateDatasets,
+        options.isIncludeWithPeriodKept ?? false,
+    );
 
     updatedReportContent = {
         ...updatedReportContent,
@@ -299,6 +315,7 @@ export function isSavedReportCurrentReport(state: IAppState): boolean {
     const options: PrepareForComparisonOptions = {
         ignoreGeoTooltipText: shouldIgnoreGeoTooltipTextInSaveComparison(state),
         dateDatasets: DateDatasetsService.getPlainDateDatasets(state),
+        isIncludeWithPeriodKept: enableImprovedMetricDateFilter(state),
     };
 
     return _isEqual(

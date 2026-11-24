@@ -7,6 +7,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 import { ShortenedText, UiTooltip } from "@gooddata/sdk-ui-kit";
 
+import { getPeriodTitleWithEmptyValues } from "../../models/empty_date_values_title.js";
 import { type IAdditionalDateFilterLabel } from "../../selectors/additional_date_filter_selector.js";
 import { type EmptyDateValuesFilterMode } from "../../store/filter_bar/filter_bar_types.js";
 import { type IDateFilterOption } from "../filterBar/dateFilter/dateFilterOptionFactory.js";
@@ -27,25 +28,8 @@ export interface IMeasureDateFilterTitleProps {
 interface ITitleProps extends IMeasureDateFilterTitleProps {
     /** "name: value" per additional date filter, in the AD locale */
     additionalFilterLines: string[];
-    /** the AD translations the empty date values wording needs */
-    emptyValuesLabel: string;
-    exceptLabel: string;
-}
-
-function periodWithEmptyValues(
-    periodTitle: string,
-    isAllTime: boolean,
-    mode: EmptyDateValuesFilterMode | undefined,
-    emptyValuesLabel: string,
-    exceptLabel: string,
-): string {
-    if (mode === "only") {
-        return emptyValuesLabel;
-    }
-    if (mode === "exclude" && isAllTime) {
-        return `${periodTitle} ${exceptLabel} ${emptyValuesLabel}`;
-    }
-    return periodTitle;
+    /** adds the empty date values mode to the period title; built outside, it needs the AD translations */
+    withEmptyValues: (periodTitle: string, isAllTime: boolean) => string;
 }
 
 function Title({
@@ -53,12 +37,10 @@ function Title({
     attributeTitle,
     dateFormat,
     additionalFilterLines,
-    emptyDateValuesFilterMode,
-    emptyValuesLabel,
-    exceptLabel,
+    withEmptyValues,
 }: ITitleProps) {
     const sdkIntl = useIntl();
-    const periodTitle = periodWithEmptyValues(
+    const periodTitle = withEmptyValues(
         DateFilterHelpers.getDateFilterTitleUsingTranslator(
             DateFilterHelpers.applyExcludeCurrentPeriod(filterOption, excludeCurrentPeriod),
             sdkIntl,
@@ -66,9 +48,6 @@ function Title({
             dateFormat,
         ),
         isAllTimeDateFilterOption(filterOption),
-        emptyDateValuesFilterMode,
-        emptyValuesLabel,
-        exceptLabel,
     );
     const lines = [
         attributeTitle ? `${attributeTitle}: ${periodTitle}` : periodTitle,
@@ -122,15 +101,14 @@ export function MeasureDateFilterTitle(props: IMeasureDateFilterTitleProps) {
         false,
         intl,
     ).map(({ name, value }) => `${name}: ${value}`);
-    const emptyValuesLabel = intl.formatMessage({ id: "filter.date.additional_filter.empty_values" });
-    const exceptLabel = intl.formatMessage({ id: "gs.list.except" });
+    const withEmptyValues = (periodTitle: string, isAllTime: boolean) =>
+        getPeriodTitleWithEmptyValues(periodTitle, isAllTime, props.emptyDateValuesFilterMode, intl);
     return (
         <IntlWrapper locale={intl.locale}>
             <Title
                 {...props}
                 additionalFilterLines={additionalFilterLines}
-                emptyValuesLabel={emptyValuesLabel}
-                exceptLabel={exceptLabel}
+                withEmptyValues={withEmptyValues}
             />
         </IntlWrapper>
     );

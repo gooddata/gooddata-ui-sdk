@@ -332,15 +332,21 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             focusedIndex,
             isSimple: true,
             isWrapping: false,
+            pageSize: DEFAULT_VISIBLE_ITEMS_COUNT,
         });
 
     const scopedIdStoreValue = useScopedIdStoreValue(getItemKey);
 
-    const { containerRef } = useFocusWithinContainer(
+    const focusedElementId =
         focusedItem && focusedAction
             ? scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction })
-            : "",
-    );
+            : "";
+
+    // Jumping far through the virtualized rows (Home, End, PageUp, PageDown) unmounts the row that
+    // held the focus, and the browser drops the focus to the document body. React ignores the blur of
+    // the removed element, so isFocusWithin is still true and lets the hook move the focus back
+    // to the target row (or the grid, which redirects it to the active row).
+    const { containerRef } = useFocusWithinContainer(focusedElementId, { isFocusWithin });
 
     const itemRenderer = useCallback(
         (item: T): ReactElement => {

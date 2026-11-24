@@ -90,6 +90,12 @@ export interface IMeasureDateFilterPickerProps {
  * Metric date filter dropdown built from the same sections as the insight date filter picker in the filter
  * bar, without over-time comparison.
  */
+/**
+ * The picker exists only with the improved metric date filter, which writes the empty values mode as the
+ * date filter's own handling, executed with include on any period.
+ */
+const IS_INCLUDE_WITH_PERIOD_ALLOWED = true;
+
 export function MeasureDateFilterPicker({
     filter,
     dateDataset,
@@ -148,6 +154,7 @@ export function MeasureDateFilterPicker({
         true,
         selectedEmptyDateValuesFilterMode,
         emptyDateValuesFilter,
+        IS_INCLUDE_WITH_PERIOD_ALLOWED,
     );
     const isApplyEnabled = isChangeApplicable;
     const applyButtonTooltip = useDisabledApplyButtonTooltip(
@@ -155,6 +162,7 @@ export function MeasureDateFilterPicker({
         OverTimeComparisonTypes.NOTHING,
         true,
         selectedEmptyDateValuesFilterMode,
+        IS_INCLUDE_WITH_PERIOD_ALLOWED,
     );
 
     const apply = () => {
@@ -228,6 +236,7 @@ export function MeasureDateFilterPicker({
                         onEmptyDateValuesFilterModeChange={handleEmptyDateValuesFilterModeChange}
                         isDisabled={isOtherFiltersDisabled}
                         isAllTime={isAllTime}
+                        isIncludeWithPeriodAllowed={IS_INCLUDE_WITH_PERIOD_ALLOWED}
                         showDateGranularities
                     />
                 ) : null}

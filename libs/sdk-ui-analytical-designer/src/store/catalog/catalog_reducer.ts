@@ -5,6 +5,7 @@ import {
     type ICatalogAttributeHierarchy,
     type ICatalogDateAttributeHierarchy,
     type ICatalogGroup,
+    type IDateRangeParameterMetadataObject,
     type IScalarParameterMetadataObject,
 } from "@gooddata/sdk-model";
 import { _isEqual } from "@gooddata/util";
@@ -31,6 +32,7 @@ export const initialCatalogState: ICatalogState = {
     dateHierarchies: [],
     attributeHierarchies: [],
     parameters: [],
+    dateRangeParameters: [],
 };
 
 // Read-only lenses encapsulating the state shape to be used
@@ -47,6 +49,9 @@ export const catalogAttributeHierarchies = (state: ICatalogState): readonly ICat
     state.attributeHierarchies;
 export const catalogStateParameters = (state: ICatalogState): readonly IScalarParameterMetadataObject[] =>
     state.parameters;
+export const catalogStateDateRangeParameters = (
+    state: ICatalogState,
+): readonly IDateRangeParameterMetadataObject[] => state.dateRangeParameters;
 
 const catalogFlagsReducer = (
     state: ICatalogState["flags"],
@@ -188,6 +193,7 @@ export const catalogReducer = (state = initialCatalogState, action: CatalogActio
             return {
                 ...state,
                 parameters: action.payload.parameters,
+                dateRangeParameters: action.payload.dateRangeParameters,
             };
         }
         default:

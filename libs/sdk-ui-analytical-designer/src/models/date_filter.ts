@@ -7,6 +7,7 @@ import { type IBucketsMetaState } from "../store/buckets/buckets_meta_state.js";
 import { type IBucketItemMetricFilter } from "../typings/bucket_item_filter.js";
 
 import { type IDecoratedDateDatasetMeta } from "./date_dataset.js";
+import { getPeriodTitleWithEmptyValues } from "./empty_date_values_title.js";
 import {
     DecoratedPresetItem,
     type IDecoratedPresetItem,
@@ -31,16 +32,7 @@ function getAttributeTitle(filter: IDecoratedDateFilter) {
     return filter.dateDataset?.attributeTitle;
 }
 
-/**
- * Words the empty date values mode like the metric date filter chip and the filter bar's button:
- * "Empty values" for only, "All time except Empty values" for exclude on All time.
- */
 function getIntervalTitle(filter: IDecoratedDateFilter, intl: IntlShape, formatLocale?: string) {
-    const mode = filter.original?.emptyDateValuesFilter;
-    const emptyValuesLabel = () => intl.formatMessage({ id: "filter.date.additional_filter.empty_values" });
-    if (mode === "only") {
-        return emptyValuesLabel();
-    }
     const periodTitle = DecoratedPresetItem.getTitle(
         filter.interval,
         intl,
@@ -48,10 +40,12 @@ function getIntervalTitle(filter: IDecoratedDateFilter, intl: IntlShape, formatL
         LOCAL_TIMEZONE_OFFSET,
         formatLocale,
     );
-    if (mode === "exclude" && isAllTime(filter)) {
-        return `${periodTitle} ${intl.formatMessage({ id: "gs.list.except" })} ${emptyValuesLabel()}`;
-    }
-    return periodTitle;
+    return getPeriodTitleWithEmptyValues(
+        periodTitle,
+        isAllTime(filter),
+        filter.original?.emptyDateValuesFilter,
+        intl,
+    );
 }
 
 function getTitle(filter: IDecoratedDateFilter, intl: IntlShape, formatLocale?: string) {

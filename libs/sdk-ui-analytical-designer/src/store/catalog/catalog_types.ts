@@ -5,6 +5,7 @@ import {
     type ICatalogAttributeHierarchy,
     type ICatalogDateAttributeHierarchy,
     type ICatalogGroup,
+    type IDateRangeParameterMetadataObject,
     type IScalarParameterMetadataObject,
 } from "@gooddata/sdk-model";
 
@@ -32,4 +33,5 @@ export interface ICatalogState {
     readonly dateHierarchies: ReadonlyArray<ICatalogDateAttributeHierarchy>;
     readonly attributeHierarchies: ReadonlyArray<ICatalogAttributeHierarchy>;
     readonly parameters: ReadonlyArray<IScalarParameterMetadataObject>;
+    readonly dateRangeParameters: ReadonlyArray<IDateRangeParameterMetadataObject>;
 }

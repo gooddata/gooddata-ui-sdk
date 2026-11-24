@@ -137,6 +137,22 @@ describe("GlobalDateFilterLabel", () => {
             expect(presetName).toBe("Last 4 quarters");
         });
 
+        it("should add empty values to preset name when they are included", () => {
+            renderComponent({
+                filter: {
+                    filterOption: RELATIVE_DATE_FILTER_PRESETS["GDC.time.quarter"].find(
+                        (p) => p.localIdentifier === "LAST_4_QUARTERS",
+                    ),
+                    excludeCurrentPeriod: false,
+                },
+                emptyDateValuesFilterMode: "include",
+            });
+
+            expect(document.querySelector(".s-global-filter-label-bottom").textContent).toBe(
+                "Last 4 quarters, empty values",
+            );
+        });
+
         it("should keep preset name when empty values are excluded", () => {
             renderComponent({
                 filter: {

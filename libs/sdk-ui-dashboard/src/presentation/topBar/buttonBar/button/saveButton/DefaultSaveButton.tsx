@@ -66,7 +66,10 @@ export function useSaveButtonProps(): ISaveButtonProps {
 
     const isVisible = isEditing;
     const isEnabled =
-        isDashboardDirty && !isEmptyDashboard && canSaveDashboard && !isAiLoading && !isAiBuilding;
+        (isAiMode || (isDashboardDirty && canSaveDashboard)) &&
+        !isEmptyDashboard &&
+        !isAiLoading &&
+        !isAiBuilding;
 
     let buttonTitle = messages.controlButtonsSaveAndPublishTitle;
     if (isPrivateDashboard) {

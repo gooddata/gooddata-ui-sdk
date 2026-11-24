@@ -3966,7 +3966,7 @@ export type LocalizationTextKind = "title" | "description" | "tags" | "freeForm"
 export type LocalizationTranslatedSettingType = "METADATA_LOCALE" | "DATA_LOCALE";
 
 // @alpha
-export type LocalizationTranslationState = "missing" | "available" | "variant";
+export type LocalizationTranslationState = "missing" | "available" | "variant" | "unused";
 
 // @alpha
 export type LocalizationUsageSource = "USER" | "WORKSPACE" | "PARENT" | "ORGANIZATION" | "ENVIRONMENT" | "DEFAULT";

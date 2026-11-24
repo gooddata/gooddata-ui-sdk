@@ -633,7 +633,7 @@ export type DateFilterAbsoluteType = "absolute";
 export type DateFilterGranularity = "GDC.time.second" | "GDC.time.minute" | "GDC.time.hour" | "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.fiscal_month" | "GDC.time.quarter" | "GDC.time.fiscal_quarter" | "GDC.time.year" | "GDC.time.fiscal_year";
 
 // @alpha
-export type DateFilterOfAnyType = IDateFilter | IAbsoluteGranularityDateFilter;
+export type DateFilterOfAnyType = IDateFilter | IAbsoluteGranularityDateFilter | IParameterizedDateFilter;
 
 // @alpha
 export type DateFilterOptionAbsoluteFormType = "absoluteForm";
@@ -1002,7 +1002,7 @@ export function filterLocalIdentifier(filter: IFilter): string | undefined;
 export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined;
 
 // @public
-export function filterObjRef(filter: IAbsoluteDateFilter | IAbsoluteGranularityDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter): ObjRef;
+export function filterObjRef(filter: IAbsoluteDateFilter | IAbsoluteGranularityDateFilter | IParameterizedDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter): ObjRef;
 
 // @public
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
@@ -1172,6 +1172,9 @@ export function getParameterAllowedValues(definition: IParameterDefinition): IPa
 
 // @alpha
 export function getParameterAllowedValueTitle(allowedValue: IParameterAllowedValue): string;
+
+// @alpha
+export function getParameterTitle(ref: ObjRef, parameter: IParameterMetadataObject | undefined): string;
 
 // @alpha
 export function getParameterValueTitle(definition: IParameterDefinition, value: ParameterValue): string;
@@ -3194,6 +3197,12 @@ export interface IDateRangeParameterDefinition {
     type: "DATE_RANGE";
 }
 
+// @alpha
+export interface IDateRangeParameterMetadataObject extends IParameterMetadataObject {
+    // (undocumented)
+    definition: IDateRangeParameterDefinition;
+}
+
 // @public
 export interface IDateRangeParameterPeriod {
     // (undocumented)
@@ -4153,6 +4162,7 @@ export interface IFeatureFlags {
     // (undocumented)
     enableMySqlDataSource?: boolean;
     enableNewGeoPushpin?: boolean;
+    enableNewGettingStartedPage?: boolean;
     enableNewPivotTable?: boolean;
     enableNotificationChannelIdentifiers?: boolean;
     enableNullJoins?: boolean;
@@ -4202,7 +4212,7 @@ export interface IFeatureFlags {
 }
 
 // @public
-export type IFilter = IAbsoluteDateFilter | IAbsoluteGranularityDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter | IRankingFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
+export type IFilter = IAbsoluteDateFilter | IAbsoluteGranularityDateFilter | IParameterizedDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter | IRankingFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
 
 // @public
 export interface IFilterableWidget {
@@ -5209,7 +5219,7 @@ export interface IMeasureDescriptorObject {
 }
 
 // @public
-export type IMeasureFilter = IAbsoluteDateFilter | IAbsoluteGranularityDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
+export type IMeasureFilter = IAbsoluteDateFilter | IAbsoluteGranularityDateFilter | IParameterizedDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
 
 // @public
 export interface IMeasureGroupDescriptor {
@@ -5829,6 +5839,25 @@ export interface IParameterAllowedValue {
 
 // @public
 export type IParameterDefinition = INumberParameterDefinition | IStringParameterDefinition | IDateRangeParameterDefinition;
+
+// @public
+export interface IParameterizedDateFilter {
+    // (undocumented)
+    parameterizedDateFilter: IParameterizedDateFilterBody;
+}
+
+// @public
+export interface IParameterizedDateFilterBody extends IIdentifiableFilter {
+    dataSet: ObjRef;
+    emptyValueHandling?: EmptyValues;
+    parameter: ObjRef;
+}
+
+// @alpha
+export interface IParameterizedDateFilterOptions {
+    emptyValueHandling?: EmptyValues;
+    localIdentifier?: string;
+}
 
 // @public
 export interface IParameterMetadataObject extends IMetadataObject, IAuditable {
@@ -7671,6 +7700,9 @@ export function isDatePeriodGranularity(value: unknown): value is DatePeriodGran
 // @alpha
 export function isDateRangeParameterDefinition(def: IParameterDefinition): def is IDateRangeParameterDefinition;
 
+// @alpha
+export function isDateRangeParameterMetadataObject(parameter: IParameterMetadataObject): parameter is IDateRangeParameterMetadataObject;
+
 // @public
 export function isDimension(obj: unknown): obj is IDimension;
 
@@ -7826,7 +7858,7 @@ export function isExternalPluggableApplicationRegistryItem(app: PluggableApplica
 export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;
 
 // @public
-export function isFilter(obj: unknown): obj is Exclude<IFilter, IAbsoluteGranularityDateFilter>;
+export function isFilter(obj: unknown): obj is Exclude<IFilter, IAbsoluteGranularityDateFilter | IParameterizedDateFilter>;
 
 // @alpha
 export function isFilterContext(obj: unknown): obj is IFilterContext;
@@ -8072,6 +8104,9 @@ export interface ISourceInsightRankingFilterRef {
     // (undocumented)
     type: "rankingFilter";
 }
+
+// @alpha
+export function isParameterizedDateFilter(obj: unknown): obj is IParameterizedDateFilter;
 
 // @public
 export function isParameterMetadataObject(obj: unknown): obj is IParameterMetadataObject;
@@ -8420,7 +8455,7 @@ export const isSharedGranularity: (g: string | undefined) => boolean;
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
 // @public
-export function isSimpleMeasureFilter(obj: unknown): obj is Exclude<IMeasureFilter, IAbsoluteGranularityDateFilter>;
+export function isSimpleMeasureFilter(obj: unknown): obj is Exclude<IMeasureFilter, IAbsoluteGranularityDateFilter | IParameterizedDateFilter>;
 
 // @alpha
 export function isSimpleMeasureFilterOfAnyType(obj: unknown): obj is IMeasureFilter;
@@ -10072,6 +10107,9 @@ export function newMeasureValueFilterWithOptions(measureOrRef: IMeasure | ObjRef
 
 // @public
 export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[], localIdentifier?: string): INegativeAttributeFilter;
+
+// @alpha
+export function newParameterizedDateFilter(dateDataSet: ObjRef | Identifier, parameter: ObjRef | Identifier, options?: IParameterizedDateFilterOptions): IParameterizedDateFilter;
 
 // @public
 export function newPopMeasure(measureOrLocalId: MeasureOrLocalId, popAttrIdOrRef: ObjRef | Identifier, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;

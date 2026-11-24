@@ -7,6 +7,8 @@
 import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
 import { AxiosRequestConfig } from 'axios';
+import { DatePeriodGranularity } from '@gooddata/sdk-model';
+import { DatePeriodRange } from '@gooddata/sdk-model';
 import { GenericAbortSignal } from 'axios';
 import { IDashboardTimezoneConfig } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -27680,16 +27682,28 @@ export interface IStaticFeatures {
 }
 
 // @public (undocumented)
-export function isTigerFilter(obj: unknown): obj is ITigerFilter;
+export function isTigerFilter(obj: unknown): obj is Exclude<ITigerFilter, ITigerAbsoluteGranularityDateFilter>;
 
 // @public (undocumented)
-export function isTigerFilterContextItem(obj: unknown): obj is ITigerFilterContextItem;
+export function isTigerFilterContextItem(obj: unknown): obj is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter>;
+
+// @alpha (undocumented)
+export function isTigerFilterContextItemOfAnyType(obj: unknown): obj is ITigerFilterContextItem;
 
 // @public (undocumented)
-export function isTigerFilterContextItems(filters: unknown[]): filters is ITigerFilterContextItem[];
+export function isTigerFilterContextItems(filters: unknown[]): filters is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter>[];
+
+// @alpha (undocumented)
+export function isTigerFilterContextItemsOfAnyType(filters: unknown[]): filters is ITigerFilterContextItem[];
+
+// @alpha (undocumented)
+export function isTigerFilterOfAnyType(obj: unknown): obj is ITigerFilter;
 
 // @public (undocumented)
-export function isTigerFilters(filters: unknown[]): filters is ITigerFilter[];
+export function isTigerFilters(filters: unknown[]): filters is Exclude<ITigerFilter, ITigerAbsoluteGranularityDateFilter>[];
+
+// @alpha (undocumented)
+export function isTigerFiltersOfAnyType(filters: unknown[]): filters is ITigerFilter[];
 
 // @public (undocumented)
 function isVisualizationObject(visualizationObject: unknown): visualizationObject is IVisualizationObject;
@@ -27710,6 +27724,17 @@ export interface ITigerAbsoluteDateFilter {
         localIdentifier?: string;
         emptyValueHandling?: TigerStoredEmptyValueHandling;
     };
+}
+
+// @public
+export interface ITigerAbsoluteGranularityDateFilter {
+    // (undocumented)
+    absoluteGranularityDateFilter: {
+        dataSet: ObjRef;
+        granularity: DatePeriodGranularity;
+        localIdentifier?: string;
+        emptyValueHandling?: TigerStoredEmptyValueHandling;
+    } & DatePeriodRange;
 }
 
 // @public
@@ -27905,6 +27930,17 @@ export interface ITigerCompoundCondition {
         conditions: Array<ITigerComparisonConditionInCompound | ITigerRangeConditionInCompound>;
         treatNullValuesAs?: number;
     };
+}
+
+// @public
+export interface ITigerDashboardAbsoluteGranularityDateFilter {
+    // (undocumented)
+    dashboardAbsoluteGranularityDateFilter: {
+        dataSet?: ObjRef;
+        localIdentifier?: string;
+        emptyValueHandling?: TigerStoredEmptyValueHandling;
+        granularity: DatePeriodGranularity;
+    } & DatePeriodRange;
 }
 
 // @public
@@ -28131,10 +28167,10 @@ export interface ITigerDashboardTab {
 }
 
 // @public
-export type ITigerFilter = ITigerAbsoluteDateFilter | ITigerRelativeDateFilter | ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter | ITigerMeasureValueFilter | ITigerRankingFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter;
+export type ITigerFilter = ITigerAbsoluteDateFilter | ITigerAbsoluteGranularityDateFilter | ITigerRelativeDateFilter | ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter | ITigerMeasureValueFilter | ITigerRankingFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter;
 
 // @public
-export type ITigerFilterContextItem = DashboardFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter | ITigerDashboardMeasureValueFilter;
+export type ITigerFilterContextItem = DashboardFilter | ITigerDashboardAbsoluteGranularityDateFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter | ITigerDashboardMeasureValueFilter;
 
 // @public
 export interface ITigerInsightLayerDefinition {

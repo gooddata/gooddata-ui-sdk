@@ -19,8 +19,11 @@ import {
 } from "../backend.js";
 import { handleReceivedApiToken } from "../postMessageApi/sagas/api_token_received_saga.js";
 import { backendInitialized } from "../sagas/application_context/application_context_actions.js";
+import { isEmbeddingOriginValidationEnabled } from "../selectors/feature_flag_selector.js";
 import { storeApiToken } from "../store/application_context/app_context_actions.js";
 import { selectApiToken, selectApiTokenType } from "../store/application_context/app_context_selector.js";
+
+const PARENT_ORIGIN = "https://embedder.example.com";
 
 const setApiTokenCommand = (token: string, type: "gooddata" | "jwt") =>
     ({
@@ -116,8 +119,13 @@ describe("adoptHostBackend", () => {
         const setApiToken = vi.fn();
         adoptHostBackend({ instance: dummyBackend(), setApiToken });
 
-        return expectSaga(handleReceivedApiToken, setApiTokenCommand("renewed-token", "gooddata"))
+        return expectSaga(
+            handleReceivedApiToken,
+            setApiTokenCommand("renewed-token", "gooddata"),
+            PARENT_ORIGIN,
+        )
             .provide([
+                [select(isEmbeddingOriginValidationEnabled), false],
                 [select(selectApiTokenType), "gooddata"],
                 [select(selectApiToken), "previous-token"],
             ])
@@ -132,8 +140,13 @@ describe("adoptHostBackend", () => {
         const setApiToken = vi.fn();
         adoptHostBackend({ instance: dummyBackend(), setApiToken });
 
-        return expectSaga(handleReceivedApiToken, setApiTokenCommand("first-token", "gooddata"))
+        return expectSaga(
+            handleReceivedApiToken,
+            setApiTokenCommand("first-token", "gooddata"),
+            PARENT_ORIGIN,
+        )
             .provide([
+                [select(isEmbeddingOriginValidationEnabled), false],
                 [select(selectApiTokenType), undefined],
                 [select(selectApiToken), undefined],
             ])
@@ -150,8 +163,13 @@ describe("adoptHostBackend", () => {
         // components that read it.
         adoptHostBackend({ instance: dummyBackend() });
 
-        return expectSaga(handleReceivedApiToken, setApiTokenCommand("renewed-token", "gooddata"))
+        return expectSaga(
+            handleReceivedApiToken,
+            setApiTokenCommand("renewed-token", "gooddata"),
+            PARENT_ORIGIN,
+        )
             .provide([
+                [select(isEmbeddingOriginValidationEnabled), false],
                 [select(selectApiTokenType), "gooddata"],
                 [select(selectApiToken), "previous-token"],
             ])

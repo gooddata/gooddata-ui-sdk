@@ -1,25 +1,20 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type PayloadAction } from "@reduxjs/toolkit";
 import { getContext, select } from "redux-saga/effects";
 
 import { type IChatConversationLocal } from "../../model.js";
 import { getVisualizationHref } from "../../utils.js";
-import { conversationSelector } from "../messages/messagesSelectors.js";
+import { conversationByIdOrLocalIdSelector } from "../messages/messagesSelectors.js";
+import { type saveVisualizationSuccessAction } from "../messages/messagesSlice.js";
 import { type OptionsDispatcher } from "../options.js";
 
-export function* onVisualizationSuccessSave({
-    payload,
-}: PayloadAction<{
-    visualizationId: string;
-    assistantMessageId: string;
-    savedVisualizationId: string;
-    explore: boolean;
-}>) {
+export function* onVisualizationSuccessSave({ payload }: ReturnType<typeof saveVisualizationSuccessAction>) {
     // Retrieve backend from context
     const workspace: string = yield getContext("workspace");
     const options: OptionsDispatcher = yield getContext("optionsDispatcher");
-    const conversation: IChatConversationLocal = yield select(conversationSelector);
+    const conversation: IChatConversationLocal | undefined = payload.conversationId
+        ? yield select(conversationByIdOrLocalIdSelector, payload.conversationId)
+        : undefined;
 
     const { onLinkClick, allowNativeLinks } = options.getOnLinkClick();
     const visualizationStatus = "saved";

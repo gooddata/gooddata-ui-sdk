@@ -339,6 +339,11 @@ describe("UiMenu", () => {
         // Item with submenu should have aria-haspopup
         const itemWithSubmenu = screen.getByText("Item 4").closest("li");
         expect(itemWithSubmenu).toHaveAttribute("aria-haspopup", "menu");
+        expect(itemWithSubmenu).toHaveAttribute("aria-expanded", "false");
+
+        // Item without submenu should not expose an expanded state
+        const plainItem = screen.getByText("Item 1").closest("li");
+        expect(plainItem).not.toHaveAttribute("aria-expanded");
     });
 
     it("should render items with a selectionRole as menuitemradio and aria-checked", () => {

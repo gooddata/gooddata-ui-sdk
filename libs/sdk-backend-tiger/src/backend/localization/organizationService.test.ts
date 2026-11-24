@@ -71,6 +71,7 @@ describe("TigerOrganizationLocalizationService", () => {
         ["available", "METADATA_LANGUAGE_MISMATCH"],
         ["variant", "METADATA_MISSING_TRANSLATION"],
         ["missing", "METADATA_MISSING_TRANSLATION"],
+        ["unused", "METADATA_UNUSED_TRANSLATION"],
     ] as const)(
         "lists the workspaces behind a %s validation from the issue %s",
         async (translation, type) => {

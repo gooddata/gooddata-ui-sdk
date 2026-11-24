@@ -1137,6 +1137,11 @@ export interface IFeatureFlags {
     enableDateRangeParameters?: boolean;
 
     /**
+     * Show the new organization Getting started page.
+     */
+    enableNewGettingStartedPage?: boolean;
+
+    /**
      * Enable enhanced insight picker.
      */
     enableEnhancedInsightPicker?: boolean;

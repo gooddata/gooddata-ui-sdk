@@ -4,6 +4,7 @@ import { describe, expect, expectTypeOf, it } from "vitest";
 
 import { type DateFilterGranularity } from "../../../dateFilterConfig/index.js";
 import { idRef } from "../../../objRef/factory.js";
+import { type ObjRef } from "../../../objRef/index.js";
 
 import {
     type DateRangeParameterGranularity,
@@ -12,8 +13,10 @@ import {
     type IParameterMetadataObject,
     getParameterAllowedValueTitle,
     getParameterAllowedValues,
+    getParameterTitle,
     getParameterValueTitle,
     isDateRangeParameterDefinition,
+    isDateRangeParameterMetadataObject,
     isScalarParameterDefinition,
     isScalarParameterMetadataObject,
     isStringParameterDefinition,
@@ -359,26 +362,70 @@ describe("isScalarParameterDefinition", () => {
     });
 });
 
-describe("isScalarParameterMetadataObject", () => {
-    function parameterWith(definition: IParameterDefinition): IParameterMetadataObject {
-        return {
-            type: "parameter",
-            id: "parameter",
-            uri: "",
-            ref: idRef("parameter", "parameter"),
-            title: "Parameter",
-            description: "",
-            production: true,
-            deprecated: false,
-            unlisted: false,
-            definition,
-        };
-    }
+function parameterWith(
+    definition: IParameterDefinition,
+    overrides: Partial<IParameterMetadataObject> = {},
+): IParameterMetadataObject {
+    return {
+        type: "parameter",
+        id: "parameter",
+        uri: "",
+        ref: idRef("parameter", "parameter"),
+        title: "Parameter",
+        description: "",
+        production: true,
+        deprecated: false,
+        unlisted: false,
+        definition,
+        ...overrides,
+    };
+}
 
+describe("isScalarParameterMetadataObject", () => {
     it("is true for a NUMBER parameter and false for a DATE_RANGE parameter", () => {
         expect(isScalarParameterMetadataObject(parameterWith({ type: "NUMBER", defaultValue: 5 }))).toBe(
             true,
         );
         expect(isScalarParameterMetadataObject(parameterWith(dateRangeDefinition))).toBe(false);
+    });
+});
+
+describe("isDateRangeParameterMetadataObject", () => {
+    it("is true for a DATE_RANGE parameter and false for NUMBER and STRING parameters", () => {
+        expect(isDateRangeParameterMetadataObject(parameterWith(dateRangeDefinition))).toBe(true);
+        expect(isDateRangeParameterMetadataObject(parameterWith({ type: "NUMBER", defaultValue: 5 }))).toBe(
+            false,
+        );
+        expect(
+            isDateRangeParameterMetadataObject(parameterWith({ type: "STRING", defaultValue: "Actual" })),
+        ).toBe(false);
+    });
+});
+
+describe("getParameterTitle", () => {
+    const ref = idRef("last_month", "parameter");
+    const uriRef: ObjRef = { uri: "/gdc/md/workspace/obj/1" };
+
+    it("returns the parameter's title", () => {
+        const parameter = parameterWith(dateRangeDefinition, { id: "last_month", ref, title: "Last month" });
+        expect(getParameterTitle(ref, parameter)).toBe("Last month");
+    });
+
+    it("returns the parameter's id when its title is empty", () => {
+        const parameter = parameterWith(dateRangeDefinition, { id: "last_month", ref, title: "" });
+        expect(getParameterTitle(ref, parameter)).toBe("last_month");
+    });
+
+    it("returns the parameter's id, not the uri, when found through a uri ref with an empty title", () => {
+        const parameter = parameterWith(dateRangeDefinition, { id: "last_month", ref: uriRef, title: "" });
+        expect(getParameterTitle(uriRef, parameter)).toBe("last_month");
+    });
+
+    it("returns the identifier of the ref when the parameter is not known", () => {
+        expect(getParameterTitle(ref, undefined)).toBe("last_month");
+    });
+
+    it("returns the uri of the ref when the parameter is not known and the ref is a uri ref", () => {
+        expect(getParameterTitle(uriRef, undefined)).toBe("/gdc/md/workspace/obj/1");
     });
 });

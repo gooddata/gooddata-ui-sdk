@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-ui-analytical-designer: With the improved metric date filter on, empty date values can be included with any period, not only All time. Filters with included empty values and a period, for example created in YAML or through the API, now show the empty-date rows, and the filter titles read \"<period>, empty values\".",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "ivan.nejezchleb@gooddata.com"
+}

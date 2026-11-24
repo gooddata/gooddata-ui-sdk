@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "sdk-backend-spi, sdk-backend-tiger, gdc-home-ui: Show a translation that nobody uses as an Unused translation note in the Validations tab of the language side panel, in the organization and the workspace view, and list the workspaces that own it. A note does not raise the Settings attention dot or change the status of the language",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

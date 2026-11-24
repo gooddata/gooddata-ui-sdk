@@ -3,11 +3,11 @@ Copyright (c) 2017-2026 GoodData Corporation
 This product includes a number of subcomponents with separate copyright notices and license terms below. Your use of these subcomponents is subject to the terms and conditions of the subcomponent's license. This GoodData project does not necessarily use all the open source software referred to below and may also only use portions of a given package. With respect to the open source software listed in this document, if you (i) have any questions, (ii) wish to receive source code for packages under licenses that require their source code to be made available (such as the GNU Lesser Public License), or (iii) discover any errors or omissions in the licensing information provided, please contact us at legal@gooddata.com. Please identify in source code requests: (i) the packages for which you are requesting corresponding source, (ii) the GoodData product (including any available version) with which the package was provided; and (iii) an email address (if available) or postal address at which GoodData may contact you.
 
 --------------------------------------------------------------------------------
-Attribution Notice for @gooddata/sdk-ui-dashboard (11.70.0-alpha.2)
+Attribution Notice for @gooddata/sdk-ui-dashboard (11.70.0-alpha.3)
 Package License: LicenseRef-LICENSE
 Own License File: LICENSE
-Date generated: 2026-11-20
-Revision ID: ef6fed3dd5fa9c43ff7a6af3634fdc17c5cfc677
+Date generated: 2026-11-23
+Revision ID: 4230cf24920a004f6f287b5132f490ceb8c41164
 
 This notice lists the components that @gooddata/sdk-ui-dashboard depends on, directly or through other
 packages, with the license and copyright information reported for each of them.
@@ -19,29 +19,29 @@ change those terms.
 Dependencies
 
 Local GoodData SDK components
-- @gooddata/api-client-tiger (11.70.0-alpha.2) [MIT] — Transitive
-- @gooddata/sdk-backend-base (11.70.0-alpha.2) [MIT] — Direct
-- @gooddata/sdk-backend-spi (11.70.0-alpha.2) [MIT] — Direct
-- @gooddata/sdk-backend-tiger (11.70.0-alpha.2) [MIT] — Transitive
-- @gooddata/sdk-code-convertors (11.70.0-alpha.2) [MIT] — Transitive
-- @gooddata/sdk-code-schemas (11.70.0-alpha.2) [MIT] — Transitive
-- @gooddata/sdk-embedding (11.70.0-alpha.2) [MIT] — Direct
-- @gooddata/sdk-maql-language-server (11.70.0-alpha.2) [MIT] — Transitive
-- @gooddata/sdk-model (11.70.0-alpha.2) [MIT] — Direct
-- @gooddata/sdk-pluggable-application-model (11.70.0-alpha.2) [MIT] — Transitive
-- @gooddata/sdk-ui (11.70.0-alpha.2) [MIT] — Direct
-- @gooddata/sdk-ui-analytical-designer (11.70.0-alpha.2) [LicenseRef-LICENSE] — Direct
-- @gooddata/sdk-ui-charts (11.70.0-alpha.2) [LicenseRef-LICENSE] — Direct
-- @gooddata/sdk-ui-ext (11.70.0-alpha.2) [LicenseRef-LICENSE] — Direct
-- @gooddata/sdk-ui-filters (11.70.0-alpha.2) [MIT] — Direct
-- @gooddata/sdk-ui-geo (11.70.0-alpha.2) [LicenseRef-LICENSE] — Direct
-- @gooddata/sdk-ui-kit (11.70.0-alpha.2) [MIT] — Direct
-- @gooddata/sdk-ui-metric-component (11.70.0-alpha.2) [LicenseRef-LICENSE] — Transitive
-- @gooddata/sdk-ui-pivot (11.70.0-alpha.2) [LicenseRef-LICENSE] — Direct
-- @gooddata/sdk-ui-semantic-search (11.70.0-alpha.2) [MIT] — Direct
-- @gooddata/sdk-ui-theme-provider (11.70.0-alpha.2) [MIT] — Direct
-- @gooddata/sdk-ui-vis-commons (11.70.0-alpha.2) [MIT] — Direct
-- @gooddata/util (11.70.0-alpha.2) [MIT] — Direct
+- @gooddata/api-client-tiger (11.70.0-alpha.3) [MIT] — Transitive
+- @gooddata/sdk-backend-base (11.70.0-alpha.3) [MIT] — Direct
+- @gooddata/sdk-backend-spi (11.70.0-alpha.3) [MIT] — Direct
+- @gooddata/sdk-backend-tiger (11.70.0-alpha.3) [MIT] — Transitive
+- @gooddata/sdk-code-convertors (11.70.0-alpha.3) [MIT] — Transitive
+- @gooddata/sdk-code-schemas (11.70.0-alpha.3) [MIT] — Transitive
+- @gooddata/sdk-embedding (11.70.0-alpha.3) [MIT] — Direct
+- @gooddata/sdk-maql-language-server (11.70.0-alpha.3) [MIT] — Transitive
+- @gooddata/sdk-model (11.70.0-alpha.3) [MIT] — Direct
+- @gooddata/sdk-pluggable-application-model (11.70.0-alpha.3) [MIT] — Transitive
+- @gooddata/sdk-ui (11.70.0-alpha.3) [MIT] — Direct
+- @gooddata/sdk-ui-analytical-designer (11.70.0-alpha.3) [LicenseRef-LICENSE] — Direct
+- @gooddata/sdk-ui-charts (11.70.0-alpha.3) [LicenseRef-LICENSE] — Direct
+- @gooddata/sdk-ui-ext (11.70.0-alpha.3) [LicenseRef-LICENSE] — Direct
+- @gooddata/sdk-ui-filters (11.70.0-alpha.3) [MIT] — Direct
+- @gooddata/sdk-ui-geo (11.70.0-alpha.3) [LicenseRef-LICENSE] — Direct
+- @gooddata/sdk-ui-kit (11.70.0-alpha.3) [MIT] — Direct
+- @gooddata/sdk-ui-metric-component (11.70.0-alpha.3) [LicenseRef-LICENSE] — Transitive
+- @gooddata/sdk-ui-pivot (11.70.0-alpha.3) [LicenseRef-LICENSE] — Direct
+- @gooddata/sdk-ui-semantic-search (11.70.0-alpha.3) [MIT] — Direct
+- @gooddata/sdk-ui-theme-provider (11.70.0-alpha.3) [MIT] — Direct
+- @gooddata/sdk-ui-vis-commons (11.70.0-alpha.3) [MIT] — Direct
+- @gooddata/util (11.70.0-alpha.3) [MIT] — Direct
 
 External components
 - @aaronhayes/react-use-hubspot-form (2.1.2) [MIT] — Transitive
@@ -495,7 +495,7 @@ Local GoodData SDK components
 ================================================================================
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/api-client-tiger (11.70.0-alpha.2)
+Package Title: @gooddata/api-client-tiger (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -513,7 +513,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-backend-base (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-backend-base (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -531,7 +531,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-backend-spi (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-backend-spi (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -549,7 +549,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-backend-tiger (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-backend-tiger (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -567,7 +567,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-code-convertors (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-code-convertors (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -585,7 +585,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-code-schemas (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-code-schemas (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -615,7 +615,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-embedding (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-embedding (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -633,7 +633,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-maql-language-server (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-maql-language-server (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -651,7 +651,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-model (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-model (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -669,7 +669,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-pluggable-application-model (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-pluggable-application-model (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -699,7 +699,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -717,7 +717,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-analytical-designer (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-analytical-designer (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -757,7 +757,7 @@ THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICA
 10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-charts (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-charts (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -797,7 +797,7 @@ THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICA
 10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-ext (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-ext (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -837,7 +837,7 @@ THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICA
 10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-filters (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-filters (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -855,7 +855,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-geo (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-geo (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -895,7 +895,7 @@ THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICA
 10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-kit (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-kit (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -913,7 +913,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-metric-component (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-metric-component (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -953,7 +953,7 @@ THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICA
 10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-pivot (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-pivot (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -993,7 +993,7 @@ THE FOREGOING LIMITATIONS SHALL APPLY TO THE MAXIMUM EXTENT PERMITTED BY APPLICA
 10. Governing Law These terms are governed by the laws of the State of California and the United States of America without regard to conflict of laws principles. You may not assign any part of this Agreement without the prior written consent of GoodData. Any attempted assignment without consent shall be void. These terms constitute the entire agreement between you and GoodData with respect to the Library and supersede all prior written or oral communications, understandings and agreements. Any waiver of these terms must be in writing to be effective. If any provision of these terms is found to be invalid or unenforceable, the remaining terms will continue to be valid and enforceable to the fullest extent permitted by law.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-semantic-search (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-semantic-search (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -1011,7 +1011,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-theme-provider (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-theme-provider (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -1029,7 +1029,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/sdk-ui-vis-commons (11.70.0-alpha.2)
+Package Title: @gooddata/sdk-ui-vis-commons (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------
@@ -1047,7 +1047,7 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 --------------------------------------------------------------------------------
-Package Title: @gooddata/util (11.70.0-alpha.2)
+Package Title: @gooddata/util (11.70.0-alpha.3)
 Package Source: Local workspace
 Package Depth: Direct
 --------------------------------------------------------------------------------

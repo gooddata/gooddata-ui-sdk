@@ -10,6 +10,7 @@ import {
     type ObjRef,
     areObjRefsEqual,
     catalogItemMetadataObject,
+    getParameterTitle,
     isCatalogAttribute,
     isCatalogComputedAttribute,
     isCatalogFact,
@@ -28,6 +29,7 @@ import {
     catalogAttributeHierarchies,
     catalogDateHierarchies,
     catalogStateAvailableItemsUris,
+    catalogStateDateRangeParameters,
     catalogStateFlags,
     catalogStateGroups,
     catalogStateItems,
@@ -60,6 +62,17 @@ export const getDateHierarchies = createSelector(getCatalogState, catalogDateHie
 export const getAttributeHierarchies = createSelector(getCatalogState, catalogAttributeHierarchies);
 
 export const getCatalogParameters = createSelector(getCatalogState, catalogStateParameters);
+
+export const getCatalogDateRangeParameters = createSelector(getCatalogState, catalogStateDateRangeParameters);
+
+export const getCatalogDateRangeParameterByRef = (ref: ObjRef) =>
+    createSelector(getCatalogDateRangeParameters, (parameters) =>
+        parameters.find((parameter) => areObjRefsEqual(parameter.ref, ref)),
+    );
+
+/** Title of the date range parameter `ref` points to, with the id fallbacks of `getParameterTitle`. */
+export const getCatalogDateRangeParameterTitle = (ref: ObjRef) =>
+    createSelector(getCatalogDateRangeParameterByRef(ref), (parameter) => getParameterTitle(ref, parameter));
 
 export const getCatalogItemById = (id: string) =>
     createSelector(getCatalogItems, (items) =>

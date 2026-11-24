@@ -1072,6 +1072,10 @@ export const TigerFeatureDefinitions: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };
+    readonly enableNewGettingStartedPage: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
     readonly enableEnhancedInsightPicker: {
         type: "BOOLEAN";
         defaultValue: boolean;

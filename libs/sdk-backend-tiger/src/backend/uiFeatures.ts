@@ -108,6 +108,7 @@ export const TigerFeatureDefinitions = {
     enableAnalyticalCatalogVisualizationEditor: booleanFeature(false),
     enableStringParameters: booleanFeature(true),
     enableDateRangeParameters: booleanFeature(false),
+    enableNewGettingStartedPage: booleanFeature(false),
     enableEnhancedInsightPicker: booleanFeature(false),
     enableDashboardVisualizationDelete: booleanFeature(false),
     enableAiAgenticSuggestions: booleanFeature(false),

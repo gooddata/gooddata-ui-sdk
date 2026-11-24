@@ -2,12 +2,21 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { ITigerFilter, ITigerFilterContextItem } from "./TigerTypes.js";
+import type {
+    ITigerAbsoluteGranularityDateFilter,
+    ITigerDashboardAbsoluteGranularityDateFilter,
+    ITigerFilter,
+    ITigerFilterContextItem,
+} from "./TigerTypes.js";
 import {
     isTigerFilter,
     isTigerFilterContextItem,
+    isTigerFilterContextItemOfAnyType,
     isTigerFilterContextItems,
+    isTigerFilterContextItemsOfAnyType,
+    isTigerFilterOfAnyType,
     isTigerFilters,
+    isTigerFiltersOfAnyType,
 } from "./typeGuards.js";
 
 describe("typeGuards", () => {
@@ -96,5 +105,62 @@ describe("typeGuards", () => {
             ]),
         ).toBe(true);
         expect(isTigerFilterContextItems([attributeDashboardFilter, { foo: "bar" }])).toBe(false);
+    });
+
+    const granularityDateFilter: ITigerAbsoluteGranularityDateFilter = {
+        absoluteGranularityDateFilter: {
+            dataSet: { identifier: "dataset.closedDate", type: "dataSet" },
+            granularity: "GDC.time.month",
+            from: "2026-01",
+            to: "2026-03",
+        },
+    };
+
+    const granularityDateDashboardFilter: ITigerDashboardAbsoluteGranularityDateFilter = {
+        dashboardAbsoluteGranularityDateFilter: {
+            granularity: "GDC.time.month",
+            to: "2026-03",
+        },
+    };
+
+    it("recognizes filter context items of any type", () => {
+        expect(isTigerFilterContextItemOfAnyType(granularityDateDashboardFilter)).toBe(true);
+        expect(isTigerFilterContextItemOfAnyType(attributeDashboardFilter)).toBe(true);
+        expect(isTigerFilterContextItemOfAnyType(granularityDateFilter)).toBe(false);
+        expect(isTigerFilterContextItemOfAnyType(null)).toBe(false);
+    });
+
+    it("recognizes filter context item arrays of any type and rejects mixed arrays", () => {
+        expect(
+            isTigerFilterContextItemsOfAnyType([
+                attributeDashboardFilter,
+                granularityDateDashboardFilter,
+                dateDashboardFilter,
+            ]),
+        ).toBe(true);
+        expect(isTigerFilterContextItemsOfAnyType([granularityDateDashboardFilter, { foo: "bar" }])).toBe(
+            false,
+        );
+    });
+
+    it("recognizes filters of any type", () => {
+        expect(isTigerFilterOfAnyType(granularityDateFilter)).toBe(true);
+        expect(isTigerFilterOfAnyType(compoundMeasureValueFilter)).toBe(true);
+        expect(isTigerFilterOfAnyType(granularityDateDashboardFilter)).toBe(false);
+        expect(isTigerFilterOfAnyType(null)).toBe(false);
+    });
+
+    it("recognizes filter arrays of any type and rejects mixed arrays", () => {
+        expect(isTigerFiltersOfAnyType([compoundMeasureValueFilter, granularityDateFilter])).toBe(true);
+        expect(isTigerFiltersOfAnyType([granularityDateFilter, { foo: "bar" }])).toBe(false);
+    });
+
+    it("does not match the absolute date filter with granularity by the guards that are not of any type", () => {
+        expect(isTigerFilter(granularityDateFilter)).toBe(false);
+        expect(isTigerFilters([compoundMeasureValueFilter, granularityDateFilter])).toBe(false);
+        expect(isTigerFilterContextItem(granularityDateDashboardFilter)).toBe(false);
+        expect(isTigerFilterContextItems([attributeDashboardFilter, granularityDateDashboardFilter])).toBe(
+            false,
+        );
     });
 });

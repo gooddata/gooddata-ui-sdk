@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "comment": "gdc-home-ui: Show the same \"Metadata language has no translation\" card, with the same text and documentation link, in the organization and the workspace view. The card no longer names a translation under another code of the language, because the two views load different statistics and could not agree",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

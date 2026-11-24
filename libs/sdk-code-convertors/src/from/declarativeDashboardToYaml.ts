@@ -1279,11 +1279,12 @@ function declarativeDateFilterToYaml(filter: IDashboardDateFilter, errorContext?
     }
 
     if (isRelativeDashboardDateFilter(filter)) {
-        // Relative filter
-        // Casting and parsing cause server may return string sometimes, invalid typing...
-        if (typeof filter.dateFilter.from === "number" && typeof filter.dateFilter.to === "number") {
-            dateFilter.add(new Pair("from", parseInt(String(filter.dateFilter.from), 10)));
-            dateFilter.add(new Pair("to", parseInt(String(filter.dateFilter.to), 10)));
+        // Relative filter. Older saves and imported layouts store the bounds as strings ("-1").
+        const from = parseInt(String(filter.dateFilter.from), 10);
+        const to = parseInt(String(filter.dateFilter.to), 10);
+        if (!Number.isNaN(from) && !Number.isNaN(to)) {
+            dateFilter.add(new Pair("from", from));
+            dateFilter.add(new Pair("to", to));
         }
     } else {
         // Absolute filter

@@ -3,18 +3,9 @@
 import { type PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, put, select } from "redux-saga/effects";
 
-import {
-    type IAnalyticalBackend,
-    type IChatConversationItem,
-    type IChatConversationItemsQueryResult,
-} from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IChatConversationItem } from "@gooddata/sdk-backend-spi";
 
-import {
-    type IChatConversationLocal,
-    type IChatConversationLocalItem,
-    makeConversationItem,
-} from "../../model.js";
-import { isClarificationQuestionsItem } from "../../utils.js";
+import { type IChatConversationLocal, type IChatConversationLocalItem } from "../../model.js";
 import {
     asyncProcessSelector,
     conversationMessagesSelector,
@@ -29,8 +20,9 @@ import {
     startNewConversationAction,
 } from "../messages/messagesSlice.js";
 
+import { fetchConversationList, getLatestConversation } from "./conversationList.js";
 import { consumeStaleConversationSession } from "./conversationSession.js";
-import { convertToLocalContent } from "./converters/toLocalContent.js";
+import { convertToLocalConversationItems } from "./converters/toLocalConversationItems.js";
 import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
 
 /**
@@ -177,11 +169,7 @@ function* fetchLatestConversation(current: IChatConversationLocal | undefined): 
     const isPreview: boolean | undefined = yield getContext("isPreview");
 
     const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
-    const query = api.getConversationItemsQuery().withSize(100).withPage(0);
-    const getConversations = query.query.bind(query);
-
-    const results: IChatConversationItemsQueryResult = yield call(getConversations);
-    const conversations = results.items.map((item) => ({ ...item, localId: item.id }));
+    const conversations: IChatConversationLocal[] = yield call(fetchConversationList, api);
 
     // Nothing on the backend - do not clobber the stored list; keep whatever is currently shown.
     if (conversations.length === 0) {
@@ -200,16 +188,13 @@ function* fetchLatestConversation(current: IChatConversationLocal | undefined): 
         return active;
     }
 
-    return storedConversations
-        .slice()
-        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())[0];
+    return getLatestConversation(storedConversations);
 }
 
 /**
  * Fetch the thread history for the given conversation and convert it to local items.
  *
- * Mirrors how onThreadLoad's fetchCurrentConversation builds items from the backend response, but
- * intentionally returns ONLY the backend items (no merge/append with cached items) so the caller can
+ * Intentionally returns ONLY the backend items (no merge/append with cached items) so the caller can
  * replace the cached history wholesale without duplicating it.
  * @internal
  */
@@ -224,16 +209,5 @@ function* fetchConversationItems(conversationId: string) {
 
     const results: IChatConversationItem[] = yield call(loadHistory);
 
-    return results.map((item, i, arr) => {
-        const isClarification = isClarificationQuestionsItem(item);
-        const filled = isClarification ? arr.length - 1 !== i : true;
-
-        return makeConversationItem(
-            {
-                ...item,
-                content: convertToLocalContent(item.content),
-            },
-            filled,
-        );
-    });
+    return convertToLocalConversationItems(results);
 }

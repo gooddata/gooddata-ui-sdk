@@ -269,7 +269,7 @@ describe("useDashboardCopilot", () => {
         expect(result.current.copilot.getSnapshot().applications).toHaveLength(1);
         dashboardEvent({ type: "GDC.DASH/EVT.DEFINITION_CHANGED", correlationId: id });
         expect(result.current.copilot.getSnapshot().applications).toEqual([]);
-        expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+        expect(result.current.dashboardProps().config?.aiMode).toBe("active");
         expect(
             result.current.copilot.getAppliedSource({
                 type: CopilotBuildType.Dashboard,
@@ -285,7 +285,7 @@ describe("useDashboardCopilot", () => {
             const id = apply();
             dashboardEvent({ type, correlationId: id });
             expect(result.current.copilot.getSnapshot().applications).toEqual([]);
-            expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+            expect(result.current.dashboardProps().config?.aiMode).toBe("active");
         },
     );
 
@@ -420,13 +420,160 @@ describe("useDashboardCopilot", () => {
             useCase: "GENERAL",
             responseCompleted: true,
         });
-        expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+        expect(result.current.dashboardProps().config?.aiMode).toBe("active");
         expect(
             result.current.copilot.getAppliedSource({
                 type: CopilotBuildType.Dashboard,
                 objectId: "dashboard",
             }),
         ).toEqual({ conversationId: "local", threadId: "thread" });
+    });
+
+    describe("AI mode lifecycle", () => {
+        it.each(["create", "edit"] as const)(
+            "keeps a completed %s workflow active across chat resets until dashboard cancellation",
+            (intent) => {
+                const { result, dispatch, chatEvent, dashboardEvent, apply, rerender } = setup(
+                    intent === "create" ? emptyDashboardState() : dashboardState(),
+                );
+                expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+                if (intent === "create") {
+                    act(() => result.current.generateDashboard("Create a dashboard"));
+                }
+                chatEvent(userMessage);
+                const correlationId = apply();
+                act(() => result.current.dashboardProps().onStateChange!(dashboardState(), dispatch));
+                dashboardEvent({ type: "GDC.DASH/EVT.DEFINITION_CHANGED", correlationId });
+                expect(result.current.copilot.getStatus(result.current.composingProps.scope)).toBe("idle");
+                expect(result.current.dashboardProps().config?.aiMode).toBe("active");
+
+                chatEvent({ type: "chatReset" });
+                chatEvent({
+                    type: "chatConversationChanged",
+                    threadId: "other",
+                    conversation: { id: "other", localId: "other-local", createdAt: "", updatedAt: "" },
+                });
+                rerender();
+                expect(result.current.dashboardProps().config?.aiMode).toBe("active");
+                act(() => result.current.cancelGeneration());
+                expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+            },
+        );
+
+        it.each(
+            ["create", "edit"].flatMap((intent) =>
+                [true, false].map((attributed) => ({ intent, attributed })),
+            ),
+        )("clears AI mode after saving: intent=$intent attributed=$attributed", ({ intent, attributed }) => {
+            const { result, dispatch, chatEvent, chatDispatch, dashboardEvent, apply } = setup(
+                intent === "create" ? emptyDashboardState() : dashboardState(),
+            );
+            if (intent === "create") {
+                act(() => result.current.generateDashboard("Create a dashboard"));
+            }
+            chatEvent(userMessage);
+            const correlationId = apply();
+            act(() => result.current.dashboardProps().onStateChange!(dashboardState(), dispatch));
+            dashboardEvent({
+                type: attributed ? "GDC.DASH/EVT.DEFINITION_CHANGED" : "GDC.DASH/EVT.COMMAND.FAILED",
+                correlationId,
+            });
+            chatEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                responseCompleted: true,
+                cancelled: !attributed,
+            });
+            expect(result.current.dashboardProps().config?.aiMode).toBe("active");
+            expect(result.current.copilot.getAppliedSource(dashboardTarget) !== undefined).toBe(attributed);
+            chatDispatch.mockClear();
+
+            const savedDashboard = { ...dashboard, identifier: intent === "create" ? "saved" : "dashboard" };
+            dashboardEvent({
+                type: "GDC.DASH/EVT.SAVED",
+                payload: {
+                    dashboard: savedDashboard,
+                    originalDashboardId: "dashboard",
+                    newDashboard: intent === "create",
+                },
+            });
+            expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+            expect(chatDispatch).toHaveBeenCalledTimes(attributed ? 1 : 0);
+
+            act(() =>
+                result.current.dashboardProps().onStateChange!(
+                    dashboardState(false, savedDashboard),
+                    dispatch,
+                ),
+            );
+            expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+            act(() =>
+                result.current.dashboardProps().onStateChange!(
+                    dashboardState(true, savedDashboard),
+                    dispatch,
+                ),
+            );
+            expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+            chatEvent({ ...definition, itemId: "next-item", dashboard: savedDashboard });
+            expect(result.current.dashboardProps().config?.aiMode).toBe("building");
+            dashboardEvent({
+                type: "GDC.DASH/EVT.DEFINITION_CHANGED",
+                correlationId: dispatch.mock.calls.at(-1)![0]["correlationId"] as string,
+            });
+            expect(result.current.dashboardProps().config?.aiMode).toBe("active");
+        });
+
+        it.each(["GDC.DASH/EVT.COMMAND.FAILED", "GDC.DASH/EVT.COMMAND.REJECTED"] as const)(
+            "keeps AI mode active when saving emits %s",
+            (type) => {
+                const { result, dashboardEvent, apply } = setup();
+                dashboardEvent({ type: "GDC.DASH/EVT.DEFINITION_CHANGED", correlationId: apply() });
+                expect(result.current.dashboardProps().config?.aiMode).toBe("active");
+                dashboardEvent({ type, correlationId: "save" });
+                expect(result.current.dashboardProps().config?.aiMode).toBe("active");
+            },
+        );
+
+        it("does not activate AI mode for an unrelated assistant response", () => {
+            const { result, chatEvent } = setup();
+            chatEvent(userMessage);
+            chatEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                responseCompleted: true,
+                skills: [{ name: "alert", title: "Creating an alert" }],
+            });
+            expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+        });
+
+        it.each(["deinitialized", "loading", "replacement"] as const)(
+            "clears completed AI mode at %s",
+            (boundary) => {
+                const { result, dispatch, dashboardEvent, apply } = setup();
+                const correlationId = apply();
+                dashboardEvent({ type: "GDC.DASH/EVT.DEFINITION_CHANGED", correlationId });
+                expect(result.current.dashboardProps().config?.aiMode).toBe("active");
+                if (boundary === "deinitialized") {
+                    dashboardEvent({ type: "GDC.DASH/EVT.DEINITIALIZED" });
+                } else {
+                    const state = dashboardState();
+                    if (boundary === "loading") {
+                        state.loading = { loading: true };
+                    }
+                    const nextDispatch = vi.fn<DashboardDispatch>() as Mock<DashboardDispatch> &
+                        DashboardDispatch;
+                    act(() =>
+                        result.current.dashboardProps().onStateChange!(
+                            state,
+                            boundary === "replacement" ? nextDispatch : dispatch,
+                        ),
+                    );
+                }
+                expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+            },
+        );
     });
 
     it("replies to the waiting conversation even after the selected conversation changes", () => {
@@ -625,6 +772,47 @@ describe("useDashboardCopilot", () => {
             ]);
         });
 
+        it.each([false, true])(
+            "clears unsupported generation progress without interrupting chat: completed=%s",
+            (responseCompleted) => {
+                const { result, chatEvent, chatDispatch, dispatch } = setup(emptyDashboardState());
+                act(() => result.current.generateDashboard("Create"));
+                chatEvent(userMessage);
+                chatEvent({
+                    type: "chatAssistantMessage",
+                    threadId: "thread",
+                    useCase: "GENERAL",
+                    agent: { id: "analyst", title: "Analyst", effectiveSkills: ["alert"] },
+                    responseCompleted,
+                });
+
+                expect(result.current.copilot.isGenerationPending(CopilotBuildType.Dashboard)).toBe(false);
+                expect(result.current.copilot.getStatus(result.current.composingProps.scope)).toBe("idle");
+                expect(result.current.dashboardProps().config?.aiMode).toBe("active");
+                expect(chatDispatch.mock.calls.map(([action]) => action.type)).toEqual([
+                    "messages/startNewConversationAction",
+                    "messages/newMessageAction",
+                ]);
+                expect(dispatch).not.toHaveBeenCalled();
+            },
+        );
+
+        it("preserves generation for an editor-only agent matching the registered skills", () => {
+            const { result, chatEvent } = setup(emptyDashboardState());
+            act(() => result.current.generateDashboard("Create"));
+            chatEvent(userMessage);
+            chatEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                agent: { id: "editor", title: "Editor", effectiveSkills: ["dashboard_editor"] },
+                responseCompleted: true,
+            });
+            expect(result.current.copilot.isGenerationPending(CopilotBuildType.Dashboard)).toBe(true);
+            expect(result.current.copilot.getStatus(result.current.composingProps.scope)).toBe("waiting");
+            expect(result.current.dashboardProps().config?.aiMode).toBe("waiting");
+        });
+
         it("can cancel and restart generation without sending a cancellation or replaying old messages", () => {
             const { result, chatDispatch } = setup(emptyDashboardState());
             act(() => {
@@ -643,6 +831,73 @@ describe("useDashboardCopilot", () => {
     });
 
     describe("definition application combinations", () => {
+        it.each(
+            ["before-message", "before-thread", "before-skill", "after-skill"].flatMap((phase) =>
+                [false, true].map((completedFirst) => ({ phase, completedFirst })),
+            ),
+        )(
+            "keeps cancelled creation empty and idle: phase=$phase completedFirst=$completedFirst",
+            ({ phase, completedFirst }) => {
+                const { result, dispatch, chatDispatch, chatEvent } = setup(emptyDashboardState());
+                const assistantMessage: ChatEvent = {
+                    type: "chatAssistantMessage",
+                    threadId: "thread",
+                    useCase: "GENERAL",
+                    skills: [{ name: "dashboard_builder", title: "Building" }],
+                };
+                const assignThread = () =>
+                    chatEvent({
+                        type: "chatConversationChanged",
+                        threadId: "thread",
+                        conversation: { id: "thread", localId: "local", createdAt: "", updatedAt: "" },
+                    });
+                act(() => result.current.generateDashboard("Create"));
+                if (phase !== "before-message") {
+                    chatEvent({ ...userMessage, threadId: undefined });
+                }
+                if (phase === "before-skill" || phase === "after-skill") {
+                    assignThread();
+                }
+                if (phase === "after-skill") {
+                    chatEvent(assistantMessage);
+                }
+
+                act(() => result.current.cancelGeneration());
+                if (phase === "before-message") {
+                    chatEvent({ ...userMessage, threadId: undefined });
+                }
+                if (phase === "before-message" || phase === "before-thread") {
+                    assignThread();
+                }
+                chatEvent(assistantMessage);
+                const complete = () => chatEvent({ ...assistantMessage, responseCompleted: true });
+                if (completedFirst) {
+                    complete();
+                }
+                chatEvent(definition);
+
+                expect(dispatch).not.toHaveBeenCalled();
+                expect(result.current.copilot.isGenerationPending(CopilotBuildType.Dashboard)).toBe(false);
+                expect(result.current.copilot.getStatus(result.current.composingProps.scope)).toBe("idle");
+                expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+                if (!completedFirst) {
+                    complete();
+                }
+                expect(result.current.copilot.getStatus(result.current.composingProps.scope)).toBe("idle");
+                expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+                expect(result.current.copilot.getSnapshot().applications).toEqual([]);
+                expect(result.current.copilot.getSnapshot().requests).toEqual([]);
+                expect(chatDispatch).toHaveBeenCalledTimes(2);
+
+                act(() => result.current.generateDashboard("Try again"));
+                chatEvent({ ...userMessage, conversationId: "next-local", threadId: "next-thread" });
+                chatEvent({ ...assistantMessage, threadId: "next-thread" });
+                chatEvent({ ...definition, conversationId: "next-local", threadId: "next-thread" });
+                expect(dispatch).toHaveBeenCalledOnce();
+                expect(result.current.dashboardProps().config?.aiMode).toBe("building");
+            },
+        );
+
         it.each(
             [false, true].flatMap((previousSkillActivated) =>
                 ["before-request", "before-activation", "after-activation"].flatMap((phase) =>
@@ -844,7 +1099,7 @@ describe("useDashboardCopilot", () => {
             expect(result.current.copilot.getSnapshot().applications.map(({ id }) => id)).toEqual([second]);
             expect(result.current.dashboardProps().config?.aiMode).toBe("building");
             dashboardEvent({ type: "GDC.DASH/EVT.DEFINITION_CHANGED", correlationId: second });
-            expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+            expect(result.current.dashboardProps().config?.aiMode).toBe("active");
             expect(result.current.copilot.getAppliedSource(dashboardTarget)).toEqual({
                 conversationId: "new-local",
                 threadId: "new-thread",
@@ -859,7 +1114,7 @@ describe("useDashboardCopilot", () => {
             expect(result.current.copilot.getSnapshot().applications.map(({ id }) => id)).toEqual([second]);
             expect(result.current.dashboardProps().config?.aiMode).toBe("building");
             dashboardEvent({ type: "GDC.DASH/EVT.DEFINITION_CHANGED", correlationId: second });
-            expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+            expect(result.current.dashboardProps().config?.aiMode).toBe("active");
         });
     });
 
@@ -1071,11 +1326,11 @@ describe("useDashboardCopilot", () => {
                 order === "response-first" ? 1 : 0,
             );
             expect(result.current.dashboardProps().config?.aiMode).toBe(
-                order === "response-first" ? "building" : undefined,
+                order === "response-first" ? "building" : "active",
             );
             (order === "response-first" ? finishApplication : finishResponse)();
             expect(result.current.copilot.getSnapshot().applications).toEqual([]);
-            expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+            expect(result.current.dashboardProps().config?.aiMode).toBe("active");
             expect(result.current.copilot.getAppliedSource(dashboardTarget)).toEqual({
                 conversationId: "local",
                 threadId: "thread",
@@ -1191,6 +1446,8 @@ describe("useDashboardCopilot", () => {
                     responseCompleted: true,
                     cancelled: true,
                 });
+                expect(result.current.dashboardProps().config?.aiMode).toBe("active");
+                act(() => result.current.cancelGeneration());
                 expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
             },
         );

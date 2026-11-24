@@ -48,7 +48,12 @@ const state = {
         },
     },
     catalog: {
-        parameters: { status: "loaded", parameters: [topNWorkspace] },
+        parameters: {
+            status: "loaded",
+            parameters: [topNWorkspace],
+            dateRangeParametersStatus: "gated-off",
+            dateRangeParameters: [],
+        },
         parameterDependencies: { status: "loaded", byRoot: {}, requestedRoots: {} },
     },
     tabs: {
