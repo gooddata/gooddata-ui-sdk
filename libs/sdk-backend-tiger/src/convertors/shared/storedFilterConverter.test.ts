@@ -3,10 +3,12 @@
 import { describe, expect, it } from "vitest";
 
 import {
+    type ITigerFilter,
     type ITigerFilterContextItem,
     type ITigerMeasureValueFilter,
     type ITigerMeasureValueFilterCondition,
 } from "@gooddata/api-client-tiger";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
     type IFilter,
@@ -541,6 +543,91 @@ describe("storedFilterConverter", () => {
             expect(sdkFilter.measureValueFilter.conditions?.[1]).toEqual({
                 comparison: { operator: "LESS_THAN", value: 100, treatNullValuesAs: 0 },
             });
+        });
+    });
+
+    describe("absolute date filter with granularity validation", () => {
+        const invalidRanges: Array<[string, Record<string, unknown>]> = [
+            ["has no edges", { granularity: "GDC.time.month" }],
+            ["has an invalid period", { granularity: "GDC.time.month", from: "2026-13" }],
+            ["starts after its end", { granularity: "GDC.time.month", from: "2026-03", to: "2026-01" }],
+            ["has a granularity other than a period", { granularity: "GDC.time.date", from: "2026-01-01" }],
+        ];
+
+        const filterContextItem = (body: Record<string, unknown>) =>
+            ({ dashboardAbsoluteGranularityDateFilter: body }) as unknown as FilterContextItem;
+        const storedFilter = (body: Record<string, unknown>) =>
+            ({
+                absoluteGranularityDateFilter: { dataSet: idRef("date1", "dataSet"), ...body },
+            }) as unknown as IFilter;
+
+        it.each(invalidRanges)("rejects a filter context item that %s on write", (_desc, body) => {
+            expect(() => convertSdkFiltersToTiger([attributeFilterItem, filterContextItem(body)])).toThrow(
+                NotSupported,
+            );
+        });
+
+        it.each(invalidRanges)("rejects a filter context item that %s on read", (_desc, body) => {
+            const tigerItems = [filterContextItem(body)] as unknown as ITigerFilterContextItem[];
+            expect(() => convertTigerToSdkFilters(tigerItems)).toThrow(NotSupported);
+        });
+
+        it("rejects an invalid filter context item read next to items in the SDK format", () => {
+            const items = [attributeFilterItem, filterContextItem({ granularity: "GDC.time.month" })];
+            expect(() => convertTigerToSdkFilters(items as unknown as ITigerFilterContextItem[])).toThrow(
+                NotSupported,
+            );
+        });
+
+        it.each(invalidRanges)("rejects a stored filter that %s on write", (_desc, body) => {
+            expect(() => convertSdkFiltersToTiger([storedFilter(body)])).toThrow(NotSupported);
+        });
+
+        it("reads an invalid stored filter without an error", () => {
+            const tigerFilters = [
+                {
+                    absoluteGranularityDateFilter: {
+                        dataSet: { identifier: { id: "date1", type: "dataset" } },
+                        granularity: "GDC.time.month",
+                        from: "2026-03",
+                        to: "2026-01",
+                    },
+                },
+            ] as unknown as ITigerFilter[];
+
+            expect(convertTigerToSdkFilters(tigerFilters)).toEqual([
+                {
+                    absoluteGranularityDateFilter: {
+                        dataSet: idRef("date1", "dataSet"),
+                        granularity: "GDC.time.month",
+                        from: "2026-03",
+                        to: "2026-01",
+                    },
+                },
+            ]);
+        });
+
+        it("writes and reads a filter context item with one edge next to an old date filter", () => {
+            const sdkItems: FilterContextItem[] = [
+                {
+                    dateFilter: {
+                        type: "relative",
+                        granularity: "GDC.time.year",
+                        from: -1,
+                        to: -1,
+                        localIdentifier: "dateFilter",
+                    },
+                },
+                {
+                    dashboardAbsoluteGranularityDateFilter: {
+                        granularity: "GDC.time.week",
+                        to: "2026-05",
+                        localIdentifier: "granularityDateFilter",
+                    },
+                },
+            ];
+
+            expect(convertTigerToSdkFilters(convertSdkFiltersToTiger(sdkItems))).toEqual(sdkItems);
         });
     });
 });

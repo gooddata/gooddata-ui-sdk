@@ -1060,6 +1060,8 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
     openOnInit?: boolean;
     overlayPositionType?: OverlayPositionType;
+    // @alpha
+    shouldOverlayRelativeRangeMenu?: boolean;
     // (undocumented)
     showDropDownHeaderMessage?: boolean;
     weekStart?: WeekStart;

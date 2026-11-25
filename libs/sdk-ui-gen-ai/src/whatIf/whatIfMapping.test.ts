@@ -2,9 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { IGenAIVisualization, IInsight } from "@gooddata/sdk-model";
+import type { IGenAIVisualization, IInsight, ObjRef } from "@gooddata/sdk-model";
 
-import type { IChatConversationLocalContent } from "../model.js";
+import type { IChatConversationLocalContent, IChatConversationMultipartLocalPart } from "../model.js";
 
 import { loadWhatIfScenarios, mapVisualizationWhatIfToScenarios } from "./whatIfMapping.js";
 
@@ -54,14 +54,22 @@ describe("whatIfMapping", () => {
         expect(mapVisualizationWhatIfToScenarios(vis)).toBeUndefined();
     });
 
-    it("returns undefined when scenarios array is empty", () => {
-        const vis = createVisualization({
-            whatIf: {
-                scenarios: [],
-            },
-        });
-        expect(mapVisualizationWhatIfToScenarios(vis)).toBeUndefined();
+    it("returns undefined when visualization has no config", () => {
+        expect(mapVisualizationWhatIfToScenarios(baseVisualization)).toBeUndefined();
     });
+
+    it.each([undefined, false, true])(
+        "returns undefined for empty scenarios even with includeBaseline=%s",
+        (includeBaseline) => {
+            const vis = createVisualization({
+                whatIf: {
+                    includeBaseline,
+                    scenarios: [],
+                },
+            });
+            expect(mapVisualizationWhatIfToScenarios(vis)).toBeUndefined();
+        },
+    );
 
     it("maps a single scenario without baseline", () => {
         const vis = createVisualization({
@@ -228,9 +236,66 @@ describe("whatIfMapping", () => {
         expect(result[1].label).toBe("Optimistic");
         expect(result[2].label).toBe("Pessimistic");
     });
+
+    it.each([undefined, false, true])(
+        "preserves labels, scenario and metric order, and input with includeBaseline=%s",
+        (includeBaseline) => {
+            const vis = createVisualization({
+                whatIf: {
+                    includeBaseline,
+                    scenarios: [
+                        {
+                            label: "Second metric first",
+                            adjustments: [
+                                { metricId: "m2", metricType: "metric", scenarioMaql: "SELECT 2" },
+                                { metricId: "f1", metricType: "fact", scenarioMaql: "SELECT 3" },
+                                { metricId: "m1", metricType: "metric", scenarioMaql: "SELECT 1" },
+                            ],
+                        },
+                        { label: "", adjustments: [] },
+                        {
+                            label: "Filtered adjustments",
+                            adjustments: [
+                                { metricId: "a1", metricType: "attribute", scenarioMaql: "SELECT 4" },
+                            ],
+                        },
+                    ],
+                },
+            });
+            const before = structuredClone(vis);
+
+            expect(mapVisualizationWhatIfToScenarios(vis)).toStrictEqual([
+                ...(includeBaseline
+                    ? [{ label: "Revenue by Region", execConfig: undefined, isBaseline: true }]
+                    : []),
+                {
+                    label: "Second metric first",
+                    execConfig: {
+                        measureDefinitionOverrides: [
+                            {
+                                item: { identifier: { id: "m2", type: "metric" } },
+                                definition: { inline: { maql: "SELECT 2" } },
+                            },
+                            {
+                                item: { identifier: { id: "m1", type: "metric" } },
+                                definition: { inline: { maql: "SELECT 1" } },
+                            },
+                        ],
+                    },
+                    isBaseline: false,
+                },
+                { label: "", execConfig: undefined, isBaseline: false },
+                { label: "Filtered adjustments", execConfig: undefined, isBaseline: false },
+            ]);
+            expect(vis).toStrictEqual(before);
+        },
+    );
 });
 
 describe("loadWhatIfScenarios", () => {
+    it("returns undefined when parts are undefined", () => {
+        expect(loadWhatIfScenarios(undefined)).toBeUndefined();
+    });
     it("returns undefined if no what-if part is present", () => {
         const content: IChatConversationLocalContent = {
             type: "multipart",
@@ -372,4 +437,117 @@ describe("loadWhatIfScenarios", () => {
             },
         });
     });
+
+    it.each([undefined, false, true])(
+        "preserves labels, scenario and reference order, insight identity, and input with includeBaseline=%s",
+        (includeBaseline) => {
+            const parts: IChatConversationMultipartLocalPart[] = [
+                { type: "visualization", visualization: insight },
+                {
+                    type: "whatIf",
+                    whatIf: {
+                        includeBaseline,
+                        scenarios: [
+                            {
+                                label: "References in input order",
+                                adjustments: [
+                                    { ref: { uri: "/metrics/2" }, scenarioMaql: "SELECT 2" },
+                                    {
+                                        ref: { identifier: "f1", type: "fact" },
+                                        scenarioMaql: "SELECT 3",
+                                    },
+                                    {
+                                        ref: { identifier: "m1", type: "measure" },
+                                        scenarioMaql: "SELECT 1",
+                                    },
+                                ],
+                            },
+                            { label: "", adjustments: [] },
+                            { label: "References in input order", adjustments: [] },
+                        ],
+                    },
+                },
+            ];
+            const before = structuredClone(parts);
+            const result = loadWhatIfScenarios(parts);
+
+            expect(result).toStrictEqual({
+                insight,
+                scenarios: [
+                    ...(includeBaseline
+                        ? [{ label: "Insight Title", execConfig: undefined, isBaseline: true }]
+                        : []),
+                    {
+                        label: "References in input order",
+                        execConfig: {
+                            measureDefinitionOverrides: [
+                                {
+                                    item: { identifier: { id: "/metrics/2", type: "metric" } },
+                                    definition: { inline: { maql: "SELECT 2" } },
+                                },
+                                {
+                                    item: { identifier: { id: "f1", type: "fact" } },
+                                    definition: { inline: { maql: "SELECT 3" } },
+                                },
+                                {
+                                    item: { identifier: { id: "m1", type: "metric" } },
+                                    definition: { inline: { maql: "SELECT 1" } },
+                                },
+                            ],
+                        },
+                        isBaseline: false,
+                    },
+                    { label: "", execConfig: undefined, isBaseline: false },
+                    { label: "References in input order", execConfig: undefined, isBaseline: false },
+                ],
+            });
+            expect(result?.insight).toBe(insight);
+            expect(parts).toStrictEqual(before);
+        },
+    );
+
+    it.each([
+        { ref: { identifier: "m1", type: "measure" }, id: "m1", type: "metric" },
+        { ref: { identifier: "a2", type: "computedAttribute" }, id: "a2", type: "computedAttribute" },
+        { ref: { identifier: "m3" }, id: "m3", type: "metric" },
+        { ref: { identifier: "f1", type: "fact" }, id: "f1", type: "fact" },
+        { ref: { identifier: "a1", type: "attribute" }, id: "a1", type: "attribute" },
+        { ref: { uri: "/metrics/4" }, id: "/metrics/4", type: "metric" },
+    ] satisfies { ref: ObjRef; id: string; type: string }[])(
+        "preserves reference conversion for $ref",
+        ({ ref, id, type }) => {
+            const parts: IChatConversationMultipartLocalPart[] = [
+                { type: "visualization", visualization: insight },
+                {
+                    type: "whatIf",
+                    whatIf: {
+                        scenarios: [
+                            {
+                                label: "Converted reference",
+                                adjustments: [{ ref, scenarioMaql: "SELECT 1" }],
+                            },
+                        ],
+                    },
+                },
+            ];
+
+            expect(loadWhatIfScenarios(parts)).toStrictEqual({
+                insight,
+                scenarios: [
+                    {
+                        label: "Converted reference",
+                        execConfig: {
+                            measureDefinitionOverrides: [
+                                {
+                                    item: { identifier: { id, type } },
+                                    definition: { inline: { maql: "SELECT 1" } },
+                                },
+                            ],
+                        },
+                        isBaseline: false,
+                    },
+                ],
+            });
+        },
+    );
 });

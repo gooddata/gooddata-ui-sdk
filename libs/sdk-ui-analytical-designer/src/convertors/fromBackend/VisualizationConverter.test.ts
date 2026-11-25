@@ -10,7 +10,10 @@ import {
     idRef,
     insightBuckets,
     insightFilters,
+    insightMeasures,
     localIdRef,
+    measureFilters,
+    newParameterizedDateFilter,
 } from "@gooddata/sdk-model";
 
 import { type IVisualization } from "../../typings/bear/bearTypes.js";
@@ -207,5 +210,54 @@ describe("convertVisualization ranking filter attributes", () => {
             { localIdentifier: "a1" },
             computedAttributeRef,
         ]);
+    });
+});
+
+describe("convertVisualization period date filters", () => {
+    const stored = {
+        parameterizedDateFilter: {
+            localIdentifier: "period-filter",
+            dataSet: { identifier: "closed" },
+            parameter: { identifier: "lastQuarter" },
+            emptyValueHandling: "only",
+        },
+    };
+    const expected = newParameterizedDateFilter(
+        idRef("closed", "dataSet"),
+        idRef("lastQuarter", "parameter"),
+        {
+            localIdentifier: "period-filter",
+            emptyValueHandling: "only",
+        },
+    );
+
+    it("converts an insight filter with a period", () => {
+        const insight = convertVisualization(visualizationWithFilters([stored]), "local:table");
+        expect(insightFilters(insight)).toEqual([expected]);
+    });
+
+    it("converts a metric filter with a period", () => {
+        const visualization = visualizationWithFilters([]);
+        visualization.visualizationObject.content.buckets = [
+            {
+                localIdentifier: "measures",
+                items: [
+                    {
+                        measure: {
+                            localIdentifier: "m1",
+                            definition: {
+                                measureDefinition: {
+                                    item: { identifier: "revenue" },
+                                    filters: [stored],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+        ] as unknown as IVisualization["visualizationObject"]["content"]["buckets"];
+        const insight = convertVisualization(visualization, "local:table");
+        const [measure] = insightMeasures(insight);
+        expect(measureFilters(measure)).toEqual([expected]);
     });
 });

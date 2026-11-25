@@ -38,28 +38,7 @@ export function InfoComponent({
                     {intl.formatMessage({ id: "gd.gen-ai.autocomplete.type" })}
                 </div>
                 <div className="gd-gen-ai-chat__autocomplete__info__item__value">
-                    {item.type === "attribute"
-                        ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.attribute" })
-                        : null}
-                    {item.type === "fact" ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.fact" }) : null}
-                    {item.type === "measure"
-                        ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.metric" })
-                        : null}
-                    {item.type === "dataSet"
-                        ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.date" })
-                        : null}
-                    {item.type === "insight"
-                        ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.insight" })
-                        : null}
-                    {item.type === "analyticalDashboard"
-                        ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.analyticalDashboard" })
-                        : null}
-                    {item.type === "document"
-                        ? intl.formatMessage({ id: "gd.gen-ai.context.type.publisherDocument" })
-                        : null}
-                    {item.type === "displayForm"
-                        ? intl.formatMessage({ id: "gd.gen-ai.autocomplete.displayForm" })
-                        : null}
+                    {getInfoTypeLabel(item.type, intl)}
                 </div>
             </div>
             {dataset ? (
@@ -88,6 +67,33 @@ export function InfoComponent({
             ) : null}
         </div>
     );
+}
+
+/**
+ * Localized name of the object type shown in the info, e.g. "Metric".
+ */
+export function getInfoTypeLabel(type: IMetadataObjectBase["type"], intl: IntlShape): string | undefined {
+    switch (type) {
+        case "attribute":
+        case "computedAttribute":
+            return intl.formatMessage({ id: "gd.gen-ai.autocomplete.attribute" });
+        case "fact":
+            return intl.formatMessage({ id: "gd.gen-ai.autocomplete.fact" });
+        case "measure":
+            return intl.formatMessage({ id: "gd.gen-ai.autocomplete.metric" });
+        case "dataSet":
+            return intl.formatMessage({ id: "gd.gen-ai.autocomplete.date" });
+        case "insight":
+            return intl.formatMessage({ id: "gd.gen-ai.autocomplete.insight" });
+        case "analyticalDashboard":
+            return intl.formatMessage({ id: "gd.gen-ai.autocomplete.analyticalDashboard" });
+        case "document":
+            return intl.formatMessage({ id: "gd.gen-ai.context.type.publisherDocument" });
+        case "displayForm":
+            return intl.formatMessage({ id: "gd.gen-ai.autocomplete.displayForm" });
+        default:
+            return undefined;
+    }
 }
 
 export function getInfo(

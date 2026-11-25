@@ -4,7 +4,13 @@ import cx from "classnames";
 import type { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import type { ISemanticConditionalFormatting, ISeparators, MetricType, ObjRef } from "@gooddata/sdk-model";
+import {
+    type ISemanticConditionalFormatting,
+    type ISeparators,
+    type MetricType,
+    type ObjRef,
+    isDateRangeParameterDefinition,
+} from "@gooddata/sdk-model";
 import { type IUiTagDef, UiDate, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -14,9 +20,11 @@ import {
     isCatalogItemFact,
     isCatalogItemHidable,
     isCatalogItemMeasure,
+    isCatalogItemParameter,
 } from "../catalogItem/guards.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
 import { getObjectTypeLabel } from "../objectType/labels.js";
+import { useIsDateRangeParametersEnabled } from "../parameter/gate.js";
 import { useFeatureFlag } from "../permission/PermissionsContext.js";
 
 import { CatalogDetailAttributeLabelsConditionalFormatting } from "./CatalogDetailAttributeLabelsConditionalFormatting.js";
@@ -25,6 +33,7 @@ import {
     measureTargetOption,
 } from "./CatalogDetailConditionalFormatting.js";
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
+import { CatalogDetailDateRangeParameter } from "./CatalogDetailDateRangeParameter.js";
 import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
 import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
 import { CatalogDetailTags } from "./CatalogDetailTags.js";
@@ -86,6 +95,13 @@ export function CatalogDetailTabMetadata({
     const isDataSet = isCatalogItemDataSet(item);
     const granularities = isDataSet ? (item.dataSet.attributes ?? []) : [];
     const datasetTitle = isAttribute || isCatalogItemFact(item) ? item.dataSet?.title : undefined;
+    const enableDateRangeParameters = useIsDateRangeParametersEnabled();
+    const period =
+        enableDateRangeParameters &&
+        isCatalogItemParameter(item) &&
+        isDateRangeParameterDefinition(item.definition)
+            ? item.definition.defaultValue
+            : undefined;
 
     return (
         <dl className="gd-analytics-catalog-detail__tab-content">
@@ -105,6 +121,7 @@ export function CatalogDetailTabMetadata({
                     content={<CatalogDetailGranularities granularities={granularities} />}
                 />
             ) : null}
+            {period ? <CatalogDetailDateRangeParameter period={period} /> : null}
             <CatalogDetailContentRow
                 title={<FormattedMessage id="analyticsCatalog.column.title.createdBy" />}
                 content={item.createdBy ?? undefined}

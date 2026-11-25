@@ -1347,6 +1347,20 @@ describe("MeasureDateFilter", () => {
                 renderComponent({ ...emptyValuesProps, filter: storedWithMode("exclude") });
                 expect(getFilterButton()).toHaveTextContent("All time except Empty values");
             });
+
+            it("adds the included empty values to a period on the chip", () => {
+                const lastHourWithEmptyValues = createDecoratedDateFilter(
+                    {
+                        identifier: DATE_DATASET_ATTRIBUTE,
+                        interval: { type: "relative", granularity: "GDC.time.hour", interval: [-1, -1] },
+                        emptyDateValuesFilter: "include",
+                    } as IBucketItemMetricFilter,
+                    undefined,
+                );
+                renderComponent({ ...emptyValuesProps, filter: lastHourWithEmptyValues });
+
+                expect(getFilterButton()).toHaveTextContent(/last hour, empty values/i);
+            });
         });
     });
 });

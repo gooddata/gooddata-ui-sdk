@@ -5,6 +5,7 @@ import {
     type ICatalogAttributeHierarchy,
     type ICatalogDateAttributeHierarchy,
     type ICatalogGroup,
+    type IDateRangeParameterMetadataObject,
     type IScalarParameterMetadataObject,
 } from "@gooddata/sdk-model";
 
@@ -22,6 +23,8 @@ export interface ICatalogState {
         /** the caught availability error — only its truthiness is read */
         readonly availabilityError: unknown;
         readonly firstLoaded: boolean;
+        /** the last catalog load failed; reset when a new load starts */
+        readonly loadFailed: boolean;
         readonly attributeHierarchiesChanged: boolean;
     };
     tooltipDetails: {
@@ -32,4 +35,5 @@ export interface ICatalogState {
     readonly dateHierarchies: ReadonlyArray<ICatalogDateAttributeHierarchy>;
     readonly attributeHierarchies: ReadonlyArray<ICatalogAttributeHierarchy>;
     readonly parameters: ReadonlyArray<IScalarParameterMetadataObject>;
+    readonly dateRangeParameters: ReadonlyArray<IDateRangeParameterMetadataObject>;
 }

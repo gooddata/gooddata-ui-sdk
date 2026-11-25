@@ -35,6 +35,7 @@ import { ExcludeCurrentPeriod } from "./ExcludeCurrentPeriod.js";
 import { RelativeDateRange } from "./RelativeDateRange.js";
 import { StaticDateRange } from "./StaticDateRange.js";
 import {
+    useResetPeriodWhenUnsupportedByDateDataset,
     useResetPresetWhenUnsupportedOneIsSelected,
     useResetRelativeRangeWhenUnsupportedOneIsSelected,
     useSupportedDateFilterPresets,
@@ -146,6 +147,12 @@ export function PresetsSection({
     );
 
     useResetPresetWhenUnsupportedOneIsSelected(currentFilterOption, enabledCalendarPresets, onChange);
+    useResetPeriodWhenUnsupportedByDateDataset(
+        filter,
+        dateDataset,
+        dateDatasetRefsWithGranularities,
+        onChange,
+    );
     useResetRelativeRangeWhenUnsupportedOneIsSelected(currentFilterOption, filteredGranularities, onChange);
 
     const displayDateRange = isAbsoluteDateFilterForm(currentFilterOption);
@@ -157,7 +164,8 @@ export function PresetsSection({
     };
 
     const onPresetSelectionChange = (newlySelectedPreset: DateFilterOption) => {
-        if (newlySelectedPreset.localIdentifier !== currentFilterOption.localIdentifier) {
+        // with a period, its All time base is not a choice the user made, so All time replaces the period too
+        if (filter.period || newlySelectedPreset.localIdentifier !== currentFilterOption.localIdentifier) {
             // If switching to relative form, ensure granularity is compatible
             if (isRelativeDateFilterForm(newlySelectedPreset)) {
                 const isFiscal = fiscalTabsConfig.showTabs && selectedTab === "fiscal";
@@ -188,6 +196,7 @@ export function PresetsSection({
             <DatePresetsDropdown
                 relativeDateFilterPresets={enabledCalendarPresets}
                 selectedPreset={currentFilterOption}
+                selectedPeriodTitle={filter.period?.title}
                 onChange={onPresetSelectionChange}
                 dateFormat={dateFormat}
                 selectedTab={selectedTab}

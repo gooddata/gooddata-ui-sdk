@@ -34,7 +34,11 @@ import {
     getFilterBarState,
     getFirstDateFilter,
 } from "../filter_bar/filter_bar_selector.js";
-import { type IAttributeElement, type IRankingFilter } from "../filter_bar/filter_bar_types.js";
+import {
+    type IAttributeElement,
+    type IRankingFilter,
+    isParameterizedDateFilterConfig,
+} from "../filter_bar/filter_bar_types.js";
 import {
     type IAddParameterFiltersUiAction,
     type IUpdateParameterFilterAction,
@@ -131,7 +135,9 @@ export function* updateDateFilter(payload: IUpdateDateFilterActionPayload): Saga
     const isEmbedded: ReturnType<typeof getIsEmbedded> = yield select(getIsEmbedded);
     if (isEmbedded) {
         const changedFilter = mapDateFilterIdToExternalDateFilter(payload);
-        yield call(postFilterContextChangedWithAvailableCommands, changedFilter);
+        if (changedFilter) {
+            yield call(postFilterContextChangedWithAvailableCommands, changedFilter);
+        }
     }
     const state: IAppState = yield select();
     const isAvailable = DateDatasetsService.getDateDatasetFromAvailablesByRef(state, payload.dateDatasetRef);
@@ -313,11 +319,19 @@ export function mapAttributeFilterToExternalAttributeFilter(
     };
 }
 
+/**
+ * The date filter the embedding application is told about. A filter with a period has no shape in the
+ * embedding contract, so it is left out rather than told as a relative filter without bounds.
+ */
 export function mapDateFilterIdToExternalDateFilter({
     dateDatasetRef,
-    filterConfig: { type, name, interval, granularity, boundedFilter },
+    filterConfig,
     localIdentifier,
-}: IUpdateDateFilterActionPayload): DateFilterItem {
+}: IUpdateDateFilterActionPayload): DateFilterItem | undefined {
+    if (isParameterizedDateFilterConfig(filterConfig)) {
+        return undefined;
+    }
+    const { type, name, interval, granularity, boundedFilter } = filterConfig;
     if (name === ALL_TIME) {
         return {
             relativeDateFilter: {

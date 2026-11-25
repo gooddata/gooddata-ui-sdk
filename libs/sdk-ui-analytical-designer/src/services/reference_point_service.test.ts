@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { uriRef } from "@gooddata/sdk-model";
+import { idRef, uriRef } from "@gooddata/sdk-model";
 
 import { ATTRIBUTE, FILTERS, MEASURES, METRIC, VIEW } from "../constants/bucket.js";
 import { DATE_DATASET_ATTRIBUTE } from "../models/date_item.js";
@@ -256,6 +256,24 @@ describe("referencePointService", () => {
                         },
                     ],
                     dateDatasetRef: DATE_FILTER_DATASET_REF,
+                },
+            ]);
+        });
+
+        it("should convert a date filter with a period without switching on the comparison over time", () => {
+            const PERIOD_FILTER: IFilter = buildDateFilterMock({
+                cacheItemIdentifier: DATE_DATASET_ATTRIBUTE,
+                localIdentifier: "date.localId",
+                filterConfig: { type: "parameterized", parameterRef: idRef("lastQuarter", "parameter") },
+            });
+
+            const result = convertFiltersToRefPoint([PERIOD_FILTER], emptyBucketsMeta);
+
+            expect(result.items[0].filters).toEqual([
+                {
+                    overTimeComparisonType: "nothing",
+                    interval: { type: "parameterized", parameterRef: idRef("lastQuarter", "parameter") },
+                    attribute: DATE_DATASET_ATTRIBUTE,
                 },
             ]);
         });

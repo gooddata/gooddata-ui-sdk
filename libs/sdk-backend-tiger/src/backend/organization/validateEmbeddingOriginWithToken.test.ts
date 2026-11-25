@@ -70,6 +70,7 @@ describe("validateEmbeddingOriginWithToken", () => {
         expect(instance).not.toBe(globalTigerAxios);
         expect(instance.defaults.baseURL).toBe(params.hostname);
         expect(instance.defaults.headers.common["Authorization"]).toBe("Bearer token-1");
+        expect(instance.defaults.adapter).toBe("fetch");
         expect(instance.defaults.withCredentials).toBe(false);
         expect(globalTigerAxios.defaults.headers.common["Authorization"]).toBeUndefined();
     });

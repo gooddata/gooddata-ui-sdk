@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { isExecutionProgressEnabled } from "../selectors/feature_flag_selector.js";
 import { reportSelector } from "../selectors/report_selector.js";
 import { type IExtendedRefPointCustomError } from "../store/reference_point/extended_reference_point_state.js";
+import { type OpenReportLoadFailure } from "../store/report/report_state.js";
 import { type IMissingDateFilterItem } from "../typings/report.js";
 
 import { ExecutionProgressPanel } from "./report/executionProgress/ExecutionProgressPanel.js";
@@ -19,6 +20,7 @@ import { ReportEmpty } from "./report/ReportEmpty.js";
 import { ReportExecuteProtected } from "./report/ReportExecuteProtected.js";
 import { ReportHasNegativeValues } from "./report/ReportHasNegativeValues.js";
 import { ReportInvalidConfiguration } from "./report/ReportInvalidConfiguration.js";
+import { ReportLoadFailed } from "./report/ReportLoadFailed.js";
 import { ReportMissingArea } from "./report/ReportMissingArea.js";
 import { ReportMissingColumns } from "./report/ReportMissingColumns.js";
 import { ReportMissingLocation } from "./report/ReportMissingLocation.js";
@@ -54,6 +56,8 @@ export interface IReportProps {
     hasNegativeValue?: boolean;
     unsupportedConfiguration?: boolean;
     hasReportLoadingError?: boolean;
+    /** the part of the insight that failed to load, when the open failed after the insight loaded */
+    reportLoadFailure?: OpenReportLoadFailure;
     customError?: IExtendedRefPointCustomError | null;
     messages?: Record<string, string>;
     /** replaces the computing spinner with the live execution progress */
@@ -85,12 +89,14 @@ export const ReportBase = memo(function Report({
     hasNegativeValue = false,
     unsupportedConfiguration = false,
     hasReportLoadingError = false,
+    reportLoadFailure,
     customError = null,
     isExecutionProgressEnabled = false,
 }: IReportProps) {
     const getReportErrorComponent = () => {
         if (hasReportLoadingError) {
-            return ReportBlank; // we do not render specific error for now, only red toast message
+            // a load failure renders ReportLoadFailed in its place; incorrectMetadata only shows a red toast
+            return ReportBlank;
         } else if (isReportNotFound) {
             return ReportNotFound;
         } else if (!isExecutable) {
@@ -148,6 +154,8 @@ export const ReportBase = memo(function Report({
             ) : null}
             {replacesSpinner ? null : ErrorComponent === ReportNotFound ? (
                 <ReportNotFound missingItems={reportNotFoundMissingItems} />
+            ) : ErrorComponent === ReportBlank && reportLoadFailure ? (
+                <ReportLoadFailed />
             ) : ErrorComponent === null ? null : (
                 <ErrorComponent isSmallScreen={isSmallScreen} />
             )}

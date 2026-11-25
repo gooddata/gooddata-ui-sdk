@@ -3,7 +3,13 @@
 // @vitest-environment node
 import { describe, expect, it } from "vitest";
 
-import { type CatalogItem, type ICatalogGroup } from "@gooddata/sdk-model";
+import {
+    type CatalogItem,
+    type ICatalogGroup,
+    type IDateRangeParameterMetadataObject,
+    type IScalarParameterMetadataObject,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { catalogAttribute, catalogFact, catalogMeasure } from "../../tests/catalog.test.helpers.js";
 
@@ -15,6 +21,8 @@ import {
     setCatalogGroups,
     setCatalogItems,
     setCatalogItemsAvailability,
+    setCatalogLoadFailed,
+    setCatalogParameters,
     setItemTooltipDetails,
     setLoadingAvailability,
     setLoadingGroups,
@@ -38,6 +46,7 @@ describe("Catalog Reducer", () => {
                 loadingAvailability: false,
                 availabilityError: null,
                 firstLoaded: false,
+                loadFailed: false,
                 attributeHierarchiesChanged: false,
             },
             tooltipDetails: {},
@@ -46,6 +55,7 @@ describe("Catalog Reducer", () => {
             dateHierarchies: [],
             attributeHierarchies: [],
             parameters: [],
+            dateRangeParameters: [],
         };
 
         expect(initialState).toEqual(expectedInitialState);
@@ -294,6 +304,23 @@ describe("Catalog Reducer", () => {
         });
     });
 
+    describe("STORE_SET_CATALOG_LOAD_FAILED action", () => {
+        it("should set the loadFailed flag", () => {
+            const resultState = catalogReducer(initialCatalogState, setCatalogLoadFailed(true));
+
+            expect(resultState.flags).toEqual({ ...initialCatalogState.flags, loadFailed: true });
+        });
+
+        it("should reset the loadFailed flag", () => {
+            const failedState: ICatalogState = {
+                ...initialCatalogState,
+                flags: { ...initialCatalogState.flags, loadFailed: true },
+            };
+
+            expect(catalogReducer(failedState, setCatalogLoadFailed(false))).toEqual(initialCatalogState);
+        });
+    });
+
     describe("STORE_SET_TOOLTIP_DETAILS action", () => {
         it("should save tooltipDetails into the state", () => {
             const initialState: ICatalogState = {
@@ -366,6 +393,52 @@ describe("Catalog Reducer", () => {
             const resultState = catalogReducer(initialState, setAction);
 
             expect(resultState).toEqual(expectedState);
+        });
+    });
+
+    describe("STORE_SET_CATALOG_PARAMETERS action", () => {
+        const topN: IScalarParameterMetadataObject = {
+            type: "parameter",
+            id: "topN",
+            uri: "/topN",
+            ref: idRef("topN", "parameter"),
+            title: "Top N",
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            definition: { type: "NUMBER", defaultValue: 10 },
+        };
+        const lastHoldingMonth: IDateRangeParameterMetadataObject = {
+            ...topN,
+            id: "lastHoldingMonth",
+            uri: "/lastHoldingMonth",
+            ref: idRef("lastHoldingMonth", "parameter"),
+            title: "Last holding month",
+            definition: {
+                type: "DATE_RANGE",
+                defaultValue: { granularity: "GDC.time.month", from: "2025-08" },
+            },
+        };
+
+        it("should replace both parameter lists", () => {
+            const initialState: ICatalogState = {
+                ...initialCatalogState,
+                parameters: [{ ...topN, id: "stale" }],
+                dateRangeParameters: [{ ...lastHoldingMonth, id: "stale" }],
+            };
+
+            const setAction = setCatalogParameters({
+                parameters: [topN],
+                dateRangeParameters: [lastHoldingMonth],
+            });
+            const resultState = catalogReducer(initialState, setAction);
+
+            expect(resultState).toEqual({
+                ...initialCatalogState,
+                parameters: [topN],
+                dateRangeParameters: [lastHoldingMonth],
+            });
         });
     });
 });

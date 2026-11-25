@@ -71,6 +71,7 @@ import { type ICatalogEntries, type ICatalogEntry } from "../typings/state_objec
 import { isSingleEmptyStringElement } from "./date_filter.js";
 import { displayFormToCacheDisplayForm } from "./displayForms.js";
 import { getRouteParams } from "./location.js";
+import { logError } from "./logging/error_logging.js";
 import { mergeSortedAlphabeticallyByTitle } from "./merge_sorted_by_title.js";
 
 export function setupSessionId(xhr: { setRequestHeader: (name: string, value: string) => void }, id: string) {
@@ -237,7 +238,14 @@ function hasElementsToLoad(elements: IAttributeElements): boolean {
     return elements.values.length > 0;
 }
 
-async function loadFilterElements(insight: IInsight, state: IAppState) {
+/**
+ * Loads the selected values of the insight's attribute filters, indexed by display form.
+ *
+ * A failed lookup does not fail the open: that filter gets no entry, and its selected values fall
+ * back to the ones stored in the insight, marked unavailable. Failing the whole open would show
+ * the insight as not found and drop its buckets and filters, so the user could not fix the filter.
+ */
+export async function loadFilterElements(insight: IInsight, state: IAppState) {
     const projectId = getProjectId(state);
     const filtersConfigs = insightAttributeFilterConfigs(insight);
     const filtersFromInsight = insightFilters(insight);
@@ -264,11 +272,16 @@ async function loadFilterElements(insight: IInsight, state: IAppState) {
                 !isSingleEmptyStringElement(getAttributeElementsItems(fc.elements)),
         )
         .map(({ dfRef, displayAsLabelRef, elements }) =>
-            getAttributeElementsNew(projectId, dfRef, displayAsLabelRef, elements, undefined),
+            getAttributeElementsNew(projectId, dfRef, displayAsLabelRef, elements, undefined).catch(
+                (error: unknown): undefined => {
+                    logError("Loading the selected values of an attribute filter failed", error);
+                    return undefined;
+                },
+            ),
         );
 
     const validElements = await Promise.all(elementPromises);
-    return indexValidElements(validElements);
+    return indexValidElements(_compact(validElements));
 }
 
 async function fetchDateDatasets(

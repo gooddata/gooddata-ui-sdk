@@ -1072,6 +1072,10 @@ export const TigerFeatureDefinitions: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };
+    readonly enableNewGettingStartedPage: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
     readonly enableEnhancedInsightPicker: {
         type: "BOOLEAN";
         defaultValue: boolean;
@@ -1161,6 +1165,10 @@ export const TigerFeatureDefinitions: {
         defaultValue: boolean;
     };
     readonly enableEmbeddingOriginValidation: {
+        type: "BOOLEAN";
+        defaultValue: boolean;
+    };
+    readonly enableEmbeddingOriginValidationSettingsUi: {
         type: "BOOLEAN";
         defaultValue: boolean;
     };

@@ -259,6 +259,7 @@ export function DefaultDashboardDateFilter({
             enableEmptyDateValues={enableEmptyDateValues}
             hideDisabledExclude
             customRangeHint={customRangeHint}
+            shouldOverlayRelativeRangeMenu
         />
     );
 }

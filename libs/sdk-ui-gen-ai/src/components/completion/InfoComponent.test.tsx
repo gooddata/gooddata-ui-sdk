@@ -31,4 +31,24 @@ describe("InfoComponent", () => {
         expect(screen.getByText("Harvest Brief")).toBeInTheDocument();
         expect(screen.getByText("Document")).toBeInTheDocument();
     });
+
+    it("labels a computed attribute reference as an attribute", () => {
+        render(
+            <InfoComponent
+                id="region_bucket"
+                intl={intl}
+                item={{
+                    type: "computedAttribute",
+                    title: "Region Bucket",
+                    description: "",
+                    deprecated: false,
+                    production: true,
+                    unlisted: false,
+                }}
+            />,
+        );
+
+        expect(screen.getByText("Region Bucket")).toBeInTheDocument();
+        expect(screen.getByText("Attribute")).toBeInTheDocument();
+    });
 });

@@ -24,6 +24,9 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { PluggableApplicationRegistryItem } from '@gooddata/sdk-model';
 
 // @alpha
+export const AI_CONVERSATION_URL_PARAM = "aiConversation";
+
+// @alpha
 export const AiAssistantAppEventName: {
     readonly PUBLISHER_DOCUMENT_SAVED: "app.publisher-document-saved";
     readonly DASHBOARD_SAVED: "app.dashboard-saved";

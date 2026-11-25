@@ -54,41 +54,27 @@ export function mapVisualizationWhatIfToScenarios(
         return undefined;
     }
 
-    const result: IWhatIfRenderableScenario[] = [];
-
-    if (whatIf.includeBaseline) {
-        result.push({
-            label: visualization!.title,
-            execConfig: undefined,
-            isBaseline: true,
-        });
-    }
-
-    for (const scenario of whatIf.scenarios) {
-        const overrides: IMeasureDefinitionOverride[] = scenario.adjustments
-            .filter((adj) => adj.metricType === "metric")
-            .map((adj) => ({
-                item: {
-                    identifier: {
-                        id: adj.metricId,
-                        type: "metric" as const,
+    return buildRenderableScenarios(
+        visualization!.title,
+        whatIf.includeBaseline,
+        whatIf.scenarios,
+        (scenario) =>
+            scenario.adjustments
+                .filter((adj) => adj.metricType === "metric")
+                .map((adj) => ({
+                    item: {
+                        identifier: {
+                            id: adj.metricId,
+                            type: "metric" as const,
+                        },
                     },
-                },
-                definition: {
-                    inline: {
-                        maql: adj.scenarioMaql,
+                    definition: {
+                        inline: {
+                            maql: adj.scenarioMaql,
+                        },
                     },
-                },
-            }));
-
-        result.push({
-            label: scenario.label,
-            execConfig: overrides.length > 0 ? { measureDefinitionOverrides: overrides } : undefined,
-            isBaseline: false,
-        });
-    }
-
-    return result;
+                })),
+    );
 }
 
 /**
@@ -112,37 +98,54 @@ export function loadWhatIfScenarios(
         return undefined;
     }
 
-    const scenarios: IWhatIfRenderableScenario[] = [];
+    const scenarios = buildRenderableScenarios(
+        visualisation.visualization.insight.title,
+        whatIf.whatIf.includeBaseline,
+        whatIf.whatIf.scenarios,
+        (scenario) =>
+            scenario.adjustments.map((adj) => ({
+                item: objRefToIdentifier(adj.ref),
+                definition: {
+                    inline: {
+                        maql: adj.scenarioMaql,
+                    },
+                },
+            })),
+    );
 
-    if (whatIf.whatIf.includeBaseline) {
-        scenarios.push({
-            label: visualisation.visualization.insight.title,
+    return {
+        scenarios,
+        insight: visualisation.visualization,
+    };
+}
+
+function buildRenderableScenarios<TScenario extends { label: string }>(
+    baselineLabel: string,
+    includeBaseline: boolean | undefined,
+    scenarios: TScenario[],
+    getOverrides: (scenario: TScenario) => IMeasureDefinitionOverride[],
+): IWhatIfRenderableScenario[] {
+    const result: IWhatIfRenderableScenario[] = [];
+
+    if (includeBaseline) {
+        result.push({
+            label: baselineLabel,
             execConfig: undefined,
             isBaseline: true,
         });
     }
 
-    for (const scenario of whatIf.whatIf.scenarios) {
-        const overrides: IMeasureDefinitionOverride[] = scenario.adjustments.map((adj) => ({
-            item: objRefToIdentifier(adj.ref),
-            definition: {
-                inline: {
-                    maql: adj.scenarioMaql,
-                },
-            },
-        }));
+    for (const scenario of scenarios) {
+        const overrides = getOverrides(scenario);
 
-        scenarios.push({
+        result.push({
             label: scenario.label,
             execConfig: overrides.length > 0 ? { measureDefinitionOverrides: overrides } : undefined,
             isBaseline: false,
         });
     }
 
-    return {
-        scenarios,
-        insight: visualisation.visualization,
-    };
+    return result;
 }
 
 function objRefToIdentifier(objRef: ObjRef) {

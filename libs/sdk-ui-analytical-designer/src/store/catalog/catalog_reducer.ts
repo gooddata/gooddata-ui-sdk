@@ -5,6 +5,7 @@ import {
     type ICatalogAttributeHierarchy,
     type ICatalogDateAttributeHierarchy,
     type ICatalogGroup,
+    type IDateRangeParameterMetadataObject,
     type IScalarParameterMetadataObject,
 } from "@gooddata/sdk-model";
 import { _isEqual } from "@gooddata/util";
@@ -23,6 +24,7 @@ export const initialCatalogState: ICatalogState = {
         loadingAvailability: false,
         availabilityError: null,
         firstLoaded: false,
+        loadFailed: false,
         attributeHierarchiesChanged: false,
     },
     tooltipDetails: {},
@@ -31,6 +33,7 @@ export const initialCatalogState: ICatalogState = {
     dateHierarchies: [],
     attributeHierarchies: [],
     parameters: [],
+    dateRangeParameters: [],
 };
 
 // Read-only lenses encapsulating the state shape to be used
@@ -47,6 +50,9 @@ export const catalogAttributeHierarchies = (state: ICatalogState): readonly ICat
     state.attributeHierarchies;
 export const catalogStateParameters = (state: ICatalogState): readonly IScalarParameterMetadataObject[] =>
     state.parameters;
+export const catalogStateDateRangeParameters = (
+    state: ICatalogState,
+): readonly IDateRangeParameterMetadataObject[] => state.dateRangeParameters;
 
 const catalogFlagsReducer = (
     state: ICatalogState["flags"],
@@ -82,6 +88,11 @@ const catalogFlagsReducer = (
             return {
                 ...state,
                 firstLoaded: action.payload.firstLoaded,
+            };
+        case CatalogActionTypeKeys.STORE_SET_CATALOG_LOAD_FAILED:
+            return {
+                ...state,
+                loadFailed: action.payload.loadFailed,
             };
         default:
             return state;
@@ -134,6 +145,7 @@ export const catalogReducer = (state = initialCatalogState, action: CatalogActio
         case CatalogActionTypeKeys.STORE_SET_LOADING_AVAILABILITY:
         case CatalogActionTypeKeys.STORE_SET_AVAILABILITY_ERROR:
         case CatalogActionTypeKeys.STORE_SET_CATALOG_FIRST_LOADED:
+        case CatalogActionTypeKeys.STORE_SET_CATALOG_LOAD_FAILED:
         case CatalogActionTypeKeys.STORE_SET_ATTRIBUTE_HIERARCHIES_CHANGED:
             return {
                 ...state,
@@ -188,6 +200,7 @@ export const catalogReducer = (state = initialCatalogState, action: CatalogActio
             return {
                 ...state,
                 parameters: action.payload.parameters,
+                dateRangeParameters: action.payload.dateRangeParameters,
             };
         }
         default:

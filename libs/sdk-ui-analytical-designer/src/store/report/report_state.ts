@@ -45,8 +45,39 @@ export const reportNowOpenInitialState: IReportNowOpenState = false;
  * module and closed `store/types -> report_state -> open_actions -> ... -> selectors -> store/types`
  * — a reducer-module import cycle, which `rushx validate` (dependency-cruise) rejects. The action
  * imports the type from here.
+ *
+ * Why an insight failed to open, when it is not a not-found failure (no reason):
+ * - `incorrectMetadata`: a date filter has a granularity AD cannot load
+ * - an `OpenReportLoadFailure`: the insight exists, but loading a part it needs to open failed
  */
-export type OpenReportError = "incorrectMetadata";
+export type OpenReportError = "incorrectMetadata" | OpenReportLoadFailure;
+
+/**
+ * The part an insight needs to open that failed to load:
+ * - `catalogLoadFailed`: the catalog, needed to map the insight's buckets; it loads before the insight
+ * - `dashboardsLoadFailed`: the dashboards, used to tell where the insight is used
+ * - `dateDatasetsLoadFailed`: the date datasets of the insight's date filters and buckets
+ * - `parametersLoadFailed`: the parameters the insight overrides
+ * - `contentLoadFailed`: the insight's buckets and filters could not be restored
+ */
+export type OpenReportLoadFailure =
+    | "catalogLoadFailed"
+    | "dashboardsLoadFailed"
+    | "dateDatasetsLoadFailed"
+    | "parametersLoadFailed"
+    | "contentLoadFailed";
+
+const OPEN_REPORT_LOAD_FAILURES: ReadonlyArray<OpenReportLoadFailure> = [
+    "catalogLoadFailed",
+    "dashboardsLoadFailed",
+    "dateDatasetsLoadFailed",
+    "parametersLoadFailed",
+    "contentLoadFailed",
+];
+
+export function isOpenReportLoadFailure(reason: unknown): reason is OpenReportLoadFailure {
+    return OPEN_REPORT_LOAD_FAILURES.includes(reason as OpenReportLoadFailure);
+}
 
 export type IReportLoadingErrorState = OpenReportError | null;
 export const reportLoadingErrorInitialState: IReportLoadingErrorState = null;

@@ -2,6 +2,7 @@
 
 import { createMockTask } from "@redux-saga/testing-utils";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
+import * as matchers from "redux-saga-test-plan/matchers";
 import { dynamic, throwError } from "redux-saga-test-plan/providers";
 import { call, fork, put, select } from "redux-saga/effects";
 import { describe, expect, it, vi } from "vitest";
@@ -10,6 +11,7 @@ import { type IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi"
 import {
     type CatalogItem,
     type ICatalogAttributeHierarchy,
+    type IDateRangeParameterMetadataObject,
     type IInsightDefinition,
     type IParameterMetadataObject,
     type IScalarParameterMetadataObject,
@@ -23,7 +25,11 @@ import { dataSourceError } from "../../actions/messages_actions.js";
 import { MEASURES } from "../../constants/bucket.js";
 import { LOCAL_BAR } from "../../constants/visualization_types.js";
 import { getProjectId } from "../../selectors/bootstrap_selector.js";
-import { enableParameters, enableStringParameters } from "../../selectors/feature_flag_selector.js";
+import {
+    enableDateRangeParameters,
+    enableParameters,
+    enableStringParameters,
+} from "../../selectors/feature_flag_selector.js";
 import { getInsightWithBucketsViaMd } from "../../selectors/insight_selectors.js";
 import { getIntlMessagesForLocale, getLocale } from "../../selectors/intl_selector.js";
 import { getTagsConfiguration, isTagsConfigurationChanged } from "../../selectors/route_selector.js";
@@ -38,6 +44,7 @@ import {
     setAttributeHierarchiesChanged,
     setAvailabilityError,
     setCatalogItemsAvailability,
+    setCatalogLoadFailed,
     setCatalogParameters,
     setItemTooltipDetails,
     setLoadingAvailability,
@@ -56,6 +63,7 @@ import {
     fetchAvailableItemsUris,
     fetchCatalog,
     fetchItemDetails,
+    fetchParameters,
     handleDeleteCatalogAttributeHierarchy,
     handleUpdateCatalogAttributeHierarchy,
     loadCatalog,
@@ -200,7 +208,9 @@ describe("Catalog sagas", () => {
                 .call(loadCatalogItemsAndGroups)
                 .call(loadDateDatasetsWithAllDates)
                 .call(loadParameters)
+                .put(setCatalogLoadFailed(false))
                 .put(catalogLoadSucceeded())
+                .not.put(setCatalogLoadFailed(true))
                 .silentRun(0);
         });
 
@@ -220,6 +230,7 @@ describe("Catalog sagas", () => {
                     [call(loadDateDatasetsWithAllDates), undefined],
                     [call(loadParameters), undefined],
                 ])
+                .put(setCatalogLoadFailed(true))
                 .put(dataSourceError(new Error("error")))
                 .not.put(catalogLoadSucceeded())
                 .silentRun(0);
@@ -269,60 +280,86 @@ describe("Catalog sagas", () => {
             definition: { type: "STRING", defaultValue: "Actual" },
         };
 
-        it("sets an empty parameter catalog when parameters are disabled", () => {
-            testSaga(loadParameters)
-                .next()
-                .select(enableParameters)
-                .next(false)
-                .put(setCatalogParameters([]))
-                .next()
-                .isDone();
+        const lastHoldingMonth: IDateRangeParameterMetadataObject = {
+            ...topN,
+            id: "lastHoldingMonth",
+            uri: "/lastHoldingMonth",
+            ref: idRef("lastHoldingMonth", "parameter"),
+            title: "Last holding month",
+            definition: {
+                type: "DATE_RANGE",
+                defaultValue: { granularity: "GDC.time.month", from: "2025-08" },
+            },
+        };
+
+        interface IParameterFlags {
+            parameters: boolean;
+            dateRangeParameters: boolean;
+            stringParameters?: boolean;
+        }
+
+        function loadParametersWith(
+            flags: IParameterFlags,
+            response: IParameterMetadataObject[] | Error = [topN, scenario, lastHoldingMonth],
+        ) {
+            return expectSaga(loadParameters).provide([
+                [select(enableParameters), flags.parameters],
+                [select(enableDateRangeParameters), flags.dateRangeParameters],
+                [select(enableStringParameters), flags.stringParameters ?? true],
+                [select(getProjectId), "projectID"],
+                [
+                    matchers.call.fn(fetchParameters),
+                    response instanceof Error ? throwError(response) : response,
+                ],
+            ]);
+        }
+
+        it("sets empty parameter lists without a request when both settings are off", async () => {
+            await loadParametersWith({ parameters: false, dateRangeParameters: false })
+                .put(setCatalogParameters({ parameters: [], dateRangeParameters: [] }))
+                .not.call.fn(fetchParameters)
+                .run();
         });
 
-        it("stores only NUMBER parameters when enableStringParameters is off", () => {
-            const iterator = loadParameters() as Generator<unknown, void, unknown>;
-
-            expect(iterator.next().value).toEqual(select(enableParameters));
-            expect(iterator.next(true).value).toEqual(select(enableStringParameters));
-            expect(iterator.next(false).value).toEqual(select(getProjectId));
-            expect(iterator.next("projectID").value).toMatchObject({ type: "CALL" });
-            expect(iterator.next([topN, scenario]).value).toEqual(put(setCatalogParameters([topN])));
-            expect(iterator.next().done).toBe(true);
+        it("stores only the scalar list when only enableParameters is on", async () => {
+            await loadParametersWith({ parameters: true, dateRangeParameters: false })
+                .call(fetchParameters, "projectID")
+                .put(setCatalogParameters({ parameters: [topN, scenario], dateRangeParameters: [] }))
+                .run();
         });
 
-        it("stores STRING parameters when enableStringParameters is on", () => {
-            const iterator = loadParameters() as Generator<unknown, void, unknown>;
-
-            expect(iterator.next().value).toEqual(select(enableParameters));
-            expect(iterator.next(true).value).toEqual(select(enableStringParameters));
-            expect(iterator.next(true).value).toEqual(select(getProjectId));
-            expect(iterator.next("projectID").value).toMatchObject({ type: "CALL" });
-            expect(iterator.next([topN, scenario]).value).toEqual(
-                put(setCatalogParameters([topN, scenario])),
-            );
-            expect(iterator.next().done).toBe(true);
+        it("stores only the date range list when only enableDateRangeParameters is on", async () => {
+            await loadParametersWith({ parameters: false, dateRangeParameters: true })
+                .call(fetchParameters, "projectID")
+                .put(setCatalogParameters({ parameters: [], dateRangeParameters: [lastHoldingMonth] }))
+                .run();
         });
 
-        it("never stores DATE_RANGE parameters", () => {
-            const lastHoldingMonth: IParameterMetadataObject = {
-                ...topN,
-                id: "lastHoldingMonth",
-                uri: "/lastHoldingMonth",
-                ref: idRef("lastHoldingMonth", "parameter"),
-                title: "Last holding month",
-                definition: {
-                    type: "DATE_RANGE",
-                    defaultValue: { granularity: "GDC.time.month", from: "2025-08" },
-                },
-            };
-            const iterator = loadParameters() as Generator<unknown, void, unknown>;
+        it("stores both lists from one request when both settings are on", async () => {
+            const { effects } = await loadParametersWith({ parameters: true, dateRangeParameters: true })
+                .put(
+                    setCatalogParameters({
+                        parameters: [topN, scenario],
+                        dateRangeParameters: [lastHoldingMonth],
+                    }),
+                )
+                .run();
+            expect(effects.call).toEqual([call(fetchParameters, "projectID")]);
+        });
 
-            expect(iterator.next().value).toEqual(select(enableParameters));
-            expect(iterator.next(true).value).toEqual(select(enableStringParameters));
-            expect(iterator.next(true).value).toEqual(select(getProjectId));
-            expect(iterator.next("projectID").value).toMatchObject({ type: "CALL" });
-            expect(iterator.next([topN, lastHoldingMonth]).value).toEqual(put(setCatalogParameters([topN])));
-            expect(iterator.next().done).toBe(true);
+        it("stores only NUMBER parameters and keeps DATE_RANGE parameters when enableStringParameters is off", async () => {
+            await loadParametersWith({ parameters: true, dateRangeParameters: true, stringParameters: false })
+                .put(setCatalogParameters({ parameters: [topN], dateRangeParameters: [lastHoldingMonth] }))
+                .run();
+        });
+
+        it.each([
+            ["only enableParameters is on", { parameters: true, dateRangeParameters: false }],
+            ["only enableDateRangeParameters is on", { parameters: false, dateRangeParameters: true }],
+            ["both settings are on", { parameters: true, dateRangeParameters: true }],
+        ])("rethrows a failed request when %s", async (_, flags) => {
+            const error = new Error("parameters boom");
+            await expect(loadParametersWith(flags, error).run()).rejects.toBe(error);
         });
     });
 

@@ -2,12 +2,7 @@
 
 import { useState } from "react";
 
-import {
-    type IActiveCalendars,
-    type WeekStart,
-    areObjRefsEqual,
-    isAllTimeDateFilterOption,
-} from "@gooddata/sdk-model";
+import { type IActiveCalendars, type WeekStart, areObjRefsEqual } from "@gooddata/sdk-model";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { type DateFilterRelativeOptionGroup } from "@gooddata/sdk-ui-filters";
 
@@ -28,7 +23,7 @@ import {
 import { CancelButton } from "../filterBar/dateFilter/Buttons/CancelButton.js";
 import { datasetRefWithGranularitiesHasSeconds } from "../filterBar/dateFilter/dateDatasetGranularities.js";
 import { DateDatasetSection } from "../filterBar/dateFilter/DateDatasetSection/DateDatasetSection.js";
-import { type IDateFilterOption } from "../filterBar/dateFilter/dateFilterOptionFactory.js";
+import { type IDateFilterOption, isAllTimeOption } from "../filterBar/dateFilter/dateFilterOptionFactory.js";
 import { ALL_TIME_FILTER_OPTION } from "../filterBar/dateFilter/defaultFilterOptions.js";
 import { PresetsSection } from "../filterBar/dateFilter/PresetSection/PresetsSection.js";
 
@@ -90,6 +85,12 @@ export interface IMeasureDateFilterPickerProps {
  * Metric date filter dropdown built from the same sections as the insight date filter picker in the filter
  * bar, without over-time comparison.
  */
+/**
+ * The picker exists only with the improved metric date filter, which writes the empty values mode as the
+ * date filter's own handling, executed with include on any period.
+ */
+const IS_INCLUDE_WITH_PERIOD_ALLOWED = true;
+
 export function MeasureDateFilterPicker({
     filter,
     dateDataset,
@@ -128,7 +129,7 @@ export function MeasureDateFilterPicker({
         emptyDateValuesFilterMode: emptyDateValuesFilter,
     });
 
-    const isAllTime = isAllTimeDateFilterOption(selectedFilter.filterOption);
+    const isAllTime = isAllTimeOption(selectedFilter);
     const isSecondsForAbsoluteRangeEnabled =
         isSecondsGranularityEnabled &&
         datasetRefWithGranularitiesHasSeconds(dateDatasetRefsWithGranularities, dateDataset.ref);
@@ -148,13 +149,15 @@ export function MeasureDateFilterPicker({
         true,
         selectedEmptyDateValuesFilterMode,
         emptyDateValuesFilter,
+        IS_INCLUDE_WITH_PERIOD_ALLOWED,
     );
     const isApplyEnabled = isChangeApplicable;
     const applyButtonTooltip = useDisabledApplyButtonTooltip(
-        selectedFilter.filterOption,
+        selectedFilter,
         OverTimeComparisonTypes.NOTHING,
         true,
         selectedEmptyDateValuesFilterMode,
+        IS_INCLUDE_WITH_PERIOD_ALLOWED,
     );
 
     const apply = () => {
@@ -228,6 +231,7 @@ export function MeasureDateFilterPicker({
                         onEmptyDateValuesFilterModeChange={handleEmptyDateValuesFilterModeChange}
                         isDisabled={isOtherFiltersDisabled}
                         isAllTime={isAllTime}
+                        isIncludeWithPeriodAllowed={IS_INCLUDE_WITH_PERIOD_ALLOWED}
                         showDateGranularities
                     />
                 ) : null}

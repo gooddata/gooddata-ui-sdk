@@ -18,6 +18,7 @@ import {
 
 import { convertExportDefinitionMdObject } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { convertSkippingNotSupported } from "../../../utils/convertSkippingNotSupported.js";
 
 export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
     private size = 50;
@@ -115,7 +116,11 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                         if (!(totalCount === null || totalCount === undefined)) {
                             this.setTotalCount(totalCount);
                         }
-                        return data.data.map((ed) => convertExportDefinitionMdObject(ed, data.included));
+                        return convertSkippingNotSupported(
+                            data.data,
+                            (ed) => convertExportDefinitionMdObject(ed, data.included),
+                            "Export definition",
+                        );
                     });
 
                 return { items, totalCount: this.totalCount! };

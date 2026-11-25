@@ -10,6 +10,7 @@ import {
     absoluteDateFilterValues,
     isAbsoluteDateFilter,
     isAbsoluteGranularityDateFilter,
+    isParameterizedDateFilter,
     isRelativeDateFilter,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
@@ -89,6 +90,11 @@ function filterMetadata(filter: DateFilterOfAnyType): DateFilterMeta | undefined
             "Notification titles do not support absolute date filters with granularity yet.",
             filter,
         );
+        return undefined;
+    }
+
+    if (isParameterizedDateFilter(filter)) {
+        console.warn("Notification titles do not support parameterized date filters yet.", filter);
         return undefined;
     }
 

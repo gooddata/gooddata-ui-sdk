@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type IDateRangeParameterMetadataObject,
     type IInsight,
     type IFilter as ISdkFilter,
     type ObjRef,
@@ -65,6 +66,8 @@ export interface IOpenReportOperationInput {
     measuresDateDatasets: IMeasureDateDatasetsState | undefined;
     /** current `data.dateDatasets` — answered BY REFERENCE when the insight selects no dataset */
     dateDatasets: IDateDatasetsState;
+    /** the catalog's periods, for the granularity of a period a date filter references */
+    dateRangeParameters?: ReadonlyArray<IDateRangeParameterMetadataObject>;
 }
 
 export interface IOpenReportOperationParams {
@@ -265,6 +268,7 @@ export function applyOpenReport(
             filterItems,
             dateDatasets: allDateDatasets,
             properties: visualizationProperties,
+            dateRangeParameters: input.dateRangeParameters,
         },
     });
 

@@ -9,6 +9,7 @@ import {
     type ICatalogAttribute,
     type ICatalogAttributeHierarchy,
     type ICatalogComputedAttribute,
+    type IDateRangeParameterMetadataObject,
     type IScalarParameterMetadataObject,
     idRef,
 } from "@gooddata/sdk-model";
@@ -16,6 +17,10 @@ import {
 import {
     selectAdhocDateHierarchies,
     selectCatalogAttributesWithComputed,
+    selectCatalogDateRangeParameterByRef,
+    selectCatalogDateRangeParameterTitle,
+    selectCatalogDateRangeParameters,
+    selectCatalogDateRangeParametersStatus,
     selectCatalogParameterDependencies,
     selectCatalogParameterDependenciesStatus,
     selectCatalogParameters,
@@ -73,31 +78,127 @@ describe("catalogSelectors", () => {
             unlisted: false,
             definition: { type: "NUMBER", defaultValue: 10 },
         };
+        const lastHoldingMonth: IDateRangeParameterMetadataObject = {
+            ...topN,
+            id: "lastHoldingMonth",
+            uri: "/lastHoldingMonth",
+            ref: idRef("lastHoldingMonth", "parameter"),
+            title: "Last holding month",
+            definition: {
+                type: "DATE_RANGE",
+                defaultValue: { granularity: "GDC.time.month", from: "2025-08" },
+            },
+        };
+        const untitledPeriod: IDateRangeParameterMetadataObject = {
+            ...lastHoldingMonth,
+            id: "untitledPeriod",
+            uri: "/untitledPeriod",
+            ref: idRef("untitledPeriod", "parameter"),
+            title: "",
+        };
 
         const stateWith = (parameters: ICatalogParametersState): any => ({
             catalog: { parameters },
         });
+        const loadedState = stateWith({
+            status: "loaded",
+            parameters: [topN],
+            dateRangeParametersStatus: "loaded",
+            dateRangeParameters: [lastHoldingMonth, untitledPeriod],
+        });
 
         it("returns parameters list and status when loaded", () => {
-            const state = stateWith({ status: "loaded", parameters: [topN] });
+            const state = stateWith({
+                status: "loaded",
+                parameters: [topN],
+                dateRangeParametersStatus: "gated-off",
+                dateRangeParameters: [],
+            });
             expect(selectCatalogParameters(state)).toEqual([topN]);
             expect(selectCatalogParametersStatus(state)).toBe("loaded");
             expect(selectCatalogParametersIsLoaded(state)).toBe(true);
         });
 
         it("returns empty parameters when loading", () => {
-            const state = stateWith({ status: "loading", parameters: [] });
+            const state = stateWith({
+                status: "loading",
+                parameters: [],
+                dateRangeParametersStatus: "loading",
+                dateRangeParameters: [],
+            });
             expect(selectCatalogParameters(state)).toEqual([]);
+            expect(selectCatalogDateRangeParameters(state)).toEqual([]);
             expect(selectCatalogParametersIsLoaded(state)).toBe(false);
         });
 
         it("treats failed and gated-off as not loaded", () => {
-            expect(selectCatalogParametersIsLoaded(stateWith({ status: "failed", parameters: [] }))).toBe(
-                false,
+            expect(
+                selectCatalogParametersIsLoaded(
+                    stateWith({
+                        status: "failed",
+                        parameters: [],
+                        dateRangeParametersStatus: "failed",
+                        dateRangeParameters: [],
+                    }),
+                ),
+            ).toBe(false);
+            expect(
+                selectCatalogParametersIsLoaded(
+                    stateWith({
+                        status: "gated-off",
+                        parameters: [],
+                        dateRangeParametersStatus: "gated-off",
+                        dateRangeParameters: [],
+                    }),
+                ),
+            ).toBe(false);
+        });
+
+        it("returns the date range parameters status apart from the scalar status", () => {
+            const state = stateWith({
+                status: "gated-off",
+                parameters: [],
+                dateRangeParametersStatus: "loaded",
+                dateRangeParameters: [lastHoldingMonth],
+            });
+            expect(selectCatalogDateRangeParametersStatus(state)).toBe("loaded");
+            expect(selectCatalogDateRangeParameters(state)).toEqual([lastHoldingMonth]);
+            expect(selectCatalogParametersStatus(state)).toBe("gated-off");
+            expect(selectCatalogParametersIsLoaded(state)).toBe(false);
+        });
+
+        it("returns the date range parameters apart from the scalar parameters", () => {
+            expect(selectCatalogDateRangeParameters(loadedState)).toEqual([lastHoldingMonth, untitledPeriod]);
+            expect(selectCatalogParameters(loadedState)).toEqual([topN]);
+        });
+
+        it("finds a date range parameter by a typed and by an untyped ref", () => {
+            expect(
+                selectCatalogDateRangeParameterByRef(idRef("lastHoldingMonth", "parameter"))(loadedState),
+            ).toBe(lastHoldingMonth);
+            expect(selectCatalogDateRangeParameterByRef(idRef("lastHoldingMonth"))(loadedState)).toBe(
+                lastHoldingMonth,
             );
-            expect(selectCatalogParametersIsLoaded(stateWith({ status: "gated-off", parameters: [] }))).toBe(
-                false,
+        });
+
+        it("finds no date range parameter for an unknown ref or a scalar parameter's ref", () => {
+            expect(selectCatalogDateRangeParameterByRef(idRef("deleted", "parameter"))(loadedState)).toBe(
+                undefined,
             );
+            expect(selectCatalogDateRangeParameterByRef(topN.ref)(loadedState)).toBe(undefined);
+        });
+
+        it("returns the date range parameter's title, falling back to its id and then to the ref's identifier", () => {
+            expect(selectCatalogDateRangeParameterTitle(lastHoldingMonth.ref)(loadedState)).toBe(
+                "Last holding month",
+            );
+            expect(selectCatalogDateRangeParameterTitle(untitledPeriod.ref)(loadedState)).toBe(
+                "untitledPeriod",
+            );
+            expect(selectCatalogDateRangeParameterTitle(idRef("deleted", "parameter"))(loadedState)).toBe(
+                "deleted",
+            );
+            expect(selectCatalogDateRangeParameterTitle(topN.ref)(loadedState)).toBe("topN");
         });
     });
 

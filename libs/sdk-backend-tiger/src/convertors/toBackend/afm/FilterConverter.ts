@@ -12,6 +12,7 @@ import {
     type MatchAttributeFilter,
     type MeasureValueFilter,
     type NegativeAttributeFilter,
+    type ParameterizedDateFilter,
     type PositiveAttributeFilter,
     type RankingFilter,
     type RelativeDateFilter,
@@ -29,6 +30,7 @@ import {
     type IMatchAttributeFilter,
     type IMeasureValueFilter,
     type INegativeAttributeFilter,
+    type IParameterizedDateFilter,
     type IPositiveAttributeFilter,
     type IRankingFilter,
     type IRelativeDateFilter,
@@ -47,6 +49,7 @@ import {
     isMeasureValueFilter,
     isNegativeAttributeFilter,
     isObjRef,
+    isParameterizedDateFilter,
     isPositiveAttributeFilter,
     isRangeCondition,
     isRankingFilter,
@@ -61,6 +64,7 @@ import {
     toDateDataSetQualifier,
     toLabelQualifier,
     toLocalIdentifier,
+    toParameterQualifier,
 } from "../ObjRefConverter.js";
 
 function toTigerEmptyValueHandling(
@@ -291,6 +295,24 @@ function convertAbsoluteGranularityDateFilter(
     };
 }
 
+function convertParameterizedDateFilter(
+    filter: IParameterizedDateFilter,
+    applyOnResultProp: ApplyOnResultProp,
+): ParameterizedDateFilter {
+    const { dataSet, parameter, localIdentifier, emptyValueHandling } = filter.parameterizedDateFilter;
+    const tigerEmptyValueHandling = toTigerEmptyValueHandling(emptyValueHandling);
+
+    return {
+        parameterizedDateFilter: {
+            dataset: toDateDataSetQualifier(dataSet),
+            parameter: toParameterQualifier(parameter),
+            localIdentifier,
+            ...(tigerEmptyValueHandling === undefined ? {} : { emptyValueHandling: tigerEmptyValueHandling }),
+            ...applyOnResultProp,
+        },
+    };
+}
+
 function convertAllTimeDateFilter(
     filter: IRelativeDateFilter,
     applyOnResultProp: ApplyOnResultProp,
@@ -501,6 +523,8 @@ export function convertFilter(
         return convertAbsoluteDateFilter(filter, applyOnResultProp);
     } else if (isAbsoluteGranularityDateFilter(filter)) {
         return convertAbsoluteGranularityDateFilter(filter, applyOnResultProp);
+    } else if (isParameterizedDateFilter(filter)) {
+        return convertParameterizedDateFilter(filter, applyOnResultProp);
     } else if (isRelativeDateFilter(filter)) {
         return convertRelativeDateFilter(filter, applyOnResultProp);
     } else if (isMeasureValueFilter(filter)) {

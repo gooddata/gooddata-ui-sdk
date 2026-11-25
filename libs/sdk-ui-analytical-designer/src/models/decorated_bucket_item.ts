@@ -397,7 +397,13 @@ function getFilters(
                     filter.dimension,
                 );
                 const emptyBucketsMeta = {};
-                return createDecoratedDateFilter(filter, decoratedDateDataset, emptyBucketsMeta, isMeasure);
+                return createDecoratedDateFilter(
+                    filter,
+                    decoratedDateDataset,
+                    emptyBucketsMeta,
+                    isMeasure,
+                    selectedDateDatasets.dateRangeParameters,
+                );
             }
             return createDecoratedMetricAttributeFilter(
                 filter,

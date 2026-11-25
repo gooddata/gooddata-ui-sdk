@@ -19,6 +19,7 @@ import {
     type IDateFilterConfig,
     type IFilter,
     type IMeasureValueFilter,
+    type IParameterizedDateFilterConfig,
     type IRankingFilter,
     type MeasureValueFilterCondition,
     type TextModeFilterData,
@@ -33,7 +34,7 @@ export interface IUpdateDateFilterActionPayload {
     localIdentifier: string;
     overTimeComparisonType?: OverTimeComparisonType;
     overTimeComparisonMeasures?: string[];
-    filterConfig: IDateFilterConfig;
+    filterConfig: IDateFilterConfig | IParameterizedDateFilterConfig;
     dateDatasetRef: ObjRef;
     additionalDateAttributeFilters?: IFilter[];
     isCurrentPeriodExcluded?: boolean;

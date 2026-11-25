@@ -7,7 +7,8 @@ import { isPoPAvailable } from "../selectors/date_filter_selector.js";
 import { getVisualizationClassTypeFromState } from "../services/visualization_class_service.js";
 import { getAvailableAttributes } from "../store/catalog/catalog_selector.js";
 import { getAvailableDateDatasets } from "../store/date_datasets/date_datasets_selectors.js";
-import { isMultiline } from "../store/filter_bar/filter_bar_selector.js";
+import { getFirstDateFilter, isMultiline } from "../store/filter_bar/filter_bar_selector.js";
+import { isParameterizedDateFilterConfig } from "../store/filter_bar/filter_bar_types.js";
 import {
     isFilteringRecommended,
     isGeoSegmentConflictRecommended as isGeoSegmentConflictRecommendedFlag,
@@ -28,16 +29,29 @@ export const isRecommendationComparisonWithPeriodEnabledSelector = (state: IAppS
 
 const hasShortcutDatasetsErrorSelector = (state: IAppState) => !!getShortcutDateDatasetsError(state);
 
+// applying the recommendation replaces the first date filter's period with a preset, and AD does not offer the
+// comparison over time with a period
 export const displayRecommendationComparisonWithPeriodSelector = createSelector(
     isRecommendationComparisonWithPeriodEnabledSelector,
     getAvailableDateDatasets,
     hasShortcutDatasetsErrorSelector,
+    getFirstDateFilter,
 
     // `.length`, not `.size`: `.size` on a plain array is undefined and `undefined > 0` would
     // silently hide the recommendation
-    (isRecommendationComparisonWithPeriodEnabled, availableDateDatasets, hasShortcutDatasetsError) => {
+    (
+        isRecommendationComparisonWithPeriodEnabled,
+        availableDateDatasets,
+        hasShortcutDatasetsError,
+        firstDateFilter,
+    ) => {
         const availableDatasets = availableDateDatasets.length > 0;
-        return !hasShortcutDatasetsError && isRecommendationComparisonWithPeriodEnabled && availableDatasets;
+        return (
+            !hasShortcutDatasetsError &&
+            isRecommendationComparisonWithPeriodEnabled &&
+            availableDatasets &&
+            !isParameterizedDateFilterConfig(firstDateFilter?.filterConfig)
+        );
     },
 );
 
@@ -47,11 +61,17 @@ export const displayRecommendationContributionInPercentsSelector = (state: IAppS
 export const isDisplayRecommendationsMetricWithPeriodSelector = (state: IAppState) =>
     getUiConfigRecommendation(state, "overTimeComparison");
 
+// AD does not offer the comparison over time with a period (a date filter that references a DATE_RANGE parameter)
 export const displayRecommendationsMetricWithPeriodSelector = createSelector(
     isDisplayRecommendationsMetricWithPeriodSelector,
     isPoPAvailable,
-    (isDisplayRecommendationsMetricWithPeriodEnabled, popIsAvailable: boolean) => {
-        return isDisplayRecommendationsMetricWithPeriodEnabled && popIsAvailable;
+    getFirstDateFilter,
+    (isDisplayRecommendationsMetricWithPeriodEnabled, popIsAvailable: boolean, firstDateFilter) => {
+        return (
+            isDisplayRecommendationsMetricWithPeriodEnabled &&
+            popIsAvailable &&
+            !isParameterizedDateFilterConfig(firstDateFilter?.filterConfig)
+        );
     },
 );
 

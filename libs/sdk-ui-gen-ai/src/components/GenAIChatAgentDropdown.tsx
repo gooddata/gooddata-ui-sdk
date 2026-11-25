@@ -34,7 +34,7 @@ import {
     useReasoningMenuItems,
     useSelectedReasoningLabel,
 } from "./GenAIChatReasoningMenu.js";
-import { getEffectiveSelectedAgentId, selectDefaultAgentId } from "./utils/agentSelection.js";
+import { getAgentSelectionUpdate, getEffectiveSelectedAgentId } from "./utils/agentSelection.js";
 import { DEFAULT_EFFORT } from "./utils/effortSelection.js";
 
 const msgs = defineMessages({
@@ -138,33 +138,14 @@ export function GenAIChatAgentDropdown({
     );
 
     useEffect(() => {
-        const isConversationAgentAvailable =
-            !!conversationAgentId && agents.some((agent) => agent.id === conversationAgentId);
-        const isSelectedAgentAvailable =
-            !!selectedAgentId && agents.some((agent) => agent.id === selectedAgentId);
-
-        if (conversationAgentId) {
-            if (isConversationAgentAvailable) {
-                if (conversationAgentId !== selectedAgentId) {
-                    onSelectAgent(conversationAgentId);
-                }
-                return;
-            }
-
-            if (agents.length) {
-                onSelectAgent(
-                    isSelectedAgentAvailable ? selectedAgentId : selectDefaultAgentId(agents, conversations),
-                );
-            }
-            return;
-        }
-
-        if (!isSelectedAgentAvailable && agents.length) {
-            // Resolve a default as soon as agents are loaded. selectDefaultAgentId always yields an
-            // agent from agent metadata alone (lastUsedAt, then modifiedAt), so input usability never
-            // depends on the conversations list loading. The conversations are still consulted as a
-            // best-effort "last used conversation agent" heuristic when they are already available.
-            onSelectAgent(selectDefaultAgentId(agents, conversations));
+        const update = getAgentSelectionUpdate({
+            agents,
+            conversations,
+            conversationAgentId,
+            selectedAgentId,
+        });
+        if (update) {
+            onSelectAgent(update.agentId);
         }
     }, [agents, conversationAgentId, conversations, onSelectAgent, selectedAgentId]);
 

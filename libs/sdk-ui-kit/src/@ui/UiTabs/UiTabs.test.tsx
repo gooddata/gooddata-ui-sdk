@@ -34,6 +34,38 @@ describe("UiTabs", () => {
         expect(onTabDoubleClick).toHaveBeenCalledWith({ id: "200", label: "Tab 2" });
     });
 
+    it("should expose each tab's position and the total number of tabs", () => {
+        const { rerender } = render(
+            <UiTabs
+                {...requiredProps}
+                tabs={[
+                    { id: "1", label: "Tab 1" },
+                    { id: "2", label: "Tab 2" },
+                ]}
+            />,
+        );
+
+        expect(screen.getByRole("tab", { name: "Tab 1" })).toHaveAttribute("aria-posinset", "1");
+        expect(screen.getByRole("tab", { name: "Tab 1" })).toHaveAttribute("aria-setsize", "2");
+        expect(screen.getByRole("tab", { name: "Tab 2" })).toHaveAttribute("aria-posinset", "2");
+        expect(screen.getByRole("tab", { name: "Tab 2" })).toHaveAttribute("aria-setsize", "2");
+
+        rerender(
+            <UiTabs
+                {...requiredProps}
+                tabs={[
+                    { id: "1", label: "Tab 1" },
+                    { id: "2", label: "Tab 2" },
+                    { id: "3", label: "Tab 3" },
+                ]}
+            />,
+        );
+
+        expect(screen.getByRole("tab", { name: "Tab 1" })).toHaveAttribute("aria-setsize", "3");
+        expect(screen.getByRole("tab", { name: "Tab 3" })).toHaveAttribute("aria-posinset", "3");
+        expect(screen.getByRole("tab", { name: "Tab 3" })).toHaveAttribute("aria-setsize", "3");
+    });
+
     it("should not render the tab actions trigger when actions contain only a separator", () => {
         render(
             <UiTabs

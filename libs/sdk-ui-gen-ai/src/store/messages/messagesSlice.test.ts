@@ -8,6 +8,7 @@ import {
     type IChatConversationLocal,
     type IChatConversationLocalItem,
     type IChatConversationMultipartLocalPart,
+    makeAssistantItem,
     makeConversationItem,
     makeUserItem,
 } from "../../model.js";
@@ -22,16 +23,19 @@ import {
     clearThreadAction,
     clearThreadErrorAction,
     dashboardSavedAction,
+    evaluateMessageAction,
     evaluateMessageErrorAction,
     loadConversationSuccessAction,
     loadThreadErrorAction,
     messagesSliceName,
     messagesSliceReducer,
+    newMessageAction,
     publisherDocumentSavedAction,
     setCurrentConversationAction,
     setSelectedAgentAction,
     setSelectedEffortAction,
     startNewConversationAction,
+    upsertConversationAction,
 } from "./messagesSlice.js";
 
 const makeConversation = (id: string): IChatConversationLocal => ({
@@ -44,6 +48,60 @@ const makeConversation = (id: string): IChatConversationLocal => ({
 });
 
 describe("messagesSlice", () => {
+    it.each([false, true])(
+        "registers a created conversation without losing its messages (navigated away: %s)",
+        (navigateAway) => {
+            const initial = messagesSliceReducer(undefined, startNewConversationAction());
+            const draft = initial.currentConversation!;
+            const withMessage = messagesSliceReducer(
+                initial,
+                newMessageAction(makeUserItem({ type: "text", text: "How are sales?" })),
+            );
+            const evaluating = messagesSliceReducer(
+                withMessage,
+                evaluateMessageAction({ message: makeAssistantItem(), conversationId: draft.localId }),
+            );
+            const state = navigateAway
+                ? messagesSliceReducer(evaluating, startNewConversationAction())
+                : evaluating;
+            const created = { ...makeConversation("server-id"), localId: draft.localId };
+
+            const updated = messagesSliceReducer(state, upsertConversationAction({ conversation: created }));
+
+            expect(updated.conversations).toEqual([{ ...created, inProgress: true }]);
+            expect(updated.conversationsData).toBe(state.conversationsData);
+            expect(updated.loaded).toBe(state.loaded);
+            expect(updated.selectedEffort).toBe(state.selectedEffort);
+            expect(updated.currentConversation).toEqual(
+                navigateAway ? state.currentConversation : { ...created, inProgress: true },
+            );
+            expect(updated.threadId).toBe(navigateAway ? state.threadId : created.id);
+            expect(updated.selectedAgentId).toBe(navigateAway ? state.selectedAgentId : created.agentId);
+        },
+    );
+
+    it.each(["server-id", "draft-id"])("updates existing history by %s without selecting it", (localId) => {
+        const conversation = { ...makeConversation("server-id"), localId, pinned: true };
+        const state = messagesSliceReducer(
+            messagesSliceReducer(undefined, setCurrentConversationAction({ conversation })),
+            startNewConversationAction(),
+        );
+        const updatedConversation = {
+            ...makeConversation("server-id"),
+            localId: "draft-id",
+            title: "Updated title",
+        };
+
+        const updated = messagesSliceReducer(
+            state,
+            upsertConversationAction({ conversation: updatedConversation }),
+        );
+
+        expect(updated.conversations).toEqual([{ ...updatedConversation, pinned: true }]);
+        expect(updated.currentConversation).toEqual(state.currentConversation);
+        expect(updated.conversationsData).toBe(state.conversationsData);
+    });
+
     it.each(["server-id", "local-id"])("activates a cached conversation by %s", (conversationId) => {
         const conversation = { ...makeConversation("server-id"), localId: "local-id" };
         const item = makeUserItem({ type: "text", text: "Build a dashboard" });

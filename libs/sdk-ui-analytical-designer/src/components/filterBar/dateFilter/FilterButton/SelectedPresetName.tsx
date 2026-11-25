@@ -2,13 +2,13 @@
 
 import { useIntl } from "react-intl";
 
-import { isAllTimeDateFilterOption } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 import { FilterLabel } from "@gooddata/sdk-ui-kit";
 
+import { getPeriodTitleWithEmptyValues } from "../../../../models/empty_date_values_title.js";
 import { type EmptyDateValuesFilterMode } from "../../../../store/filter_bar/filter_bar_types.js";
-import { type IDateFilterOption } from "../dateFilterOptionFactory.js";
+import { type IDateFilterOption, isAllTimeOption } from "../dateFilterOptionFactory.js";
 
 export interface ISelectedPresetNameProps {
     filter: IDateFilterOption;
@@ -18,49 +18,45 @@ export interface ISelectedPresetNameProps {
 }
 
 function PresetName({
-    filter: { filterOption, excludeCurrentPeriod },
+    filter,
     dateFormat,
     isInDefaultState,
-    emptyDateValuesFilterMode,
-    emptyValuesLabel,
-    exceptLabel,
-}: ISelectedPresetNameProps & { emptyValuesLabel: string; exceptLabel: string }) {
+    withEmptyValues,
+}: Omit<ISelectedPresetNameProps, "emptyDateValuesFilterMode"> & {
+    /** adds the empty date values mode to the period title; built outside, it needs the AD translations */
+    withEmptyValues: (periodTitle: string, isAllTime: boolean) => string;
+}) {
     const sdkIntl = useIntl();
-    const actualFilter = DateFilterHelpers.applyExcludeCurrentPeriod(filterOption, excludeCurrentPeriod);
-    const selectionTitle = DateFilterHelpers.getDateFilterTitleUsingTranslator(
-        actualFilter,
-        sdkIntl,
-        "full",
-        dateFormat,
-    );
-    const isAllTime = isAllTimeDateFilterOption(filterOption);
+    const { filterOption, excludeCurrentPeriod, period } = filter;
+    // a period shows its title, not its range (Figma Specs 05); its empty values mode is worded like any period's
+    const selectionTitle = period
+        ? period.title
+        : DateFilterHelpers.getDateFilterTitleUsingTranslator(
+              DateFilterHelpers.applyExcludeCurrentPeriod(filterOption, excludeCurrentPeriod),
+              sdkIntl,
+              "full",
+              dateFormat,
+          );
+    const title = withEmptyValues(selectionTitle, isAllTimeOption(filter));
 
-    if (emptyDateValuesFilterMode === "only") {
-        return <FilterLabel title={emptyValuesLabel} noData={false} isDate />;
-    }
-
-    if (emptyDateValuesFilterMode === "exclude" && isAllTime) {
-        const selectionTitleWithEmptyValues = `${selectionTitle} ${exceptLabel} ${emptyValuesLabel}`;
-        return <FilterLabel title={selectionTitleWithEmptyValues} noData={false} isDate />;
-    }
-
-    if (isInDefaultState) {
+    // a worded empty date values mode is never the default state
+    if (isInDefaultState && title === selectionTitle) {
         return <>{selectionTitle}</>;
     }
 
-    return <FilterLabel title={selectionTitle} noData={false} isDate />;
+    return <FilterLabel title={title} noData={false} isDate />;
 }
 
-export function SelectedPresetName(props: ISelectedPresetNameProps) {
+export function SelectedPresetName({ emptyDateValuesFilterMode, ...props }: ISelectedPresetNameProps) {
     const adIntl = useIntl();
 
-    // These need to be passed down, since PresetName uses a different intl context
-    const emptyValuesLabel = adIntl.formatMessage({ id: "filter.date.additional_filter.empty_values" });
-    const exceptLabel = adIntl.formatMessage({ id: "gs.list.except" });
+    // built here, since PresetName renders in the SDK intl context
+    const withEmptyValues = (periodTitle: string, isAllTime: boolean) =>
+        getPeriodTitleWithEmptyValues(periodTitle, isAllTime, emptyDateValuesFilterMode, adIntl);
 
     return (
         <IntlWrapper locale={adIntl.locale}>
-            <PresetName {...props} emptyValuesLabel={emptyValuesLabel} exceptLabel={exceptLabel} />
+            <PresetName {...props} withEmptyValues={withEmptyValues} />
         </IntlWrapper>
     );
 }

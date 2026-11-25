@@ -18,6 +18,7 @@ import {
     dateDatasetRefsWithGranularities,
 } from "../../../../tests/DateDatasetWithGranularities.test.helpers.js";
 import { type IDateDatasetRefWithGranularities } from "../../../../typings/datasets.js";
+import { buildPeriodDateFilterOption } from "../dateFilterOptionFactory.js";
 import {
     ALL_TIME_FILTER_OPTION,
     RELATIVE_PERIOD_FILTER_OPTION,
@@ -26,6 +27,7 @@ import {
 import { RELATIVE_DATE_FILTER_PRESETS } from "../presets.js";
 
 import {
+    useResetPeriodWhenUnsupportedByDateDataset,
     useResetPresetWhenUnsupportedOneIsSelected,
     useResetRelativeRangeWhenUnsupportedOneIsSelected,
     useSupportedDateFilterPresets,
@@ -245,4 +247,61 @@ describe("supportedPresetHook", () => {
             });
         });
     });
+});
+
+describe("useResetPeriodWhenUnsupportedByDateDataset", () => {
+    const yearPeriod = buildPeriodDateFilterOption(
+        { type: "parameterized", parameterRef: idRef("lastYear", "parameter"), granularity: "GDC.time.year" },
+        "Last year",
+    );
+    const periodWithoutGranularity = buildPeriodDateFilterOption(
+        { type: "parameterized", parameterRef: idRef("deleted", "parameter") },
+        "deleted",
+    );
+
+    it("resets a period to All time when the date dataset lacks its granularity", () => {
+        const resetCallback = vi.fn();
+        renderHook(() =>
+            useResetPeriodWhenUnsupportedByDateDataset(
+                yearPeriod,
+                dateDataset3,
+                dateDatasetRefsWithGranularities,
+                resetCallback,
+            ),
+        );
+        expect(resetCallback).toBeCalledWith({
+            filterOption: ALL_TIME_FILTER_OPTION,
+            excludeCurrentPeriod: false,
+        });
+    });
+
+    it.each([
+        ["the date dataset has its granularity", yearPeriod, dateDataset1, dateDatasetRefsWithGranularities],
+        [
+            "the period has no known granularity",
+            periodWithoutGranularity,
+            dateDataset3,
+            dateDatasetRefsWithGranularities,
+        ],
+        ["the date dataset's granularities are not known", yearPeriod, dateDataset3, []],
+    ])(
+        "keeps a period when %s",
+        (
+            _case: string,
+            filter: typeof yearPeriod,
+            dateDataset: IDecoratedDateDataset,
+            refsWithGranularities: IDateDatasetRefWithGranularities[],
+        ) => {
+            const resetCallback = vi.fn();
+            renderHook(() =>
+                useResetPeriodWhenUnsupportedByDateDataset(
+                    filter,
+                    dateDataset,
+                    refsWithGranularities,
+                    resetCallback,
+                ),
+            );
+            expect(resetCallback).not.toBeCalled();
+        },
+    );
 });

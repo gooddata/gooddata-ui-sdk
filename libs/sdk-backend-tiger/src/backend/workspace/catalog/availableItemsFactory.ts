@@ -18,6 +18,8 @@ import {
     type ICatalogGroup,
     type IFilter,
     type IInsightDefinition,
+    type IMeasure,
+    type IRelativeDateFilter,
     type ObjRef,
     type ObjRefInScope,
     areObjRefsEqual,
@@ -35,8 +37,11 @@ import {
     isLocalIdRef,
     isMeasure,
     isMeasureValueFilter,
+    isParameterizedDateFilter,
     isRankingFilter,
+    isSimpleMeasure,
     measureLocalId,
+    newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 import { _compact, _uniq } from "@gooddata/util";
 
@@ -186,8 +191,8 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             ? [...insightMeasures(insight), ...insightAttributes(insight), ...insightFilters(insight)]
             : items;
         const attributes = relevantItems.filter(isAttribute);
-        const measures = relevantItems.filter(isMeasure);
-        const filters = relevantItems.filter(isFilterOfAnyType);
+        const measures = relevantItems.filter(isMeasure).map(measureWithoutPeriods);
+        const filters = relevantItems.filter(isFilterOfAnyType).map(withoutPeriod);
 
         const attributeLocalIds = new Set(attributes.map((attribute) => attributeLocalId(attribute)));
         const measureLocalIds = new Set(measures.map((measure) => measureLocalId(measure)));
@@ -242,6 +247,38 @@ export function filterAvailableItems(refs: ObjRef[], items: CatalogItem[]): Cata
 
         return intersectionWith(refs, itemRefs, areObjRefsEqual).length > 0;
     });
+}
+
+/**
+ * Whether an item is valid depends on the date data set of a filter with a period, not on the period. As a
+ * filter on that data set the query does not need the period, which may have been deleted: the action
+ * refuses a query that references a missing period.
+ */
+function withoutPeriod<T extends IFilter>(filter: T): T | IRelativeDateFilter {
+    return isParameterizedDateFilter(filter)
+        ? newRelativeDateFilter(filter.parameterizedDateFilter.dataSet, "GDC.time.year", 0, 0)
+        : filter;
+}
+
+function measureWithoutPeriods(measure: IMeasure): IMeasure {
+    if (!isSimpleMeasure(measure)) {
+        return measure;
+    }
+    const { measureDefinition } = measure.measure.definition;
+    if (!measureDefinition.filters?.some(isParameterizedDateFilter)) {
+        return measure;
+    }
+    return {
+        measure: {
+            ...measure.measure,
+            definition: {
+                measureDefinition: {
+                    ...measureDefinition,
+                    filters: measureDefinition.filters.map(withoutPeriod),
+                },
+            },
+        },
+    };
 }
 
 /** @internal */

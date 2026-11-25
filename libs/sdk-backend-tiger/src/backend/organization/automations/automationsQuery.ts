@@ -25,6 +25,7 @@ import {
 } from "../../../backend/common/automations.js";
 import { convertAutomation } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { convertSkippingNotSupported } from "../../../utils/convertSkippingNotSupported.js";
 
 /**
  * Organization automations query implementation for centralized automation management.
@@ -189,11 +190,14 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
                             this.setTotalCount(totalCount);
                         }
                         // Convert workspace automation list to standard automation objects
-                        return res.data.data.map((automationObject) =>
-                            convertAutomation(
-                                automationObject,
-                                (res.data?.included ?? []) as JsonApiAutomationOutIncludes[],
-                            ),
+                        return convertSkippingNotSupported(
+                            res.data.data,
+                            (automationObject) =>
+                                convertAutomation(
+                                    automationObject,
+                                    (res.data?.included ?? []) as JsonApiAutomationOutIncludes[],
+                                ),
+                            "Automation",
                         );
                     })
                     .catch((error) => {

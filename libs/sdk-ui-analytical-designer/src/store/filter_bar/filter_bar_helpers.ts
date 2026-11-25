@@ -43,8 +43,10 @@ import {
     type IDateFilterConfig,
     type IFilter,
     type IMeasureValueFilter,
+    type IParameterizedDateFilterConfig,
     type IRankingFilter,
     type TextModeFilterData,
+    isParameterizedDateFilterConfig,
     normalizeMeasureValueFilterConditions,
 } from "./filter_bar_types.js";
 import { type IParameterFilter } from "./parameter_filter_types.js";
@@ -428,7 +430,7 @@ export const updateDateFilter = (
         emptyDateValuesFilter,
     }: {
         localIdentifier: string;
-        filterConfig?: IDateFilterConfig;
+        filterConfig?: IDateFilterConfig | IParameterizedDateFilterConfig;
         overTimeComparisonType?: OverTimeComparisonType;
         dateDatasetRef?: ObjRef;
         emptyDateValuesFilter?: EmptyDateValuesFilterMode;
@@ -731,6 +733,26 @@ export const resetAdditionalDateFilters = (
 
 // --- the extended-reference-point filter converters ----------------------------------------------
 
+const convertToDateFilterConfig = (
+    interval: IVisDateFilter["interval"],
+): IDateFilterConfig | IParameterizedDateFilterConfig | undefined => {
+    if (!interval) {
+        return undefined;
+    }
+    // a period passes through the visualization as it is: rebuilding it from the range fields would drop the
+    // period's ref and the stored local identifier
+    if (isParameterizedDateFilterConfig(interval)) {
+        return interval;
+    }
+    return {
+        interval: interval.interval,
+        name: interval.name,
+        granularity: interval.granularity as Granularity,
+        type: interval.type,
+        ...(interval.boundedFilter ? { boundedFilter: interval.boundedFilter } : {}),
+    };
+};
+
 const convertToDateFilter = (
     filter: IVisDateFilter,
     localIdentifier: string,
@@ -739,15 +761,7 @@ const convertToDateFilter = (
     localIdentifier,
     type: "date",
     cacheItemIdentifier: filter.attribute,
-    filterConfig: filter.interval
-        ? {
-              interval: filter.interval.interval,
-              name: filter.interval.name,
-              granularity: filter.interval.granularity as Granularity,
-              type: filter.interval.type,
-              ...(filter.interval.boundedFilter ? { boundedFilter: filter.interval.boundedFilter } : {}),
-          }
-        : undefined,
+    filterConfig: convertToDateFilterConfig(filter.interval),
     overTimeComparisonType: filter.overTimeComparisonType,
     emptyDateValuesFilter: filter.emptyDateValuesFilter,
     dateDatasetRef,

@@ -740,8 +740,8 @@
         "crowdinContext": "Error shown when the parameter YAML declares an unsupported parameter type. {enabledTypes} is a comma-separated list of the supported type names (e.g. 'NUMBER' or 'NUMBER and STRING')."
     },
     "analyticsCatalog.parameter.validation.invalidDefaultValue": {
-        "text": "Default value must be {type, select, STRING {a string, listed in allowedValues when they are defined} other {a number}}.",
-        "crowdinContext": "Error shown when the parameter YAML contains a defaultValue that does not match the declared parameter type or, for STRING, is not one of the defined allowedValues. {type} is the declared type: STRING expects a string that is among allowedValues when those are set, otherwise a number."
+        "text": "Default value must be {type, select, STRING {a string, listed in allowedValues when they are defined} DATE_RANGE {a period with granularity and from, to, or both} other {a number}}.",
+        "crowdinContext": "Error shown when the parameter YAML contains a defaultValue that does not match the declared parameter type or, for STRING, is not one of the defined allowedValues. {type} is the declared type: STRING expects a string that is among allowedValues when those are set, DATE_RANGE expects a period, otherwise a number. Do not translate granularity, from and to: they are YAML keys."
     },
     "analyticsCatalog.parameter.validation.invalidConstraints": {
         "text": "Invalid constraints: {type, select, STRING {STRING parameters allow non-negative integer minLength and maxLength, or allowedValues} other {NUMBER parameters allow numeric min and max}}.",
@@ -778,6 +778,50 @@
     "analyticsCatalog.parameter.validation.invalidTags": {
         "text": "Tags must be a list of strings.",
         "crowdinContext": "Error shown when the parameter YAML contains invalid tags."
+    },
+    "analyticsCatalog.parameter.validation.unsupportedGranularity": {
+        "text": "Granularity must be {granularities}.",
+        "crowdinContext": "Error shown when the YAML of a date range parameter has a missing or unknown granularity. {granularities} is the list of accepted values, e.g. 'YEAR, QUARTER, MONTH, WEEK, DAY, HOUR, MINUTE, or SECOND'. The values are YAML keywords and stay untranslated."
+    },
+    "analyticsCatalog.parameter.validation.invalidPeriodValue": {
+        "text": "{field} must be written as {format}, for example {example}.",
+        "crowdinContext": "Error shown when the start or the end of a date range parameter's period does not match its granularity or is not a real date, e.g. month 13. {field} is the YAML key, 'from' or 'to'. {format} is the expected format, e.g. 'YYYY-MM', and {example} a valid value, e.g. '2025-08'. Do not translate the placeholders."
+    },
+    "analyticsCatalog.parameter.validation.emptyPeriod": {
+        "text": "A period needs from, to, or both. Leave one out to keep that end open.",
+        "crowdinContext": "Error shown when the YAML of a date range parameter sets neither the start (from) nor the end (to) of its period. Do not translate from and to: they are YAML keys."
+    },
+    "analyticsCatalog.parameter.validation.invalidPeriodOrder": {
+        "text": "from cannot be after to.",
+        "crowdinContext": "Error shown when the start (from) of a date range parameter's period is later than its end (to). Do not translate from and to: they are YAML keys."
+    },
+    "analyticsCatalog.parameter.detail.granularity": {
+        "text": "Granularity",
+        "crowdinContext": "Label in the catalog detail of a date range parameter, next to the granularity of its period, e.g. 'Month'."
+    },
+    "analyticsCatalog.parameter.detail.currentRange": {
+        "text": "Current range",
+        "crowdinContext": "Label in the catalog detail of a date range parameter, next to the period it holds now, e.g. 'Aug 2025 – Aug 2026'."
+    },
+    "analyticsCatalog.parameter.period.granularity": {
+        "text": "{granularity, select, YEAR {Year} QUARTER {Quarter} MONTH {Month} WEEK {Week} DAY {Day} HOUR {Hour} MINUTE {Minute} other {Second}}",
+        "crowdinContext": "Granularity of a date range parameter's period, shown in its catalog detail. Translate only the words inside the braces (Year, Quarter, Month, Week, Day, Hour, Minute, Second), not the uppercase keys."
+    },
+    "analyticsCatalog.parameter.period.openEnd": {
+        "text": "From {from}",
+        "crowdinContext": "Names a date range parameter's period that has a start but no end, in its catalog detail. {from} is the first period of the range, which is included, e.g. 'Aug 2025', 'Q3 2025' or '2025'. Do not translate the {from} placeholder."
+    },
+    "analyticsCatalog.parameter.period.openStart": {
+        "text": "Until {to}",
+        "crowdinContext": "Names a date range parameter's period that has an end but no start, in its catalog detail. {to} is the last period of the range, which is included, e.g. 'Aug 2026', 'Q2 2026' or '2026'. Use wording that includes that last period. Do not translate the {to} placeholder."
+    },
+    "analyticsCatalog.parameter.period.quarter": {
+        "text": "Q{quarter} {year}",
+        "crowdinContext": "Names one quarter in the range of a date range parameter, e.g. 'Q3 2025'. {quarter} is the quarter number, 1 to 4, and {year} the year. Do not translate the placeholders."
+    },
+    "analyticsCatalog.parameter.period.week": {
+        "text": "W{week} {year}",
+        "crowdinContext": "Names one ISO week in the range of a date range parameter, e.g. 'W33 2025'. {week} is the two-digit week number, 01 to 53, and {year} the ISO week-numbering year. Do not translate the placeholders."
     },
     "analyticsCatalog.parameter.create.defaultTitle": {
         "text": "My Parameter",

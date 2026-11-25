@@ -8,10 +8,15 @@ import { _isEmpty } from "@gooddata/util";
 import { ALL_TIME } from "../../constants/presets.js";
 import { type IDecoratedDateFilter } from "../../models/date_filter.js";
 import { type IPresetItem } from "../../models/preset_item.js";
-import { type IDateFilterConfig } from "../../store/filter_bar/filter_bar_types.js";
+import {
+    type IDateFilterConfig,
+    type IParameterizedDateFilterConfig,
+    isParameterizedDateFilterConfig,
+} from "../../store/filter_bar/filter_bar_types.js";
 import {
     type IDateFilterOption,
     buildDateFilterValueFromDateFilterOption,
+    buildPeriodDateFilterOption,
     matchDateFilterValueToDateFilterOption,
 } from "../filterBar/dateFilter/dateFilterOptionFactory.js";
 
@@ -46,6 +51,9 @@ export function measureDateFilterToOption(
     if (!stored || _isEmpty(stored)) {
         return undefined;
     }
+    if (isParameterizedDateFilterConfig(stored)) {
+        return buildPeriodDateFilterOption(stored, filter.periodTitle);
+    }
     // the legacy All time filter is stored as the bare preset name, without an interval
     if (stored.name === ALL_TIME) {
         return matchDateFilterValueToDateFilterOption({
@@ -63,12 +71,16 @@ export function measureDateFilterToOption(
 /**
  * Converts the option picked in the shared date filter components into the interval stored on the metric filter.
  * All time lands in the legacy shape, the bare preset name: it is stored in the visualization object like
- * the filter bar's All time and, like it, dropped from the execution.
+ * the filter bar's All time and, like it, dropped from the execution. A period the option keeps stays as it is.
  */
 export function optionToMeasureDateFilterInterval({
     filterOption,
     excludeCurrentPeriod,
-}: IDateFilterOption): IPresetItem | undefined {
+    period,
+}: IDateFilterOption): IPresetItem | IParameterizedDateFilterConfig | undefined {
+    if (period) {
+        return period.config;
+    }
     if (isAllTimeDateFilterOption(filterOption)) {
         return { name: ALL_TIME };
     }

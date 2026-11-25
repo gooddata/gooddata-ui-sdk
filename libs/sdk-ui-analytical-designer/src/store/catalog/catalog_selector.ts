@@ -28,6 +28,7 @@ import {
     catalogAttributeHierarchies,
     catalogDateHierarchies,
     catalogStateAvailableItemsUris,
+    catalogStateDateRangeParameters,
     catalogStateFlags,
     catalogStateGroups,
     catalogStateItems,
@@ -60,6 +61,8 @@ export const getDateHierarchies = createSelector(getCatalogState, catalogDateHie
 export const getAttributeHierarchies = createSelector(getCatalogState, catalogAttributeHierarchies);
 
 export const getCatalogParameters = createSelector(getCatalogState, catalogStateParameters);
+
+export const getCatalogDateRangeParameters = createSelector(getCatalogState, catalogStateDateRangeParameters);
 
 export const getCatalogItemById = (id: string) =>
     createSelector(getCatalogItems, (items) =>
@@ -196,6 +199,8 @@ export const isLoadingAvailability = createSelector(getCatalogFlags, (flags) => 
 export const hasAvailabilityError = createSelector(getCatalogFlags, (flags) => !!flags.availabilityError);
 
 export const hasCatalogFirstLoaded = createSelector(getCatalogFlags, (flags) => flags.firstLoaded);
+
+export const hasCatalogLoadFailed = createSelector(getCatalogFlags, (flags) => flags.loadFailed);
 
 export const getAllTooltipDetails = createSelector(getCatalogState, catalogStateTooltipDetails);
 

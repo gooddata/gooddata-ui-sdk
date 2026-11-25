@@ -8,6 +8,7 @@ import { type IFilters } from "@gooddata/sdk-ui-ext/internal";
 
 import { type IDateDatasetsMetaItem } from "../../models/date_datasets_meta_item.js";
 import { DATE_DATASET_ATTRIBUTE } from "../../models/date_item.js";
+import { convertFiltersToRefPoint } from "../../services/reference_point_service.js";
 import { itemCache } from "../../tests/constants.test.helpers.js";
 import {
     dateDatasetsMetaItems,
@@ -30,6 +31,7 @@ import {
 import { getInitializedState } from "../../tests/state.test.helpers.js";
 import { withData } from "../../tests/state_builder.test.helpers.js";
 import { type IRawBucketItems } from "../../typings/buckets.js";
+import { bucketsMetaInitialState } from "../buckets/buckets_meta_state.js";
 
 import { buildCacheItemMock } from "./cache_item.test.helpers.js";
 import { getFilterBarState, getFilterItems, getFirstDateFilter } from "./filter_bar_selector.js";
@@ -1046,6 +1048,29 @@ describe("filterBarService", () => {
     });
 
     describe("convertFromExtendedRefPointFilters", () => {
+        it("keeps a date filter with a period as it went into the reference point", () => {
+            const period: IDateFilter = {
+                localIdentifier: "date.localId",
+                type: "date",
+                cacheItemIdentifier: DATE_DATASET_ATTRIBUTE,
+                overTimeComparisonType: "nothing",
+                filterConfig: {
+                    type: "parameterized",
+                    parameterRef: idRef("review_period", "parameter"),
+                    granularity: "GDC.time.month",
+                    localIdentifier: "period_filter",
+                },
+                dateDatasetRef: DATE_FILTER_DATASET_REF,
+                emptyDateValuesFilter: "exclude",
+            };
+
+            const [converted] = FilterBarService.convertFromExtendedRefPointFilters(
+                convertFiltersToRefPoint([period], bucketsMetaInitialState),
+            );
+
+            expect(converted).toEqual(period);
+        });
+
         it("should return the list of converted filters", () => {
             const EXTENDED_REF_POINT_FILTERS: IFilters = {
                 localIdentifier: "filters",

@@ -1,19 +1,28 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactElement } from "react";
+import { type ReactElement, type ReactNode } from "react";
 
 import { configureStore } from "@reduxjs/toolkit";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
 import { describe, expect, it } from "vitest";
 
-import { chatWindowSliceName, chatWindowSliceReducer } from "../../../store/chatWindow/chatWindowSlice.js";
+import { type CatalogItem } from "@gooddata/sdk-model";
+
+import { en_US } from "../../../localization/bundles/en-US.localization-bundle.js";
+import {
+    chatWindowSliceName,
+    chatWindowSliceReducer,
+    setCatalogItemsActions,
+} from "../../../store/chatWindow/chatWindowSlice.js";
 import { messagesSliceName, messagesSliceReducer } from "../../../store/messages/messagesSlice.js";
 import { ConfigProvider } from "../../ConfigContext.js";
 import { escapeMarkdown } from "../../utils/markdownUtils.js";
 
 import { MarkdownComponent } from "./Markdown.js";
+
+const messages = Object.fromEntries(Object.entries(en_US).map(([id, message]) => [id, message.text]));
 
 const withStoreAndIntl = (component: ReactElement) => {
     const store = configureStore({
@@ -24,10 +33,21 @@ const withStoreAndIntl = (component: ReactElement) => {
     });
     return (
         <Provider store={store}>
-            <IntlProvider locale="en">{component}</IntlProvider>
+            <IntlProvider locale="en" messages={messages}>
+                {component}
+            </IntlProvider>
         </Provider>
     );
 };
+
+/**
+ * Text shown on the screen, without text given only to screen readers (e.g. a reference chip's type).
+ */
+function visibleText(element: Element) {
+    const clone = element.cloneNode(true) as Element;
+    clone.querySelectorAll(".sr-only").forEach((hidden) => hidden.remove());
+    return clone.textContent;
+}
 
 describe("MarkdownComponent", () => {
     it("renders literal text with reference chips when Markdown is disabled", () => {
@@ -39,7 +59,7 @@ describe("MarkdownComponent", () => {
             ),
         );
 
-        expect(container.textContent).toBe("**bold** :rocket: &amp;\n    > Revenue and {metric/missing}");
+        expect(visibleText(container)).toBe("**bold** :rocket: &amp;\n    > Revenue and {metric/missing}");
         expect(container.querySelector("strong, blockquote")).toBeNull();
         expect(container.querySelector(".gd-gen-ai-chat__message__object.metric")).toHaveTextContent(
             "Revenue",
@@ -169,10 +189,10 @@ describe("MarkdownComponent", () => {
             ),
         );
 
-        expect(document.querySelector("code")).toHaveTextContent("SELECT Total Returns / Total Sales");
+        expect(visibleText(document.querySelector("code")!)).toBe("SELECT Total Returns / Total Sales");
 
         const chips = document.querySelectorAll("code .gd-gen-ai-chat__message__object.metric");
-        expect(Array.from(chips).map((chip) => chip.textContent)).toEqual(["Total Returns", "Total Sales"]);
+        expect(Array.from(chips).map(visibleText)).toEqual(["Total Returns", "Total Sales"]);
     });
 
     it("renders a document reference as a chip with its title", () => {
@@ -193,6 +213,44 @@ describe("MarkdownComponent", () => {
         expect(screen.queryByRole("link")).not.toBeInTheDocument();
     });
 
+    it.each([
+        ["plain text", false, "How many orders have we delivered? {metric/r1}"],
+        ["markdown", true, "# Title\n\nI found **10** dashboards, see [it](https://example.com) {metric/r1}"],
+    ])("keeps its DOM nodes when re-rendered with new references (%s)", (_, allowMarkdown, text) => {
+        const references = () => [{ id: "r1", type: "metric" as const, title: "Spend" }];
+        const store = configureStore({
+            reducer: {
+                [chatWindowSliceName]: chatWindowSliceReducer,
+                [messagesSliceName]: messagesSliceReducer,
+            },
+        });
+        const wrapper = ({ children }: { children: ReactNode }) => (
+            <Provider store={store}>
+                <IntlProvider locale="en" messages={messages}>
+                    {children}
+                </IntlProvider>
+            </Provider>
+        );
+        const { container, rerender } = render(
+            <MarkdownComponent allowMarkdown={allowMarkdown} references={references()}>
+                {text}
+            </MarkdownComponent>,
+            { wrapper },
+        );
+        const nodesBefore = Array.from(container.querySelectorAll("*"));
+
+        // A parent re-render (e.g. a new message or a streaming update) passes a new references array.
+        rerender(
+            <MarkdownComponent allowMarkdown={allowMarkdown} references={references()}>
+                {text}
+            </MarkdownComponent>,
+        );
+        const nodesAfter = Array.from(container.querySelectorAll("*"));
+
+        expect(nodesAfter).toHaveLength(nodesBefore.length);
+        nodesAfter.forEach((node, index) => expect(node).toBe(nodesBefore[index]));
+    });
+
     it("renders a reference chip wrapped in a tooltip anchor", () => {
         render(
             withStoreAndIntl(
@@ -205,5 +263,45 @@ describe("MarkdownComponent", () => {
         const trigger = document.querySelector(".gd-ui-kit-tooltip__anchor");
         expect(trigger).toBeInTheDocument();
         expect(trigger).toHaveTextContent("Spend");
+    });
+
+    it("announces a focused reference chip with its type, and its description once", async () => {
+        const store = configureStore({
+            reducer: {
+                [chatWindowSliceName]: chatWindowSliceReducer,
+                [messagesSliceName]: messagesSliceReducer,
+            },
+        });
+        store.dispatch(
+            setCatalogItemsActions([
+                {
+                    type: "measure",
+                    measure: { id: "amount_id", title: "Amount", description: "Total order amount" },
+                } as unknown as CatalogItem,
+            ]),
+        );
+        render(
+            <Provider store={store}>
+                <IntlProvider locale="en" messages={messages}>
+                    <ConfigProvider canManage>
+                        <MarkdownComponent
+                            allowMarkdown
+                            references={[{ id: "amount_id", type: "metric", title: "Amount" }]}
+                        >
+                            {"Total for {metric/amount_id}"}
+                        </MarkdownComponent>
+                    </ConfigProvider>
+                </IntlProvider>
+            </Provider>,
+        );
+        const chip = document.querySelector<HTMLElement>(".gd-gen-ai-chat__message__object")!;
+
+        act(() => chip.focus());
+
+        expect(await screen.findByRole("tooltip")).toHaveTextContent("Total order amount");
+        expect(chip).toHaveTextContent("Amount, Metric");
+        expect(chip).toHaveAccessibleDescription("Total order amount");
+        const descriptionId = chip.getAttribute("aria-describedby")!;
+        expect(document.querySelectorAll(`[id="${descriptionId}"]`)).toHaveLength(1);
     });
 });

@@ -14,7 +14,10 @@ import {
 } from "@gooddata/sdk-ui-filters";
 
 import { ALL_TIME } from "../../../constants/presets.js";
-import { type IDateFilterConfig } from "../../../store/filter_bar/filter_bar_types.js";
+import {
+    type IDateFilterConfig,
+    type IParameterizedDateFilterConfig,
+} from "../../../store/filter_bar/filter_bar_types.js";
 
 import { ALL_TIME_FILTER_OPTION } from "./defaultFilterOptions.js";
 import { findRelativePresetByValue } from "./presets.js";
@@ -23,7 +26,32 @@ export interface IDateFilterOption {
     filterOption: DateFilterOption;
     excludeCurrentPeriod: boolean;
     isTimeForAbsoluteRangeEnabled?: boolean;
+    /**
+     * The period (a DATE_RANGE parameter) the filter references. `filterOption` is then All time, which no
+     * other option is; picking another option drops the period.
+     */
+    period?: IDateFilterOptionPeriod;
 }
+
+export interface IDateFilterOptionPeriod {
+    config: IParameterizedDateFilterConfig;
+    /** the period's title, or its id when the catalog does not have the period */
+    title: string;
+}
+
+/** The option is All time, not a period, which is All time underneath. */
+export const isAllTimeOption = ({ filterOption, period }: IDateFilterOption): boolean =>
+    !period && isAllTimeDateFilterOption(filterOption);
+
+/** The option of a filter with a period. */
+export const buildPeriodDateFilterOption = (
+    config: IParameterizedDateFilterConfig,
+    title: string,
+): IDateFilterOption => ({
+    filterOption: ALL_TIME_FILTER_OPTION,
+    excludeCurrentPeriod: false,
+    period: { config, title },
+});
 
 const virtualPresetBase = {
     name: "",

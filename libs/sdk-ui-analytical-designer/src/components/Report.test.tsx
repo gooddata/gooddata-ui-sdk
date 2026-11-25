@@ -148,6 +148,22 @@ describe("Report", () => {
         });
     });
 
+    it("should show the load failure in place of the visualization", () => {
+        const { container } = createComponent({
+            hasReportLoadingError: true,
+            reportLoadFailure: "dashboardsLoadFailed",
+        });
+
+        return delay().then(() => {
+            const page = container.querySelector("[data-testid='error-report-load-failed']");
+            expect(page?.textContent).toContain("Sorry, we can't display this visualization");
+            expect(page?.textContent).toContain(
+                "Some of the information needed to open this visualization did not load.",
+            );
+            expect(container.querySelectorAll(".s-error-report-blank").length).toEqual(0);
+        });
+    });
+
     it("should show report empty", () => {
         const { container } = createComponent({ isReportWithFiltersEmpty: true });
 

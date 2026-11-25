@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-code-convertors: A relative date filter whose range is stored as text, such as \"-1\", keeps that range when converted to code, so the AI assistant's dashboard draft no longer opens on All time.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

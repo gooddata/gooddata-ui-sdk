@@ -119,6 +119,13 @@ export interface IDateFilterBodyProps {
      * @alpha
      */
     customRangeHint?: ReactNode;
+
+    /**
+     * Render the relative period from/to select menus in an overlay.
+     *
+     * @alpha
+     */
+    shouldOverlayRelativeRangeMenu?: boolean;
 }
 
 export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {
@@ -403,7 +410,9 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         ? route === "absoluteForm"
             ? intl.formatMessage({ id: "filters.staticPeriod" })
             : intl.formatMessage({ id: "filters.floatingRange" })
-        : ariaLabel;
+        : // Same title the filter button shows, so the dialog is announced as the filter it belongs to.
+          // A blank custom name would leave the dialog unnamed, so it falls back to the default title too.
+          ariaLabel?.trim() || intl.formatMessage({ id: "dateFilterDropdown.title" });
 
     return (
         <div
@@ -451,6 +460,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                         withoutApply={withoutApply}
                         enableEmptyDateValues={props.enableEmptyDateValues}
                         customRangeHint={props.customRangeHint}
+                        shouldOverlayRelativeRangeMenu={props.shouldOverlayRelativeRangeMenu}
                         onPeriodRangeValidityChange={setIsPeriodRangeValid}
                         activeForm={route}
                         onBackNavigation={handleBackNavigation}

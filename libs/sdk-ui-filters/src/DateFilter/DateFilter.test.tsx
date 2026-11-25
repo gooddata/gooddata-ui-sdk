@@ -46,6 +46,20 @@ describe("DateFilter", () => {
         },
     );
 
+    it.each([
+        ["the default filter title", undefined, "Date range"],
+        ["the custom filter name", "Created at", "Created at"],
+        ["the default filter title when the custom name is empty", "", "Date range"],
+        ["the default filter title when the custom name is blank", "   ", "Date range"],
+    ])("names the opened filter dialog by %s", (_case, customFilterName, expectedName) => {
+        createDateFilter({ customFilterName });
+        clickDateFilterButton();
+
+        const dialog = document.querySelector(".s-extended-date-filters-body");
+        expect(dialog).toHaveAttribute("role", "dialog");
+        expect(dialog).toHaveAttribute("aria-label", expectedName);
+    });
+
     it("steps back from a period form on Escape, and closes the filter on a second Escape", () => {
         createDateFilter();
         openRelativeFormFilter();

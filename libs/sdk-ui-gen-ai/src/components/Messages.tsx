@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -49,6 +49,7 @@ export function Messages({ initializing }: MessagesComponentProps) {
 
     const isLoading = loading === "loading" || loading === "clearing" || initializing || !loaded;
     const isEmpty = !conversationMessages.length && !isLoading;
+    const logKey = useLogKey(conversationMessages, isLoading);
 
     return (
         <div
@@ -67,6 +68,7 @@ export function Messages({ initializing }: MessagesComponentProps) {
             }}
         >
             <div
+                key={logKey}
                 className="gd-gen-ai-chat__messages__scroll"
                 role="log"
                 aria-relevant={isEmpty || isLoading ? undefined : "additions"}
@@ -84,6 +86,29 @@ export function Messages({ initializing }: MessagesComponentProps) {
             </div>
         </div>
     );
+}
+
+/**
+ * Key of the "Chat messages" log region.
+ *
+ * Screen readers announce content added to an existing log, but not the content a log is created with.
+ * New messages and streaming updates keep the existing messages in place, so the log stays and
+ * announces just them. When the messages are loaded or replaced instead (thread load, re-sync on
+ * chat open, conversation switch), the log is re-created together with them, so the history that was
+ * already in the conversation is not read out as new.
+ */
+function useLogKey(messages: ReturnType<typeof conversationMessagesSelector>, isLoading: boolean): number {
+    const ids = messages.map((message) => message.localId);
+    const [log, setLog] = useState({ key: 0, ids, isLoading });
+
+    const keepsMessages = log.isLoading === isLoading && log.ids.every((id, i) => id === ids[i]);
+    if (keepsMessages && log.ids.length === ids.length) {
+        return log.key;
+    }
+
+    const key = keepsMessages ? log.key : log.key + 1;
+    setLog({ key, ids, isLoading });
+    return key;
 }
 
 interface IConversationMessagesProps {

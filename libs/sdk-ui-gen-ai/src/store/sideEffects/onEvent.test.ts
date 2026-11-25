@@ -4,6 +4,7 @@ import { runSaga } from "redux-saga";
 import { describe, expect, it, vi } from "vitest";
 
 import {
+    type GenAIAgent,
     type IChatConversationLocalContent,
     type IChatConversationLocalItem,
     makeUserItem,
@@ -14,6 +15,8 @@ import {
     evaluateMessageStreamingAction,
     filledFormAction,
     newMessageAction,
+    saveVisualizationErrorAction,
+    saveVisualizationSuccessAction,
 } from "../messages/messagesSlice.js";
 
 import {
@@ -21,14 +24,23 @@ import {
     onEvaluateMessageComplete,
     onEvaluateMessageStreaming,
     onNewMessage,
+    onSaveVisualizationError,
+    onSaveVisualizationSuccess,
 } from "./onEvent.js";
 
+// Ensure these selector mocks apply even if another test already imported the event handlers.
+vi.hoisted(() => vi.resetModules());
+
 vi.mock("../messages/messagesSelectors.js", () => ({
+    agentsSelector: (state: TestState) => state.agents,
+    selectedAgentIdSelector: (state: TestState) => state.selectedAgentId,
     conversationMessagesSelector: (state: TestState) => state.messages,
     conversationMessagesByIdSelector: (state: TestState, conversationId: string) =>
         state.messagesByConversation?.[conversationId] ?? [],
     conversationByIdOrLocalIdSelector: (state: TestState, conversationId: string) =>
-        state.conversations?.find((conversation) => conversation.localId === conversationId),
+        state.conversations?.find(
+            (conversation) => conversation.localId === conversationId || conversation.id === conversationId,
+        ),
     conversationSelector: (state: TestState) => state.conversations?.[0],
     threadIdSelector: (state: TestState) => state.threadId,
 }));
@@ -37,8 +49,112 @@ type TestState = {
     messages: IChatConversationLocalItem[];
     threadId: string;
     messagesByConversation?: Record<string, IChatConversationLocalItem[]>;
-    conversations?: { id: string; localId: string }[];
+    conversations?: { id: string; localId: string; agentId?: string }[];
+    agents?: GenAIAgent[];
+    selectedAgentId?: string;
 };
+
+describe.each(["success", "error"] as const)("visualization save %s events", (outcome) => {
+    const origin = { id: "origin-thread", localId: "origin-local" };
+    const selected = { id: "selected-thread", localId: "selected-local" };
+
+    it.each([
+        {
+            name: "originating conversation in the background",
+            conversationId: origin.localId,
+            conversations: [selected, origin],
+            expectedThreadId: origin.id,
+        },
+        {
+            name: "originating conversation still selected",
+            conversationId: origin.localId,
+            conversations: [origin],
+            expectedThreadId: origin.id,
+        },
+        {
+            name: "unknown originating conversation",
+            conversationId: "unknown-origin",
+            conversations: [selected, origin],
+            expectedThreadId: undefined,
+        },
+        {
+            name: "missing originating conversation ID",
+            conversationId: undefined,
+            conversations: [selected, origin],
+            expectedThreadId: "selected-thread",
+        },
+        {
+            name: "empty originating conversation ID",
+            conversationId: "",
+            conversations: [{ ...selected, localId: "" }, origin],
+            expectedThreadId: "selected-thread",
+        },
+        {
+            name: "originating conversation without a server ID",
+            conversationId: origin.localId,
+            conversations: [selected, { ...origin, id: "" }],
+            expectedThreadId: undefined,
+        },
+        {
+            name: "no conversation metadata",
+            conversationId: origin.localId,
+            conversations: [],
+            expectedThreadId: undefined,
+        },
+    ])(
+        "uses only the origin's server ID with $name",
+        async ({ conversationId, conversations, expectedThreadId }) => {
+            const dispatch = vi.fn<(event: ChatEvent) => void>();
+            const options = {
+                context: { eventDispatcher: { dispatch } },
+                getState: (): TestState => ({
+                    messages: [],
+                    threadId: "stale-global-thread",
+                    conversations,
+                }),
+            };
+            const payload = {
+                assistantMessageId: "assistant-message-id",
+                visualizationId: "draft-visualization-id",
+                conversationId,
+            };
+            const error = { name: "SaveError", message: "Could not save visualization" };
+
+            if (outcome === "success") {
+                await runSaga(
+                    options,
+                    onSaveVisualizationSuccess,
+                    saveVisualizationSuccessAction({
+                        ...payload,
+                        savedVisualizationId: "saved-visualization-id",
+                        explore: false,
+                    }),
+                ).toPromise();
+            } else {
+                await runSaga(
+                    options,
+                    onSaveVisualizationError,
+                    saveVisualizationErrorAction({ ...payload, error }),
+                ).toPromise();
+            }
+
+            expect(dispatch).toHaveBeenCalledExactlyOnceWith(
+                outcome === "success"
+                    ? {
+                          type: "chatSaveVisualizationSuccess",
+                          threadId: expectedThreadId,
+                          savedVisualizationId: "saved-visualization-id",
+                      }
+                    : {
+                          type: "chatSaveVisualizationError",
+                          threadId: expectedThreadId,
+                          errorMessage: error.message,
+                          errorType: error.name,
+                      },
+            );
+        },
+    );
+});
 
 const clarificationMessage = {
     id: "interaction-id",
@@ -310,6 +426,175 @@ describe("clarification question events", () => {
 });
 
 describe("assistant message events", () => {
+    describe.each(["completion", "streaming"] as const)("%s agent details", (kind) => {
+        const supportedAgent: GenAIAgent = {
+            id: "dashboard-agent",
+            title: "Dashboard agent",
+            description: "Builds and edits dashboards",
+            effectiveSkills: ["dashboard_builder", "dashboard_editor"],
+        };
+        const unsupportedAgent: GenAIAgent = {
+            id: "other-agent",
+            title: "Other agent",
+            effectiveSkills: ["alert"],
+        };
+        const origin = { id: "origin-thread", localId: "origin-local", agentId: supportedAgent.id };
+        const selected = { id: "selected-thread", localId: "selected-local", agentId: unsupportedAgent.id };
+
+        it.each<{
+            name: string;
+            conversationId?: string;
+            conversations?: TestState["conversations"];
+            agents?: GenAIAgent[];
+            selectedAgentId?: string;
+            agentId?: string;
+            expectedAgent: GenAIAgent | undefined;
+        }>([
+            { name: "agent with dashboard skills", expectedAgent: supportedAgent },
+            {
+                name: "agent without dashboard skills",
+                agentId: unsupportedAgent.id,
+                conversations: [{ ...origin, agentId: unsupportedAgent.id }],
+                selectedAgentId: supportedAgent.id,
+                expectedAgent: unsupportedAgent,
+            },
+            {
+                name: "unknown responding agent",
+                agentId: "unknown-agent",
+                conversations: [{ ...origin, agentId: "unknown-agent" }],
+                expectedAgent: undefined,
+            },
+            { name: "unloaded agents", agents: undefined, expectedAgent: undefined },
+            { name: "empty agents", agents: [], expectedAgent: undefined },
+            {
+                name: "selected conversation without an agent ID",
+                agentId: unsupportedAgent.id,
+                conversations: [{ ...origin, agentId: undefined }],
+                expectedAgent: unsupportedAgent,
+            },
+            {
+                name: "no origin with a selected conversation agent",
+                conversationId: undefined,
+                expectedAgent: supportedAgent,
+            },
+            {
+                name: "no origin or selected conversation",
+                agentId: unsupportedAgent.id,
+                conversationId: undefined,
+                conversations: [],
+                expectedAgent: unsupportedAgent,
+            },
+            {
+                name: "unknown responding and selected agent",
+                agentId: "unknown-agent",
+                conversationId: undefined,
+                conversations: [],
+                selectedAgentId: "unknown-agent",
+                expectedAgent: undefined,
+            },
+            {
+                name: "no agent ID",
+                agentId: undefined,
+                conversationId: undefined,
+                conversations: [],
+                selectedAgentId: undefined,
+                expectedAgent: undefined,
+            },
+            {
+                name: "background conversation with its own agent",
+                conversations: [selected, origin],
+                expectedAgent: supportedAgent,
+            },
+            {
+                name: "background conversation without an agent ID",
+                conversations: [selected, { ...origin, agentId: undefined }],
+                expectedAgent: supportedAgent,
+            },
+            {
+                name: "unknown origin with a selected conversation",
+                conversationId: "unknown-origin",
+                expectedAgent: supportedAgent,
+            },
+            {
+                name: "unknown origin without a selected conversation",
+                conversationId: "unknown-origin",
+                conversations: [],
+                expectedAgent: supportedAgent,
+            },
+            {
+                name: "origin identified by server ID",
+                conversationId: origin.id,
+                conversations: [selected, origin],
+                expectedAgent: supportedAgent,
+            },
+            {
+                name: "selection changed to an unsupported agent during the response",
+                conversations: [{ ...origin, agentId: unsupportedAgent.id }],
+                expectedAgent: supportedAgent,
+            },
+            {
+                name: "selection changed to a supported agent during the response",
+                agentId: unsupportedAgent.id,
+                selectedAgentId: supportedAgent.id,
+                expectedAgent: unsupportedAgent,
+            },
+            {
+                name: "missing response agent despite a known selection",
+                agentId: undefined,
+                expectedAgent: undefined,
+            },
+        ])("includes only the responding agent for $name", async (testCase) => {
+            const dispatch = vi.fn<(event: ChatEvent) => void>();
+            const { conversationId, agentId } = {
+                conversationId: origin.localId,
+                agentId: supportedAgent.id,
+                ...testCase,
+            };
+            const message = {
+                ...clarificationMessage,
+                agentId,
+                content: {
+                    type: "skillsActivated",
+                    skills: [{ name: "dashboard_builder", title: "Build dashboard" }],
+                },
+            } as IChatConversationLocalItem;
+            const options = {
+                context: { eventDispatcher: { dispatch } },
+                getState: (): TestState => ({
+                    messages: [message],
+                    threadId: "selected-thread",
+                    conversations: [origin],
+                    agents: [supportedAgent, unsupportedAgent],
+                    selectedAgentId: unsupportedAgent.id,
+                    ...testCase,
+                    messagesByConversation: { [conversationId ?? ""]: [message] },
+                }),
+            };
+            const payload = { assistantMessageId: message.localId, conversationId };
+
+            if (kind === "streaming") {
+                await runSaga(
+                    options,
+                    onEvaluateMessageStreaming,
+                    evaluateMessageStreamingAction(payload),
+                ).toPromise();
+            } else {
+                await runSaga(
+                    options,
+                    onEvaluateMessageComplete,
+                    evaluateMessageCompleteAction(payload),
+                ).toPromise();
+            }
+
+            expect(dispatch).toHaveBeenCalledExactlyOnceWith(
+                expect.objectContaining({
+                    type: "chatAssistantMessage",
+                    agent: testCase.expectedAgent,
+                }),
+            );
+        });
+    });
+
     describe.each(["skills", "clarification", "completion", "cancellation"] as const)(
         "%s conversation identity",
         (kind) => {

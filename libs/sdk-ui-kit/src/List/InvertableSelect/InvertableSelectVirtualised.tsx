@@ -332,15 +332,36 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             focusedIndex,
             isSimple: true,
             isWrapping: false,
+            pageSize: DEFAULT_VISIBLE_ITEMS_COUNT,
         });
+
+    // Space on a focused native checkbox is left to the browser: it toggles the checkbox as a user
+    // action and the resulting click reaches the item's click handler, which changes the selection.
+    // Toggling it from here instead (preventing the default and setting `checked` programmatically)
+    // changes the state silently for screen readers.
+    const handleListKeyDown = useCallback(
+        (e: KeyboardEvent) => {
+            if (!isSingleSelect && isSpaceKey(e) && isNativeCheckbox(e.target)) {
+                return;
+            }
+
+            onKeyboardNavigation(e);
+        },
+        [isSingleSelect, onKeyboardNavigation],
+    );
 
     const scopedIdStoreValue = useScopedIdStoreValue(getItemKey);
 
-    const { containerRef } = useFocusWithinContainer(
+    const focusedElementId =
         focusedItem && focusedAction
             ? scopedIdStoreValue.makeId({ item: focusedItem, specifier: focusedAction })
-            : "",
-    );
+            : "";
+
+    // Jumping far through the virtualized rows (Home, End, PageUp, PageDown) unmounts the row that
+    // held the focus, and the browser drops the focus to the document body. React ignores the blur of
+    // the removed element, so isFocusWithin is still true and lets the hook move the focus back
+    // to the target row (or the grid, which redirects it to the active row).
+    const { containerRef } = useFocusWithinContainer(focusedElementId, { isFocusWithin });
 
     const itemRenderer = useCallback(
         (item: T): ReactElement => {
@@ -506,7 +527,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                                     ) : (
                                         <div className="gd-invertable-select-list" ref={measureRef}>
                                             <div
-                                                onKeyDown={onKeyboardNavigation}
+                                                onKeyDown={handleListKeyDown}
                                                 onFocus={handleFocus}
                                                 onBlur={handleBlur}
                                                 className={cx("gd-async-list", className || "")}
@@ -573,6 +594,10 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
             </div>
         </ScopedIdStore>
     );
+}
+
+function isNativeCheckbox(target: EventTarget): boolean {
+    return target instanceof HTMLInputElement && target.type === "checkbox";
 }
 
 function defaultError({ error }: IInvertableSelectRenderErrorProps): ReactElement {

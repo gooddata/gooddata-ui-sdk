@@ -4,6 +4,7 @@ import { type IntlShape, defineMessage } from "react-intl";
 
 import {
     type DateAttributeGranularity,
+    type DateRangeParameterGranularity,
     isGenericGranularity,
     isFiscalGranularity as isSdkFiscalGranularity,
     isStandardGranularity as isSdkStandardGranularity,
@@ -93,6 +94,13 @@ export const GRANULARITY = {
     FISCAL_QUARTER: "GDC.time.fiscal_quarter",
     FISCAL_YEAR: "GDC.time.fiscal_year",
 } as const satisfies GranularityConstants;
+
+/**
+ * The granularity of a period (a DATE_RANGE parameter) in Analytical Designer's terms. A period's week is
+ * `GDC.time.week`, which AD names by the week attribute it filters, `GDC.time.week_us`.
+ */
+export const periodGranularityToGranularity = (granularity: DateRangeParameterGranularity): Granularity =>
+    granularity === "GDC.time.week" ? GRANULARITY.WEEK : granularity;
 
 export const isFiscalGranularity = (granularity: Granularity | string | undefined): boolean =>
     isSdkFiscalGranularity(granularity);

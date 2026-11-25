@@ -3,6 +3,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
+import { idRef } from "@gooddata/sdk-model";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 import { GRANULARITY } from "../../../../models/granularity.js";
@@ -124,6 +125,26 @@ describe("GlobalDateFilterLabel", () => {
             );
         });
 
+        it("should render only the title of a period, even with empty values excluded", () => {
+            renderComponent({
+                filter: {
+                    filterOption: ALL_TIME_FILTER_OPTION,
+                    excludeCurrentPeriod: false,
+                    period: {
+                        config: { type: "parameterized", parameterRef: idRef("lastQuarter", "parameter") },
+                        title: "Most recent quarter",
+                    },
+                },
+                emptyDateValuesFilterMode: "exclude",
+            });
+
+            expect(document.querySelector(".s-global-filter-label-bottom").textContent).toBe(
+                "Most recent quarter",
+            );
+            // a period is not the gray All time default state
+            expect(document.querySelector(".adi-filter-all-selected")).toBeNull();
+        });
+
         it("should render preset name", () => {
             renderComponent({
                 filter: {
@@ -135,6 +156,22 @@ describe("GlobalDateFilterLabel", () => {
             });
             const presetName = document.querySelector(".s-global-filter-label-bottom").textContent;
             expect(presetName).toBe("Last 4 quarters");
+        });
+
+        it("should add empty values to preset name when they are included", () => {
+            renderComponent({
+                filter: {
+                    filterOption: RELATIVE_DATE_FILTER_PRESETS["GDC.time.quarter"].find(
+                        (p) => p.localIdentifier === "LAST_4_QUARTERS",
+                    ),
+                    excludeCurrentPeriod: false,
+                },
+                emptyDateValuesFilterMode: "include",
+            });
+
+            expect(document.querySelector(".s-global-filter-label-bottom").textContent).toBe(
+                "Last 4 quarters, empty values",
+            );
         });
 
         it("should keep preset name when empty values are excluded", () => {

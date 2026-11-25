@@ -155,6 +155,60 @@ describe("CatalogDetailTabMetadata", () => {
     });
 });
 
+describe("CatalogDetailTabMetadata — date range parameter", () => {
+    function renderPeriod(enableDateRangeParameters: boolean, from?: string) {
+        return render(
+            <TestPermissionsProvider
+                result={{
+                    ...defaultPermissionsResult,
+                    settings: { ...defaultPermissionsResult.settings, enableDateRangeParameters },
+                }}
+            >
+                <TestIntlProvider>
+                    <CatalogDetailTabMetadata
+                        item={{
+                            ...baseItem,
+                            type: "parameter",
+                            definition: {
+                                type: "DATE_RANGE",
+                                defaultValue: { granularity: "GDC.time.month", from, to: "2026-08" },
+                            },
+                        }}
+                        canEdit
+                        onTagClick={noop}
+                        onTagAdd={noop}
+                        onTagRemove={noop}
+                        onIsHiddenChange={noop}
+                        onIsHiddenFromKdaChange={noop}
+                    />
+                </TestIntlProvider>
+            </TestPermissionsProvider>,
+        );
+    }
+
+    it("shows the granularity and the current range of the period", () => {
+        renderPeriod(true, "2025-08");
+
+        expect(screen.getByText("Granularity")).toBeInTheDocument();
+        expect(screen.getByText("Month")).toBeInTheDocument();
+        expect(screen.getByText("Current range")).toBeInTheDocument();
+        expect(screen.getByText("Aug 2025 – Aug 2026")).toBeInTheDocument();
+    });
+
+    it("names a period open at the start by its end", () => {
+        renderPeriod(true);
+
+        expect(screen.getByText("Until Aug 2026")).toBeInTheDocument();
+    });
+
+    it("shows neither row while date range parameters are off", () => {
+        renderPeriod(false, "2025-08");
+
+        expect(screen.queryByText("Granularity")).not.toBeInTheDocument();
+        expect(screen.queryByText("Current range")).not.toBeInTheDocument();
+    });
+});
+
 describe("CatalogDetailTabMetadata — label conditional formatting", () => {
     const attributeItem: ICatalogItemAttribute = {
         ...baseItem,

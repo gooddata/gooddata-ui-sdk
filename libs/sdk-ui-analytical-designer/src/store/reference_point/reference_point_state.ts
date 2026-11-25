@@ -9,6 +9,7 @@ import {
     type EmptyDateValuesFilterMode,
     type IAttributeElement,
     type IDateFilterConfig,
+    type IParameterizedDateFilterConfig,
     type MeasureValueFilterCondition,
     type TextModeFilterData,
 } from "../filter_bar/filter_bar_types.js";
@@ -42,7 +43,7 @@ export type IRefPointFilterDetail =
 export interface IRefPointDateFilterDetail {
     attribute: string;
     /** the date filter's configuration, or the `all_time` marker when there is none */
-    interval: IDateFilterConfig | { name: string };
+    interval: IDateFilterConfig | IParameterizedDateFilterConfig | { name: string };
     overTimeComparisonType?: string;
     emptyDateValuesFilter?: EmptyDateValuesFilterMode;
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;

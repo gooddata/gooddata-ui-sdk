@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import type { ScalarParameterType } from "@gooddata/sdk-model";
+import type { ParameterType, ScalarParameterType } from "@gooddata/sdk-model";
 
 import { type ParameterDraft, serializeParameterToYaml } from "./parameterSerialization.js";
 import { validateParameterYaml } from "./parameterValidation.js";
@@ -1004,5 +1004,171 @@ describe("a type behind a feature flag", () => {
         expect(validateParameterYaml(stringParameter, { enabledTypes: ["NUMBER", "STRING"] }).isValid).toBe(
             true,
         );
+    });
+});
+
+describe("date range parameters", () => {
+    const WITH_DATE_RANGE: ParameterType[] = ["NUMBER", "DATE_RANGE"];
+
+    function validatePeriod(period: string, enabledTypes = WITH_DATE_RANGE) {
+        return validateParameterYaml(
+            `id: most_recent_13_months
+title: Most Recent 13 Months
+tags: [published]
+definition:
+  type: DATE_RANGE
+  defaultValue:
+${period}`,
+            { enabledTypes },
+        );
+    }
+
+    it("parses a period with both ends", () => {
+        expect(validatePeriod("    granularity: MONTH\n    from: 2025-08\n    to: 2026-08\n")).toEqual({
+            isValid: true,
+            parameter: {
+                type: "parameter",
+                id: "most_recent_13_months",
+                title: "Most Recent 13 Months",
+                tags: ["published"],
+                definition: {
+                    type: "DATE_RANGE",
+                    defaultValue: { granularity: "MONTH", from: "2025-08", to: "2026-08" },
+                },
+            },
+        });
+    });
+
+    it("parses a period open at one end", () => {
+        const result = validatePeriod("    granularity: DAY\n    to: 2026-08-14\n");
+
+        expect(result.isValid && result.parameter.definition).toEqual({
+            type: "DATE_RANGE",
+            defaultValue: { granularity: "DAY", to: "2026-08-14" },
+        });
+    });
+
+    it("takes a year written without quotes as its text", () => {
+        const result = validatePeriod("    granularity: YEAR\n    from: 2025\n");
+
+        expect(result.isValid && result.parameter.definition).toEqual({
+            type: "DATE_RANGE",
+            defaultValue: { granularity: "YEAR", from: "2025" },
+        });
+    });
+
+    it("accepts every granularity the backend accepts", () => {
+        const periods = [
+            "    granularity: QUARTER\n    from: 2025-3\n",
+            "    granularity: WEEK\n    from: 2025-33\n",
+            "    granularity: HOUR\n    from: 2025-08-14 13\n",
+            "    granularity: MINUTE\n    from: 2025-08-14 13:30\n",
+            "    granularity: SECOND\n    from: 2025-08-14 13:30:45\n",
+        ];
+
+        expect(periods.map((period) => validatePeriod(period).isValid)).toEqual([
+            true,
+            true,
+            true,
+            true,
+            true,
+        ]);
+    });
+
+    it("rejects a DATE_RANGE definition as unsupported while the type is not enabled", () => {
+        expect(validatePeriod("    granularity: MONTH\n    from: 2025-08\n", ["NUMBER", "STRING"])).toEqual({
+            isValid: false,
+            errorCode: "unsupportedType",
+            path: ["definition", "type"],
+        });
+    });
+
+    it("rejects a granularity the backend does not accept", () => {
+        expect(validatePeriod("    granularity: month\n    from: 2025-08\n")).toEqual({
+            isValid: false,
+            errorCode: "unsupportedGranularity",
+            type: "DATE_RANGE",
+            path: ["definition", "defaultValue", "granularity"],
+        });
+    });
+
+    it("rejects a missing granularity", () => {
+        expect(validatePeriod("    from: 2025-08\n")).toMatchObject({
+            isValid: false,
+            errorCode: "unsupportedGranularity",
+            path: ["definition", "defaultValue", "granularity"],
+        });
+    });
+
+    it("names the start when it does not match the granularity", () => {
+        expect(validatePeriod("    granularity: MONTH\n    from: 2026-13\n    to: 2026-12\n")).toEqual({
+            isValid: false,
+            errorCode: "invalidPeriodValue",
+            period: { field: "from", granularity: "MONTH" },
+            path: ["definition", "defaultValue", "from"],
+        });
+    });
+
+    it("names the end when it is not a real date", () => {
+        expect(validatePeriod("    granularity: DAY\n    from: 2025-02-01\n    to: 2025-02-30\n")).toEqual({
+            isValid: false,
+            errorCode: "invalidPeriodValue",
+            period: { field: "to", granularity: "DAY" },
+            path: ["definition", "defaultValue", "to"],
+        });
+    });
+
+    it("names an end that is not text", () => {
+        expect(validatePeriod("    granularity: MONTH\n    from: true\n")).toEqual({
+            isValid: false,
+            errorCode: "invalidPeriodValue",
+            period: { field: "from", granularity: "MONTH" },
+            path: ["definition", "defaultValue", "from"],
+        });
+    });
+
+    it("rejects a period with neither end", () => {
+        expect(validatePeriod("    granularity: MONTH\n")).toEqual({
+            isValid: false,
+            errorCode: "emptyPeriod",
+            type: "DATE_RANGE",
+            path: ["definition", "defaultValue"],
+        });
+    });
+
+    it("rejects a start after the end", () => {
+        expect(validatePeriod("    granularity: MONTH\n    from: 2026-08\n    to: 2025-08\n")).toEqual({
+            isValid: false,
+            errorCode: "invalidPeriodOrder",
+            type: "DATE_RANGE",
+            path: ["definition", "defaultValue"],
+        });
+    });
+
+    it("rejects the period written directly under definition", () => {
+        const result = validateParameterYaml(
+            `definition:
+  type: DATE_RANGE
+  granularity: MONTH
+  from: 2025-08
+`,
+            { enabledTypes: WITH_DATE_RANGE },
+        );
+
+        expect(result).toMatchObject({
+            isValid: false,
+            errorCode: "invalidDefaultValue",
+            type: "DATE_RANGE",
+        });
+    });
+
+    it("rejects an unknown key in the period", () => {
+        expect(validatePeriod("    granularity: MONTH\n    from: 2025-08\n    until: 2026-08\n")).toEqual({
+            isValid: false,
+            errorCode: "invalidDefaultValue",
+            type: "DATE_RANGE",
+            path: ["definition", "defaultValue", "until"],
+            target: "key",
+        });
     });
 });

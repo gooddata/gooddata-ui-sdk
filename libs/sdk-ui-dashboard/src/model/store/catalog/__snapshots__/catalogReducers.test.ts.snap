@@ -188,6 +188,8 @@ exports[`catalogReducers > addAttributeHierarchy > should add attribute hierarch
     "status": "uninitialized",
   },
   "parameters": {
+    "dateRangeParameters": [],
+    "dateRangeParametersStatus": "uninitialized",
     "parameters": [],
     "status": "uninitialized",
   },
@@ -235,6 +237,8 @@ exports[`catalogReducers > addAttributeHierarchy > should add attribute hierarch
     "status": "uninitialized",
   },
   "parameters": {
+    "dateRangeParameters": [],
+    "dateRangeParametersStatus": "uninitialized",
     "parameters": [],
     "status": "uninitialized",
   },
@@ -363,6 +367,8 @@ exports[`catalogReducers > deleteAttributeHierarchy > should delete attribute hi
     "status": "uninitialized",
   },
   "parameters": {
+    "dateRangeParameters": [],
+    "dateRangeParametersStatus": "uninitialized",
     "parameters": [],
     "status": "uninitialized",
   },
@@ -526,6 +532,8 @@ exports[`catalogReducers > updateAttributeHierarchy > should update attribute hi
     "status": "uninitialized",
   },
   "parameters": {
+    "dateRangeParameters": [],
+    "dateRangeParametersStatus": "uninitialized",
     "parameters": [],
     "status": "uninitialized",
   },

@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type KeyboardEvent, type MutableRefObject, useMemo } from "react";
+import { type KeyboardEvent, type MutableRefObject, useEffect, useMemo } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -8,6 +8,7 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
+import { createInvalidDatapoint, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import {
     Dropdown,
     DropdownButton,
@@ -16,6 +17,7 @@ import {
     type OverlayPositionType,
     SingleSelectListItem,
     UiListbox,
+    useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
 import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
@@ -57,16 +59,41 @@ export function DestinationSelect({
     }, [items, selectedItemId]);
 
     const accessibilityValue = "schedule.destination";
+    const labelId = useIdPrefixed("destinationLabel");
+    const missingDestinationId = useIdPrefixed("destinationMissing");
+    const isEmpty = items.length === 0;
+
+    // Registers the "no destination" warning in the dialog's validation tree, so the disabled submit
+    // button references it through its validation-driven aria-describedby.
+    const { setInvalidDatapoints } = useValidationContextValue(
+        createInvalidNode({ id: "DestinationSelect" }),
+    );
+    useEffect(() => {
+        setInvalidDatapoints(() =>
+            isEmpty
+                ? [
+                      createInvalidDatapoint({
+                          id: missingDestinationId,
+                          message: intl.formatMessage({ id: "dialogs.schedule.email.destination.missing" }),
+                      }),
+                  ]
+                : [],
+        );
+    }, [isEmpty, missingDestinationId, intl, setInvalidDatapoints]);
 
     return (
-        <div className="gd-input-component gd-destination-field s-gd-notifications-channels-dialog-destination">
-            <label htmlFor={accessibilityValue} className="gd-label">
+        <div
+            className="gd-input-component gd-destination-field s-gd-notifications-channels-dialog-destination"
+            role={isEmpty ? "group" : undefined}
+            aria-labelledby={isEmpty ? `${labelId} ${missingDestinationId}` : undefined}
+        >
+            <label id={labelId} htmlFor={isEmpty ? undefined : accessibilityValue} className="gd-label">
                 <FormattedMessage id="dialogs.schedule.email.destination" />
             </label>
-            {items.length === 0 ? (
+            {isEmpty ? (
                 <div className="gd-notifications-channels-dialog-destination-empty">
-                    <span>
-                        <span className="gd-icon-warning" />
+                    <span id={missingDestinationId}>
+                        <span className="gd-icon-warning" aria-hidden="true" />
                         <FormattedMessage id="dialogs.schedule.email.destination.missing" />
                     </span>
                     <Hyperlink

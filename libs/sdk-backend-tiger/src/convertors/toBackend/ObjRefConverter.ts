@@ -8,6 +8,7 @@ import {
     type AfmObjectIdentifierCore,
     type AfmObjectIdentifierDataset,
     type AfmObjectIdentifierLabel,
+    type AfmObjectIdentifierParameter,
 } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
@@ -123,6 +124,26 @@ export function toAttributeQualifier(ref: ObjRef): AfmObjectIdentifierAttribute 
  */
 export function toDateDataSetQualifier(ref: ObjRef): AfmObjectIdentifierDataset {
     return toAfmObjQualifier(ref, "dataset") as AfmObjectIdentifierDataset;
+}
+
+/**
+ * @internal
+ */
+export function toParameterQualifier(ref: ObjRef): AfmObjectIdentifierParameter {
+    if (isUriRef(ref)) {
+        throw new NotSupported(`Tiger backend does not allow referencing objects by URI.`);
+    }
+
+    if (ref.type !== undefined && ref.type !== "parameter") {
+        throw new UnexpectedError(`Cannot reference ${ref.type} ${ref.identifier} as a parameter.`);
+    }
+
+    return {
+        identifier: {
+            id: ref.identifier,
+            type: "parameter",
+        },
+    };
 }
 
 /**

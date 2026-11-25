@@ -24,12 +24,20 @@ export function DefaultUiTabsTab<
     isFocused,
 }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>) {
     const store = getTypedUiTabsContextStore<TTabProps, TTabActionProps>();
-    const { accessibilityConfig, TabValue, TabActions, maxLabelLength } = store.useContextStoreValues([
+    const { accessibilityConfig, TabValue, TabActions, maxLabelLength, tabs } = store.useContextStoreValues([
         "accessibilityConfig",
         "TabValue",
         "TabActions",
         "maxLabelLength",
+        "tabs",
     ]);
+
+    // Each tab button is wrapped in its own element, so the browser cannot infer the set
+    // position and size from the DOM. Expose them explicitly for assistive technologies.
+    const tabIndexInSet = tabs.findIndex((t) => t.id === tab.id);
+    const isTabRole = accessibilityConfig?.tabRole === "tab";
+    const ariaPosInSet = isTabRole && tabIndexInSet >= 0 ? tabIndexInSet + 1 : undefined;
+    const ariaSetSize = isTabRole && tabIndexInSet >= 0 ? tabs.length : undefined;
 
     const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
 
@@ -63,6 +71,8 @@ export function DefaultUiTabsTab<
             aria-selected={isSelected}
             aria-controls={panelId}
             aria-label={tab.ariaLabel ?? tab.label}
+            aria-posinset={ariaPosInSet}
+            aria-setsize={ariaSetSize}
             tabIndex={tabIndex}
             id={tabId}
             data-testid={`s-tab-${simplifyText(tab.label)}`}

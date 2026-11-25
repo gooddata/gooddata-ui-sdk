@@ -6,7 +6,9 @@ import { type GenAIAgent, type IChatConversationLocal } from "../../model.js";
 
 import {
     getAgentSelectionStatus,
+    getAgentSelectionUpdate,
     getEffectiveSelectedAgentId,
+    getStandaloneSelectedAgentId,
     selectDefaultAgentId,
 } from "./agentSelection.js";
 
@@ -160,6 +162,73 @@ describe("getEffectiveSelectedAgentId", () => {
                 selectedAgentId: "retired-selected-agent",
             }),
         ).toBeUndefined();
+    });
+});
+
+describe("getAgentSelectionUpdate", () => {
+    const agents = [
+        agent("sales", { modifiedAt: "2026-01-01T00:00:00Z" }),
+        agent("support", { modifiedAt: "2026-02-01T00:00:00Z" }),
+    ];
+
+    it.each([
+        { conversationAgentId: "sales", selectedAgentId: "support", expected: { agentId: "sales" } },
+        { conversationAgentId: "sales", selectedAgentId: "sales", expected: undefined },
+        { conversationAgentId: "sales", selectedAgentId: undefined, expected: { agentId: "sales" } },
+        { conversationAgentId: "retired", selectedAgentId: "sales", expected: { agentId: "sales" } },
+        { conversationAgentId: "retired", selectedAgentId: "missing", expected: { agentId: "support" } },
+        { conversationAgentId: "retired", selectedAgentId: undefined, expected: { agentId: "support" } },
+        { conversationAgentId: undefined, selectedAgentId: "sales", expected: undefined },
+        { conversationAgentId: undefined, selectedAgentId: "missing", expected: { agentId: "support" } },
+        { conversationAgentId: undefined, selectedAgentId: undefined, expected: { agentId: "support" } },
+        { conversationAgentId: "", selectedAgentId: "", expected: { agentId: "support" } },
+    ])("resolves the existing reconciliation decision: %j", ({ expected, ...selection }) => {
+        expect(getAgentSelectionUpdate({ agents, ...selection })).toEqual(expected);
+    });
+
+    it.each([undefined, "sales"])(
+        "does nothing without agents for conversation agent %s",
+        (conversationAgentId) => {
+            expect(
+                getAgentSelectionUpdate({ agents: [], conversationAgentId, selectedAgentId: "sales" }),
+            ).toBeUndefined();
+        },
+    );
+
+    it("uses available history without mutating either input list", () => {
+        const conversations = [
+            conversation("older", "support", "2026-01-01T00:00:00Z"),
+            conversation("newer", "sales", "2026-02-01T00:00:00Z"),
+        ];
+        const before = structuredClone({ agents, conversations });
+
+        expect(getAgentSelectionUpdate({ agents, conversations })).toEqual({ agentId: "sales" });
+        expect({ agents, conversations }).toEqual(before);
+    });
+
+    it("keeps metadata precedence when history is available", () => {
+        expect(
+            getAgentSelectionUpdate({
+                agents: [agents[0], { ...agents[1], lastUsedAt: "2026-03-01T00:00:00Z" }],
+                conversations: [conversation("previous", "sales")],
+            }),
+        ).toEqual({ agentId: "support" });
+    });
+});
+
+describe("getStandaloneSelectedAgentId", () => {
+    const agents = [agent("sales"), agent("support", { lastUsedAt: "2026-03-01T00:00:00Z" })];
+
+    it.each([
+        { agents: undefined, selectedAgentId: "sales", expected: undefined },
+        { agents: [], selectedAgentId: "sales", expected: undefined },
+        { agents, selectedAgentId: "support", expected: "support" },
+        { agents, selectedAgentId: "sales", expected: "sales" },
+        { agents, selectedAgentId: "retired", expected: "sales" },
+        { agents, selectedAgentId: undefined, expected: "sales" },
+        { agents: [agent("sales"), agent("")], selectedAgentId: "", expected: "" },
+    ])("keeps a valid selection or uses list order, not metadata: %j", ({ expected, ...selection }) => {
+        expect(getStandaloneSelectedAgentId(selection)).toBe(expected);
     });
 });
 

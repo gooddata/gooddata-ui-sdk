@@ -16,6 +16,7 @@ import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 import { getHostTelemetryServices } from "../loader/pluggableApplicationsLoader.js";
 import { getBackend } from "../platformContext/backend.js";
 
+import { canOpenChatFromUrl, useOpenChatFromUrl } from "./aiConversationUrlParam.js";
 import { e } from "./hostChromeBem.js";
 import { HostIntlProvider } from "./HostIntlProvider.js";
 import "./HostChat.scss";
@@ -211,6 +212,12 @@ export function HostChat({
         // `seq` changes on every request, so a repeated identical open/ask/toggle still re-runs this.
         // oxlint-disable-next-line react-hooks/exhaustive-deps
     }, [visibilitySeq, chatAskAiAssistant, chatOpenAiAssistant, chatOpen, chatClose, chatToggle]);
+
+    const openConversationFromUrl = useCallback(
+        (conversationId: string) => chatOpenAiAssistant(undefined, false, undefined, conversationId),
+        [chatOpenAiAssistant],
+    );
+    useOpenChatFromUrl(canOpenChatFromUrl(showChatItem, ctx, context?.embedded), openConversationFromUrl);
 
     const enablePanel = useGenAiRightPanel(
         features.settings["enableGenAiRightPanel"] as boolean,

@@ -833,6 +833,32 @@ describe("dashboard conversion", () => {
             });
         });
 
+        it.each([
+            { stored: "numbers", from: -1, to: -1, expected: { from: -1, to: -1 } },
+            { stored: "text", from: "-1", to: "-1", expected: { from: -1, to: -1 } },
+            { stored: "text with a zero end", from: "-11", to: "0", expected: { from: -11, to: 0 } },
+            { stored: "empty text", from: "", to: "", expected: {} },
+            { stored: "one end only", from: "-1", to: undefined, expected: {} },
+        ])("should read a relative date range stored as $stored", ({ from, to, expected }) => {
+            const input = makeDashboard({
+                filters: {
+                    main_date: { type: "date_filter", granularity: "MONTH", from: -1, to: -1 },
+                } as any,
+            });
+            const { dashboard, filterContext } = yamlDashboardToDeclarative(emptyEntities, input);
+            const stored = (filterContext!.content as any).filters.find((f: any) => f.dateFilter);
+            stored.dateFilter.from = from;
+            stored.dateFilter.to = to;
+
+            const { json } = declarativeDashboardToYaml(emptyFromEntities, dashboard, [filterContext!]);
+
+            expect(json.filters?.["main_date"]).toEqual({
+                type: "date_filter",
+                granularity: "MONTH",
+                ...expected,
+            });
+        });
+
         it("should omit an All time common date filter", () => {
             const input = makeDashboard({
                 filters: {

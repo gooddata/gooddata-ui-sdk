@@ -10,13 +10,14 @@ import {
 import { EditorState, Transaction, type TransactionSpec } from "@codemirror/state";
 import { describe, expect, it } from "vitest";
 
-import type { ScalarParameterType } from "@gooddata/sdk-model";
+import type { ParameterType } from "@gooddata/sdk-model";
 
 import { createParameterCompletions } from "./parameterCompletions.js";
 import { validateParameterYaml } from "./parameterValidation.js";
 
-const NUMBER_ONLY: ScalarParameterType[] = ["NUMBER"];
-const ALL_TYPES: ScalarParameterType[] = ["NUMBER", "STRING"];
+const NUMBER_ONLY: ParameterType[] = ["NUMBER"];
+const ALL_TYPES: ParameterType[] = ["NUMBER", "STRING"];
+const WITH_DATE_RANGE: ParameterType[] = ["NUMBER", "STRING", "DATE_RANGE"];
 
 function completeAt(docWithCursor: string, enabledTypes = ALL_TYPES) {
     const pos = docWithCursor.indexOf("|");
@@ -201,6 +202,57 @@ definition:
   type: NUMBER`);
 
         expect(labelsOf(result)).toEqual(["parameter"]);
+    });
+
+    it("offers DATE_RANGE as a definition type once it is enabled", () => {
+        const result = completeAt(
+            `definition:
+  type: |`,
+            WITH_DATE_RANGE,
+        );
+
+        expect(labelsOf(result)).toEqual(["NUMBER", "STRING", "DATE_RANGE"]);
+    });
+
+    it("offers the period keys under a DATE_RANGE default value", () => {
+        const result = completeAt(
+            `definition:
+  type: DATE_RANGE
+  defaultValue:
+    |`,
+            WITH_DATE_RANGE,
+        );
+
+        expect(labelsOf(result)).toEqual(["granularity", "from", "to"]);
+    });
+
+    it("offers the granularities as values of a period's granularity", () => {
+        const result = completeAt(
+            `definition:
+  type: DATE_RANGE
+  defaultValue:
+    granularity: |`,
+            WITH_DATE_RANGE,
+        );
+
+        expect(labelsOf(result)).toEqual([
+            "YEAR",
+            "QUARTER",
+            "MONTH",
+            "WEEK",
+            "DAY",
+            "HOUR",
+            "MINUTE",
+            "SECOND",
+        ]);
+    });
+
+    it("offers no granularities while DATE_RANGE is not enabled", () => {
+        const result = completeAt(`definition:
+  defaultValue:
+    granularity: |`);
+
+        expect(result).toBeNull();
     });
 
     it("does not offer values for keys other than type", () => {

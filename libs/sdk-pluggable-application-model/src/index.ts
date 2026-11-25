@@ -59,6 +59,7 @@ export {
     isAiAssistantPublisherDocumentDefinitionV2,
     isReloadPlatformContextRequestedEvent,
     openAiAssistantRequested,
+    AI_CONVERSATION_URL_PARAM,
     closeAiAssistantRequested,
     openPricingDialogRequested,
     aiAssistantContextChanged,

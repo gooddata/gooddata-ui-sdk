@@ -10,23 +10,24 @@ import {
 } from "@codemirror/autocomplete";
 import type { Text } from "@codemirror/state";
 
-import type { ScalarParameterType } from "@gooddata/sdk-model";
+import type { ParameterType } from "@gooddata/sdk-model";
 
 import { replacingKey } from "../asCode/keyCompletions.js";
 import type { SchemaKeys, SchemaKeysEntry } from "../asCode/schemaKeys.js";
 
+import { periodGranularities } from "./dateRangePeriod.js";
 import { parameterSchemaKeys } from "./parameterSchema.js";
 
 /**
  * Creates a CodeMirror completion source that suggests allowed YAML property
- * names and `type:` values.
+ * names and the values of `type:` and a period's `granularity:`.
  *
  * The parent mapping is derived from the cursor's indentation column. Key
  * suggestions are narrowed to the declared `definition.type` when present
  * (falling back to the union of the enabled types); `type:` value suggestions
  * always offer every enabled type.
  */
-export function createParameterCompletions(enabledTypes: ScalarParameterType[]) {
+export function createParameterCompletions(enabledTypes: ParameterType[]) {
     const vocabularyByType = new Map<string, CompletionVocabulary>(
         enabledTypes.map((type) => [type, toVocabulary(parameterSchemaKeys([type]))]),
     );
@@ -35,17 +36,21 @@ export function createParameterCompletions(enabledTypes: ScalarParameterType[]) 
         "": [{ label: "parameter", type: "constant" }],
         definition: enabledTypes.map((label) => ({ label, type: "constant" })),
     };
+    const granularityValueOptions: Record<string, Completion[]> = enabledTypes.includes("DATE_RANGE")
+        ? { defaultValue: periodGranularities.map((label) => ({ label, type: "constant" })) }
+        : {};
 
     return function completeParameter(context: CompletionContext): CompletionResult | null {
         const line = context.state.doc.lineAt(context.pos);
         const before = line.text.slice(0, context.pos - line.from);
 
         // Trigger on a key name at the start of a line, on a key inside a sequence item, or on the
-        // value of a `type:` key; the three patterns are mutually exclusive.
+        // value of a `type:` or `granularity:` key; the patterns are mutually exclusive.
         const keyMatch = before.match(/^(\s*)(\w*)$/);
         const itemMatch = before.match(/^(\s*)-\s+(\w*)$/);
         const typeMatch = before.match(/^(\s*)type:\s+(\w*)$/);
-        const match = keyMatch ?? itemMatch ?? typeMatch;
+        const granularityMatch = before.match(/^(\s*)granularity:\s+(\w*)$/);
+        const match = keyMatch ?? itemMatch ?? typeMatch ?? granularityMatch;
         if (!match) {
             return null;
         }
@@ -58,8 +63,8 @@ export function createParameterCompletions(enabledTypes: ScalarParameterType[]) 
             return null;
         }
 
-        if (typeMatch) {
-            const options = typeValueOptions[parent.key];
+        if (typeMatch || granularityMatch) {
+            const options = (typeMatch ? typeValueOptions : granularityValueOptions)[parent.key];
             return options ? { from, options } : null;
         }
 

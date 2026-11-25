@@ -26,6 +26,8 @@ import {
 
 import {
     type ITigerAbsoluteDateFilter,
+    type ITigerAbsoluteGranularityDateFilter,
+    type ITigerDashboardAbsoluteGranularityDateFilter,
     type ITigerDashboardArbitraryAttributeFilter,
     type ITigerDashboardMatchAttributeFilter,
     type ITigerFilter,
@@ -152,9 +154,14 @@ export function isParameterItem(parameter: unknown): parameter is JsonApiParamet
 }
 
 /**
+ * @remarks
+ * Does not cover the absolute date filter with granularity, {@link isTigerFilterContextItemOfAnyType} does.
+ *
  * @public
  */
-export function isTigerFilterContextItem(obj: unknown): obj is ITigerFilterContextItem {
+export function isTigerFilterContextItem(
+    obj: unknown,
+): obj is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter> {
     if (!obj || typeof obj !== "object") {
         return false;
     }
@@ -183,16 +190,26 @@ export function isTigerFilterContextItem(obj: unknown): obj is ITigerFilterConte
 }
 
 /**
+ * @remarks
+ * Does not cover the absolute date filter with granularity, {@link isTigerFilterContextItemsOfAnyType} does.
+ *
  * @public
  */
-export function isTigerFilterContextItems(filters: unknown[]): filters is ITigerFilterContextItem[] {
+export function isTigerFilterContextItems(
+    filters: unknown[],
+): filters is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter>[] {
     return filters.every(isTigerFilterContextItem);
 }
 
 /**
+ * @remarks
+ * Does not cover the absolute date filter with granularity, {@link isTigerFilterOfAnyType} does.
+ *
  * @public
  */
-export function isTigerFilter(obj: unknown): obj is ITigerFilter {
+export function isTigerFilter(
+    obj: unknown,
+): obj is Exclude<ITigerFilter, ITigerAbsoluteGranularityDateFilter> {
     return (
         isTigerDateFilter(obj) ||
         isTigerAttributeFilter(obj) ||
@@ -204,10 +221,43 @@ export function isTigerFilter(obj: unknown): obj is ITigerFilter {
 }
 
 /**
+ * @remarks
+ * Does not cover the absolute date filter with granularity, {@link isTigerFiltersOfAnyType} does.
+ *
  * @public
  */
-export function isTigerFilters(filters: unknown[]): filters is ITigerFilter[] {
+export function isTigerFilters(
+    filters: unknown[],
+): filters is Exclude<ITigerFilter, ITigerAbsoluteGranularityDateFilter>[] {
     return filters.every(isTigerFilter);
+}
+
+/**
+ * @alpha
+ */
+export function isTigerFilterContextItemOfAnyType(obj: unknown): obj is ITigerFilterContextItem {
+    return isTigerFilterContextItem(obj) || isTigerDashboardAbsoluteGranularityDateFilter(obj);
+}
+
+/**
+ * @alpha
+ */
+export function isTigerFilterContextItemsOfAnyType(filters: unknown[]): filters is ITigerFilterContextItem[] {
+    return filters.every(isTigerFilterContextItemOfAnyType);
+}
+
+/**
+ * @alpha
+ */
+export function isTigerFilterOfAnyType(obj: unknown): obj is ITigerFilter {
+    return isTigerFilter(obj) || isTigerAbsoluteGranularityDateFilter(obj);
+}
+
+/**
+ * @alpha
+ */
+export function isTigerFiltersOfAnyType(filters: unknown[]): filters is ITigerFilter[] {
+    return filters.every(isTigerFilterOfAnyType);
 }
 
 function isTigerAttributeFilter(
@@ -234,6 +284,16 @@ function isTigerAbsoluteDateFilter(obj: unknown): obj is ITigerAbsoluteDateFilte
 
 function isTigerRelativeDateFilter(obj: unknown): obj is ITigerRelativeDateFilter {
     return !!obj && typeof obj === "object" && "relativeDateFilter" in obj;
+}
+
+function isTigerAbsoluteGranularityDateFilter(obj: unknown): obj is ITigerAbsoluteGranularityDateFilter {
+    return !!obj && typeof obj === "object" && "absoluteGranularityDateFilter" in obj;
+}
+
+function isTigerDashboardAbsoluteGranularityDateFilter(
+    obj: unknown,
+): obj is ITigerDashboardAbsoluteGranularityDateFilter {
+    return !!obj && typeof obj === "object" && "dashboardAbsoluteGranularityDateFilter" in obj;
 }
 
 function isTigerMeasureValueFilter(obj: unknown): obj is ITigerMeasureValueFilter {

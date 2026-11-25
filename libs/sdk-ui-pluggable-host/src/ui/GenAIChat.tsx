@@ -13,7 +13,7 @@ import {
     type GenAIChatConnectedEvent,
     type ISequencedAppEvent,
 } from "@gooddata/sdk-ui-gen-ai/internal";
-import { HEADER_CHAT_BUTTON_ID, useToastMessage } from "@gooddata/sdk-ui-kit";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { handleChatLinkClick } from "./chatLinks.js";
 import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
@@ -21,6 +21,9 @@ import { useGenAiRightPanel } from "./useGenAiRightPanel.js";
 // DOM id of the embedded dashboard's AI trigger button (defined in gdc-dashboards-runtime as
 // EMBED_AI_TRIGGER_ID). Used as the chat's focus-return target when running embedded, where the host
 // header chat button does not exist. Kept as a literal to avoid a host→app package dependency.
+// Outside embedding the chat does not return focus itself: the header chat button does, once it
+// renders the closed state. The header is a separate React root updated after the chat closes, so
+// focus returned by the chat would land on a button still announced as expanded.
 const EMBEDDED_AI_TRIGGER_ID = "embed-ai-trigger";
 const EMBEDDED_CHAT_CLASS = "gd-gen-ai-chat-embedded";
 
@@ -224,7 +227,7 @@ export function GenAIChat({
             onLinkClick={onLinkClick}
             onEvent={handleEvent}
             displayMode={enableRightPanel ? "inline" : "modal"}
-            returnFocusTo={embedded ? EMBEDDED_AI_TRIGGER_ID : HEADER_CHAT_BUTTON_ID}
+            returnFocusTo={embedded ? EMBEDDED_AI_TRIGGER_ID : undefined}
         />
     );
 }

@@ -252,4 +252,39 @@ describe("parameter references", () => {
 
         expect(await listParameterReferences(backend, "ws-1", parameterItem)).toEqual([]);
     });
+
+    it("listParameterReferences finds the dashboards that use a date range parameter", async () => {
+        const period: ICatalogItemParameter = {
+            identifier: "most_recent_13_months",
+            type: "parameter",
+            title: "Most Recent 13 Months",
+            description: "",
+            tags: [],
+            createdBy: "test",
+            updatedBy: "test",
+            createdAt: null,
+            updatedAt: null,
+            isLocked: false,
+            isEditable: true,
+            definition: {
+                type: "DATE_RANGE",
+                defaultValue: { granularity: "GDC.time.month", from: "2025-08", to: "2026-08" },
+            },
+        };
+        const periodRoot = { identifier: "most_recent_13_months", type: "parameter" };
+        const dashboard = { identifier: "sales", type: "analyticalDashboard" };
+        const { backend, getReferences } = createFakeBackend();
+        getReferences.mockResolvedValueOnce({
+            nodes: [
+                { ...periodRoot, title: "Most Recent 13 Months", isRoot: true },
+                { ...dashboard, title: "Sales", isRoot: false },
+            ],
+            edges: [{ from: periodRoot, to: dashboard }],
+        });
+
+        expect(await listParameterReferences(backend, "ws-1", period)).toEqual([
+            { ...dashboard, title: "Sales" },
+        ]);
+        expect(getReferences).toHaveBeenCalledWith(periodRoot, { direction: "up" });
+    });
 });

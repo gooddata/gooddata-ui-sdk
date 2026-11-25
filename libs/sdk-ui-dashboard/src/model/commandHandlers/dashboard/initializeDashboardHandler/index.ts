@@ -18,8 +18,6 @@ import {
     type IDateFilterConfig,
     type IDateHierarchyTemplate,
     type IInsight,
-    type IScalarParameterMetadataObject,
-    type ISettings,
     type IWidget,
     type ObjRef,
     areObjRefsEqual,
@@ -401,22 +399,21 @@ function* loadExistingDashboard(
 
     const [
         { tabsAttributeFilterConfigs, tabsDateFilterConfig, tabsDateFilterConfigSource },
-        workspaceParameters,
+        catalogParameters,
         parameterDependencies,
     ]: [
         SagaReturnType<typeof getTabsFilterConfigs>,
-        SagaReturnType<typeof loadWorkspaceParametersWithStatus>,
+        PromiseFnReturnType<typeof loadDashboardParameters>,
         PromiseFnReturnType<typeof loadParameterDependencies>,
     ] = yield all([
         call(getTabsFilterConfigs, dashboard, config, ctx, cmd),
-        call(loadWorkspaceParametersWithStatus, ctx, config.settings),
+        call(loadDashboardParameters, ctx, config.settings),
         call(
             loadParameterDependencies,
             ctx,
             enableParameters ? collectDashboardParameterRoots(dashboard, insights) : [],
         ),
     ]);
-    const workspaceParametersList = Array.isArray(workspaceParameters) ? workspaceParameters : [];
 
     const initActions: SagaReturnType<typeof actionsToInitializeExistingDashboard> = yield call(
         actionsToInitializeExistingDashboard,
@@ -434,7 +431,7 @@ function* loadExistingDashboard(
         // the default filter view changes only the working filters, never the persisted ones
         cmd.payload.persistedDashboard ?? loadedDashboard,
         resolvedActiveTabId,
-        workspaceParametersList,
+        catalogParameters.parameters,
         undefined,
         preloadedAttributeFilters?.attributesWithReferences,
     );
@@ -451,7 +448,7 @@ function* loadExistingDashboard(
             userActions.setUser(user),
             permissionsActions.setPermissions(permissions),
             catalogActions.setCatalogItems(catalogPayload),
-            catalogActions.setCatalogParameters(makeCatalogParametersPayload(workspaceParameters)),
+            catalogActions.setCatalogParameters(catalogParameters),
             catalogActions.setCatalogParameterDependencies({
                 status: enableParameters ? "loaded" : "uninitialized",
                 byRoot: {},
@@ -539,12 +536,11 @@ function* initializeNewDashboard(
         call(loadExportTimezone, ctx),
     ]);
 
-    const workspaceParameters: SagaReturnType<typeof loadWorkspaceParametersWithStatus> = yield call(
-        loadWorkspaceParametersWithStatus,
+    const catalogParameters: PromiseFnReturnType<typeof loadDashboardParameters> = yield call(
+        loadDashboardParameters,
         ctx,
         config.settings,
     );
-    const workspaceParametersList = Array.isArray(workspaceParameters) ? workspaceParameters : [];
 
     const dateFilterConfig = deriveAbsoluteFormGranularitiesFromRelativeForm(
         config.dateFilterConfig,
@@ -561,7 +557,7 @@ function* initializeNewDashboard(
                 ? createDisplayFormMapFromCatalog(loadedCatalog.catalog, loadedCatalog.computedAttributes)
                 : createDisplayFormMap([], []),
             cmd.payload.initialTabId,
-            workspaceParametersList,
+            catalogParameters.parameters,
         );
 
     const enableParameters = config.settings?.enableParameters ?? false;
@@ -586,7 +582,7 @@ function* initializeNewDashboard(
                 computedAttributes: loadedCatalog?.computedAttributes ?? [],
                 dateHierarchyTemplates: dateHierarchyTemplates,
             }),
-            catalogActions.setCatalogParameters(makeCatalogParametersPayload(workspaceParameters)),
+            catalogActions.setCatalogParameters(catalogParameters),
             catalogActions.setCatalogParameterDependencies({
                 status: enableParameters ? "loaded" : "uninitialized",
                 byRoot: {},
@@ -653,38 +649,6 @@ export function* requestCatalog(ctx: DashboardContext, cmd: InitializeDashboard)
             dateHierarchyTemplates: dateHierarchyTemplates,
         }),
     );
-}
-
-function* loadWorkspaceParametersWithStatus(
-    ctx: DashboardContext,
-    settings: ISettings | undefined,
-): SagaIterator<IScalarParameterMetadataObject[] | "gated-off" | "failed"> {
-    if (!settings?.enableParameters) {
-        return "gated-off";
-    }
-    try {
-        const result: PromiseFnReturnType<typeof loadDashboardParameters> = yield call(
-            loadDashboardParameters,
-            ctx,
-            settings.enableStringParameters ?? true,
-        );
-        return result;
-    } catch {
-        return "failed";
-    }
-}
-
-function makeCatalogParametersPayload(result: IScalarParameterMetadataObject[] | "gated-off" | "failed"): {
-    status: "loaded" | "gated-off" | "failed";
-    parameters: IScalarParameterMetadataObject[];
-} {
-    if (result === "gated-off") {
-        return { status: "gated-off", parameters: [] };
-    }
-    if (result === "failed") {
-        return { status: "failed", parameters: [] };
-    }
-    return { status: "loaded", parameters: result };
 }
 
 /**

@@ -495,6 +495,21 @@ export interface IVisualizationObjectAbsoluteDateFilter {
     };
 }
 
+/**
+ * A date filter that references a period (a DATE_RANGE parameter). The backend resolves the period's range
+ * at every execution, so the filter stores only the reference.
+ *
+ * It is not a {@link VisualizationObjectDateFilter}: the readers of those expect a range or All time.
+ */
+export interface IVisualizationObjectParameterizedDateFilter {
+    parameterizedDateFilter: {
+        localIdentifier?: string;
+        dataSet: ObjQualifier;
+        parameter: ObjQualifier;
+        emptyValueHandling?: EmptyValues;
+    };
+}
+
 export interface IVisualizationObjectPositiveAttributeFilter {
     positiveAttributeFilter: {
         localIdentifier?: string;
@@ -544,7 +559,10 @@ export type VisualizationObjectDateFilter =
     | IVisualizationObjectAbsoluteDateFilter;
 
 // does not include measure value filter and ranking filter as these are not supported on measure item level
-export type VisualizationObjectFilter = VisualizationObjectDateFilter | VisualizationObjectAttributeFilter;
+export type VisualizationObjectFilter =
+    | VisualizationObjectDateFilter
+    | IVisualizationObjectParameterizedDateFilter
+    | VisualizationObjectAttributeFilter;
 
 export interface IVisualizationObjectMeasureDefinition {
     measureDefinition: {
@@ -959,6 +977,15 @@ export function isVisualizationObjectDateFilter(
         !_isEmpty(filter) &&
         ((filter as IVisualizationObjectAbsoluteDateFilter).absoluteDateFilter !== undefined ||
             (filter as IVisualizationObjectRelativeDateFilter).relativeDateFilter !== undefined)
+    );
+}
+
+export function isVisualizationObjectParameterizedDateFilter(
+    filter: VisualizationObjectExtendedFilter,
+): filter is IVisualizationObjectParameterizedDateFilter {
+    return (
+        !_isEmpty(filter) &&
+        (filter as IVisualizationObjectParameterizedDateFilter).parameterizedDateFilter !== undefined
     );
 }
 

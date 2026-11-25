@@ -33,6 +33,13 @@ import {
 export const ADD_GRANTEE_ID = "add-grantee-id";
 
 /**
+ * Id of the share dialog element, referenced by `aria-controls` of the button that opens it.
+ */
+export const SHARE_DIALOG_ID = "share-dialog";
+
+export const SHARE_DIALOG_ACCESSIBILITY_CONFIG = { dialogId: SHARE_DIALOG_ID };
+
+/**
  * @internal
  */
 export const ADD_GRANTEE_SELECT_ID = "add-grantee-select-id";

@@ -391,6 +391,72 @@ describe("ConversationVisualizationContent - VisualizationMenu slot", () => {
         visualisationMock.props = undefined;
     });
 
+    describe.each([
+        { mode: "save", menuTitle: "Save visualization", submitText: messages["gd.gen-ai.button.save"] },
+        {
+            mode: "explore",
+            menuTitle: "Open in Analyze",
+            submitText: messages["gd.gen-ai.button.save_and_explore"],
+        },
+    ])("$mode dialog", ({ menuTitle, submitText }) => {
+        it.each(["message", "part", "visualization"] as const)(
+            "preserves the entered title and focus when %s changes",
+            async (changedProp) => {
+                const { rerender } = renderContent({});
+                openMenu();
+                fireEvent.click(screen.getByText(menuTitle));
+
+                const input = await screen.findByRole("textbox");
+                fireEvent.change(input, { target: { value: "My custom visualization" } });
+                input.focus();
+                expect(input).toHaveValue("My custom visualization");
+                expect(input).toHaveFocus();
+
+                rerender(
+                    <ConversationVisualizationContent
+                        message={changedProp === "message" ? { ...mockMessage } : mockMessage}
+                        part={changedProp === "part" ? { ...mockPart, reporting: true } : mockPart}
+                        visualization={
+                            changedProp === "visualization"
+                                ? {
+                                      ...mockVisualization,
+                                      insight: { ...mockVisualization.insight, title: "Updated title" },
+                                  }
+                                : mockVisualization
+                        }
+                    />,
+                );
+
+                expect(await screen.findByRole("textbox")).toHaveValue("My custom visualization");
+                expect(screen.getByRole("textbox")).toBe(input);
+                expect(input).toHaveFocus();
+                expect(screen.getByRole("button", { name: submitText })).toBeInTheDocument();
+                expect(input).toHaveAttribute(
+                    "placeholder",
+                    changedProp === "visualization" ? "Updated title" : mockVisualization.insight.title,
+                );
+            },
+        );
+
+        it("can be canceled and reopened with the original title", async () => {
+            renderContent({});
+            expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+            openMenu();
+            fireEvent.click(screen.getByText(menuTitle));
+            await screen.findByRole("textbox");
+            expect(screen.getByRole("button", { name: submitText })).toBeInTheDocument();
+            fireEvent.change(screen.getByRole("textbox"), { target: { value: "Discard this title" } });
+
+            fireEvent.click(screen.getByRole("button", { name: messages["gd.gen-ai.button.cancel"] }));
+
+            expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+            openMenu();
+            fireEvent.click(screen.getByText(menuTitle));
+            expect(await screen.findByRole("textbox")).toHaveValue(mockVisualization.insight.title);
+            expect(screen.getByRole("button", { name: submitText })).toBeInTheDocument();
+        });
+    });
+
     it("renders the built-in menu items by default", () => {
         renderContent({});
         openMenu();

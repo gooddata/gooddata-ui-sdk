@@ -25,7 +25,11 @@ import {
     getReportLoadingError as getReportLoadingErrorState,
     isReportOpening,
 } from "../store/report/report_selectors.js";
-import { type OpenReportError } from "../store/report/report_state.js";
+import {
+    type OpenReportError,
+    type OpenReportLoadFailure,
+    isOpenReportLoadFailure,
+} from "../store/report/report_state.js";
 import { type IAppState } from "../store/types.js";
 import { type IErrorResponseData, type IMissingDateFilterItem } from "../typings/report.js";
 
@@ -215,6 +219,12 @@ export const isProtectedReportSelector = createSelector(
 
 export const hasReportLoadingError = createSelector(getReportLoadingError, (error) => error !== undefined);
 
+/** The part of the insight that failed to load, when the open failed after the insight loaded. */
+export const getReportLoadFailure = createSelector(
+    getReportLoadingError,
+    (error): OpenReportLoadFailure | undefined => (isOpenReportLoadFailure(error) ? error : undefined),
+);
+
 export const isReportMissingLocationSelector = createSelector(
     getExecutionError,
     getVisualizationClassTypeFromState,
@@ -329,6 +339,7 @@ const reportTopLayerDataSelector = createStructuredSelector({
     hasNegativeValue: hasNegativeValueSelector,
     unsupportedConfiguration: isUnsupportedConfiguration,
     hasReportLoadingError: hasReportLoadingError,
+    reportLoadFailure: getReportLoadFailure,
     customError: getUiConfigCustomErrorSelector,
 });
 
