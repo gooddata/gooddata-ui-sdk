@@ -137,6 +137,14 @@ function* handleSetTimezoneCommand(commandData: AdSetTimezoneCommandData) {
     yield put(setTimezoneOverride(resolvedOverride));
 }
 
+/**
+ * Tells if the event data of a command is an object. A type guard checks only the command name.
+ */
+function hasEventData(commandData: { gdc: { event: { data?: unknown } } }): boolean {
+    const data = commandData.gdc.event.data;
+    return typeof data === "object" && data !== null;
+}
+
 export function* handleReceivedCommand({
     payload: { data: commandData, origin: commandOrigin },
 }: ICommandReceivedAction) {
@@ -146,6 +154,15 @@ export function* handleReceivedCommand({
     // Commands injected in-process by an installed host adapter carry the sentinel origin — no
     // host-domain validation applies (the sentinel is unreachable via window messages).
     const isHostInjected = commandOrigin === HOST_ADAPTER_ORIGIN && !!getHostAdapter();
+
+    // The common check runs with the current token. A new token is checked with the token itself, so
+    // that a renewal works also when the current token has expired. A command without data goes
+    // through the common path, which rejects it.
+    if (isAdSetApiTokenCommandData(commandData) && hasEventData(commandData)) {
+        yield call(handleReceivedApiToken, commandData, isHostInjected ? undefined : commandOrigin);
+        return;
+    }
+
     const originCheck: SagaReturnType<typeof checkCommandOrigin> = isHostInjected
         ? "valid"
         : yield call(checkCommandOrigin, commandOrigin);
@@ -197,8 +214,6 @@ export function* handleReceivedCommand({
         yield put(removeFilterContextRequested(commandData));
     } else if (isAdRequestCancellationCommandData(commandData)) {
         yield handleCancelEditFromKD();
-    } else if (isAdSetApiTokenCommandData(commandData)) {
-        yield handleReceivedApiToken(commandData);
     } else if (isAdSetTimezoneCommandData(commandData)) {
         yield handleSetTimezoneCommand(commandData);
     } else {

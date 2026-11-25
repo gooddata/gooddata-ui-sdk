@@ -29,6 +29,8 @@ import { DatePresetsDropdownButton } from "./DatePresetsDropdownButton.js";
 
 export interface IDatePresetsDropdownProps {
     selectedPreset: DateFilterOption;
+    /** the title of the period the filter references; no preset is selected then */
+    selectedPeriodTitle?: string;
     relativeDateFilterPresets: DateFilterRelativeOptionGroup;
     onChange: (filter: DateFilterOption) => void;
     dateFormat: string;
@@ -43,9 +45,13 @@ interface IDatePresetsDropdownBodyProps extends IDatePresetsDropdownProps {
     closeDropdown: () => void;
 }
 
+// matches no item: with a period selected, no preset is
+const NO_SELECTED_PRESET: DateFilterOption = { ...ALL_TIME_FILTER_OPTION, localIdentifier: "" };
+
 function DatePresetsDropdownBody({
     buttonNode,
-    selectedPreset,
+    selectedPreset: selectedPresetProp,
+    selectedPeriodTitle,
     relativeDateFilterPresets,
     onChange,
     closeDropdown,
@@ -57,6 +63,7 @@ function DatePresetsDropdownBody({
 }: IDatePresetsDropdownBodyProps) {
     const intl = useIntl();
     const dialogHeight = useDropdownHeight(buttonNode, 100, 600, 0, 30, contextWindow);
+    const selectedPreset = selectedPeriodTitle === undefined ? selectedPresetProp : NO_SELECTED_PRESET;
 
     const fiscalTabsConfig = getFiscalTabsConfig(relativeDateFilterPresets, activeCalendars);
 
@@ -108,7 +115,7 @@ function DatePresetsDropdownBody({
 
 export function DatePresetsDropdown(props: IDatePresetsDropdownProps) {
     const buttonRef = useRef<HTMLDivElement>(null);
-    const { selectedPreset, dateFormat } = props;
+    const { selectedPreset, selectedPeriodTitle, dateFormat } = props;
     return (
         <Dropdown
             className="s-filter-date-preset-switch adi-date-preset-select-dropdown s-date-dataset-switch"
@@ -116,6 +123,7 @@ export function DatePresetsDropdown(props: IDatePresetsDropdownProps) {
                 <DatePresetsDropdownButton
                     {...props}
                     selectedPreset={selectedPreset}
+                    selectedPeriodTitle={selectedPeriodTitle}
                     buttonWrapperRef={buttonRef}
                     dateFormat={dateFormat}
                 />

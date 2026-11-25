@@ -56,6 +56,7 @@ const ISSUE_TYPE_OF_TRANSLATION: Record<LocalizationTranslationState, Localizati
     available: "METADATA_LANGUAGE_MISMATCH",
     variant: "METADATA_MISSING_TRANSLATION",
     missing: "METADATA_MISSING_TRANSLATION",
+    unused: "METADATA_UNUSED_TRANSLATION",
 };
 
 export class TigerOrganizationLocalizationService implements IOrganizationLocalizationService {

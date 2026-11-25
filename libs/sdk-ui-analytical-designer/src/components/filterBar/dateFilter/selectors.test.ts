@@ -2,6 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
+import { type IDateRangeParameterMetadataObject, idRef } from "@gooddata/sdk-model";
 import { type OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 import { METRIC } from "../../../constants/bucket.js";
@@ -189,6 +190,51 @@ describe("selectors", () => {
                 onClose: () => {},
             });
             expect(dateFilterItem).toEqual(undefined);
+        });
+    });
+
+    describe("selectDateFilter with a period", () => {
+        const lastQuarter: IDateRangeParameterMetadataObject = {
+            type: "parameter",
+            id: "lastQuarter",
+            uri: "/lastQuarter",
+            ref: idRef("lastQuarter", "parameter"),
+            title: "Most recent quarter",
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            definition: {
+                type: "DATE_RANGE",
+                defaultValue: { granularity: "GDC.time.quarter", from: "2026-3" },
+            },
+        };
+        const periodFilter = buildDateFilterMock({
+            cacheItemIdentifier: DATE_DATASET_ATTRIBUTE,
+            filterConfig: { type: "parameterized", parameterRef: idRef("lastQuarter", "parameter") },
+        });
+
+        it("titles the period by the catalog", () => {
+            expect(DateFilterSelectorTest.selectDateFilter.resultFunc(periodFilter, [lastQuarter])).toEqual({
+                filterOption: expect.objectContaining({ type: "allTime" }),
+                excludeCurrentPeriod: false,
+                period: { config: periodFilter.filterConfig, title: "Most recent quarter" },
+            });
+        });
+
+        it("titles a period the catalog does not have by its id", () => {
+            // the enableDateRangeParameters setting is off, or the period was deleted
+            expect(DateFilterSelectorTest.selectDateFilter.resultFunc(periodFilter, []).period).toEqual({
+                config: periodFilter.filterConfig,
+                title: "lastQuarter",
+            });
+        });
+
+        it("gives no period to a filter without one", () => {
+            const allTime = buildDateFilterMock({ cacheItemIdentifier: DATE_DATASET_ATTRIBUTE });
+            expect(
+                DateFilterSelectorTest.selectDateFilter.resultFunc(allTime, [lastQuarter]).period,
+            ).toBeUndefined();
         });
     });
 });

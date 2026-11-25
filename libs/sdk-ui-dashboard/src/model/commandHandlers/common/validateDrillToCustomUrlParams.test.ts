@@ -160,6 +160,8 @@ describe("parameter placeholders in custom URL drill validation", () => {
             batchActions([
                 catalogActions.setCatalogParameters({
                     status: "loaded",
+                    dateRangeParametersStatus: "gated-off",
+                    dateRangeParameters: [],
                     parameters: [
                         {
                             type: "parameter",

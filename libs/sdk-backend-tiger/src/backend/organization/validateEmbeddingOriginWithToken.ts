@@ -33,7 +33,11 @@ export interface IValidateEmbeddingOriginWithTokenParams {
  * - an authentication error does not start the authentication flow of the backend,
  * - the current authentication of the backend does not change.
  *
- * The instance does not send cookies, so only the token decides. The result is not cached.
+ * The request does not send cookies, so only the token decides. A session cookie would otherwise
+ * authenticate the request when the token is not valid. The instance uses the fetch adapter, because
+ * an XMLHttpRequest sends the cookies of a same-origin request also with `withCredentials` set to
+ * `false`. With the fetch adapter, axios maps `withCredentials: false` to `credentials: "omit"`.
+ * The result is not cached.
  *
  * @returns `true` when the backend answers that the origin is valid, `false` when it answers that the
  *  origin is not valid. Rejects on every error, for example an invalid token or a network error.
@@ -46,6 +50,7 @@ export async function validateEmbeddingOriginWithToken({
     hostname,
 }: IValidateEmbeddingOriginWithTokenParams): Promise<boolean> {
     const axios = newAxios(hostname);
+    axios.defaults.adapter = "fetch";
     axios.defaults.withCredentials = false;
     setAxiosAuthorizationToken(axios, token);
 

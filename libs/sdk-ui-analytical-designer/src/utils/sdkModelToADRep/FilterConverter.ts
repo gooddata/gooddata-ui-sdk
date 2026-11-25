@@ -8,6 +8,7 @@ import {
     type IMeasureFilter,
     type IMeasureValueFilter,
     type INegativeAttributeFilter,
+    type IParameterizedDateFilter,
     type IPositiveAttributeFilter,
     type IRankingFilter,
     type IRelativeDateFilter,
@@ -22,6 +23,7 @@ import {
     isMatchAttributeFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
+    isParameterizedDateFilter,
     isPositiveAttributeFilter,
     isRankingFilter,
     isRelativeDateFilter,
@@ -39,6 +41,7 @@ import {
     type IVisualizationObjectMatchAttributeFilter,
     type IVisualizationObjectMeasureValueFilter,
     type IVisualizationObjectNegativeAttributeFilter,
+    type IVisualizationObjectParameterizedDateFilter,
     type IVisualizationObjectPositiveAttributeFilter,
     type IVisualizationObjectRankingFilter,
     type IVisualizationObjectRelativeDateFilter,
@@ -101,6 +104,20 @@ const convertAbsoluteDateFilter = (filter: IAbsoluteDateFilter): IVisualizationO
         absoluteDateFilter: {
             dataSet: toBearRef(filterObjRef(filter)),
             ...absoluteDateFilterValues(filter),
+        },
+    };
+};
+
+const convertParameterizedDateFilter = (
+    filter: IParameterizedDateFilter,
+): IVisualizationObjectParameterizedDateFilter => {
+    const { localIdentifier, dataSet, parameter, emptyValueHandling } = filter.parameterizedDateFilter;
+    return {
+        parameterizedDateFilter: {
+            ...(localIdentifier ? { localIdentifier } : {}),
+            dataSet: toBearRef(dataSet),
+            parameter: toBearRef(parameter),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
         },
     };
 };
@@ -228,6 +245,8 @@ export const convertFilter = (
         return convertAbsoluteDateFilter(filter);
     } else if (isAbsoluteGranularityDateFilter(filter)) {
         throw new Error("Absolute date filters with granularity are not supported in insights yet.");
+    } else if (isParameterizedDateFilter(filter)) {
+        return convertParameterizedDateFilter(filter);
     } else if (isRelativeDateFilter(filter)) {
         return convertRelativeDateFilter(filter);
     }

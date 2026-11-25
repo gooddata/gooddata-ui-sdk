@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type Dispatch,
@@ -31,6 +31,7 @@ interface IKeyboardNavigationDeps<Item, Action extends string> {
     focusedItemAdditionalActions: Action[];
     focusedItem: Item | undefined;
     isWrapping: boolean;
+    pageSize: number | undefined;
     actionHandlers: {
         [key in Action | typeof SELECT_ITEM_ACTION]: (
             item: Item,
@@ -52,6 +53,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     isSimple = false,
     isWrapping = false,
     focusedIndex: focusedIndexProp,
+    pageSize,
 }: {
     items: Item[];
     actionHandlers: {
@@ -65,6 +67,11 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     isSimple?: boolean;
     isWrapping?: boolean;
     focusedIndex?: number;
+    /**
+     * Number of items PageUp / PageDown move by in the simple mode.
+     * When not provided, PageUp / PageDown are not handled.
+     */
+    pageSize?: number;
 }) {
     const [focusedIndex, setFocusedIndex] = useState<number | undefined>(focusedIndexProp ?? 0);
     const focusedItem = focusedIndex === undefined ? undefined : items[focusedIndex];
@@ -102,6 +109,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
         focusedItem,
         actionHandlers,
         isWrapping,
+        pageSize,
     });
 
     // There are two separate modes of control,
@@ -193,8 +201,27 @@ function makeSimpleSelectionNavigation<Item, Action extends string>(
                 return actions[newIndex] ?? actions[0];
             });
         },
-        onFocusFirst: () => {},
-        onFocusLast: () => {},
+        // Home / End (with or without Ctrl) jump to the first / last loaded item.
+        onFocusFirst: () => {
+            const { items, setFocusedIndex, setFocusedAction } = depsRef.current;
+
+            if (items.length === 0) {
+                return;
+            }
+
+            setFocusedIndex(0);
+            setFocusedAction(SELECT_ITEM_ACTION);
+        },
+        onFocusLast: () => {
+            const { items, setFocusedIndex, setFocusedAction } = depsRef.current;
+
+            if (items.length === 0) {
+                return;
+            }
+
+            setFocusedIndex(items.length - 1);
+            setFocusedAction(SELECT_ITEM_ACTION);
+        },
         onSelect: (e) => {
             const { actionHandlers, focusedItem, focusedAction } = depsRef.current;
 
@@ -203,6 +230,28 @@ function makeSimpleSelectionNavigation<Item, Action extends string>(
             }
 
             actionHandlers[focusedAction](focusedItem, e)?.();
+        },
+        onUnhandledKeyDown: (e) => {
+            const { items, setFocusedIndex, setFocusedAction, pageSize } = depsRef.current;
+            const isPageUp = e.code === "PageUp";
+            const isPageDown = e.code === "PageDown";
+
+            if (!pageSize || pageSize <= 0 || (!isPageUp && !isPageDown) || items.length === 0) {
+                return;
+            }
+
+            // Handle the page jump ourselves: the native scroll would move the viewport
+            // without moving the keyboard focus to a row in it.
+            e.preventDefault();
+            e.stopPropagation();
+
+            setFocusedIndex((currentIndex) => {
+                const index = currentIndex ?? 0;
+                const nextIndex = isPageUp ? index - pageSize : index + pageSize;
+
+                return Math.min(items.length - 1, Math.max(0, nextIndex));
+            });
+            setFocusedAction(SELECT_ITEM_ACTION);
         },
     });
 }

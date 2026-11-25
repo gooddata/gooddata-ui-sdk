@@ -2,6 +2,7 @@
 
 import { describe, expect, it, vi } from "vitest";
 
+import { type GenAIAgent } from "../model.js";
 import { type ChatDefinitionReceivedEvent } from "../store/events.js";
 
 import { CopilotHandler } from "./CopilotHandler.js";
@@ -50,6 +51,201 @@ function setup(overrides: Partial<ICopilotRegistration> = {}) {
 }
 
 describe("CopilotHandler", () => {
+    describe("unsupported generation", () => {
+        const unsupported: GenAIAgent = { id: "analyst", title: "Analyst", effectiveSkills: ["alert"] };
+
+        function startGeneration() {
+            const connection = setup();
+            connection.handler.startGeneration(type);
+            connection.handler.handleEvent({
+                type: "chatUserMessage",
+                conversationId: "local",
+                threadId: "thread",
+                question: "Build",
+                objects: [],
+            });
+            return connection;
+        }
+
+        it.each([false, true])(
+            "cancels on an assistant message with responseCompleted=%s",
+            (responseCompleted) => {
+                const { handler } = startGeneration();
+                expect(handler.getStatus({ type })).toBe("generating");
+
+                handler.handleEvent({
+                    type: "chatAssistantMessage",
+                    threadId: "thread",
+                    useCase: "GENERAL",
+                    agent: unsupported,
+                    responseCompleted,
+                });
+
+                expect(handler.isGenerationPending(type)).toBe(false);
+                expect(handler.getStatus({ type })).toBe("idle");
+                handler.handleEvent({
+                    type: "chatAssistantMessage",
+                    threadId: "thread",
+                    useCase: "GENERAL",
+                    agent: unsupported,
+                    responseCompleted: true,
+                });
+                expect(handler.getStatus({ type })).toBe("idle");
+                expect(handler.getSnapshot().requests).toEqual([]);
+            },
+        );
+
+        it.each<GenAIAgent | undefined>([
+            undefined,
+            { id: "builder", title: "Builder", effectiveSkills: ["dashboard_builder"] },
+        ])("preserves generation for a capable or unknown agent: %j", (agent) => {
+            const { handler } = startGeneration();
+            handler.handleEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                agent,
+                responseCompleted: true,
+            });
+            expect(handler.isGenerationPending(type)).toBe(true);
+            expect(handler.getStatus({ type })).toBe("waiting");
+        });
+
+        it.each([undefined, []])(
+            "cancels for a known agent without effective skills: %j",
+            (effectiveSkills) => {
+                const { handler } = startGeneration();
+                handler.handleEvent({
+                    type: "chatAssistantMessage",
+                    threadId: "thread",
+                    useCase: "GENERAL",
+                    agent: { ...unsupported, effectiveSkills },
+                    responseCompleted: true,
+                });
+                expect(handler.isGenerationPending(type)).toBe(false);
+                expect(handler.getStatus({ type })).toBe("idle");
+            },
+        );
+
+        it("does not cancel generation for an unrelated assistant message", () => {
+            const { handler } = startGeneration();
+            const snapshot = handler.getSnapshot();
+            handler.handleEvent({
+                type: "chatAssistantMessage",
+                threadId: "other-thread",
+                useCase: "GENERAL",
+                agent: unsupported,
+                responseCompleted: true,
+            });
+            expect(handler.getSnapshot()).toBe(snapshot);
+        });
+
+        it("does not cancel a newer generation for a late response from the previous request", () => {
+            const { handler } = startGeneration();
+            handler.cancelGeneration(type);
+            handler.startGeneration(type);
+            handler.handleEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                agent: unsupported,
+                responseCompleted: true,
+            });
+            expect(handler.isGenerationPending(type)).toBe(true);
+            expect(handler.getStatus({ type })).toBe("generating");
+        });
+
+        it.each([false, true])(
+            "does not cancel a replacement generation started by a listener with trackedRequest=%s",
+            (trackedRequest) => {
+                const { handler } = trackedRequest ? startGeneration() : setup();
+                if (!trackedRequest) {
+                    handler.startGeneration(type);
+                }
+                const listener = vi.fn(() => {
+                    unsubscribe();
+                    handler.startGeneration(type);
+                    return handler.getSnapshot();
+                });
+                const unsubscribe = handler.subscribe(listener);
+
+                handler.handleEvent({
+                    type: "chatAssistantMessage",
+                    threadId: trackedRequest ? "thread" : undefined,
+                    useCase: "GENERAL",
+                    agent: unsupported,
+                    responseCompleted: true,
+                });
+
+                expect(listener).toHaveBeenCalledOnce();
+                expect(handler.getSnapshot()).toBe(listener.mock.results[0].value);
+                expect(handler.getSnapshot().generation).toBe(type);
+                expect(handler.isGenerationPending(type)).toBe(true);
+            },
+        );
+
+        it("still cancels unsupported generation when a listener only changes context", () => {
+            const { handler } = startGeneration();
+            const listener = vi.fn(() => {
+                unsubscribe();
+                handler.setContext({ ...target, isEditing: false });
+            });
+            const unsubscribe = handler.subscribe(listener);
+
+            handler.handleEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                agent: unsupported,
+                responseCompleted: true,
+            });
+
+            expect(listener).toHaveBeenCalledOnce();
+            expect(handler.isGenerationPending(type)).toBe(false);
+            expect(handler.getStatus({ type })).toBe("idle");
+            expect(handler.getSnapshot().requests).toEqual([]);
+        });
+
+        it.each(["dashboard_builder", "dashboard_editor"] as const)(
+            "preserves generation for any registered workflow skill: %s",
+            (skill) => {
+                const { handler } = setup({
+                    skills: ["dashboard_builder", "dashboard_editor"],
+                });
+                handler.startGeneration(type);
+                handler.handleEvent({
+                    type: "chatUserMessage",
+                    conversationId: "local",
+                    threadId: "thread",
+                    question: "Build",
+                    objects: [],
+                });
+                handler.handleEvent({
+                    type: "chatAssistantMessage",
+                    threadId: "thread",
+                    useCase: "GENERAL",
+                    agent: { id: "agent", title: "Agent", effectiveSkills: [skill] },
+                    responseCompleted: true,
+                });
+                expect(handler.isGenerationPending(type)).toBe(true);
+                expect(handler.getStatus({ type })).toBe("waiting");
+            },
+        );
+
+        it("does not cancel ordinary editing", () => {
+            const { handler } = setup({ skills: ["dashboard_builder", "dashboard_editor"] });
+            handler.handleEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                skills: [{ name: "dashboard_editor", title: "Editing" }],
+                agent: { id: "editor", title: "Editor", effectiveSkills: ["dashboard_editor"] },
+            });
+            expect(handler.getStatus({ ...target, isEditing: true })).toBe("building");
+            expect(handler.isGenerationPending(type)).toBe(false);
+        });
+    });
+
     it("publishes application state before the callback and requires an acknowledgement", () => {
         const { handler, onApplyDefinition } = setup();
         const order: string[] = [];

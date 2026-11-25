@@ -164,7 +164,16 @@ const InsightRendererCore = memo(function InsightRendererCore(props: InsightRend
         propsRef.current = currentProps;
     });
 
+    /**
+     * Identifies the current setup of the visualization. A replaced or unmounted visualization keeps running
+     * for a while: its React root is cleared or unmounted asynchronously, so its executions can still
+     * settle. Its errors must not reach the props, because they would put the widget into the error state
+     * that no later execution clears (STL-3824).
+     */
+    const setupIdRef = useRef<object | undefined>(undefined);
+
     const unmountVisualization = useCallback(() => {
+        setupIdRef.current = undefined;
         if (visualizationRef.current) {
             visualizationRef.current.unmount();
         }
@@ -331,6 +340,9 @@ const InsightRendererCore = memo(function InsightRendererCore(props: InsightRend
         // the visualization we may have from earlier is no longer valid -> get rid of it
         unmountVisualization();
 
+        const setupId = {};
+        setupIdRef.current = setupId;
+
         const visualizationFactory = FullVisualizationCatalog.forInsight(
             insight,
             settings?.enableNewPivotTable ?? true,
@@ -341,6 +353,9 @@ const InsightRendererCore = memo(function InsightRendererCore(props: InsightRend
             backend: backend!,
             callbacks: {
                 onError: (error) => {
+                    if (setupIdRef.current !== setupId) {
+                        return;
+                    }
                     propsRef.current.onError?.(error);
                     propsRef.current.onLoadingChanged?.({ isLoading: false });
                 },

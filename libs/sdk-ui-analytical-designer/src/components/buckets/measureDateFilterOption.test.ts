@@ -2,9 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
+import { type IDateRangeParameterMetadataObject, idRef } from "@gooddata/sdk-model";
+
 import { createDecoratedDateFilter } from "../../models/date_filter.js";
 import { DATE_DATASET_ATTRIBUTE } from "../../models/date_item.js";
 import { createDecoratedPresetItem } from "../../models/preset_item.js";
+import { type IParameterizedDateFilterConfig } from "../../store/filter_bar/filter_bar_types.js";
 import { type IBucketItemMetricFilter } from "../../typings/bucket_item_filter.js";
 
 import { measureDateFilterToOption, optionToMeasureDateFilterInterval } from "./measureDateFilterOption.js";
@@ -143,6 +146,45 @@ describe("measureDateFilterOption", () => {
                 granularity: "GDC.time.date",
                 interval: ["2026-01-01", "2026-01-31"],
             });
+        });
+    });
+
+    describe("with a period", () => {
+        const config: IParameterizedDateFilterConfig = {
+            type: "parameterized",
+            parameterRef: idRef("lastQuarter", "parameter"),
+            granularity: "GDC.time.quarter",
+            localIdentifier: "period-filter",
+        };
+        const lastQuarter = {
+            ref: idRef("lastQuarter", "parameter"),
+            id: "lastQuarter",
+            title: "Most recent quarter",
+        } as IDateRangeParameterMetadataObject;
+        const storedPeriod = (dateRangeParameters: IDateRangeParameterMetadataObject[]) =>
+            createDecoratedDateFilter(
+                { attribute: DATE_DATASET_ATTRIBUTE, interval: config } as IBucketItemMetricFilter,
+                null,
+                undefined,
+                true,
+                dateRangeParameters,
+            );
+
+        it("maps the stored period to an option with the period's title", () => {
+            expect(measureDateFilterToOption(storedPeriod([lastQuarter]))).toEqual({
+                filterOption: expect.objectContaining({ type: "allTime" }),
+                excludeCurrentPeriod: false,
+                period: { config, title: "Most recent quarter" },
+            });
+        });
+
+        it("titles a period the catalog does not have by its id", () => {
+            expect(measureDateFilterToOption(storedPeriod([]))?.period?.title).toBe("lastQuarter");
+        });
+
+        it("stores the period the option keeps as it was", () => {
+            const option = measureDateFilterToOption(storedPeriod([lastQuarter]));
+            expect(optionToMeasureDateFilterInterval(option)).toBe(config);
         });
     });
 });

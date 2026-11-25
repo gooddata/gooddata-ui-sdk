@@ -95,11 +95,36 @@ export interface IDateFilterConfig {
     readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
 }
 
+/**
+ * A date filter that references a period (a DATE_RANGE parameter). The backend resolves the period's range
+ * at every execution, so the filter holds only the reference.
+ */
+export interface IParameterizedDateFilterConfig {
+    readonly type: "parameterized";
+    readonly parameterRef: ObjRef;
+    /**
+     * The period's granularity, when the period is in the catalog. A period that is not there (the
+     * `enableDateRangeParameters` setting is off, or it was deleted) has none.
+     */
+    readonly granularity?: Granularity;
+    /** The local identifier the stored filter has, written back on save. */
+    readonly localIdentifier?: string;
+}
+
+/**
+ * The filter bar's date filter config, or the interval of a metric's date filter, references a period.
+ */
+export function isParameterizedDateFilterConfig(
+    filterConfig: unknown,
+): filterConfig is IParameterizedDateFilterConfig {
+    return (filterConfig as Partial<IParameterizedDateFilterConfig> | undefined)?.type === "parameterized";
+}
+
 export interface IDateFilter extends IFilterBase {
     readonly type: "date";
     readonly cacheItemIdentifier: string;
     readonly overTimeComparisonType: OverTimeComparisonType;
-    readonly filterConfig?: IDateFilterConfig;
+    readonly filterConfig?: IDateFilterConfig | IParameterizedDateFilterConfig;
     readonly dateDatasetRef: ObjRef;
     readonly emptyDateValuesFilter?: EmptyDateValuesFilterMode;
 }

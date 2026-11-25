@@ -35,6 +35,7 @@ import {
 } from "../../../convertors/toBackend/ExportDefinitionsConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
+import { convertSkippingNotSupported } from "../../../utils/convertSkippingNotSupported.js";
 
 import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
 
@@ -62,15 +63,21 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                     if (options?.title) {
                         const lowercaseSearch = options.title.toLocaleLowerCase();
 
-                        return res.data
-                            .filter((ed) => {
+                        return convertSkippingNotSupported(
+                            res.data.filter((ed) => {
                                 const title = ed.attributes?.title;
 
                                 return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
-                            })
-                            .map((ed) => convertExportDefinitionMdObjectFromBackend(ed, res.included));
+                            }),
+                            (ed) => convertExportDefinitionMdObjectFromBackend(ed, res.included),
+                            "Export definition",
+                        );
                     }
-                    return res.data.map((ep) => convertExportDefinitionMdObjectFromBackend(ep, res.included));
+                    return convertSkippingNotSupported(
+                        res.data,
+                        (ep) => convertExportDefinitionMdObjectFromBackend(ep, res.included),
+                        "Export definition",
+                    );
                 });
         });
 

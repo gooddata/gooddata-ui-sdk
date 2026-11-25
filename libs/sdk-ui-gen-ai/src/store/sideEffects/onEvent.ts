@@ -5,6 +5,7 @@ import { call, getContext, select, takeEvery } from "redux-saga/effects";
 import { type GenAIChatRoutingUseCase } from "@gooddata/sdk-model";
 
 import {
+    type GenAIAgent,
     type IChatConversationErrorContent,
     type IChatConversationLocal,
     type IChatConversationLocalContent,
@@ -26,6 +27,7 @@ import {
 } from "../events.js";
 import { setIsOpened } from "../localStorage.js";
 import {
+    agentsSelector,
     conversationByIdOrLocalIdSelector,
     conversationMessagesByIdSelector,
     conversationMessagesSelector,
@@ -347,11 +349,13 @@ export function* onEvaluateMessageComplete({
         ? yield select(conversationByIdOrLocalIdSelector, conversationId)
         : undefined;
     const threadId: string | undefined = originatingThreadId || conversation?.id || undefined;
+    const agent: GenAIAgent | undefined = yield call(selectRespondingAgent, message);
 
     eventDispatcher.dispatch({
         type: "chatAssistantMessage",
         interactionId: message.id,
         useCase: message.useCase,
+        agent,
         skills: message.skills,
         threadId,
         ...(cancelled ? { cancelled: true } : {}),
@@ -377,11 +381,13 @@ export function* onEvaluateMessageStreaming({
     const threadId: string | undefined = originatingThreadId || conversation?.id || undefined;
 
     if (message.skills?.length) {
+        const agent: GenAIAgent | undefined = yield call(selectRespondingAgent, message);
         eventDispatcher.dispatch({
             type: "chatAssistantMessage",
             interactionId: message.id,
             threadId,
             useCase: message.useCase ?? "GENERAL",
+            agent,
             skills: message.skills,
         });
         return;
@@ -473,9 +479,11 @@ function* onVisualizationError({
     });
 }
 
-function* onSaveVisualizationError({ payload: { error } }: ReturnType<typeof saveVisualizationErrorAction>) {
+export function* onSaveVisualizationError({
+    payload: { error, conversationId },
+}: ReturnType<typeof saveVisualizationErrorAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield selectRightThreadId();
+    const threadId: string | undefined = yield selectRightThreadId(conversationId);
 
     eventDispatcher.dispatch({
         type: "chatSaveVisualizationError",
@@ -485,11 +493,11 @@ function* onSaveVisualizationError({ payload: { error } }: ReturnType<typeof sav
     });
 }
 
-function* onSaveVisualizationSuccess({
-    payload: { savedVisualizationId },
+export function* onSaveVisualizationSuccess({
+    payload: { savedVisualizationId, conversationId },
 }: ReturnType<typeof saveVisualizationSuccessAction>) {
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield selectRightThreadId();
+    const threadId: string | undefined = yield selectRightThreadId(conversationId);
 
     eventDispatcher.dispatch({
         type: "chatSaveVisualizationSuccess",
@@ -523,11 +531,17 @@ function* onDefinitionReceived({ payload }: ReturnType<typeof onDefinitionReceiv
 type MessageInfo = {
     id: string;
     localId: string;
+    agentId?: string;
     useCase: GenAIChatRoutingUseCase | undefined;
     skills?: ChatAssistantMessageEvent["skills"];
     clarificationQuestions?: ChatClarificationQuestion[];
     filled?: boolean;
 };
+
+function* selectRespondingAgent(message: MessageInfo): Generator<unknown, GenAIAgent | undefined> {
+    const agents: GenAIAgent[] | undefined = yield select(agentsSelector);
+    return agents?.find((agent) => agent.id === message.agentId);
+}
 
 function* loadMessage(
     assistantMessageId: string,
@@ -542,6 +556,7 @@ function* loadMessage(
         ? {
               id: message.id,
               localId: message.localId,
+              agentId: message.agentId,
               useCase: convertMessageTypeTo(message?.content),
               skills: message.content.type === "skillsActivated" ? message.content.skills : undefined,
               clarificationQuestions: convertToChatClarificationQuestions(message.content),
@@ -609,7 +624,13 @@ function* onUserContextChanged({ payload }: ReturnType<typeof setUserContextActi
     });
 }
 
-function* selectRightThreadId() {
+function* selectRightThreadId(conversationId?: string) {
+    if (conversationId) {
+        const conversation: IChatConversationLocal | undefined = conversationId
+            ? yield select(conversationByIdOrLocalIdSelector, conversationId)
+            : undefined;
+        return conversation?.id || undefined;
+    }
     const conversation: IChatConversationLocal | undefined = yield select(conversationSelector);
     const threadId: string | undefined = conversation
         ? conversation.id || undefined

@@ -14,6 +14,7 @@ import {
     type MatchAttributeFilterMatchAttributeFilterMatchTypeEnum,
     type MeasureValueCondition,
     type NegativeAttributeFilter,
+    type ParameterizedDateFilter,
     type PositiveAttributeFilter,
     type RangeMeasureValueFilter,
     type RankingFilter,
@@ -29,14 +30,17 @@ import {
     type IAbsoluteGranularityDateFilter,
     type IFilter,
     type ILowerBoundedFilter,
+    type IParameterizedDateFilter,
     type IUpperBoundedFilter,
     type MatchFilterOperator,
     type MeasureValueFilterCondition,
     type ObjRefInScope,
     type RangeConditionOperator,
+    idRef,
     isValidDatePeriodRange,
     newAbsoluteGranularityDateFilter,
     newArbitraryAttributeFilter,
+    newParameterizedDateFilter,
 } from "@gooddata/sdk-model";
 
 import { parseDateValue } from "../dateFormatting/dateValueParser.js";
@@ -58,6 +62,20 @@ const isAbsoluteDateFilter = (filter: unknown): filter is AbsoluteDateFilter => 
 const isAbsoluteGranularityDateFilter = (filter: unknown): filter is AbsoluteGranularityDateFilter => {
     return (filter as AbsoluteGranularityDateFilter).absoluteGranularityDateFilter !== undefined;
 };
+
+const isParameterizedDateFilter = (filter: unknown): filter is ParameterizedDateFilter => {
+    return typeof filter === "object" && filter !== null && "parameterizedDateFilter" in filter;
+};
+
+function convertParameterizedDateFilter(filter: ParameterizedDateFilter): IParameterizedDateFilter {
+    const { dataset, parameter, localIdentifier } = filter.parameterizedDateFilter;
+    const emptyValueHandling = toSdkEmptyValues(filter.parameterizedDateFilter.emptyValueHandling);
+
+    return newParameterizedDateFilter(toObjRef(dataset), idRef(parameter.identifier.id, "parameter"), {
+        localIdentifier,
+        emptyValueHandling,
+    });
+}
 
 const isAllTimeDateFilter = (filter: unknown): filter is AllTimeDateFilter => {
     return (filter as AllTimeDateFilter).allTimeDateFilter !== undefined;
@@ -286,6 +304,8 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         };
     } else if (isAbsoluteGranularityDateFilter(filter)) {
         return convertAbsoluteGranularityDateFilter(filter);
+    } else if (isParameterizedDateFilter(filter)) {
+        return convertParameterizedDateFilter(filter);
     } else if (isAllTimeDateFilter(filter)) {
         const emptyValueHandling = toSdkEmptyValues(filter.allTimeDateFilter.emptyValueHandling);
         return {

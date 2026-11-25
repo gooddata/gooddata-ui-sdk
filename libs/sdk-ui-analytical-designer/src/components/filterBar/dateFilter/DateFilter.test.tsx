@@ -24,7 +24,7 @@ import { getIntlOptions, withIntl } from "../../../utils/with_intl.js";
 import { withRedux } from "../../../utils/with_redux.js";
 
 import { DateFilter } from "./DateFilter.js";
-import { type IDateFilterOption } from "./dateFilterOptionFactory.js";
+import { type IDateFilterOption, buildPeriodDateFilterOption } from "./dateFilterOptionFactory.js";
 import { ALL_TIME_FILTER_OPTION, STATIC_PERIOD_FILTER_OPTION } from "./defaultFilterOptions.js";
 import { RELATIVE_DATE_FILTER_PRESETS, findSupportedRelativePresets } from "./presets.js";
 import { type IDateFilterProps, type IDateFilterStateProps } from "./types.js";
@@ -33,7 +33,19 @@ vi.hoisted(() => {
     vi.resetModules();
 });
 
-const { selectDateFilterPropsMock } = vi.hoisted(() => ({ selectDateFilterPropsMock: vi.fn() }));
+const { selectDateFilterPropsMock, improvedMetricDateFilterMock } = vi.hoisted(() => ({
+    selectDateFilterPropsMock: vi.fn(),
+    improvedMetricDateFilterMock: vi.fn(() => false),
+}));
+
+vi.mock("../../../selectors/feature_flag_selector.js", async (importOriginal) => {
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../../../selectors/feature_flag_selector.js")>();
+    return {
+        ...actual,
+        enableImprovedMetricDateFilter: () => improvedMetricDateFilterMock(),
+    };
+});
 
 // the additional date filter rows render the attribute filter, which loads elements
 vi.mock("../../AttributeFilter/AttributeFilter", () => {
@@ -124,6 +136,15 @@ const defaultProps: IDateFilterProps & IDateFilterStateProps = {
     isFirstDateFilter: true,
 };
 
+const periodFilter: IDateFilterOption = {
+    filterOption: ALL_TIME_FILTER_OPTION,
+    excludeCurrentPeriod: false,
+    period: {
+        config: { type: "parameterized", parameterRef: idRef("lastQuarter", "parameter") },
+        title: "Most recent quarter",
+    },
+};
+
 const changeEvent = (value: string) => ({
     target: {
         value,
@@ -163,6 +184,30 @@ describe("DateFilter", () => {
 
             expect(onClose).toHaveBeenCalledTimes(1);
             expect(presetSection()).not.toBeInTheDocument();
+        });
+    });
+
+    describe("Button title with included empty values", () => {
+        const lastFourQuarters: IDateFilterOption = {
+            filterOption: RELATIVE_DATE_FILTER_PRESETS["GDC.time.quarter"].find(
+                (preset) => preset.localIdentifier === "LAST_4_QUARTERS",
+            ),
+            excludeCurrentPeriod: false,
+        };
+        const buttonTitle = () => document.querySelector(".s-global-filter-label-bottom")?.textContent;
+
+        it("should add the empty values to the period with the improved metric date filter", () => {
+            improvedMetricDateFilterMock.mockReturnValue(true);
+            renderDateFilter({ filter: lastFourQuarters, storedEmptyDateValuesFilter: "include" });
+
+            expect(buttonTitle()).toBe("Last 4 quarters, empty values");
+        });
+
+        it("should keep the period title without the improved metric date filter", () => {
+            improvedMetricDateFilterMock.mockReturnValue(false);
+            renderDateFilter({ filter: lastFourQuarters, storedEmptyDateValuesFilter: "include" });
+
+            expect(buttonTitle()).toBe("Last 4 quarters");
         });
     });
 
@@ -315,6 +360,58 @@ describe("DateFilter", () => {
         });
     });
 
+    describe("with a period", () => {
+        it("words include on the button without the improved metric date filter, since the period keeps it", () => {
+            renderDateFilter({ filter: periodFilter, storedEmptyDateValuesFilter: "include" });
+
+            expect(document.querySelector(".s-global-filter-label-bottom").textContent).toBe(
+                "Most recent quarter, empty values",
+            );
+        });
+
+        it("shows the period's title on the button and in the period select", () => {
+            const { getByText } = renderDateFilter({ filter: periodFilter });
+
+            fireEvent.click(getByText("Most recent quarter")); // open filter dropdown by clicking on filter btn
+
+            expect(document.querySelector(".s-date-preset-button").textContent).toBe("Most recent quarter");
+        });
+
+        it("does not offer the comparison over time", () => {
+            const { getByText } = renderDateFilter({ filter: periodFilter });
+
+            fireEvent.click(getByText("Most recent quarter"));
+
+            expect(document.querySelector(".s-comparison-types-button")).toBeNull();
+            // nor the note meant for a filter that is not the first one
+            expect(document.querySelector(".s-date-filter-error-message")).toBeNull();
+        });
+
+        it("offers the comparison over time once another period replaces it", () => {
+            const { getByText, getByLabelText } = renderDateFilter({ filter: periodFilter });
+
+            fireEvent.click(getByText("Most recent quarter"));
+            fireEvent.click(getByLabelText("Period"));
+            fireEvent.click(getByText("Last 4 quarters"));
+
+            expect(document.querySelector(".s-comparison-types-button")).toBeInTheDocument();
+        });
+
+        it("is replaced by All time picked in the period select", () => {
+            const onApply = vi.fn();
+            const { getByText, getByLabelText } = renderDateFilter({ filter: periodFilter, onApply });
+
+            fireEvent.click(getByText("Most recent quarter"));
+            fireEvent.click(getByLabelText("Period"));
+            fireEvent.click(getByText("All time"));
+            fireEvent.click(getByText("Apply"));
+
+            expect(onApply).toHaveBeenCalledTimes(1);
+            expect(onApply.mock.calls[0][0].filter).toMatchObject({ type: "allTime" });
+            expect(onApply.mock.calls[0][0]).not.toHaveProperty("period");
+        });
+    });
+
     const customTranslations = { last_7_days: "last 7 days" };
 
     function initState(state: IAppState) {
@@ -440,6 +537,105 @@ describe("DateFilter", () => {
         }
 
         describe("selecting date dataset", () => {
+            it("keeps a period saved with include when only the date dataset changes, without the improved metric date filter", () => {
+                // the period's own empty values handling keeps include whether the flag is on or off
+                const onApply = vi.fn();
+                renderOpenedDropdown({
+                    filter: periodFilter,
+                    isDateDatasetsDropdownLoaded: true,
+                    onApply,
+                    storedEmptyDateValuesFilter: "include",
+                });
+
+                openDateDatasetDropdown();
+                selectItemFromDropdownPortal(".s-week_year__activity_");
+                fireEvent.click(document.querySelector(".s-date-filter-apply"));
+
+                expect(onApply).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        period: periodFilter.period.config,
+                        emptyDateValuesFilter: "include",
+                    }),
+                );
+            });
+
+            it("keeps a period when only the date dataset changes", () => {
+                const onApply = vi.fn();
+                renderOpenedDropdown({ filter: periodFilter, isDateDatasetsDropdownLoaded: true, onApply });
+
+                openDateDatasetDropdown();
+                selectItemFromDropdownPortal(".s-week_year__activity_");
+                fireEvent.click(document.querySelector(".s-date-filter-apply"));
+
+                expect(onApply).toHaveBeenCalledWith(
+                    expect.objectContaining({ period: periodFilter.period.config }),
+                );
+            });
+
+            describe("with a period of a known granularity", () => {
+                const monthPeriod = buildPeriodDateFilterOption(
+                    {
+                        type: "parameterized",
+                        parameterRef: idRef("lastQuarter", "parameter"),
+                        granularity: "GDC.time.month",
+                    },
+                    "Most recent quarter",
+                );
+                const monthAttribute = (id: string) => ({
+                    ref: uriRef(`/gdc/md/${id}`),
+                    dfRef: uriRef(`/gdc/md/${id}.df`),
+                    cacheIdentifier: `${id}.month`,
+                    dateType: "GDC.time.month",
+                    label: "month",
+                });
+                const withActivity = (activityAttributes: ReturnType<typeof monthAttribute>[]) => [
+                    {
+                        ref: uriRef("/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/attr.datedataset.closed"),
+                        attributes: [monthAttribute("closed")],
+                    },
+                    {
+                        ref: uriRef("/gdc/md/i6k6sk4sznefv1kf0f2ls7jf8tm5ida6/obj/attr.datedataset.activity"),
+                        attributes: activityAttributes,
+                    },
+                ];
+
+                it("replaces the period with All time when the new dataset lacks its granularity", () => {
+                    const onApply = vi.fn();
+                    renderOpenedDropdown({
+                        filter: monthPeriod,
+                        isDateDatasetsDropdownLoaded: true,
+                        dateDatasetRefsWithGranularities: withActivity([]),
+                        onApply,
+                    });
+
+                    openDateDatasetDropdown();
+                    selectItemFromDropdownPortal(".s-week_year__activity_");
+                    fireEvent.click(document.querySelector(".s-date-filter-apply"));
+
+                    expect(onApply).toHaveBeenCalledTimes(1);
+                    expect(onApply.mock.calls[0][0].period).toBeUndefined();
+                    expect(onApply.mock.calls[0][0].filter).toEqual(ALL_TIME_FILTER_OPTION);
+                });
+
+                it("keeps the period when the new dataset has its granularity", () => {
+                    const onApply = vi.fn();
+                    renderOpenedDropdown({
+                        filter: monthPeriod,
+                        isDateDatasetsDropdownLoaded: true,
+                        dateDatasetRefsWithGranularities: withActivity([monthAttribute("activity")]),
+                        onApply,
+                    });
+
+                    openDateDatasetDropdown();
+                    selectItemFromDropdownPortal(".s-week_year__activity_");
+                    fireEvent.click(document.querySelector(".s-date-filter-apply"));
+
+                    expect(onApply).toHaveBeenCalledWith(
+                        expect.objectContaining({ period: monthPeriod.period.config }),
+                    );
+                });
+            });
+
             it("should not close dropdown", () => {
                 renderOpenedDropdown({ isDateDatasetsDropdownLoaded: true });
 

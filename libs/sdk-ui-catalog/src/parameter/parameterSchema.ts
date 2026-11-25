@@ -2,11 +2,14 @@
 
 import * as z from "zod/mini";
 
-import type { ScalarParameterType } from "@gooddata/sdk-model";
+import type { v1 } from "@gooddata/sdk-code-schemas";
+import type { ParameterType } from "@gooddata/sdk-model";
 
 import type { AacSchemaParity, AssertAacParity } from "../asCode/aacParity.js";
 import { type SchemaKeys, deriveSchemaKeys } from "../asCode/schemaKeys.js";
 import type { ObjectTypes } from "../objectType/constants.js";
+
+import { isPeriodInOrder, isValidPeriodLiteral, periodGranularities } from "./dateRangePeriod.js";
 
 /**
  * Codes carried by schema issues via `issue.message`; `classifySchemaError` routes each to the
@@ -21,6 +24,10 @@ export const schemaErrorCodes = [
     "constraintsAllowedValuesExclusive",
     "unsupportedCardinality",
     "invalidDefaultValue",
+    "unsupportedGranularity",
+    "invalidPeriodValue",
+    "emptyPeriod",
+    "invalidPeriodOrder",
 ] as const;
 
 export type SchemaErrorCode = (typeof schemaErrorCodes)[number];
@@ -30,16 +37,28 @@ export type ParameterSchema = z.infer<typeof parameterSchema>;
 
 /** Fails the build when this schema drifts from the AAC `parameter` document type. */
 export type ParameterAacParity = AssertAacParity<
-    AacSchemaParity<typeof ObjectTypes.PARAMETER, ParameterSchema>
+    AacSchemaParity<typeof ObjectTypes.PARAMETER, AacParameterSchema>
 >;
 
+/** Breaks the build once AAC defines DATE_RANGE, so the arm stops being exempt from the parity above. */
+export type ParameterAacDateRangeGap = AssertAacParity<
+    [Extract<v1.ParameterDefinition, { type: "DATE_RANGE" }>] extends [never]
+        ? true
+        : { aacDefinesDateRange: true }
+>;
+
+// AAC cannot express a DATE_RANGE definition yet, so that arm is left out of the comparison.
+type AacParameterSchema = Omit<ParameterSchema, "definition"> & {
+    definition: Exclude<ParameterSchema["definition"], { type: "DATE_RANGE" }>;
+};
+
 /** Parent key → child-key entry for the schema restricted to `enabledTypes`; powers YAML editor autocompletion. */
-export function parameterSchemaKeys(enabledTypes: ScalarParameterType[]): SchemaKeys {
+export function parameterSchemaKeys(enabledTypes: ParameterType[]): SchemaKeys {
     return deriveSchemaKeys(buildParameterSchema(enabledTypes));
 }
 
 /** Runtime validation schema restricted to the enabled types; the static types stay the full union. */
-export function buildParameterSchema(enabledTypes: ScalarParameterType[]) {
+export function buildParameterSchema(enabledTypes: ParameterType[]) {
     // Re-spread to a non-empty tuple: `discriminatedUnion` requires it and it preserves the inferred union.
     const [first, ...rest] = enabledTypes.map((type) => definitionSchemas[type]);
     return z.extend(parameterSchema, {
@@ -103,7 +122,34 @@ const stringConstraintsSchema = z
         ),
     );
 
-/** One arm per scalar model type; `satisfies` breaks the build if the model gains one without an arm. */
+// A year written without quotes parses as a number, so a whole number is taken as its text.
+const periodLiteralSchema = z.pipe(
+    z.union([z.string(), z.int()]),
+    z.transform((literal) => String(literal)),
+);
+
+const dateRangePeriodSchema = z
+    .strictObject({
+        granularity: z.enum(periodGranularities, "unsupportedGranularity"),
+        from: z.optional(periodLiteralSchema),
+        to: z.optional(periodLiteralSchema),
+    })
+    .check(
+        rule(
+            "invalidPeriodValue",
+            ({ granularity, from }) => from === undefined || isValidPeriodLiteral(granularity, from),
+            ["from"],
+        ),
+        rule(
+            "invalidPeriodValue",
+            ({ granularity, to }) => to === undefined || isValidPeriodLiteral(granularity, to),
+            ["to"],
+        ),
+        rule("emptyPeriod", ({ from, to }) => from !== undefined || to !== undefined),
+        rule("invalidPeriodOrder", ({ from, to }) => isPeriodInOrder(from, to)),
+    );
+
+/** One arm per model type; `satisfies` breaks the build if the model gains one without an arm. */
 const definitionSchemas = {
     NUMBER: z.strictObject({
         type: z.literal("NUMBER"),
@@ -130,7 +176,11 @@ const definitionSchemas = {
             ),
         z.transform(({ cardinality: _cardinality, ...definition }) => definition),
     ),
-} satisfies Record<ScalarParameterType, z.core.$ZodType>;
+    DATE_RANGE: z.strictObject({
+        type: z.literal("DATE_RANGE"),
+        defaultValue: dateRangePeriodSchema,
+    }),
+} satisfies Record<ParameterType, z.core.$ZodType>;
 
 /** Full-union schema: single source for the editor vocabulary and the exported types, independent of the flag. */
 const parameterSchema = z.strictObject({
@@ -139,7 +189,11 @@ const parameterSchema = z.strictObject({
     title: z.optional(z.string()),
     description: z.optional(z.string()),
     tags: z.optional(z.array(z.string())),
-    definition: z.discriminatedUnion("type", [definitionSchemas.NUMBER, definitionSchemas.STRING]),
+    definition: z.discriminatedUnion("type", [
+        definitionSchemas.NUMBER,
+        definitionSchemas.STRING,
+        definitionSchemas.DATE_RANGE,
+    ]),
 });
 
 function rule<TValue>(

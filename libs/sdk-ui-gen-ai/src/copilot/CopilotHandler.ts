@@ -2,8 +2,13 @@
 
 import { v4 as uuid } from "uuid";
 
-import { type ChatDefinitionReceivedEvent, type ChatEvent } from "../store/events.js";
+import {
+    type ChatAssistantMessageEvent,
+    type ChatDefinitionReceivedEvent,
+    type ChatEvent,
+} from "../store/events.js";
 
+import { eventRequestIndex } from "./requestTransitions.js";
 import {
     selectCopilotGenerationPending,
     selectCopilotReasoningTitle,
@@ -11,6 +16,7 @@ import {
     selectCopilotStatus,
 } from "./selectors.js";
 import { createCopilotState, transitionCopilot } from "./transitions.js";
+import { matches } from "./transitionUtils.js";
 import {
     type CopilotBuildType,
     type CopilotInput,
@@ -94,6 +100,9 @@ export class CopilotHandler<TBuild extends string = CopilotBuildType> {
         }
         const previous = this.state;
         this.update({ kind: "event", event });
+        if (event.type === "chatAssistantMessage") {
+            this.cancelUnsupportedGeneration(event, previous);
+        }
         if (
             !this.disposed &&
             event.type === "chatClarificationQuestions" &&
@@ -223,6 +232,49 @@ export class CopilotHandler<TBuild extends string = CopilotBuildType> {
         this.disposed = true;
         this.listeners.clear();
     };
+
+    private cancelUnsupportedGeneration(
+        event: ChatAssistantMessageEvent,
+        previous: ICopilotSnapshot<TBuild>,
+    ): void {
+        if (!event.agent) {
+            return;
+        }
+        const availableSkills = event.agent.effectiveSkills ?? [];
+        for (const { type, skills } of this.configuration.registrations) {
+            if (
+                // Subscribers may have started a replacement generation while the event was published.
+                this.state.generationRevision === previous.generationRevision &&
+                this.assistantMessageOwnsGeneration(event, previous, type) &&
+                this.isGenerationPending(type) &&
+                !skills.some((skill) => availableSkills.includes(skill))
+            ) {
+                this.cancelGeneration(type);
+            }
+        }
+    }
+
+    /**
+     * Whether this reply belongs to the generation it would cancel, using the pre-message snapshot.
+     * A tracked request must not be superseded, must be newer than the last generation boundary,
+     * and must represent creation of this type. Without a tracked request, only a reply matching
+     * the foreground thread and generation type can cancel generation.
+     */
+    private assistantMessageOwnsGeneration(
+        event: ChatAssistantMessageEvent,
+        previous: ICopilotSnapshot<TBuild>,
+        type: TBuild,
+    ): boolean {
+        const pending = previous.requests[eventRequestIndex(previous, event)];
+        if (pending) {
+            return (
+                !pending.superseded &&
+                pending.revision > (previous.generationRevision ?? 0) &&
+                (pending.generation === type || (pending.type === type && pending.intent === "create"))
+            );
+        }
+        return matches(previous.interaction, event.threadId) && previous.generation === type;
+    }
 
     private hasPendingClarification(snapshot: ICopilotSnapshot<TBuild>, interactionId: string): boolean {
         return this.configuration.registrations.some(

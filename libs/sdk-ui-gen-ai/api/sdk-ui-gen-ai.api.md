@@ -70,6 +70,7 @@ export type ChatAssistantMessageEvent = BaseEvent & {
     type: "chatAssistantMessage";
     interactionId?: string;
     useCase: string;
+    agent?: GenAIAgent;
     cancelled?: boolean;
     responseCompleted?: boolean;
     skills?: {

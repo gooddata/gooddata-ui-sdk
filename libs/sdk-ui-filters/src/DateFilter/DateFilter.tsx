@@ -189,6 +189,17 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * @alpha
      */
     customRangeHint?: ReactNode;
+
+    /**
+     * Render the relative period from/to select menus in an overlay.
+     *
+     * @remarks
+     * The menu is then not clipped by a scrollable or overflow-hidden parent of the filter body.
+     *
+     * @defaultValue false
+     * @alpha
+     */
+    shouldOverlayRelativeRangeMenu?: boolean;
 }
 
 /**
@@ -358,6 +369,7 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function 
         activeCalendars,
         enableEmptyDateValues,
         customRangeHint,
+        shouldOverlayRelativeRangeMenu,
         hideDisabledExclude = false,
         onApply,
         onSelect,
@@ -598,6 +610,7 @@ export const DateFilter: NamedExoticComponent<IDateFilterProps> = memo(function 
             activeCalendars={activeCalendars}
             enableEmptyDateValues={enableEmptyDateValues}
             customRangeHint={customRangeHint}
+            shouldOverlayRelativeRangeMenu={shouldOverlayRelativeRangeMenu}
         />
     );
 });

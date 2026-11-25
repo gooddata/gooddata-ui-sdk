@@ -2,10 +2,11 @@
 
 import type * as z from "zod/mini";
 
-import type { ScalarParameterType } from "@gooddata/sdk-model";
+import type { ParameterType } from "@gooddata/sdk-model";
 
 import { type YamlValidationFailure, validateYaml } from "../asCode/validateYaml.js";
 
+import { type PeriodGranularity, periodGranularities } from "./dateRangePeriod.js";
 import {
     type ParameterSchema,
     type SchemaErrorCode,
@@ -20,7 +21,14 @@ export type ParameterValidationResult =
       }
     | YamlValidationFailure<ParameterFailure>;
 
-type ParameterFailure = { errorCode: ParameterValidationErrorCode; type?: ScalarParameterType };
+type ParameterFailure = {
+    errorCode: ParameterValidationErrorCode;
+    type?: ParameterType;
+    /** The period end that `invalidPeriodValue` names, and the granularity it must match. */
+    period?: { field: PeriodField; granularity: PeriodGranularity };
+};
+
+type PeriodField = "from" | "to";
 
 export type ParameterValidationErrorCode =
     | "empty"
@@ -35,7 +43,7 @@ export type ParameterValidationErrorCode =
     | SchemaErrorCode;
 
 type ValidateParameterYamlOptions = {
-    enabledTypes: ScalarParameterType[];
+    enabledTypes: ParameterType[];
     fixedIdentifier?: string;
 };
 
@@ -61,6 +69,14 @@ function classifyParameterIssue(
     issue: z.core.$ZodIssue,
 ): ParameterFailure | undefined {
     const declaredType = readDeclaredType(parsed);
+    const periodField = readPeriodField(path);
+    if (periodField !== undefined && declaredType === "DATE_RANGE") {
+        // A wrongly typed end fails before the period rules run, but needs the same message.
+        const granularity = readPeriodGranularity(parsed);
+        return granularity === undefined
+            ? { errorCode: "unsupportedGranularity" }
+            : { errorCode: "invalidPeriodValue", period: { field: periodField, granularity } };
+    }
     if (isSchemaErrorCode(issue.message)) {
         return { errorCode: issue.message, type: declaredType };
     }
@@ -91,14 +107,29 @@ function isSchemaErrorCode(message: string): message is SchemaErrorCode {
     return schemaErrorCodeSet.has(message);
 }
 
-function readDeclaredType(parsed: unknown): ScalarParameterType | undefined {
-    if (!parsed || typeof parsed !== "object") {
-        return undefined;
+function readDeclaredType(parsed: unknown): ParameterType | undefined {
+    const type = readDefinition(parsed)?.["type"];
+    return type === "NUMBER" || type === "STRING" || type === "DATE_RANGE" ? type : undefined;
+}
+
+function readPeriodGranularity(parsed: unknown): PeriodGranularity | undefined {
+    const period = readDefinition(parsed)?.["defaultValue"];
+    const granularity = isRecord(period) ? period["granularity"] : undefined;
+    return periodGranularities.find((candidate) => candidate === granularity);
+}
+
+function readPeriodField(path: string): PeriodField | undefined {
+    if (path === "definition.defaultValue.from") {
+        return "from";
     }
-    const { definition } = parsed as { definition?: unknown };
-    if (!definition || typeof definition !== "object") {
-        return undefined;
-    }
-    const { type } = definition as { type?: unknown };
-    return type === "NUMBER" || type === "STRING" ? type : undefined;
+    return path === "definition.defaultValue.to" ? "to" : undefined;
+}
+
+function readDefinition(parsed: unknown): Record<string, unknown> | undefined {
+    const definition = isRecord(parsed) ? parsed["definition"] : undefined;
+    return isRecord(definition) ? definition : undefined;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value !== null;
 }

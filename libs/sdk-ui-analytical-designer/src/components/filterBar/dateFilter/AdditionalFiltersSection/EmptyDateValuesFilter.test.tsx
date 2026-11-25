@@ -13,6 +13,8 @@ interface IRenderComponentProps {
     onModeChange?: (mode: EmptyDateValuesFilterMode) => void;
     onRemove?: () => void;
     openOnInit?: boolean;
+    isAllTime?: boolean;
+    isIncludeWithPeriodAllowed?: boolean;
 }
 
 const renderComponent = (props: IRenderComponentProps = {}) => {
@@ -63,6 +65,33 @@ describe("EmptyDateValuesFilter", () => {
             renderComponent();
 
             expect(getDropdownButton()).toBeInTheDocument();
+        });
+    });
+
+    describe("include with a period", () => {
+        const selectInclude = async (props: IRenderComponentProps) => {
+            const onModeChange = vi.fn();
+            renderComponent({ mode: "exclude", onModeChange, ...props });
+
+            fireEvent.click(getDropdownButton());
+            await waitFor(() => {
+                expect(getListboxOption("include")).toBeInTheDocument();
+            });
+            fireEvent.click(getListboxOption("include")?.querySelector(".gd-ui-kit-listbox__item"));
+
+            return onModeChange;
+        };
+
+        it("should not select include with a period by default", async () => {
+            const onModeChange = await selectInclude({ isAllTime: false });
+
+            expect(onModeChange).not.toHaveBeenCalled();
+        });
+
+        it("should select include with a period when it is allowed", async () => {
+            const onModeChange = await selectInclude({ isAllTime: false, isIncludeWithPeriodAllowed: true });
+
+            expect(onModeChange).toHaveBeenCalledWith("include");
         });
     });
 

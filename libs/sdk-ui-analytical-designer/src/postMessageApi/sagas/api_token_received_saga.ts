@@ -10,14 +10,28 @@ import { storeApiToken } from "../../store/application_context/app_context_actio
 import { selectApiToken, selectApiTokenType } from "../../store/application_context/app_context_selector.js";
 import { postInvalidCommandArgument } from "../outgoing/invalid_command_events.js";
 
+import { checkApiTokenOrigin } from "./api_token_origin_check.js";
 import { getPostMessageContextIdFromCommandData } from "./post_message_saga_helper.js";
 
 const DEFAULT_TOKEN_TYPE = "gooddata";
 
-const isValidToken = (token: string, type: string) =>
-    token !== undefined && token.length > 0 && (type !== "jwt" || /^[\w-]+\.[\w-]+\.[\w-]+$/.test(token));
+const isValidToken = (token: unknown, type: string) =>
+    typeof token === "string" &&
+    token.length > 0 &&
+    (type !== "jwt" || /^[\w-]+\.[\w-]+\.[\w-]+$/.test(token));
 
-export function* handleReceivedApiToken(setApiTokenContext: AdSetApiTokenCommandData) {
+/**
+ * Applies the token of a `setApiToken` command to the live authentication.
+ *
+ * @param setApiTokenContext - the received command.
+ * @param origin - origin of the window that sent the command. The token is used only when this origin
+ *  passes the check with the token itself; see {@link checkApiTokenOrigin}. `undefined` for a command
+ *  that an installed host adapter injected in-process: no window sent it, so there is no origin to check.
+ */
+export function* handleReceivedApiToken(
+    setApiTokenContext: AdSetApiTokenCommandData,
+    origin: string | undefined,
+) {
     const contextId = getPostMessageContextIdFromCommandData(setApiTokenContext);
     const {
         token,
@@ -42,6 +56,13 @@ export function* handleReceivedApiToken(setApiTokenContext: AdSetApiTokenCommand
     } else if (previousTokenType !== undefined && previousTokenType !== type) {
         yield call(postInvalidCommandArgument, "Token type is not same as the previous one.", contextId);
         return;
+    }
+
+    if (origin !== undefined) {
+        const isOriginValid: boolean = yield call(checkApiTokenOrigin, token, origin, contextId);
+        if (!isOriginValid) {
+            return;
+        }
     }
 
     const previousToken: ReturnType<typeof selectApiToken> = yield select(selectApiToken);

@@ -55,6 +55,7 @@ type FeatureFlag =
     | "restrictBaseUi"
     | "enableParameters"
     | "enableStringParameters"
+    | "enableDateRangeParameters"
     | "enableEnhancedInsightPicker"
     | "enableDashboardTimezone"
     | "enableMetricPermissions"
@@ -103,6 +104,7 @@ type FeatureFlagKey =
     | "RESTRICT_BASE_UI"
     | "ENABLE_PARAMETERS"
     | "ENABLE_STRING_PARAMETERS"
+    | "ENABLE_DATE_RANGE_PARAMETERS"
     | "ENABLE_ENHANCED_INSIGHT_PICKER"
     | "ENABLE_METRIC_PERMISSIONS"
     | "ENABLE_VISUALIZATION_PERMISSIONS"
@@ -152,6 +154,7 @@ export const FEATURE_FLAGS: {
     RESTRICT_BASE_UI: "restrictBaseUi",
     ENABLE_PARAMETERS: "enableParameters",
     ENABLE_STRING_PARAMETERS: "enableStringParameters",
+    ENABLE_DATE_RANGE_PARAMETERS: "enableDateRangeParameters",
     ENABLE_ENHANCED_INSIGHT_PICKER: "enableEnhancedInsightPicker",
     ENABLE_METRIC_PERMISSIONS: "enableMetricPermissions",
     ENABLE_VISUALIZATION_PERMISSIONS: "enableVisualizationPermissions",
@@ -295,6 +298,11 @@ export const enableParameters = createSelector(
 export const enableStringParameters = createSelector(
     [getFeatureFlags],
     (flags) => (flags?.[FEATURE_FLAGS.ENABLE_STRING_PARAMETERS] ?? true) as boolean,
+);
+
+export const enableDateRangeParameters = createSelector(
+    [getFeatureFlags],
+    (flags) => (flags?.[FEATURE_FLAGS.ENABLE_DATE_RANGE_PARAMETERS] ?? false) as boolean,
 );
 
 export const enableNewInsightChangedPostMessageEvent = createSelector(

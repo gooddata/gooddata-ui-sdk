@@ -7,6 +7,7 @@ import { describe, expect, it } from "vitest";
 
 import {
     type ICatalogAttributeHierarchy,
+    type IDateRangeParameterMetadataObject,
     type IScalarParameterMetadataObject,
     idRef,
     serializeObjRef,
@@ -20,7 +21,12 @@ import { catalogActions } from "./index.js";
 describe("catalogReducers", () => {
     const prepareState = (attributeHierarchies?: ICatalogAttributeHierarchy[]): CatalogState => ({
         attributeHierarchies,
-        parameters: { status: "uninitialized", parameters: [] },
+        parameters: {
+            status: "uninitialized",
+            parameters: [],
+            dateRangeParametersStatus: "uninitialized",
+            dateRangeParameters: [],
+        },
         parameterDependencies: { status: "uninitialized", byRoot: {}, requestedRoots: {} },
     });
 
@@ -50,29 +56,54 @@ describe("catalogReducers", () => {
             unlisted: false,
             definition: { type: "NUMBER", defaultValue: 10 },
         };
+        const lastHoldingMonth: IDateRangeParameterMetadataObject = {
+            ...topN,
+            id: "lastHoldingMonth",
+            uri: "/lastHoldingMonth",
+            ref: idRef("lastHoldingMonth", "parameter"),
+            title: "Last holding month",
+            definition: {
+                type: "DATE_RANGE",
+                defaultValue: { granularity: "GDC.time.month", from: "2025-08" },
+            },
+        };
 
-        it("transitions status and stores parameters", () => {
+        it("transitions both statuses and stores both parameter lists", () => {
             const state = prepareState();
             const newState = produce(state, (draft) => {
                 const action = catalogActions.setCatalogParameters({
                     status: "loaded",
                     parameters: [topN],
+                    dateRangeParametersStatus: "loaded",
+                    dateRangeParameters: [lastHoldingMonth],
                 });
                 catalogReducers.setCatalogParameters(draft, action);
             });
-            expect(newState.parameters).toEqual({ status: "loaded", parameters: [topN] });
+            expect(newState.parameters).toEqual({
+                status: "loaded",
+                parameters: [topN],
+                dateRangeParametersStatus: "loaded",
+                dateRangeParameters: [lastHoldingMonth],
+            });
         });
 
-        it("records failed status with empty parameters", () => {
+        it("records the status of each list with empty parameters", () => {
             const state = prepareState();
             const newState = produce(state, (draft) => {
                 const action = catalogActions.setCatalogParameters({
                     status: "failed",
                     parameters: [],
+                    dateRangeParametersStatus: "gated-off",
+                    dateRangeParameters: [],
                 });
                 catalogReducers.setCatalogParameters(draft, action);
             });
-            expect(newState.parameters).toEqual({ status: "failed", parameters: [] });
+            expect(newState.parameters).toEqual({
+                status: "failed",
+                parameters: [],
+                dateRangeParametersStatus: "gated-off",
+                dateRangeParameters: [],
+            });
         });
     });
 

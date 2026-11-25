@@ -1137,6 +1137,11 @@ export interface IFeatureFlags {
     enableDateRangeParameters?: boolean;
 
     /**
+     * Show the new organization Getting started page.
+     */
+    enableNewGettingStartedPage?: boolean;
+
+    /**
      * Enable enhanced insight picker.
      */
     enableEnhancedInsightPicker?: boolean;
@@ -1275,6 +1280,19 @@ export interface IFeatureFlags {
      * Disabled by default.
      */
     enableEmbeddingOriginValidation?: boolean;
+
+    /**
+     * Enable the embedding origins settings UI in organization settings.
+     *
+     * @remarks
+     * The UI is shown only when both this flag and `enableEmbeddingOriginValidation` are enabled.
+     * This lets the origin validation run in production before administrators can edit the allowlist.
+     *
+     * This flag is temporary. It will be removed when the settings UI is always shown.
+     *
+     * Disabled by default.
+     */
+    enableEmbeddingOriginValidationSettingsUi?: boolean;
 
     /**
      * Enable the live execution progress in Analytical Designer.

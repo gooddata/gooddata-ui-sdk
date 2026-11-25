@@ -26,6 +26,7 @@ import {
     newMessageAction,
     setCurrentConversationAction,
     setMessagesAction,
+    setSelectedAgentAction,
 } from "../messages/messagesSlice.js";
 
 import { onUserMessage } from "./onUserMessage.js";
@@ -130,11 +131,11 @@ function reasoning(summary: string, id = "reasoning-1", role: IChatConversationI
     return item({ type: "reasoning", summary }, id, role);
 }
 
-function setup(text = "How are sales?") {
+function setup(text = "How are sales?", current = conversation) {
     const store = configureStore({
         reducer: { messages: messagesSliceReducer, chatWindow: chatWindowSliceReducer },
     });
-    store.dispatch(setCurrentConversationAction({ conversation }));
+    store.dispatch(setCurrentConversationAction({ conversation: current }));
     const action = newMessageAction(makeUserItem({ type: "text", text }));
     store.dispatch(action);
 
@@ -242,6 +243,29 @@ describe("onUserMessage with different publisher settings", () => {
 });
 
 describe("onUserMessage answering agent", () => {
+    it("captures the agent before selection changes, including later interactions without an agent ID", async () => {
+        const run = setup("Create a dashboard", { ...conversation, agentId: "agent-a" });
+        const messages = () =>
+            conversationMessagesByIdSelector(run.store.getState(), conversation.localId).filter(
+                (message) => message.role === "assistant",
+            );
+        expect(messages().map((message) => message.agentId)).toEqual(["agent-a"]);
+
+        run.store.dispatch(setSelectedAgentAction({ agentId: "agent-b", showChangeEvent: true }));
+        await run.send(
+            item({
+                type: "skillsActivated",
+                skills: [{ name: "dashboard_builder", title: "Build dashboard" }],
+            }),
+        );
+        await run.send(item({ type: "text", text: "Answer" }, "answer-1"));
+        await run.finish();
+
+        expect(run.store.getState().messages.currentConversation?.agentId).toBe("agent-b");
+        expect(messages()).toHaveLength(2);
+        expect(messages().map((message) => message.agentId)).toEqual(["agent-a", "agent-a"]);
+    });
+
     it("keeps per-item agents on live user and assistant messages across streamed interactions", async () => {
         const run = setup();
         await run.send({
@@ -270,6 +294,20 @@ describe("onUserMessage answering agent", () => {
         expect(
             conversationMessagesByIdSelector(run.store.getState(), conversation.localId).at(-1)?.agentId,
         ).toBe("agent-a");
+    });
+
+    it("preserves a streamed agent on later interactions without an agent ID", async () => {
+        const run = setup("Create a dashboard", { ...conversation, agentId: "initial-agent" });
+        await run.send({ ...reasoning("# Plan"), agentId: "agent-a" });
+        run.store.dispatch(setSelectedAgentAction({ agentId: "agent-b", showChangeEvent: true }));
+        await run.send(item({ type: "text", text: "Answer" }, "answer-1"));
+        await run.finish();
+
+        const messages = conversationMessagesByIdSelector(run.store.getState(), conversation.localId).filter(
+            (message) => message.role === "assistant",
+        );
+        expect(messages).toHaveLength(2);
+        expect(messages.map((message) => message.agentId)).toEqual(["agent-a", "agent-a"]);
     });
 
     it("names the turn's agent on a drafted document whose chunk omits it", async () => {
@@ -472,6 +510,59 @@ describe("onUserMessage reasoning titles", () => {
         expect(completions.map(({ payload }) => payload.responseCompleted)).toEqual([undefined, true]);
     });
 
+    it("completes the previous interaction before streaming an error with a new interaction ID", async () => {
+        const run = setup();
+        await run.send(item({ type: "text", text: "Working" }, "interaction-1"));
+        await run.send({ type: "error", code: 500, message: "error-interaction" });
+        await run.finish();
+
+        const [first, last] = run.actions.filter(evaluateMessageStreamingAction.match);
+        const completions = run.actions.filter(evaluateMessageCompleteAction.match);
+        expect(completions.map(({ payload }) => payload)).toStrictEqual([
+            {
+                assistantMessageId: first.payload.assistantMessageId,
+                conversationId: conversation.localId,
+                threadId: conversation.id,
+            },
+            {
+                assistantMessageId: last.payload.assistantMessageId,
+                conversationId: conversation.localId,
+                threadId: conversation.id,
+                cancelled: false,
+                responseCompleted: true,
+            },
+        ]);
+        expect(first.payload.assistantMessageId).not.toBe(last.payload.assistantMessageId);
+        expect(run.actions.indexOf(completions[0])).toBeLessThan(run.actions.indexOf(last));
+    });
+
+    it.each(["item", "error"] as const)(
+        "does not complete a removed message when a new %s interaction arrives",
+        async (kind) => {
+            const run = setup();
+            await run.send(item({ type: "text", text: "Working" }, "interaction-1"));
+            run.store.dispatch(setMessagesAction({ items: [] }));
+            await run.send(
+                kind === "item"
+                    ? item({ type: "text", text: "Answer" }, "interaction-2")
+                    : { type: "error", code: 500, message: "error-interaction" },
+            );
+            await run.finish();
+
+            const [first, last] = run.actions.filter(evaluateMessageStreamingAction.match);
+            const completions = run.actions.filter(evaluateMessageCompleteAction.match);
+            expect(completions).toHaveLength(1);
+            expect(completions[0].payload).toStrictEqual({
+                assistantMessageId: last.payload.assistantMessageId,
+                conversationId: conversation.localId,
+                threadId: conversation.id,
+                cancelled: false,
+                responseCompleted: true,
+            });
+            expect(completions[0].payload.assistantMessageId).not.toBe(first.payload.assistantMessageId);
+        },
+    );
+
     it("clears on cancellation and cancels the pending reader", async () => {
         const run = setup();
         await run.send(reasoning("# Plan"));
@@ -502,5 +593,6 @@ describe("onUserMessage reasoning titles", () => {
         expect(run.events()).toStrictEqual([clearEvent, titleEvent("Plan"), clearEvent]);
         expect(run.events().every((event) => event.threadId === conversation.id)).toBe(true);
         expect(run.actions.filter(evaluateMessageStreamingAction.match)).toHaveLength(1);
+        expect(run.actions.filter(evaluateMessageCompleteAction.match)).toEqual([]);
     });
 });

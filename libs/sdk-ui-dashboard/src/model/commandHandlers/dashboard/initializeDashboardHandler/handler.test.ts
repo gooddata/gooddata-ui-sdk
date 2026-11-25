@@ -25,6 +25,12 @@ import { initializeDashboard } from "../../../commands/dashboard.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
 import { type DashboardInitialized } from "../../../events/dashboard.js";
 import { type IDashboardCommandFailed } from "../../../events/general.js";
+import {
+    selectCatalogDateRangeParameters,
+    selectCatalogDateRangeParametersStatus,
+    selectCatalogParameters,
+    selectCatalogParametersStatus,
+} from "../../../store/catalog/catalogSelectors.js";
 import { selectConfig } from "../../../store/config/configSelectors.js";
 import {
     selectEnablePersistentFiltersAcrossTabs,
@@ -443,5 +449,43 @@ describe("initialize dashboard handler", () => {
 
             expect(effectiveDateFilterConfig.absoluteForm).toEqual(absoluteForm);
         });
+    });
+
+    describe("catalog parameters", () => {
+        // the recorded backend does not support the parameters query, so loading them fails
+        it.each([
+            ["an existing dashboard", false, false, "gated-off", "gated-off", SimpleDashboardIdentifier],
+            ["an existing dashboard", true, false, "failed", "gated-off", SimpleDashboardIdentifier],
+            ["an existing dashboard", false, true, "gated-off", "failed", SimpleDashboardIdentifier],
+            ["an existing dashboard", true, true, "failed", "failed", SimpleDashboardIdentifier],
+            ["a new dashboard", false, false, "gated-off", "gated-off", undefined],
+            ["a new dashboard", true, false, "failed", "gated-off", undefined],
+            ["a new dashboard", false, true, "gated-off", "failed", undefined],
+            ["a new dashboard", true, true, "failed", "failed", undefined],
+        ] as const)(
+            "should store the parameters of %s with enableParameters=%s and enableDateRangeParameters=%s as %s and %s with empty lists",
+            async (
+                _,
+                enableParameters,
+                enableDateRangeParameters,
+                expectedStatus,
+                expectedDateRangeStatus,
+                identifier,
+            ) => {
+                let Tester: DashboardTester;
+                await preloadedTesterFactory(
+                    (tester) => {
+                        Tester = tester;
+                    },
+                    identifier,
+                    { backendConfig: { globalSettings: { enableParameters, enableDateRangeParameters } } },
+                );
+
+                expect(selectCatalogParametersStatus(Tester!.state())).toBe(expectedStatus);
+                expect(selectCatalogParameters(Tester!.state())).toEqual([]);
+                expect(selectCatalogDateRangeParametersStatus(Tester!.state())).toBe(expectedDateRangeStatus);
+                expect(selectCatalogDateRangeParameters(Tester!.state())).toEqual([]);
+            },
+        );
     });
 });

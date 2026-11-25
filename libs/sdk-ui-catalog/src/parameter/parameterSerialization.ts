@@ -2,9 +2,10 @@
 
 import { stringify as stringifyYaml } from "yaml";
 
-import type { IParameterDefinition } from "@gooddata/sdk-model";
+import type { IParameterDefinition, IParameterMetadataObjectDefinition } from "@gooddata/sdk-model";
 
-import type { ParameterSchemaInput } from "./parameterSchema.js";
+import { toModelGranularity, toPeriodGranularity } from "./dateRangePeriod.js";
+import type { ParameterSchema, ParameterSchemaInput } from "./parameterSchema.js";
 
 /** Editor seed: envelope with `definition` widened past the validated subset so any model type displays. */
 export type ParameterDraft = Omit<ParameterSchemaInput, "definition"> & {
@@ -21,6 +22,35 @@ export type ParameterDraft = Omit<ParameterSchemaInput, "definition"> & {
  */
 export function serializeParameterToYaml(parameter: ParameterDraft): string {
     const { id, ...rest } = parameter;
-    const yaml = stringifyYaml({ id: id ?? null, ...rest }, { lineWidth: 0, nullStr: "" }).trimEnd();
+    const yaml = stringifyYaml(
+        { id: id ?? null, ...rest, definition: toYamlDefinition(rest.definition) },
+        { lineWidth: 0, nullStr: "" },
+    ).trimEnd();
     return id ? yaml : yaml.replace(/^id:$/m, "id: ");
+}
+
+/** The validated YAML as a parameter: YAML names a period's granularity as the backend does. */
+export function toParameterMetadataDefinition(
+    parameter: ParameterSchema,
+): IParameterMetadataObjectDefinition {
+    const { definition } = parameter;
+    if (definition.type !== "DATE_RANGE") {
+        return { ...parameter, definition };
+    }
+    const { granularity, ...ends } = definition.defaultValue;
+    return {
+        ...parameter,
+        definition: {
+            ...definition,
+            defaultValue: { granularity: toModelGranularity(granularity), ...ends },
+        },
+    };
+}
+
+function toYamlDefinition(definition: IParameterDefinition) {
+    if (definition.type !== "DATE_RANGE") {
+        return definition;
+    }
+    const { granularity, ...ends } = definition.defaultValue;
+    return { ...definition, defaultValue: { granularity: toPeriodGranularity(granularity), ...ends } };
 }

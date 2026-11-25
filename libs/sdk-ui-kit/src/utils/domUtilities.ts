@@ -313,6 +313,13 @@ export const isElementFocusable = (element?: HTMLElement | null, includeHidden: 
 
 /**
  * @internal
+ * @returns whether the browser dropped the focus to the document body, e.g. because the focused element
+ * was unmounted
+ */
+export const isFocusLost = () => !document.activeElement || document.activeElement === document.body;
+
+/**
+ * @internal
  * Check a single sibling element for focusable descendants.
  *
  * @param sibling - The sibling element to check

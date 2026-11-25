@@ -9,14 +9,20 @@ import { dateAttributeIdToSdkGranularity } from "@gooddata/sdk-backend-tiger";
 import {
     type IInsight,
     type IMetadataObject,
+    type ObjRef,
+    areObjRefsEqual,
+    insightFilters,
+    insightMeasures,
     insightParameters,
     insightSorts,
     insightUri,
     insightVisualizationUrl,
     isAllTimeDateFilter,
     isDateFilterGranularity,
+    isParameterizedDateFilter,
     isRelativeDateFilter,
     isUriRef,
+    measureFilters,
     objRefToString,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -35,8 +41,10 @@ import {
 import { backend } from "../backend.js";
 import { ActionTypeKeys } from "../constants/actions.js";
 import { generateBucketItemIdentifier } from "../models/bucket_item_identifier.js";
+import { findPeriod } from "../models/period.js";
 import {
     enableAnalyticalDesignerCatalogSideload,
+    enableDateRangeParameters,
     enableImprovedMetricDateFilter,
     enableParameters,
     enableStringParameters,
@@ -56,13 +64,19 @@ import {
 } from "../services/visualization_class_service.js";
 import { buildApplicationResetCarrier } from "../store/app_context/application_reset_events.js";
 import { resetRemovedItems } from "../store/bucket_notifications/bucket_notifications_actions.js";
-import { getCatalogParameters, hasCatalogFirstLoaded } from "../store/catalog/catalog_selector.js";
+import {
+    getCatalogDateRangeParameters,
+    getCatalogParameters,
+    hasCatalogFirstLoaded,
+    hasCatalogLoadFailed,
+} from "../store/catalog/catalog_selector.js";
 import { storeAppliedChartSort } from "../store/chart_sort/chart_sort_actions.js";
 import { getDateDatasetsState } from "../store/date_datasets/date_datasets_selectors.js";
 import { getDateDatasetsMeta } from "../store/date_datasets_meta/date_datasets_meta_selectors.js";
 import { getFilterBarState } from "../store/filter_bar/filter_bar_selector.js";
 import {
     type IParameterRestoreResult,
+    type IParameterWarning,
     restoreParameterFilters,
 } from "../store/filter_bar/parameter_filter_service.js";
 import { getItemCacheState } from "../store/item_cache/item_cache_selectors.js";
@@ -73,13 +87,14 @@ import {
     isMissingInsightItemsError,
 } from "../store/report/handle_missing_date_filters.js";
 import { applyOpenReport } from "../store/report/open_report_operation.js";
+import { type OpenReportLoadFailure } from "../store/report/report_state.js";
 import { type IAppState } from "../store/types.js";
 import {
     getVisualizationClassState,
     getVisualizationClassesState,
 } from "../store/visualization_classes/visualization_classes_selectors.js";
 import { type IApplicationResetCarrier } from "../typings/application_reset.js";
-import { type ILoadedReportItems, type IMissingDateFilterItem } from "../typings/report.js";
+import { type ILoadedReportItems } from "../typings/report.js";
 import { getItemCacheItems, getObjectIdFromUri, loadAccessibleDocumentIds } from "../utils/api.js";
 import { getInsightRef } from "../utils/insight_ref.js";
 import { getRouteParams, getRouteUri, setLocation } from "../utils/location.js";
@@ -292,6 +307,7 @@ export function resolveOpenReportResult(
             filterBar: getFilterBarState(state),
             measuresDateDatasets: getMeasureDateDatasetsState(state),
             dateDatasets: getDateDatasetsState(state),
+            dateRangeParameters: getCatalogDateRangeParameters(state),
         },
         { insight, loadedItems, visualizationClass },
         {
@@ -376,10 +392,52 @@ export function hasDateFilterWithUnsupportedGranularity(insight: IInsight): bool
         );
 }
 
-const missingItemsOf = (error: unknown): ReadonlyArray<IMissingDateFilterItem> | undefined =>
-    isMissingInsightItemsError(error) ? error.missingItems : undefined;
+/**
+ * The part of the insight an open is loading: the insight itself, then the parts it needs to open.
+ * A failure names the part that was loading. `insight` also covers mapping the loaded insight onto
+ * the catalog: both fail as not found.
+ */
+export type OpenReportLoadingPart = "insight" | OpenReportLoadFailure;
+
+/**
+ * Fails the open with the real cause. Only a failure to load the insight itself is a not-found
+ * failure: once it loaded, the insight exists and the user can access it, so "not found" would
+ * be wrong, and the failure names the part that failed to load instead.
+ */
+export function* failOpenReport(error: unknown, isDraft: boolean, loadingPart: OpenReportLoadingPart) {
+    const reset: IApplicationResetCarrier = yield call(selectOpenReportFailureReset);
+    if (isMissingInsightItemsError(error)) {
+        yield put(openReportFailed(reset, isDraft, undefined, error.missingItems));
+    } else if (loadingPart === "insight") {
+        yield put(openReportFailed(reset, isDraft));
+    } else {
+        yield put(openReportFailed(reset, isDraft, loadingPart));
+    }
+}
+
+/**
+ * Waits until the catalog is loaded, and throws when it failed to load. Without the catalog, the
+ * insight's buckets cannot be mapped to the store. A load that already failed dispatched its
+ * SAGA_CATALOG_LOAD_FINISHED before the open started, so waiting for it would never end.
+ */
+export function* waitForCatalog() {
+    const isLoaded: ReturnType<typeof hasCatalogFirstLoaded> = yield select(hasCatalogFirstLoaded);
+    if (isLoaded) {
+        return;
+    }
+    const hasFailed: ReturnType<typeof hasCatalogLoadFailed> = yield select(hasCatalogLoadFailed);
+    if (!hasFailed) {
+        yield take(CatalogSagaActionTypeKeys.SAGA_CATALOG_LOAD_FINISHED);
+        const isLoadedNow: ReturnType<typeof hasCatalogFirstLoaded> = yield select(hasCatalogFirstLoaded);
+        if (isLoadedNow) {
+            return;
+        }
+    }
+    throw new Error("The catalog failed to load");
+}
 
 export function* fetchReport(projectId: string, reportId: string) {
+    let loadingPart: OpenReportLoadingPart = "insight";
     try {
         yield put(openReportStarted(projectId, reportId));
         const startTime: ReturnType<typeof getStartTime> = yield call(getStartTime);
@@ -390,11 +448,9 @@ export function* fetchReport(projectId: string, reportId: string) {
         // and then the insight buckets cannot be properly mapped to their internal store representation.
         // (transformation in metadata.ts file throws error),
         // resulting in a "Sorry, we cannot find visualization" error.
-        const hasCatalogItemsLoaded: ReturnType<typeof hasCatalogFirstLoaded> =
-            yield select(hasCatalogFirstLoaded);
-        if (!hasCatalogItemsLoaded) {
-            yield take(CatalogSagaActionTypeKeys.SAGA_CATALOG_LOAD_FINISHED);
-        }
+        loadingPart = "catalogLoadFailed";
+        yield call(waitForCatalog);
+        loadingPart = "insight";
 
         const {
             includeObjectsWithTags = [],
@@ -412,6 +468,7 @@ export function* fetchReport(projectId: string, reportId: string) {
             reportId,
             sideloadInsightItems,
         );
+        loadingPart = "contentLoadFailed";
 
         if (hasDateFilterWithUnsupportedGranularity(insight)) {
             const reset: IApplicationResetCarrier = yield call(selectOpenReportFailureReset);
@@ -432,7 +489,9 @@ export function* fetchReport(projectId: string, reportId: string) {
 
         yield call(failOnMissingDateFilterItems, insight);
 
+        loadingPart = "dashboardsLoadFailed";
         const userDashboards: SagaReturnType<typeof fetchDashboards> = yield call(fetchDashboards, projectId);
+        loadingPart = "contentLoadFailed";
         const permissions: ReturnType<typeof workspacePermissions> = yield select(workspacePermissions);
         const accessibleDocumentIds: SagaReturnType<typeof loadAccessibleDocumentIds> = yield call(
             loadAccessibleDocumentIds,
@@ -452,11 +511,13 @@ export function* fetchReport(projectId: string, reportId: string) {
         yield put(storeAppliedChartSort(insightSorts(insight)));
 
         const state: IAppState = yield select();
+        loadingPart = "dateDatasetsLoadFailed";
         const baseLoadedItems: SagaReturnType<typeof getItemCacheItems> = yield call(
             getItemCacheItems,
             insight,
             state,
         );
+        loadingPart = "parametersLoadFailed";
         const {
             filters: parameterFilters,
             warnings: parameterWarnings,
@@ -464,7 +525,16 @@ export function* fetchReport(projectId: string, reportId: string) {
             restoreInsightParameterFilters,
             insight,
         );
-        const loadedItems: ILoadedReportItems = { ...baseLoadedItems, parameterFilters, parameterWarnings };
+        const periodWarnings: SagaReturnType<typeof findDeletedPeriodWarnings> = yield call(
+            findDeletedPeriodWarnings,
+            insight,
+        );
+        loadingPart = "contentLoadFailed";
+        const loadedItems: ILoadedReportItems = {
+            ...baseLoadedItems,
+            parameterFilters,
+            parameterWarnings: [...parameterWarnings, ...periodWarnings],
+        };
 
         const time: ReturnType<typeof getDuration> = yield call(getDuration, startTime);
         yield call(logVisualizationOpen, { state, time });
@@ -473,6 +543,10 @@ export function* fetchReport(projectId: string, reportId: string) {
             state,
             insightVisualizationUrl(insight),
         );
+        // Mapping the insight onto the catalog loads nothing. It fails when the catalog lacks an item
+        // the insight uses, typically one the user is not permitted to see, so the insight cannot be
+        // shown to this user and the open fails as not found, like a failure to load the insight.
+        loadingPart = "insight";
         const result: SagaReturnType<typeof buildOpenReportResult> = yield call(
             buildOpenReportResult,
             insight,
@@ -482,9 +556,7 @@ export function* fetchReport(projectId: string, reportId: string) {
         yield put(openReportFinished(insight, loadedItems, time, useDefaultClass, result));
     } catch (err) {
         logError("Error while opening insight", err);
-
-        const reset: IApplicationResetCarrier = yield call(selectOpenReportFailureReset);
-        yield put(openReportFailed(reset, false, undefined, missingItemsOf(err)));
+        yield call(failOpenReport, err, false, loadingPart);
     }
 }
 
@@ -498,16 +570,15 @@ export function* fetchDashboards(projectId: string) {
 }
 
 export function* fetchDraftReport(projectId: string, reportId: string) {
+    let loadingPart: OpenReportLoadingPart = "insight";
     try {
         yield put(openReportStarted(projectId, reportId));
 
         // Wait for catalog load so parameter metadata is available when mapping
         // the draft's saved insight.parameters to filter bar state.
-        const hasCatalogItemsLoaded: ReturnType<typeof hasCatalogFirstLoaded> =
-            yield select(hasCatalogFirstLoaded);
-        if (!hasCatalogItemsLoaded) {
-            yield take(CatalogSagaActionTypeKeys.SAGA_CATALOG_LOAD_FINISHED);
-        }
+        loadingPart = "catalogLoadFailed";
+        yield call(waitForCatalog);
+        loadingPart = "insight";
 
         const {
             includeObjectsWithTags = [],
@@ -526,6 +597,7 @@ export function* fetchDraftReport(projectId: string, reportId: string) {
             reportId,
             sideloadInsightItems,
         );
+        loadingPart = "contentLoadFailed";
 
         if (catalogItems) {
             yield call(updateCatalogWithExtras, {
@@ -538,11 +610,13 @@ export function* fetchDraftReport(projectId: string, reportId: string) {
         yield put(storeAppliedChartSort(insightSorts(insight)));
 
         const state: IAppState = yield select();
+        loadingPart = "dateDatasetsLoadFailed";
         const baseLoadedItems: SagaReturnType<typeof getItemCacheItems> = yield call(
             getItemCacheItems,
             insight,
             state,
         );
+        loadingPart = "parametersLoadFailed";
         const {
             filters: parameterFilters,
             warnings: parameterWarnings,
@@ -550,7 +624,16 @@ export function* fetchDraftReport(projectId: string, reportId: string) {
             restoreInsightParameterFilters,
             insight,
         );
-        const loadedItems: ILoadedReportItems = { ...baseLoadedItems, parameterFilters, parameterWarnings };
+        const periodWarnings: SagaReturnType<typeof findDeletedPeriodWarnings> = yield call(
+            findDeletedPeriodWarnings,
+            insight,
+        );
+        loadingPart = "contentLoadFailed";
+        const loadedItems: ILoadedReportItems = {
+            ...baseLoadedItems,
+            parameterFilters,
+            parameterWarnings: [...parameterWarnings, ...periodWarnings],
+        };
 
         const useDefaultClass: SagaReturnType<typeof isVisualizationClassDeletedOrDeprecated> = yield call(
             isVisualizationClassDeletedOrDeprecated,
@@ -558,6 +641,10 @@ export function* fetchDraftReport(projectId: string, reportId: string) {
             insightVisualizationUrl(insight),
         );
 
+        // Mapping the insight onto the catalog loads nothing. It fails when the catalog lacks an item
+        // the insight uses, typically one the user is not permitted to see, so the insight cannot be
+        // shown to this user and the open fails as not found, like a failure to load the insight.
+        loadingPart = "insight";
         const result: SagaReturnType<typeof buildOpenReportResult> = yield call(
             buildOpenReportResult,
             insight,
@@ -567,8 +654,7 @@ export function* fetchDraftReport(projectId: string, reportId: string) {
         yield put(openReportFinished(insight, loadedItems, 0, useDefaultClass, result, true));
     } catch (err) {
         logError("Error while opening draft insight", err);
-        const reset: IApplicationResetCarrier = yield call(selectOpenReportFailureReset);
-        yield put(openReportFailed(reset, true, undefined, missingItemsOf(err)));
+        yield call(failOpenReport, err, true, loadingPart);
     }
 }
 
@@ -586,6 +672,39 @@ export function* restoreInsightParameterFilters(insight: IInsight) {
         : overrides.filter((override) => typeof override.value !== "string");
     const catalogParameters: ReturnType<typeof getCatalogParameters> = yield select(getCatalogParameters);
     return restoreParameterFilters(enabledOverrides, catalogParameters);
+}
+
+/** The periods (DATE_RANGE parameters) the date filters of the insight and of its metrics reference, each once. */
+function insightPeriodRefs(insight: IInsight): ObjRef[] {
+    const filters = [
+        ...insightFilters(insight),
+        ...insightMeasures(insight).flatMap((measure) => measureFilters(measure) ?? []),
+    ];
+    return filters
+        .filter(isParameterizedDateFilter)
+        .map((filter) => filter.parameterizedDateFilter.parameter)
+        .filter((ref, index, refs) => refs.findIndex((other) => areObjRefsEqual(other, ref)) === index);
+}
+
+const NO_PERIOD_WARNINGS: IParameterWarning[] = [];
+
+/**
+ * A `removed` warning for each period the insight references that the catalog does not have, worded as for a
+ * deleted parameter. The filter itself stays and shows the period's id. As for parameters, it needs the
+ * setting on and the catalog loaded, so a catalog that failed to load warns about nothing.
+ */
+export function* findDeletedPeriodWarnings(insight: IInsight) {
+    const periodsEnabled: boolean = yield select(enableDateRangeParameters);
+    const catalogLoaded: boolean = yield select(hasCatalogFirstLoaded);
+    if (!periodsEnabled || !catalogLoaded) {
+        return NO_PERIOD_WARNINGS;
+    }
+    const dateRangeParameters: ReturnType<typeof getCatalogDateRangeParameters> = yield select(
+        getCatalogDateRangeParameters,
+    );
+    return insightPeriodRefs(insight)
+        .filter((ref) => !findPeriod(ref, dateRangeParameters))
+        .map((ref): IParameterWarning => ({ kind: "removed", ref, name: objRefToString(ref) }));
 }
 
 export function* showOpenReportMessage({

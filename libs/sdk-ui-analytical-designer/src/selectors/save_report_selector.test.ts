@@ -9,6 +9,7 @@ import { LOCAL_COLUMN, LOCAL_PUSHPIN, LOCAL_TABLE } from "../constants/visualiza
 import { metadataToBuckets } from "../models/metadata.js";
 import { itemCache as catalogEntries } from "../models/metadata.test.helpers.js";
 import { getVisualizationObjectForSave } from "../services/report_service.js";
+import { type IDateFilterConfig } from "../store/filter_bar/filter_bar_types.js";
 import { EMPTY_INSIGHT_USAGE_IN_DOCUMENTS } from "../store/insight_usage/insight_usage_helpers.js";
 import { type IInsightUsageOnDashboard } from "../store/insight_usage/insight_usage_state.js";
 import { type IAppState } from "../store/types.js";
@@ -966,9 +967,15 @@ describe("Save selectors", () => {
                 warn.mockRestore();
             });
 
-            it("should compare a period stored with the include default equal to the one AD writes", () => {
+            it("should keep include on a period, where the default is exclude", () => {
                 const period = { granularity: "GDC.time.year", from: -30, to: 0 };
-                compare({ ...period, emptyValueHandling: "include" }, period);
+                compare(
+                    { ...period, emptyValueHandling: "include" },
+                    { ...period, emptyValueHandling: "include" },
+                );
+                expect(
+                    prepareForComparison(withMetricFilter({ ...period, emptyValueHandling: "include" })),
+                ).not.toEqual(prepareForComparison(withMetricFilter(period)));
             });
 
             it("should keep a changed empty values mode", () => {
@@ -998,7 +1005,12 @@ describe("Save selectors", () => {
                     },
                 ],
             };
-            const openedWith = (content: IReportContent, mode: "include" | "exclude" | "only") => {
+            const openedWith = (
+                content: IReportContent,
+                mode: "include" | "exclude" | "only",
+                enableImprovedMetricDateFilter = true,
+                filterConfig?: IDateFilterConfig,
+            ) => {
                 const withDateDatasets = withData(validReportWithoutChanges, {
                     dateDatasets: {
                         ...validReportWithoutChanges.data.dateDatasets,
@@ -1014,12 +1026,13 @@ describe("Save selectors", () => {
                                 overTimeComparisonType: "nothing",
                                 dateDatasetRef: dataSet,
                                 emptyDateValuesFilter: mode,
+                                filterConfig,
                             },
                         ],
                     },
                 });
                 return withReport(
-                    withRoot(withDateDatasets, { featureFlags: { enableImprovedMetricDateFilter: true } }),
+                    withRoot(withDateDatasets, { featureFlags: { enableImprovedMetricDateFilter } }),
                     {
                         lastSavedObject: {
                             visualizationObject: {
@@ -1061,6 +1074,33 @@ describe("Save selectors", () => {
                 expect(isSavedReportCurrentReport(openedWith(content, "exclude"))).toBe(false);
                 warn.mockRestore();
             });
+
+            it.each([true, false])(
+                "treats a period stored with include and opened without edits as saved (flag %s)",
+                (enableImprovedMetricDateFilter) => {
+                    const content: IReportContent = {
+                        ...legacyContent,
+                        filters: [
+                            {
+                                relativeDateFilter: {
+                                    dataSet,
+                                    granularity: "GDC.time.year",
+                                    from: -1,
+                                    to: -1,
+                                    emptyValueHandling: "include",
+                                },
+                            },
+                        ],
+                    };
+                    const state = openedWith(content, "include", enableImprovedMetricDateFilter, {
+                        type: "relative",
+                        granularity: "GDC.time.year",
+                        interval: [-1, -1],
+                    });
+
+                    expect(isSavedReportCurrentReport(state)).toBe(true);
+                },
+            );
         });
 
         it.each([

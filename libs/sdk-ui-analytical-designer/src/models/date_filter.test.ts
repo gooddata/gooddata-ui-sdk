@@ -4,6 +4,8 @@
 
 import { describe, expect, it } from "vitest";
 
+import { type IDateRangeParameterMetadataObject, idRef } from "@gooddata/sdk-model";
+
 import { ALL_TIME, LAST_7_DAYS } from "../constants/presets.js";
 import { mockIntlProp } from "../utils/with_intl.js";
 
@@ -224,10 +226,52 @@ describe("DecoratedDateFilter", () => {
                     expect(titleOf({ name: ALL_TIME }, "include")).toEqual("test title: All time");
                 });
 
+                it("should add the empty values when they are included with a period", () => {
+                    expect(titleOf({ name: LAST_7_DAYS }, "include")).toEqual(
+                        `${titleOf({ name: LAST_7_DAYS }, "exclude")}, empty values`,
+                    );
+                });
+
                 it("should keep the period title when the empty values are excluded from a period", () => {
                     expect(titleOf({ name: LAST_7_DAYS }, "exclude")).not.toContain("Empty values");
                 });
             });
+        });
+    });
+
+    describe("with a period", () => {
+        const intl = mockIntlProp();
+        const lastQuarter = {
+            ref: idRef("lastQuarter", "parameter"),
+            id: "lastQuarter",
+            title: "Most recent quarter",
+        } as IDateRangeParameterMetadataObject;
+        const periodFilter = (emptyDateValuesFilter?: "exclude" | "only") => ({
+            attribute: defaultAttribute,
+            interval: { type: "parameterized", parameterRef: idRef("lastQuarter", "parameter") },
+            ...(emptyDateValuesFilter ? { emptyDateValuesFilter } : {}),
+        });
+
+        it("titles the metric's filter by the period's title", () => {
+            const filter = createDecoratedDateFilter(periodFilter(), defaultDateDataset, {}, true, [
+                lastQuarter,
+            ]);
+
+            expect(DecoratedDateFilter.getTitle(filter, intl)).toBe("test title: Most recent quarter");
+        });
+
+        it("titles a period the catalog does not have by its id", () => {
+            const filter = createDecoratedDateFilter(periodFilter(), defaultDateDataset, {}, true, []);
+
+            expect(DecoratedDateFilter.getIntervalTitle(filter, intl)).toBe("lastQuarter");
+        });
+
+        it("keeps the empty values wording for only empty values", () => {
+            const filter = createDecoratedDateFilter(periodFilter("only"), defaultDateDataset, {}, true, [
+                lastQuarter,
+            ]);
+
+            expect(DecoratedDateFilter.getIntervalTitle(filter, intl)).toBe("Empty values");
         });
     });
 });

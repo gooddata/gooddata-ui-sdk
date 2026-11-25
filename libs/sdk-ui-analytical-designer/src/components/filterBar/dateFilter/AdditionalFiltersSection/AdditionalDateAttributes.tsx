@@ -45,6 +45,7 @@ export interface IAdditionalDateAttributesProps {
     isEmptyDateValuesFilterOpenOnInit?: boolean;
     isDisabled?: boolean;
     isAllTime?: boolean;
+    isIncludeWithPeriodAllowed?: boolean;
     showDateGranularities?: boolean;
     isEmptyDateValuesFilterAvailable?: boolean;
 }
@@ -136,6 +137,7 @@ export function AdditionalDateAttributes({
     isEmptyDateValuesFilterOpenOnInit,
     isDisabled,
     isAllTime,
+    isIncludeWithPeriodAllowed,
     showDateGranularities = true,
     isEmptyDateValuesFilterAvailable = true,
 }: IAdditionalDateAttributesProps) {
@@ -179,11 +181,13 @@ export function AdditionalDateAttributes({
             ))}
             {isEmptyDateValuesFilterEnabled ? (
                 <EmptyDateValuesFilter
-                    mode={emptyDateValuesFilterMode ?? "include"}
+                    // without a mode the backend default applies: include on All time, exclude with a period
+                    mode={emptyDateValuesFilterMode ?? (isAllTime === false ? "exclude" : "include")}
                     onModeChange={onEmptyDateValuesFilterModeChange}
                     onRemove={onEmptyDateValuesFilterRemove}
                     openOnInit={isEmptyDateValuesFilterOpenOnInit}
                     isAllTime={isAllTime}
+                    isIncludeWithPeriodAllowed={isIncludeWithPeriodAllowed}
                     canRemove={!isSingleEmptyValuesMode}
                 />
             ) : null}

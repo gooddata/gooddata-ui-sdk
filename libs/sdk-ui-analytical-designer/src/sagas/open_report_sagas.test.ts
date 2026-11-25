@@ -1,6 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import { type RunResult, expectSaga, testSaga } from "redux-saga-test-plan";
+import { throwError } from "redux-saga-test-plan/providers";
 import { call, put, select } from "redux-saga/effects";
 import { describe, expect, it } from "vitest";
 
@@ -8,6 +9,7 @@ import {
     type ICatalogAttribute,
     type ICatalogFact,
     type ICatalogMeasure,
+    type IDateRangeParameterMetadataObject,
     type IInsight,
     type IInsightParameterValue,
     type IMetadataObject,
@@ -16,7 +18,10 @@ import {
     insightVisualizationUrl,
     newAllTimeFilter,
     newAttributeSort,
+    newBucket,
+    newMeasure,
     newNegativeAttributeFilter,
+    newParameterizedDateFilter,
     newRelativeDateFilter,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -35,6 +40,7 @@ import { combinedRootReducer } from "../reducers/combined_root_reducer.js";
 import { buildInitialState } from "../reducers/initial_state.js";
 import {
     enableAnalyticalDesignerCatalogSideload,
+    enableDateRangeParameters,
     enableParameters,
     enableStringParameters,
 } from "../selectors/feature_flag_selector.js";
@@ -48,7 +54,12 @@ import {
 } from "../services/visualization_class_service.js";
 import { setRemovedItems } from "../store/bucket_notifications/bucket_notifications_actions.js";
 import { getRemovedItems } from "../store/bucket_notifications/bucket_notifications_selector.js";
-import { getCatalogParameters, hasCatalogFirstLoaded } from "../store/catalog/catalog_selector.js";
+import {
+    getCatalogDateRangeParameters,
+    getCatalogParameters,
+    hasCatalogFirstLoaded,
+    hasCatalogLoadFailed,
+} from "../store/catalog/catalog_selector.js";
 import { storeAppliedChartSort } from "../store/chart_sort/chart_sort_actions.js";
 import { getDateDatasetsMeta } from "../store/date_datasets_meta/date_datasets_meta_selectors.js";
 import { type IParameterWarning } from "../store/filter_bar/parameter_filter_service.js";
@@ -73,13 +84,14 @@ import { getInsightRef } from "../utils/insight_ref.js";
 import { getRouteParams, getRouteUri, setLocation } from "../utils/location.js";
 import { buildOpenReportFinished } from "../utils/open_report_actions.js";
 
-import { CatalogSagaActionTypeKeys } from "./catalog/catalog_saga_actions.js";
+import { CatalogSagaActionTypeKeys, catalogLoadFinished } from "./catalog/catalog_saga_actions.js";
 import {
     buildOpenReportResult,
     ensureDominantDatasetSelected,
     fetchDashboards,
     fetchDraftReport,
     fetchReport,
+    findDeletedPeriodWarnings,
     getDuration,
     getInsight,
     getObjectsReferencing,
@@ -91,6 +103,7 @@ import {
     selectOpenReportFailureReset,
     showOpenReportMessage,
     updateCatalogWithExtras,
+    waitForCatalog,
 } from "./open_report_sagas.js";
 
 // the boundary computation is stubbed in the orchestration specs — the operation itself is
@@ -160,9 +173,16 @@ const loadedItems: ILoadedReportItems = {
     parameterWarnings: [],
 };
 const loadedItemsWithParams: ILoadedReportItems = { ...loadedItems, parameterFilters: [] };
+const deletedPeriodWarning: IParameterWarning = {
+    kind: "removed",
+    ref: idRef("deletedPeriod", "parameter"),
+    name: "deletedPeriod",
+};
+
+// the warnings about parameters come first, then the ones about deleted periods
 const loadedItemsWithWarning: ILoadedReportItems = {
     ...loadedItemsWithParams,
-    parameterWarnings: [resetWarning],
+    parameterWarnings: [resetWarning, deletedPeriodWarning],
 };
 
 describe("Open report sagas", () => {
@@ -362,7 +382,79 @@ describe("Open report sagas", () => {
         });
     });
 
+    describe("waitForCatalog", () => {
+        /** the catalog flags before the load finishes, and after it */
+        function catalogProvider(before: { loaded: boolean; failed: boolean }, afterLoaded: boolean) {
+            let isFinished = false;
+            return {
+                select({ selector }: { selector: unknown }, next: () => unknown) {
+                    if (selector === hasCatalogFirstLoaded) {
+                        return isFinished ? afterLoaded : before.loaded;
+                    }
+                    if (selector === hasCatalogLoadFailed) {
+                        return isFinished ? !afterLoaded : before.failed;
+                    }
+                    return next();
+                },
+                take(_effect: unknown, next: () => unknown) {
+                    isFinished = true;
+                    return next();
+                },
+            };
+        }
+
+        it("should not wait when the catalog is loaded", async () => {
+            const saga = await expectSaga(waitForCatalog)
+                .provide(catalogProvider({ loaded: true, failed: false }, true))
+                .run();
+
+            expect(saga.effects.take).toBeUndefined();
+        });
+
+        it("should fail without waiting when the catalog load already failed", async () => {
+            await expect(
+                expectSaga(waitForCatalog)
+                    .provide(catalogProvider({ loaded: false, failed: true }, false))
+                    .run(),
+            ).rejects.toThrow("The catalog failed to load");
+        });
+
+        it("should wait for a loading catalog and return when it loaded", async () => {
+            const saga = await expectSaga(waitForCatalog)
+                .provide(catalogProvider({ loaded: false, failed: false }, true))
+                .dispatch(catalogLoadFinished())
+                .run();
+
+            expect(saga.effects.take).toHaveLength(1);
+        });
+
+        it("should wait for a loading catalog and fail when it failed to load", async () => {
+            await expect(
+                expectSaga(waitForCatalog)
+                    .provide(catalogProvider({ loaded: false, failed: false }, false))
+                    .dispatch(catalogLoadFinished())
+                    .run(),
+            ).rejects.toThrow("The catalog failed to load");
+        });
+    });
+
     describe("fetchReport", () => {
+        it("should fail the open naming the catalog, not as not found, when the catalog failed to load", async () => {
+            const saga: RunResult = await expectSaga(fetchReport, projectId, reportId)
+                .provide([
+                    [select(hasCatalogFirstLoaded), false],
+                    [select(hasCatalogLoadFailed), true],
+                    [call(getStartTime), 10],
+                    [call(selectOpenReportFailureReset), stubFailureReset],
+                ])
+                .run();
+
+            expect(saga.effects.put).toEqual([
+                put(openReportStarted(projectId, reportId)),
+                put(openReportFailed(stubFailureReset, false, "catalogLoadFailed")),
+            ]);
+        });
+
         it.each([true, false])(
             "should fetch given saga and call open report for useDefaultClass: %p",
             async (useDefaultClass) => {
@@ -393,6 +485,7 @@ describe("Open report sagas", () => {
                             call(restoreInsightParameterFilters, dummyInsight),
                             { filters: [], warnings: [resetWarning] },
                         ],
+                        [call(findDeletedPeriodWarnings, dummyInsight), [deletedPeriodWarning]],
                         [call(getDuration, startTime), duration],
                         [call(fetchDashboards, projectId), publicDashboards],
                         [select(workspacePermissions), null],
@@ -466,6 +559,7 @@ describe("Open report sagas", () => {
                     ],
                     [call(getItemCacheItems, dummyInsight, state), loadedItems],
                     [call(restoreInsightParameterFilters, dummyInsight), { filters: [], warnings: [] }],
+                    [call(findDeletedPeriodWarnings, dummyInsight), []],
                     [call(getDuration, startTime), duration],
                     [call(fetchDashboards, projectId), publicDashboards],
                     [select(workspacePermissions), null],
@@ -540,6 +634,106 @@ describe("Open report sagas", () => {
                 call(getItemCacheItems, orphanedDateFilterInsight, state),
             );
         });
+        it("should fail the open as not found when the insight itself does not load", async () => {
+            const saga: RunResult = await expectSaga(fetchReport, projectId, reportId)
+                .provide([
+                    [select(hasCatalogFirstLoaded), true],
+                    [
+                        select(getTagsConfiguration),
+                        { includeObjectsWithTags: [], excludeObjectsWithTags: [] },
+                    ],
+                    [select(enableAnalyticalDesignerCatalogSideload), false],
+                    [call(getStartTime), 10],
+                    [call(getInsight, projectId, reportId, false), throwError(new Error("404"))],
+                    [call(selectOpenReportFailureReset), stubFailureReset],
+                ])
+                .run();
+
+            expect(saga.effects.put).toEqual([
+                put(openReportStarted(projectId, reportId)),
+                put(openReportFailed(stubFailureReset, false)),
+            ]);
+        });
+
+        describe("when a part fails to load after the insight loaded", () => {
+            const state: IAppState = buildInitialState();
+            const failure = throwError(new Error("500"));
+            const loadedSteps = {
+                dashboards: [call(fetchDashboards, projectId), []],
+                dateDatasets: [call(getItemCacheItems, dummyInsight, state), loadedItems],
+                parameters: [
+                    call(restoreInsightParameterFilters, dummyInsight),
+                    { filters: [], warnings: [] },
+                ],
+                content: [call(logVisualizationOpen, { time: 25, state }), {}],
+                mapping: [
+                    call(buildOpenReportResult, dummyInsight, loadedItems, false),
+                    stubOpenReportResult,
+                ],
+            } as const;
+            type LoadedStep = keyof typeof loadedSteps;
+
+            const runWithFailingStep = (failingStep: LoadedStep) => {
+                const steps = Object.entries(loadedSteps).map(([step, [effect, result]]) =>
+                    step === failingStep ? [effect, failure] : [effect, result],
+                ) as Parameters<ReturnType<typeof expectSaga>["provide"]>[0];
+
+                return expectSaga(fetchReport, projectId, reportId)
+                    .provide([
+                        [select(), state],
+                        [select(hasCatalogFirstLoaded), true],
+                        [select(getDateDatasetsMeta), { items: [] }],
+                        [
+                            select(getTagsConfiguration),
+                            { includeObjectsWithTags: [], excludeObjectsWithTags: [] },
+                        ],
+                        [select(enableAnalyticalDesignerCatalogSideload), false],
+                        [call(getStartTime), 10],
+                        [call(getInsight, projectId, reportId, false), { insight: dummyInsight }],
+                        [
+                            call(getObjectsReferencing, projectId, dummyInsight),
+                            { dashboards: [], documents: [] },
+                        ],
+                        [select(workspacePermissions), null],
+                        [call(loadAccessibleDocumentIds, projectId, [], null), []],
+                        [call(findDeletedPeriodWarnings, dummyInsight), []],
+                        [call(getDuration, 10), 25],
+                        [
+                            call(
+                                isVisualizationClassDeletedOrDeprecated,
+                                state,
+                                insightVisualizationUrl(dummyInsight),
+                            ),
+                            false,
+                        ],
+                        [call(selectOpenReportFailureReset), stubFailureReset],
+                        ...steps,
+                    ])
+                    .run();
+            };
+
+            it.each([
+                ["dashboards", "dashboardsLoadFailed"],
+                ["dateDatasets", "dateDatasetsLoadFailed"],
+                ["parameters", "parametersLoadFailed"],
+                ["content", "contentLoadFailed"],
+            ] as const)(
+                "should fail the open naming the %s, not as not found",
+                async (failingStep, reason) => {
+                    const saga: RunResult = await runWithFailingStep(failingStep);
+
+                    expect(saga.effects.put.at(-1)).toEqual(
+                        put(openReportFailed(stubFailureReset, false, reason)),
+                    );
+                },
+            );
+
+            it("should fail the open as not found when the catalog lacks an item the insight uses", async () => {
+                const saga: RunResult = await runWithFailingStep("mapping");
+
+                expect(saga.effects.put.at(-1)).toEqual(put(openReportFailed(stubFailureReset, false)));
+            });
+        });
     });
 
     describe("hasDateFilterWithUnsupportedGranularity", () => {
@@ -577,6 +771,21 @@ describe("Open report sagas", () => {
     });
 
     describe("fetchDraftReport", () => {
+        it("should fail the draft open naming the catalog when the catalog failed to load", async () => {
+            const saga: RunResult = await expectSaga(fetchDraftReport, projectId, reportId)
+                .provide([
+                    [select(hasCatalogFirstLoaded), false],
+                    [select(hasCatalogLoadFailed), true],
+                    [call(selectOpenReportFailureReset), stubFailureReset],
+                ])
+                .run();
+
+            expect(saga.effects.put).toEqual([
+                put(openReportStarted(projectId, reportId)),
+                put(openReportFailed(stubFailureReset, true, "catalogLoadFailed")),
+            ]);
+        });
+
         it.each([true, false])(
             "should fetch given saga and call open report for useDefaultClass: %p",
             async (useDefaultClass) => {
@@ -595,6 +804,7 @@ describe("Open report sagas", () => {
                         [call(getInsight, projectId, reportId, false), { insight: dummyInsight }],
                         [call(getItemCacheItems, dummyInsight, state), loadedItems],
                         [call(restoreInsightParameterFilters, dummyInsight), { filters: [], warnings: [] }],
+                        [call(findDeletedPeriodWarnings, dummyInsight), []],
                         [
                             call(
                                 isVisualizationClassDeletedOrDeprecated,
@@ -649,6 +859,122 @@ describe("Open report sagas", () => {
                 put(openReportStarted(projectId, reportId)),
                 put(openReportFailed(stubFailureReset, true, undefined, [missingDeliveryMinuteOfHour])),
             ]);
+        });
+
+        it("should fail the draft open naming the part that failed to load, not as not found", async () => {
+            const state: IAppState = buildInitialState();
+
+            const saga: RunResult = await expectSaga(fetchDraftReport, projectId, reportId)
+                .provide([
+                    [select(), state],
+                    [select(hasCatalogFirstLoaded), true],
+                    [select(getDateDatasetsMeta), { items: [] }],
+                    [select(enableAnalyticalDesignerCatalogSideload), false],
+                    [
+                        select(getTagsConfiguration),
+                        { includeObjectsWithTags: [], excludeObjectsWithTags: [] },
+                    ],
+                    [call(getInsight, projectId, reportId, false), { insight: dummyInsight }],
+                    [call(getItemCacheItems, dummyInsight, state), throwError(new Error("500"))],
+                    [call(selectOpenReportFailureReset), stubFailureReset],
+                ])
+                .run();
+
+            expect(saga.effects.put).toEqual([
+                put(openReportStarted(projectId, reportId)),
+                put(storeAppliedChartSort(dummySorts)),
+                put(openReportFailed(stubFailureReset, true, "dateDatasetsLoadFailed")),
+            ]);
+        });
+    });
+
+    describe("findDeletedPeriodWarnings", () => {
+        const lastQuarter: IDateRangeParameterMetadataObject = {
+            type: "parameter",
+            id: "lastQuarter",
+            uri: "/lastQuarter",
+            ref: idRef("lastQuarter", "parameter"),
+            title: "Most recent quarter",
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            definition: {
+                type: "DATE_RANGE",
+                defaultValue: { granularity: "GDC.time.quarter", from: "2026-3" },
+            },
+        };
+        const onPeriod = (period: string) =>
+            newParameterizedDateFilter(idRef("closed", "dataSet"), idRef(period, "parameter"));
+
+        function runWithPeriods(
+            { filterPeriod, metricPeriod }: { filterPeriod?: string; metricPeriod?: string },
+            periodsEnabled = true,
+            catalogLoaded = true,
+        ) {
+            const insight = newInsight("local:table", "foo", "/gdc/md/vo1", (definition) =>
+                definition.filters(filterPeriod ? [onPeriod(filterPeriod)] : []).buckets([
+                    newBucket(
+                        "measures",
+                        newMeasure(idRef("amount", "measure"), (measure) =>
+                            metricPeriod ? measure.filters(onPeriod(metricPeriod)) : measure,
+                        ),
+                    ),
+                ]),
+            );
+            return expectSaga(findDeletedPeriodWarnings, insight)
+                .provide([
+                    [select(enableDateRangeParameters), periodsEnabled],
+                    [select(hasCatalogFirstLoaded), catalogLoaded],
+                    [select(getCatalogDateRangeParameters), [lastQuarter]],
+                ])
+                .run();
+        }
+
+        it("warns about a period the catalog does not have, by its id", async () => {
+            const { returnValue } = await runWithPeriods({ filterPeriod: "deletedPeriod" });
+
+            expect(returnValue).toEqual([
+                { kind: "removed", ref: idRef("deletedPeriod", "parameter"), name: "deletedPeriod" },
+            ]);
+        });
+
+        it("warns about a period on a metric", async () => {
+            const { returnValue } = await runWithPeriods({ metricPeriod: "deletedPeriod" });
+
+            expect(returnValue).toEqual([
+                { kind: "removed", ref: idRef("deletedPeriod", "parameter"), name: "deletedPeriod" },
+            ]);
+        });
+
+        it("warns once about a period used on the filter bar and on a metric", async () => {
+            const { returnValue } = await runWithPeriods({
+                filterPeriod: "deletedPeriod",
+                metricPeriod: "deletedPeriod",
+            });
+
+            expect(returnValue).toHaveLength(1);
+        });
+
+        it("does not warn about a period the catalog has", async () => {
+            const { returnValue } = await runWithPeriods({
+                filterPeriod: "lastQuarter",
+                metricPeriod: "lastQuarter",
+            });
+
+            expect(returnValue).toEqual([]);
+        });
+
+        it("does not warn when the enableDateRangeParameters setting is off", async () => {
+            const { returnValue } = await runWithPeriods({ filterPeriod: "deletedPeriod" }, false);
+
+            expect(returnValue).toEqual([]);
+        });
+
+        it("does not warn before the catalog has loaded", async () => {
+            const { returnValue } = await runWithPeriods({ filterPeriod: "deletedPeriod" }, true, false);
+
+            expect(returnValue).toEqual([]);
         });
     });
 

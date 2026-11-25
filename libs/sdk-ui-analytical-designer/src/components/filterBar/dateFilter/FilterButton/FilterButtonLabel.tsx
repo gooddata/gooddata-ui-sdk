@@ -4,12 +4,10 @@ import { useRef } from "react";
 
 import classNames from "classnames";
 
-import { isAllTimeDateFilterOption } from "@gooddata/sdk-model";
-
 import { type IAdditionalDateFilterLabel } from "../../../../selectors/additional_date_filter_selector.js";
 import { type EmptyDateValuesFilterMode } from "../../../../store/filter_bar/filter_bar_types.js";
 import { type IOverTimeComparisonSummary } from "../../../../typings/over_time_comparison.js";
-import { type IDateFilterOption } from "../dateFilterOptionFactory.js";
+import { type IDateFilterOption, isAllTimeOption } from "../dateFilterOptionFactory.js";
 
 import { AdditionalFilterDetails } from "./AdditionalFilterDetails.js";
 import { DatasetTitle } from "./DatasetTitle.js";
@@ -55,7 +53,7 @@ export function FilterButtonLabel({
     const hasTimeComparisonConfigured = isTimeComparisonConfigured(timeComparisonSummary);
     const hasAdditionalFiltersConfigured = additionalDateFilterLabels.length > 0;
     const isPresetOnFirstLine = hasTimeComparisonConfigured || hasAdditionalFiltersConfigured;
-    const isAllTime = isAllTimeDateFilterOption(filter.filterOption);
+    const isAllTime = isAllTimeOption(filter);
     const hasEmptyValuesFilterApplied =
         emptyDateValuesFilterMode === "only" || emptyDateValuesFilterMode === "exclude";
     const isInDefaultState = isAllTime && !hasTimeComparisonConfigured && !hasEmptyValuesFilterApplied;

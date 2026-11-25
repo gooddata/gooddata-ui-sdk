@@ -313,12 +313,21 @@ export class TouchBackend implements Backend {
 
     public handleTopMoveStart = (e: MouseEvent | TouchEvent): void => {
         const clientOffset = getEventClientOffset(e);
-        if (clientOffset && getNodesAtOffset(this.sourceNodes, clientOffset).length > 0) {
+        if (!clientOffset) {
+            return;
+        }
+        // The hit test is by coordinates only, so also require the press to land inside
+        // the source: a press on an element covering it (e.g. a modal backdrop) must not
+        // steal focus from that element.
+        const target = e.target as HTMLElement;
+        const isPressOnSource = getNodesAtOffset(this.sourceNodes, clientOffset).some((sourceId) =>
+            this.sourceNodes[sourceId].contains(target),
+        );
+        if (isPressOnSource) {
             this._mouseClientOffset = clientOffset;
 
             // note: calling preventDefault here, seems to be the only way to defeat text selection in Safari
             // to handle other browsers, we could just call window.getSelection().removeAllRanges();
-            const target = e.target as HTMLElement;
             if (target.tagName !== "SELECT" && target.tagName !== "INPUT" && target.tagName !== "TEXTAREA") {
                 e.preventDefault();
 

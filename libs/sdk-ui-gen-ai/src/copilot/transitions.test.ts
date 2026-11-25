@@ -21,6 +21,7 @@ import {
     CopilotBuildType,
     type CopilotInput,
     type ICopilotConfiguration,
+    type ICopilotRequest,
     type ICopilotSnapshot,
 } from "./types.js";
 
@@ -102,6 +103,540 @@ function freeze<T>(value: T): T {
 }
 
 describe("pure copilot lifecycle", () => {
+    describe("target-reset lifecycle boundaries", () => {
+        it.each([
+            { name: "unbound provisional", request: {}, retained: false },
+            { name: "untyped with another object", request: { objectId: "other" }, retained: false },
+            { name: "same workflow without an object", request: { type: Build.Board }, retained: false },
+            { name: "same target", request: { ...target }, retained: false },
+            { name: "another object", request: { type: Build.Board, objectId: "other" }, retained: true },
+            {
+                name: "another workflow",
+                request: { type: Build.Document, objectId: "board" },
+                retained: true,
+            },
+            { name: "same generation", request: { generation: Build.Board }, retained: false },
+            { name: "another generation", request: { generation: Build.Document }, retained: true },
+            {
+                name: "activated type before generation",
+                request: { type: Build.Board, generation: Build.Document },
+                retained: false,
+            },
+            { name: "superseded same target", request: { ...target, superseded: true }, retained: false },
+            {
+                name: "application on another object",
+                request: { type: Build.Board, objectId: "other", applicationIds: ["application"] },
+                retained: true,
+            },
+            {
+                name: "application on another workflow",
+                request: { type: Build.Document, applicationIds: ["application"] },
+                retained: true,
+            },
+        ] satisfies { name: string; request: Partial<ICopilotRequest<Build>>; retained: boolean }[])(
+            "retains only explicitly unrelated work: $name",
+            ({ request, retained }) => {
+                const state = freeze({
+                    ...initial(),
+                    requests: [{ revision: 1, applicationIds: [], ...request }],
+                });
+                const input = freeze({ kind: "resetTarget", target } as const);
+
+                const next = transition(state, input);
+
+                expect(next).toStrictEqual(
+                    retained
+                        ? state
+                        : {
+                              ...state,
+                              requests: [],
+                              interaction: {
+                                  ...state.interaction,
+                                  threadId: undefined,
+                                  reasoningTitle: undefined,
+                              },
+                          },
+                );
+                expect(next === state).toBe(retained);
+                expect(state.requests).toHaveLength(1);
+                expect(transition(freeze(next), input)).toBe(next);
+            },
+        );
+
+        it("preserves unrelated request order and clears only transient foreground fields", () => {
+            const base = transition(activated(), event(questions()));
+            const state = freeze({
+                ...base,
+                interaction: { ...base.interaction, reasoningTitle: "Planning", waitingForUserInput: true },
+                requests: [
+                    { ...base.requests[0], revision: 10, objectId: "other" },
+                    base.requests[0],
+                    { revision: 11, applicationIds: [] },
+                    { ...base.requests[0], revision: 12, type: Build.Document },
+                ],
+                sources: [
+                    {
+                        target,
+                        revision: 1,
+                        source: { conversationId: "source-local", threadId: "source-thread" },
+                    },
+                ],
+            });
+            const input = freeze({ kind: "resetTarget", target } as const);
+
+            const next = transition(state, input);
+
+            expect(next).toStrictEqual({
+                ...state,
+                requests: [state.requests[0], state.requests[3]],
+                interaction: {
+                    ...state.interaction,
+                    threadId: undefined,
+                    reasoningTitle: undefined,
+                    waitingForUserInput: false,
+                },
+            });
+            expect(next.requests[0]).toBe(state.requests[0]);
+            expect(next.requests[1]).toBe(state.requests[3]);
+            expect(next.interaction.build).toBe(state.interaction.build);
+            expect(next.interaction.pendingClarificationIds).toBe(state.interaction.pendingClarificationIds);
+            expect(next.context).toBe(state.context);
+            expect(next.applications).toBe(state.applications);
+            expect(next.sources).toBe(state.sources);
+            expect(state.interaction.threadId).toBe("thread");
+            expect(state.requests).toHaveLength(4);
+            expect(transition(freeze(next), input)).toBe(next);
+        });
+
+        describe.each([undefined, "board"])("with an application bound to object %s", (objectId) => {
+            it.each([false, true])(
+                "retains every request while installation is pending, response finished: %s",
+                (responseFinished) => {
+                    const base = applying();
+                    const state = freeze({
+                        ...base,
+                        requests: [
+                            { revision: 0, applicationIds: [] },
+                            { ...base.requests[0], objectId, responseFinished },
+                            { revision: 10, type: Build.Board, applicationIds: [] },
+                        ],
+                    });
+                    const input = freeze({ kind: "resetTarget", target } as const);
+
+                    const next = transition(state, input);
+
+                    expect(next).toStrictEqual({
+                        ...state,
+                        interaction: {
+                            ...state.interaction,
+                            threadId: undefined,
+                            reasoningTitle: undefined,
+                            waitingForUserInput: false,
+                        },
+                    });
+                    expect(next.requests).toBe(state.requests);
+                    expect(next.applications).toBe(state.applications);
+                    expect(next.interaction.build).toBe(state.interaction.build);
+                    expect(transition(freeze(next), input)).toBe(next);
+                },
+            );
+        });
+
+        it("does not protect reset-target requests when only another target has a pending application", () => {
+            const base = applying();
+            const state = freeze({
+                ...base,
+                requests: [
+                    { ...base.requests[0], objectId: "other" },
+                    { revision: 10, type: Build.Board, applicationIds: [] },
+                ],
+            });
+
+            const next = transition(state, freeze({ kind: "resetTarget", target } as const));
+
+            expect(next.requests).toStrictEqual([state.requests[0]]);
+            expect(next.requests[0]).toBe(state.requests[0]);
+            expect(next.applications).toBe(state.applications);
+            expect(next.generation).toBe(state.generation);
+            expect(next.revision).toBe(state.revision);
+            expect(state.requests).toHaveLength(2);
+        });
+    });
+
+    describe("foreground-interaction lifecycle boundaries", () => {
+        it.each(["local", "other-local"])(
+            "preserves draft progress only when assigning its own local conversation: %s",
+            (localId) => {
+                let state = transition(initial(), { kind: "startGeneration", type: Build.Board });
+                state = transition(state, event({ ...user(), threadId: undefined }));
+                state = transition(state, event({ ...skill(), threadId: undefined }));
+                state = transition(state, event({ ...completed(), threadId: undefined }));
+                state = freeze(transition(state, event({ ...questions(), threadId: undefined })));
+                const input = freeze(
+                    event({
+                        type: "chatConversationChanged",
+                        threadId: "assigned",
+                        conversation: { id: "assigned", localId, createdAt: "", updatedAt: "" },
+                    }),
+                );
+
+                const next = transition(state, input);
+
+                expect(next.interaction).toStrictEqual({
+                    ...(localId === "local"
+                        ? state.interaction
+                        : { waitingForUserInput: false, pendingClarificationIds: [] }),
+                    conversationId: localId,
+                    threadId: "assigned",
+                });
+                expect(state.interaction.threadId).toBeUndefined();
+                expect(state.interaction.pendingClarificationIds).toEqual(["question"]);
+                expect(next.revision).toBe(state.revision);
+                expect(next.generation).toBe(state.generation);
+                expect(next.applications).toBe(state.applications);
+                expect(transition(freeze(next), input)).toBe(next);
+            },
+        );
+
+        it("clears foreground progress on reload with a replacement local ID even for the same thread", () => {
+            let state = transition(activated(), event(completed()));
+            state = transition(state, event(questions()));
+            state = freeze(
+                transition(state, event({ type: "chatReasoning", threadId: "thread", title: "Planning" })),
+            );
+
+            const next = transition(
+                state,
+                freeze(
+                    event({
+                        type: "chatConversationChanged",
+                        threadId: "thread",
+                        conversation: {
+                            id: "thread",
+                            localId: "reloaded-local",
+                            createdAt: "",
+                            updatedAt: "",
+                        },
+                    }),
+                ),
+            );
+
+            expect(next.interaction).toStrictEqual({
+                conversationId: "reloaded-local",
+                threadId: "thread",
+                waitingForUserInput: false,
+                pendingClarificationIds: [],
+            });
+            expect(next.requests[0]).toStrictEqual({
+                ...state.requests[0],
+                conversationId: "reloaded-local",
+            });
+            expect(state.interaction.waitingForUserInput).toBe(true);
+            expect(state.interaction.reasoningTitle).toBe("Planning");
+        });
+
+        it("updates only the foreground reasoning title and preserves identity for repeated titles", () => {
+            const state = freeze(transition(activated(), event(questions())));
+            const input = freeze(event({ type: "chatReasoning", threadId: "thread", title: "Planning" }));
+
+            const next = freeze(transition(state, input));
+
+            expect(next).toStrictEqual({
+                ...state,
+                interaction: { ...state.interaction, reasoningTitle: "Planning" },
+            });
+            expect(next.requests).toBe(state.requests);
+            expect(next.interaction.pendingClarificationIds).toBe(state.interaction.pendingClarificationIds);
+            expect(transition(next, input)).toBe(next);
+            expect(
+                transition(next, freeze(event({ type: "chatReasoning", threadId: "thread" }))),
+            ).toStrictEqual({
+                ...next,
+                interaction: { ...next.interaction, reasoningTitle: undefined },
+            });
+            expect(state.interaction.reasoningTitle).toBeUndefined();
+        });
+
+        it.each([
+            { threadId: "other-thread", conversationId: "local", preserve: true },
+            { threadId: "thread", conversationId: "other-local", preserve: false },
+            { threadId: "thread", conversationId: undefined, preserve: true },
+        ])(
+            "uses local-ID precedence and thread fallback on new input: $conversationId / $threadId",
+            ({ threadId, conversationId, preserve }) => {
+                let state = transition(activated(), event(completed()));
+                state = transition(state, event(questions()));
+                state = freeze(
+                    transition(
+                        state,
+                        event({ type: "chatReasoning", threadId: "thread", title: "Planning" }),
+                    ),
+                );
+
+                const next = transition(state, freeze(event({ ...user(), threadId, conversationId })));
+
+                expect(next.interaction).toStrictEqual({
+                    ...(preserve
+                        ? state.interaction
+                        : { pendingClarificationIds: [], waitingForUserInput: false }),
+                    conversationId,
+                    threadId,
+                    reasoningTitle: undefined,
+                    waitingForUserInput: false,
+                });
+                expect(next.revision).toBe(state.revision + 1);
+                expect(state.interaction.reasoningTitle).toBe("Planning");
+                expect(state.interaction.waitingForUserInput).toBe(true);
+            },
+        );
+
+        it.each([null, { answer: "Yes" }])(
+            "removes only the resolved clarification and clears the wait without losing build intent: %s",
+            (responses) => {
+                let state = transition(activated(), event(completed()));
+                state = transition(state, event(questions()));
+                state = freeze(
+                    transition(state, event({ ...questions(), interactionId: "second-question" })),
+                );
+
+                const next = transition(state, freeze(event(questions("thread", responses))));
+
+                expect(next.interaction).toStrictEqual({
+                    ...state.interaction,
+                    waitingForUserInput: false,
+                    pendingClarificationIds: ["second-question"],
+                });
+                expect(next.interaction.build).toBe(state.interaction.build);
+                expect(state.interaction.waitingForUserInput).toBe(true);
+                expect(state.interaction.pendingClarificationIds).toEqual(["question", "second-question"]);
+            },
+        );
+
+        it.each([
+            { ...skill(), threadId: undefined },
+            { ...completed(), threadId: undefined },
+            { ...completed(), threadId: undefined, useCase: "INVALID" },
+            { ...questions(), threadId: undefined },
+        ] satisfies ChatEvent[])("ignores unassigned $type after the foreground has a thread", (value) => {
+            const state = freeze(activated());
+
+            expect(transition(state, freeze(event(value)))).toBe(state);
+        });
+
+        it.each(["local", undefined])(
+            "uses retained local ownership for completion during an application after navigation: %s",
+            (conversationId) => {
+                let state = transition(initial(), { kind: "startGeneration", type: Build.Board });
+                state = transition(state, event({ ...user(), conversationId }));
+                state = transition(state, event(skill()));
+                state = transition(state, {
+                    kind: "applicationStarted",
+                    id: "application",
+                    source: { target, conversationId, threadId: "thread" },
+                });
+                state = freeze(transition(state, { kind: "resetTarget", target }));
+
+                const next = transition(state, freeze(event(completed())));
+
+                expect(next.interaction).toStrictEqual({
+                    ...state.interaction,
+                    waitingForUserInput: conversationId !== undefined,
+                });
+                expect(next.interaction.threadId).toBeUndefined();
+                expect(next.interaction.build).toBe(state.interaction.build);
+                expect(next.applications).toBe(state.applications);
+                expect(next.requests[0].applicationIds).toBe(state.requests[0].applicationIds);
+                expect(state.interaction.waitingForUserInput).toBe(false);
+            },
+        );
+
+        it("clears newly superseded foreground progress without switching its conversation", () => {
+            let state = transition(activated(), event(user("other", "other-local")));
+            state = transition(
+                state,
+                event({
+                    type: "chatConversationChanged",
+                    threadId: "thread",
+                    conversation: { id: "thread", localId: "local", createdAt: "", updatedAt: "" },
+                }),
+            );
+            state = transition(state, event(questions()));
+            state = freeze(
+                transition(state, event({ type: "chatReasoning", threadId: "thread", title: "Planning" })),
+            );
+
+            const next = transition(state, freeze(event(skill("other"))));
+
+            expect(next.interaction).toStrictEqual({
+                conversationId: "local",
+                threadId: "thread",
+                waitingForUserInput: false,
+                pendingClarificationIds: [],
+            });
+            expect(next.requests[0].superseded).toBe(true);
+            expect(state.requests[0].superseded).not.toBe(true);
+            expect(state.interaction.pendingClarificationIds).toEqual(["question"]);
+            const superseded = freeze(next);
+            for (const value of [
+                questions(),
+                { type: "chatReasoning", threadId: "thread", title: "Late" },
+            ] satisfies ChatEvent[]) {
+                expect(transition(superseded, freeze(event(value)))).toBe(superseded);
+            }
+        });
+    });
+
+    describe("request lifecycle boundaries", () => {
+        describe.each([false, true])("new input with an applying request: %s", (installing) => {
+            it.each([false, true])(
+                "appends a new revision without moving unrelated work (clarification reply: %s)",
+                (answering) => {
+                    let state = installing ? applying() : activated();
+                    state = transition(state, event(questions()));
+                    state = transition(state, event({ ...questions(), interactionId: "second-question" }));
+                    state = freeze(transition(state, event(user("other", "other-local"))));
+                    const [pending, unrelated] = state.requests;
+                    const input = freeze(
+                        event(
+                            answering
+                                ? {
+                                      type: "chatUserAnswers",
+                                      threadId: "thread",
+                                      conversationId: "local",
+                                      interactionId: "question",
+                                      answers: [],
+                                  }
+                                : user(),
+                        ),
+                    );
+
+                    const next = transition(state, input);
+
+                    expect(next.revision).toBe(state.revision + 1);
+                    expect(next.requests.slice(0, -1)).toEqual(
+                        installing ? [unrelated, pending] : [unrelated],
+                    );
+                    expect(next.requests[0]).toBe(unrelated);
+                    expect(next.requests.includes(pending)).toBe(installing);
+                    expect(next.requests.at(-1)).toStrictEqual({
+                        revision: next.revision,
+                        conversationId: "local",
+                        threadId: "thread",
+                        type: pending.type,
+                        generation: pending.generation,
+                        intent: pending.intent,
+                        objectId: pending.objectId,
+                        pendingClarificationIds: answering ? ["second-question"] : undefined,
+                        awaitingClarification: answering,
+                        applicationIds: [],
+                    });
+                    expect(next.applications).toBe(state.applications);
+                    expect(pending.pendingClarificationIds).toEqual(["question", "second-question"]);
+                },
+            );
+        });
+
+        it.each([
+            { input: user("reassigned", "local"), retained: false },
+            { input: user("thread", "different-local"), retained: true },
+            { input: { ...user(), conversationId: undefined }, retained: false },
+        ])(
+            "correlates new input using local identity before thread fallback: $input",
+            ({ input, retained }) => {
+                const state = freeze(activated());
+                const pending = state.requests[0];
+
+                const next = transition(state, freeze(event(input)));
+
+                expect(next.requests).toHaveLength(retained ? 2 : 1);
+                expect(next.requests.includes(pending)).toBe(retained);
+                expect(next.requests.at(-1)).toMatchObject({
+                    revision: state.revision + 1,
+                    threadId: input.threadId,
+                    conversationId: input.conversationId,
+                    type: retained ? undefined : pending.type,
+                    generation: retained ? undefined : pending.generation,
+                    intent: retained ? undefined : pending.intent,
+                });
+            },
+        );
+
+        it("matches reloads by assigned thread before a colliding local conversation", () => {
+            const state = freeze(transition(activated(), event(user("other", "other-local"))));
+            const input = freeze(
+                event({
+                    type: "chatConversationChanged",
+                    threadId: "thread",
+                    conversation: { id: "thread", localId: "other-local", createdAt: "", updatedAt: "" },
+                }),
+            );
+
+            const next = transition(state, input);
+
+            expect(next.requests).toEqual([
+                { ...state.requests[0], conversationId: "other-local" },
+                state.requests[1],
+            ]);
+            expect(next.requests[1]).toBe(state.requests[1]);
+            expect(next.revision).toBe(state.revision);
+            expect(next.applications).toBe(state.applications);
+        });
+
+        it("keeps duplicate clarification events unchanged and removes only the answered item", () => {
+            let state = transition(activated(), event(questions()));
+            state = freeze(transition(state, event({ ...questions(), interactionId: "second-question" })));
+
+            expect(transition(state, freeze(event(questions())))).toBe(state);
+
+            const next = transition(state, freeze(event(questions("thread", null))));
+
+            expect(next.requests[0]).toStrictEqual({
+                ...state.requests[0],
+                pendingClarificationIds: ["second-question"],
+            });
+            expect(next.requests[0].awaitingClarification).toBe(true);
+            expect(state.requests[0].pendingClarificationIds).toEqual(["question", "second-question"]);
+            expect(next.revision).toBe(state.revision);
+        });
+
+        it("finishes only the newest response revision while the old revision still owns its application", () => {
+            const state = freeze(transition(applying(), event(user())));
+
+            const next = transition(state, freeze(event(completed())));
+
+            expect(next.requests).toEqual([
+                state.requests[0],
+                { ...state.requests[1], responseFinished: true },
+            ]);
+            expect(next.requests[0]).toBe(state.requests[0]);
+            expect(next.requests[1].applicationIds).toEqual([]);
+            expect(next.applications).toBe(state.applications);
+            expect(next.revision).toBe(state.revision);
+            const applied = transition(freeze(next), {
+                kind: "applicationApplied",
+                id: "application",
+                target,
+            });
+            expect(applied.requests).toEqual([next.requests[1]]);
+            expect(applied.requests[0]).toBe(next.requests[1]);
+        });
+
+        it("transfers ownership even when the activating edit completes and is removed in the same event", () => {
+            const state = freeze(transition(activated(), event(user("other", "other-local"))));
+
+            const next = transition(state, freeze(event(skill("other", true))));
+
+            expect(next.requests).toStrictEqual([{ ...state.requests[0], superseded: true }]);
+            expect(next.revision).toBe(state.revision);
+            expect(next.applications).toBe(state.applications);
+            const superseded = freeze(next);
+            for (const value of [skill(), questions()]) {
+                expect(transition(superseded, freeze(event(value)))).toBe(superseded);
+            }
+            expect(transition(superseded, freeze(event(completed()))).requests).toEqual([]);
+        });
+    });
+
     it("keeps late thread assignment for superseded drafts without restoring ownership", () => {
         let state = transition(initial(), { kind: "startGeneration", type: Build.Board });
         state = transition(state, event(user("", "draft-local")));
@@ -1357,6 +1892,181 @@ describe("pure copilot lifecycle", () => {
         expect(state.interaction.pendingClarificationIds).toEqual([]);
         expect(transition(state, event({ type: "chatOpened" }))).toBe(state);
         expect(transition(state, { kind: "context", context: { ...target, isEditing: true } })).toBe(state);
+    });
+
+    describe("application lifecycle boundaries", () => {
+        it("ignores a duplicate application start even with a different source", () => {
+            const state = freeze(applying());
+            const input = freeze({
+                kind: "applicationStarted",
+                id: "application",
+                source: { target: { type: Build.Document, objectId: "doc" }, conversationId: "other" },
+            } satisfies CopilotInput<Build>);
+
+            expect(transition(state, input)).toBe(state);
+        });
+
+        it.each([
+            { source: { target, conversationId: "local", threadId: "reassigned" }, index: 0 },
+            { source: { target, conversationId: "unknown", threadId: "thread" }, index: -1 },
+            { source: { target, threadId: "thread" }, index: 1 },
+            { source: { target, threadId: "second-local" }, index: 1 },
+            { source: { target, conversationId: "second-local" }, index: 1 },
+        ])(
+            "correlates application sources without merging local and thread policies: $source",
+            ({ source, index }) => {
+                const state = freeze(transition(activated(), event(user("thread", "second-local"))));
+                const input = freeze({ kind: "applicationStarted", id: "application", source } as const);
+                const pending = state.requests[index];
+
+                const next = transition(state, input);
+
+                expect(next.revision).toBe(state.revision + 1);
+                expect(next.requests.slice(0, -1)).toEqual(state.requests.filter((_, i) => i !== index));
+                next.requests.slice(0, -1).forEach((request) => expect(state.requests).toContain(request));
+                expect(next.requests.at(-1)).toStrictEqual({
+                    ...pending,
+                    revision: pending?.revision ?? next.revision,
+                    type: Build.Board,
+                    objectId: target.objectId,
+                    conversationId: source.conversationId ?? pending?.conversationId,
+                    threadId: source.threadId ?? pending?.threadId,
+                    responseFinished: pending ? pending.responseFinished : true,
+                    awaitingClarification: false,
+                    applicationIds: ["application"],
+                });
+                expect(next.applications).toStrictEqual([
+                    {
+                        ...source,
+                        id: "application",
+                        revision: next.revision,
+                        requestRevision: next.requests.at(-1)?.revision,
+                    },
+                ]);
+                expect(next.applications[0].target).not.toBe(source.target);
+                expect(next.interaction).toBe(state.interaction);
+                expect(next.context).toBe(state.context);
+                expect(next.sources).toBe(state.sources);
+                expect(state.applications).toEqual([]);
+            },
+        );
+
+        it.each([
+            { kind: "applicationApplied", id: "unknown", target },
+            { kind: "applicationInterrupted", id: "unknown" },
+            {
+                kind: "applicationApplied",
+                id: "application",
+                target: { type: Build.Document, objectId: "doc" },
+            },
+        ] satisfies CopilotInput<Build>[])(
+            "preserves snapshot identity for an invalid acknowledgement: $kind/$id",
+            (input) => {
+                const state = freeze(applying());
+
+                expect(transition(state, freeze(input))).toBe(state);
+            },
+        );
+
+        it.each([
+            { kind: "applicationApplied", responseFinished: false },
+            { kind: "applicationApplied", responseFinished: true },
+            { kind: "applicationInterrupted", responseFinished: false },
+            { kind: "applicationInterrupted", responseFinished: true },
+        ] as const)(
+            "retains sibling installations when $kind finishes a response: $responseFinished",
+            ({ kind, responseFinished }) => {
+                let state = applying(applying(), "second");
+                if (responseFinished) {
+                    state = transition(state, event(completed()));
+                }
+                freeze(state);
+
+                const next = transition(state, { kind, id: "application", target });
+
+                expect(next.applications).toEqual([state.applications[1]]);
+                expect(next.applications[0]).toBe(state.applications[1]);
+                expect(next.requests[0]).toEqual({ ...state.requests[0], applicationIds: ["second"] });
+                expect(next.interaction).toBe(state.interaction);
+                expect(next.revision).toBe(state.revision);
+                const finished = transition(freeze(next), { kind, id: "second", target });
+                expect(finished.applications).toEqual([]);
+                expect(finished.requests).toEqual(
+                    kind === "applicationApplied" || responseFinished
+                        ? []
+                        : [{ ...state.requests[0], applicationIds: [] }],
+                );
+                expect(finished.interaction === state.interaction).toBe(kind === "applicationInterrupted");
+                expect(finished.sources === state.sources).toBe(kind === "applicationInterrupted");
+            },
+        );
+
+        it("attributes the final target, preserves other sources, and clears an unassigned foreground generation", () => {
+            const otherSource = { target: { type: Build.Document, objectId: "doc" }, revision: 0 };
+            const state = freeze(
+                transition(
+                    {
+                        ...transition(initial(), { kind: "startGeneration", type: Build.Board }),
+                        sources: [otherSource],
+                    },
+                    {
+                        kind: "applicationStarted",
+                        id: "application",
+                        source: { target, conversationId: "origin", threadId: "server" },
+                    },
+                ),
+            );
+            const finalTarget = freeze({ type: Build.Board, objectId: "created-board" });
+
+            const next = transition(state, {
+                kind: "applicationApplied",
+                id: "application",
+                target: finalTarget,
+            });
+
+            expect(next.sources).toStrictEqual([
+                otherSource,
+                {
+                    target: finalTarget,
+                    revision: state.applications[0].revision,
+                    source: { conversationId: "origin", threadId: "server" },
+                },
+            ]);
+            expect(next.sources[0]).toBe(otherSource);
+            expect(next.sources[1].target).not.toBe(finalTarget);
+            expect(next.requests).toEqual([]);
+            expect(next.generation).toBeUndefined();
+            expect(next.interaction).toEqual(createCopilotState<Build>().interaction);
+            expect(next.revision).toBe(state.revision);
+        });
+
+        it("does not clear a newer request from the same conversation when an older application finishes", () => {
+            const state = freeze(transition(applying(), event(user())));
+            const newer = state.requests[1];
+
+            const next = transition(state, { kind: "applicationApplied", id: "application", target });
+
+            expect(next.requests).toEqual([newer]);
+            expect(next.requests[0]).toBe(newer);
+            expect(next.interaction).toBe(state.interaction);
+            expect(next.applications).toEqual([]);
+            expect(selectCopilotSource(next, target)).toEqual({
+                conversationId: "local",
+                threadId: "thread",
+            });
+        });
+
+        it("releases a claimed generation only after its completed application is interrupted", () => {
+            const state = freeze(transition(applying(started()), event(completed())));
+            expect(state.generation).toBe(Build.Board);
+
+            const next = transition(state, { kind: "applicationInterrupted", id: "application" });
+
+            expect(next.requests).toEqual([]);
+            expect(next.generation).toBeUndefined();
+            expect(next.interaction).toBe(state.interaction);
+            expect(next.sources).toBe(state.sources);
+        });
     });
 
     describe("a reply to a waiting workflow", () => {

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: pressing Space on a value checkbox in the attribute filter's values list toggles the native checkbox, so screen readers announce its new checked or unchecked state.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

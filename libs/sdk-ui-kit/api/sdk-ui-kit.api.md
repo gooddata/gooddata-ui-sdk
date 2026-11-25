@@ -9117,6 +9117,11 @@ export interface IUseFloatingPositionResult {
 }
 
 // @internal (undocumented)
+export interface IUseFocusWithinContainerOptions {
+    isFocusWithin?: boolean;
+}
+
+// @internal (undocumented)
 export interface IUseKeyboardNavigationTargetProps {
     // (undocumented)
     label?: string;
@@ -10564,7 +10569,7 @@ export function useFileSelection(input?: IUseFileSelectionConfig): IUseFileSelec
 export function useFloatingPosition(input: IUseFloatingPositionOptions): IUseFloatingPositionResult;
 
 // @internal (undocumented)
-export function useFocusWithinContainer(idToFocus?: string | null): {
+export function useFocusWithinContainer(idToFocus?: string | null, input?: IUseFocusWithinContainerOptions): {
     containerRef: RefObject<HTMLElement | null>;
 };
 
@@ -10614,6 +10619,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
     isSimple?: boolean;
     isWrapping?: boolean;
     focusedIndex?: number;
+    pageSize?: number;
 }): {
     onKeyboardNavigation: (event: KeyboardEvent_2<Element>) => void;
     onBlur: FocusEventHandler;

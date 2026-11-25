@@ -7,10 +7,11 @@ import {
     type ICatalogAttributeHierarchy,
     type ICatalogDateAttributeHierarchy,
     type ICatalogGroup,
-    type IScalarParameterMetadataObject,
 } from "@gooddata/sdk-model";
 
 import { type IOrganizedCatalogTooltipDetails } from "../../typings/catalog.js";
+
+import { type ICatalogState } from "./catalog_types.js";
 
 export type CatalogAction =
     | ISetCatalogItemsAction
@@ -19,6 +20,7 @@ export type CatalogAction =
     | ISetCatalogItemsAvailabilityAction
     | ISetCatalogAvailabilityErrorFlagAction
     | ISetCatalogFirstLoadedFlagAction
+    | ISetCatalogLoadFailedFlagAction
     | ISetItemTooltipDetailsAction
     | ISetUpdatedItemsCountAction
     | IResetTooltipDetailsAction
@@ -34,6 +36,7 @@ export enum CatalogActionTypeKeys {
     STORE_SET_CATALOG_GROUPS = "STORE/SET_CATALOG_GROUPS",
     STORE_SET_CATALOG_ITEMS_AVAILABILITY = "STORE/SET_CATALOG_ITEMS_AVAILABILITY",
     STORE_SET_CATALOG_FIRST_LOADED = "STORE/SET_CATALOG_FIRST_LOADED",
+    STORE_SET_CATALOG_LOAD_FAILED = "STORE/SET_CATALOG_LOAD_FAILED",
     STORE_SET_LOADING_ITEMS = "STORE/SET_LOADING_ITEMS",
     STORE_SET_LOADING_GROUPS = "STORE/SET_LOADING_GROUPS",
     STORE_SET_LOADING_AVAILABILITY = "STORE/SET_LOADING_AVAILABILITY",
@@ -116,6 +119,13 @@ export const setCatalogFirstLoaded = createAction(
 
 export type ISetCatalogFirstLoadedFlagAction = ReturnType<typeof setCatalogFirstLoaded>;
 
+export const setCatalogLoadFailed = createAction(
+    CatalogActionTypeKeys.STORE_SET_CATALOG_LOAD_FAILED,
+    (loadFailed: boolean) => ({ payload: { loadFailed } }),
+);
+
+export type ISetCatalogLoadFailedFlagAction = ReturnType<typeof setCatalogLoadFailed>;
+
 export const setItemTooltipDetails = createAction(
     CatalogActionTypeKeys.STORE_SET_TOOLTIP_DETAILS,
     (itemId: string, details: IOrganizedCatalogTooltipDetails) => ({ payload: { itemId, details } }),
@@ -164,7 +174,7 @@ export type ISetAttributeHierarchies = ReturnType<typeof setAttributeHierarchies
 
 export const setCatalogParameters = createAction(
     CatalogActionTypeKeys.STORE_SET_CATALOG_PARAMETERS,
-    (parameters: ReadonlyArray<IScalarParameterMetadataObject>) => ({ payload: { parameters } }),
+    (lists: Pick<ICatalogState, "parameters" | "dateRangeParameters">) => ({ payload: lists }),
 );
 
 export type ISetCatalogParameters = ReturnType<typeof setCatalogParameters>;

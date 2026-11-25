@@ -61,6 +61,13 @@ describe("parameterSchemaKeys", () => {
         expect(parameterSchemaKeys(["NUMBER"])["tags"]).toEqual({ kind: "sequence", keys: [] });
     });
 
+    it("derives DATE_RANGE definition and period keys from the zod schema", () => {
+        const keys = parameterSchemaKeys(["DATE_RANGE"]);
+
+        expect(keys["definition"]).toEqual({ kind: "mapping", keys: ["type", "defaultValue"] });
+        expect(keys["defaultValue"]).toEqual({ kind: "mapping", keys: ["granularity", "from", "to"] });
+    });
+
     it("only contains expected nesting levels", () => {
         expect(Object.keys(parameterSchemaKeys(["NUMBER", "STRING"])).sort()).toEqual([
             "",

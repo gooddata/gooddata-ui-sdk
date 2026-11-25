@@ -2,7 +2,7 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type IVisualizationClassBody } from "@gooddata/sdk-model";
+import { type IVisualizationClassBody, idRef } from "@gooddata/sdk-model";
 import { ErrorCodes } from "@gooddata/sdk-ui";
 
 import { FILTERS, MEASURES, VIEW } from "../constants/bucket.js";
@@ -107,6 +107,37 @@ describe("Recommendations selector test", () => {
     });
 
     describe("displayRecommendationComparisonWithPeriodSelector", () => {
+        it("should hide the comparison with a period in the date filter", () => {
+            state = withData(
+                withData(state, {
+                    extendedReferencePoint: withRecommendationsUiConfig(state.data.extendedReferencePoint, {
+                        previousPeriod: true,
+                    }),
+                    filterBar: {
+                        ...state.data.filterBar,
+                        items: [
+                            {
+                                type: DATE_TYPE,
+                                localIdentifier: "period-filter",
+                                cacheItemIdentifier: DATE_DATASET_ATTRIBUTE,
+                                overTimeComparisonType: "nothing",
+                                filterConfig: {
+                                    type: "parameterized",
+                                    parameterRef: idRef("lastQuarter", "parameter"),
+                                },
+                                dateDatasetRef: { uri: "uri" },
+                            },
+                        ],
+                    },
+                }),
+                {
+                    buckets: withBucketItem(state.data.buckets, 1, 0, { attribute: "test" }),
+                },
+            );
+
+            expect(displayRecommendationComparisonWithPeriodSelector(state)).toEqual(false);
+        });
+
         it("should return contribution in percent visible flag set to true", () => {
             state = withData(
                 withData(state, {
@@ -251,6 +282,32 @@ describe("Recommendations selector test", () => {
             });
             const shouldShow = displayRecommendationsMetricWithPeriodSelector(state);
             expect(shouldShow).toEqual(true);
+        });
+
+        it("should hide the comparison with a period in the date filter", () => {
+            state = withData(state, {
+                extendedReferencePoint: withRecommendationsUiConfig(state.data.extendedReferencePoint, {
+                    overTimeComparison: true,
+                }),
+                filterBar: {
+                    ...state.data.filterBar,
+                    items: [
+                        {
+                            type: DATE_TYPE,
+                            localIdentifier: "period-filter",
+                            cacheItemIdentifier: DATE_DATASET_ATTRIBUTE,
+                            overTimeComparisonType: "nothing",
+                            filterConfig: {
+                                type: "parameterized",
+                                parameterRef: idRef("lastQuarter", "parameter"),
+                            },
+                            dateDatasetRef: { uri: "uri" },
+                        },
+                    ],
+                },
+            });
+
+            expect(displayRecommendationsMetricWithPeriodSelector(state)).toEqual(false);
         });
 
         it("should return comparsion with period visible flag set to false", () => {

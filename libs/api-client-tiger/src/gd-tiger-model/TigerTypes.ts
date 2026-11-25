@@ -28,7 +28,12 @@
  * @public
  */
 
-import { type DateFilterGranularity, type ObjRef } from "@gooddata/sdk-model";
+import {
+    type DateFilterGranularity,
+    type DatePeriodGranularity,
+    type DatePeriodRange,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 
 import {
     type DashboardArbitraryAttributeFilter,
@@ -274,6 +279,19 @@ export interface ITigerRelativeDateFilter {
 }
 
 /**
+ * Tiger-specific absolute date filter that selects whole weeks, months, quarters or years
+ * @public
+ */
+export interface ITigerAbsoluteGranularityDateFilter {
+    absoluteGranularityDateFilter: {
+        dataSet: ObjRef;
+        granularity: DatePeriodGranularity;
+        localIdentifier?: string;
+        emptyValueHandling?: TigerStoredEmptyValueHandling;
+    } & DatePeriodRange;
+}
+
+/**
  * Tiger-specific comparison condition
  * @public
  */
@@ -384,6 +402,7 @@ export interface ITigerRankingFilter {
  */
 export type ITigerFilter =
     | ITigerAbsoluteDateFilter
+    | ITigerAbsoluteGranularityDateFilter
     | ITigerRelativeDateFilter
     | ITigerPositiveAttributeFilter
     | ITigerNegativeAttributeFilter
@@ -831,6 +850,19 @@ export interface ITigerDashboardDateFilter {
 }
 
 /**
+ * Tiger-specific dashboard absolute date filter that selects whole weeks, months, quarters or years
+ * @public
+ */
+export interface ITigerDashboardAbsoluteGranularityDateFilter {
+    dashboardAbsoluteGranularityDateFilter: {
+        dataSet?: ObjRef;
+        localIdentifier?: string;
+        emptyValueHandling?: TigerStoredEmptyValueHandling;
+        granularity: DatePeriodGranularity;
+    } & DatePeriodRange;
+}
+
+/**
  * Tiger-specific dashboard arbitrary attribute filter
  * @public
  */
@@ -860,6 +892,7 @@ export interface ITigerDashboardMeasureValueFilter extends DashboardMeasureValue
  */
 export type ITigerFilterContextItem =
     | DashboardFilter
+    | ITigerDashboardAbsoluteGranularityDateFilter
     | ITigerDashboardArbitraryAttributeFilter
     | ITigerDashboardMatchAttributeFilter
     | ITigerDashboardMeasureValueFilter;

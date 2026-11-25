@@ -1172,7 +1172,10 @@ export {
     useListWithActionsKeyboardNavigation,
     SELECT_ITEM_ACTION,
 } from "./@ui/hooks/useListWithActionsKeyboardNavigation.js";
-export { useFocusWithinContainer } from "./@ui/hooks/useFocusWithinContainer.js";
+export {
+    useFocusWithinContainer,
+    type IUseFocusWithinContainerOptions,
+} from "./@ui/hooks/useFocusWithinContainer.js";
 export {
     ScopedIdStore,
     useScopedIdStoreValue,

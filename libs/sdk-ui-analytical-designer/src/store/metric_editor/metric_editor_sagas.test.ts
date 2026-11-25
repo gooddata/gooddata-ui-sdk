@@ -4,6 +4,7 @@ import { type RunResult, expectSaga } from "redux-saga-test-plan";
 import { call, put, select } from "redux-saga/effects";
 import { describe, expect, it } from "vitest";
 
+import { UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 import { type ISaveMetricInfo, SaveNameMode } from "@gooddata/sdk-ui-metric-component";
 
 import {
@@ -171,6 +172,42 @@ describe("metric editor saga", () => {
     it("should addMessage when save metric failed", async () => {
         const saga: RunResult = await expectSaga(watchMetricEditor)
             .dispatch(metricEditorMetricSaveError(exampleMetric, exampleError))
+            .silentRun();
+
+        expect(saga.effects.put).toEqual([
+            put(
+                addMessage({
+                    type: "error",
+                    translationKey: "messages.metricSaveError",
+                    durationInMs: HIDE_ERROR_MESSAGE_AFTER,
+                }),
+            ),
+        ]);
+    });
+
+    it("should name the ID conflict when the backend refuses the save with HTTP 409", async () => {
+        const conflictError = new UnexpectedResponseError("Conflict", 409, {
+            detail: "The object 'dup_test' exists in the current workspace.",
+        });
+        const saga: RunResult = await expectSaga(watchMetricEditor)
+            .dispatch(metricEditorMetricSaveError(exampleMetric, conflictError))
+            .silentRun();
+
+        expect(saga.effects.put).toEqual([
+            put(
+                addMessage({
+                    type: "error",
+                    translationKey: "messages.metricSaveIdConflict",
+                    durationInMs: HIDE_ERROR_MESSAGE_AFTER,
+                }),
+            ),
+        ]);
+    });
+
+    it("should keep the generic message for other HTTP errors", async () => {
+        const serverError = new UnexpectedResponseError("Server error", 500, {});
+        const saga: RunResult = await expectSaga(watchMetricEditor)
+            .dispatch(metricEditorMetricSaveError(exampleMetric, serverError))
             .silentRun();
 
         expect(saga.effects.put).toEqual([

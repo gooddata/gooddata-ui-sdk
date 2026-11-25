@@ -13,6 +13,7 @@ import {
     type IFilter,
     type IMeasureValueFilter,
     type IRankingFilter,
+    isParameterizedDateFilterConfig,
     normalizeMeasureValueFilterConditions,
 } from "../store/filter_bar/filter_bar_types.js";
 import {
@@ -84,6 +85,11 @@ function convertDateFilterToRefPointFilter(
     dateFilter: IDateFilter,
     bucketsMeta: IBucketsMetaState,
 ): IRefPointFilterItem {
+    const { filterConfig } = dateFilter;
+    // a period has no bounded filter
+    const boundedFilter = isParameterizedDateFilterConfig(filterConfig)
+        ? undefined
+        : filterConfig?.boundedFilter;
     return {
         localIdentifier: dateFilter.localIdentifier,
         autoCreated: isUnmodifiedAndAutoCreated(dateFilter.cacheItemIdentifier, bucketsMeta),
@@ -91,13 +97,11 @@ function convertDateFilterToRefPointFilter(
             {
                 overTimeComparisonType: dateFilter.overTimeComparisonType,
                 emptyDateValuesFilter: dateFilter.emptyDateValuesFilter,
-                interval: dateFilter.filterConfig || {
+                interval: filterConfig || {
                     name: "all_time",
                 },
                 attribute: dateFilter.cacheItemIdentifier,
-                ...(dateFilter.filterConfig?.boundedFilter
-                    ? { boundedFilter: dateFilter.filterConfig.boundedFilter }
-                    : {}),
+                ...(boundedFilter ? { boundedFilter } : {}),
             },
         ],
         attribute: dateFilter.cacheItemIdentifier,

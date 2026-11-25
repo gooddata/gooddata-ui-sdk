@@ -5,17 +5,11 @@ import { all, call, cancelled, getContext, put, race, select, spawn, take } from
 import {
     type IAnalyticalBackend,
     type IChatConversationItem,
-    type IChatConversationItemsQueryResult,
     type IChatConversationThread,
     type IChatConversations,
 } from "@gooddata/sdk-backend-spi";
 
-import {
-    type IChatConversationLocal,
-    type IChatConversationLocalItem,
-    makeConversationItem,
-} from "../../model.js";
-import { isClarificationQuestionsItem } from "../../utils.js";
+import { type IChatConversationLocal, type IChatConversationLocalItem } from "../../model.js";
 import {
     conversationMessagesByIdSelector,
     conversationSelector,
@@ -31,8 +25,9 @@ import {
 } from "../messages/messagesSlice.js";
 import { createEmptyConversation } from "../utils.js";
 
+import { fetchConversationList, getLatestConversation } from "./conversationList.js";
 import { consumeStaleConversationSession } from "./conversationSession.js";
-import { convertToLocalContent } from "./converters/toLocalContent.js";
+import { convertToLocalConversationItems } from "./converters/toLocalConversationItems.js";
 import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
 
 /**
@@ -95,28 +90,19 @@ function* fetchAllConversations() {
     }
 
     const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
-    const query = api.getConversationItemsQuery().withSize(100).withPage(0);
-
-    const getConversations = query.query.bind(query);
     const [resultsConversations, cancelledConversations]: [
-        results: IChatConversationItemsQueryResult,
+        results: IChatConversationLocal[],
         ReturnType<typeof cancelAsyncAction>,
-    ] = yield race([call(getConversations), take(cancelAsyncAction.type)]);
+    ] = yield race([call(fetchConversationList, api), take(cancelAsyncAction.type)]);
 
     //Canceled during the loading
     if (cancelledConversations) {
         return;
     }
 
-    const conversationItems = resultsConversations.items.map((item) => {
-        return {
-            ...item,
-            localId: item.id,
-        };
-    });
     yield put(
         loadConversationsSuccessAction({
-            conversations: conversationItems,
+            conversations: resultsConversations,
         }),
     );
 }
@@ -171,12 +157,8 @@ function* fetchCurrentConversation() {
 
     const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
 
-    //Sort by createion date, because normally there are pinned on top
-    const sortedConv = conversations
-        ?.slice()
-        .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
     //Load the first conversation if there are any or create a new one
-    const selectedConversation = conversation ?? sortedConv?.[0] ?? undefined;
+    const selectedConversation = conversation ?? getLatestConversation(conversations);
     if (selectedConversation) {
         const preparedThread = api.getConversationThread(selectedConversation.id);
         const [resultsItems, cancelledItems]: [
@@ -195,17 +177,7 @@ function* fetchCurrentConversation() {
             selectedConversation.localId,
         );
 
-        const items = resultsItems.map((item, i, arr) => {
-            const isClarification = isClarificationQuestionsItem(item);
-            const filled = isClarification ? arr.length - 1 !== i : true;
-            return makeConversationItem(
-                {
-                    ...item,
-                    content: convertToLocalContent(item.content),
-                },
-                filled,
-            );
-        });
+        const items = convertToLocalConversationItems(resultsItems);
 
         yield put(
             loadConversationSuccessAction({

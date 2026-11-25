@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { type AutomationAutomationAlert } from "@gooddata/api-client-tiger";
+import { type AutomationAutomationAlert, type JsonApiAutomationOutList } from "@gooddata/api-client-tiger";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type IDashboardMeasureValueFilter,
     type IMeasureValueFilter,
@@ -11,7 +12,11 @@ import {
     newAbsoluteGranularityDateFilter,
 } from "@gooddata/sdk-model";
 
-import { convertAlert, convertExecutionFilterToFilterContextItem } from "./AutomationConverter.js";
+import {
+    convertAlert,
+    convertAutomationListToAutomations,
+    convertExecutionFilterToFilterContextItem,
+} from "./AutomationConverter.js";
 
 describe("convertExecutionFilterToFilterContextItem — MVF branch", () => {
     const baseMvf = (overrides: Partial<IMeasureValueFilter["measureValueFilter"]>): IMeasureValueFilter => ({
@@ -210,5 +215,95 @@ describe("convertAlert (fromBackend) — execution settings", () => {
 
     it("leaves executionConfig undefined when the backend sends no settings", () => {
         expect(convertAlert(baseAlert())?.execution.executionConfig).toBeUndefined();
+    });
+});
+
+describe("convertAutomationListToAutomations", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
+    const automation = (id: string, attributes: Record<string, unknown>) => ({
+        id,
+        type: "automation",
+        attributes: { title: id, ...attributes },
+        relationships: {},
+    });
+
+    const alertWithRange = (from: string, to: string) => ({
+        alert: {
+            execution: {
+                attributes: [],
+                measures: [],
+                filters: [
+                    {
+                        absoluteGranularityDateFilter: {
+                            dataset: { identifier: { id: "closed", type: "dataset" } },
+                            granularity: "MONTH",
+                            from,
+                            to,
+                        },
+                    },
+                ],
+            },
+            condition: {
+                comparison: {
+                    operator: "GREATER_THAN",
+                    left: { localIdentifier: "m1" },
+                    right: { value: 5 },
+                },
+            },
+            trigger: "ALWAYS",
+        },
+    });
+
+    const visualExportWithRange = (from: string, to: string) => ({
+        visualExports: [
+            {
+                requestPayload: {
+                    fileName: "export",
+                    dashboardId: "dashboard-1",
+                    metadata: {
+                        filters: [
+                            {
+                                dashboardAbsoluteGranularityDateFilter: {
+                                    granularity: "GDC.time.month",
+                                    from,
+                                    to,
+                                },
+                            },
+                        ],
+                    },
+                },
+            },
+        ],
+    });
+
+    it.each([
+        [
+            "an invalid alert filter",
+            alertWithRange("2026-03", "2026-04"),
+            alertWithRange("2026-04", "2026-03"),
+        ],
+        [
+            "an invalid filter context item",
+            visualExportWithRange("2026-01", "2026-03"),
+            visualExportWithRange("2026-03", "2026-01"),
+        ],
+    ])("skips an automation with %s and returns the others", (_desc, validAttributes, invalidAttributes) => {
+        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+        const automationList = {
+            data: [automation("valid", validAttributes), automation("invalid", invalidAttributes)],
+        } as unknown as JsonApiAutomationOutList;
+
+        const automations = convertAutomationListToAutomations(automationList);
+
+        expect(automations.map((a) => a.id)).toEqual(["valid"]);
+        expect(warn).toHaveBeenCalledOnce();
+        expect(warn).toHaveBeenCalledWith(
+            "Automation cannot be loaded, skipping it:",
+            "invalid",
+            expect.any(NotSupported),
+        );
     });
 });

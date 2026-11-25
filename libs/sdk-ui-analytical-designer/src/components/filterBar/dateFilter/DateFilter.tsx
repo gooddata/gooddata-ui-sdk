@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from "react";
 
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 
-import { type ObjRef, areObjRefsEqual, isAllTimeDateFilterOption } from "@gooddata/sdk-model";
+import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { type OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 import { normalizeSelectedFilterOption } from "@gooddata/sdk-ui-filters/internal";
@@ -12,6 +12,7 @@ import { _isEqual } from "@gooddata/util";
 
 import { type IDecoratedDateDataset } from "../../../models/decorated_date_dataset.js";
 import { loadDateDatasetsToDateDropdown } from "../../../sagas/date_datasets/date_datasets_actions.js";
+import { enableImprovedMetricDateFilter } from "../../../selectors/feature_flag_selector.js";
 import { setMigratedAdditionalFilters } from "../../../store/filter_bar/filter_bar_actions.js";
 import { type EmptyDateValuesFilterMode } from "../../../store/filter_bar/filter_bar_types.js";
 import { type AppDispatch, type IAppState } from "../../../store/types.js";
@@ -24,6 +25,7 @@ import { CancelButton } from "./Buttons/CancelButton.js";
 import { STATIC_DATE_RANGE_BUTTON_LABEL_FORMAT } from "./constants.js";
 import { datasetRefWithGranularitiesHasSeconds } from "./dateDatasetGranularities.js";
 import { DateDatasetSection } from "./DateDatasetSection/DateDatasetSection.js";
+import { isAllTimeOption } from "./dateFilterOptionFactory.js";
 import { ALL_TIME_FILTER_OPTION } from "./defaultFilterOptions.js";
 import { FilterDropdown } from "./FilterDropdown/FilterDropdown.js";
 import { PresetsSection } from "./PresetSection/PresetsSection.js";
@@ -73,6 +75,10 @@ export function DateFilter(ownProps: IDateFilterProps) {
         isFirstDateFilter,
         activeCalendars,
     } = useSelector((state: IAppState) => selectDateFilterProps(state, ownProps), shallowEqual);
+
+    // the flag writes the empty values mode as the date filter's own handling, which supports include
+    // with any period
+    const isImprovedMetricDateFilterEnabled = useSelector(enableImprovedMetricDateFilter);
 
     const dispatch = useDispatch<AppDispatch>();
     const loadDateDatasets = useCallback(
@@ -130,14 +136,19 @@ export function DateFilter(ownProps: IDateFilterProps) {
         isSecondsGranularityEnabled &&
         datasetRefWithGranularitiesHasSeconds(dateDatasetRefsWithGranularities, dateDataset?.ref);
 
-    const isAllTime = isAllTimeDateFilterOption(selectedFilter.filterOption);
+    const isAllTime = isAllTimeOption(selectedFilter);
+    // AD does not offer the comparison over time with a period
+    const isPeriodSelected = !!selectedFilter.period;
+    // a filter with a period always carries its empty values mode itself, so it keeps include without the flag
+    const isIncludeWithPeriodAllowed = isImprovedMetricDateFilterEnabled || isPeriodSelected;
     const isValidDateDataset = isValidDateDatasetSelected(selectedDateDataset, dateBucketItemDateDatasetRefs);
 
     const applyButtonTooltip = useDisabledApplyButtonTooltip(
-        selectedFilter.filterOption,
+        selectedFilter,
         selectedTimeComparison,
         isValidDateDataset,
         selectedEmptyDateValuesFilterMode,
+        isIncludeWithPeriodAllowed,
     );
 
     const isApplyEnabled = useApplyButtonEnabled(
@@ -154,6 +165,7 @@ export function DateFilter(ownProps: IDateFilterProps) {
         isValidDateDataset,
         selectedEmptyDateValuesFilterMode,
         storedEmptyDateValuesFilter,
+        isIncludeWithPeriodAllowed,
     );
 
     const handleOnOpen = () => {
@@ -173,7 +185,7 @@ export function DateFilter(ownProps: IDateFilterProps) {
     };
 
     const handleOnApply = () => {
-        const { filterOption, excludeCurrentPeriod } = selectedFilter;
+        const { filterOption, excludeCurrentPeriod, period } = selectedFilter;
 
         // When "Only" empty values is selected, force All time, remove additional filters, and reset comparison
         const isOnlyEmptyValues = selectedEmptyDateValuesFilterMode === "only";
@@ -199,6 +211,8 @@ export function DateFilter(ownProps: IDateFilterProps) {
             ),
             isCurrentPeriodExcluded: effectiveExcludeCurrentPeriod,
             emptyDateValuesFilter: selectedEmptyDateValuesFilterMode,
+            // "Only" empty values replaces the period with All time like any other period
+            ...(period && !isOnlyEmptyValues ? { period: period.config } : {}),
         });
         handleOnClose();
     };
@@ -243,6 +257,13 @@ export function DateFilter(ownProps: IDateFilterProps) {
         }
     };
 
+    // Without the flag the legacy representation drops include, so the button must not word it; a filter with
+    // a period keeps it
+    const buttonEmptyDateValuesFilterMode =
+        storedEmptyDateValuesFilter === "include" && !isImprovedMetricDateFilterEnabled && !filter.period
+            ? undefined
+            : storedEmptyDateValuesFilter;
+
     const filterDropdownDateFormat = formatLocale ? dateFormat : STATIC_DATE_RANGE_BUTTON_LABEL_FORMAT;
 
     return (
@@ -265,7 +286,7 @@ export function DateFilter(ownProps: IDateFilterProps) {
                     : null
             }
             additionalDateFilterLabels={additionalDateFilterLabels}
-            emptyDateValuesFilterMode={storedEmptyDateValuesFilter}
+            emptyDateValuesFilterMode={buttonEmptyDateValuesFilterMode}
             isDragged={isDragged}
             datasetTitle={dateDataset?.title} // can be undefined when filter is dragged to trash
             isUsedByInsight={isUsedByInsight}
@@ -313,22 +334,26 @@ export function DateFilter(ownProps: IDateFilterProps) {
                         onEmptyDateValuesFilterModeChange={handleEmptyDateValuesFilterModeChange}
                         isDisabled={isOtherFiltersDisabled}
                         isAllTime={isAllTime}
+                        isIncludeWithPeriodAllowed={isIncludeWithPeriodAllowed}
                         showDateGranularities={isFirstDateFilter}
                     />
                 ) : null}
 
-                <TimeComparisonSection
-                    selectedType={selectedTimeComparison}
-                    selectedMeasureIds={selectedTimeComparisonMeasures}
-                    onTypeSelected={handleTimeComparisonTypeSelected}
-                    onMeasuresSelected={handleTimeComparisonMeasuresSelected}
-                    compatibleMeasures={timeComparisonCompatibleMeasures}
-                    supportedTypes={supportedTimeComparisonTypes}
-                    isAllTimeDateFilter={isAllTime}
-                    isPoPAvailable={isValidDateDataset}
-                    isSectionHidden={!isFirstDateFilter}
-                    isDisabled={isOtherFiltersDisabled}
-                />
+                {/* no comparison with a period; the section's own hidden state words a different reason */}
+                {isPeriodSelected ? null : (
+                    <TimeComparisonSection
+                        selectedType={selectedTimeComparison}
+                        selectedMeasureIds={selectedTimeComparisonMeasures}
+                        onTypeSelected={handleTimeComparisonTypeSelected}
+                        onMeasuresSelected={handleTimeComparisonMeasuresSelected}
+                        compatibleMeasures={timeComparisonCompatibleMeasures}
+                        supportedTypes={supportedTimeComparisonTypes}
+                        isAllTimeDateFilter={isAllTime}
+                        isPoPAvailable={isValidDateDataset}
+                        isSectionHidden={!isFirstDateFilter}
+                        isDisabled={isOtherFiltersDisabled}
+                    />
+                )}
             </div>
             <div className="filter-picker-buttons">
                 <CancelButton onClick={handleOnClose} />

@@ -2,6 +2,7 @@
 
 import { type Action } from "redux";
 import { type RunResult, expectSaga } from "redux-saga-test-plan";
+import * as matchers from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
 import { call, put, select } from "redux-saga/effects";
 import { describe, expect, it } from "vitest";
@@ -11,6 +12,7 @@ import {
     type AdCommandData,
     type AdRequestCancellationCommandData,
     type AdSaveInsightCommandData,
+    type AdSetApiTokenCommandData,
     type AdSetTimezoneCommandData,
     GdcAdCommandType,
     GdcAdEventType,
@@ -23,6 +25,7 @@ import { displayConfirmUnsavedChangesDialogWithPostMessageAction } from "../../a
 import { conversionInit } from "../../actions/drillable_items_actions.js";
 import { setTimezoneOverride } from "../../actions/timezone_override_actions.js";
 import { XLSX } from "../../constants/export_types.js";
+import { HOST_ADAPTER_ORIGIN, installHostAdapter } from "../../embedding/hostBridge.js";
 import { initialState } from "../../reducers/initial_state.js";
 import { getOrganizationId } from "../../selectors/bootstrap_selector.js";
 import { isReportChanging } from "../../selectors/confirm_unsaved_changes_dialog_selector.js";
@@ -57,7 +60,8 @@ import { postInvalidCommandArgument } from "../outgoing/invalid_command_events.j
 import { adPostEvent } from "../outgoing/post_event_helper.js";
 import { WRITE_COMMANDS } from "../outgoing/supported_commands_events.js";
 
-import { validateHostDomain, watchCommandReceived } from "./command_received_saga.js";
+import { handleReceivedApiToken } from "./api_token_received_saga.js";
+import { handleReceivedCommand, validateHostDomain, watchCommandReceived } from "./command_received_saga.js";
 
 describe("command received saga", () => {
     const contextId = "contextId";
@@ -553,5 +557,52 @@ describe("command received saga", () => {
 
             expect(saga.effects.put).toEqual([put(hostVerificationErrored(contextId))]);
         });
+    });
+});
+
+/**
+ * The common check runs with the current token, which may have expired. A new token is checked with
+ * the token itself, in its handler.
+ */
+describe("command received saga setApiToken", () => {
+    const envelope: AdSetApiTokenCommandData = {
+        gdc: {
+            product: GdcProductName.ANALYTICAL_DESIGNER,
+            event: { name: GdcAdCommandType.SetApiToken, data: { token: "new-token", type: "gooddata" } },
+        },
+    };
+
+    async function run(origin: string): Promise<RunResult> {
+        return expectSaga(handleReceivedCommand, commandReceived(envelope, origin))
+            .provide([
+                [select(isEmbeddingOriginValidationEnabled), true],
+                [matchers.call.fn(handleReceivedApiToken), undefined],
+            ])
+            .run();
+    }
+
+    it("sends the token from a window to its own check, not to the check with the current token", async () => {
+        const saga = await run("https://embedder.example.com");
+
+        expect(saga.effects.call).toEqual([
+            call(handleReceivedApiToken, envelope, "https://embedder.example.com"),
+        ]);
+    });
+
+    it("does not check the origin of a token that the installed host adapter injected", async () => {
+        const uninstall = installHostAdapter({ onEvent: () => {} });
+        try {
+            const saga = await run(HOST_ADAPTER_ORIGIN);
+
+            expect(saga.effects.call).toEqual([call(handleReceivedApiToken, envelope, undefined)]);
+        } finally {
+            uninstall();
+        }
+    });
+
+    it("checks the origin of a token that claims the host adapter origin when no adapter is installed", async () => {
+        const saga = await run(HOST_ADAPTER_ORIGIN);
+
+        expect(saga.effects.call).toEqual([call(handleReceivedApiToken, envelope, HOST_ADAPTER_ORIGIN)]);
     });
 });

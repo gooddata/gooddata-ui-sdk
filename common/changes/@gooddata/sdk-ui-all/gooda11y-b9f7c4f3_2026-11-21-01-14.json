@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: in the virtualized attribute filter values list, Home, End, PageUp and PageDown move keyboard focus to the target row instead of losing it to the document body. Home and End now move to the first and last item in every list using the simple mode of useListWithActionsKeyboardNavigation (also the filter views list and the all tabs dropdown), where they did nothing before.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

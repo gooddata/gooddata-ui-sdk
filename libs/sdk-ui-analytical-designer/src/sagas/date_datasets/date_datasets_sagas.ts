@@ -65,7 +65,10 @@ import { updateDateFilter } from "../../store/bucket_filters/bucket_filters_saga
 import { bucketsDateDatasetChanged } from "../../store/buckets/buckets_operation_events.js";
 import { setDateHierarchies } from "../../store/catalog/catalog_store_actions.js";
 import { getDateFilters } from "../../store/filter_bar/filter_bar_selector.js";
-import { type IDateFilterConfig } from "../../store/filter_bar/filter_bar_types.js";
+import {
+    type IDateFilterConfig,
+    isParameterizedDateFilterConfig,
+} from "../../store/filter_bar/filter_bar_types.js";
 import { getMeasureDateDatasetStatus } from "../../store/measure_date_datasets/measure_date_datasets_selectors.js";
 import { type IRawBucketItems } from "../../typings/buckets.js";
 import { type IDateDatasets } from "../../typings/datasets.js";
@@ -276,8 +279,15 @@ function* synchronizeDateFilterDateDataset(dateDatasetRef: ObjRef, initialBucket
         areObjRefsEqual(initialBucketItems[0].dateDatasetRef, dateFilter.dateDatasetRef);
 
     if (dateBucketItems.length === 1 && isBucketAndFilterEqual) {
+        const { filterConfig } = dateFilter;
+        // a period that is not in the catalog has no known granularity: it follows the dataset rather than
+        // being replaced by All time
+        const isPeriodWithoutGranularity =
+            isParameterizedDateFilterConfig(filterConfig) && !filterConfig.granularity;
         const granularitySupportedByDataset: SagaReturnType<typeof isGranularitySupportedByDataset> =
-            yield call(isGranularitySupportedByDataset, dateFilter.filterConfig.granularity, dateDatasetRef);
+            isPeriodWithoutGranularity
+                ? true
+                : yield call(isGranularitySupportedByDataset, filterConfig.granularity, dateDatasetRef);
         const { localIdentifier } = dateFilter;
         if (granularitySupportedByDataset) {
             yield put(storeUpdateDateFilterDateDataset(localIdentifier, dateDatasetRef));

@@ -130,6 +130,7 @@ import { IDateFilterButtonProps } from '@gooddata/sdk-ui-filters';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
 import { IDateFilterOptionsByType } from '@gooddata/sdk-ui-filters';
 import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
+import { IDateRangeParameterMetadataObject } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
 import { IDrillDownIntersectionIgnoredAttributes } from '@gooddata/sdk-model';
@@ -3251,9 +3252,9 @@ export interface ICatalogParameterDependenciesState {
 
 // @alpha
 export interface ICatalogParametersState {
-    // (undocumented)
+    dateRangeParameters: IDateRangeParameterMetadataObject[];
+    dateRangeParametersStatus: CatalogParametersStatus;
     parameters: IScalarParameterMetadataObject[];
-    // (undocumented)
     status: CatalogParametersStatus;
 }
 
@@ -12147,6 +12148,12 @@ export const selectCatalogDateAttributes: DashboardSelector<ICatalogDateAttribut
 
 // @public (undocumented)
 export const selectCatalogDateDatasets: DashboardSelector<ICatalogDateDataset[]>;
+
+// @alpha
+export const selectCatalogDateRangeParameters: DashboardSelector<IDateRangeParameterMetadataObject[]>;
+
+// @alpha
+export const selectCatalogDateRangeParametersStatus: DashboardSelector<CatalogParametersStatus>;
 
 // @public (undocumented)
 export const selectCatalogFacts: DashboardSelector<ICatalogFact[]>;

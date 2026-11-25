@@ -6,6 +6,7 @@ import { IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
 import { describe, expect, it, vi } from "vitest";
 
+import { en_US } from "../../localization/bundles/en-US.localization-bundle.js";
 import {
     type GenAIAgent,
     type IChatConversationLocalItem,
@@ -30,13 +31,15 @@ import { type IChatMessagesGroup, groupMessages } from "../utils/groupUtility.js
 
 import { ConversationItemContents } from "./ConversationItemContents.js";
 
+const messages = Object.fromEntries(Object.entries(en_US).map(([id, message]) => [id, message.text]));
+
 function renderContent(message: IChatConversationLocalItem, slots?: IGenAIAssistantSlots) {
     const store = configureStore({
         reducer: { chatWindow: chatWindowSliceReducer, messages: messagesSliceReducer },
     });
     return render(
         <Provider store={store}>
-            <IntlProvider locale="en">
+            <IntlProvider locale="en" messages={messages}>
                 <CustomizationProvider slots={slots}>
                     <ConversationItemContents
                         message={message}
@@ -49,6 +52,15 @@ function renderContent(message: IChatConversationLocalItem, slots?: IGenAIAssist
             </IntlProvider>
         </Provider>,
     );
+}
+
+/**
+ * Text shown on the screen, without text given only to screen readers (e.g. a reference chip's type).
+ */
+function visibleText(element: Element) {
+    const clone = element.cloneNode(true) as Element;
+    clone.querySelectorAll(".sr-only").forEach((hidden) => hidden.remove());
+    return clone.textContent;
 }
 
 describe("ConversationItemContents text", () => {
@@ -95,7 +107,7 @@ describe("ConversationItemContents text", () => {
             }),
         );
 
-        expect(container.textContent).toBe("Show **this** Revenue #1 ~~struck~~ :rocket:\n> quote");
+        expect(visibleText(container)).toBe("Show **this** Revenue #1 ~~struck~~ :rocket:\n> quote");
         expect(container.querySelector(".gd-gen-ai-chat__message__object.metric")).toHaveTextContent(
             "Revenue",
         );
@@ -158,7 +170,7 @@ describe("ConversationItemContents text", () => {
         const savedMessage = conversationMessagesSelector(store.getState())[0];
         const { container } = renderContent(savedMessage);
 
-        expect(container.textContent).toBe(`${text}\nRevenue`);
+        expect(visibleText(container)).toBe(`${text}\nRevenue`);
         expect(container.querySelector("del, blockquote, h1, ol, ul")).toBeNull();
         expect(savedMessage.content).toEqual(message.content);
     });
@@ -173,7 +185,7 @@ describe("ConversationItemContents text", () => {
         const question = "Show **revenue** #1";
         render(
             <Provider store={store}>
-                <IntlProvider locale="en">
+                <IntlProvider locale="en" messages={messages}>
                     <DefaultLandingQuestion question={question} answer="Example answer." />
                 </IntlProvider>
             </Provider>,

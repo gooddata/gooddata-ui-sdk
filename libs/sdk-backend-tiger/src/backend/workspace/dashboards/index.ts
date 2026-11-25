@@ -136,6 +136,7 @@ import { convertExportMetadata as convertToBackendExportMetadata } from "../../.
 import { cloneWithSanitizedIds } from "../../../convertors/toBackend/IdSanitization.js";
 import { type FiltersByTab, type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier, objRefsToIdentifiers } from "../../../utils/api.js";
+import { convertSkippingNotSupported } from "../../../utils/convertSkippingNotSupported.js";
 import { convertApiError } from "../../../utils/errorHandling.js";
 import { handleExportResultPolling } from "../../../utils/exportPolling.js";
 import { addFilterLocalIdentifier } from "../../../utils/filterLocalidentifier.js";
@@ -1338,9 +1339,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 });
             });
             const { data, included } = result.data;
-            return data
-                .map((itemData) => convertFilterView(itemData, included))
-                .sort((a, b) => a.name.localeCompare(b.name));
+            return convertSkippingNotSupported(
+                data,
+                (itemData) => convertFilterView(itemData, included),
+                "Filter view",
+            ).sort((a, b) => a.name.localeCompare(b.name));
         } catch (error: any) {
             throw convertApiError(error);
         }

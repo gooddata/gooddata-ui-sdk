@@ -6,6 +6,7 @@ import atexit
 import json
 import os
 import tempfile
+import threading
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any
@@ -30,37 +31,47 @@ def _find_wasm_binary() -> Path:
 
 _WASM_PATH = _find_wasm_binary()
 
-# Cache Engine and Module (expensive to create, thread-safe, immutable).
+# Cache Engine, Module and Linker (expensive to create, thread-safe, immutable).
 # A fresh Store is created per call (cheap, holds per-call state).
-_engine: Engine | None = None
-_module: Module | None = None
-_linker: Linker | None = None
+# The three objects are cached as one tuple, built under a lock: a Store, Module
+# and Linker from different Engines make wasmtime panic and abort the process.
+_runtime: tuple[Engine, Module, Linker] | None = None
+_runtime_lock = threading.Lock()
+
+
+def _reset_lock_after_fork() -> None:
+    # A fork copies the lock as it is. If another thread was loading the runtime,
+    # the child would get a lock nobody ever releases.
+    global _runtime_lock
+    _runtime_lock = threading.Lock()
+
+
+if hasattr(os, "register_at_fork"):
+    os.register_at_fork(after_in_child=_reset_lock_after_fork)
 
 
 def _ensure_loaded() -> tuple[Engine, Module, Linker]:
-    global _engine, _module, _linker
-    if _engine is None:
-        if not _WASM_PATH.exists():
-            raise FileNotFoundError(
-                f"WASM binary not found at {_WASM_PATH}. "
-                "Build it with: cd sdk/libs/sdk-code-convertors && npm run build-wasm"
-            )
-        # Build all objects before assigning globals so a partial failure
-        # doesn't leave a broken cached state.
-        engine = Engine(Config())
-        module = Module.from_file(engine, str(_WASM_PATH))
-        linker = Linker(engine)
-        linker.define_wasi()
-        _engine, _module, _linker = engine, module, linker
-    return _engine, _module, _linker
+    global _runtime
+    with _runtime_lock:
+        if _runtime is None:
+            if not _WASM_PATH.exists():
+                raise FileNotFoundError(
+                    f"WASM binary not found at {_WASM_PATH}. "
+                    "Build it with: cd sdk/libs/sdk-code-convertors && npm run build-wasm"
+                )
+            engine = Engine(Config())
+            module = Module.from_file(engine, str(_WASM_PATH))
+            linker = Linker(engine)
+            linker.define_wasi()
+            _runtime = (engine, module, linker)
+        return _runtime
 
 
 def _cleanup() -> None:
     """Release WASM resources before interpreter shutdown to avoid tokio runtime panic."""
-    global _engine, _module, _linker
-    _linker = None
-    _module = None
-    _engine = None
+    global _runtime
+    with _runtime_lock:
+        _runtime = None
 
 
 atexit.register(_cleanup)

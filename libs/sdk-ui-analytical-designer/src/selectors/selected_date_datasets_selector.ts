@@ -15,6 +15,7 @@ import {
 import { getBuckets, getUsedDateDatasetsExtendedFromBuckets } from "../services/buckets_service.js";
 import { DateDatasetsMetaService } from "../services/date_datasets_meta_service.js";
 import { DateDatasetsService } from "../services/date_datasets_service.js";
+import { getCatalogDateRangeParameters } from "../store/catalog/catalog_selector.js";
 import { getFilterItemsExtended } from "../store/filter_bar/filter_bar_selector.js";
 import { getMeasureDateDatasetsState } from "../store/measure_date_datasets/measure_date_datasets_selectors.js";
 import { type IMeasureDateDatasetsState } from "../store/measure_date_datasets/measure_date_datasets_state.js";
@@ -93,13 +94,16 @@ export const selectedDateDatasetsSelector = createSelector(
     getDecoratedDateDatasets,
     getMeasuresDateDatasetsSelector,
     DateDatasetsMetaService.getDateDatasetsMetaItems,
+    getCatalogDateRangeParameters,
     (
         globalDateDatasets: IDecoratedDateDatasets,
         measureDateDatasets: IMeasureDateDatasetsMetaItems,
         dateDatasetsMeta,
+        dateRangeParameters,
     ): ISelectedDateDatasets => ({
         measureDateDatasets,
         globalDateDatasets,
         dateDatasetsMeta,
+        dateRangeParameters,
     }),
 );

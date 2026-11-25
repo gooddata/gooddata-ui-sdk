@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-analytical-designer, sdk-backend-tiger: Behind enableEmbeddingOriginValidation, a new token from setApiToken is used only when its origin passes the check with that token.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

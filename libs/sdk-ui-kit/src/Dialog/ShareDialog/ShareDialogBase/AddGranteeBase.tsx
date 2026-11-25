@@ -10,6 +10,7 @@ import { ContentDivider } from "../../ContentDivider.js";
 
 import { AddGranteeContent } from "./AddGranteeContent.js";
 import { type IAddGranteeBaseProps } from "./types.js";
+import { SHARE_DIALOG_ACCESSIBILITY_CONFIG } from "./utils.js";
 
 /**
  * @internal
@@ -57,6 +58,7 @@ export function AddGranteeBase({
             onSubmit={onSubmit}
             onClose={onCancel}
             headerLeftButtonRenderer={backButtonRenderer}
+            accessibilityConfig={SHARE_DIALOG_ACCESSIBILITY_CONFIG}
         >
             <AddGranteeContent
                 currentUserPermissions={currentUserPermissions}

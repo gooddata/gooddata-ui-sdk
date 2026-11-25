@@ -8,6 +8,7 @@ import {
     type ICatalogFact,
     type ICatalogMeasure,
     type IDateHierarchyTemplate,
+    type IDateRangeParameterMetadataObject,
     type IScalarParameterMetadataObject,
     type IdentifierRef,
 } from "@gooddata/sdk-model";
@@ -20,13 +21,33 @@ import {
 export type CatalogParametersStatus = "uninitialized" | "loading" | "loaded" | "failed" | "gated-off";
 
 /**
- * Catalog parameters slice.
+ * Catalog parameters slice: the workspace parameters from one request, split by kind.
+ *
+ * @remarks
+ * Each list has its own setting and its own status. A list whose setting is off is empty and `gated-off`,
+ * even when the other list loaded.
  *
  * @alpha
  */
 export interface ICatalogParametersState {
+    /**
+     * Load status of `parameters`. `gated-off` when the `enableParameters` setting is off.
+     */
     status: CatalogParametersStatus;
+    /**
+     * Number and string parameters. Loaded only when the `enableParameters` setting is on, string parameters
+     * only when the `enableStringParameters` setting is on too.
+     */
     parameters: IScalarParameterMetadataObject[];
+    /**
+     * Load status of `dateRangeParameters`. `gated-off` when the `enableDateRangeParameters` setting is off,
+     * so a period missing from a loaded list can be told apart from periods that were never loaded.
+     */
+    dateRangeParametersStatus: CatalogParametersStatus;
+    /**
+     * Date range parameters (named periods). Loaded only when the `enableDateRangeParameters` setting is on.
+     */
+    dateRangeParameters: IDateRangeParameterMetadataObject[];
 }
 
 /**
@@ -91,6 +112,11 @@ export const catalogInitialState: CatalogState = {
     attributeHierarchies: undefined,
     computedAttributes: undefined,
     dateHierarchyTemplates: undefined,
-    parameters: { status: "uninitialized", parameters: [] },
+    parameters: {
+        status: "uninitialized",
+        parameters: [],
+        dateRangeParametersStatus: "uninitialized",
+        dateRangeParameters: [],
+    },
     parameterDependencies: { status: "uninitialized", byRoot: {}, requestedRoots: {} },
 };

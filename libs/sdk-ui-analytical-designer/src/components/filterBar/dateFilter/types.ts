@@ -10,6 +10,7 @@ import { type IAdditionalDateFilterLabel } from "../../../selectors/additional_d
 import {
     type EmptyDateValuesFilterMode,
     type IAttributeFilter,
+    type IParameterizedDateFilterConfig,
 } from "../../../store/filter_bar/filter_bar_types.js";
 import { type IDateDatasetRefWithGranularities } from "../../../typings/datasets.js";
 
@@ -24,6 +25,8 @@ export interface IComparisonCompatibleMeasure {
 
 export interface IUpdateDateFilterPayload {
     filter: DateFilterOption;
+    /** the period the filter keeps; it takes the place of `filter`, which is then All time */
+    period?: IParameterizedDateFilterConfig;
     dateDatasetRef: ObjRef;
     overTimeComparisonType: OverTimeComparisonType;
     overTimeComparisonMeasures: string[];

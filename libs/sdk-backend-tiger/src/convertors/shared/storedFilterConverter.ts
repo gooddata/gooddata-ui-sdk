@@ -3,9 +3,10 @@
 import {
     type ITigerFilter,
     type ITigerFilterContextItem,
-    isTigerFilter,
-    isTigerFilterContextItems,
+    isTigerFilterContextItemsOfAnyType,
+    isTigerFilterOfAnyType,
 } from "@gooddata/api-client-tiger";
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
     type IDashboardMeasureValueFilter,
@@ -14,8 +15,12 @@ import {
     isAbsoluteDateFilter,
     isAbsoluteGranularityDateFilter,
     isComparisonCondition,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
+    isDatePeriodGranularity,
+    isParameterizedDateFilter,
+    isValidDatePeriodRange,
 } from "@gooddata/sdk-model";
 
 import { cloneWithSanitizedIdsTyped as cloneWithSanitizedIdsTypedFromBackend } from "../fromBackend/IdSanitization.js";
@@ -37,6 +42,26 @@ export interface IStoredFilterConversionOptions {
     dropAbsoluteDateGranularity?: boolean;
 }
 
+// The backend cannot execute an absolute date filter with granularity whose granularity or range is invalid,
+// so such a filter is rejected instead of being stored.
+function assertValidGranularityAndRange(granularity: unknown, from: unknown, to: unknown): void {
+    if (!isDatePeriodGranularity(granularity)) {
+        throw new NotSupported(`Absolute date filters at the ${granularity} granularity are not supported.`);
+    }
+    if (!isValidDatePeriodRange(granularity, from, to)) {
+        throw new NotSupported(
+            `The absolute date filter range from ${from} to ${to} is not a valid range of the ${granularity} granularity.`,
+        );
+    }
+}
+
+function assertValidFilterContextItem(item: unknown): void {
+    if (isDashboardAbsoluteGranularityDateFilter(item)) {
+        const { granularity, from, to } = item.dashboardAbsoluteGranularityDateFilter;
+        assertValidGranularityAndRange(granularity, from, to);
+    }
+}
+
 // SINGULAR FILTER CONVERSIONS
 // SDK -> Tiger
 
@@ -56,6 +81,10 @@ export function convertSdkFilterToTigerStored(
     filter: IFilter,
     options: IStoredFilterConversionOptions = {},
 ): ITigerFilter {
+    if (isAbsoluteGranularityDateFilter(filter)) {
+        const { granularity, from, to } = filter.absoluteGranularityDateFilter;
+        assertValidGranularityAndRange(granularity, from, to);
+    }
     const stored = options.dropAbsoluteDateGranularity ? dropAbsoluteDateFilterGranularity(filter) : filter;
     const sanitized = cloneWithSanitizedIdsTypedToBackend<IFilter, IFilter>(stored);
     return convertMeasureValueFilterSdkToTiger(sanitized);
@@ -80,6 +109,7 @@ function dropAbsoluteDateFilterGranularity(filter: IFilter): IFilter {
  * @public
  */
 export function convertSdkFilterContextItemToTiger(item: FilterContextItem): ITigerFilterContextItem {
+    assertValidFilterContextItem(item);
     if (isDashboardMatchAttributeFilter(item)) {
         return cloneWithSanitizedIdsTypedToBackend<FilterContextItem, ITigerFilterContextItem>({
             matchAttributeFilter: {
@@ -160,6 +190,7 @@ export function convertTigerStoredToSdkFilter(filter: ITigerFilter): IFilter {
  * @public
  */
 function convertDashboardFilterToSdk(item: ITigerFilterContextItem): FilterContextItem {
+    assertValidFilterContextItem(item);
     if ("dashboardMeasureValueFilter" in item) {
         return cloneWithSanitizedIdsTypedFromBackend<unknown, FilterContextItem>(item);
     }
@@ -167,14 +198,14 @@ function convertDashboardFilterToSdk(item: ITigerFilterContextItem): FilterConte
 }
 
 /**
- * Checks that all items are Tiger stored filters, including the absolute date filter with granularity,
- * which the Tiger stored filter types do not list.
+ * Checks that all items are Tiger stored filters, including the parameterized date filter, which the Tiger
+ * stored filter types do not list.
  *
  * @param filters - items to check
  * @returns true if every item is a Tiger stored filter
  */
 export function isTigerStoredFilters(filters: unknown[]): filters is ITigerFilter[] {
-    return filters.every((filter) => isTigerFilter(filter) || isAbsoluteGranularityDateFilter(filter));
+    return filters.every((filter) => isTigerFilterOfAnyType(filter) || isParameterizedDateFilter(filter));
 }
 
 // BATCH CONVERSIONS
@@ -232,7 +263,7 @@ export function convertTigerToSdkFilters<T extends TigerToSdkFiltersInput>(
         return [] as unknown as TigerToSdkFiltersOutput<T>;
     }
 
-    if (isTigerFilterContextItems(filters)) {
+    if (isTigerFilterContextItemsOfAnyType(filters)) {
         return filters.map(convertDashboardFilterToSdk) as TigerToSdkFiltersOutput<T>;
     }
 
@@ -244,6 +275,8 @@ export function convertTigerToSdkFilters<T extends TigerToSdkFiltersInput>(
     // Ideally, this should not happen, but we want to handle such cases gracefully instead of crashing.
 
     if (isFilterContextItems(filters)) {
+        const items: FilterContextItem[] = filters;
+        items.forEach(assertValidFilterContextItem);
         return cloneWithSanitizedIdsTypedFromBackend<FilterContextItem[], FilterContextItem[]>(
             filters,
         ) as unknown as TigerToSdkFiltersOutput<T>;

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-all: Add IParameterizedDateFilter, a date filter that takes its period from a date range parameter, and send it to the Tiger backend.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

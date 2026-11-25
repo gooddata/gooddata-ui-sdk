@@ -3,6 +3,7 @@
 import {
     type IGenAIObjectReference,
     type IGenAIUserContext,
+    type IGenAIWidgetDescriptor,
     areObjRefsEqual,
     isIdentifierRef,
     serializeObjRef,
@@ -93,7 +94,7 @@ export function collectAvailableReferences(
     }
 
     const references: IGenAIContextObject[] = [];
-    const used: string[] = [];
+    const used = new Set<string>();
 
     // dashboard
     const dashboard = context.view?.dashboard;
@@ -108,63 +109,45 @@ export function collectAvailableReferences(
             title: dashboard.title || placeholderTitle || dashboardId,
             nesting: 0,
         });
-        used.push(serializeObjRef(dashboardRef));
+        used.add(serializeObjRef(dashboardRef));
 
         const context: IGenAIObjectReference = {
             ref: dashboardRef,
             type: "DASHBOARD",
             title: dashboard.title || placeholderTitle || dashboardId,
         };
+
+        const addWidgetReference = (widget: IGenAIWidgetDescriptor) => {
+            const ref = widget.widgetRef;
+            if (!ref) {
+                return;
+            }
+            const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
+            const key = serializeObjRef(ref);
+            if (!used.has(key)) {
+                used.add(key);
+                references.push({
+                    id,
+                    ref,
+                    nesting: 1,
+                    where: "referencedObjects",
+                    title: widget.title || placeholderTitle || id,
+                    type: "widget",
+                    context,
+                    insightRef: widget.insightRef,
+                    ...(widget.visualizationUrl ? { visualizationUrl: widget.visualizationUrl } : {}),
+                });
+            }
+        };
+
         dashboard.widgets.forEach((widget) => {
             switch (widget.widgetType) {
                 case "insight": {
-                    const ref = widget.widgetRef;
-                    if (!ref) {
-                        return;
-                    }
-                    const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
-                    const key = serializeObjRef(ref);
-                    if (!used.includes(key)) {
-                        used.push(key);
-                        references.push({
-                            id,
-                            ref,
-                            nesting: 1,
-                            where: "referencedObjects",
-                            title: widget.title || placeholderTitle || id,
-                            type: "widget",
-                            context,
-                            insightRef: widget.insightRef,
-                            ...(widget.visualizationUrl ? { visualizationUrl: widget.visualizationUrl } : {}),
-                        });
-                    }
+                    addWidgetReference(widget);
                     break;
                 }
                 case "visualizationSwitcher": {
-                    widget.visualizations?.forEach((visualization) => {
-                        const ref = visualization.widgetRef;
-                        if (!ref) {
-                            return;
-                        }
-                        const id = isIdentifierRef(ref) ? ref.identifier : ref.uri;
-                        const key = serializeObjRef(ref);
-                        if (!used.includes(key)) {
-                            used.push(key);
-                            references.push({
-                                id,
-                                ref,
-                                nesting: 1,
-                                where: "referencedObjects",
-                                title: visualization.title || placeholderTitle || id,
-                                type: "widget",
-                                context,
-                                insightRef: visualization.insightRef,
-                                ...(visualization.visualizationUrl
-                                    ? { visualizationUrl: visualization.visualizationUrl }
-                                    : {}),
-                            });
-                        }
-                    });
+                    widget.visualizations?.forEach(addWidgetReference);
                     break;
                 }
                 default:

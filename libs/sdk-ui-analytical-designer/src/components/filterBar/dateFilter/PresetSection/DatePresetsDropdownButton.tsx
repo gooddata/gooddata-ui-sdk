@@ -44,6 +44,8 @@ function ButtonTitle({ preset, dateFormat }: IPresetTitleProps) {
 
 export interface IDatePresetsDropdownButtonProps extends IDropdownButtonRenderProps {
     selectedPreset: DateFilterOption;
+    /** the title of the period the filter references, shown instead of the preset */
+    selectedPeriodTitle?: string;
     buttonWrapperRef: Ref<HTMLDivElement>;
     dateFormat: string;
 }
@@ -52,6 +54,7 @@ export function DatePresetsDropdownButton({
     isOpen,
     toggleDropdown,
     selectedPreset,
+    selectedPeriodTitle,
     buttonWrapperRef,
     dateFormat,
 }: IDatePresetsDropdownButtonProps) {
@@ -64,7 +67,13 @@ export function DatePresetsDropdownButton({
             <DropdownButton
                 id="preset-dropdown"
                 className={buttonClassName}
-                value={<ButtonTitle preset={selectedPreset} dateFormat={dateFormat} />}
+                value={
+                    selectedPeriodTitle === undefined ? (
+                        <ButtonTitle preset={selectedPreset} dateFormat={dateFormat} />
+                    ) : (
+                        selectedPeriodTitle
+                    )
+                }
                 onClick={toggleDropdown}
             />
         </DropdownButtonWrapper>

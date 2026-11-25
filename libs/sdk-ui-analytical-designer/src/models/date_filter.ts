@@ -2,11 +2,16 @@
 
 import { type IntlShape } from "react-intl";
 
+import { type IDateRangeParameterMetadataObject } from "@gooddata/sdk-model";
+
 import { ALL_TIME } from "../constants/presets.js";
 import { type IBucketsMetaState } from "../store/buckets/buckets_meta_state.js";
+import { isParameterizedDateFilterConfig } from "../store/filter_bar/filter_bar_types.js";
 import { type IBucketItemMetricFilter } from "../typings/bucket_item_filter.js";
 
 import { type IDecoratedDateDatasetMeta } from "./date_dataset.js";
+import { getPeriodTitleWithEmptyValues } from "./empty_date_values_title.js";
+import { getPeriodTitle } from "./period.js";
 import {
     DecoratedPresetItem,
     type IDecoratedPresetItem,
@@ -17,6 +22,8 @@ import {
 
 export interface IDecoratedDateFilter {
     interval: IDecoratedPresetItem;
+    /** the title of the period the filter references, or its id when the catalog does not have it */
+    periodTitle?: string;
     /**
      * The raw bucket filter, as stored in `data.buckets[i].items[j].filters[k]`. Write-back paths
      * dispatch it verbatim.
@@ -31,27 +38,17 @@ function getAttributeTitle(filter: IDecoratedDateFilter) {
     return filter.dateDataset?.attributeTitle;
 }
 
-/**
- * Words the empty date values mode like the metric date filter chip and the filter bar's button:
- * "Empty values" for only, "All time except Empty values" for exclude on All time.
- */
 function getIntervalTitle(filter: IDecoratedDateFilter, intl: IntlShape, formatLocale?: string) {
-    const mode = filter.original?.emptyDateValuesFilter;
-    const emptyValuesLabel = () => intl.formatMessage({ id: "filter.date.additional_filter.empty_values" });
-    if (mode === "only") {
-        return emptyValuesLabel();
-    }
-    const periodTitle = DecoratedPresetItem.getTitle(
-        filter.interval,
+    // a period (DATE_RANGE parameter) is titled by the catalog, then worded like any other period
+    const periodTitle =
+        filter.periodTitle ??
+        DecoratedPresetItem.getTitle(filter.interval, intl, 0, LOCAL_TIMEZONE_OFFSET, formatLocale);
+    return getPeriodTitleWithEmptyValues(
+        periodTitle,
+        isAllTime(filter),
+        filter.original?.emptyDateValuesFilter,
         intl,
-        0,
-        LOCAL_TIMEZONE_OFFSET,
-        formatLocale,
     );
-    if (mode === "exclude" && isAllTime(filter)) {
-        return `${periodTitle} ${intl.formatMessage({ id: "gs.list.except" })} ${emptyValuesLabel()}`;
-    }
-    return periodTitle;
 }
 
 function getTitle(filter: IDecoratedDateFilter, intl: IntlShape, formatLocale?: string) {
@@ -74,10 +71,15 @@ export function createDecoratedDateFilter(
     dateDataset: IDecoratedDateDatasetMeta | null,
     bucketsMeta: Partial<IBucketsMetaState> | undefined = undefined,
     isMeasure = false,
+    dateRangeParameters: ReadonlyArray<IDateRangeParameterMetadataObject> | undefined = undefined,
 ): IDecoratedDateFilter {
+    const period = filter?.interval;
     return {
         original: filter,
         interval: createDecoratedPresetItem(filter?.interval || PRESETS[0]),
+        ...(isParameterizedDateFilterConfig(period)
+            ? { periodTitle: getPeriodTitle(period.parameterRef, dateRangeParameters) }
+            : {}),
         isModified: isMeasure ? true : bucketsMeta?.modified?.[filter?.attribute],
         dateDataset,
         isDate: true,

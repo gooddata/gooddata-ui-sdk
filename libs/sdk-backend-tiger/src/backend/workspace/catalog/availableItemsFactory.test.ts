@@ -17,8 +17,13 @@ import {
     localIdRef,
     measureLocalId,
     newAttribute,
+    newBucket,
+    newInsightDefinition,
     newMeasure,
+    newParameterizedDateFilter,
 } from "@gooddata/sdk-model";
+
+import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 import {
     TigerWorkspaceCatalogAvailableItemsFactory,
@@ -110,11 +115,12 @@ describe("available item filtering", () => {
 
         describe("the validObjects query", () => {
             const computeValidObjects = ActionsApi_ComputeValidObjects as Mock;
-            const authCall = (fn: (client: any) => any) => fn({ axios: {}, basePath: "" });
+            const authCall = ((fn: (client: unknown) => unknown) =>
+                fn({ axios: {}, basePath: "" })) as unknown as TigerAuthenticatedCallGuard;
 
             const loadAvailableItems = (types: CatalogItemType[]) =>
                 new TigerWorkspaceCatalogAvailableItemsFactory(
-                    authCall as any,
+                    authCall,
                     "workspace",
                     [],
                     [computedAttribute],
@@ -149,6 +155,46 @@ describe("available item filtering", () => {
 
                 // exactly once: a pass-through on top of the response would duplicate it
                 expect(result.availableComputedAttributes()).toEqual([computedAttribute]);
+            });
+
+            it("should send a filter with a period as a filter on its date data set, without the period", async () => {
+                const period = newParameterizedDateFilter(
+                    idRef("date", "dataSet"),
+                    idRef("deleted", "parameter"),
+                );
+                const insight = newInsightDefinition("local:table", (builder) =>
+                    builder
+                        .buckets([
+                            newBucket(
+                                "measures",
+                                newMeasure(idRef("orders", "measure"), (m) => m.filters(period)),
+                            ),
+                        ])
+                        .filters([period]),
+                );
+                await new TigerWorkspaceCatalogAvailableItemsFactory(
+                    authCall,
+                    "workspace",
+                    [],
+                    [computedAttribute],
+                    {
+                        types: ["attribute"],
+                        excludeTags: [],
+                        includeTags: [],
+                        loadGroups: false,
+                        insight,
+                    },
+                ).load();
+
+                const { afm } = sentQuery();
+                const onDateDataSet = {
+                    relativeDateFilter: expect.objectContaining({
+                        dataset: { identifier: { id: "date", type: "dataset" } },
+                    }),
+                };
+                expect(JSON.stringify(afm)).not.toContain("parameter");
+                expect(afm.filters).toEqual([onDateDataSet]);
+                expect(afm.measures[0].definition.measure.filters).toEqual([onDateDataSet]);
             });
 
             it("should not ask for computed attributes when they were not requested", async () => {

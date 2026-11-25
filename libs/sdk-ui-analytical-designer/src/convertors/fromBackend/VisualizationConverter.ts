@@ -14,6 +14,7 @@ import {
     type IMeasureDefinitionType,
     type IMeasureFilter,
     type IMeasureValueFilter,
+    type IParameterizedDateFilter,
     type IRankingFilter,
     type IUser,
     type ObjectType,
@@ -33,6 +34,7 @@ import {
     type IVisualizationObjectMatchAttributeFilter,
     type IVisualizationObjectMeasure,
     type IVisualizationObjectMeasureValueFilter,
+    type IVisualizationObjectParameterizedDateFilter,
     type IVisualizationObjectRankingFilter,
     type Qualifier,
     type VisualizationObjectExtendedFilter,
@@ -46,6 +48,7 @@ import {
     isVisualizationObjectMeasure,
     isVisualizationObjectMeasureValueFilter,
     isVisualizationObjectNegativeAttributeFilter,
+    isVisualizationObjectParameterizedDateFilter,
     isVisualizationObjectPoPMeasureDefinition,
     isVisualizationObjectPositiveAttributeFilter,
     isVisualizationObjectPreviousPeriodMeasureDefinition,
@@ -157,6 +160,20 @@ const convertRankingFilter = (filter: IVisualizationObjectRankingFilter): IRanki
     };
 };
 
+const convertParameterizedDateFilter = (
+    filter: IVisualizationObjectParameterizedDateFilter,
+): IParameterizedDateFilter => {
+    const { localIdentifier, dataSet, parameter, emptyValueHandling } = filter.parameterizedDateFilter;
+    return {
+        parameterizedDateFilter: {
+            ...(localIdentifier ? { localIdentifier } : {}),
+            dataSet: fromBearRef(dataSet, "dataSet"),
+            parameter: fromBearRef(parameter, "parameter"),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
+        },
+    };
+};
+
 export const convertFilter = (filter: VisualizationObjectExtendedFilter): IFilter => {
     if (isVisualizationObjectMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
@@ -168,6 +185,8 @@ export const convertFilter = (filter: VisualizationObjectExtendedFilter): IFilte
         return convertMatchAttributeFilter(filter);
     } else if (isVisualizationObjectAttributeFilter(filter)) {
         return convertMeasureFilter(filter);
+    } else if (isVisualizationObjectParameterizedDateFilter(filter)) {
+        return convertParameterizedDateFilter(filter);
     } else if (isVisualizationObjectAbsoluteDateFilter(filter)) {
         return convertMeasureFilter(filter);
     } else if (isVisualizationObjectRelativeDateFilter(filter)) {
@@ -206,6 +225,8 @@ const convertMeasureFilter = (filter: VisualizationObjectFilter): IMeasureFilter
                 },
             };
         }
+    } else if (isVisualizationObjectParameterizedDateFilter(filter)) {
+        return convertParameterizedDateFilter(filter);
     } else if (isVisualizationObjectAbsoluteDateFilter(filter)) {
         const { emptyValueHandling } = filter.absoluteDateFilter;
         return {

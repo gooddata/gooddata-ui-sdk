@@ -50,7 +50,7 @@ import { getBucketIdentifierByItemId } from "../../services/buckets_service.js";
 import { storeUpdateDateFilterDateDataset } from "../../store/bucket_filters/bucket_filters_actions.js";
 import { bucketsDateDatasetChanged } from "../../store/buckets/buckets_operation_events.js";
 import { getDateFilters, getFirstDateFilter } from "../../store/filter_bar/filter_bar_selector.js";
-import { type IDateFilterConfig } from "../../store/filter_bar/filter_bar_types.js";
+import { type IDateFilter, type IDateFilterConfig } from "../../store/filter_bar/filter_bar_types.js";
 import { getMeasureDateDatasetStatus } from "../../store/measure_date_datasets/measure_date_datasets_selectors.js";
 import { type IAppState } from "../../store/types.js";
 import { activityDateDataset } from "../../tests/constants.test.helpers.js";
@@ -614,6 +614,34 @@ describe("Date datasets sagas", () => {
                     .put(
                         storeUpdateDateFilterDateDataset(
                             dateFilter6YearsSply.localIdentifier,
+                            activityDateDataset.ref,
+                        ),
+                    )
+                    .silentRun(0);
+            });
+
+            it("should sync dimension to a date filter with a period the catalog does not know, without asking for its granularity", () => {
+                const mockedState: IAppState = buildInitialState();
+                const periodFilter: IDateFilter = {
+                    ...dateFilter6YearsSply,
+                    filterConfig: { type: "parameterized", parameterRef: idRef("deleted", "parameter") },
+                };
+
+                return expectSaga(watchDateDatasets)
+                    .withState(mockedState)
+                    .provide([
+                        [select(visualizationAllowsMultipleDateDatasets), false],
+                        [select(getDateBucketItems), [dateItem]],
+                        [select(getFirstDateFilter), periodFilter],
+                        [select(getDateFilters), [periodFilter]],
+                        [select(isPoPSetup), true],
+                    ])
+                    .dispatch(action)
+                    .dispatch(commit)
+                    .not.call.fn(isGranularitySupportedByDataset)
+                    .put(
+                        storeUpdateDateFilterDateDataset(
+                            periodFilter.localIdentifier,
                             activityDateDataset.ref,
                         ),
                     )

@@ -140,3 +140,35 @@ export const useResetRelativeRangeWhenUnsupportedOneIsSelected = (
         }
     }, [selectedFilter, supportedChronologicalGranularities, resetCallback]);
 };
+
+/**
+ * Hook calls `resetCallback` with All time when `filter` keeps a period whose granularity the selected date dataset
+ *  does not have, as moving the date item in the buckets to such a dataset does. A period without a known
+ *  granularity (the catalog does not have it) follows the dataset, and so does any period while the dataset's
+ *  granularities are not known.
+ *
+ * @param filter -
+ * @param selectedDateDataset -
+ * @param dateDatasetRefsWithGranularities -
+ * @param resetCallback -
+ */
+export const useResetPeriodWhenUnsupportedByDateDataset = (
+    filter: IDateFilterOption,
+    selectedDateDataset: IDecoratedDateDataset,
+    dateDatasetRefsWithGranularities: IDateDatasetRefWithGranularities[],
+    resetCallback: (filter: IDateFilterOption) => void,
+) => {
+    const granularity = filter.period?.config.granularity;
+    useEffect(() => {
+        const datasetGranularities = dateDatasetRefsWithGranularities.find(({ ref }) =>
+            areObjRefsEqual(ref, selectedDateDataset?.ref),
+        )?.attributes;
+        if (
+            granularity &&
+            datasetGranularities &&
+            !datasetGranularities.some((attribute) => attribute.dateType === granularity)
+        ) {
+            resetCallback(defaultPreset);
+        }
+    }, [granularity, selectedDateDataset, dateDatasetRefsWithGranularities, resetCallback]);
+};

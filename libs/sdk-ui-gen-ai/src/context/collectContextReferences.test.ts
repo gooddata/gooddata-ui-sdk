@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IGenAIUserContext, idRef, uriRef } from "@gooddata/sdk-model";
+import { type IGenAIUserContext, type IGenAIWidgetDescriptor, idRef, uriRef } from "@gooddata/sdk-model";
 
 import { type SelectedContext } from "../types.js";
 
@@ -239,6 +239,218 @@ describe("collectContextReferences", () => {
 describe("collectAvailableReferences", () => {
     it("should return empty array if context is undefined", () => {
         expect(collectAvailableReferences(undefined)).toEqual([]);
+    });
+
+    it("preserves mixed widget order and the first reference's metadata without mutating input", () => {
+        const context: IGenAIUserContext = {
+            view: {
+                dashboard: {
+                    ref: idRef("dash1"),
+                    title: "Dashboard",
+                    widgets: [
+                        { widgetType: "insight", widgetRef: idRef("dash1"), title: "Dashboard collision" },
+                        {
+                            widgetType: "insight",
+                            widgetRef: idRef("shared"),
+                            title: "First insight",
+                            insightRef: idRef("insight1"),
+                            visualizationUrl: "local:bar",
+                        },
+                        {
+                            widgetType: "visualizationSwitcher",
+                            widgetRef: idRef("switcher"),
+                            title: "Switcher itself is not collected",
+                            visualizations: [
+                                {
+                                    widgetType: "insight",
+                                    widgetRef: idRef("shared"),
+                                    title: "Duplicate insight",
+                                    insightRef: idRef("different-insight"),
+                                    visualizationUrl: "local:pie",
+                                },
+                                {
+                                    widgetType: "insight",
+                                    widgetRef: uriRef("/widgets/2"),
+                                    title: "First switcher entry",
+                                    insightRef: uriRef("/insights/2"),
+                                    visualizationUrl: "local:line",
+                                },
+                                {
+                                    widgetType: "insight",
+                                    widgetRef: uriRef("/widgets/2"),
+                                    title: "Duplicate within switcher",
+                                },
+                                {
+                                    widgetType: "insight",
+                                    widgetRef: idRef("dash1"),
+                                    title: "Dashboard collision in switcher",
+                                },
+                            ],
+                        },
+                        {
+                            widgetType: "insight",
+                            widgetRef: uriRef("/widgets/2"),
+                            title: "Duplicate after switcher",
+                        },
+                        { widgetType: "richText", widgetRef: idRef("text"), title: "Ignored" },
+                        { widgetType: "insight", widgetRef: idRef("last"), title: "Last" },
+                    ],
+                },
+            },
+        };
+        const before = structuredClone(context);
+        const dashboardContext = { ref: idRef("dash1"), title: "Dashboard", type: "DASHBOARD" };
+
+        expect(collectAvailableReferences(context)).toStrictEqual([
+            {
+                id: "dash1",
+                ref: idRef("dash1"),
+                type: "dashboard",
+                where: "view.dashboard",
+                title: "Dashboard",
+                nesting: 0,
+            },
+            {
+                id: "shared",
+                ref: idRef("shared"),
+                type: "widget",
+                where: "referencedObjects",
+                title: "First insight",
+                nesting: 1,
+                context: dashboardContext,
+                insightRef: idRef("insight1"),
+                visualizationUrl: "local:bar",
+            },
+            {
+                id: "/widgets/2",
+                ref: uriRef("/widgets/2"),
+                type: "widget",
+                where: "referencedObjects",
+                title: "First switcher entry",
+                nesting: 1,
+                context: dashboardContext,
+                insightRef: uriRef("/insights/2"),
+                visualizationUrl: "local:line",
+            },
+            {
+                id: "last",
+                ref: idRef("last"),
+                type: "widget",
+                where: "referencedObjects",
+                title: "Last",
+                nesting: 1,
+                context: dashboardContext,
+                insightRef: undefined,
+            },
+        ]);
+        expect(context).toStrictEqual(before);
+    });
+
+    it("deduplicates by serialized reference rather than the displayed identifier", () => {
+        const refs = [idRef("same"), idRef("same", "insight"), uriRef("same")];
+        const context: IGenAIUserContext = {
+            view: {
+                dashboard: {
+                    ref: idRef("dash1"),
+                    widgets: refs.flatMap((widgetRef) => [
+                        { widgetType: "insight", widgetRef, title: "First" },
+                        { widgetType: "insight", widgetRef: { ...widgetRef }, title: "Duplicate" },
+                    ]),
+                },
+            },
+        };
+
+        const widgets = collectAvailableReferences(context).slice(1);
+
+        expect(widgets.map(({ ref }) => ref)).toStrictEqual(refs);
+        expect(widgets.map(({ title }) => title)).toEqual(["First", "First", "First"]);
+    });
+
+    describe.each(["insight", "visualizationSwitcher"] as const)("%s widgets", (widgetType) => {
+        function createContext(widget: IGenAIWidgetDescriptor): IGenAIUserContext {
+            return {
+                view: {
+                    dashboard: {
+                        ref: uriRef("/dashboards/1"),
+                        widgets: [
+                            widgetType === "insight"
+                                ? widget
+                                : {
+                                      widgetType,
+                                      widgetRef: idRef("switcher"),
+                                      title: "Switcher",
+                                      visualizations: [widget],
+                                  },
+                        ],
+                    },
+                },
+            };
+        }
+
+        it.each([
+            { title: "Widget", placeholder: "Placeholder", expected: "Widget" },
+            { title: "", placeholder: "Placeholder", expected: "Placeholder" },
+            { title: "", placeholder: "", expected: "/widgets/1" },
+            { title: "", placeholder: undefined, expected: "/widgets/1" },
+        ])("preserves title fallbacks for $title and $placeholder", ({ title, placeholder, expected }) => {
+            const context = createContext({
+                widgetType: "insight",
+                widgetRef: uriRef("/widgets/1"),
+                title,
+                visualizationUrl: "",
+            });
+
+            const result = collectAvailableReferences(context, placeholder);
+
+            expect(result[0].title).toBe(placeholder || "/dashboards/1");
+            expect(result[1]).toStrictEqual({
+                id: "/widgets/1",
+                ref: uriRef("/widgets/1"),
+                type: "widget",
+                where: "referencedObjects",
+                nesting: 1,
+                title: expected,
+                insightRef: undefined,
+                context: {
+                    ref: uriRef("/dashboards/1"),
+                    type: "DASHBOARD",
+                    title: placeholder || "/dashboards/1",
+                },
+            });
+        });
+
+        it("skips missing widget references", () => {
+            const context = createContext({
+                widgetType: "insight",
+                title: "Missing ref",
+            } as IGenAIWidgetDescriptor);
+
+            expect(collectAvailableReferences(context)).toHaveLength(1);
+        });
+    });
+
+    it("ignores missing switcher entries and contexts without a dashboard", () => {
+        expect(collectAvailableReferences({})).toEqual([]);
+        expect(collectAvailableReferences({ view: { publisherDocument: { title: "Document" } } })).toEqual(
+            [],
+        );
+
+        const context: IGenAIUserContext = {
+            view: {
+                dashboard: {
+                    ref: idRef("dash1"),
+                    widgets: [
+                        {
+                            widgetType: "visualizationSwitcher",
+                            widgetRef: idRef("switcher"),
+                            title: "Switcher",
+                        },
+                    ],
+                },
+            },
+        };
+
+        expect(collectAvailableReferences(context)).toHaveLength(1);
     });
 
     it("should collect dashboard and its widgets", () => {

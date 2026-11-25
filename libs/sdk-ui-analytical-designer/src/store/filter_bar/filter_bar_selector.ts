@@ -36,6 +36,7 @@ import {
     type IFilterBarConfig,
     type IMeasureValueFilter,
     type IRankingFilter,
+    isParameterizedDateFilterConfig,
 } from "./filter_bar_types.js";
 import { type IParameterFilter, isParameterOverridden } from "./parameter_filter_types.js";
 
@@ -73,7 +74,8 @@ export const getFilterItemsWithoutAdditionalDateAttributes = createSelector(
 );
 
 const isDateFilterSetUp = (filter: IDateFilter) =>
-    filter.filterConfig && filter.filterConfig.name !== ALL_TIME;
+    isParameterizedDateFilterConfig(filter.filterConfig) ||
+    (filter.filterConfig && filter.filterConfig.name !== ALL_TIME);
 
 const isMeasureValueFilterSetUp = (filter: IMeasureValueFilter) => (filter.conditions?.length ?? 0) > 0;
 

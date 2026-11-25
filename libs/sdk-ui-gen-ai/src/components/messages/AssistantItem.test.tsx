@@ -55,16 +55,11 @@ function renderAnswer(message: IChatConversationLocalItem) {
 afterEach(cleanup);
 
 describe("AssistantItemComponent", () => {
-    it("announces the answer once it finishes streaming", () => {
+    it("leaves announcing the answer to the chat log, so it is not read twice", () => {
         const { container } = renderAnswer({ ...ANSWER, streaming: false });
 
-        expect(container.querySelector("[aria-live]")?.textContent).toBe("Revenue was $1.2M.");
-    });
-
-    it("does not announce an answer loaded from history", () => {
-        const { container } = renderAnswer(ANSWER);
-
-        expect(container.querySelector("[aria-live]")?.textContent).toBe("");
+        expect(container).toHaveTextContent("Revenue was $1.2M.");
+        expect(container.querySelector("[aria-live]")).toBeNull();
     });
 
     it("keeps the chat input focused when the feedback button is pressed", () => {

@@ -679,6 +679,10 @@
         "text": "Metric save failed, try again later…",
         "crowdinContext": "Use '…' as one character, not 3 dots ('...')."
     },
+    "messages.metricSaveIdConflict": {
+        "text": "A metric with this ID already exists. Change the ID and save again.",
+        "crowdinContext": "Error message shown when a metric cannot be saved because another object already uses its ID."
+    },
     "messages.exportResultError": {
         "text": "Failed to export the data. Try again later.",
         "crowdinContext": "Error message when data export fails"
@@ -1242,6 +1246,10 @@
     "filter.date.empty_values.include.disabled_option_tooltip": {
         "text": "Select All time in period to include empty values",
         "crowdinContext": "Tooltip on disabled Include option in empty values dropdown."
+    },
+    "filter.date.empty_values.include.title": {
+        "text": "{title}, empty values",
+        "crowdinContext": "Date filter button label when a period (not All time) also includes empty (missing) date values. {title} is the period label, e.g. 'Last 12 months'."
     },
     "filter.compare.apply_on": {
         "text": "Apply on",
@@ -2002,6 +2010,10 @@
     "dashboard.message.report_not_found.missing_date_filter_items.description": {
         "text": "{items} used in the date filter {count, plural, one {is} other {are}} no longer available.",
         "crowdinContext": "Shown under the header 'Sorry, we can't display this visualization' when a visualization cannot be opened because its date filter uses a date granularity that was disabled in the data model. {items} is a comma-separated list of date items, each written as date dataset title, a dash and the granularity name, for example 'Order date - Minute of Hour'. {count} is the number of items."
+    },
+    "dashboard.message.report_load_failed.description": {
+        "text": "Some of the information needed to open this visualization did not load. Reload the page in a few minutes. If this continues, contact your administrator.",
+        "crowdinContext": "Shown under the header 'Sorry, we can't display this visualization' when the visualization exists, but it cannot be opened because loading data it needs (for example the Data Catalog, dashboards, date datasets or parameters) failed, for example because of a server error or a timeout."
     },
     "dashboard.message.invalid_configuration.header": {
         "text": "Sorry, we can't display this visualization",

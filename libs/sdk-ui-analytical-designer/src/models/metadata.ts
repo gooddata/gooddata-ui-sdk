@@ -8,11 +8,13 @@ import {
     type EmptyValues,
     type IActiveCalendars,
     type IAttributeFilterConfigs,
+    type IDateRangeParameterMetadataObject,
     type IInsightParameterValue,
     type IMeasure,
     type IdentifierRef,
     type ObjRef,
     areObjRefsEqual,
+    idRef,
     isComputedAttributeRef,
     isIdentifierRef,
     isUriRef,
@@ -41,8 +43,10 @@ import {
     type IDateFilterConfig,
     type IFilter,
     type IMeasureValueFilter,
+    type IParameterizedDateFilterConfig,
     type IRankingFilter,
     type TextModeFilterData,
+    isParameterizedDateFilterConfig,
     isTextFilterAll,
 } from "../store/filter_bar/filter_bar_types.js";
 import { type IParameterFilter } from "../store/filter_bar/parameter_filter_types.js";
@@ -59,6 +63,7 @@ import {
     type IVisualizationObjectMeasure,
     type IVisualizationObjectMeasureDefinition,
     type IVisualizationObjectMeasureValueFilter,
+    type IVisualizationObjectParameterizedDateFilter,
     type IVisualizationObjectRankingFilter,
     type IVisualizationObjectRelativeDateFilter,
     type ObjQualifier,
@@ -74,6 +79,7 @@ import {
     isVisualizationObjectMeasure,
     isVisualizationObjectMeasureValueFilter,
     isVisualizationObjectNegativeAttributeFilter,
+    isVisualizationObjectParameterizedDateFilter,
     isVisualizationObjectPoPMeasureDefinition as isVisualizationObjectPopMeasureDefinition,
     isVisualizationObjectPositiveAttributeFilter,
     isVisualizationObjectPreviousPeriodMeasureDefinition,
@@ -124,7 +130,13 @@ import {
 } from "./bucket_item_identifier.js";
 import { DATE_DATASET_ATTRIBUTE } from "./date_item.js";
 import { isSupportedDisplayFormType } from "./display_form.js";
-import { GRANULARITY, type Granularity, isFiscalGranularity } from "./granularity.js";
+import {
+    GRANULARITY,
+    type Granularity,
+    isFiscalGranularity,
+    periodGranularityToGranularity,
+} from "./granularity.js";
+import { findPeriod } from "./period.js";
 import { PRESETS } from "./preset_item.js";
 
 const isDefined = negate((v) => v === undefined);
@@ -166,16 +178,20 @@ function numberOrUndefined(value: string | number | undefined): number | undefin
 const ALL_TIME_GRANULARITY: AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 /**
- * The `emptyValueHandling` a date filter stores for the empty date values mode. Like the legacy `""`
- * attribute filter, only exclude and only are stored: include is the backend default for All time and
- * the picker does not offer it with a period.
+ * The `emptyValueHandling` a date filter stores for the empty date values mode. Exclude and only are
+ * always stored. Include is stored only with a period, where the backend default is exclude; on All time
+ * it is the backend default, so it is dropped to keep a single stored shape.
  */
-export function emptyValueHandlingToMd(emptyDateValuesFilter: EmptyDateValuesFilterMode | undefined): {
+export function emptyValueHandlingToMd(
+    emptyDateValuesFilter: EmptyDateValuesFilterMode | undefined,
+    isAllTime: boolean,
+): {
     emptyValueHandling?: EmptyValues;
 } {
-    return emptyDateValuesFilter === "exclude" || emptyDateValuesFilter === "only"
-        ? { emptyValueHandling: emptyDateValuesFilter }
-        : {};
+    if (emptyDateValuesFilter === "exclude" || emptyDateValuesFilter === "only") {
+        return { emptyValueHandling: emptyDateValuesFilter };
+    }
+    return emptyDateValuesFilter === "include" && !isAllTime ? { emptyValueHandling: "include" } : {};
 }
 
 function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObjectFilter | null {
@@ -187,9 +203,14 @@ function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObject
             return null;
         }
 
+        const period = filter.interval?.original;
+        if (isParameterizedDateFilterConfig(period)) {
+            return parameterizedDateFilterToMd(period, dataSet, filter.original?.emptyDateValuesFilter);
+        }
+
         const from = filter.interval?.interval?.[0];
         const to = filter.interval?.interval?.[1];
-        const emptyValueHandlingProp = emptyValueHandlingToMd(filter.original?.emptyDateValuesFilter);
+        const emptyDateValuesFilter = filter.original?.emptyDateValuesFilter;
         const absoluteDateFilter = filter.interval?.isStatic ?? false;
         if (absoluteDateFilter) {
             // a static (absolute) preset interval is the [string, string] side of the tuple union
@@ -198,7 +219,7 @@ function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObject
                     dataSet,
                     from: from as string,
                     to: to as string,
-                    ...emptyValueHandlingProp,
+                    ...emptyValueHandlingToMd(emptyDateValuesFilter, false),
                 },
             };
         }
@@ -206,6 +227,10 @@ function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObject
         const boundedFilter = filter.interval?.boundedFilter;
         const relativeFrom = numberOrUndefined(from);
         const relativeTo = numberOrUndefined(to);
+        const emptyValueHandlingProp = emptyValueHandlingToMd(
+            emptyDateValuesFilter,
+            relativeFrom === undefined || relativeTo === undefined,
+        );
         // All time is stored without bounds, a no-op the execution drops; to carry the empty date values
         // mode it has to be the real All time filter, the one the execution sends (as on the filter bar)
         if ((relativeFrom === undefined || relativeTo === undefined) && !_isEmpty(emptyValueHandlingProp)) {
@@ -297,14 +322,44 @@ function measureFilterToMd(filter: IDecoratedMetricFilter): IVisualizationObject
     };
 }
 
+/**
+ * A filter with a period is new, so it has no legacy shape: it always carries its empty date values mode
+ * itself. A period is never All time, so include is stored too, as for any other period.
+ */
+function parameterizedDateFilterToMd(
+    { parameterRef, localIdentifier }: IParameterizedDateFilterConfig,
+    dataSet: ObjRef,
+    emptyDateValuesFilter: EmptyDateValuesFilterMode | undefined,
+): IVisualizationObjectParameterizedDateFilter {
+    return {
+        parameterizedDateFilter: {
+            ...(localIdentifier ? { localIdentifier } : {}),
+            dataSet,
+            parameter: parameterRef,
+            ...emptyValueHandlingToMd(emptyDateValuesFilter, false),
+        },
+    };
+}
+
 function dateFilterToMd(
     { filterConfig, dateDatasetRef, emptyDateValuesFilter }: IDateFilter,
     useEmptyValueHandling: boolean,
-): IVisualizationObjectAbsoluteDateFilter | IVisualizationObjectRelativeDateFilter {
-    const [from, to] = filterConfig?.interval || [undefined, undefined];
-    const emptyValueHandlingProp = useEmptyValueHandling ? emptyValueHandlingToMd(emptyDateValuesFilter) : {};
+):
+    | IVisualizationObjectAbsoluteDateFilter
+    | IVisualizationObjectRelativeDateFilter
+    | IVisualizationObjectParameterizedDateFilter {
+    if (isParameterizedDateFilterConfig(filterConfig)) {
+        return parameterizedDateFilterToMd(filterConfig, dateDatasetRef, emptyDateValuesFilter);
+    }
 
-    if (filterConfig?.type === "absolute") {
+    const [from, to] = filterConfig?.interval || [undefined, undefined];
+    const isAbsolute = filterConfig?.type === "absolute";
+    const isAllTime = !isAbsolute && (from === undefined || to === undefined);
+    const emptyValueHandlingProp = useEmptyValueHandling
+        ? emptyValueHandlingToMd(emptyDateValuesFilter, isAllTime)
+        : {};
+
+    if (isAbsolute) {
         return {
             absoluteDateFilter: {
                 dataSet: dateDatasetRef,
@@ -317,7 +372,7 @@ function dateFilterToMd(
 
     // All time is stored without bounds, a no-op the execution drops. To carry the empty date values mode
     // it has to be the real All time filter, the one the execution sends.
-    if ((from === undefined || to === undefined) && !_isEmpty(emptyValueHandlingProp)) {
+    if (isAllTime && !_isEmpty(emptyValueHandlingProp)) {
         return {
             relativeDateFilter: {
                 dataSet: dateDatasetRef,
@@ -898,7 +953,11 @@ export function filtersToMetadata(
     filters.forEach((filter) => {
         result.push(filterToMd(filter, attributeFilterConfigs, useEmptyValueHandling));
 
-        if (!useEmptyValueHandling && FilterBar.isDateFilter(filter)) {
+        if (
+            !useEmptyValueHandling &&
+            FilterBar.isDateFilter(filter) &&
+            !isParameterizedDateFilterConfig(filter.filterConfig)
+        ) {
             const emptyValuesFilter = createEmptyDateValuesAttributeFilter(filter, dateDatasets);
             if (emptyValuesFilter) {
                 result.push(emptyValuesFilter);
@@ -939,6 +998,8 @@ export interface IAdditionalData {
     filterItems: ILoadedReportItems["filterItems"];
     dateDatasets: IDateDatasets;
     properties: IStoredVisualizationProperties;
+    /** the catalog's periods, for the granularity of a period a date filter references */
+    dateRangeParameters?: ReadonlyArray<IDateRangeParameterMetadataObject>;
 }
 
 /** IAdditionalData enriched with the master measures as it flows through the MD → state transform. */
@@ -952,20 +1013,9 @@ const refUri = (ref: ObjQualifier | ObjRef | undefined): string | undefined =>
 const refIdentifier = (ref: ObjQualifier | ObjRef | undefined): string | undefined =>
     isIdentifierRef(ref) ? ref.identifier : undefined;
 
-function findDimensionIdentifier(
-    filterItem: IVisualizationObjectDateFilter,
-    data: IDateDatasets | undefined,
-) {
-    const relativeDataSet = isVisualizationObjectRelativeDateFilter(filterItem)
-        ? filterItem.relativeDateFilter.dataSet
-        : undefined;
-    const absoluteDataSet = isVisualizationObjectAbsoluteDateFilter(filterItem)
-        ? filterItem.absoluteDateFilter.dataSet
-        : undefined;
-
-    const dimensionUri = refUri(relativeDataSet) || refUri(absoluteDataSet);
-
-    const dimensionId = refIdentifier(relativeDataSet) || refIdentifier(absoluteDataSet);
+function findDimensionIdentifier(dataSet: ObjQualifier, data: IDateDatasets | undefined) {
+    const dimensionUri = refUri(dataSet);
+    const dimensionId = refIdentifier(dataSet);
 
     const itemDimension = (data?.available ?? []).find(
         (dimension) => dimension.uri === dimensionUri || dimension.identifier === dimensionId,
@@ -1181,7 +1231,7 @@ function processVisualizationDateFilter(
     data: IMdTransformContext,
     overTimeComparisonType: OverTimeComparisonType,
 ): IBucketItemMetricFilter {
-    const dimension = findDimensionIdentifier(filterItem, data?.dateDatasets);
+    const dimension = findDimensionIdentifier(getDateFilterDataSet(filterItem), data?.dateDatasets);
 
     const relativeFilter = isVisualizationObjectRelativeDateFilter(filterItem)
         ? filterItem.relativeDateFilter
@@ -1233,6 +1283,45 @@ function processVisualizationDateFilter(
     };
 }
 
+/**
+ * The period a stored filter references, with the granularity the catalog knows for it and the local
+ * identifier the filter is stored with.
+ */
+function toParameterizedDateFilterConfig(
+    { parameter, localIdentifier }: IVisualizationObjectParameterizedDateFilter["parameterizedDateFilter"],
+    dateRangeParameters: ReadonlyArray<IDateRangeParameterMetadataObject> | undefined,
+): IParameterizedDateFilterConfig {
+    // the convertor from SDK returns a ref without type
+    const parameterRef = isUriRef(parameter) ? parameter : idRef(parameter.identifier, "parameter");
+    const granularity = findPeriod(parameterRef, dateRangeParameters)?.definition.defaultValue.granularity;
+
+    return {
+        type: "parameterized",
+        parameterRef,
+        ...(granularity ? { granularity: periodGranularityToGranularity(granularity) } : {}),
+        ...(localIdentifier ? { localIdentifier } : {}),
+    };
+}
+
+function processVisualizationParameterizedDateFilter(
+    { parameterizedDateFilter }: IVisualizationObjectParameterizedDateFilter,
+    data: IMdTransformContext,
+    overTimeComparisonType: OverTimeComparisonType,
+): IBucketItemMetricFilter {
+    const { dataSet, emptyValueHandling } = parameterizedDateFilter;
+    return {
+        attribute: DATE_DATASET_ATTRIBUTE,
+        allElements: [],
+        selectedElements: [],
+        isInverted: true,
+        totalElementsCount: 0,
+        dimension: findDimensionIdentifier(dataSet, data?.dateDatasets),
+        interval: toParameterizedDateFilterConfig(parameterizedDateFilter, data?.dateRangeParameters),
+        overTimeComparisonType,
+        ...(emptyValueHandling ? { emptyDateValuesFilter: emptyValueHandling } : {}),
+    };
+}
+
 function transformVisualizationFilter(
     filter: IVisualizationObjectFilter,
     data: IMdTransformContext,
@@ -1240,6 +1329,9 @@ function transformVisualizationFilter(
 ): IBucketItemMetricFilter {
     if (isVisualizationObjectDateFilter(filter)) {
         return processVisualizationDateFilter(filter, data, overTimeComparisonType);
+    }
+    if (isVisualizationObjectParameterizedDateFilter(filter)) {
+        return processVisualizationParameterizedDateFilter(filter, data, overTimeComparisonType);
     }
 
     return processVisualizationAttributeFilter(filter, data);
@@ -1308,6 +1400,29 @@ function transformVisualizationDateFilter(
         filterConfig: transformToDateFilterConfig(visualizationFilter),
         dateDatasetRef: datasetRef,
         ...(emptyDateValuesFilter ? { emptyDateValuesFilter } : {}),
+    };
+}
+
+function transformVisualizationParameterizedDateFilter(
+    { parameterizedDateFilter }: IVisualizationObjectParameterizedDateFilter,
+    dateRangeParameters: ReadonlyArray<IDateRangeParameterMetadataObject> | undefined,
+    overTimeComparisonType: OverTimeComparisonType,
+    ignoreOverTimeComparisonType: boolean,
+): IDateFilter {
+    const { dataSet, emptyValueHandling } = parameterizedDateFilter;
+    return {
+        type: "date",
+        localIdentifier: generateBucketItemIdentifier(),
+        cacheItemIdentifier: DATE_DATASET_ATTRIBUTE,
+        // AD does not offer the comparison with a period, but keeps a saved one like with any date filter:
+        // "nothing" would drop the saved derived metrics
+        ...(ignoreOverTimeComparisonType
+            ? { overTimeComparisonType: "nothing" }
+            : { overTimeComparisonType }),
+        filterConfig: toParameterizedDateFilterConfig(parameterizedDateFilter, dateRangeParameters),
+        // the convertor from SDK returns a ref without type
+        dateDatasetRef: { ...dataSet, type: "dataSet" } as IdentifierRef,
+        ...(emptyValueHandling ? { emptyDateValuesFilter: emptyValueHandling } : {}),
     };
 }
 
@@ -1605,13 +1720,20 @@ function collectLegacyEmptyDateValuesFilters(
  * - a legacy `""` attribute filter becomes the empty values mode of its date filter, as when the insight
  *   is loaded,
  * - every All time filter becomes `ALL_TIME_GRANULARITY` from 0 to 0, however it is stored,
- * - the default `include` mode is dropped, as when the insight is saved.
+ * - the `include` mode is dropped on All time, where it is the default, as when the insight is saved,
+ *   and also with a period when the writer cannot store it there (`isIncludeWithPeriodKept` is false).
  *
  * Used only to compare stored content; the result is never saved.
+ *
+ * @param visualizationFilters - the stored filters
+ * @param dateDatasets - date datasets, used to recognize the legacy `""` attribute filter
+ * @param isIncludeWithPeriodKept - whether the writer keeps `include` with a period: the filter bar only
+ *  with the `enableImprovedMetricDateFilter` flag, metric date filters always.
  */
 export function normalizeEmptyDateValuesFilters(
     visualizationFilters: ReadonlyArray<VisualizationObjectExtendedFilter>,
     dateDatasets: IDateDatasets | undefined,
+    isIncludeWithPeriodKept: boolean,
 ): VisualizationObjectExtendedFilter[] {
     const { emptyDateValuesFilters, emptyDateValuesFilterIndices } = collectLegacyEmptyDateValuesFilters(
         visualizationFilters,
@@ -1621,25 +1743,37 @@ export function normalizeEmptyDateValuesFilters(
     return visualizationFilters
         .filter((_filter, index) => !emptyDateValuesFilterIndices.has(index))
         .map((filter) => {
+            if (isVisualizationObjectParameterizedDateFilter(filter)) {
+                // its writer keeps include with the flag on or off; a legacy "" attribute filter sets the mode
+                // as when loaded
+                const { dataSet, emptyValueHandling } = filter.parameterizedDateFilter;
+                const mode = emptyValueHandling ?? emptyDateValuesFilters[objRefToString(dataSet)]?.mode;
+                return {
+                    parameterizedDateFilter: {
+                        ..._omit(filter.parameterizedDateFilter, "emptyValueHandling"),
+                        ...emptyValueHandlingToMd(mode, false),
+                    },
+                };
+            }
             if (!isVisualizationObjectDateFilter(filter)) {
                 return filter;
             }
             const dataSet = getDateFilterDataSet(filter);
-            const storedMode = getDateFilterEmptyValueHandling(filter);
-            const mode = emptyValueHandlingToMd(
-                storedMode ?? emptyDateValuesFilters[objRefToString(dataSet)]?.mode,
-            );
+            const storedMode =
+                getDateFilterEmptyValueHandling(filter) ??
+                emptyDateValuesFilters[objRefToString(dataSet)]?.mode;
 
             if (isVisualizationObjectAbsoluteDateFilter(filter)) {
                 return {
                     absoluteDateFilter: {
                         ..._omit(filter.absoluteDateFilter, "emptyValueHandling"),
-                        ...mode,
+                        ...emptyValueHandlingToMd(storedMode, !isIncludeWithPeriodKept),
                     },
                 };
             }
             const { granularity, from, to } = filter.relativeDateFilter;
             const isAllTime = granularity === ALL_TIME_GRANULARITY || from === undefined || to === undefined;
+            const mode = emptyValueHandlingToMd(storedMode, isAllTime || !isIncludeWithPeriodKept);
             // AD saves All time as GDC.time.year without from/to, or as ALL_TIME_GRANULARITY 0..0 when it has
             // an empty values mode. API clients can store either shape, e.g. ALL_TIME_GRANULARITY with "include".
             if (isAllTime) {
@@ -1687,12 +1821,22 @@ function transformVisualizationFilters(
             const itemCache = additionalData?.itemCache;
             const filterItems = additionalData?.filterItems;
             result.push(transformVisualizationAttributeFilter(visualizationFilter, itemCache, filterItems));
-        } else if (isVisualizationObjectDateFilter(visualizationFilter)) {
-            let df = transformVisualizationDateFilter(
-                visualizationFilter,
-                overTimeComparisonType,
-                firstDateFilterTransformed,
-            );
+        } else if (
+            isVisualizationObjectDateFilter(visualizationFilter) ||
+            isVisualizationObjectParameterizedDateFilter(visualizationFilter)
+        ) {
+            let df = isVisualizationObjectParameterizedDateFilter(visualizationFilter)
+                ? transformVisualizationParameterizedDateFilter(
+                      visualizationFilter,
+                      additionalData?.dateRangeParameters,
+                      overTimeComparisonType,
+                      firstDateFilterTransformed,
+                  )
+                : transformVisualizationDateFilter(
+                      visualizationFilter,
+                      overTimeComparisonType,
+                      firstDateFilterTransformed,
+                  );
 
             // the legacy "" attribute filter sets the mode unless the date filter carries it itself; either
             // way the attribute filter is dropped, so re-saving migrates the insight to the field

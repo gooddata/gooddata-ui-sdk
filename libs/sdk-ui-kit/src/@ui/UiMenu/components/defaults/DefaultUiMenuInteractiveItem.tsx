@@ -132,6 +132,13 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
             role={getItemRole(item.selectionRole)}
             aria-checked={item.selectionRole ? !!item.isSelected : item.ariaAttributes?.["aria-checked"]}
             aria-haspopup={item.subItems ? "menu" : item.ariaAttributes?.["aria-haspopup"]}
+            // UiMenu drills down: the submenu replaces the parent menu, so whenever this item
+            // is rendered its submenu is closed.
+            aria-expanded={
+                item.subItems
+                    ? (item.ariaAttributes?.["aria-expanded"] ?? false)
+                    : item.ariaAttributes?.["aria-expanded"]
+            }
             aria-disabled={item.isDisabled}
             aria-label={item.ariaAttributes?.["aria-label"]}
             onMouseMove={handleMouseFocus}

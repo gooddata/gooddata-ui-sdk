@@ -12,6 +12,7 @@ import {
     type IDashboardDateFilterConfigItem,
     type IDashboardMeasureValueFilterConfig,
     type IFilter,
+    type IParameterizedDateFilter,
     type ObjRef,
     absoluteDateFilterValues,
     absoluteGranularityDateFilterValues,
@@ -40,6 +41,7 @@ import {
     isInsightWidget,
     isMatchAttributeFilter,
     isNegativeAttributeFilter,
+    isParameterizedDateFilter,
     isPositiveAttributeFilter,
     isRelativeDateFilter,
     relativeDateFilterValues,
@@ -387,6 +389,12 @@ export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
                 filter1Type === filter2Type
             );
         }
+    } else if (isParameterizedDateFilter(filter1) || isParameterizedDateFilter(filter2)) {
+        return (
+            isParameterizedDateFilter(filter1) &&
+            isParameterizedDateFilter(filter2) &&
+            areParameterizedDateFiltersEqual(filter1, filter2)
+        );
     } else if (isAbsoluteDateFilter(filter1) && isAbsoluteDateFilter(filter2)) {
         // An alert does not store the granularity, so it counts only when both filters have one.
         const filter1Values = dateFilterValues(filter1);
@@ -411,11 +419,25 @@ export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
     return _isEqual(filter1, filter2);
 }
 
+// a missing emptyValueHandling means the backend default, which excludes empty dates
+function areParameterizedDateFiltersEqual(
+    filter1: IParameterizedDateFilter,
+    filter2: IParameterizedDateFilter,
+) {
+    const body1 = filter1.parameterizedDateFilter;
+    const body2 = filter2.parameterizedDateFilter;
+    return (
+        areObjRefsEqual(body1.dataSet, body2.dataSet) &&
+        areObjRefsEqual(body1.parameter, body2.parameter) &&
+        (body1.emptyValueHandling ?? "exclude") === (body2.emptyValueHandling ?? "exclude")
+    );
+}
+
 /**
  * Values to compare date filters by. A bounded range never matches an empty date, so a missing
  * `emptyValueHandling` counts as "exclude" there; on an all-time filter it means no filtering at all.
  */
-export function dateFilterValues(filter: DateFilterOfAnyType) {
+export function dateFilterValues(filter: Exclude<DateFilterOfAnyType, IParameterizedDateFilter>) {
     const values = dateFilterTypeValues(filter);
 
     if (!values) {
@@ -429,7 +451,7 @@ export function dateFilterValues(filter: DateFilterOfAnyType) {
     return { ...values, emptyValueHandling: "exclude" as const };
 }
 
-function dateFilterTypeValues(filter: DateFilterOfAnyType) {
+function dateFilterTypeValues(filter: Exclude<DateFilterOfAnyType, IParameterizedDateFilter>) {
     if (isAbsoluteDateFilter(filter)) {
         return absoluteDateFilterValues(filter);
     } else if (isAbsoluteGranularityDateFilter(filter)) {

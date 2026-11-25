@@ -148,6 +148,26 @@ export function isDocumentTitleChangedEvent(obj: unknown): obj is IDocumentTitle
 }
 
 /**
+ * Name of the URL query parameter that opens the host AI assistant on an existing conversation.
+ *
+ * @remarks
+ * When a workspace route loads with `?aiConversation=<conversationId>` in a full page load, the host
+ * opens its chat with that backend conversation selected and then removes the parameter from the URL.
+ * It does this once per page load, only where the host chat is available, and never in export or
+ * iframe-embedded mode. The host ignores the parameter after client-side navigation. When the host
+ * does not act on the parameter, the parameter stays in the URL.
+ *
+ * Put the parameter in the search part of the URL, before any `#` fragment, so that the host reads it
+ * whatever router the target application uses.
+ *
+ * @example
+ * `/workspace/ws1/dashboards/?aiConversation=abc123#/dashboard/d1`
+ *
+ * @alpha
+ */
+export const AI_CONVERSATION_URL_PARAM = "aiConversation";
+
+/**
  * Event requesting the host to open its AI assistant chat.
  *
  * @remarks
@@ -157,6 +177,10 @@ export function isDocumentTitleChangedEvent(obj: unknown): obj is IDocumentTitle
  * (e.g. a "Summarize" action) emit this event and the host opens its chat, optionally seeded with a
  * question and the user's location context. Tag scoping for the assistant's object search is carried
  * separately via {@link IAiAssistantContextChangedEvent}, which reflects the app's current view.
+ *
+ * Exception: an organization-scope application may embed `GenAIAssistant` for a workspace it chooses
+ * explicitly. The host renders its chat only on workspace routes, so the two never meet. To continue
+ * such a conversation in a workspace application, link there with {@link AI_CONVERSATION_URL_PARAM}.
  *
  * @alpha
  */

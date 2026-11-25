@@ -4,7 +4,6 @@ import { call, cancel, cancelled, getContext, put, select } from "redux-saga/eff
 
 import {
     type IAnalyticalBackend,
-    type IChatConversation,
     type IChatConversationError,
     type IChatConversationInteractionStep,
     type IChatConversationItem,
@@ -27,9 +26,7 @@ import {
     makeAssistantItem,
 } from "../../model.js";
 import { publisherDocumentFormatOf } from "../../publisherDocumentPart.js";
-import { generateTitleFromQuestion } from "../../utils.js";
 import {
-    agentSwitchingActiveSelector,
     allowedRelationshipTypesSelector,
     objectTypesSelector,
     settingsSelector,
@@ -41,26 +38,24 @@ import {
     conversationEffortSelector,
     conversationMessagesByIdSelector,
     conversationSelector,
-    pendingAgentSwitchSelector,
     selectedAgentIdSelector,
 } from "../messages/messagesSelectors.js";
 import {
     appendInteractionStepAction,
     appendResponseDetailAction,
     appendTracedActionAction,
-    applyPendingAgentSwitchAction,
     evaluateMessageAction,
     evaluateMessageCompleteAction,
     evaluateMessageErrorAction,
     evaluateMessageStreamingAction,
     evaluateMessageUpdateAction,
     type newMessageAction,
-    revertAgentSwitchAction,
-    setCurrentConversationAction,
+    upsertConversationAction,
 } from "../messages/messagesSlice.js";
 
 import { convertToLocalContent } from "./converters/toLocalContent.js";
 import { notifyDefinitionReceived } from "./onDefinitionReceivedTrigger.js";
+import { ensureUserMessageConversation, flushPendingAgentSwitch } from "./userMessageConversation.js";
 import { extractErrorContent } from "./utils.js";
 
 /**
@@ -110,8 +105,11 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             throw new Error("Conversation ID is not available.");
         }
 
-        // Create assistant message
-        initialAssistantMessage = makeAssistantItem();
+        // Capture the turn's agent before selection can change while the response is in flight.
+        initialAssistantMessage = {
+            ...makeAssistantItem(),
+            agentId: conversationState.agentId ?? (yield select(selectedAgentIdSelector)),
+        };
 
         // Block input immediately so the user cannot send another message while
         // the deferred switchAgent call (or the streaming response) is in flight.
@@ -123,38 +121,16 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         );
 
         // If we are in the transient new-conversation state, create the conversation first
-        if (conversationState.id) {
-            conversation = conversationState;
-        } else {
-            const api = backend.workspace(workspace).genAI().getChatConversations({ isPreview });
-            // agentSwitchingActiveSelector is false in preview mode, so preview conversations are
-            // never created with an explicit agent and stay pinned to the preview agent being built.
-            const agentSwitchingActive: boolean = yield select(agentSwitchingActiveSelector);
-            const selectedAgentId: string | undefined = agentSwitchingActive
-                ? yield select(selectedAgentIdSelector)
-                : undefined;
-            const created: IChatConversation = yield call(
-                { context: api, fn: api.create },
-                selectedAgentId
-                    ? {
-                          agentId: selectedAgentId,
-                      }
-                    : undefined,
-            );
-            const updated: IChatConversation = yield call(api.update.bind(api), created.id, {
-                title:
-                    message.content.type === "text"
-                        ? generateTitleFromQuestion(message.content.text)
-                        : undefined,
-            });
-            //save
-            conversation = {
-                ...updated,
-                agentId: updated.agentId ?? created.agentId ?? selectedAgentId,
-                localId: conversationState.localId,
-            };
-            // Store it as current conversation and clear the transient flag
-            yield put(setCurrentConversationAction({ conversation }));
+        const conversationContext = { backend, workspace, isPreview };
+        const preparedConversation: IChatConversationLocal = yield call(
+            ensureUserMessageConversation,
+            conversationContext,
+            conversationState,
+            message,
+        );
+        conversation = preparedConversation;
+        if (!conversationState.id) {
+            yield put(upsertConversationAction({ conversation }));
         }
 
         if (!conversation) {
@@ -168,53 +144,15 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         // the first message sent to the new agent. evaluateMessageAction above is
         // local-only state — the message stream does not start until after the
         // switch is confirmed by the backend.
-        // Guard with the feature flag: when agent switching is off the pending
-        // switch should never be set, but skip defensively to preserve the
-        // original no-switching behaviour in that case.
-        const agentSwitchingActive: boolean = yield select(agentSwitchingActiveSelector);
-        const pendingSwitch: ReturnType<typeof pendingAgentSwitchSelector> = agentSwitchingActive
-            ? yield select(pendingAgentSwitchSelector, conversation.localId)
-            : undefined;
-        if (pendingSwitch) {
-            try {
-                yield put(
-                    applyPendingAgentSwitchAction({
-                        conversationLocalId: conversation.localId,
-                        beforeItemLocalId: message.localId,
-                    }),
-                );
-                const chatConversations = backend
-                    .workspace(workspace)
-                    .genAI()
-                    .getChatConversations({ isPreview });
-                const updatedConversation: IChatConversation = yield call(
-                    chatConversations.switchAgent.bind(chatConversations),
-                    conversation.id,
-                    pendingSwitch.agentId,
-                );
-                yield put(
-                    setCurrentConversationAction({
-                        conversation: { ...updatedConversation, localId: conversation.localId },
-                    }),
-                );
-            } catch (e) {
-                console.error("Failed to switch agent before sending message", e);
-                yield put(
-                    revertAgentSwitchAction({
-                        previousAgentId: pendingSwitch.previousAgentId,
-                        failedAgentId: pendingSwitch.agentId,
-                        conversationLocalId: conversation.localId,
-                    }),
-                );
-                yield put(
-                    evaluateMessageErrorAction({
-                        assistantMessageId: initialAssistantMessage.localId,
-                        error: extractErrorContent(e),
-                        conversationId: conversation.localId,
-                    }),
-                );
-                return;
-            }
+        const switchSucceeded: boolean = yield call(
+            flushPendingAgentSwitch,
+            conversationContext,
+            conversation,
+            message.localId,
+            initialAssistantMessage.localId,
+        );
+        if (!switchSucceeded) {
+            return;
         }
 
         // Make the request to start the evaluation
@@ -264,26 +202,29 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         // Mark the last assistant message as complete
         const messageToComplete = lastAssistantMessage ?? initialAssistantMessage;
         if (messageToComplete) {
-            // Check if the message still exists before marking it complete
-            // (it may have been removed if the chat was cleared)
-            const currentMessages: IChatConversationLocalItem[] = yield select(
-                conversationMessagesByIdSelector,
-                conversation?.localId,
-            );
-            const messageExists = currentMessages.some((m) => m.localId === messageToComplete.localId);
-
-            if (messageExists) {
-                yield put(
-                    evaluateMessageCompleteAction({
-                        assistantMessageId: messageToComplete.localId,
-                        conversationId: conversation?.localId ?? conversationState?.localId ?? "",
-                        threadId: conversation?.id || undefined,
-                        cancelled: wasCanceled,
-                        ...(responseCompleted && !wasCanceled ? { responseCompleted: true } : {}),
-                    }),
-                );
-            }
+            yield* completeAssistantMessageIfPresent(conversation?.localId, {
+                assistantMessageId: messageToComplete.localId,
+                conversationId: conversation?.localId ?? conversationState?.localId ?? "",
+                threadId: conversation?.id || undefined,
+                cancelled: wasCanceled,
+                ...(responseCompleted && !wasCanceled ? { responseCompleted: true } : {}),
+            });
         }
+    }
+}
+
+function* completeAssistantMessageIfPresent(
+    conversationId: string | undefined,
+    payload: ReturnType<typeof evaluateMessageCompleteAction>["payload"],
+) {
+    // Check if the message still exists before marking it complete
+    // (it may have been removed if the chat was cleared).
+    const currentMessages: IChatConversationLocalItem[] = yield select(
+        conversationMessagesByIdSelector,
+        conversationId,
+    );
+    if (currentMessages.some((m) => m.localId === payload.assistantMessageId)) {
+        yield put(evaluateMessageCompleteAction(payload));
     }
 }
 
@@ -328,7 +269,7 @@ function* evaluateUserConversationMessage(
     let currentAssistantMessage: IChatConversationLocalItem = assistantMessage;
     let currentInteractionId: string | undefined = undefined;
     // The turn's agent, kept for chunks that do not name it.
-    let turnAgentId: string | undefined = undefined;
+    let turnAgentId: string | undefined = assistantMessage.agentId;
     // Tool names by callId, so a toolResult's trace detail can name the tool that produced it.
     const toolNamesByCallId = new Map<string, string>();
 
@@ -469,29 +410,14 @@ function* evaluateUserConversationMessage(
                         currentInteractionId &&
                         chunkInteractionId !== currentInteractionId
                     ) {
-                        // Check if the current message still exists before marking it complete
-                        // (it may have been removed if the chat was cleared)
-                        const currentMessages: IChatConversationLocalItem[] = yield select(
-                            conversationMessagesByIdSelector,
-                            conversation.localId,
-                        );
-                        const messageExists = currentMessages.some(
-                            (m) => m.localId === currentAssistantMessage.localId,
-                        );
-
-                        if (messageExists) {
-                            // Mark current message as complete
-                            yield put(
-                                evaluateMessageCompleteAction({
-                                    assistantMessageId: currentAssistantMessage.localId,
-                                    conversationId: conversation.localId,
-                                    threadId: conversation.id || undefined,
-                                }),
-                            );
-                        }
+                        yield* completeAssistantMessageIfPresent(conversation.localId, {
+                            assistantMessageId: currentAssistantMessage.localId,
+                            conversationId: conversation.localId,
+                            threadId: conversation.id || undefined,
+                        });
 
                         // Create new assistant message for the new interaction
-                        currentAssistantMessage = makeAssistantItem();
+                        currentAssistantMessage = { ...makeAssistantItem(), agentId: turnAgentId };
                         yield put(
                             evaluateMessageAction({
                                 message: currentAssistantMessage,
@@ -557,29 +483,14 @@ function* evaluateUserConversationMessage(
                         currentInteractionId &&
                         chunkInteractionId !== currentInteractionId
                     ) {
-                        // Check if the current message still exists before marking it complete
-                        // (it may have been removed if the chat was cleared)
-                        const currentMessages: IChatConversationLocalItem[] = yield select(
-                            conversationMessagesByIdSelector,
-                            conversation.localId,
-                        );
-                        const messageExists = currentMessages.some(
-                            (m) => m.localId === currentAssistantMessage.localId,
-                        );
-
-                        if (messageExists) {
-                            // Mark current message as complete
-                            yield put(
-                                evaluateMessageCompleteAction({
-                                    assistantMessageId: currentAssistantMessage.localId,
-                                    conversationId: conversation.localId,
-                                    threadId: conversation.id || undefined,
-                                }),
-                            );
-                        }
+                        yield* completeAssistantMessageIfPresent(conversation.localId, {
+                            assistantMessageId: currentAssistantMessage.localId,
+                            conversationId: conversation.localId,
+                            threadId: conversation.id || undefined,
+                        });
 
                         // Create new assistant message for the new interaction
-                        currentAssistantMessage = makeAssistantItem();
+                        currentAssistantMessage = { ...makeAssistantItem(), agentId: turnAgentId };
                         yield put(
                             evaluateMessageAction({
                                 message: currentAssistantMessage,

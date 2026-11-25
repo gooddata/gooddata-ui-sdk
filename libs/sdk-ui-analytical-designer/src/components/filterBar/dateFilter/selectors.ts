@@ -5,6 +5,7 @@ import { createSelector, createStructuredSelector } from "reselect";
 import { type OverTimeComparisonType, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 import { DecoratedDateDataset as DecoratedDataset } from "../../../models/decorated_date_dataset.js";
+import { getPeriodTitle } from "../../../models/period.js";
 import { getAdditionalDateFiltersLabel } from "../../../selectors/additional_date_filter_selector.js";
 import {
     areGenericDateAttributeElementsSupported,
@@ -39,6 +40,7 @@ import {
 } from "../../../services/buckets_service.js";
 import { DateDatasetsService } from "../../../services/date_datasets_service.js";
 import { getCompatibleMeasures } from "../../../services/over_time_comparison_service.js";
+import { getCatalogDateRangeParameters } from "../../../store/catalog/catalog_selector.js";
 import {
     getAdditionalDateAttributeFilters,
     getFilterItems,
@@ -48,6 +50,7 @@ import {
     type EmptyDateValuesFilterMode,
     FilterBar,
     type IDateFilter,
+    isParameterizedDateFilterConfig,
 } from "../../../store/filter_bar/filter_bar_types.js";
 import { type IAppState } from "../../../store/types.js";
 import {
@@ -56,7 +59,10 @@ import {
     type IRawBucketItems,
 } from "../../../typings/buckets.js";
 
-import { matchDateFilterValueToDateFilterOption } from "./dateFilterOptionFactory.js";
+import {
+    buildPeriodDateFilterOption,
+    matchDateFilterValueToDateFilterOption,
+} from "./dateFilterOptionFactory.js";
 import { findSupportedRelativePresets } from "./presets.js";
 import {
     type IComparisonCompatibleMeasure,
@@ -90,8 +96,18 @@ const getDateFilterItem = (state: IAppState, props: IDateFilterProps): IDateFilt
         .filter(FilterBar.isDateFilter)
         .find((item) => item.localIdentifier === props.filterLocalIdentifier);
 
-const selectDateFilter = createSelector(getDateFilterItem, (filterItem) =>
-    matchDateFilterValueToDateFilterOption(filterItem?.filterConfig),
+const selectDateFilter = createSelector(
+    getDateFilterItem,
+    getCatalogDateRangeParameters,
+    (filterItem, dateRangeParameters) => {
+        const filterConfig = filterItem?.filterConfig;
+        return isParameterizedDateFilterConfig(filterConfig)
+            ? buildPeriodDateFilterOption(
+                  filterConfig,
+                  getPeriodTitle(filterConfig.parameterRef, dateRangeParameters),
+              )
+            : matchDateFilterValueToDateFilterOption(filterConfig);
+    },
 );
 
 const getDateDataset = (state: IAppState, props: IDateFilterProps) => {
@@ -234,6 +250,7 @@ export const selectDateFilterProps = createSelector(
 
 export const DateFilterSelectorTest = {
     getDateFilterItem,
+    selectDateFilter,
     getComparisonCompatibleMeasure,
     getSelectedOverTimeComparisonType,
 };

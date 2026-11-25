@@ -324,6 +324,61 @@ describe("empty date values mode", () => {
                 ]);
             });
 
+            it("writes include on a relative period as the date filter's emptyValueHandling", () => {
+                const result = filtersToMetadata(
+                    [
+                        dateFilter({
+                            filterConfig: { granularity: "GDC.time.year", interval: [-30, 0] },
+                            emptyDateValuesFilter: "include",
+                        }),
+                    ],
+                    {},
+                    defaultDateDatasets,
+                    true,
+                );
+
+                expect(result).toEqual([
+                    {
+                        relativeDateFilter: {
+                            dataSet: dateCreated.ref,
+                            granularity: "GDC.time.year",
+                            from: -30,
+                            to: 0,
+                            emptyValueHandling: "include",
+                        },
+                    },
+                ]);
+            });
+
+            it("writes include on a static period as the absolute date filter's emptyValueHandling", () => {
+                const result = filtersToMetadata(
+                    [
+                        dateFilter({
+                            filterConfig: {
+                                type: "absolute",
+                                granularity: "GDC.time.date",
+                                interval: ["2024-01-01", "2026-12-31"],
+                            },
+                            emptyDateValuesFilter: "include",
+                        }),
+                    ],
+                    {},
+                    defaultDateDatasets,
+                    true,
+                );
+
+                expect(result).toEqual([
+                    {
+                        absoluteDateFilter: {
+                            dataSet: dateCreated.ref,
+                            from: "2024-01-01",
+                            to: "2026-12-31",
+                            emptyValueHandling: "include",
+                        },
+                    },
+                ]);
+            });
+
             it("keeps the bare All time shape for include and for no mode", () => {
                 const allTime = {
                     relativeDateFilter: { dataSet: dateCreated.ref, granularity: "GDC.time.year" },
@@ -449,8 +504,8 @@ describe("empty date values mode", () => {
     });
 
     describe("normalizeEmptyDateValuesFilters", () => {
-        const normalize = (filters: VisualizationObjectExtendedFilter[]) =>
-            normalizeEmptyDateValuesFilters(filters, defaultDateDatasets);
+        const normalize = (filters: VisualizationObjectExtendedFilter[], isIncludeWithPeriodKept = true) =>
+            normalizeEmptyDateValuesFilters(filters, defaultDateDatasets, isIncludeWithPeriodKept);
         // what AD writes back for a stored insight opened without edits
         const reSaved = (stored: VisualizationObjectExtendedFilter[], useEmptyValueHandling: boolean) =>
             filtersToMetadata(
@@ -536,9 +591,42 @@ describe("empty date values mode", () => {
                 "the ALL_TIME_GRANULARITY All time without the mode",
                 [{ relativeDateFilter: { dataSet, granularity: "ALL_TIME_GRANULARITY", from: 0, to: 0 } }],
             ],
+            [
+                "include stored on a relative period",
+                [
+                    {
+                        relativeDateFilter: {
+                            ...lastYearFilter.relativeDateFilter,
+                            emptyValueHandling: "include",
+                        },
+                    },
+                ],
+            ],
+            [
+                "include stored on a static period",
+                [
+                    {
+                        absoluteDateFilter: {
+                            dataSet,
+                            from: "2020-01-01",
+                            to: "2020-12-31",
+                            emptyValueHandling: "include",
+                        },
+                    },
+                ],
+            ],
         ])("compares %s equal to what AD writes back with the flag on and off", (_name, stored) => {
-            expect(normalize(reSaved(stored, true))).toEqual(normalize(stored));
-            expect(normalize(reSaved(stored, false))).toEqual(normalize(stored));
+            expect(normalize(reSaved(stored, true), true)).toEqual(normalize(stored, true));
+            expect(normalize(reSaved(stored, false), false)).toEqual(normalize(stored, false));
+        });
+
+        it("keeps include on a period only when the writer keeps it", () => {
+            const withInclude = {
+                relativeDateFilter: { ...lastYearFilter.relativeDateFilter, emptyValueHandling: "include" },
+            } as VisualizationObjectExtendedFilter;
+
+            expect(normalize([withInclude], true)).not.toEqual(normalize([lastYearFilter], true));
+            expect(normalize([withInclude], false)).toEqual(normalize([lastYearFilter], false));
         });
 
         it("keeps different modes different", () => {

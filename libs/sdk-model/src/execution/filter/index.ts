@@ -309,6 +309,41 @@ export type IAbsoluteGranularityDateFilterBody = IIdentifiableFilter & {
 } & DatePeriodRange;
 
 /**
+ * Filters results to the period held by a date range parameter.
+ *
+ * @remarks
+ * The filter holds only a reference to the parameter. The backend resolves the parameter's current
+ * period at every execution, so the filter follows changes of the parameter value.
+ *
+ * @public
+ */
+export interface IParameterizedDateFilter {
+    parameterizedDateFilter: IParameterizedDateFilterBody;
+}
+
+/**
+ * Object defining the {@link IParameterizedDateFilter} object body.
+ *
+ * @public
+ */
+export interface IParameterizedDateFilterBody extends IIdentifiableFilter {
+    /**
+     * Date data set for filtering
+     */
+    dataSet: ObjRef;
+
+    /**
+     * Date range parameter that holds the period
+     */
+    parameter: ObjRef;
+
+    /**
+     * How to treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
+}
+
+/**
  * Filters results to a relative date range.
  *
  * @remarks
@@ -428,18 +463,19 @@ export type TextAttributeFilter = IArbitraryAttributeFilter | IMatchAttributeFil
  * Date filters limit the range of results to data within relative or absolute date range.
  *
  * @remarks
- * Does not cover the absolute date filter with granularity. {@link DateFilterOfAnyType} covers all date filters.
+ * Does not cover the absolute date filter with granularity or the parameterized date filter.
+ * {@link DateFilterOfAnyType} covers all date filters.
  *
  * @public
  */
 export type IDateFilter = IRelativeDateFilter | IAbsoluteDateFilter;
 
 /**
- * Date filter of any type, including the absolute date filter with granularity.
+ * Date filter of any type, including the absolute date filter with granularity and the parameterized date filter.
  *
  * @alpha
  */
-export type DateFilterOfAnyType = IDateFilter | IAbsoluteGranularityDateFilter;
+export type DateFilterOfAnyType = IDateFilter | IAbsoluteGranularityDateFilter | IParameterizedDateFilter;
 
 /**
  * @public
@@ -572,6 +608,7 @@ export interface IRankingFilter {
 export type IFilter =
     | IAbsoluteDateFilter
     | IAbsoluteGranularityDateFilter
+    | IParameterizedDateFilter
     | IRelativeDateFilter
     | IPositiveAttributeFilter
     | INegativeAttributeFilter
@@ -605,6 +642,7 @@ export type INullableFilter = IFilter | undefined | null;
 export type IMeasureFilter =
     | IAbsoluteDateFilter
     | IAbsoluteGranularityDateFilter
+    | IParameterizedDateFilter
     | IRelativeDateFilter
     | IPositiveAttributeFilter
     | INegativeAttributeFilter
@@ -619,13 +657,14 @@ export type IMeasureFilter =
  * Type guard checking whether the provided object is a positive attribute filter.
  *
  * @remarks
- * Does not cover the absolute date filter with granularity, {@link isSimpleMeasureFilterOfAnyType} does.
+ * Does not cover the absolute date filter with granularity or the parameterized date filter,
+ * {@link isSimpleMeasureFilterOfAnyType} does.
  *
  * @public
  */
 export function isSimpleMeasureFilter(
     obj: unknown,
-): obj is Exclude<IMeasureFilter, IAbsoluteGranularityDateFilter> {
+): obj is Exclude<IMeasureFilter, IAbsoluteGranularityDateFilter | IParameterizedDateFilter> {
     return (
         isPositiveAttributeFilter(obj) ||
         isNegativeAttributeFilter(obj) ||
@@ -636,12 +675,14 @@ export function isSimpleMeasureFilter(
 
 /**
  * Type guard checking whether the provided object is a measure filter, including the absolute date filter
- * with granularity.
+ * with granularity and the parameterized date filter.
  *
  * @alpha
  */
 export function isSimpleMeasureFilterOfAnyType(obj: unknown): obj is IMeasureFilter {
-    return isSimpleMeasureFilter(obj) || isAbsoluteGranularityDateFilter(obj);
+    return (
+        isSimpleMeasureFilter(obj) || isAbsoluteGranularityDateFilter(obj) || isParameterizedDateFilter(obj)
+    );
 }
 
 /**
@@ -732,6 +773,20 @@ export function isAbsoluteDateFilter(obj: unknown): obj is IAbsoluteDateFilter {
 export function isAbsoluteGranularityDateFilter(obj: unknown): obj is IAbsoluteGranularityDateFilter {
     return (
         !_isEmpty(obj) && (obj as IAbsoluteGranularityDateFilter).absoluteGranularityDateFilter !== undefined
+    );
+}
+
+/**
+ * Type guard checking whether the provided object is a date filter that references a date range parameter.
+ *
+ * @alpha
+ */
+export function isParameterizedDateFilter(obj: unknown): obj is IParameterizedDateFilter {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "parameterizedDateFilter" in obj &&
+        obj.parameterizedDateFilter !== undefined
     );
 }
 
@@ -935,7 +990,8 @@ export function isAttributeFilterWithSelection(obj: unknown): obj is IAttributeF
  * Type guard checking whether the provided object is a date filter.
  *
  * @remarks
- * Does not cover the absolute date filter with granularity, {@link isDateFilterOfAnyType} does.
+ * Does not cover the absolute date filter with granularity or the parameterized date filter,
+ * {@link isDateFilterOfAnyType} does.
  *
  * @public
  */
@@ -949,7 +1005,7 @@ export function isDateFilter(obj: unknown): obj is IDateFilter {
  * @alpha
  */
 export function isDateFilterOfAnyType(obj: unknown): obj is DateFilterOfAnyType {
-    return isDateFilter(obj) || isAbsoluteGranularityDateFilter(obj);
+    return isDateFilter(obj) || isAbsoluteGranularityDateFilter(obj) || isParameterizedDateFilter(obj);
 }
 
 /**
@@ -974,11 +1030,14 @@ export function isRankingFilter(obj: unknown): obj is IRankingFilter {
  * Type guard checking whether the provided object is a filter.
  *
  * @remarks
- * Does not cover the absolute date filter with granularity, {@link isFilterOfAnyType} does.
+ * Does not cover the absolute date filter with granularity or the parameterized date filter,
+ * {@link isFilterOfAnyType} does.
  *
  * @public
  */
-export function isFilter(obj: unknown): obj is Exclude<IFilter, IAbsoluteGranularityDateFilter> {
+export function isFilter(
+    obj: unknown,
+): obj is Exclude<IFilter, IAbsoluteGranularityDateFilter | IParameterizedDateFilter> {
     return isDateFilter(obj) || isAttributeFilter(obj) || isMeasureValueFilter(obj) || isRankingFilter(obj);
 }
 
@@ -988,7 +1047,7 @@ export function isFilter(obj: unknown): obj is Exclude<IFilter, IAbsoluteGranula
  * @alpha
  */
 export function isFilterOfAnyType(obj: unknown): obj is IFilter {
-    return isFilter(obj) || isAbsoluteGranularityDateFilter(obj);
+    return isFilter(obj) || isAbsoluteGranularityDateFilter(obj) || isParameterizedDateFilter(obj);
 }
 
 /**
@@ -1220,6 +1279,7 @@ export function filterObjRef(
     filter:
         | IAbsoluteDateFilter
         | IAbsoluteGranularityDateFilter
+        | IParameterizedDateFilter
         | IRelativeDateFilter
         | IPositiveAttributeFilter
         | INegativeAttributeFilter
@@ -1253,6 +1313,9 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined {
     }
     if (isAbsoluteGranularityDateFilter(filter)) {
         return filter.absoluteGranularityDateFilter.dataSet;
+    }
+    if (isParameterizedDateFilter(filter)) {
+        return filter.parameterizedDateFilter.dataSet;
     }
     if (isRelativeDateFilter(filter)) {
         return filter.relativeDateFilter.dataSet;
@@ -1291,6 +1354,9 @@ export function filterLocalIdentifier(filter: IFilter): string | undefined {
     }
     if (isAbsoluteGranularityDateFilter(filter)) {
         return filter.absoluteGranularityDateFilter.localIdentifier;
+    }
+    if (isParameterizedDateFilter(filter)) {
+        return filter.parameterizedDateFilter.localIdentifier;
     }
     if (isRelativeDateFilter(filter)) {
         return filter.relativeDateFilter.localIdentifier;

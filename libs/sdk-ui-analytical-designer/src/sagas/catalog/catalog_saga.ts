@@ -25,6 +25,7 @@ import {
     idRef,
     insightBuckets,
     insightVisualizationUrl,
+    isDateRangeParameterMetadataObject,
     isNumberParameterDefinition,
     isScalarParameterMetadataObject,
     newInsightDefinition,
@@ -44,6 +45,7 @@ import { supportsAttributeHierarchies } from "../../selectors/backend_capabiliti
 import { getProjectId } from "../../selectors/bootstrap_selector.js";
 import {
     enableComputedAttributes,
+    enableDateRangeParameters,
     enableMetricPermissions,
     enableParameters,
     enableStringParameters,
@@ -67,6 +69,7 @@ import {
     setCatalogGroups,
     setCatalogItems,
     setCatalogItemsAvailability,
+    setCatalogLoadFailed,
     setCatalogParameters,
     setIsWorkspaceEmpty,
     setItemTooltipDetails,
@@ -203,31 +206,44 @@ export function* loadAttributeHierarchies() {
 
 const PARAMETERS_PAGE_SIZE = 2000;
 
+export async function fetchParameters(projectId: string): Promise<IParameterMetadataObject[]> {
+    const result = await backend
+        .workspace(projectId)
+        .parameters()
+        .getParametersQuery()
+        .withSize(PARAMETERS_PAGE_SIZE)
+        .query();
+    return result.all();
+}
+
 export function* loadParameters() {
-    const isEnabled: boolean = yield select(enableParameters);
-    if (!isEnabled) {
-        yield put(setCatalogParameters([]));
+    const parametersEnabled: boolean = yield select(enableParameters);
+    const dateRangeParametersEnabled: boolean = yield select(enableDateRangeParameters);
+    if (!parametersEnabled && !dateRangeParametersEnabled) {
+        yield put(setCatalogParameters({ parameters: [], dateRangeParameters: [] }));
         return;
     }
 
     const stringParametersEnabled: boolean = yield select(enableStringParameters);
 
     const projectId: ReturnType<typeof getProjectId> = yield select(getProjectId);
-    const parameters: IParameterMetadataObject[] = yield call(async () => {
-        const result = await backend
-            .workspace(projectId)
-            .parameters()
-            .getParametersQuery()
-            .withSize(PARAMETERS_PAGE_SIZE)
-            .query();
-        return result.all();
-    });
+    const parameters: SagaReturnType<typeof fetchParameters> = yield call(fetchParameters, projectId);
 
-    const supportedParameters = parameters
-        .filter(isScalarParameterMetadataObject)
-        .filter((parameter) => stringParametersEnabled || isNumberParameterDefinition(parameter.definition));
-
-    yield put(setCatalogParameters(supportedParameters));
+    yield put(
+        setCatalogParameters({
+            parameters: parametersEnabled
+                ? parameters
+                      .filter(isScalarParameterMetadataObject)
+                      .filter(
+                          (parameter) =>
+                              stringParametersEnabled || isNumberParameterDefinition(parameter.definition),
+                      )
+                : [],
+            dateRangeParameters: dateRangeParametersEnabled
+                ? parameters.filter(isDateRangeParameterMetadataObject)
+                : [],
+        }),
+    );
 }
 
 export function* loadCatalogItemsAndGroups() {
@@ -255,6 +271,7 @@ export function* loadCatalogItemsAndGroups() {
 
 export function* loadCatalog(refreshAvailability = false) {
     yield put(catalogLoadRequested());
+    yield put(setCatalogLoadFailed(false));
     yield put(setLoadingItems(true));
     yield put(setLoadingGroups(true));
     try {
@@ -270,6 +287,7 @@ export function* loadCatalog(refreshAvailability = false) {
         yield put(catalogLoadSucceeded());
     } catch (error) {
         logError("Error while loading catalog", error);
+        yield put(setCatalogLoadFailed(true));
         yield put(dataSourceError(error));
     } finally {
         yield put(setLoadingItems(false));

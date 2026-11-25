@@ -87,30 +87,32 @@ function createGeoStyleProxy({ backend, origin, cookieDomain, hostHeader }) {
             "X-Requested-With": "XMLHttpRequest",
         },
         selfHandleResponse: true,
-        onProxyReq: applyProxyRequestHeaders,
-        onProxyRes(proxyRes, req, res) {
-            const chunks = [];
-            proxyRes.on("data", (chunk) => chunks.push(chunk));
-            proxyRes.on("end", () => {
-                const buffer = Buffer.concat(chunks);
+        on: {
+            proxyReq: applyProxyRequestHeaders,
+            proxyRes(proxyRes, req, res) {
+                const chunks = [];
+                proxyRes.on("data", (chunk) => chunks.push(chunk));
+                proxyRes.on("end", () => {
+                    const buffer = Buffer.concat(chunks);
 
-                if (proxyRes.statusCode && proxyRes.statusCode >= 400) {
-                    res.writeHead(proxyRes.statusCode, proxyRes.headers);
-                    res.end(buffer);
-                    return;
-                }
+                    if (proxyRes.statusCode && proxyRes.statusCode >= 400) {
+                        res.writeHead(proxyRes.statusCode, proxyRes.headers);
+                        res.end(buffer);
+                        return;
+                    }
 
-                try {
-                    const rewrittenBody = rewriteLocationStyleResponse(buffer, origin);
-                    res.setHeader("content-type", "application/json");
-                    res.end(rewrittenBody);
-                } catch (err) {
-                    // oxlint-disable-next-line eslint-js/no-console
-                    console.error("[devServer] Failed to rewrite geo style response", err);
-                    res.writeHead(500, { "content-type": "application/json" });
-                    res.end(JSON.stringify({ error: "Failed to rewrite geo style response." }));
-                }
-            });
+                    try {
+                        const rewrittenBody = rewriteLocationStyleResponse(buffer, origin);
+                        res.setHeader("content-type", "application/json");
+                        res.end(rewrittenBody);
+                    } catch (err) {
+                        // oxlint-disable-next-line eslint-js/no-console
+                        console.error("[devServer] Failed to rewrite geo style response", err);
+                        res.writeHead(500, { "content-type": "application/json" });
+                        res.end(JSON.stringify({ error: "Failed to rewrite geo style response." }));
+                    }
+                });
+            },
         },
     };
 }
@@ -141,9 +143,11 @@ module.exports = (_env, argv) => {
                 // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
                 "X-Requested-With": "XMLHttpRequest",
             },
-            onProxyReq(proxyReq) {
-                // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
-                applyProxyRequestHeaders(proxyReq);
+            on: {
+                proxyReq(proxyReq) {
+                    // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
+                    applyProxyRequestHeaders(proxyReq);
+                },
             },
         },
     ];

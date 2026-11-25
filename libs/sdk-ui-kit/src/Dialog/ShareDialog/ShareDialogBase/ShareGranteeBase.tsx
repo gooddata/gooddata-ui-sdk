@@ -15,7 +15,7 @@ import { SharedObjectUnderLenientControl } from "./SharedObjectUnderLenientContr
 import { ShareGranteeContent } from "./ShareGranteeContent.js";
 import { ShareLink } from "./ShareLink.js";
 import { type IShareGranteeBaseProps } from "./types.js";
-import { ADD_GRANTEE_ID } from "./utils.js";
+import { ADD_GRANTEE_ID, SHARE_DIALOG_ACCESSIBILITY_CONFIG } from "./utils.js";
 
 /**
  * @internal
@@ -100,6 +100,7 @@ export function ShareGranteeBase({
             onSubmit={onSubmit}
             hideSubmitButton={applyShareGrantOnSelect}
             initialFocus={ADD_GRANTEE_ID}
+            accessibilityConfig={SHARE_DIALOG_ACCESSIBILITY_CONFIG}
         >
             <AdminInformationMessage isVisible={shouldDisplayAdminMessage ?? false} />
             {isShareGrantHidden ? null : (

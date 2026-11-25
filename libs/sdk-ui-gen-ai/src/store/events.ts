@@ -10,7 +10,7 @@ import { type IAiAssistantDefinitionReceivedPayload } from "@gooddata/sdk-plugga
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { type GenAIAssistantMode } from "../components/ConfigContext.js";
-import { type IChatConversationLocal, type TextContentObject } from "../model.js";
+import { type GenAIAgent, type IChatConversationLocal, type TextContentObject } from "../model.js";
 
 /**
  * A common event definition for the Chat component.
@@ -304,6 +304,10 @@ export type ChatAssistantMessageEvent = BaseEvent & {
     type: "chatAssistantMessage";
     interactionId?: string;
     useCase: string;
+    /**
+     * The responding agent, when known.
+     */
+    agent?: GenAIAgent;
     /**
      * Whether processing was cancelled before the message completed.
      */

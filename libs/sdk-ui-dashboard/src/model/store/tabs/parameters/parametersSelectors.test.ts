@@ -281,7 +281,12 @@ function makeFullState({
         insights: makeInsightsSliceState(insights),
         backendCapabilities: BACKEND_CAPABILITIES,
         catalog: {
-            parameters: { status: catalogStatus, parameters: workspaceParameters },
+            parameters: {
+                status: catalogStatus,
+                parameters: workspaceParameters,
+                dateRangeParametersStatus: "gated-off",
+                dateRangeParameters: [],
+            },
             parameterDependencies: {
                 status: dependenciesStatus,
                 byRoot: { ...byRoot, ...filterParameters },
@@ -1548,7 +1553,12 @@ describe("parameter selectors (per tab)", () => {
                 ]),
                 backendCapabilities: BACKEND_CAPABILITIES,
                 catalog: {
-                    parameters: { status: "loaded", parameters: [] },
+                    parameters: {
+                        status: "loaded",
+                        parameters: [],
+                        dateRangeParametersStatus: "gated-off",
+                        dateRangeParameters: [],
+                    },
                     parameterDependencies: {
                         status: "loaded",
                         byRoot: { [serializeObjRef(switcherChildInsightRef)]: [topNRef] },
@@ -1831,7 +1841,12 @@ describe("parameter selectors (per tab)", () => {
                 insights: makeInsightsSliceState(insights),
                 backendCapabilities: BACKEND_CAPABILITIES,
                 catalog: {
-                    parameters: { status: "loaded", parameters: workspaceParameters },
+                    parameters: {
+                        status: "loaded",
+                        parameters: workspaceParameters,
+                        dateRangeParametersStatus: "gated-off",
+                        dateRangeParameters: [],
+                    },
                     parameterDependencies: {
                         status: "loaded",
                         byRoot: {
@@ -2165,7 +2180,12 @@ describe("parameter selectors (per tab)", () => {
                     },
                     backendCapabilities: BACKEND_CAPABILITIES,
                     catalog: {
-                        parameters: { status: "loaded", parameters: [topNWorkspace] },
+                        parameters: {
+                            status: "loaded",
+                            parameters: [topNWorkspace],
+                            dateRangeParametersStatus: "gated-off",
+                            dateRangeParameters: [],
+                        },
                     },
                     meta: { persistedDashboard: undefined },
                     config: { config: { settings: { enableParameters: true } } },
@@ -2238,6 +2258,8 @@ describe("parameter selectors (per tab)", () => {
                         parameters: {
                             status: "loaded",
                             parameters: [topNWorkspace, exportSampleSizeWorkspace],
+                            dateRangeParametersStatus: "gated-off",
+                            dateRangeParameters: [],
                         },
                     },
                     meta: { persistedDashboard: undefined },
@@ -2318,7 +2340,14 @@ describe("parameter selectors (per tab)", () => {
                     ],
                     activeTabLocalIdentifier,
                 },
-                catalog: { parameters: { status: "loaded", parameters: [topNWorkspace] } },
+                catalog: {
+                    parameters: {
+                        status: "loaded",
+                        parameters: [topNWorkspace],
+                        dateRangeParametersStatus: "gated-off",
+                        dateRangeParameters: [],
+                    },
+                },
                 meta: { persistedDashboard: undefined },
                 config: { config: { settings: { enableParameters: true } } },
             }) as unknown as DashboardState;
@@ -2385,7 +2414,14 @@ describe("parameter reconciliation selectors", () => {
                     ],
                     activeTabLocalIdentifier: "tab-1",
                 },
-                catalog: { parameters: { status: "loaded", parameters: [boundedTopNWorkspace] } },
+                catalog: {
+                    parameters: {
+                        status: "loaded",
+                        parameters: [boundedTopNWorkspace],
+                        dateRangeParametersStatus: "gated-off",
+                        dateRangeParameters: [],
+                    },
+                },
                 config: { config: { settings: { enableParameters: true } } },
             } as unknown as DashboardState;
             expect(selectParameterReconciliations(state)).toEqual([

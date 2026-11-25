@@ -2,7 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type CatalogItem } from "@gooddata/sdk-model";
+import {
+    type CatalogItem,
+    type IDateRangeParameterMetadataObject,
+    type IScalarParameterMetadataObject,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { initialState } from "../../reducers/initial_state.js";
 import { catalogAttribute, catalogFact, catalogMeasure } from "../../tests/catalog.test.helpers.js";
@@ -18,7 +23,9 @@ import {
     getAvailableAttributes,
     getAvailableCatalogItemsUris,
     getAvailableItems,
+    getCatalogDateRangeParameters,
     getCatalogItems,
+    getCatalogParameters,
     getHLLFilteredCatalogItems,
     getSortedCatalogGroups,
     hasAvailabilityError,
@@ -457,6 +464,51 @@ describe("CatalogSelector", () => {
             const state = withData(initialState, { catalog: catalogState });
             const item = getAttributeHierarchiesWithCatalogItem("city_name")(state);
             expect(item).toEqual([]);
+        });
+    });
+
+    describe("date range parameters", () => {
+        const topN: IScalarParameterMetadataObject = {
+            type: "parameter",
+            id: "topN",
+            uri: "/topN",
+            ref: idRef("topN", "parameter"),
+            title: "Top N",
+            description: "",
+            production: true,
+            deprecated: false,
+            unlisted: false,
+            definition: { type: "NUMBER", defaultValue: 10 },
+        };
+        const lastHoldingMonth: IDateRangeParameterMetadataObject = {
+            ...topN,
+            id: "lastHoldingMonth",
+            uri: "/lastHoldingMonth",
+            ref: idRef("lastHoldingMonth", "parameter"),
+            title: "Last holding month",
+            definition: {
+                type: "DATE_RANGE",
+                defaultValue: { granularity: "GDC.time.month", from: "2025-08" },
+            },
+        };
+        const untitledPeriod: IDateRangeParameterMetadataObject = {
+            ...lastHoldingMonth,
+            id: "untitledPeriod",
+            uri: "/untitledPeriod",
+            ref: idRef("untitledPeriod", "parameter"),
+            title: "",
+        };
+        const state = withData(initialState, {
+            catalog: {
+                ...initialCatalogState,
+                parameters: [topN],
+                dateRangeParameters: [lastHoldingMonth, untitledPeriod],
+            },
+        });
+
+        it("should return the date range parameters apart from the scalar parameters", () => {
+            expect(getCatalogDateRangeParameters(state)).toEqual([lastHoldingMonth, untitledPeriod]);
+            expect(getCatalogParameters(state)).toEqual([topN]);
         });
     });
 });

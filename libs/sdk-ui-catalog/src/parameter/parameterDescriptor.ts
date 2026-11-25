@@ -16,12 +16,13 @@ import {
 import type { ICatalogItemParameter } from "../catalogItem/types.js";
 import { ObjectTypes } from "../objectType/constants.js";
 
+import { periodGranularities, periodLiteralFormats } from "./dateRangePeriod.js";
 import { PARAMETER_FEATURE_FLAG, useEnabledParameterTypes } from "./gate.js";
 import { createParameterCompletions } from "./parameterCompletions.js";
 import { createCopiedParameter } from "./parameterCopy.js";
 import { createParameterMutationAdapter, listParameterReferences } from "./parameterMutationPort.js";
-import { serializeParameterToYaml } from "./parameterSerialization.js";
-import { validateParameterYaml } from "./parameterValidation.js";
+import { serializeParameterToYaml, toParameterMetadataDefinition } from "./parameterSerialization.js";
+import { type ParameterValidationResult, validateParameterYaml } from "./parameterValidation.js";
 
 const PARAMETER_DOCS_URL = "https://www.gooddata.ai/docs/cloud/experimental-features/numeric-parameters/";
 
@@ -68,6 +69,10 @@ const errorMessages = defineMessages({
     },
     unsupportedCardinality: { id: "analyticsCatalog.parameter.validation.unsupportedCardinality" },
     invalidTags: { id: "analyticsCatalog.parameter.validation.invalidTags" },
+    unsupportedGranularity: { id: "analyticsCatalog.parameter.validation.unsupportedGranularity" },
+    invalidPeriodValue: { id: "analyticsCatalog.parameter.validation.invalidPeriodValue" },
+    emptyPeriod: { id: "analyticsCatalog.parameter.validation.emptyPeriod" },
+    invalidPeriodOrder: { id: "analyticsCatalog.parameter.validation.invalidPeriodOrder" },
 });
 
 function useParameterEditing(): IAsCodeEditing<IParameterMetadataObjectDefinition> {
@@ -78,8 +83,7 @@ function useParameterEditing(): IAsCodeEditing<IParameterMetadataObjectDefinitio
         () => ({
             completionSource,
             syntaxErrorMessage: intl.formatMessage(errorMessages.syntax),
-            // Parameter YAML round-trips 1:1 to its definition, so serialization is a plain stringify and
-            // every definition has a code form.
+            // YAML maps 1:1 to the definition except a period's granularity name, so all have a code form.
             serialize: (definition) => ({
                 yaml: serializeParameterToYaml(definition),
                 hasCodeForm: true,
@@ -90,12 +94,14 @@ function useParameterEditing(): IAsCodeEditing<IParameterMetadataObjectDefinitio
                     fixedIdentifier: fixedIdentifierOf(context),
                 });
                 return result.isValid
-                    ? { isValid: true, definition: result.parameter }
+                    ? { isValid: true, definition: toParameterMetadataDefinition(result.parameter) }
                     : toAsCodeFailure(
                           result,
                           intl.formatMessage(errorMessages[result.errorCode], {
                               type: result.type,
                               enabledTypes: intl.formatList(enabledTypes, { type: "conjunction" }),
+                              granularities: intl.formatList(periodGranularities, { type: "disjunction" }),
+                              ...periodMessageValues(result),
                           }),
                       );
             },
@@ -104,9 +110,14 @@ function useParameterEditing(): IAsCodeEditing<IParameterMetadataObjectDefinitio
     );
 }
 
-// The editor accepts only scalar definitions, so a date range parameter stays read-only.
+function periodMessageValues({ period }: Exclude<ParameterValidationResult, { isValid: true }>) {
+    return period ? { field: period.field, ...periodLiteralFormats[period.granularity] } : {};
+}
+
+// A date range parameter is read-only while the editor does not accept its type.
 function useIsParameterItemEditable(item: ICatalogItemParameter): boolean {
-    return isScalarParameterDefinition(item.definition);
+    const enabledTypes = useEnabledParameterTypes();
+    return isScalarParameterDefinition(item.definition) || enabledTypes.includes(item.definition.type);
 }
 
 /**

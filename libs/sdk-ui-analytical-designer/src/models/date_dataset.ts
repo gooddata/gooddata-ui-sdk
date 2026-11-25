@@ -2,7 +2,7 @@
 
 import { keyBy } from "lodash-es";
 
-import { type ObjRef } from "@gooddata/sdk-model";
+import { type IDateRangeParameterMetadataObject, type ObjRef } from "@gooddata/sdk-model";
 
 import { type IDateDatasetAttribute } from "../typings/dataset_attribute.js";
 import { type IDateDataset } from "../typings/datasets.js";
@@ -45,6 +45,8 @@ export interface ISelectedDateDatasets {
     measureDateDatasets: IMeasureDateDatasetsMetaItems;
     /** every date dataset's meta, for the metric date filters that name their own dataset */
     dateDatasetsMeta?: ReadonlyArray<IDateDatasetsMetaItem>;
+    /** the catalog's periods, for the title of a metric date filter that references one */
+    dateRangeParameters?: ReadonlyArray<IDateRangeParameterMetadataObject>;
 }
 
 export function decoratedDateDataset(item: IDateDataset): IDecoratedDateDatasetItem {

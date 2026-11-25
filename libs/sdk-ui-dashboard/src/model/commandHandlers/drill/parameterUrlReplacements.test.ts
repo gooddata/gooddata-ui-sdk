@@ -245,6 +245,8 @@ describe("parameter placeholders of a custom URL drill", () => {
         Tester.dispatch(
             catalogActions.setCatalogParameters({
                 status: "loaded",
+                dateRangeParametersStatus: "gated-off",
+                dateRangeParameters: [],
                 parameters: [
                     {
                         type: "parameter",

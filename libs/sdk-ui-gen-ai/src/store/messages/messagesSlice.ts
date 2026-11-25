@@ -233,6 +233,23 @@ const getAssistantMessageStrict = (
     return message;
 };
 
+const getVisualizationPart = (
+    state: MessagesSliceState,
+    assistantMessageId: string,
+    visualizationId: string,
+    conversationId?: string,
+): Extract<IChatConversationMultipartLocalPart, { type: "visualization" }> | undefined => {
+    const assistantMessage = getAssistantMessageStrict(state, assistantMessageId, conversationId);
+
+    if (assistantMessage.content.type !== "multipart") {
+        throw new Error("Unexpected message type");
+    }
+
+    return assistantMessage.content.parts
+        .filter((filter) => filter.type === "visualization")
+        .find((content) => content.visualization?.insight.identifier === visualizationId);
+};
+
 const getUserMessageStrict = (
     state: MessagesSliceState,
     assistantMessageId: string,
@@ -622,6 +639,34 @@ const messagesSlice = createSlice({
             state.selectedAgentId = payload.conversation.agentId ?? state.selectedAgentId;
             seedConversationEffort(state, state.currentConversation?.localId);
         },
+        upsertConversationAction: (
+            state,
+            { payload }: PayloadAction<{ conversation: IChatConversationLocal }>,
+        ) => {
+            const existing = state.conversations?.find(
+                (conversation) =>
+                    conversation.localId === payload.conversation.localId ||
+                    (payload.conversation.id && conversation.id === payload.conversation.id),
+            );
+            if (existing) {
+                state.conversations = state.conversations?.map((conversation) =>
+                    conversation === existing ? { ...conversation, ...payload.conversation } : conversation,
+                );
+            } else {
+                state.conversations = [payload.conversation, ...(state.conversations ?? [])];
+            }
+
+            // Async preparation must not select a conversation the user has left.
+            if (isConversationWithLocalId(state.currentConversation, payload.conversation.localId)) {
+                state.currentConversation = { ...state.currentConversation, ...payload.conversation };
+                state.threadId = payload.conversation.id;
+                state.selectedAgentId = payload.conversation.agentId ?? state.selectedAgentId;
+            }
+
+            if (state.conversationsData[payload.conversation.localId]?.asyncProcess === "evaluating") {
+                setConversationInProgress(state, true, payload.conversation.localId);
+            }
+        },
         activateConversationAction: (
             state,
             { payload: { conversationId } }: PayloadAction<{ conversationId: string }>,
@@ -964,20 +1009,12 @@ const messagesSlice = createSlice({
             }>,
         ) => {
             const conversationId = getConversationLocalId(state.currentConversation);
-            const assistantMessage = getAssistantMessageStrict(
+            const visualization = getVisualizationPart(
                 state,
                 payload.assistantMessageId,
+                payload.visualizationId,
                 conversationId,
             );
-
-            if (assistantMessage.content.type !== "multipart") {
-                throw new Error("Unexpected message type");
-            }
-
-            const visualization: IChatConversationMultipartLocalPart | undefined =
-                assistantMessage.content.parts
-                    .filter((filter) => filter.type === "visualization")
-                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
             if (visualization?.visualization) {
                 visualization.visualization.insight.title = payload.visualizationTitle;
@@ -997,20 +1034,12 @@ const messagesSlice = createSlice({
             }>,
         ) => {
             const conversationId = getConversationLocalId(state.currentConversation);
-            const assistantMessage = getAssistantMessageStrict(
+            const visualization = getVisualizationPart(
                 state,
                 payload.assistantMessageId,
+                payload.visualizationId,
                 conversationId,
             );
-
-            if (assistantMessage.content.type !== "multipart") {
-                throw new Error("Unexpected message type");
-            }
-
-            const visualization: IChatConversationMultipartLocalPart | undefined =
-                assistantMessage.content.parts
-                    .filter((filter) => filter.type === "visualization")
-                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
             if (visualization) {
                 delete visualization.saving;
@@ -1030,20 +1059,12 @@ const messagesSlice = createSlice({
                 conversationId?: string;
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(
+            const visualization = getVisualizationPart(
                 state,
                 payload.assistantMessageId,
+                payload.visualizationId,
                 payload.conversationId,
             );
-
-            if (assistantMessage.content.type !== "multipart") {
-                throw new Error("Unexpected message type");
-            }
-
-            const visualization: IChatConversationMultipartLocalPart | undefined =
-                assistantMessage.content.parts
-                    .filter((filter) => filter.type === "visualization")
-                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
             if (visualization) {
                 visualization.saving = {
@@ -1065,20 +1086,12 @@ const messagesSlice = createSlice({
                 explore: boolean;
             }>,
         ) => {
-            const assistantMessage = getAssistantMessageStrict(
+            const visualization = getVisualizationPart(
                 state,
                 payload.assistantMessageId,
+                payload.visualizationId,
                 payload.conversationId,
             );
-
-            if (assistantMessage.content.type !== "multipart") {
-                throw new Error("Unexpected message type");
-            }
-
-            const visualization: IChatConversationMultipartLocalPart | undefined =
-                assistantMessage.content.parts
-                    .filter((filter) => filter.type === "visualization")
-                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
             if (visualization?.visualization) {
                 visualization.saving = {
@@ -1182,20 +1195,12 @@ const messagesSlice = createSlice({
             }>,
         ) => {
             const conversationId = getConversationLocalId(state.currentConversation);
-            const assistantMessage = getAssistantMessageStrict(
+            const visualization = getVisualizationPart(
                 state,
                 payload.assistantMessageId,
+                payload.visualizationId,
                 conversationId,
             );
-
-            if (assistantMessage.content.type !== "multipart") {
-                throw new Error("Unexpected message type");
-            }
-
-            const visualization: IChatConversationMultipartLocalPart | undefined =
-                assistantMessage.content.parts
-                    .filter((filter) => filter.type === "visualization")
-                    .find((content) => content.visualization?.insight.identifier === payload.visualizationId);
 
             if (visualization) {
                 delete visualization.reporting;
@@ -1373,6 +1378,7 @@ export const {
     revertAgentSwitchAction,
     setAgentsAction,
     setAgentsLoadingAction,
+    upsertConversationAction,
     pinConversationSuccessAction,
     pinConversationFailureAction,
     renameConversationSuccessAction,

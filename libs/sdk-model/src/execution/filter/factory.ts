@@ -38,6 +38,7 @@ import {
     type IMatchAttributeFilter,
     type IMeasureValueFilter,
     type INegativeAttributeFilter,
+    type IParameterizedDateFilter,
     type IPositiveAttributeFilter,
     type IRankingFilter,
     type IRelativeDateFilter,
@@ -370,6 +371,48 @@ export function newAbsoluteGranularityDateFilter(
             dataSet,
             granularity,
             ...range,
+            ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
+        },
+    };
+}
+
+/**
+ * Options of a new parameterized date filter.
+ *
+ * @alpha
+ */
+export interface IParameterizedDateFilterOptions {
+    /**
+     * Filter local identifier.
+     */
+    localIdentifier?: string;
+
+    /**
+     * How to treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
+}
+
+/**
+ * Creates a new date filter that takes its period from a date range parameter.
+ *
+ * @param dateDataSet - ref or identifier of the date data set to filter on
+ * @param parameter - ref or identifier of the date range parameter that holds the period
+ * @param options - local identifier and empty values handling of the filter
+ *
+ * @alpha
+ */
+export function newParameterizedDateFilter(
+    dateDataSet: ObjRef | Identifier,
+    parameter: ObjRef | Identifier,
+    options: IParameterizedDateFilterOptions = {},
+): IParameterizedDateFilter {
+    const { localIdentifier, emptyValueHandling } = options;
+    return {
+        parameterizedDateFilter: {
+            dataSet: isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet),
+            parameter: isObjRef(parameter) ? parameter : idRef(parameter, "parameter"),
             ...(localIdentifier ? { localIdentifier } : {}),
             ...(emptyValueHandling ? { emptyValueHandling } : {}),
         },
