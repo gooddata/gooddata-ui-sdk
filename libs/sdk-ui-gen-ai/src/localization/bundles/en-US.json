@@ -31,6 +31,22 @@
         "text": "The AI service is temporarily unavailable. Please try again later.",
         "crowdinContext": "Message shown when the AI service or inference gateway is temporarily unavailable."
     },
+    "gd.gen-ai.global-error.not-authenticated": {
+        "text": "You're not signed in. Please sign in again to continue.",
+        "crowdinContext": "AI assistant error shown when authentication is required (HTTP 401). Asks the user to sign in again through the embedding application."
+    },
+    "gd.gen-ai.global-error.forbidden": {
+        "text": "You don't have permission to access this content. Start a new conversation or contact your administrator if you need access.",
+        "crowdinContext": "AI assistant error shown for an ordinary HTTP 403 authorization failure, including when access to the conversation's agent is revoked. Suggests starting a new conversation or contacting an administrator; not a sign-in failure."
+    },
+    "gd.gen-ai.global-error.not-found": {
+        "text": "The requested result or conversation is no longer available. Start a new conversation and try again.",
+        "crowdinContext": "AI assistant error shown for HTTP 404. The missing resource may be a result or conversation; do not imply that the user's sign-in session expired."
+    },
+    "gd.gen-ai.global-error.empty-response": {
+        "text": "The assistant returned no response. Please send your question again.",
+        "crowdinContext": "AI assistant error shown when a response stream closes without any visible assistant content. Asks the user to resend their question."
+    },
     "gd.gen-ai.global-error.traceId": {
         "text": "Error trace ID",
         "crowdinContext": "Button label to show more detailed error information"

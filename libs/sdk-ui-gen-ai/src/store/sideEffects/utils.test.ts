@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import { NotAuthenticated, UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 
 import { extractError, extractErrorContent } from "./utils.js";
 
@@ -22,6 +22,45 @@ describe("sideEffects utils", () => {
     });
 
     describe("extractErrorContent", () => {
+        it("preserves typed authentication failures as a stable reason and status", () => {
+            expect(extractErrorContent(new NotAuthenticated("No session or session expired"))).toMatchObject({
+                type: "error",
+                code: 401,
+                reason: "NOT_AUTHENTICATED",
+            });
+        });
+
+        it("normalizes structured HTTP 401 failures without parsing the message", () => {
+            expect(extractErrorContent(new UnexpectedResponseError("Unauthorized", 401, {}))).toMatchObject({
+                code: 401,
+                reason: "NOT_AUTHENTICATED",
+            });
+        });
+
+        it("preserves streamed errors and normalizes their authentication reason", () => {
+            expect(
+                extractErrorContent({ type: "error", code: 401, message: "Unauthorized", traceId: "trace" }),
+            ).toEqual({
+                type: "error",
+                code: 401,
+                reason: "NOT_AUTHENTICATED",
+                message: "Unauthorized",
+                traceId: "trace",
+            });
+        });
+
+        it("does not misclassify permission failures or result-cache misses as authentication", () => {
+            for (const code of [403, 404]) {
+                const content = extractErrorContent(
+                    new UnexpectedResponseError("Request failed", code, {
+                        detail: "Result not found in result cache.",
+                    }),
+                );
+                expect(content.code).toBe(code);
+                expect(content.reason).toBeUndefined();
+            }
+        });
+
         it("extracts full error content from UnexpectedResponseError", () => {
             const err = new UnexpectedResponseError(
                 "Request failed",

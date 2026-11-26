@@ -65,8 +65,14 @@ export function renderHighCharts(props: IHighChartsRendererProps): ReactElement 
  * @internal
  */
 export interface IChartTransformationProps {
-    height: number;
-    width: number;
+    /**
+     * When not provided, the chart measures and fills its container.
+     */
+    height?: number;
+    /**
+     * When not provided, the chart measures and fills its container.
+     */
+    width?: number;
     config: IChartConfig;
     drillableItems: ExplicitDrill[];
     locale: string;

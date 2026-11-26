@@ -22,8 +22,10 @@ import {
 import { extractHeading } from "../../components/utils/markdownUtils.js";
 import {
     type IChatConversationLocal,
+    type IChatConversationLocalContent,
     type IChatConversationLocalItem,
     makeAssistantItem,
+    makeErrorContent,
 } from "../../model.js";
 import { publisherDocumentFormatOf } from "../../publisherDocumentPart.js";
 import {
@@ -163,8 +165,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             .getConversationThread(conversation.id)
             .query(message.content);
 
-        // evaluateUserMessage may create additional assistant messages if the stream contains
-        // multiple interaction IDs. It returns the last message that needs to be completed.
+        // Track replacement messages before the child returns so cancellation completes the active one.
         const result: EvaluateUserConversationMessageResult = yield call(
             evaluateUserConversationMessage,
             conversation,
@@ -172,9 +173,11 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
             initialAssistantMessage,
             chatThreadQuery,
             !conversationState.id,
+            (assistantMessage: IChatConversationLocalItem) => {
+                lastAssistantMessage = assistantMessage;
+            },
         );
-        lastAssistantMessage = result.lastAssistantMessage;
-        if (result.error) {
+        if ("error" in result) {
             throw result.error;
         }
         responseCompleted = true;
@@ -202,7 +205,7 @@ function* conversationUserMessage(message: IChatConversationLocalItem) {
         // Mark the last assistant message as complete
         const messageToComplete = lastAssistantMessage ?? initialAssistantMessage;
         if (messageToComplete) {
-            yield* completeAssistantMessageIfPresent(conversation?.localId, {
+            yield* completeAssistantMessageIfPresent(conversation?.localId ?? conversationState?.localId, {
                 assistantMessageId: messageToComplete.localId,
                 conversationId: conversation?.localId ?? conversationState?.localId ?? "",
                 threadId: conversation?.id || undefined,
@@ -228,15 +231,28 @@ function* completeAssistantMessageIfPresent(
     }
 }
 
+function* startNextAssistantMessage(
+    conversation: IChatConversationLocal,
+    currentAssistantMessage: IChatConversationLocalItem,
+    agentId: string | undefined,
+    onAssistantMessageStarted: (message: IChatConversationLocalItem) => void,
+) {
+    yield* completeAssistantMessageIfPresent(conversation.localId, {
+        assistantMessageId: currentAssistantMessage.localId,
+        conversationId: conversation.localId,
+        threadId: conversation.id || undefined,
+    });
+
+    const message = { ...makeAssistantItem(), agentId };
+    onAssistantMessageStarted(message);
+    yield put(evaluateMessageAction({ message, conversationId: conversation.localId }));
+    return message;
+}
+
 /**
- * Result of evaluating a user message, containing all assistant messages created during the stream.
+ * Result of evaluating a user message, containing any error encountered during the stream.
  */
 type EvaluateUserConversationMessageResult = {
-    /**
-     * The last assistant message that was being processed when the stream ended.
-     * This is the message that needs to be marked as complete by the caller.
-     */
-    lastAssistantMessage: IChatConversationLocalItem;
     error?: unknown;
 };
 
@@ -246,6 +262,7 @@ function* evaluateUserConversationMessage(
     assistantMessage: IChatConversationLocalItem,
     preparedChatThread: IChatConversationThreadQuery,
     isStartMessage: boolean,
+    onAssistantMessageStarted: (message: IChatConversationLocalItem) => void,
 ) {
     let reader:
         | ReadableStreamReader<
@@ -267,11 +284,14 @@ function* evaluateUserConversationMessage(
     // Track interaction ID to assistant message mapping
     let currentUserMessage: IChatConversationLocalItem | undefined = userMessage;
     let currentAssistantMessage: IChatConversationLocalItem = assistantMessage;
+    let currentAssistantContent: IChatConversationLocalContent | IChatConversationError | undefined;
     let currentInteractionId: string | undefined = undefined;
     // The turn's agent, kept for chunks that do not name it.
     let turnAgentId: string | undefined = assistantMessage.agentId;
     // Tool names by callId, so a toolResult's trace detail can name the tool that produced it.
     const toolNamesByCallId = new Map<string, string>();
+    let hasVisibleAssistantContent = false;
+    let streamFinished = false;
 
     let queryBuilder = preparedChatThread
         .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 10)
@@ -316,6 +336,17 @@ function* evaluateUserConversationMessage(
             } = yield call([reader, reader.read]);
 
             if (done) {
+                streamFinished = true;
+                if (!hasVisibleAssistantContent) {
+                    return {
+                        error: makeErrorContent(
+                            "The assistant returned no response. Please send your question again.",
+                            undefined,
+                            undefined,
+                            "EMPTY_RESPONSE",
+                        ),
+                    };
+                }
                 break;
             }
 
@@ -404,26 +435,20 @@ function* evaluateUserConversationMessage(
                     }
 
                     const chunkInteractionId = value.id;
-                    // If we see a NEW interaction ID, create a new assistant message
+                    // A new interaction or content after a conversion error needs its own message.
                     if (
-                        chunkInteractionId &&
-                        currentInteractionId &&
-                        chunkInteractionId !== currentInteractionId
+                        (chunkInteractionId &&
+                            currentInteractionId &&
+                            chunkInteractionId !== currentInteractionId) ||
+                        currentAssistantContent?.type === "error"
                     ) {
-                        yield* completeAssistantMessageIfPresent(conversation.localId, {
-                            assistantMessageId: currentAssistantMessage.localId,
-                            conversationId: conversation.localId,
-                            threadId: conversation.id || undefined,
-                        });
-
-                        // Create new assistant message for the new interaction
-                        currentAssistantMessage = { ...makeAssistantItem(), agentId: turnAgentId };
-                        yield put(
-                            evaluateMessageAction({
-                                message: currentAssistantMessage,
-                                conversationId: conversation.localId,
-                            }),
+                        currentAssistantMessage = yield* startNextAssistantMessage(
+                            conversation,
+                            currentAssistantMessage,
+                            turnAgentId,
+                            onAssistantMessageStarted,
                         );
+                        currentAssistantContent = undefined;
                     }
 
                     // Track the current interaction ID
@@ -435,6 +460,9 @@ function* evaluateUserConversationMessage(
 
                     // Dispatch streaming content to current message
                     const localContent = convertToLocalContent(value.content);
+                    currentAssistantContent = localContent;
+                    hasVisibleAssistantContent ||=
+                        value.role === "assistant" && hasVisibleContent(localContent);
                     yield put(
                         evaluateMessageStreamingAction({
                             content: localContent,
@@ -476,39 +504,31 @@ function* evaluateUserConversationMessage(
                     );
                 }
                 if (isChatConversationError(value)) {
-                    const chunkInteractionId = value.message;
-                    // If we see a NEW interaction ID, create a new assistant message
-                    if (
-                        chunkInteractionId &&
-                        currentInteractionId &&
-                        chunkInteractionId !== currentInteractionId
-                    ) {
-                        yield* completeAssistantMessageIfPresent(conversation.localId, {
-                            assistantMessageId: currentAssistantMessage.localId,
-                            conversationId: conversation.localId,
-                            threadId: conversation.id || undefined,
-                        });
-
-                        // Create new assistant message for the new interaction
-                        currentAssistantMessage = { ...makeAssistantItem(), agentId: turnAgentId };
-                        yield put(
-                            evaluateMessageAction({
-                                message: currentAssistantMessage,
-                                conversationId: conversation.localId,
-                            }),
+                    // Backend errors end the turn; client-side item conversion failures do not.
+                    if (value.code !== 0) {
+                        throw value;
+                    }
+                    const messages: IChatConversationLocalItem[] = yield select(
+                        conversationMessagesByIdSelector,
+                        conversation.localId,
+                    );
+                    if (!messages.some((message) => message.localId === currentAssistantMessage.localId)) {
+                        yield cancel();
+                    }
+                    if (currentAssistantContent) {
+                        currentAssistantMessage = yield* startNextAssistantMessage(
+                            conversation,
+                            currentAssistantMessage,
+                            turnAgentId,
+                            onAssistantMessageStarted,
                         );
                     }
-
-                    // Track the current interaction ID
-                    if (chunkInteractionId) {
-                        currentInteractionId = chunkInteractionId;
-                    }
-
-                    // Dispatch streaming content to current message
+                    currentAssistantContent = value;
+                    currentInteractionId = undefined;
+                    hasVisibleAssistantContent = true;
                     yield put(
                         evaluateMessageStreamingAction({
                             assistantMessageId: currentAssistantMessage.localId,
-                            interactionId: chunkInteractionId,
                             content: value,
                             conversationId: conversation.localId,
                             threadId: conversation.id || undefined,
@@ -518,15 +538,30 @@ function* evaluateUserConversationMessage(
             }
         }
 
-        return { lastAssistantMessage: currentAssistantMessage };
+        return {};
     } catch (error) {
-        return { lastAssistantMessage: currentAssistantMessage, error };
+        if (currentAssistantContent) {
+            const messages: IChatConversationLocalItem[] = yield select(
+                conversationMessagesByIdSelector,
+                conversation.localId,
+            );
+            if (messages.some((message) => message.localId === currentAssistantMessage.localId)) {
+                currentAssistantMessage = yield* startNextAssistantMessage(
+                    conversation,
+                    currentAssistantMessage,
+                    turnAgentId,
+                    onAssistantMessageStarted,
+                );
+            }
+        }
+        return { error };
     } finally {
         if (reader) {
             const wasCancelled: boolean = yield cancelled();
 
-            if (wasCancelled) {
-                yield call([reader, reader.cancel]);
+            if (wasCancelled || !streamFinished) {
+                // Cleanup must not delay completion or replace the original stream error.
+                void reader.cancel().catch(() => undefined);
             }
 
             yield call([reader, reader.releaseLock]);
@@ -541,5 +576,23 @@ function* evaluateUserConversationMessage(
         if (!found) {
             yield cancel();
         }
+    }
+}
+
+function hasVisibleContent(content: IChatConversationLocalContent): boolean {
+    switch (content.type) {
+        case "text":
+            return !!content.text.trim();
+        case "reasoning":
+            return !!content.summary.trim();
+        case "multipart":
+            return content.parts.length > 0;
+        case "skillsActivated":
+            return content.skills.length > 0;
+        case "toolCall":
+        case "toolResult":
+            return false;
+        default:
+            return true;
     }
 }

@@ -142,6 +142,11 @@ export {
     type IScatterPlotBucketProps,
     ScatterPlot,
 } from "./charts/scatterPlot/ScatterPlot.js";
+export {
+    type IStaticDataChartProps,
+    type StaticDataChartType,
+    StaticDataChart,
+} from "./charts/staticDataChart/StaticDataChart.js";
 export { type ITreemapProps, type ITreemapBucketProps, Treemap } from "./charts/treemap/Treemap.js";
 export { type IMekkoProps, type IMekkoBucketProps, Mekko } from "./charts/mekko/Mekko.js";
 export {

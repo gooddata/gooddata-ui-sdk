@@ -1,6 +1,121 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 19 Nov 2026 10:25:01 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Nov 2026 09:23:18 GMT and should not be manually modified.
+
+## 11.70.0
+
+Thu, 26 Nov 2026 09:23:18 GMT
+
+### Updates
+
+- sdk-ui-kit, sdk-ui-ext: Tables built on UiAsyncTable now follow the dual-mode keyboard navigation of the grid pattern. A cell with several controls, or text and a control, is entered with Enter or F2, Tab moves between its controls and Escape returns to the grid. The tooltip trigger in the list of scheduled exports and alerts is reachable this way and no longer adds a tab stop per row
+- sdk-ui-kit, sdk-ui-filters: Pressing Escape in an empty search input of the attribute filter dropdown now closes it. Other inputs with clearOnEsc keep their behavior; the new propagateEscapeWhenEmpty prop lets one pass Escape on while it is empty
+- sdk-ui-dashboard: In a widget menu, a single Tab now closes the menu when a disabled item's reason contains a link, and the hidden reason is no longer reachable by keyboard.
+- sdk-model, sdk-ui-filters, sdk-ui-dashboard: The date filter creates an absolute date filter with granularity (week, month, quarter, year) and dashboards use it as the common date filter. New alpha channels with the OfAnyType suffix carry it; the existing public ones never receive it. A date filter with a dimension of this type, alerts and scheduled exports with it, and drills to a dashboard do not support it yet.
+- api-client-tiger, sdk-backend-tiger: Add Tiger types and guards for the absolute date filter with granularity and its dashboard filter context item. ITigerFilter and ITigerFilterContextItem now include them, isTigerFilter, isTigerFilters, isTigerFilterContextItem and isTigerFilterContextItems do not match them. The Tiger backend rejects such a filter with an invalid granularity or range, and lists skip the items that contain it.
+- sdk-ui-analytical-designer: Leaving Analytical Designer while an unchanged visualization is still computing no longer warns about unsaved changes.
+- sdk-ui-dashboard: Cancel stale AI dashboard draft editing when browser navigation changes or removes the draft target, while preserving intentional draft opening and saving.
+- sdk-ui-gen-ai: Fix AI context remaining in a loading state when opening another dashboard draft.
+- sdk-ui-gen-ai: Add the optional isLinkEnabled callback to GenAIAssistant and GenAiStore to disable links by object type. Disabled answer references render as plain text; search results remain visible without navigation or Open/Edit actions, preserving existing expansion and hover behavior.
+- sdk-ui-gen-ai: Finalize failed and empty assistant responses, preserve structured authentication errors in assistant message events, and show actionable sign-in, permission, and missing-result messages. Document conversation title language limitations.
+- sdk-ui-web-components: Add the optional isLinkEnabled JavaScript property to gd-ai-assistant, gd-ai-chat, gd-ai-conversations, and gd-ai-provider to disable object links by type. Configure it during initialization; provider policies apply to the shared store and child elements unless overridden.
+- sdk-ui-kit: Toolbar press, open and disabled destructive colours match the design library; new `bold` and `italic` icons and the `numberList` and `bulletList` icons.
+- sdk-ui-gen-ai: Make cancelGeneration prevent pending edits to existing dashboards from being applied, including cancellation before skill activation. Keep already applied changes and allow new requests after cancellation. Assistant streaming is not stopped.
+- sdk-ui-gen-ai, sdk-ui-dashboard: Fix saving dashboards created with useDashboardCopilot.
+- sdk-ui-gen-ai: Clear dashboard generation progress when the responding agent lacks the required dashboard skills, preventing a stuck waiting state. The dashboard builder feature flag must still be enabled.
+- sdk-ui-gen-ai: Prevent late assistant responses from applying cancelled dashboard generation and preserve replacement generations started by event listeners.
+- sdk-model, sdk-backend-tiger, sdk-embedding, sdk-ui-dashboard, sdk-ui-analytical-designer, sdk-ui-ext: Tests cover the absolute date filter with granularity.
+- sdk-ui-ext: Notification titles skip absolute date filters with granularity with a warning instead of throwing.
+- sdk-model, sdk-backend-tiger, sdk-embedding: Add `IAbsoluteGranularityDateFilter`, an absolute date filter over whole weeks, months, quarters or years given as `DatePeriodLiteral` values, and its alpha filter context item `IDashboardAbsoluteGranularityDateFilter`. The range can be open at one end. `IFilter`, `IMeasureFilter`, `IDashboardFilter`, `FilterContextItem` and the embedding `FilterItem` now include the new types, while `IDateFilter`, `IDashboardDateFilter` and the embedding `DateFilterItem` do not. The existing guards, such as `isFilter`, `isDateFilter` and `isFilterContextItem`, do not match the new types. The new alpha guards `isFilterOfAnyType`, `isDateFilterOfAnyType`, `isDashboardFilterOfAnyType`, `isSimpleMeasureFilterOfAnyType`, `isDashboardDateFilterOfAnyType`, `isFilterContextItemOfAnyType` and the embedding `isDateFilterOfAnyType` match them too. The `granularity` added to the absolute date filter types in 11.62.0 is deprecated. The Tiger backend sends and reads the new filter and filter context item as they are, except that dashboard tabular exports reject the filter context item, reads an `absoluteGranularityDateFilter` over weeks, months, quarters or years as `IAbsoluteGranularityDateFilter`, and sends `IAbsoluteDateFilter` as its days, ignoring the deprecated granularity. Dashboards and Analytical Designer do not support the new filter yet: a dashboard fails to load when its filter context or default filters hold it, `changeFilterContextSelection` and `changeDashboardDefinition` reject it, postMessage commands reject it, and the `filterContextChanged` event, drill postMessages and drills to a dashboard leave it out.
+- sdk-ui-all: Add IParameterizedDateFilter, a date filter that takes its period from a date range parameter, and send it to the Tiger backend.
+- sdk-ui-dashboard: With visualization permissions on, users who may create visualizations can open Edit on a visualization inherited from a parent workspace and save a copy in the child workspace.
+- sdk-ui-gen-ai: Add the alpha ConversationVisualizationBody slot to customize AI Assistant chart rendering while preserving the wrapper, title, visualization menu, table toggle, save dialog, and error handling. Table mode always uses the default SDK renderer.
+- sdk-ui-gen-ai: Add the beta useDrillKeyDriverAnalysis hook to open Key Driver Analysis from custom chart drills. The hook provides drillable items, an onDrill callback, and an Explain comparison menu, managing dialog opening and focus restoration under a shared GenAiStore with GenAiKeyDriverAnalysis.
+- sdk-ui-gen-ai: Always render AI Assistant visualizations with InsightRenderer, removing legacy charts and the renderer feature flag.
+- sdk-ui-vis-commons: Chart legend options expose aria-posinset and aria-setsize counted across all legend groups, so screen readers announce the correct position and number of series (for example "1 of 3" instead of "1 of 1").
+- sdk-ui-dashboard: the expanded key driver analysis dialog is named by its visible title, and its Minimize and Close the analysis buttons no longer repeat the title as their description.
+- sdk-ui-kit, sdk-ui-pluggable-host: when the AI Assistant dialog closes and focus returns to the "Open AI Assistant" header button, screen readers announce it as collapsed instead of still expanded.
+- sdk-ui-gen-ai: The AI Assistant "Chat messages" log announces each new message once. Earlier messages and the stored conversation are no longer read out again when a question is sent, the answer streams in or the panel opens. Reference chips in messages tell screen readers their object type and read their description once.
+- sdk-ui-dashboard: The attribute list of the "Add filter" dropdown is exposed as a labelled listbox driven by the search combobox, so screen readers announce each attribute as it becomes active and the one added on Enter.
+- sdk-ui-kit: UiTabs tabs expose aria-posinset and aria-setsize so screen readers announce each tab's position and the total number of tabs, such as "1 of 2" in the dashboard tab strip.
+- sdk-ui-kit: tree view items expose aria-posinset and aria-setsize, so screen readers announce the real position of each item among its siblings (for example "4 of 10" in the header search results) instead of "1 of 1".
+- sdk-ui-dashboard: in the Scheduled emails dialog, the "No destination available" warning is announced with the Destination field and describes the disabled Create button for screen readers.
+- sdk-ui-kit: pressing Space on a value checkbox in the attribute filter's values list toggles the native checkbox, so screen readers announce its new checked or unchecked state.
+- sdk-ui-kit: in UiMenu, Escape inside an open submenu closes only that submenu and returns focus to its parent item; Escape on the top level still closes the menu.
+- sdk-ui-dashboard: Pressing Escape on an expanded widget Description button closes the description overlay and keeps focus on the button.
+- sdk-ui-kit: The permission dropdown button in the share dialog announces the current permission level (for example "Permission: Can edit & share") to screen readers, followed by the grantee as its description.
+- sdk-ui-gen-ai: activating a suggested question on the AI Assistant welcome screen moves keyboard focus to the chat message input instead of losing it.
+- sdk-ui-filters: The date filter's "Empty values" option is exposed inside a group labelled "Other", so screen readers announce the section and no longer count it together with "All time" as "2 of 2".
+- sdk-ui-filters: The date filter checkboxes "Include empty values" and "Exclude today" toggle natively on Space, so screen readers announce the new checked state immediately.
+- sdk-ui-filters: the "Select a date range" list box in the date filter dropdown is a single Tab stop, so one Tab or Shift+Tab leaves it from any option, including options reached with the arrow keys.
+- sdk-ui-dashboard: Opening the "Choose drill action" menu from a chart data point moves keyboard focus into the menu once it is shown, so screen readers announce the menu and its active item.
+- sdk-ui-kit: UiMenu items, such as those in the "Choose drill action" menu, report their position and the item count of the whole menu level across all groups, so screen readers announce "1 of 3" instead of "1 of 1".
+- sdk-ui-metric-component: F8 in the MAQL editor announces the message of the problem it moves to to screen readers, while the focus stays in the editor.
+- sdk-ui-dashboard: the visualization switcher button in a dashboard widget header is named by its purpose and the current visualization, and the list it opens is named as the visualizations to switch to.
+- sdk-ui-kit: Keep focus on the attribute filter search field after the dropdown opens, instead of moving it to the "More options" button.
+- sdk-ui-metric-component: switching the open metric tabs with the arrow keys keeps focus on the selected tab instead of moving it into the metric form.
+- sdk-ui-metric-component: screen readers announce that the "How to create metrics?" help link in the metric editor opens in a new tab.
+- sdk-ui-dashboard: in the widget "More actions" menu, a submenu such as "Export" and the dialog around it are named by the submenu's own title instead of the empty label of the parent menu.
+- sdk-ui-charts: In a line chart with forecast, the forecast and confidence interval series have their own names, and screen readers announce both bounds of a confidence interval point.
+- sdk-ui-kit: in the virtualized attribute filter values list, Home, End, PageUp and PageDown move keyboard focus to the target row instead of losing it to the document body. Home and End now move to the first and last item in every list using the simple mode of useListWithActionsKeyboardNavigation (also the filter views list and the all tabs dropdown), where they did nothing before.
+- sdk-ui-charts: Arrow keys now move keyboard focus through all data points of a bar chart and on into its other series.
+- sdk-ui-dashboard: the minimized key driver analysis status bar announces "Analysis is ready" politely (or "Analysis failed" assertively) with the analysis title to screen readers once when the analysis finishes.
+- sdk-ui-dashboard: The filter bar "Show all" / "Show less" button is a keyboard Tab stop exposed to screen readers with its expanded/collapsed state, so keyboard users can expand and collapse the filter bar.
+- sdk-ui-dashboard: After a hyperlink drill is chosen from a chart's drill menu with the keyboard, focus returns to the drilled data point.
+- sdk-ui-dashboard: opening the dashboard "More actions" menu moves focus to its first item, and each Down Arrow moves focus by exactly one item.
+- sdk-ui-kit: UiMenu items that open a submenu, such as "Export" in the widget "More actions" menu, expose aria-expanded="false" so screen readers announce them as collapsed.
+- sdk-ui-dashboard: the "Share dashboard" button tells screen readers whether the share dialog is open and points to it with aria-controls while it is open.
+- sdk-ui-filters: The opened date filter dialog is named after the filter (its custom name, or "Date range"), so screen readers announce which filter it belongs to.
+- sdk-ui-kit: Tabs are no longer named by their message id. Text tabs are named by their translated visible label and icon-only tabs by their translated message, so screen readers announce e.g. "Unread (0)" and "All" in the notifications panel.
+- sdk-ui-analytical-designer: When a metric cannot be saved because its ID is already in use, the metric editor now says so and asks to change the ID, instead of the generic save error
+- sdk-ui-dashboard: Fix clicks on relative date range options in the date filter being ignored.
+- sdk-ui-filters: Add alpha DateFilter prop `shouldOverlayRelativeRangeMenu`.
+- Dashboards: an attribute filter can be added for an attribute that shares its id with a computed attribute.
+- sdk-ui-analytical-designer: With the improved metric date filter on, empty date values can be included with any period, not only All time. Filters with included empty values and a period, for example created in YAML or through the API, now show the empty-date rows, and the filter titles read "<period>, empty values".
+- sdk-ui-analytical-designer: Stop opening a visualization from spinning forever when the Data Catalog failed to load; show the failure instead.
+- sdk-ui-analytical-designer: Open a visualization even when loading its attribute filter values fails, and stop reporting such failures as not found.
+- sdk-ui-analytical-designer: Format execution progress and stats durations with the user's locale, keep the visible text as the accessible name of the execution stats link, and label the close button of its popover.
+- sdk-code-convertors: Load the Python package's WASM runtime once under a lock, so concurrent first calls no longer crash wasmtime with mixed engines.
+- sdk-code-convertors: Require wasmtime 50.0.1 for the Python package to pick up critical Cranelift fixes.
+- sdk-code-convertors: A relative date filter whose range is stored as text, such as "-1", keeps that range when converted to code, so the AI assistant's dashboard draft no longer opens on All time.
+- api-client-tiger, sdk-backend-tiger: Use the current semantic search endpoint. On GoodData.CN, semantic search requires 4.14 or newer.
+- sdk-model, sdk-backend-tiger: Remove the enableCatalogDocuments feature flag. sdk-ui-catalog, sdk-ui-gen-ai, sdk-ui-pluggable-host: Reports documents show in the Analytics Catalog and search whenever enableBusinessBriefingReportsApp and enablePublisherV2 are on.
+- sdk-ui-filters: Add DateFilterHelpers.formatDateRangeParameterPeriod, which names the range of a date range parameter's period as the date filter names a static period, such as "August 2025 – August 2026", with weeks written as their days from the given week start.
+- sdk-model: The date period literal helpers also accept day, hour, minute and second literals of a date range parameter's period, and reject dates that are not in the calendar.
+- sdk-ui-catalog: The catalog detail of a date range parameter writes its current range as the date filter does: full month names, weeks as their days from the user's week start, days in the user's date format, and "From …" or "To …" for a period with one end.
+- sdk-model: Add `IDateRangeParameterMetadataObject`, `isDateRangeParameterMetadataObject` and `getParameterTitle` for date range parameters (named periods).
+- sdk-ui-dashboard: Load the workspace's date range parameters into the catalog next to the scalar parameters when the `enableDateRangeParameters` setting is on, readable with `selectCatalogDateRangeParameters` and `selectCatalogDateRangeParametersStatus`.
+- sdk-ui-analytical-designer: Keep the workspace's date range parameters in the catalog next to the scalar parameters when the `enableDateRangeParameters` setting is on.
+- sdk-ui-charts: The tooltip of a treemap with an attribute in View by and an empty Segment by shows the View by value of the hovered rectangle again. Since the upgrade to Highcharts 12.5, every tooltip showed the same value.
+- sdk-ui-analytical-designer: Open and save visualizations whose date filter references a period (a DATE_RANGE parameter), on the filter bar and on metrics. The filter chip shows the period's title, or its id when the catalog does not have the period.
+- sdk-backend-tiger: The available catalog items of an insight no longer depend on the period (date range parameter) its date filters reference, only on their date data set, so an insight whose period was deleted still gets them.
+- sdk-ui-analytical-designer: The API token saga and backend adoption tests reset their modules before their imports, so they pass whichever test file shares their worker.
+- sdk-ui-metric-component: The MAQL editor no longer takes the focus from a dialog opened over it, such as the unsaved changes dialog, while it waits for its own dialog to be shown.
+- sdk-ui-charts: The Mekko component no longer orders the columns of a stacked chart by a measure sort in the browser. With stackBy set, measure sorts in sortBy are ignored with a console warning, so the chart shows the columns in the same order as its exports. IChartConfig.sortBy is deprecated and ignored.
+- sdk-ui-ext: A Mekko chart with a Stack by attribute no longer offers sorting by its Width or Height metric, and offers the Total sort only when it has a single metric, so the chart and its exports show the columns in the same order. Insights saved with such a metric sort now show the columns in the default order.
+- sdk-ui-charts: Chart tooltips no longer show a white box with a pointer behind them.
+- sdk-model, sdk-backend-tiger: Add the enableEmbeddingOriginValidationSettingsUi feature flag (temporary, disabled by default).
+- sdk-ui-analytical-designer, sdk-backend-tiger: Behind enableEmbeddingOriginValidation, a new token from setApiToken is used only when its origin passes the check with that token.
+- sdk-ui-pluggable-host: Open the host AI assistant on an existing conversation when a workspace URL carries the `aiConversation` query parameter (`AI_CONVERSATION_URL_PARAM` in sdk-pluggable-application-model)
+- sdk-ui-all: Add the `enableNewGettingStartedPage` feature flag
+- sdk-ui-gen-ai: Show the AI Assistant conversation menu above the full-screen chat on small screens.
+- sdk-ui-dashboard: Name the KDA period comparison listbox for screen readers.
+- sdk-ui-dashboard: Tab from the open Date range list in the KDA dialog now moves focus to the add filter button.
+- sdk-ui-dashboard: Keep focus in the KDA dialog after adding a filter from the breakdown chart.
+- sdk-ui-semantic-search: Keep the search result tooltip open after Show more on short windows.
+- sdk-ui-catalog: test ids for e2e tests on the Create menu items (analytics-catalog-create/<type>), the detail panel (analytics-catalog-detail) and the search input (analytics-catalog-search)
+- gdc-home-ui: Show the same "Metadata language has no translation" card, with the same text and documentation link, in the organization and the workspace view. The card no longer names a translation under another code of the language, because the two views load different statistics and could not agree
+- sdk-backend-spi, sdk-backend-tiger, gdc-home-ui: Show a translation that nobody uses as an Unused translation note in the Validations tab of the language side panel, in the organization and the workspace view, and list the workspaces that own it. A note does not raise the Settings attention dot or change the status of the language
+- gdc-home-ui: Grade a metadata language code with a trailing hyphen the same way in the organization and the workspace view, by matching it to the issue that the backend reports under the code without the hyphen
+- sdk-backend-tiger: getInsightReferencingObjects returns document templates and page templates with the documents. Analytical Designer, Analytics Catalog and the modeler list them under documents.
+- sdk-ui-catalog, sdk-ui-analytical-designer: Show the documents the backend returns. A user who may not create documents now also sees their own documents inherited from a parent workspace, in the catalog and in a visualization's report usage.
+- sdk-backend-spi: Add `updateDocumentMeta` to the publisher V2 service to change a document's title, description and tags. sdk-ui-catalog: Let the creator and workspace managers edit a document's title, description and tags in the Analytics Catalog.
+- sdk-ui-gen-ai: A gooddata://document link in an AI Assistant answer now opens the document in Reports.
+- sdk-ui-analytical-designer: Call documents "documents" instead of "reports" in the visualization usage button, delete dialog and save dialog.
+- sdk-ui-dashboard: The delete visualization dialog in edit mode no longer names documents the user cannot open. They are counted as not shared with you, like dashboards.
+- sdk-ui-all: Add IDashboardParameterizedDateFilter, a dashboard date filter that takes its period from a date range parameter, and store it in the Tiger backend.
+- sdk-ui-all: Regenerate the tiger API client with the parameterized date filter for visualizations, dashboards, automations and exports.
+- sdk-ui-catalog: Create and edit date range parameters in the YAML editor and show their granularity and current range in the detail, behind the enableDateRangeParameters flag.
 
 ## 11.69.0
 
