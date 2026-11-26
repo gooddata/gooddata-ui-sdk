@@ -153,6 +153,22 @@ export const isElementTextInput = (element: HTMLElement | EventTarget | null | u
     );
 };
 
+/**
+ * Checks whether an element matches an allowed focus source or is contained within one.
+ * @internal
+ */
+export const canStealFocusFrom = (
+    element: Element | null,
+    stealFocusFrom?: readonly (string | HTMLElement)[],
+): boolean => {
+    return Boolean(
+        element &&
+        stealFocusFrom?.some((source) =>
+            typeof source === "string" ? element.closest(source) : source.contains(element),
+        ),
+    );
+};
+
 export const isElementSubmitButton = (event: KeyboardEvent) => {
     const { id } = event.target as HTMLElement;
 

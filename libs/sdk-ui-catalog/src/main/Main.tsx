@@ -24,6 +24,8 @@ import { FilterVisibilityMemo } from "../filter/FilterVisibility.js";
 import { useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { Table } from "../table/Table.js";
 
+import { getUpdateErrorMessage } from "./updateErrorMessage.js";
+
 type Props = {
     backend: IAnalyticalBackend;
     workspace: string;
@@ -38,7 +40,6 @@ type Props = {
 };
 
 const messages = defineMessages({
-    updateFailed: { id: "analyticsCatalog.catalogItem.update.failed" },
     showLess: { id: "analyticsCatalog.showLess" },
     showMore: { id: "analyticsCatalog.showMore" },
 });
@@ -112,11 +113,17 @@ export function Main({
                     onCloseDetail();
                 }}
                 onCatalogItemUpdateError={(err) => {
-                    addError(messages.updateFailed, {
-                        showLess: intl.formatMessage(messages.showLess),
-                        showMore: intl.formatMessage(messages.showMore),
-                        errorDetail: `${err.name} ${err.message}`,
-                    });
+                    const { message, errorDetail } = getUpdateErrorMessage(err);
+                    addError(
+                        message,
+                        errorDetail === undefined
+                            ? undefined
+                            : {
+                                  showLess: intl.formatMessage(messages.showLess),
+                                  showMore: intl.formatMessage(messages.showMore),
+                                  errorDetail,
+                              },
+                    );
                 }}
             />
         </section>

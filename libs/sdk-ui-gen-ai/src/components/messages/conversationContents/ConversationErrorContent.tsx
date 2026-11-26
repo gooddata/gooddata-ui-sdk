@@ -48,7 +48,7 @@ export function ConversationErrorContent({
     );
 
     return (
-        <div className={classNames}>
+        <div className={classNames} role="alert">
             <div className={cx("gd-gen-ai-chat__error-info")}>
                 <div className={cx("gd-gen-ai-chat__content")}>
                     <div className={cx("gd-gen-ai-chat__error-message")}>
@@ -69,6 +69,14 @@ export function ConversationErrorContent({
                                 id="gd.gen-ai.global-error.service-unavailable"
                                 values={components}
                             />
+                        ) : code === 401 || reason === "NOT_AUTHENTICATED" ? (
+                            <FormattedMessage id="gd.gen-ai.global-error.not-authenticated" />
+                        ) : reason === "EMPTY_RESPONSE" ? (
+                            <FormattedMessage id="gd.gen-ai.global-error.empty-response" />
+                        ) : code === 403 ? (
+                            <FormattedMessage id="gd.gen-ai.global-error.forbidden" />
+                        ) : code === 404 ? (
+                            <FormattedMessage id="gd.gen-ai.global-error.not-found" />
                         ) : (
                             <div className={cx("gd-gen-ai-chat__error-raw")}>
                                 <MarkdownComponent allowMarkdown={useMarkdown}>{message}</MarkdownComponent>

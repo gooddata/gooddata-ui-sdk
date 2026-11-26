@@ -2,7 +2,7 @@
 
 // @vitest-environment node
 
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
     type DateAttributeGranularity,
@@ -305,6 +305,10 @@ describe("automationFilters/utils", () => {
     });
 
     describe("dateFilterValues", () => {
+        afterEach(() => {
+            vi.restoreAllMocks();
+        });
+
         it("should return undefined with a warning for a date filter of an unknown type", () => {
             const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
             const unknownFilter = { futureDateFilter: { dataSet: idRef("date", "dataSet") } };
@@ -314,7 +318,6 @@ describe("automationFilters/utils", () => {
                 "A date filter of an unknown type does not equal any filter.",
                 unknownFilter,
             );
-            warn.mockRestore();
         });
     });
 

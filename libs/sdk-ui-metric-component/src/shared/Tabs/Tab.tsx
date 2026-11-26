@@ -127,6 +127,18 @@ const useStyles = makeStyles<void, "close">()((theme, _params, classes) => {
             textOverflow: "ellipsis",
             overflow: "hidden",
         },
+        // text for assistive technology only, e.g. the state the dirty flag shows
+        visuallyHidden: {
+            position: "absolute",
+            width: 1,
+            height: 1,
+            padding: 0,
+            margin: -1,
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            border: 0,
+        },
         //placeholder
         placeholder: {
             color: theme.tabs.colors.placeholder,
@@ -183,6 +195,10 @@ export interface ITabProps<T = undefined> {
      * Accessible name of the tab's close button; gets the tab title (or the placeholder) as `title`.
      */
     closeLabel?: (title: string) => string;
+    /**
+     * Text for assistive technology of the states the flag of the tab shows.
+     */
+    stateLabels?: Partial<Record<TabState, string>>;
     onActive: (tab: ITab<T>) => void;
     onClose: (tab: ITab<T>) => void;
 }
@@ -194,11 +210,16 @@ export function Tab({
     active,
     afterActive,
     closeLabel,
+    stateLabels,
     onActive,
     onClose,
 }: ITabProps) {
     const { states, options, title } = tab;
     const { classes, cx } = useStyles();
+    // the same states the flag shows, so the tab's name tells what is seen
+    const dirtyText = states?.dirty ? stateLabels?.dirty : undefined;
+    const invalidText = states?.invalid ? stateLabels?.invalid : undefined;
+    const stateText = [dirtyText, invalidText].filter(Boolean).join(", ");
 
     return (
         <>
@@ -239,6 +260,7 @@ export function Tab({
                         <Title title={title} placeholder={placeholder} />
                     </div>
                 </div>
+                {stateText ? <span className={classes.visuallyHidden}>{`, ${stateText}`}</span> : null}
                 {options && options.closeable && (
                     <button
                         type="button"

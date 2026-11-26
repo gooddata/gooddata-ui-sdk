@@ -6295,6 +6295,7 @@ export interface IUiAutofocusOptions {
     initialFocus?: string | RefObject<HTMLElement | null>;
     // (undocumented)
     refocusKey?: unknown;
+    stealFocusFrom?: readonly (string | HTMLElement)[];
 }
 
 // @internal (undocumented)

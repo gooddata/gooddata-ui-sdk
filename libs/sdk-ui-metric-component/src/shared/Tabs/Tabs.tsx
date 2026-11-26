@@ -303,6 +303,7 @@ export function Tabs({
                             beforeActive={active - 1 === i}
                             afterActive={active + 1 === i}
                             closeLabel={labels.closeTab}
+                            stateLabels={labels.tabStates}
                             onActive={onTabActiveHandler}
                             onClose={onTabCloseHandler}
                         />

@@ -18,6 +18,13 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
+    getAutomationDashboardFilters as getStagingAutomationDashboardFilters,
+    getAutomationDashboardFiltersByTab as getStagingAutomationDashboardFiltersByTab,
+    getAutomationVisualizationFilters as getStagingAutomationVisualizationFilters,
+} from "../../../../_staging/automation/index.js";
+import { ABSOLUTE_GRANULARITY_DATE_FILTER_AUTOMATIONS_NOT_SUPPORTED } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+
+import {
     convertUserToAutomationRecipient,
     getAutomationDashboardFilters,
     getAutomationDashboardFiltersByTab,
@@ -44,7 +51,24 @@ describe("convertUserToAutomationRecipient", () => {
     });
 });
 
-describe("filters of export definitions with an absolute date filter with granularity", () => {
+describe.each([
+    [
+        "_staging/automation",
+        {
+            getAutomationDashboardFilters: getStagingAutomationDashboardFilters,
+            getAutomationDashboardFiltersByTab: getStagingAutomationDashboardFiltersByTab,
+            getAutomationVisualizationFilters: getStagingAutomationVisualizationFilters,
+        },
+    ],
+    [
+        "automationUtils",
+        {
+            getAutomationDashboardFilters,
+            getAutomationDashboardFiltersByTab,
+            getAutomationVisualizationFilters,
+        },
+    ],
+])("filters of export definitions with an absolute date filter with granularity (%s)", (_name, getters) => {
     const granularityDateFilter: FilterContextItem = {
         dashboardAbsoluteGranularityDateFilter: {
             granularity: "GDC.time.month",
@@ -60,7 +84,9 @@ describe("filters of export definitions with an absolute date filter with granul
             type: "dashboard",
             content: { filters: [granularityDateFilter] },
         });
-        expect(() => getAutomationDashboardFilters(automation)).toThrow(NotSupported);
+        expect(() => getters.getAutomationDashboardFilters(automation)).toThrow(
+            new NotSupported(ABSOLUTE_GRANULARITY_DATE_FILTER_AUTOMATIONS_NOT_SUPPORTED),
+        );
     });
 
     it("getAutomationDashboardFiltersByTab should throw", () => {
@@ -68,7 +94,9 @@ describe("filters of export definitions with an absolute date filter with granul
             type: "dashboard",
             content: { filtersByTab: { "tab-A": [granularityDateFilter] } },
         });
-        expect(() => getAutomationDashboardFiltersByTab(automation)).toThrow(NotSupported);
+        expect(() => getters.getAutomationDashboardFiltersByTab(automation)).toThrow(
+            new NotSupported(ABSOLUTE_GRANULARITY_DATE_FILTER_AUTOMATIONS_NOT_SUPPORTED),
+        );
     });
 
     it("getAutomationVisualizationFilters should throw", () => {
@@ -76,7 +104,9 @@ describe("filters of export definitions with an absolute date filter with granul
             type: "visualizationObject",
             content: { filters: [granularityDateFilter] },
         });
-        expect(() => getAutomationVisualizationFilters(automation)).toThrow(NotSupported);
+        expect(() => getters.getAutomationVisualizationFilters(automation)).toThrow(
+            new NotSupported(ABSOLUTE_GRANULARITY_DATE_FILTER_AUTOMATIONS_NOT_SUPPORTED),
+        );
     });
 });
 

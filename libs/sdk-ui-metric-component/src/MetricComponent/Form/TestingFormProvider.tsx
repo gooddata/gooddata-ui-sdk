@@ -2,6 +2,7 @@
 
 import { type ReactElement } from "react";
 
+import { type FormMode } from "../../shared/Form/data.js";
 import { FormProvider, type FormProviderComponent } from "../../shared/Form/Form.js";
 import { emptyMetric } from "../metric/emptyMetric.js";
 import { type IMeasureDef } from "../metric/metricHelpers.js";
@@ -15,12 +16,14 @@ export function TestFormProvider({
     metric = emptyMetric,
     canManageProject = true,
     locked = false,
+    mode,
     onValueChange,
 }: {
     children: ReactElement;
     metric?: IMeasureDef;
     canManageProject?: boolean;
     locked?: boolean;
+    mode?: FormMode;
     onValueChange?: (metric: IMeasureDef, valid: boolean) => void;
 }): ReactElement {
     return (
@@ -29,6 +32,7 @@ export function TestFormProvider({
             writeable={canManageProject}
             editable={canManageProject}
             locked={locked}
+            mode={mode}
             onClose={() => {}}
             onSave={() => Promise.resolve()}
             onSaveAs={() => Promise.resolve()}

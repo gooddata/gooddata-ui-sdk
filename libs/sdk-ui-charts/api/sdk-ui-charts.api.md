@@ -38,6 +38,7 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IForecastConfig } from '@gooddata/sdk-backend-spi';
+import { ILocale } from '@gooddata/sdk-ui';
 import { IOutliersConfig } from '@gooddata/sdk-backend-spi';
 import { IPatternFill } from '@gooddata/sdk-ui-vis-commons';
 import { IPatternOptionsObject } from '@gooddata/sdk-ui-vis-commons';
@@ -1007,6 +1008,23 @@ export const isSankeyOrDependencyWheel: (type: string | undefined) => boolean;
 // @internal (undocumented)
 export const isScatterPlot: (type: string | undefined) => boolean;
 
+// @alpha
+export interface IStaticDataChartProps {
+    afterRender?: () => void;
+    config?: IChartConfig;
+    dataView: IDataView;
+    drillableItems?: ExplicitDrill[];
+    height?: number;
+    locale?: ILocale;
+    onDataTooLarge?: (chartOptions: unknown, errorMessage?: string) => void;
+    onDrill?: OnFiredDrillEvent;
+    onLegendReady?: OnLegendReady;
+    onNegativeValues?: (chartOptions: unknown) => void;
+    theme?: ITheme;
+    type: StaticDataChartType;
+    width?: number;
+}
+
 // @internal (undocumented)
 export const isTreemap: (type: string | undefined) => boolean;
 
@@ -1139,6 +1157,12 @@ export function SankeyChart(props: ISankeyChartProps): JSX.Element;
 
 // @public
 export function ScatterPlot(props: IScatterPlotProps): JSX.Element;
+
+// @alpha
+export function StaticDataChart(props: IStaticDataChartProps): JSX.Element;
+
+// @alpha
+export type StaticDataChartType = "bar" | "column" | "line" | "pie" | "scatter";
 
 // @internal (undocumented)
 export const TOP = "top";

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-gen-ai: Fix keyboard accessibility of newly received AI Assistant questionnaires by moving focus from the reply box to the questionnaire, while preserving focus when loading conversation history.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

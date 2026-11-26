@@ -33,8 +33,18 @@ describe("convertExportMetadata — timezone", () => {
 });
 
 describe("convertExportMetadata — filters", () => {
-    const granularityDateFilter = {
+    const tigerGranularityDateFilter = {
         dashboardAbsoluteGranularityDateFilter: {
+            dataSet: { identifier: { id: "date", type: "dataset" } },
+            granularity: "GDC.time.quarter",
+            from: "2026-1",
+            to: "2026-2",
+            localIdentifier: "granularityDateFilter",
+        },
+    };
+    const sdkGranularityDateFilter = {
+        dashboardAbsoluteGranularityDateFilter: {
+            dataSet: idRef("date", "dataSet"),
             granularity: "GDC.time.quarter",
             from: "2026-1",
             to: "2026-2",
@@ -42,14 +52,14 @@ describe("convertExportMetadata — filters", () => {
         },
     };
 
-    it("keeps an absolute date filter with granularity in the filters", () => {
-        const result = convertExportMetadata({ filters: [granularityDateFilter] });
-        expect(result?.filters).toEqual([granularityDateFilter]);
+    it("keeps an absolute date filter with granularity in the filters and converts its date dataset", () => {
+        const result = convertExportMetadata({ filters: [tigerGranularityDateFilter] });
+        expect(result?.filters).toEqual([sdkGranularityDateFilter]);
     });
 
-    it("keeps an absolute date filter with granularity in the filters of a tab", () => {
-        const result = convertExportMetadata({ filtersByTab: { "tab-A": [granularityDateFilter] } });
-        expect(result?.filtersByTab).toEqual({ "tab-A": [granularityDateFilter] });
+    it("keeps an absolute date filter with granularity in the filters of a tab and converts its date dataset", () => {
+        const result = convertExportMetadata({ filtersByTab: { "tab-A": [tigerGranularityDateFilter] } });
+        expect(result?.filtersByTab).toEqual({ "tab-A": [sdkGranularityDateFilter] });
     });
 
     describe("parameterized date filter", () => {

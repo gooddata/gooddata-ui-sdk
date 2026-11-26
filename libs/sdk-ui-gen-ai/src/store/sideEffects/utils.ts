@@ -1,6 +1,11 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type IChatConversationError, isUnexpectedResponseError } from "@gooddata/sdk-backend-spi";
+import {
+    type IChatConversationError,
+    isChatConversationError,
+    isNotAuthenticated,
+    isUnexpectedResponseError,
+} from "@gooddata/sdk-backend-spi";
 
 import { type IChatConversationErrorContent, makeErrorContent } from "../../model.js";
 
@@ -15,6 +20,20 @@ export function extractError(e: unknown) {
 }
 
 export function extractErrorContent(e: unknown): IChatConversationErrorContent {
+    if (isNotAuthenticated(e)) {
+        return makeErrorContent(e.message, 401, undefined, "NOT_AUTHENTICATED");
+    }
+
+    if (isChatConversationError(e as IChatConversationError)) {
+        const error = e as IChatConversationError;
+        return makeErrorContent(
+            error.message,
+            error.code,
+            error.traceId,
+            error.code === 401 ? "NOT_AUTHENTICATED" : error.reason,
+        );
+    }
+
     if (isUnexpectedResponseError(e)) {
         const body = e.responseBody;
         const detail = extractErrorDetail(e) ?? e.message;
@@ -28,7 +47,12 @@ export function extractErrorContent(e: unknown): IChatConversationErrorContent {
                 ? body.traceId
                 : undefined);
 
-        return makeErrorContent(`${e.name}: ${detail}`, e.httpStatus, traceId, reason);
+        return makeErrorContent(
+            `${e.name}: ${detail}`,
+            e.httpStatus,
+            traceId,
+            e.httpStatus === 401 ? "NOT_AUTHENTICATED" : reason,
+        );
     }
 
     if (e instanceof Error) {

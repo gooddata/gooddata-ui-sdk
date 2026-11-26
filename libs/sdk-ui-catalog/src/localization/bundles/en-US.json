@@ -455,6 +455,10 @@
         "text": "Failed to update catalog item. Try again later.",
         "crowdinContext": "Catalog item update failed message."
     },
+    "analyticsCatalog.catalogItem.update.notFound": {
+        "text": "Changes not saved — this item has been removed or is no longer accessible.",
+        "crowdinContext": "Toast shown when saving a change to a catalog item (document, metric, visualization, …) fails because the item was removed elsewhere or the user can no longer access it. The old value is restored. Keep the wording of \"has been removed or is no longer accessible\" consistent with the dashboard and document messages for a removed visualization."
+    },
     "analyticsCatalog.catalogItem.id": {
         "text": "Id",
         "crowdinContext": "Catalog item id label."

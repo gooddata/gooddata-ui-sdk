@@ -17,6 +17,7 @@ import { type GenAIAgent } from "../model.js";
 import { selectedEffortSelector } from "../store/messages/messagesSelectors.js";
 
 import { useCompletion } from "./completion/useCompletion.js";
+import { REPLY_BOX_CLASS_NAME } from "./constants.js";
 import { CustomizationProvider } from "./CustomizationProvider.js";
 import type { IGenAIAssistantSlots } from "./customized/types.js";
 import { GenAiChatAgentSwitching } from "./GenAiChatAgentSwitching.js";
@@ -162,7 +163,7 @@ function StandaloneInputContent({
         >
             <div className="gd-gen-ai-chat__input__content">
                 <div className="gd-gen-ai-chat__input__container">
-                    <div className="gd-gen-ai-chat__input__text" {...ref}>
+                    <div className={REPLY_BOX_CLASS_NAME} {...ref}>
                         <DefaultSyntaxHighlightingInput
                             className="gd-gen-ai-chat__input__mc"
                             placeholder={

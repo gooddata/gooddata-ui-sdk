@@ -359,6 +359,7 @@ export function* onEvaluateMessageComplete({
         skills: message.skills,
         threadId,
         ...(cancelled ? { cancelled: true } : {}),
+        ...(message.error ? { error: message.error } : {}),
         ...(responseCompleted && !cancelled && message.useCase !== "INVALID"
             ? { responseCompleted: true }
             : {}),
@@ -536,6 +537,7 @@ type MessageInfo = {
     skills?: ChatAssistantMessageEvent["skills"];
     clarificationQuestions?: ChatClarificationQuestion[];
     filled?: boolean;
+    error?: IChatConversationErrorContent;
 };
 
 function* selectRespondingAgent(message: MessageInfo): Generator<unknown, GenAIAgent | undefined> {
@@ -561,6 +563,7 @@ function* loadMessage(
               skills: message.content.type === "skillsActivated" ? message.content.skills : undefined,
               clarificationQuestions: convertToChatClarificationQuestions(message.content),
               filled: message.filled,
+              error: message.content.type === "error" ? message.content : undefined,
           }
         : null;
 }

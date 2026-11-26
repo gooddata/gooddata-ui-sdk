@@ -6,7 +6,7 @@ import type { LinkHandlerEvent, GenAIAssistant as OriginalGenAIAssistant } from 
 import { CustomElementAdapter, GET_COMPONENT, LOAD_COMPONENT } from "../common/CustomElementAdapter.js";
 import { type CustomElementContext } from "../context.js";
 
-import { type ICommonPropertiesDefinition, getProperties, setActions } from "./common.js";
+import { type ICommonPropertiesDefinition, getProperties, loadGenAi, setActions } from "./common.js";
 
 type IGenAIAssistant = typeof OriginalGenAIAssistant;
 type IGenAIAssistantLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
@@ -53,7 +53,7 @@ export class GenAIAssistant
     }
 
     override async [LOAD_COMPONENT]() {
-        return (await import("@gooddata/sdk-ui-gen-ai")).GenAIAssistant;
+        return (await loadGenAi()).GenAIAssistant;
     }
 
     override [GET_COMPONENT](Component: IGenAIAssistant, { backend, workspaceId }: CustomElementContext) {
