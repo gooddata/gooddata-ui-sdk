@@ -9,6 +9,7 @@ import {
     getInteractiveItem,
     getItem,
     getItemInteractiveParent,
+    getItemPositionInMenuLevel,
     getItemsByInteractiveParent,
     getNextSiblings,
     getPreviousSiblings,
@@ -68,6 +69,22 @@ describe("itemUtils", () => {
         it("should handle empty array", () => {
             const result = findItem([], (item) => item.id === "item1");
             expect(result).toBeUndefined();
+        });
+    });
+
+    describe("getItemPositionInMenuLevel", () => {
+        it("should count menu items across groups of the root level", () => {
+            expect(getItemPositionInMenuLevel(mockItems, "item1")).toEqual({ posInSet: 1, setSize: 6 });
+            expect(getItemPositionInMenuLevel(mockItems, "groupitem1")).toEqual({ posInSet: 5, setSize: 6 });
+        });
+
+        it("should count items of a submenu level only", () => {
+            expect(getItemPositionInMenuLevel(mockItems, "subitem2")).toEqual({ posInSet: 2, setSize: 2 });
+        });
+
+        it("should return undefined for non-menu items", () => {
+            expect(getItemPositionInMenuLevel(mockItems, "static1")).toBeUndefined();
+            expect(getItemPositionInMenuLevel(mockItems, "nonexistent")).toBeUndefined();
         });
     });
 

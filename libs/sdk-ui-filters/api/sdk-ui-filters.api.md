@@ -8,7 +8,11 @@ import { AttributeFiltersOrPlaceholders } from '@gooddata/sdk-ui';
 import { ComparisonConditionOperator } from '@gooddata/sdk-model';
 import { ComponentType } from 'react';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
+import { DashboardDateFilterOfAnyType } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
+import { DateFilterOptionAbsoluteGranularityFormType } from '@gooddata/sdk-model';
+import { DatePeriodGranularity } from '@gooddata/sdk-model';
+import { DatePeriodLiteral } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
 import { ElementsQueryOptionsElementsSpecification } from '@gooddata/sdk-backend-spi';
 import { EmptyValues } from '@gooddata/sdk-model';
@@ -17,6 +21,7 @@ import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-model';
+import { IAbsoluteGranularityDateFilter } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAlignPoint } from '@gooddata/sdk-ui-kit';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-model';
@@ -29,6 +34,8 @@ import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
+import { IDateFilterOption } from '@gooddata/sdk-model';
+import { IDateRangeParameterPeriod } from '@gooddata/sdk-model';
 import { IDropdownButtonRenderProps } from '@gooddata/sdk-ui-kit';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IEmptyValuesDateFilterOption } from '@gooddata/sdk-model';
@@ -268,6 +275,7 @@ export const DateFilterHelpers: {
     mapOptionToAfm: typeof mapOptionToAfm;
     formatAbsoluteDateRange: typeof formatAbsoluteDateRange;
     formatRelativeDateRange: typeof formatRelativeDateRange;
+    formatDateRangeParameterPeriod: typeof formatDateRangeParameterPeriod;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
 
@@ -275,7 +283,7 @@ export const DateFilterHelpers: {
 export type DateFilterLabelMode = "short" | "full";
 
 // @public
-export type DateFilterOption = IAllTimeDateFilterOption | IEmptyValuesDateFilterOption | AbsoluteDateFilterOption | RelativeDateFilterOption;
+export type DateFilterOption = IAllTimeDateFilterOption | IEmptyValuesDateFilterOption | AbsoluteDateFilterOption | IUiAbsoluteGranularityDateFilterForm | RelativeDateFilterOption;
 
 // @public
 export type DateFilterRelativeOptionGroup = {
@@ -384,13 +392,16 @@ export function filterStandardPresets(presets: DateFilterRelativeOptionGroup): D
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
 
 // @alpha
-export function findDateFilterOptionByValue(dateFilter: IDashboardDateFilter, dateFilterOptions: IDateFilterOptionsByType): DateFilterOption | undefined;
+export function findDateFilterOptionByValue(dateFilter: DashboardDateFilterOfAnyType, dateFilterOptions: IDateFilterOptionsByType): DateFilterOption | undefined;
 
 // @alpha
 export function flattenDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): DateFilterOption[];
 
 // @beta (undocumented)
 export const formatAbsoluteDateRange: (from: Date | string, to: Date | string, dateFormat: string, splitter?: string) => string;
+
+// @beta
+export const formatDateRangeParameterPeriod: (period: IDateRangeParameterPeriod, translator: IDateAndMessageTranslator, dateFormat?: string, weekStart?: WeekStart) => string | undefined;
 
 // @beta (undocumented)
 export const formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter) => string;
@@ -404,11 +415,11 @@ export function getAvailableSelectionTypeFromFilter(filter: IAttributeFilter | u
 // @alpha
 export function getAvailableTextSelectionTypes(selectionTypes: AttributeFilterAvailableSelectionType[] | undefined): AttributeFilterTextSelectionType[];
 
-// @beta (undocumented)
-export const getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
+// @beta
+export const getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, labelMode: DateFilterLabelMode, dateFormat?: string, weekStart?: WeekStart) => string;
 
 // @beta
-export const getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
+export const getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, dateFormat?: string, weekStart?: WeekStart) => string;
 
 // @alpha
 export function getDefaultCalendarTab(activeCalendars?: IActiveCalendars, currentPreset?: DateFilterOption): CalendarTabType;
@@ -1439,9 +1450,9 @@ export type InvertableSelection<T> = {
 // @alpha
 export interface IPeriodRange {
     // (undocumented)
-    from?: DateString;
+    from?: DateString | DatePeriodLiteral;
     // (undocumented)
-    to?: DateString;
+    to?: DateString | DatePeriodLiteral;
 }
 
 // @alpha (undocumented)
@@ -1586,6 +1597,9 @@ export interface IStagedSingleSelectionHandler<T> extends Omit<ISingleSelectionH
     revertSelection(): void;
 }
 
+// @alpha
+export const isUiAbsoluteGranularityDateFilterForm: (obj: unknown) => obj is IUiAbsoluteGranularityDateFilterForm;
+
 // @public
 export const isUiRelativeDateFilterForm: (obj: unknown) => obj is IUiRelativeDateFilterForm;
 
@@ -1652,6 +1666,15 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
 }
 
 // @public
+export interface IUiAbsoluteGranularityDateFilterForm extends IDateFilterOption {
+    emptyValueHandling?: EmptyValues;
+    from?: DatePeriodLiteral;
+    granularity: DatePeriodGranularity;
+    to?: DatePeriodLiteral;
+    type: DateFilterOptionAbsoluteGranularityFormType;
+}
+
+// @public
 export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm, "availableGranularities"> {
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     emptyValueHandling?: EmptyValues;
@@ -1713,14 +1736,14 @@ export type IWarningMessage = {
 // @alpha
 export function mapAvailableSelectionTypesToInternal(selectionTypes: AttributeFilterAvailableSelectionType[] | undefined): AttributeFilterSelectionType[];
 
-// @beta (undocumented)
-export const mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter | null;
+// @beta
+export const mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter | IAbsoluteGranularityDateFilter | null;
 
 // @alpha
-export function matchDateFilterToDateFilterOption(dateFilter: IDashboardDateFilter | undefined, availableOptions: IDateFilterOptionsByType): IDateFilterOptionInfo;
+export function matchDateFilterToDateFilterOption(dateFilter: DashboardDateFilterOfAnyType | undefined, availableOptions: IDateFilterOptionsByType): IDateFilterOptionInfo;
 
 // @alpha
-export function matchDateFilterToDateFilterOptionWithPreference(dateFilter: IDashboardDateFilter | undefined, availableOptions: IDateFilterOptionsByType, preferredOptionId: string | undefined): IDateFilterOptionInfo;
+export function matchDateFilterToDateFilterOptionWithPreference(dateFilter: DashboardDateFilterOfAnyType | undefined, availableOptions: IDateFilterOptionsByType, preferredOptionId: string | undefined): IDateFilterOptionInfo;
 
 // @beta (undocumented)
 export const MeasureValueFilter: NamedExoticComponent<IMeasureValueFilterProps>;
@@ -1872,7 +1895,7 @@ export type ParentFilterOverAttributeType = ObjRef | ((parentFilter: IAttributeF
 export function PeriodRangePicker(props: IPeriodRangePickerProps): JSX.Element;
 
 // @alpha
-export type PeriodRangePickerGranularity = Extract<DateFilterGranularity, "GDC.time.date" | "GDC.time.week_us" | "GDC.time.month" | "GDC.time.quarter" | "GDC.time.year">;
+export type PeriodRangePickerGranularity = "GDC.time.date" | DatePeriodGranularity;
 
 // @beta (undocumented)
 export function RankingFilter(input: IRankingFilterProps): JSX.Element;

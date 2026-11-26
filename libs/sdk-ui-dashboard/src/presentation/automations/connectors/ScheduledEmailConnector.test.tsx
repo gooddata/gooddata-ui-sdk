@@ -29,6 +29,9 @@ const fixtures = vi.hoisted(() => {
     let managementDialogProps: Record<string, unknown> | undefined;
     let dialogProps: Record<string, unknown> | undefined;
     let automationsError: Error | undefined;
+    let notSupportedDialogProps: Record<string, unknown> | undefined;
+    const blocksAutomation = vi.fn((_isDashboardExport: boolean) => false);
+    const buildDialogContext = vi.fn(() => ({}));
     const seState = {
         isScheduleEmailingDialogOpen: false,
         isScheduleEmailingManagementDialogOpen: true,
@@ -59,6 +62,14 @@ const fixtures = vi.hoisted(() => {
         },
         get automationsError() {
             return automationsError;
+        },
+        blocksAutomation,
+        buildDialogContext,
+        get notSupportedDialogProps() {
+            return notSupportedDialogProps;
+        },
+        set notSupportedDialogProps(value: Record<string, unknown> | undefined) {
+            notSupportedDialogProps = value;
         },
         set automationsError(value: Error | undefined) {
             automationsError = value;
@@ -172,7 +183,7 @@ vi.mock("./hooks/useBuildAutomationsContext.js", () => ({
 }));
 
 vi.mock("./hooks/useBuildScheduledEmailDialogContext.js", () => ({
-    useBuildScheduledEmailDialogContext: () => ({}),
+    useBuildScheduledEmailDialogContext: fixtures.buildDialogContext,
 }));
 
 vi.mock("./hooks/useBuildScheduledEmailManagementDialogContext.js", () => ({
@@ -192,6 +203,17 @@ vi.mock("../shared/filters/index.js", () => ({
     getAppliedDashboardFilters: () => [],
 }));
 
+vi.mock("./hooks/useAbsoluteGranularityDateFilterBlocksAutomation.js", () => ({
+    useAbsoluteGranularityDateFilterBlocksAutomation: fixtures.blocksAutomation,
+}));
+
+vi.mock("../shared/components/AbsoluteGranularityDateFilterNotSupportedDialog.js", () => ({
+    AbsoluteGranularityDateFilterNotSupportedDialog: (props: Record<string, unknown>) => {
+        fixtures.notSupportedDialogProps = props;
+        return null;
+    },
+}));
+
 import { ScheduledEmailConnector } from "./ScheduledEmailConnector.js";
 
 describe("ScheduledEmailConnector", () => {
@@ -202,6 +224,10 @@ describe("ScheduledEmailConnector", () => {
         fixtures.managementDialogProps = undefined;
         fixtures.dialogProps = undefined;
         fixtures.automationsError = undefined;
+        fixtures.notSupportedDialogProps = undefined;
+        fixtures.blocksAutomation.mockReset();
+        fixtures.blocksAutomation.mockReturnValue(false);
+        fixtures.buildDialogContext.mockClear();
         fixtures.seState.isScheduleEmailingDialogOpen = false;
         fixtures.seState.isScheduleEmailingManagementDialogOpen = true;
     });
@@ -274,5 +300,28 @@ describe("ScheduledEmailConnector", () => {
         render(<ScheduledEmailConnector />);
 
         expect(fixtures.managementDialogProps).toBeDefined();
+    });
+
+    it("shows the not supported dialog without building the schedule dialog when the filters block it", () => {
+        fixtures.seState.isScheduleEmailingDialogOpen = true;
+        fixtures.seState.isScheduleEmailingManagementDialogOpen = false;
+        fixtures.blocksAutomation.mockReturnValue(true);
+
+        render(<ScheduledEmailConnector />);
+
+        expect(fixtures.blocksAutomation).toHaveBeenCalledWith(false);
+        expect(fixtures.notSupportedDialogProps?.["automationType"]).toBe("scheduledExport");
+        expect(fixtures.dialogProps).toBeUndefined();
+        expect(fixtures.buildDialogContext).not.toHaveBeenCalled();
+    });
+
+    it("shows the schedule dialog when the filters do not block it", () => {
+        fixtures.seState.isScheduleEmailingDialogOpen = true;
+        fixtures.seState.isScheduleEmailingManagementDialogOpen = false;
+
+        render(<ScheduledEmailConnector />);
+
+        expect(fixtures.notSupportedDialogProps).toBeUndefined();
+        expect(fixtures.dialogProps).toBeDefined();
     });
 });

@@ -3,7 +3,7 @@
 import { type EditorView } from "@codemirror/view";
 import { configureStore } from "@reduxjs/toolkit";
 import { act, render } from "@testing-library/react";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { type IChatConversationLocal } from "../../model.js";
@@ -12,10 +12,12 @@ import {
     chatWindowSliceReducer,
     getInitialChatWindowState,
 } from "../../store/chatWindow/chatWindowSlice.js";
+import { refocusSelector } from "../../store/messages/messagesSelectors.js";
 import {
     clearConversationSuccessAction,
     messagesSliceName,
     messagesSliceReducer,
+    refocusInput,
 } from "../../store/messages/messagesSlice.js";
 
 import { useInputAutofocus } from "./useInputAutofocus.js";
@@ -114,4 +116,36 @@ describe("useInputAutofocus", () => {
 
         expect(elsewhere).toHaveFocus();
     });
+
+    it("focuses the editor when the input is asked to refocus", async () => {
+        const store = createStore();
+        switchConversation(store, "conversation-1");
+        const { contentDOM, editorApi } = mountEditor();
+        render(
+            <Provider store={store}>
+                <RefocusableTestInput editorApi={editorApi} />
+            </Provider>,
+        );
+        await nextFrame();
+
+        // e.g. a landing screen suggestion button that is removed after activation
+        const elsewhere = document.createElement("button");
+        document.body.appendChild(elsewhere);
+        elsewhere.focus();
+
+        act(() => {
+            store.dispatch(refocusInput());
+        });
+        elsewhere.remove();
+        await nextFrame();
+
+        expect(contentDOM).toHaveFocus();
+    });
 });
+
+function RefocusableTestInput({ editorApi }: { editorApi: EditorView }) {
+    const refocusKey = useSelector(refocusSelector);
+    const ref = useInputAutofocus(editorApi, true, { isBusy: false, refocusKey });
+
+    return <div {...ref} />;
+}

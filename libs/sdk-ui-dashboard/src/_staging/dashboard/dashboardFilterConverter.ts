@@ -1,13 +1,15 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type DashboardDateFilterOfAnyType,
     type DateFilterGranularity,
-    type IDashboardDateFilter,
     type ObjRef,
     absoluteDateFilterValues,
+    absoluteGranularityDateFilterValues,
     idRef,
     isAbsoluteDateFilter,
     isAbsoluteDateFilterForm,
+    isAbsoluteGranularityDateFilter,
     isEmptyValuesDateFilterOption,
     isRelativeDateFilter,
     newAllTimeDashboardDateFilter,
@@ -16,7 +18,7 @@ import {
 import { DateFilterHelpers, type DateFilterOption } from "@gooddata/sdk-ui-filters";
 
 /**
- * Converts {@link DateFilterOption} to {@link IDashboardDateFilter}.
+ * Converts {@link DateFilterOption} to the date filter of the filter context.
  *
  * @param dateFilterOption - date filter option to convert
  * @param excludeCurrentPeriod - whether or not to exclude the current period
@@ -29,7 +31,7 @@ export function dateFilterOptionToDashboardDateFilter(
     excludeCurrentPeriod: boolean,
     dataSet?: ObjRef,
     localIdentifier?: string,
-): IDashboardDateFilter | undefined {
+): DashboardDateFilterOfAnyType | undefined {
     const emptyValueHandling = isEmptyValuesDateFilterOption(dateFilterOption)
         ? "only"
         : dateFilterOption.emptyValueHandling;
@@ -77,6 +79,17 @@ export function dateFilterOptionToDashboardDateFilter(
                     : "GDC.time.date",
                 from,
                 to,
+                dataSet,
+                localIdentifier,
+                ...(emptyValueHandling ? { emptyValueHandling } : {}),
+            },
+        };
+    } else if (isAbsoluteGranularityDateFilter(afmFilter)) {
+        const { granularity, ...range } = absoluteGranularityDateFilterValues(afmFilter);
+        return {
+            dashboardAbsoluteGranularityDateFilter: {
+                granularity,
+                ...range,
                 dataSet,
                 localIdentifier,
                 ...(emptyValueHandling ? { emptyValueHandling } : {}),

@@ -120,10 +120,15 @@ export function LegendItem({
 }: ILegendItemProps) {
     const theme = useTheme();
 
-    const { isFocused, id } = LegendSeriesContextStore.useContextStore((ctx) => ({
-        isFocused: ctx.focusedItem === item,
-        id: ctx.makeItemId(item),
-    }));
+    const { isFocused, id, posInSet, setSize } = LegendSeriesContextStore.useContextStore((ctx) => {
+        const position = ctx.getItemPosition(item);
+        return {
+            isFocused: ctx.focusedItem === item,
+            id: ctx.makeItemId(item),
+            posInSet: position?.posInSet,
+            setSize: position?.setSize,
+        };
+    });
     const { registerItem } = useItemVisibility();
 
     const disabledColor = theme?.palette?.complementary?.c5 ?? DEFAULT_DISABLED_COLOR;
@@ -195,6 +200,8 @@ export function LegendItem({
             data-testid={"legend-item"}
             role={"option"}
             aria-selected={item.isVisible}
+            aria-posinset={posInSet}
+            aria-setsize={setSize}
             id={id}
             style={style}
             className={cx("series-item", { "series-item--isFocused": isFocused })}

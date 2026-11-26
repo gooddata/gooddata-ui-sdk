@@ -149,10 +149,12 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
             <div
                 className="dash-filters-wrapper s-gd-dashboard-filter-bar"
                 ref={dropRef as unknown as Ref<HTMLDivElement> | undefined}
-                onFocus={onContainerFocus}
-                onBlur={onContainerBlur}
             >
+                {/* Auto-expansion follows focus in the filters area only: the "Show all" toggle is
+                    outside it, so keyboard users get its real state and can expand/collapse manually. */}
                 <div
+                    onFocus={onContainerFocus}
+                    onBlur={onContainerBlur}
                     style={{ height }}
                     className={cx("dash-filters-visible", {
                         scrollable: scrollable,
@@ -196,6 +198,8 @@ function DefaultFilterBarContainerCore({ children }: { children?: ReactNode }) {
                     onToggle={(isExpanded) => {
                         setFilterBarExpanded(isExpanded);
                         setExpandedAutomatically(false);
+                        // a manual toggle is not an auto-collapse: drop the stale announcement
+                        setCollapseAnnouncement("");
                     }}
                 />
                 {isInEditMode ? <FlexibleBulletsBar /> : null}

@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "ID sledi",
     "automations.icon.tooltip.startsOn": "Začne se",
     "automations.icon.tooltip.repeats": "Ponavlja",
+    "automations.icon.tooltip.trigger.failed": "Pokaži podrobnosti o napaki",
+    "automations.icon.tooltip.trigger.details": "Prikaži podrobnosti",
     "automations.menu.trigger": "Pošlji zdaj",
     "automations.menu.copyId": "Kopiraj ID",
     "automations.message.copyId.success": "ID skopiran v odložišče",

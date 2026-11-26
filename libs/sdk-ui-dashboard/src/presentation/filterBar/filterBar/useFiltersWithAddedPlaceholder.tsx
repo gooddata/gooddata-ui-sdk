@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import {
     type DashboardAttributeFilterItem,
+    type DashboardDateFilterOfAnyType,
     type FilterContextItem,
     type IDashboardDateFilter,
     type IDashboardFilterGroup,
@@ -13,7 +14,7 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardFilterObjRef,
     isDashboardAttributeFilterItem,
-    isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
@@ -169,8 +170,8 @@ export function useFiltersWithAddedPlaceholder(
     workingFilters?: FilterContextItem[],
 ): [
     {
-        commonDateFilter: IDashboardDateFilter;
-        commonWorkingDateFilter?: IDashboardDateFilter;
+        commonDateFilter: DashboardDateFilterOfAnyType;
+        commonWorkingDateFilter?: DashboardDateFilterOfAnyType;
         draggableFiltersWithPlaceholder: FilterBarDraggableItems;
         draggableFiltersCount: number;
         autoOpenFilter: ObjRef | undefined;
@@ -187,13 +188,13 @@ export function useFiltersWithAddedPlaceholder(
     const allAttributes = useDashboardSelector(selectCatalogAttributesWithComputed);
     const dateDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
 
-    const commonWorkingDateFilter = workingFilters?.find(isDashboardCommonDateFilter);
+    const commonWorkingDateFilter = workingFilters?.find(isDashboardCommonDateFilterOfAnyType);
     const [draggableFilters, nonDraggableFilters] = _partition(filters, isNotDashboardCommonDateFilter);
     // nonDraggableFilters may contain new filter types (arbitrary, match) alongside the common date filter.
     // Use a cast since TypeScript cannot narrow FilterContextItem exclusions through .find().
     const commonDateFilter = nonDraggableFilters.find((f) =>
-        isDashboardCommonDateFilter(f),
-    ) as unknown as IDashboardDateFilter;
+        isDashboardCommonDateFilterOfAnyType(f),
+    ) as unknown as DashboardDateFilterOfAnyType;
     const [dateFiltersWithDimensions, attributeFilters] = _partition(
         draggableFilters,
         isDashboardDateFilterWithDimension,

@@ -288,6 +288,34 @@ describe("maqlDiagnosticWidget", () => {
         expect(widgetMessage(view)).toBe("The call expression 'SUM()' has invalid arguments");
     });
 
+    it("announces each diagnostic it moves to and keeps the focus in the editor", () => {
+        const announcements = (view: EditorView) =>
+            Array.from(view.dom.querySelectorAll(".cm-announced > div")).map((div) => div.textContent);
+        view = new EditorView({
+            state: EditorState.create({
+                doc: "SELECT SUM;",
+                selection: { anchor: 11 },
+                extensions: maqlDiagnosticWidget(),
+            }),
+            parent: document.body,
+        });
+        view.dispatch(
+            setDiagnostics(view.state, [
+                error(7, 10, "The call expression 'SUM()' has invalid arguments"),
+                error(10, 11, "mismatched input ';' expecting '('"),
+            ]),
+        );
+        view.focus();
+
+        showNextDiagnostic(view);
+        expect(view.dom.querySelector(".cm-announced")?.getAttribute("aria-live")).toBe("polite");
+        expect(announcements(view)).toEqual(["mismatched input ';' expecting '('"]);
+
+        showNextDiagnostic(view);
+        expect(announcements(view)).toEqual(["The call expression 'SUM()' has invalid arguments"]);
+        expect(view.hasFocus).toBe(true);
+    });
+
     it("closes when the code changes", () => {
         view = new EditorView({
             state: EditorState.create({ doc: "SELECT SUM;", extensions: maqlDiagnosticWidget() }),

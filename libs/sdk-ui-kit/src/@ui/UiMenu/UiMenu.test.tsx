@@ -7,6 +7,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
+import { DefaultUiMenuInteractiveItemWrapper } from "./components/defaults/DefaultUiMenuInteractiveItem.js";
 import { typedUiMenuContextStore } from "./context.js";
 import { b } from "./menuBem.js";
 import {
@@ -108,6 +109,83 @@ describe("UiMenu", () => {
 
         expect(contentItemLi).toHaveAttribute("role", "menuitem");
         expect(contentItemLi).toHaveAttribute("aria-describedby", "content1-description");
+    });
+
+    it("should report item positions across all groups of the menu level", () => {
+        renderMenu({
+            items: [
+                {
+                    type: "group",
+                    id: "drillDown",
+                    stringTitle: "Drill down",
+                    data: "Drill down",
+                    subItems: [{ type: "interactive", id: "down", stringTitle: "Down", data: "down" }],
+                },
+                {
+                    type: "group",
+                    id: "drillInto",
+                    stringTitle: "Drill into",
+                    data: "Drill into",
+                    subItems: [
+                        {
+                            type: "content",
+                            id: "into",
+                            stringTitle: "Into",
+                            data: "into",
+                            Component: () => null,
+                        },
+                    ],
+                },
+                {
+                    type: "group",
+                    id: "explain",
+                    stringTitle: "Explain",
+                    data: "Explain",
+                    subItems: [{ type: "interactive", id: "kda", stringTitle: "Explain it", data: "kda" }],
+                },
+            ],
+        });
+
+        const menuItems = screen.getAllByRole("menuitem");
+        expect(menuItems).toHaveLength(3);
+        menuItems.forEach((menuItem, index) => {
+            expect(menuItem).toHaveAttribute("aria-posinset", String(index + 1));
+            expect(menuItem).toHaveAttribute("aria-setsize", "3");
+        });
+        // group titles still label the groups
+        expect(screen.getByRole("group", { name: "Drill into" })).toBeInTheDocument();
+    });
+
+    it("should count only menu items of the current level for positions", () => {
+        renderMenu();
+
+        const item1 = screen.getByText("Item 1").closest("li");
+        const groupItem2 = screen.getByText("Group Item 2").closest("li");
+
+        // item1, item2, item3, item4, groupitem1, groupitem2 (static item is excluded)
+        expect(item1).toHaveAttribute("aria-posinset", "1");
+        expect(item1).toHaveAttribute("aria-setsize", "6");
+        expect(groupItem2).toHaveAttribute("aria-posinset", "6");
+        expect(groupItem2).toHaveAttribute("aria-setsize", "6");
+    });
+
+    it("should not report positions when a custom item wrapper may render items as non-menu items", () => {
+        renderMenu({
+            InteractiveItemWrapper: (props) =>
+                props.item.id === "item2" ? (
+                    <li role="none">
+                        <button type="button">Item 2 row</button>
+                    </li>
+                ) : (
+                    <DefaultUiMenuInteractiveItemWrapper {...props} />
+                ),
+        });
+
+        const item1 = screen.getByText("Item 1").closest("li");
+
+        expect(item1).toHaveAttribute("role", "menuitem");
+        expect(item1).not.toHaveAttribute("aria-posinset");
+        expect(item1).not.toHaveAttribute("aria-setsize");
     });
 
     it("should call onSelect when item is clicked", () => {

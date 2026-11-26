@@ -795,6 +795,8 @@
     "shareDialog.olp.generalAccess.workspace.description.edit": "Vsi v tem delovnem prostoru lahko urejajo ta predmet.",
     "uiKit.autocomplete.searchPlaceholder": "Iskanje",
     "uiKit.toast.regionLabel": "{count, plural, one {# obvestilo} two {# obvestili} few {# obvestila} other {# obvestil}}",
+    "uiKit.message.showMore": "Prikaži več",
+    "uiKit.message.showLess": "Prikaži manj",
     "uiKit.autocomplete.stateLoading": "Nalaganje…",
     "uiKit.autocomplete.stateError": "Možnosti ni bilo mogoče naložiti. Poskusite znova.",
     "uiKit.autocomplete.stateNoMatch": "Ni ujemajočih se možnosti.",

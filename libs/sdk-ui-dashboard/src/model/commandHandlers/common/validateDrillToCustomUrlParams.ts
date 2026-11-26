@@ -15,6 +15,7 @@ import {
     isArbitraryAttributeFilter,
     isAttributeFilter,
     isDrillToCustomUrl,
+    isInsightWidget,
     isMatchAttributeFilter,
     isNegativeAttributeFilter,
     widgetRef,
@@ -28,6 +29,7 @@ import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSele
 import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextAttributeFilterItems } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectAllAnalyticalWidgets } from "../../store/tabs/layout/layoutSelectors.js";
 import {
     type IWidgetParameterValue,
     selectWidgetParameterValues,
@@ -45,6 +47,11 @@ import { isDisplayFormRelevantToDrill } from "./isDisplayFormRelevantToDrill.js"
 interface IInvalidParamsInfo {
     widget: IInsightWidget;
     invalidDrills: IDrillToCustomUrl[];
+}
+
+export function* revalidateDrillToCustomUrlParams(): SagaIterator<void> {
+    const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(selectAllAnalyticalWidgets);
+    yield call(validateDrillToCustomUrlParams, widgets.filter(isInsightWidget));
 }
 
 //

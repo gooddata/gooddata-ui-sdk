@@ -51,6 +51,7 @@ import {
 import {
     type DashboardAttributeFilterItemSelectionReplaced,
     type DashboardAttributeFilterSelectionChanged,
+    type DashboardDateFilterOfAnyTypeSelectionChanged,
     type DashboardDateFilterSelectionChanged,
     type DashboardFilterContextChanged,
     type IDashboardAttributeFilterAdded,
@@ -59,6 +60,7 @@ import {
     type IDashboardAttributeFilterRemoved,
     type IDashboardAttributeSelectionModeChanged,
     type IDashboardAttributeTitleChanged,
+    type IDashboardDateFilterOfAnyTypeTitleChanged,
     type IDashboardMeasureValueFilterAdded,
     type IDashboardMeasureValueFilterConditionChanged,
     type IDashboardMeasureValueFilterConfigModeChanged,
@@ -121,7 +123,12 @@ import {
     type IDashboardLayoutSectionMoved,
     type IDashboardLayoutSectionRemoved,
 } from "./layout.js";
-import { type IDashboardParametersChanged, type IDashboardParametersSelectionReset } from "./parameters.js";
+import {
+    type IDashboardParametersAdded,
+    type IDashboardParametersChanged,
+    type IDashboardParametersRemoved,
+    type IDashboardParametersSelectionReset,
+} from "./parameters.js";
 import {
     type DashboardAsyncRenderRequested,
     type DashboardAsyncRenderResolved,
@@ -206,6 +213,8 @@ export type DashboardEvents =
     | IDashboardExportToImageResolved
     | IDashboardUserInteractionTriggered
     | DashboardDateFilterSelectionChanged
+    | DashboardDateFilterOfAnyTypeSelectionChanged
+    | IDashboardDateFilterOfAnyTypeTitleChanged
     | IDashboardAttributeFilterAdded
     | IDashboardAttributeFilterRemoved
     | IDashboardAttributeFilterMoved
@@ -296,6 +305,8 @@ export type DashboardEvents =
     | IDashboardTabRenamed
     | IDashboardParametersSelectionReset
     | IDashboardParametersChanged
+    | IDashboardParametersAdded
+    | IDashboardParametersRemoved
     | IDashboardInsightEditorOpened
     | IDashboardInsightEditorInsightSaved
     | IDashboardInsightEditorCancelled

@@ -10,7 +10,10 @@ import { type IUiButtonProps, UiButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 import { makeAssistantItem, makeUserItem } from "../../model.js";
 import { agentSwitchingActiveSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 import { agentsAvailableSelector } from "../../store/messages/messagesSelectors.js";
-import { setMessagesAction as setMessagesActionCreator } from "../../store/messages/messagesSlice.js";
+import {
+    refocusInput,
+    setMessagesAction as setMessagesActionCreator,
+} from "../../store/messages/messagesSlice.js";
 import { escapeMarkdown } from "../utils/markdownUtils.js";
 
 const disabledTooltip = defineMessage({ id: "gd.gen-ai.agent.unavailable.disabled-tooltip" });
@@ -59,6 +62,9 @@ export function DefaultLandingQuestion({ icon, question, answer, title = questio
                         makeAssistantItem({ type: "text", text: escapeMarkdown(answer) }, "", true),
                     ],
                 });
+                // The landing screen (and this focused button) unmounts once the conversation has
+                // messages, so move focus to the chat input to let the user type a follow-up.
+                dispatch(refocusInput());
             }}
             variant="secondary"
             size="medium"

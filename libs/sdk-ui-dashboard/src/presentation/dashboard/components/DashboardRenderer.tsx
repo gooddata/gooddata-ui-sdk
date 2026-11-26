@@ -245,7 +245,9 @@ export function DashboardRenderer(props: IDashboardProps) {
                                                 DashboardAttributeFilterComponentProvider={
                                                     attributeFilterProvider
                                                 }
-                                                DashboardDateFilterComponentProvider={dateFilterProvider}
+                                                DashboardDateFilterOfAnyTypeComponentProvider={
+                                                    dateFilterProvider
+                                                }
                                                 DashboardMeasureValueFilterComponentProvider={
                                                     measureValueFilterProvider
                                                 }

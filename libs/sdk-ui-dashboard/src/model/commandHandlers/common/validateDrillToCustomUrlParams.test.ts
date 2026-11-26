@@ -1,11 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import { batchActions } from "redux-batched-actions";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     type IDashboardParameter,
     type IDrillToCustomUrl,
+    type IInsight,
+    type IScalarParameterMetadataObject,
     type ObjRef,
     idRef,
     insightRef,
@@ -20,8 +21,9 @@ import {
 } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { initializeDashboard } from "../../commands/dashboard.js";
 import { addDrillTargets } from "../../commands/drillTargets.js";
-import { changeInsightWidgetInsight } from "../../commands/insight.js";
+import { changeInsightWidgetInsight, refreshInsightWidget } from "../../commands/insight.js";
 import { undoLayoutChanges } from "../../commands/layout.js";
+import { addParameters, removeParameters } from "../../commands/parameters.js";
 import { changeRenderMode } from "../../commands/renderMode.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { catalogActions } from "../../store/catalog/index.js";
@@ -29,6 +31,7 @@ import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
+import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { selectInvalidUrlDrillParameterWidgetRefs } from "../../store/ui/uiSelectors.js";
 import { PivotTableWithRowAndColumnAttributes } from "../../tests/Insights.test.helpers.js";
 
@@ -37,6 +40,18 @@ describe("parameter placeholders in custom URL drill validation", () => {
         ref: idRef("topN", "parameter"),
         parameterType: "NUMBER",
         mode: "active",
+    };
+    const topNCatalogParameter: IScalarParameterMetadataObject = {
+        type: "parameter",
+        id: "topN",
+        uri: "/topN",
+        ref: topNParameter.ref,
+        title: "Top N",
+        description: "",
+        production: true,
+        deprecated: false,
+        unlisted: false,
+        definition: { type: "NUMBER", defaultValue: 5 },
     };
 
     let Tester: DashboardTester;
@@ -47,6 +62,14 @@ describe("parameter placeholders in custom URL drill validation", () => {
             },
             SimpleDashboardIdentifier,
             { initCommand: initializeDashboard({ settings: { enableParameters: true } }) },
+        );
+        Tester.dispatch(
+            catalogActions.setCatalogParameters({
+                status: "loaded",
+                dateRangeParametersStatus: "gated-off",
+                dateRangeParameters: [],
+                parameters: [topNCatalogParameter],
+            }),
         );
         Tester.dispatch(tabsActions.addParameter({ parameter: topNParameter, workspaceDefault: 5 }));
     });
@@ -75,13 +98,12 @@ describe("parameter placeholders in custom URL drill validation", () => {
     it("marks the widget when its parameter is removed from the dashboard", async () => {
         await loadDrillInEditMode("https://example.com/?n={parameter(topN)}");
 
-        Tester.dispatch(tabsActions.removeParameter({ ref: topNParameter.ref }));
-
-        await vi.waitFor(() =>
-            expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([
-                SimpleSortedTableWidgetRef,
-            ]),
+        await Tester.dispatchAndWaitFor(
+            removeParameters([topNParameter.ref], activeTab()),
+            "GDC.DASH/EVT.PARAMETERS.REMOVED",
         );
+
+        expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([SimpleSortedTableWidgetRef]);
     });
 
     it("clears the mark when the missing parameter is added to the dashboard", async () => {
@@ -89,9 +111,12 @@ describe("parameter placeholders in custom URL drill validation", () => {
         await loadDrillInEditMode("https://example.com/?n={parameter(topN)}");
         expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([SimpleSortedTableWidgetRef]);
 
-        Tester.dispatch(tabsActions.addParameter({ parameter: topNParameter, workspaceDefault: 5 }));
+        await Tester.dispatchAndWaitFor(
+            addParameters([topNParameter.ref], activeTab()),
+            "GDC.DASH/EVT.PARAMETERS.ADDED",
+        );
 
-        await vi.waitFor(() => expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([]));
+        expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([]);
     });
 
     it("clears only the repaired widget while another widget stays invalid", async () => {
@@ -105,23 +130,32 @@ describe("parameter placeholders in custom URL drill validation", () => {
             drillToAttributeUrlWidgetRef,
         ]);
 
-        Tester.dispatch(tabsActions.addParameter({ parameter: topNParameter, workspaceDefault: 5 }));
-
-        await vi.waitFor(() =>
-            expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([
-                drillToAttributeUrlWidgetRef,
-            ]),
+        await Tester.dispatchAndWaitFor(
+            addParameters([topNParameter.ref], activeTab()),
+            "GDC.DASH/EVT.PARAMETERS.ADDED",
         );
+
+        expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([
+            drillToAttributeUrlWidgetRef,
+        ]);
     });
 
     it("clears the mark when the missing parameter is saved on the insight", async () => {
         Tester.dispatch(tabsActions.removeParameter({ ref: topNParameter.ref }));
         await loadDrillInEditMode("https://example.com/?n={parameter(topN)}");
         expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([SimpleSortedTableWidgetRef]);
+        const insightsService = Tester.ctx.backend.workspace(Tester.ctx.workspace).insights();
+        vi.spyOn(
+            Object.getPrototypeOf(insightsService) as typeof insightsService,
+            "getInsight",
+        ).mockResolvedValueOnce(insightWithSavedTopN());
 
-        saveTopNOnInsight();
+        await Tester.dispatchAndWaitFor(
+            refreshInsightWidget(SimpleSortedTableWidgetRef),
+            "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED",
+        );
 
-        await vi.waitFor(() => expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([]));
+        expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([]);
     });
 
     it("clears the mark when the change of the widget insight is undone", async () => {
@@ -137,18 +171,22 @@ describe("parameter placeholders in custom URL drill validation", () => {
             ),
             "GDC.DASH/EVT.INSIGHT_WIDGET.INSIGHT_SWITCHED",
         );
-        await vi.waitFor(() =>
-            expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([
-                SimpleSortedTableWidgetRef,
-            ]),
-        );
+        expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([SimpleSortedTableWidgetRef]);
 
         await Tester.dispatchAndWaitFor(undoLayoutChanges(), "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED");
 
-        await vi.waitFor(() => expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([]));
+        expect(Tester.select(selectInvalidUrlDrillParameterWidgetRefs)).toEqual([]);
     });
 
+    function activeTab(): string {
+        return selectActiveOrDefaultTabLocalIdentifier(Tester.state());
+    }
+
     function saveTopNOnInsight() {
+        Tester.dispatch(insightsActions.upsertInsight(insightWithSavedTopN()));
+    }
+
+    function insightWithSavedTopN(): IInsight {
         const widget = selectAnalyticalWidgetByRef(SimpleSortedTableWidgetRef)(Tester.state());
         const insight = isInsightWidget(widget)
             ? selectInsightByRef(widget.insight)(Tester.state())
@@ -156,33 +194,10 @@ describe("parameter placeholders in custom URL drill validation", () => {
         if (!insight) {
             throw new Error("The widget has no insight.");
         }
-        Tester.dispatch(
-            batchActions([
-                catalogActions.setCatalogParameters({
-                    status: "loaded",
-                    dateRangeParametersStatus: "gated-off",
-                    dateRangeParameters: [],
-                    parameters: [
-                        {
-                            type: "parameter",
-                            id: "topN",
-                            uri: "/topN",
-                            ref: topNParameter.ref,
-                            title: "Top N",
-                            description: "",
-                            production: true,
-                            deprecated: false,
-                            unlisted: false,
-                            definition: { type: "NUMBER", defaultValue: 5 },
-                        },
-                    ],
-                }),
-                insightsActions.upsertInsight({
-                    ...insight,
-                    insight: { ...insight.insight, parameters: [{ ref: topNParameter.ref, value: 7 }] },
-                }),
-            ]),
-        );
+        return {
+            ...insight,
+            insight: { ...insight.insight, parameters: [{ ref: topNParameter.ref, value: 7 }] },
+        };
     }
 
     function loadDrillInEditMode(url: string) {

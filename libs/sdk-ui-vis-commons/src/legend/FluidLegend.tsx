@@ -41,7 +41,7 @@ export const FluidLegend: NamedExoticComponent<IFluidLegendProps> = memo(functio
         const pagedSeries = series.slice(0, limit);
 
         return (
-            <LegendSeries onToggleItem={onItemClick as any} series={pagedSeries}>
+            <LegendSeries onToggleItem={onItemClick as any} series={pagedSeries} allSeries={series}>
                 <LegendList
                     enableBorderRadius={enableBorderRadius}
                     series={pagedSeries}

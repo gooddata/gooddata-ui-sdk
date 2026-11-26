@@ -3,7 +3,7 @@
 import { type KeyboardEvent, type ReactElement, type ReactNode, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, type MessageDescriptor, useIntl } from "react-intl";
 
 import { simplifyText } from "@gooddata/util";
 
@@ -23,6 +23,10 @@ export interface ITab {
         string,
         string | number | boolean | null | undefined | Date | FormatXMLElementFn<string, string>
     >;
+    /**
+     * Message of the tab's label. When omitted, the tab id is used as the message id.
+     */
+    label?: MessageDescriptor;
     iconOnly?: boolean;
     icon?: string;
     iconNode?: ReactNode;
@@ -54,6 +58,7 @@ export function Tabs({
     selectedTabId: propSelectedTabId = "",
     tabs = [] as ITab[],
 }: ITabsProps): ReactElement {
+    const intl = useIntl();
     const [selectedTabId, setSelectedTabId] = useState<string>(propSelectedTabId || tabs?.[0]?.id);
 
     const selectTab = useCallback(
@@ -90,9 +95,16 @@ export function Tabs({
                 }
             };
 
+            const label = tab.label ?? { id: tab.id };
+            const values = (tab.values ?? {}) as Record<string, string>;
+
+            // Text tabs are named by their visible (translated) content; icon-only tabs
+            // need the translated message as an explicit accessible name.
+            const ariaLabel = tab.iconOnly ? intl.formatMessage(label, values) : undefined;
+
             return (
                 <div
-                    aria-label={simplifyText(tab.id)}
+                    aria-label={ariaLabel}
                     className={tabClassName}
                     key={tab.id}
                     onClick={handleClick}
@@ -104,17 +116,12 @@ export function Tabs({
                 >
                     <span>
                         {tab.iconNode ?? (tab.icon ? <i className={tab.icon} /> : null)}
-                        {tab.iconOnly ? null : (
-                            <FormattedMessage
-                                id={tab.id}
-                                values={(tab.values ?? {}) as Record<string, string>}
-                            />
-                        )}
+                        {tab.iconOnly ? null : <FormattedMessage {...label} values={values} />}
                     </span>
                 </div>
             );
         },
-        [selectedTabId, selectTab],
+        [selectedTabId, selectTab, intl],
     );
 
     const renderedTabs = useMemo(() => {

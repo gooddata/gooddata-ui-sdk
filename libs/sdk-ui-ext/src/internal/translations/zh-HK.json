@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "跟蹤識別碼",
     "automations.icon.tooltip.startsOn": "開始于",
     "automations.icon.tooltip.repeats": "重複",
+    "automations.icon.tooltip.trigger.failed": "顯示失敗詳情",
+    "automations.icon.tooltip.trigger.details": "顯示詳情",
     "automations.menu.trigger": "立即傳送",
     "automations.menu.copyId": "複製ID",
     "automations.message.copyId.success": "ID已複製到剪貼板",

@@ -12,7 +12,6 @@ import { enrichAgGridToken, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { shallowEqualObjects } from "@gooddata/util";
 
 import { newDashboardSummaryWorkflowWorker } from "../commandHandlers/dashboard/dashboardSummaryWorkflowWorker.js";
-import { newCustomUrlDrillParametersWorker } from "../commandHandlers/parameters/customUrlDrillParametersWorker.js";
 import { newParameterDependenciesWorker } from "../commandHandlers/parameters/parameterDependenciesWorker.js";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
 import {
@@ -162,7 +161,6 @@ export const useInitializeDashboardStore = (
                 }),
                 newDashboardSummaryWorkflowWorker(),
                 newParameterDependenciesWorker(),
-                newCustomUrlDrillParametersWorker(),
             ];
 
             // Create new store and fire load dashboard command.

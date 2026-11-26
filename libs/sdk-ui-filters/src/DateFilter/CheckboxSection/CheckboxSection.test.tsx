@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { useState } from "react";
+
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
@@ -39,5 +41,37 @@ describe("CheckboxSection", () => {
 
         fireEvent.click(screen.getAllByText("Exclude open period")[0]);
         expect(onExcludeChange).toHaveBeenCalledWith(true);
+    });
+
+    it("should leave Space to the native checkbox and keep the focused node when toggled", () => {
+        function Stateful() {
+            const [checked, setChecked] = useState(false);
+            return (
+                <Wrapped
+                    emptyValuesHandling={{ mode: "include", checked, onChange: setChecked }}
+                    excludeCurrentPeriod={{ value: false, onChange: vi.fn() }}
+                />
+            );
+        }
+        render(<Stateful />);
+
+        const checkbox = screen.getByRole("checkbox", { name: "Include empty values" });
+        checkbox.focus();
+
+        // The browser toggles a checkbox on Space only when keydown is not prevented.
+        const notPrevented = fireEvent.keyDown(checkbox, { key: " ", code: "Space" });
+        expect(notPrevented).toBe(true);
+        expect(checkbox).not.toBeChecked();
+
+        // Native activation of the checkbox on Space release.
+        fireEvent.click(checkbox);
+        const afterToggle = screen.getByRole("checkbox", { name: "Include empty values" });
+        expect(afterToggle).toBe(checkbox);
+        expect(afterToggle).toBeChecked();
+        expect(document.activeElement).toBe(checkbox);
+
+        fireEvent.click(checkbox);
+        expect(checkbox).not.toBeChecked();
+        expect(document.activeElement).toBe(checkbox);
     });
 });

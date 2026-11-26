@@ -3,7 +3,12 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { type IDataSetMetadataObject, idRef } from "@gooddata/sdk-model";
+import {
+    type IDataSetMetadataObject,
+    type IDateRangeParameterPeriod,
+    type ISettings,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { createLabel } from "../catalogItem/testFixtures.js";
 import type { ICatalogItem, ICatalogItemAttribute } from "../catalogItem/types.js";
@@ -156,12 +161,21 @@ describe("CatalogDetailTabMetadata", () => {
 });
 
 describe("CatalogDetailTabMetadata — date range parameter", () => {
-    function renderPeriod(enableDateRangeParameters: boolean, from?: string) {
+    function renderPeriod(
+        enableDateRangeParameters: boolean,
+        from?: string,
+        defaultValue: IDateRangeParameterPeriod = { granularity: "GDC.time.month", from, to: "2026-08" },
+        settings: ISettings = {},
+    ) {
         return render(
             <TestPermissionsProvider
                 result={{
                     ...defaultPermissionsResult,
-                    settings: { ...defaultPermissionsResult.settings, enableDateRangeParameters },
+                    settings: {
+                        ...defaultPermissionsResult.settings,
+                        ...settings,
+                        enableDateRangeParameters,
+                    },
                 }}
             >
                 <TestIntlProvider>
@@ -171,7 +185,7 @@ describe("CatalogDetailTabMetadata — date range parameter", () => {
                             type: "parameter",
                             definition: {
                                 type: "DATE_RANGE",
-                                defaultValue: { granularity: "GDC.time.month", from, to: "2026-08" },
+                                defaultValue,
                             },
                         }}
                         canEdit
@@ -192,13 +206,46 @@ describe("CatalogDetailTabMetadata — date range parameter", () => {
         expect(screen.getByText("Granularity")).toBeInTheDocument();
         expect(screen.getByText("Month")).toBeInTheDocument();
         expect(screen.getByText("Current range")).toBeInTheDocument();
-        expect(screen.getByText("Aug 2025 – Aug 2026")).toBeInTheDocument();
+        expect(screen.getByText("August 2025 – August 2026")).toBeInTheDocument();
     });
 
     it("names a period open at the start by its end", () => {
         renderPeriod(true);
 
-        expect(screen.getByText("Until Aug 2026")).toBeInTheDocument();
+        expect(screen.getByText("To August 2026")).toBeInTheDocument();
+    });
+
+    it("writes days in the user's date format", () => {
+        renderPeriod(
+            true,
+            undefined,
+            { granularity: "GDC.time.date", from: "2025-08-14", to: "2025-08-15" },
+            { responsiveUiDateFormat: "dd/MM/yyyy" },
+        );
+
+        expect(screen.getByText("14/08/2025 – 15/08/2025")).toBeInTheDocument();
+    });
+
+    it("writes days in the pattern of the user's format locale before the date format", () => {
+        renderPeriod(
+            true,
+            undefined,
+            { granularity: "GDC.time.date", from: "2025-08-14", to: "2025-08-15" },
+            { formatLocale: "de-DE", responsiveUiDateFormat: "dd/MM/yyyy" },
+        );
+
+        expect(screen.getByText("14.8.2025 – 15.8.2025")).toBeInTheDocument();
+    });
+
+    it("writes weeks as their days from the user's week start", () => {
+        renderPeriod(
+            true,
+            undefined,
+            { granularity: "GDC.time.week", from: "2025-33", to: "2025-35" },
+            { weekStart: "Monday" },
+        );
+
+        expect(screen.getByText("08/11/2025 – 08/31/2025")).toBeInTheDocument();
     });
 
     it("shows neither row while date range parameters are off", () => {

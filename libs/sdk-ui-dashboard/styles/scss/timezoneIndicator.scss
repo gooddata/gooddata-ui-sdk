@@ -14,10 +14,8 @@
         white-space: nowrap;
 
         .gd-timezone-indicator-icon {
-            width: 18px;
-            height: 18px;
+            display: inline-flex;
             flex: 0 0 auto;
-            background: url("@gooddata/sdk-ui-dashboard/esm/assets/timezone.svg") no-repeat center / contain;
         }
     }
 }

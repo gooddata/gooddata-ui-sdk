@@ -9,6 +9,7 @@ import {
     isInsightWidget,
 } from "@gooddata/sdk-model";
 
+import { automationHasUneditableDateFilter } from "../../../_staging/automation/index.js";
 import { switchDashboardTab } from "../../commands/tabs.js";
 import { selectInsights } from "../../store/insights/insightsSelectors.js";
 import { selectWidgets } from "../../store/tabs/layout/layoutSelectors.js";
@@ -40,6 +41,13 @@ export const useDashboardScheduledEmailsCommands = () => {
     const openScheduleEmailingDialog = useCallback(
         (options: IOpenScheduleEmailingDialogOptions = {}) => {
             const { widget, openedFrom, schedule } = options;
+
+            if (schedule && automationHasUneditableDateFilter(schedule)) {
+                console.warn(
+                    `Cannot edit automation ${schedule.id}. Dashboards do not support its date filters yet.`,
+                );
+                return;
+            }
 
             const targetTabIdentifier = schedule?.metadata?.targetTabIdentifier;
             if (targetTabIdentifier && targetTabIdentifier !== activeTabId) {

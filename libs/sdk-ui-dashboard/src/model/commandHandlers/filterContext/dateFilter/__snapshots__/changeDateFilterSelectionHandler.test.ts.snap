@@ -15,6 +15,10 @@ exports[`changeDateFilterSelectionHandler > should emit the appropriate events f
   },
   {
     "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.SELECTION_CHANGED",
+  },
+  {
+    "correlationId": "testCorrelationId",
     "type": "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
   },
 ]

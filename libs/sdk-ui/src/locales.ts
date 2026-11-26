@@ -57,6 +57,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     hierarchyAttributeHowToWork: { id: "attributeHierarchyEditor.howToWork.link" },
     hierarchyAttributeDropdown: { id: "attributeHierarchyEditor.attribute.dropdown.title" },
     hierarchyAttributeSearch: { id: "attributeHierarchyEditor.attribute.dropdown.search" },
+    hierarchyAttributeTab: { id: "attributeHierarchyEditor.attribute.dropdown.tab.attributes" },
+    hierarchyDateAttributeTab: { id: "attributeHierarchyEditor.attribute.dropdown.tab.dates" },
     hierarchyAttributeNote: { id: "attributeHierarchyEditor.note.title" },
     hierarchyAttributeNoteMessage: { id: "attributeHierarchyEditor.note.message" },
     hierarchyAttributeHowItWorks: { id: "attributeHierarchyEditor.howItWorks.title" },

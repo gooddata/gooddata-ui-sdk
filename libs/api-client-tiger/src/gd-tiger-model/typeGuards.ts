@@ -13,6 +13,7 @@ import {
 import {
     type DashboardAttributeFilter,
     type DashboardDateFilter,
+    type DashboardParameterizedDateFilter,
     type JsonApiAttributeOutWithLinks,
     type JsonApiDashboardPluginOutWithLinks,
     type JsonApiDatasetOutWithLinks,
@@ -155,13 +156,17 @@ export function isParameterItem(parameter: unknown): parameter is JsonApiParamet
 
 /**
  * @remarks
- * Does not cover the absolute date filter with granularity, {@link isTigerFilterContextItemOfAnyType} does.
+ * Does not cover the absolute date filter with granularity and the parameterized date filter,
+ * {@link isTigerFilterContextItemOfAnyType} does.
  *
  * @public
  */
 export function isTigerFilterContextItem(
     obj: unknown,
-): obj is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter> {
+): obj is Exclude<
+    ITigerFilterContextItem,
+    ITigerDashboardAbsoluteGranularityDateFilter | DashboardParameterizedDateFilter
+> {
     if (!obj || typeof obj !== "object") {
         return false;
     }
@@ -191,13 +196,17 @@ export function isTigerFilterContextItem(
 
 /**
  * @remarks
- * Does not cover the absolute date filter with granularity, {@link isTigerFilterContextItemsOfAnyType} does.
+ * Does not cover the absolute date filter with granularity and the parameterized date filter,
+ * {@link isTigerFilterContextItemsOfAnyType} does.
  *
  * @public
  */
 export function isTigerFilterContextItems(
     filters: unknown[],
-): filters is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter>[] {
+): filters is Exclude<
+    ITigerFilterContextItem,
+    ITigerDashboardAbsoluteGranularityDateFilter | DashboardParameterizedDateFilter
+>[] {
     return filters.every(isTigerFilterContextItem);
 }
 
@@ -236,7 +245,11 @@ export function isTigerFilters(
  * @alpha
  */
 export function isTigerFilterContextItemOfAnyType(obj: unknown): obj is ITigerFilterContextItem {
-    return isTigerFilterContextItem(obj) || isTigerDashboardAbsoluteGranularityDateFilter(obj);
+    return (
+        isTigerFilterContextItem(obj) ||
+        isTigerDashboardAbsoluteGranularityDateFilter(obj) ||
+        isTigerDashboardParameterizedDateFilter(obj)
+    );
 }
 
 /**
@@ -294,6 +307,15 @@ function isTigerDashboardAbsoluteGranularityDateFilter(
     obj: unknown,
 ): obj is ITigerDashboardAbsoluteGranularityDateFilter {
     return !!obj && typeof obj === "object" && "dashboardAbsoluteGranularityDateFilter" in obj;
+}
+
+function isTigerDashboardParameterizedDateFilter(obj: unknown): obj is DashboardParameterizedDateFilter {
+    return (
+        !!obj &&
+        typeof obj === "object" &&
+        "dashboardParameterizedDateFilter" in obj &&
+        !!obj.dashboardParameterizedDateFilter
+    );
 }
 
 function isTigerMeasureValueFilter(obj: unknown): obj is ITigerMeasureValueFilter {

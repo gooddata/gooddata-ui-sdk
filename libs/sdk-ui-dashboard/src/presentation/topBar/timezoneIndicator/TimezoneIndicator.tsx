@@ -4,7 +4,7 @@ import { type ReactElement } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { UiTooltip } from "@gooddata/sdk-ui-kit";
+import { UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { resolveDashboardTimezoneInfo } from "./resolveDashboardTimezoneInfo.js";
 import { type ITimezoneIndicatorProps } from "./types.js";
@@ -45,7 +45,15 @@ export function TimezoneIndicator({
                 triggerBy={["hover"]}
                 anchor={
                     <div className="gd-timezone-indicator-content">
-                        <i aria-hidden="true" className="gd-timezone-indicator-icon" />
+                        <span className="gd-timezone-indicator-icon">
+                            <UiIcon
+                                type="timezone"
+                                size={18}
+                                layout="block"
+                                color="currentColor"
+                                accessibilityConfig={{ ariaHidden: true }}
+                            />
+                        </span>
                         <span className="sr-only">
                             <FormattedMessage id="topBar.timezoneIndicator.label" />
                         </span>

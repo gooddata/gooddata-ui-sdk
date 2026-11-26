@@ -7,6 +7,7 @@ import {
     DateFilter,
     type IDateFilterProps,
     type IUiAbsoluteDateFilterForm,
+    type IUiAbsoluteGranularityDateFilterForm,
     defaultDateFilterOptions,
 } from "@gooddata/sdk-ui-filters";
 
@@ -30,7 +31,6 @@ const fixedAbsoluteDateFormWithGranularity: IUiAbsoluteDateFilterForm = {
     type: "absoluteForm",
     from: "2026-02-01",
     to: "2026-04-30",
-    granularity: "GDC.time.month",
     availableGranularities: [
         "GDC.time.date",
         "GDC.time.week_us",
@@ -42,18 +42,31 @@ const fixedAbsoluteDateFormWithGranularity: IUiAbsoluteDateFilterForm = {
     visible: true,
 };
 
-const sundayWeekForm: IUiAbsoluteDateFilterForm = {
-    ...fixedAbsoluteDateFormWithGranularity,
-    from: "2026-12-27",
-    to: "2027-01-23",
-    granularity: "GDC.time.week_us",
+const weekOption: IUiAbsoluteGranularityDateFilterForm = {
+    localIdentifier: "ABSOLUTE_FORM",
+    type: "absoluteGranularityForm",
+    granularity: "GDC.time.week",
+    from: "2026-53",
+    to: "2027-03",
+    name: "",
+    visible: true,
 };
 
-const mondayWeekForm: IUiAbsoluteDateFilterForm = {
-    ...sundayWeekForm,
-    from: "2026-12-28",
-    to: "2027-01-24",
+const monthOption: IUiAbsoluteGranularityDateFilterForm = {
+    ...weekOption,
+    granularity: "GDC.time.month",
+    from: "2026-02",
+    to: "2026-04",
 };
+
+const periodTitleOptions: IUiAbsoluteGranularityDateFilterForm[] = [
+    weekOption,
+    monthOption,
+    { ...weekOption, granularity: "GDC.time.quarter", from: "2026-1", to: "2026-1" },
+    { ...weekOption, granularity: "GDC.time.year", from: "2025", to: "2026" },
+    { ...monthOption, to: undefined },
+    { ...monthOption, from: undefined },
+];
 
 const requiredProps = {
     availableGranularities: ["GDC.time.date", "GDC.time.month", "GDC.time.quarter", "GDC.time.year"],
@@ -88,6 +101,7 @@ export function FullFeatured() {
                     ...defaultDateFilterOptions,
                     absoluteForm: fixedAbsoluteDateFormWithGranularity,
                 }}
+                selectedFilterOption={monthOption}
                 isAbsoluteDateFilterGranularityEnabled
             />
         </div>
@@ -312,6 +326,7 @@ export function GranularitySwitching() {
                     ...defaultDateFilterOptions,
                     absoluteForm: fixedAbsoluteDateFormWithGranularity,
                 }}
+                selectedFilterOption={monthOption}
                 isAbsoluteDateFilterGranularityEnabled
             />
         </div>
@@ -356,19 +371,16 @@ GranularitySwitching.parameters = {
     },
 } satisfies IStoryParameters;
 
-function WeekListDateFilter({
-    weekForm,
-    weekStart,
-}: {
-    weekForm: IUiAbsoluteDateFilterForm;
-    weekStart?: WeekStart;
-}) {
+function WeekListDateFilter({ weekStart }: { weekStart?: WeekStart }) {
     return (
         <div style={wrapperStyle} className="screenshot-target">
             <DateFilter
                 {...requiredProps}
-                filterOptions={{ ...defaultDateFilterOptions, absoluteForm: weekForm }}
-                selectedFilterOption={weekForm}
+                filterOptions={{
+                    ...defaultDateFilterOptions,
+                    absoluteForm: fixedAbsoluteDateFormWithGranularity,
+                }}
+                selectedFilterOption={weekOption}
                 weekStart={weekStart}
                 isAbsoluteDateFilterGranularityEnabled
             />
@@ -377,7 +389,7 @@ function WeekListDateFilter({
 }
 
 export function WeekList() {
-    return <WeekListDateFilter weekForm={sundayWeekForm} />;
+    return <WeekListDateFilter />;
 }
 WeekList.parameters = {
     kind: "week list",
@@ -394,12 +406,65 @@ WeekList.parameters = {
 } satisfies IStoryParameters;
 
 export function WeekListWithMondayWeekStart() {
-    return <WeekListDateFilter weekForm={mondayWeekForm} weekStart="Monday" />;
+    return <WeekListDateFilter weekStart="Monday" />;
 }
 WeekListWithMondayWeekStart.parameters = {
     kind: "week list with Monday week start",
     screenshots: {
         "absolute-form-week": {
+            readySelector: { selector: ".screenshot-target", state: State.Attached },
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
+            delay: {
+                postOperation: 200,
+            },
+        },
+    },
+} satisfies IStoryParameters;
+
+export function PeriodTitles() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            {periodTitleOptions.map((option, index) => (
+                <DateFilter
+                    key={index}
+                    {...requiredProps}
+                    filterOptions={{
+                        ...defaultDateFilterOptions,
+                        absoluteForm: fixedAbsoluteDateFormWithGranularity,
+                    }}
+                    selectedFilterOption={option}
+                    isAbsoluteDateFilterGranularityEnabled
+                />
+            ))}
+        </div>
+    );
+}
+PeriodTitles.parameters = {
+    kind: "period titles",
+    screenshots: {
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+    },
+} satisfies IStoryParameters;
+
+export function PeriodOptionWithoutGranularity() {
+    return (
+        <div style={wrapperStyle} className="screenshot-target">
+            <DateFilter
+                {...requiredProps}
+                filterOptions={{
+                    ...defaultDateFilterOptions,
+                    absoluteForm: fixedAbsoluteDateFormWithGranularity,
+                }}
+                selectedFilterOption={monthOption}
+            />
+        </div>
+    );
+}
+PeriodOptionWithoutGranularity.parameters = {
+    kind: "period option without granularity",
+    screenshots: {
+        closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+        "absolute-form": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
             delay: {

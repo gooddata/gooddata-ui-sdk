@@ -13,7 +13,7 @@ import type { ICustomWidget } from "../../model/types/layoutTypes.js";
 import {
     type AttributeFilterComponentProvider,
     type DashboardLayoutComponentProvider,
-    type DateFilterComponentProvider,
+    type DateFilterOfAnyTypeComponentProvider,
     type InsightComponentProvider,
     type RichTextComponentProvider,
     type VisualizationSwitcherComponentProvider,
@@ -35,7 +35,7 @@ import {
     type IDashboardAttributeFilterPlaceholderProps,
     type IDashboardAttributeFilterProps,
 } from "../filterBar/attributeFilter/types.js";
-import { type IDashboardDateFilterProps } from "../filterBar/dateFilter/types.js";
+import { type IDashboardDateFilterOfAnyTypeProps } from "../filterBar/dateFilter/types.js";
 import { type IDashboardLayoutProps as IDashboardNestedLayoutProps } from "../widget/dashboardLayout/types.js";
 import { type IDashboardInsightProps } from "../widget/insight/types.js";
 import { type IDashboardRichTextProps } from "../widget/richText/types.js";
@@ -361,8 +361,8 @@ export type AttributeFilterComponentSet = ICustomComponentBase<
  * @internal
  */
 export type DateFilterComponentSet = ICustomComponentBase<
-    IDashboardDateFilterProps,
-    Parameters<DateFilterComponentProvider>
+    IDashboardDateFilterOfAnyTypeProps,
+    Parameters<DateFilterOfAnyTypeComponentProvider>
 > &
     DraggableComponent &
     CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & // placeholder is shared with AF

@@ -1,8 +1,14 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { type IDashboardDefinition, idRef, objRefToString, serializeObjRef } from "@gooddata/sdk-model";
+import {
+    type FilterContextItem,
+    type IDashboardDefinition,
+    idRef,
+    objRefToString,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 
 import {
     buildDashboardContext,
@@ -48,6 +54,10 @@ describe("buildWidgetContext", () => {
 });
 
 describe("buildFiltersContext", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
+
     it("should keep the computed attribute type in the using identifier", () => {
         const filters = [
             {
@@ -187,6 +197,52 @@ describe("buildFiltersContext", () => {
             from: -1,
             to: 0,
         });
+    });
+
+    it("leaves out absolute date filters with granularity with a warning", () => {
+        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+        const filters: FilterContextItem[] = [
+            {
+                dashboardAbsoluteGranularityDateFilter: {
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                    dataSet: idRef("ds1"),
+                },
+            },
+            {
+                dateFilter: {
+                    type: "relative",
+                    from: 0,
+                    to: 0,
+                    granularity: "GDC.time.month",
+                    dataSet: idRef("ds2"),
+                },
+            },
+        ];
+
+        const result = buildFiltersContext(filters);
+
+        expect(result).toEqual([expect.objectContaining({ type: "date_filter", using: "ds2" })]);
+        expect(warn).toHaveBeenCalledExactlyOnceWith(
+            "The AI assistant does not support absolute date filters with granularity yet. The filter is left out of its context.",
+        );
+    });
+
+    it("does not warn about other filters", () => {
+        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+        buildFiltersContext([
+            {
+                dateFilter: {
+                    type: "absolute",
+                    granularity: "GDC.time.date",
+                    from: "2023-01-01",
+                    to: "2023-01-31",
+                    dataSet: idRef("ds1"),
+                },
+            },
+        ]);
+        expect(warn).not.toHaveBeenCalled();
     });
 });
 

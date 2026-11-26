@@ -27685,13 +27685,13 @@ export interface IStaticFeatures {
 export function isTigerFilter(obj: unknown): obj is Exclude<ITigerFilter, ITigerAbsoluteGranularityDateFilter>;
 
 // @public (undocumented)
-export function isTigerFilterContextItem(obj: unknown): obj is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter>;
+export function isTigerFilterContextItem(obj: unknown): obj is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter | DashboardParameterizedDateFilter>;
 
 // @alpha (undocumented)
 export function isTigerFilterContextItemOfAnyType(obj: unknown): obj is ITigerFilterContextItem;
 
 // @public (undocumented)
-export function isTigerFilterContextItems(filters: unknown[]): filters is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter>[];
+export function isTigerFilterContextItems(filters: unknown[]): filters is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter | DashboardParameterizedDateFilter>[];
 
 // @alpha (undocumented)
 export function isTigerFilterContextItemsOfAnyType(filters: unknown[]): filters is ITigerFilterContextItem[];

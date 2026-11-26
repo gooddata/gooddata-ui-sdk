@@ -2,10 +2,11 @@
 
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
-import type { IDateRangeParameterPeriod } from "@gooddata/sdk-model";
+import { type IDateRangeParameterPeriod, resolveWeekStart } from "@gooddata/sdk-model";
+import { formatDateRangeParameterPeriod, getLocalizedIcuDateFormatPattern } from "@gooddata/sdk-ui-filters";
 
 import { toPeriodGranularity } from "../parameter/dateRangePeriod.js";
-import { formatPeriodRange } from "../parameter/periodRangeLabel.js";
+import { useFeatureFlags } from "../permission/PermissionsContext.js";
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 
@@ -22,6 +23,11 @@ type Props = {
 /** Detail rows of a date range parameter: the granularity of its period and the range it holds now. */
 export function CatalogDetailDateRangeParameter({ period }: Props) {
     const intl = useIntl();
+    // days in the user's date format and weeks from the user's week start, as the date filter writes them
+    const settings = useFeatureFlags();
+    const dateFormat = settings?.formatLocale
+        ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
+        : settings?.responsiveUiDateFormat;
     return (
         <>
             <CatalogDetailContentRow
@@ -32,7 +38,7 @@ export function CatalogDetailDateRangeParameter({ period }: Props) {
             />
             <CatalogDetailContentRow
                 title={<FormattedMessage {...messages.currentRangeTitle} />}
-                content={formatPeriodRange(intl, period)}
+                content={formatDateRangeParameterPeriod(period, intl, dateFormat, resolveWeekStart(settings))}
             />
         </>
     );

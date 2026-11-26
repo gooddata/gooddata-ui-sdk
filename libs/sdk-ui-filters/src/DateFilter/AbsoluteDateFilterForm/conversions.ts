@@ -1,6 +1,11 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type DateFilterGranularity, type DateString, type EmptyValues } from "@gooddata/sdk-model";
+import {
+    type DateFilterGranularity,
+    type DatePeriodGranularity,
+    type DateString,
+    type EmptyValues,
+} from "@gooddata/sdk-model";
 
 import {
     DAY_END_TIME,
@@ -12,7 +17,11 @@ import {
     platformDateTimeFormatWithSeconds,
 } from "../constants/Platform.js";
 import { type IDateRange } from "../DateRangePicker/types.js";
-import { type IUiAbsoluteDateFilterForm } from "../interfaces/index.js";
+import {
+    type IUiAbsoluteDateFilterForm,
+    type IUiAbsoluteGranularityDateFilterForm,
+    isUiAbsoluteGranularityDateFilterForm,
+} from "../interfaces/index.js";
 import { type IPeriodRange } from "../PeriodRangePicker/types.js";
 import {
     convertDateToPlatformDateString,
@@ -68,7 +77,82 @@ export const dateFilterValueToDateRange = (
     return { from, to };
 };
 
-export const dateFilterValueToPeriodRange = (value: IUiAbsoluteDateFilterForm): IPeriodRange => {
+/**
+ * An option of the absolute form: days, or whole periods of a granularity.
+ */
+export type AbsoluteFormOption = IUiAbsoluteDateFilterForm | IUiAbsoluteGranularityDateFilterForm;
+
+/**
+ * The granularity tab of a period granularity. The configuration lists the week as the US week.
+ */
+export const datePeriodGranularityToTab = (granularity: DatePeriodGranularity): DateFilterGranularity =>
+    granularity === "GDC.time.week" ? "GDC.time.week_us" : granularity;
+
+/**
+ * The period granularity of a granularity tab, undefined for the day and any other tab.
+ */
+export const tabToDatePeriodGranularity = (tab: DateFilterGranularity): DatePeriodGranularity | undefined => {
+    switch (tab) {
+        case "GDC.time.week_us":
+            return "GDC.time.week";
+        case "GDC.time.month":
+        case "GDC.time.quarter":
+        case "GDC.time.year":
+            return tab;
+        default:
+            return undefined;
+    }
+};
+
+/**
+ * The granularity tab of an absolute form option. Days are on the day tab, whatever granularity they carry.
+ */
+export const getAbsoluteFormTab = (option: AbsoluteFormOption): DateFilterGranularity =>
+    isUiAbsoluteGranularityDateFilterForm(option)
+        ? datePeriodGranularityToTab(option.granularity)
+        : "GDC.time.date";
+
+/**
+ * The empty option of the tab: days for the day tab, whole periods for the others. The identity and the
+ * handling of empty values are kept.
+ */
+export const switchAbsoluteFormTab = (
+    option: AbsoluteFormOption,
+    tab: DateFilterGranularity,
+): AbsoluteFormOption => {
+    const { localIdentifier, name, visible, emptyValueHandling } = option;
+    const common = { localIdentifier, name, visible, ...(emptyValueHandling ? { emptyValueHandling } : {}) };
+    const granularity = tabToDatePeriodGranularity(tab);
+
+    return granularity
+        ? { ...common, type: "absoluteGranularityForm", granularity }
+        : { ...common, type: "absoluteForm", granularity: "GDC.time.date" };
+};
+
+/**
+ * The option of whole periods selected in a period picker.
+ */
+export const periodRangeToAbsoluteGranularityForm = (
+    { from, to }: IPeriodRange,
+    granularity: DatePeriodGranularity,
+    localIdentifier: string,
+    emptyValueHandling?: EmptyValues,
+): IUiAbsoluteGranularityDateFilterForm => ({
+    type: "absoluteGranularityForm",
+    localIdentifier,
+    name: "",
+    visible: true,
+    granularity,
+    from,
+    to,
+    ...(emptyValueHandling ? { emptyValueHandling } : {}),
+});
+
+export const dateFilterValueToPeriodRange = (value: AbsoluteFormOption): IPeriodRange => {
+    if (isUiAbsoluteGranularityDateFilterForm(value)) {
+        return { from: value.from, to: value.to };
+    }
+
     const from = convertPlatformDateStringToDate(value.from);
     const to = convertPlatformDateStringToDate(value.to);
 
@@ -85,30 +169,23 @@ export interface IPeriodRangeToDateFilterValueOptions {
     range: IPeriodRange;
     localIdentifier: string;
     isTimeForAbsoluteRangeEnabled: boolean;
-    granularity: DateFilterGranularity;
     emptyValueHandling?: EmptyValues;
     isSecondsForAbsoluteRangeEnabled?: boolean;
 }
 
 /**
- * Converts a resolved period-picker range into an absolute date filter value, extending it to the
+ * Converts days selected in the period picker into an absolute date filter value, extending them to the
  * start/end of day when time-of-day is enabled.
- *
- * @remarks
- * The day boundary time is only ever appended at day granularity. A wider granularity reaches the
- * backend as whole periods only when its days have no time, so a time there would send the range as days
- * and an alert or a scheduled export would lose the granularity.
  */
 export const periodRangeToDateFilterValue = ({
     range,
     localIdentifier,
     isTimeForAbsoluteRangeEnabled,
-    granularity,
     emptyValueHandling,
     isSecondsForAbsoluteRangeEnabled = false,
 }: IPeriodRangeToDateFilterValueOptions): IUiAbsoluteDateFilterForm => {
     const withDayBoundaryTime = (date: DateString | undefined, time: string): DateString | undefined =>
-        isTimeForAbsoluteRangeEnabled && granularity === "GDC.time.date" && date ? `${date} ${time}` : date;
+        isTimeForAbsoluteRangeEnabled && date ? `${date} ${time}` : date;
 
     return {
         from: withDayBoundaryTime(
@@ -123,7 +200,7 @@ export const periodRangeToDateFilterValue = ({
         type: "absoluteForm",
         name: "",
         visible: true,
-        granularity,
+        granularity: "GDC.time.date",
         ...(emptyValueHandling ? { emptyValueHandling } : {}),
     };
 };

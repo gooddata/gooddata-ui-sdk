@@ -2,6 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
+import type { DashboardParameterizedDateFilter } from "../generated/metadata-json-api/index.js";
+
 import type {
     ITigerAbsoluteGranularityDateFilter,
     ITigerDashboardAbsoluteGranularityDateFilter,
@@ -162,5 +164,28 @@ describe("typeGuards", () => {
         expect(isTigerFilterContextItems([attributeDashboardFilter, granularityDateDashboardFilter])).toBe(
             false,
         );
+    });
+
+    const parameterizedDateDashboardFilter: DashboardParameterizedDateFilter = {
+        dashboardParameterizedDateFilter: {
+            parameter: { identifier: { id: "period", type: "parameter" } },
+            localIdentifier: "periodFilter",
+        },
+    };
+
+    it("matches the parameterized date filter context item only by the filter context guards of any type", () => {
+        expect(isTigerFilterContextItemOfAnyType(parameterizedDateDashboardFilter)).toBe(true);
+        expect(
+            isTigerFilterContextItemsOfAnyType([attributeDashboardFilter, parameterizedDateDashboardFilter]),
+        ).toBe(true);
+        expect(isTigerFilterContextItem(parameterizedDateDashboardFilter)).toBe(false);
+        expect(isTigerFilterContextItems([attributeDashboardFilter, parameterizedDateDashboardFilter])).toBe(
+            false,
+        );
+        expect(isTigerFilterOfAnyType(parameterizedDateDashboardFilter)).toBe(false);
+    });
+
+    it("does not match a parameterized date filter context item without a body", () => {
+        expect(isTigerFilterContextItemOfAnyType({ dashboardParameterizedDateFilter: null })).toBe(false);
     });
 });

@@ -47,6 +47,7 @@ import {
     type DateFilterOption,
     type IDateFilterOptionsByType,
     type IExtendedDateFilterErrors,
+    isUiAbsoluteGranularityDateFilterForm,
 } from "./interfaces/index.js";
 import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
@@ -270,6 +271,10 @@ export function DateFilterCore({
     );
 
     const initialFocus = getInitialFocus(selectedFilterOption, filterOptions, activeCalendars);
+    const buttonDateFilterOption = applyExcludeCurrentPeriod(
+        withoutApply ? lastValidSelectedFilterOption : originalSelectedFilterOption,
+        withoutApply ? (lastValidExcludeCurrentPeriod ?? false) : originalExcludeCurrentPeriod,
+    );
 
     return (
         <IntlWrapper locale={locale || "en-US"}>
@@ -286,21 +291,16 @@ export function DateFilterCore({
                                 disabled={disabled}
                                 isMobile={isMobile}
                                 isOpen={isOpen}
-                                dateFilterOption={applyExcludeCurrentPeriod(
-                                    withoutApply
-                                        ? lastValidSelectedFilterOption
-                                        : originalSelectedFilterOption,
-                                    withoutApply
-                                        ? (lastValidExcludeCurrentPeriod ?? false)
-                                        : originalExcludeCurrentPeriod,
-                                )}
+                                dateFilterOption={buttonDateFilterOption}
                                 dateFormat={adjustDateFormatForDisplay(
                                     verifiedDateFormat,
-                                    isTimeForAbsoluteRangeEnabled,
+                                    isTimeForAbsoluteRangeEnabled &&
+                                        !isUiAbsoluteGranularityDateFilterForm(buttonDateFilterOption),
                                     isSecondsForAbsoluteRangeEnabled,
                                 )}
                                 customFilterName={customFilterName}
                                 customIcon={customIcon}
+                                weekStart={weekStart}
                                 onClick={toggleDropdown}
                                 ButtonComponent={ButtonComponent}
                                 buttonRef={buttonRef ?? undefined}

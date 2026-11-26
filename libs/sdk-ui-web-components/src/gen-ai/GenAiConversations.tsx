@@ -1,5 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
+import { type GenAIObjectType } from "@gooddata/sdk-model";
 import type {
     LinkHandlerEvent,
     GenAIConversations as OriginalGenAIConversations,
@@ -14,8 +15,10 @@ type IGenAIAssistantLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
 type IGenAIConversations = typeof OriginalGenAIConversations;
 
 export class GenAIConversations extends CustomElementAdapter<IGenAIConversations> {
-    //HANDLES: CLICK
+    //HANDLERS: Policy type check
+    declare isLinkEnabled?: (type: GenAIObjectType) => boolean;
 
+    //HANDLES: CLICK
     declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined;
 
     //DISPATCHER

@@ -8,8 +8,9 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
+import { LegendList } from "./LegendList.js";
 import { LegendSeries } from "./LegendSeries.js";
-import { type ISeriesItem } from "./types.js";
+import { type ISeriesItem, LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "./types.js";
 
 // The visibility detection hook is mocked globally in vitest.setup.ts.
 
@@ -147,6 +148,33 @@ describe("LegendSeries", () => {
         fireEvent.keyDown(wrapper, { code: "ArrowUp" });
         fireEvent.keyDown(wrapper, { code: "Enter" });
         expect(onToggleItem).toHaveBeenCalledWith(series[2]);
+    });
+
+    it("should expose position and set size of options across legend groups", () => {
+        const groupedSeries: ISeriesItem[] = [
+            { type: LEGEND_AXIS_INDICATOR, labelKey: "left" },
+            { type: "column", name: "Sum of Velocity", color: "red", isVisible: true, legendIndex: 0 },
+            { type: "column", name: "Sum of Probability", color: "blue", isVisible: true, legendIndex: 1 },
+            { type: LEGEND_SEPARATOR },
+            { type: LEGEND_AXIS_INDICATOR, labelKey: "right" },
+            { type: "line", name: "Win Rate", color: "green", isVisible: true, legendIndex: 2 },
+        ];
+
+        render(
+            <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
+                <LegendSeries series={groupedSeries} onToggleItem={onToggleItem}>
+                    <LegendList series={groupedSeries} onItemClick={onToggleItem} />
+                </LegendSeries>
+            </IntlProvider>,
+        );
+
+        const options = screen.getAllByRole("option");
+        expect(options).toHaveLength(3);
+        options.forEach((option, index) => {
+            expect(option).toHaveAttribute("aria-posinset", String(index + 1));
+            expect(option).toHaveAttribute("aria-setsize", "3");
+        });
+        expect(screen.getAllByRole("group")).toHaveLength(2);
     });
 
     it("should skip anomaly items during keyboard navigation", () => {

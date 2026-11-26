@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-filters",
-    "version": "11.70.0-alpha.4",
+    "version": "11.70.0-alpha.5",
     "description": "GoodData.UI SDK - Filter Components",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -56,6 +56,7 @@
         "validate-theming": "npm run scss && node scripts/validateCss.js"
     },
     "dependencies": {
+        "@date-fns/tz": "1.5.0",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",

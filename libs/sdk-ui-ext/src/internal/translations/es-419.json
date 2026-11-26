@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "ID de rastreo",
     "automations.icon.tooltip.startsOn": "Comienza el",
     "automations.icon.tooltip.repeats": "Repite",
+    "automations.icon.tooltip.trigger.failed": "Mostrar detalles del error",
+    "automations.icon.tooltip.trigger.details": "Mostrar detalles",
     "automations.menu.trigger": "Enviar ahora",
     "automations.menu.copyId": "Copiar ID",
     "automations.message.copyId.success": "ID copiado en el portapapeles",

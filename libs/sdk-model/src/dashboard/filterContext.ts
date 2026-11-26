@@ -4,6 +4,7 @@ import { _isEmpty } from "@gooddata/util";
 
 import { type DatePeriodGranularity, type DatePeriodRange } from "../base/dateGranularities.js";
 import { type DateFilterGranularity, type DateString } from "../dateFilterConfig/index.js";
+import { type IParameterizedDateFilterOptions } from "../execution/filter/factory.js";
 import {
     type EmptyValues,
     type IAttributeElements,
@@ -13,7 +14,8 @@ import {
     type MeasureValueFilterCondition,
     isAttributeElementsByRef,
 } from "../execution/filter/index.js";
-import { type ObjRef, isObjRef } from "../objRef/index.js";
+import { idRef } from "../objRef/factory.js";
+import { type Identifier, type ObjRef, isObjRef } from "../objRef/index.js";
 
 import { type IDashboardObjectIdentity } from "./common.js";
 import { type IDashboardParameter } from "./parameter.js";
@@ -438,10 +440,30 @@ export interface IDashboardAbsoluteGranularityDateFilter {
 }
 
 /**
+ * Date filter of the filter context whose period comes from a date range parameter.
+ *
+ * @remarks
+ * The date data set is optional, as in {@link IDashboardDateFilter}.
+ *
+ * @alpha
+ */
+export interface IDashboardParameterizedDateFilter {
+    dashboardParameterizedDateFilter: IDashboardDateFilterBodyBase & {
+        /**
+         * Date range parameter that holds the period
+         */
+        parameter: ObjRef;
+    };
+}
+
+/**
  * Date filter of the filter context of any type.
  * @alpha
  */
-export type DashboardDateFilterOfAnyType = IDashboardDateFilter | IDashboardAbsoluteGranularityDateFilter;
+export type DashboardDateFilterOfAnyType =
+    | IDashboardDateFilter
+    | IDashboardAbsoluteGranularityDateFilter
+    | IDashboardParameterizedDateFilter;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardDateFilter}.
@@ -465,11 +487,28 @@ export function isDashboardAbsoluteGranularityDateFilter(
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardParameterizedDateFilter}.
+ * @alpha
+ */
+export function isDashboardParameterizedDateFilter(obj: unknown): obj is IDashboardParameterizedDateFilter {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "dashboardParameterizedDateFilter" in obj &&
+        !!obj.dashboardParameterizedDateFilter
+    );
+}
+
+/**
  * Type-guard testing whether the provided object is an instance of {@link DashboardDateFilterOfAnyType}.
  * @alpha
  */
 export function isDashboardDateFilterOfAnyType(obj: unknown): obj is DashboardDateFilterOfAnyType {
-    return isDashboardDateFilter(obj) || isDashboardAbsoluteGranularityDateFilter(obj);
+    return (
+        isDashboardDateFilter(obj) ||
+        isDashboardAbsoluteGranularityDateFilter(obj) ||
+        isDashboardParameterizedDateFilter(obj)
+    );
 }
 
 /**
@@ -482,6 +521,24 @@ export function isDashboardCommonDateFilter(obj: unknown): obj is IDashboardDate
         !!(obj as IDashboardDateFilter).dateFilter &&
         !(obj as IDashboardDateFilter).dateFilter.dataSet
     );
+}
+
+/**
+ * Type-guard testing whether the provided object is a common date filter of any type, i.e. an instance of
+ * {@link DashboardDateFilterOfAnyType} without date dataSet (aka dimension) defined.
+ * @alpha
+ */
+export function isDashboardCommonDateFilterOfAnyType(obj: unknown): obj is DashboardDateFilterOfAnyType {
+    if (isDashboardDateFilter(obj)) {
+        return !obj.dateFilter.dataSet;
+    }
+    if (isDashboardAbsoluteGranularityDateFilter(obj)) {
+        return !obj.dashboardAbsoluteGranularityDateFilter.dataSet;
+    }
+    if (isDashboardParameterizedDateFilter(obj)) {
+        return !obj.dashboardParameterizedDateFilter.dataSet;
+    }
+    return false;
 }
 
 /**
@@ -583,6 +640,40 @@ export function newAbsoluteDashboardDateFilter(
             from,
             to,
             dataSet,
+            ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
+        },
+    };
+}
+
+/**
+ * Options of a new dashboard parameterized date filter.
+ *
+ * @alpha
+ */
+export interface IDashboardParameterizedDateFilterOptions extends IParameterizedDateFilterOptions {
+    /**
+     * Date data set to filter on.
+     */
+    dataSet?: ObjRef;
+}
+
+/**
+ * Creates a new dashboard date filter that takes its period from a date range parameter.
+ *
+ * @param parameter - ref or identifier of the date range parameter that holds the period
+ * @param options - date data set, local identifier and empty values handling of the filter
+ * @alpha
+ */
+export function newDashboardParameterizedDateFilter(
+    parameter: ObjRef | Identifier,
+    options: IDashboardParameterizedDateFilterOptions = {},
+): IDashboardParameterizedDateFilter {
+    const { dataSet, localIdentifier, emptyValueHandling } = options;
+    return {
+        dashboardParameterizedDateFilter: {
+            parameter: isObjRef(parameter) ? parameter : idRef(parameter, "parameter"),
+            ...(dataSet ? { dataSet } : {}),
             ...(localIdentifier ? { localIdentifier } : {}),
             ...(emptyValueHandling ? { emptyValueHandling } : {}),
         },
@@ -876,6 +967,9 @@ export function dashboardFilterObjRef(filter: FilterContextItem): ObjRef | undef
     if (isDashboardAbsoluteGranularityDateFilter(filter)) {
         return filter.dashboardAbsoluteGranularityDateFilter.dataSet;
     }
+    if (isDashboardParameterizedDateFilter(filter)) {
+        return filter.dashboardParameterizedDateFilter.dataSet;
+    }
     if (isDashboardMeasureValueFilter(filter)) {
         return filter.dashboardMeasureValueFilter.measure;
     }
@@ -897,6 +991,9 @@ export function dashboardFilterLocalIdentifier(filter: FilterContextItem): strin
     if (isDashboardAbsoluteGranularityDateFilter(filter)) {
         return filter.dashboardAbsoluteGranularityDateFilter.localIdentifier;
     }
+    if (isDashboardParameterizedDateFilter(filter)) {
+        return filter.dashboardParameterizedDateFilter.localIdentifier;
+    }
     if (isDashboardMeasureValueFilter(filter)) {
         return filter.dashboardMeasureValueFilter.localIdentifier;
     }
@@ -912,19 +1009,24 @@ export type FilterContextItem =
     | DashboardAttributeFilterItem
     | IDashboardDateFilter
     | IDashboardAbsoluteGranularityDateFilter
+    | IDashboardParameterizedDateFilter
     | IDashboardMeasureValueFilter;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link FilterContextItem}.
  *
  * @remarks
- * Does not cover the absolute date filter with granularity, {@link isFilterContextItemOfAnyType} does.
+ * Does not cover the absolute date filter with granularity and the parameterized date filter,
+ * {@link isFilterContextItemOfAnyType} does.
  *
  * @alpha
  */
 export function isFilterContextItem(
     obj: unknown,
-): obj is Exclude<FilterContextItem, IDashboardAbsoluteGranularityDateFilter> {
+): obj is Exclude<
+    FilterContextItem,
+    IDashboardAbsoluteGranularityDateFilter | IDashboardParameterizedDateFilter
+> {
     return (
         isDashboardDateFilter(obj) ||
         isDashboardAttributeFilterItem(obj) ||
@@ -934,12 +1036,16 @@ export function isFilterContextItem(
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link FilterContextItem}, including
- * the absolute date filter with granularity.
+ * the absolute date filter with granularity and the parameterized date filter.
  *
  * @alpha
  */
 export function isFilterContextItemOfAnyType(obj: unknown): obj is FilterContextItem {
-    return isFilterContextItem(obj) || isDashboardAbsoluteGranularityDateFilter(obj);
+    return (
+        isFilterContextItem(obj) ||
+        isDashboardAbsoluteGranularityDateFilter(obj) ||
+        isDashboardParameterizedDateFilter(obj)
+    );
 }
 
 /**

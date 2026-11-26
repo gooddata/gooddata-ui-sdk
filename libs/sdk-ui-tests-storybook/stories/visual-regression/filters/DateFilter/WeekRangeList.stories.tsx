@@ -18,10 +18,7 @@ import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
 // As wide as the list in the date filter dropdown.
 const wrapperStyle = { width: 242, padding: "1em 1em" };
 
-const initialRangeByWeekStart: Record<WeekStart, IPeriodRange> = {
-    Sunday: { from: "2026-12-27", to: "2027-01-16" },
-    Monday: { from: "2026-12-28", to: "2027-01-17" },
-};
+const initialRange: IPeriodRange = { from: "2026-53", to: "2027-02" };
 
 function WeekRangeListExample({
     weekStart,
@@ -32,7 +29,7 @@ function WeekRangeListExample({
     customRangeHint?: ReactNode;
     dateFormat?: string;
 }) {
-    const [range, setRange] = useState<IPeriodRange>(initialRangeByWeekStart[weekStart]);
+    const [range, setRange] = useState<IPeriodRange>(initialRange);
     return (
         <IntlWrapper locale="en-US">
             <div style={wrapperStyle} className="screenshot-target">

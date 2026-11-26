@@ -76,7 +76,7 @@ describe("InsightUsageOnDashboards", () => {
         expect(container.querySelector(".s-insight-usage-document-item").textContent).toEqual("Board pack");
         expect(
             Array.from(container.querySelectorAll("summary")).map((summary) => summary.textContent),
-        ).toEqual(["Dashboards (3)", "Reports (1)"]);
+        ).toEqual(["Dashboards (3)", "Documents (1)"]);
     });
 
     it("should show only the documents section when no dashboard uses the visualization", () => {
@@ -98,7 +98,7 @@ describe("InsightUsageOnDashboards", () => {
         });
         expect(
             Array.from(container.querySelectorAll("summary")).map((summary) => summary.textContent),
-        ).toEqual(["Reports (2)"]);
+        ).toEqual(["Documents (2)"]);
     });
 
     it("should count the reports the user may not open without naming them", () => {
@@ -111,7 +111,7 @@ describe("InsightUsageOnDashboards", () => {
         });
         expect(
             Array.from(container.querySelectorAll("summary")).map((summary) => summary.textContent),
-        ).toEqual(["Dashboards (3)", "Reports (3)"]);
+        ).toEqual(["Dashboards (3)", "Documents (3)"]);
         expect(container.querySelectorAll(".s-insight-usage-document-item")).toHaveLength(1);
         expect(container.querySelector(".s-kd-save-dialog-usage-inaccessible").textContent).toEqual(
             "and 2 more not shared with you.",

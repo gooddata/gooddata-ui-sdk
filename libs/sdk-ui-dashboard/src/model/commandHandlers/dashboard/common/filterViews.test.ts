@@ -15,7 +15,10 @@ import {
     type MeasureValueFilterCondition,
     exportOverrideFilterContextIdentifier,
     idRef,
+    newDashboardParameterizedDateFilter,
 } from "@gooddata/sdk-model";
+
+import { ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 
 import {
     applyDefaultFilterView,
@@ -294,6 +297,96 @@ describe("filterViews", () => {
                 expect(updated.tabs?.[1]?.parameters).toEqual([{ ...topNParameter, value: 7 }]);
             });
 
+            it("writes the common date filter of the new type to every tab, keeping their local identifiers", () => {
+                const dashboard = buildTabbedDashboard();
+                const granularityDate = (localIdentifier?: string): FilterContextItem => ({
+                    dashboardAbsoluteGranularityDateFilter: {
+                        granularity: "GDC.time.quarter",
+                        from: "2026-1",
+                        to: "2026-2",
+                        ...(localIdentifier ? { localIdentifier } : {}),
+                    },
+                });
+                const viewA = buildFilterView({
+                    tabLocalIdentifier: "tab-A",
+                    filterContext: {
+                        title: "",
+                        description: "",
+                        filters: [granularityDate("view_date"), regionFilter("a_region", ["view-a"])],
+                    },
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [viewA], undefined, [], {
+                    persistFiltersAcrossTabs: true,
+                    activeTabLocalIdentifier: "tab-A",
+                });
+
+                expect(tabFilters(updated, 0)).toEqual([
+                    granularityDate("view_date"),
+                    regionFilter("a_region", ["view-a"]),
+                ]);
+                expect(tabFilters(updated, 1)?.[0]).toEqual(granularityDate("b_date"));
+            });
+
+            it("writes the common date filter of the old type over the new type on another tab", () => {
+                const granularityDate: FilterContextItem = {
+                    dashboardAbsoluteGranularityDateFilter: {
+                        granularity: "GDC.time.year",
+                        from: "2025",
+                        to: "2026",
+                        localIdentifier: "b_date",
+                    },
+                };
+                const dashboard = buildDashboard({
+                    tabs: [
+                        {
+                            localIdentifier: "tab-A",
+                            title: "Tab A",
+                            filterContext: buildFilterContext([regionFilter("a_region", ["stored-a"])]),
+                        },
+                        {
+                            localIdentifier: "tab-B",
+                            title: "Tab B",
+                            filterContext: buildFilterContext([granularityDate]),
+                        },
+                    ],
+                });
+                const viewA = buildFilterView({
+                    tabLocalIdentifier: "tab-A",
+                    filterContext: { title: "", description: "", filters: [commonDate(-6)] },
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [viewA], undefined, [], {
+                    persistFiltersAcrossTabs: true,
+                    activeTabLocalIdentifier: "tab-A",
+                });
+
+                expect(tabFilters(updated, 1)).toEqual([commonDate(-6, "b_date")]);
+            });
+
+            it("adds the common date filter of the new type without a local identifier to a tab that is All", () => {
+                const granularityDate = (localIdentifier?: string): FilterContextItem => ({
+                    dashboardAbsoluteGranularityDateFilter: {
+                        granularity: "GDC.time.month",
+                        from: "2026-01",
+                        ...(localIdentifier ? { localIdentifier } : {}),
+                    },
+                });
+                const dashboard = buildTabbedDashboard();
+                const viewB = buildFilterView({
+                    tabLocalIdentifier: "tab-B",
+                    filterContext: { title: "", description: "", filters: [granularityDate("view_date")] },
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [viewB], undefined, [], {
+                    persistFiltersAcrossTabs: true,
+                    activeTabLocalIdentifier: "tab-B",
+                });
+
+                expect(tabFilters(updated, 1)?.[0]).toEqual(granularityDate("b_date"));
+                expect(tabFilters(updated, 0)?.[0]).toEqual(granularityDate());
+            });
+
             it("uses the default view of the tab the dashboard opens on", () => {
                 const dashboard = buildTabbedDashboard();
                 const viewB = buildFilterView({
@@ -385,7 +478,7 @@ describe("filterViews", () => {
             });
         });
 
-        describe("default view with an absolute date filter with granularity", () => {
+        describe("default view with an absolute date filter with granularity for a date dataset", () => {
             const regionFilter = (uris: string[]): FilterContextItem => ({
                 attributeFilter: {
                     displayForm: idRef("region", "displayForm"),
@@ -395,6 +488,14 @@ describe("filterViews", () => {
                 },
             });
             const granularityDateFilter: FilterContextItem = {
+                dashboardAbsoluteGranularityDateFilter: {
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                    dataSet: idRef("closed", "dataSet"),
+                },
+            };
+            const commonGranularityDateFilter: FilterContextItem = {
                 dashboardAbsoluteGranularityDateFilter: {
                     granularity: "GDC.time.month",
                     from: "2026-01",
@@ -429,6 +530,8 @@ describe("filterViews", () => {
                 filterContext: viewFilterContext([regionFilter(["legacy-view"])]),
             });
 
+            const skippedViewWarning = `The default filter view "Default view" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED}`;
+
             let warn: MockInstance<typeof console.warn>;
             beforeEach(() => {
                 warn = vi.spyOn(console, "warn").mockImplementation(() => {});
@@ -446,7 +549,7 @@ describe("filterViews", () => {
                 );
 
                 expect(updated.tabs).toEqual(tabbedDashboard.tabs);
-                expect(warn).toHaveBeenCalled();
+                expect(warn).toHaveBeenCalledWith(skippedViewWarning);
             });
 
             it("skips the view when filters persist across tabs", () => {
@@ -456,14 +559,14 @@ describe("filterViews", () => {
                 });
 
                 expect(updated).toBe(tabbedDashboard);
-                expect(warn).toHaveBeenCalled();
+                expect(warn).toHaveBeenCalledWith(skippedViewWarning);
             });
 
             it("finds no default view for a tab whose view it cannot apply", () => {
                 expect(
                     findTabDefaultFilterView([unsupportedTabView, legacyView], "tab-A", true),
                 ).toBeUndefined();
-                expect(warn).toHaveBeenCalled();
+                expect(warn).toHaveBeenCalledWith(skippedViewWarning);
             });
 
             it("skips the view saved without a tab on a dashboard without tabs", () => {
@@ -475,8 +578,49 @@ describe("filterViews", () => {
                 });
 
                 expect(applyDefaultFilterView(dashboard, [view], undefined, [])).toBe(dashboard);
-                expect(warn).toHaveBeenCalled();
+                expect(warn).toHaveBeenCalledWith(skippedViewWarning);
             });
+
+            it("applies the view with the common filter", () => {
+                const dashboard = buildDashboard({
+                    filterContext: buildFilterContext([regionFilter(["stored"])]),
+                });
+                const view = buildFilterView({
+                    filterContext: viewFilterContext([commonGranularityDateFilter, regionFilter(["view"])]),
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [view], undefined, []);
+
+                expect(updated.filterContext?.filters).toEqual([
+                    commonGranularityDateFilter,
+                    regionFilter(["view"]),
+                ]);
+                expect(warn).not.toHaveBeenCalled();
+            });
+
+            it("finds the default view of a tab with the common filter", () => {
+                const view = buildFilterView({
+                    tabLocalIdentifier: "tab-A",
+                    filterContext: viewFilterContext([commonGranularityDateFilter]),
+                });
+
+                expect(findTabDefaultFilterView([view], "tab-A", true)).toBe(view);
+            });
+        });
+
+        it("skips a default view with a parameterized date filter", () => {
+            const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+            const dashboard = buildDashboard({ filterContext: buildFilterContext([]) });
+            const view = buildFilterView({
+                filterContext: {
+                    title: "",
+                    description: "",
+                    filters: [newDashboardParameterizedDateFilter(idRef("period", "parameter"))],
+                },
+            });
+
+            expect(applyDefaultFilterView(dashboard, [view], undefined, [])).toBe(dashboard);
+            expect(warn).toHaveBeenCalled();
         });
 
         describe("export override filter context", () => {
@@ -987,6 +1131,101 @@ describe("filterViews", () => {
                             filters: filterViewFilters,
                         },
                         configUpdates: new Map(),
+                    });
+                });
+
+                describe("absolute date filter with granularity", () => {
+                    const relativeCommonDate = (localIdentifier?: string): FilterContextItem => ({
+                        dateFilter: {
+                            granularity: "GDC.time.year",
+                            type: "relative",
+                            from: -1,
+                            to: -1,
+                            ...(localIdentifier ? { localIdentifier } : {}),
+                        },
+                    });
+                    const granularityCommonDate = (localIdentifier?: string): FilterContextItem => ({
+                        dashboardAbsoluteGranularityDateFilter: {
+                            granularity: "GDC.time.week",
+                            from: "2026-05",
+                            to: "2026-08",
+                            ...(localIdentifier ? { localIdentifier } : {}),
+                        },
+                    });
+
+                    const yearCommonDate = (localIdentifier: string): FilterContextItem => ({
+                        dashboardAbsoluteGranularityDateFilter: {
+                            granularity: "GDC.time.year",
+                            from: "2025",
+                            localIdentifier,
+                        },
+                    });
+
+                    it.each([
+                        [
+                            "the old type by the new type",
+                            relativeCommonDate("date"),
+                            granularityCommonDate("view"),
+                            granularityCommonDate("date"),
+                        ],
+                        [
+                            "the new type by the old type",
+                            granularityCommonDate("date"),
+                            relativeCommonDate("view"),
+                            relativeCommonDate("date"),
+                        ],
+                        [
+                            "the new type by the new type",
+                            granularityCommonDate("date"),
+                            yearCommonDate("view"),
+                            yearCommonDate("date"),
+                        ],
+                    ])("should replace %s and keep the local identifier", (_desc, stored, view, expected) => {
+                        const filterContext = buildFilterContext([stored]);
+
+                        const { filterContext: updated } = changeFilterContextSelection(
+                            filterContext,
+                            [view],
+                            NO_RESTRICTED_FILTERS,
+                        );
+
+                        expect(updated.filters).toEqual([expected]);
+                    });
+
+                    it("should inject the new type when the stored filter is All", () => {
+                        const filterContext = buildFilterContext([]);
+
+                        const { filterContext: updated } = changeFilterContextSelection(
+                            filterContext,
+                            [granularityCommonDate()],
+                            NO_RESTRICTED_FILTERS,
+                        );
+
+                        expect(updated.filters).toEqual([granularityCommonDate()]);
+                    });
+
+                    it("should remove the new type when the view has All", () => {
+                        const filterContext = buildFilterContext([granularityCommonDate("date")]);
+
+                        const { filterContext: updated } = changeFilterContextSelection(
+                            filterContext,
+                            [],
+                            NO_RESTRICTED_FILTERS,
+                        );
+
+                        expect(updated.filters).toEqual([]);
+                    });
+
+                    it("should keep a restricted new type", () => {
+                        const filterContext = buildFilterContext([granularityCommonDate("date")]);
+
+                        const { filterContext: updated } = changeFilterContextSelection(
+                            filterContext,
+                            [relativeCommonDate("view")],
+                            new Set(["date"]),
+                        );
+
+                        expect(updated.filters).toEqual([granularityCommonDate("date")]);
                     });
                 });
             });

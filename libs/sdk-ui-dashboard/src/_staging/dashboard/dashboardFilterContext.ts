@@ -10,12 +10,14 @@ import {
     type IDashboardObjectIdentity,
     type IDateFilterConfig,
     type IFilterContextDefinition,
+    absoluteGranularityDateFilterValues,
     dashboardAttributeFilterItemFilterElementsBy,
     dashboardFilterLocalIdentifier,
     filterAttributeElements,
     filterLocalIdentifier,
     filterObjRef,
     isAbsoluteDateFilter,
+    isAbsoluteGranularityDateFilter,
     isAllTimeDateFilter,
     isArbitraryAttributeFilter,
     isAttributeFilterWithSelection,
@@ -240,6 +242,15 @@ export function dashboardFilterToFilterContextItem(
             isRelativeBoundedDateFilter(filter) ? filter.relativeDateFilter.boundedFilter : undefined,
             filter.relativeDateFilter.emptyValueHandling,
         );
+    } else if (isAbsoluteGranularityDateFilter(filter)) {
+        const { dataSet, localIdentifier } = filter.absoluteGranularityDateFilter;
+        return {
+            dashboardAbsoluteGranularityDateFilter: {
+                ...absoluteGranularityDateFilterValues(filter),
+                ...(keepDatasets ? { dataSet } : {}),
+                ...(localIdentifier ? { localIdentifier } : {}),
+            },
+        };
     } else if (isMeasureValueFilter(filter)) {
         const measure = measureValueFilterMeasure(filter);
         // Dashboard MVFs always reference the measure by ObjRef. Insight MVFs use LocalIdRef

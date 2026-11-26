@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { type IAnalyticalBackend, type IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
 import {
@@ -254,7 +254,7 @@ function PlainControlledPicker({
 }
 
 /** A caller that starts out saying nothing about semantic search, then allows it. */
-function DefaultPicker({ backend }: { backend: IAnalyticalBackend }) {
+function DefaultPicker({ backend, onClose }: { backend: IAnalyticalBackend; onClose?: () => void }) {
     const pickerState = useInsightPickerState(AUTHOR);
     const [enableSemanticSearch, setEnableSemanticSearch] = useState<boolean | undefined>(undefined);
 
@@ -267,6 +267,7 @@ function DefaultPicker({ backend }: { backend: IAnalyticalBackend }) {
                     author={AUTHOR}
                     enableSemanticSearch={enableSemanticSearch}
                     onSelect={() => {}}
+                    onClose={onClose}
                 />
             </WorkspaceProvider>
         </BackendProvider>
@@ -319,6 +320,20 @@ describe("InsightPicker", () => {
 
         expect(await screen.findByText(SUGGESTION_TITLE)).toBeTruthy();
         expect(semanticQuestions).toEqual(["eventing"]);
+    });
+
+    it("closes on Escape in the list", async () => {
+        const { backend } = createBackend({ insightsAuthor: AUTHOR });
+        const onClose = vi.fn();
+
+        render(<DefaultPicker backend={backend} onClose={onClose} />);
+        expect(await screen.findByText("Insight 0")).toBeTruthy();
+        fireEvent.keyDown(document.querySelector(".gd-ui-kit-paged-virtual-list__list")!, {
+            key: "Escape",
+            code: "Escape",
+        });
+
+        expect(onClose).toHaveBeenCalledTimes(1);
     });
 
     it("heads the AI suggestions with their own group label", async () => {

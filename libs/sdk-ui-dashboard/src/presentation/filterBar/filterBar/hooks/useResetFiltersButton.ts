@@ -6,13 +6,18 @@ import { difference } from "lodash-es";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
+    type DashboardDateFilterOfAnyType,
     type FilterContextItem,
+    type IDashboardAbsoluteGranularityDateFilter,
     type IDashboardDateFilter,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
+    isDashboardDateFilterOfAnyType,
     isDashboardMeasureValueFilter,
     isNoopAllTimeDashboardDateFilter,
     newAllTimeDashboardDateFilter,
@@ -85,7 +90,25 @@ const normalizeDateFilterForComparison = (filter: IDashboardDateFilter): IDashbo
     };
 };
 
+const normalizeAbsoluteGranularityDateFilterForComparison = (
+    filter: IDashboardAbsoluteGranularityDateFilter,
+): IDashboardAbsoluteGranularityDateFilter => {
+    const { dataSet, from, to, ...rest } = filter.dashboardAbsoluteGranularityDateFilter;
+
+    return {
+        dashboardAbsoluteGranularityDateFilter: {
+            ...rest,
+            ...(dataSet === undefined ? {} : { dataSet }),
+            ...(from === undefined ? {} : { from }),
+            ...(to === undefined ? {} : { to }),
+        } as IDashboardAbsoluteGranularityDateFilter["dashboardAbsoluteGranularityDateFilter"],
+    };
+};
+
 const normalizeFilterForComparison = (filter: FilterContextItem): FilterContextItem => {
+    if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+        return normalizeAbsoluteGranularityDateFilterForComparison(filter);
+    }
     return isDashboardDateFilter(filter) ? normalizeDateFilterForComparison(filter) : filter;
 };
 
@@ -102,11 +125,16 @@ const shouldIgnoreDateFilterLocalIdentifiers = (originalFilters: FilterContextIt
     // When original filters do not have identifiers yet,
     // we omit them in current filters to avoid false positive results when comparing the objects
     return originalFilters.some(
-        (filter) => isDashboardDateFilter(filter) && dashboardFilterLocalIdentifier(filter) === undefined,
+        (filter) =>
+            isDashboardDateFilterOfAnyType(filter) && dashboardFilterLocalIdentifier(filter) === undefined,
     );
 };
 
 const removeDateFilterLocalIdentifier = (filter: FilterContextItem): FilterContextItem => {
+    if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+        const { localIdentifier: _localIdentifier, ...rest } = filter.dashboardAbsoluteGranularityDateFilter;
+        return { dashboardAbsoluteGranularityDateFilter: rest };
+    }
     if (isDashboardDateFilter(filter)) {
         // oxlint-disable-next-line @typescript-eslint/no-unused-vars
         const { localIdentifier, ...rest } = filter.dateFilter;
@@ -277,8 +305,8 @@ export const useResetFiltersButton = (): {
             // Normalize filters to include "All time" date filter
             const [[commonDateFilter], otherFilters] = _partition(
                 originalFilters,
-                isDashboardCommonDateFilter,
-            ) as [IDashboardDateFilter[], FilterContextItem[]];
+                isDashboardCommonDateFilterOfAnyType,
+            ) as [DashboardDateFilterOfAnyType[], FilterContextItem[]];
 
             if (isApplyAllAtOnceEnabledAndSet) {
                 dispatch(resetFilterContextWorkingSelection());

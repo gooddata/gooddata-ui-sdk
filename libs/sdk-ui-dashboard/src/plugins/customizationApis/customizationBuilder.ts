@@ -185,7 +185,9 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
             DashboardAttributeFilterComponentProvider: this.filtersCustomizer
                 .attribute()
                 .getAttributeFilterProvider(),
-            DashboardDateFilterComponentProvider: this.filtersCustomizer.date().getDateFilterProvider(),
+            DashboardDateFilterOfAnyTypeComponentProvider: this.filtersCustomizer
+                .date()
+                .getDateFilterOfAnyTypeProvider(),
             DashboardMeasureValueFilterComponentProvider: this.filtersCustomizer
                 .measureValue()
                 .getMeasureValueFilterProvider(),

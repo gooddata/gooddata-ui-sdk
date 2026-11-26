@@ -11,7 +11,6 @@ import {
     type IDashboardAttributeFilter,
     type ObjRef,
     areObjRefsEqual,
-    isInsightWidget,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { _isEmpty } from "@gooddata/util";
@@ -30,11 +29,10 @@ import {
     selectFilterContextAttributeFilterItems,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
-import { selectAllAnalyticalWidgets } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { type PromiseFnReturnType, type PromiseReturnType } from "../../../types/sagas.js";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
-import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
+import { revalidateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
 import {
@@ -198,8 +196,7 @@ export function* addAttributeFilterHandler(
     );
 
     yield call(dispatchFilterContextChanged, ctx, cmd);
-    const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(selectAllAnalyticalWidgets);
-    yield call(validateDrillToCustomUrlParams, widgets.filter(isInsightWidget));
+    yield call(revalidateDrillToCustomUrlParams);
 }
 
 export function* getConnectingAttributes(

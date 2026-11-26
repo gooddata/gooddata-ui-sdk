@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { type Mock, beforeEach, describe, expect, it, vi } from "vitest";
+import { type Mock, type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -29,8 +29,15 @@ function lastCoreMekkoProps(): ICoreChartProps {
 }
 
 describe("Mekko", () => {
+    let warnSpy: MockInstance<typeof console.warn>;
+
     beforeEach(() => {
         vi.clearAllMocks();
+        warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+        warnSpy.mockRestore();
     });
 
     it("should render with custom SDK", () => {
@@ -38,7 +45,7 @@ describe("Mekko", () => {
         expect(CoreMekko).toHaveBeenCalled();
     });
 
-    it("should strip measure sorts from the stacked execution and pass all sorts via config", () => {
+    it("should drop measure sorts from the stacked execution and not sort in the browser", () => {
         render(
             <Mekko
                 workspace="foo"
@@ -53,7 +60,8 @@ describe("Mekko", () => {
 
         const props = lastCoreMekkoProps();
         expect(props.execution.definition.sortBy).toEqual([attributeSort]);
-        expect(props.config?.sortBy).toEqual(sortBy);
+        expect(props.config?.sortBy).toBeUndefined();
+        expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("ignores measure sorts"));
     });
 
     it("should keep measure sorts in the execution without a stackBy attribute", () => {
@@ -68,12 +76,11 @@ describe("Mekko", () => {
             />,
         );
 
-        const props = lastCoreMekkoProps();
-        expect(props.execution.definition.sortBy).toEqual(sortBy);
-        expect(props.config?.sortBy).toEqual(sortBy);
+        expect(lastCoreMekkoProps().execution.definition.sortBy).toEqual(sortBy);
+        expect(warnSpy).not.toHaveBeenCalled();
     });
 
-    it("should keep a user-set config.sortBy when the sortBy prop is not provided", () => {
+    it("should warn that the deprecated config.sortBy is ignored", () => {
         render(
             <Mekko
                 workspace="foo"
@@ -83,6 +90,6 @@ describe("Mekko", () => {
             />,
         );
 
-        expect(lastCoreMekkoProps().config?.sortBy).toEqual([measureSort]);
+        expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining("config.sortBy"));
     });
 });

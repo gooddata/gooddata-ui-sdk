@@ -1,12 +1,10 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type KeyboardEvent } from "react";
-
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, isSpaceKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { CheckboxDescription } from "../CheckboxSection/CheckboxDescription.js";
 
@@ -30,17 +28,7 @@ export function ExcludeCurrentPeriodToggle({
     const labelId = useIdPrefixed("exclude-current-period-label");
     const descriptionId = useIdPrefixed("exclude-current-period-description");
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-        if (disabled) {
-            return;
-        }
-
-        if (isSpaceKey(e)) {
-            e.preventDefault();
-            onChange(!value);
-        }
-    };
-
+    // Space is left to the native checkbox so assistive technologies announce the state change.
     return (
         <div className="gd-extended-date-filter-exclude-current">
             <BubbleHoverTrigger>
@@ -55,7 +43,6 @@ export function ExcludeCurrentPeriodToggle({
                         checked={value}
                         onChange={(e) => onChange(e.target.checked)}
                         disabled={disabled}
-                        onKeyDown={handleKeyDown}
                         aria-labelledby={labelId}
                         aria-describedby={disabled ? descriptionId : undefined}
                     />

@@ -5,7 +5,11 @@ import { describe, expect, it } from "vitest";
 import { newAbsoluteGranularityDateFilter, newPositiveAttributeFilter } from "../execution/filter/factory.js";
 import { idRef, uriRef } from "../objRef/factory.js";
 
-import { type FilterContextItem, type IDashboardAbsoluteGranularityDateFilter } from "./filterContext.js";
+import {
+    type FilterContextItem,
+    type IDashboardAbsoluteGranularityDateFilter,
+    newDashboardParameterizedDateFilter,
+} from "./filterContext.js";
 import { dashboardAttributeFilter } from "./filterContext.test.helpers.js";
 import {
     filterContextItemsToDashboardFiltersByDateDataSet,
@@ -95,5 +99,26 @@ describe("filter context with an absolute date filter with granularity", () => {
                 localIdentifier: "openStart",
             }),
         ]);
+    });
+});
+
+describe("filter context with a parameterized date filter", () => {
+    const items: FilterContextItem[] = [
+        dashboardAttributeFilter,
+        newDashboardParameterizedDateFilter(idRef("period", "parameter"), { localIdentifier: "period" }),
+    ];
+
+    it.each([
+        ["filterContextItemsToDashboardFiltersByWidget", filterContextItemsToDashboardFiltersByWidget],
+        [
+            "filterContextItemsToDashboardFiltersByRichTextWidget",
+            filterContextItemsToDashboardFiltersByRichTextWidget,
+        ],
+    ])("%s should throw", (_name, convert) => {
+        expect(() => convert(items, { dateDataSet: widgetDataSet })).toThrow();
+    });
+
+    it("filterContextItemsToDashboardFiltersByDateDataSet should throw", () => {
+        expect(() => filterContextItemsToDashboardFiltersByDateDataSet(items, requestedDataSet)).toThrow();
     });
 });

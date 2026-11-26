@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -58,7 +58,11 @@ const switcher: IVisualizationSwitcherWidget = {
     ignoreDashboardFilters: [],
 };
 
-const messages = { "visualizationSwitcher.restrictedEntry": "Restricted" };
+const messages = {
+    "visualizationSwitcher.restrictedEntry": "Restricted",
+    "visualizationSwitcher.button.ariaLabel": "Switch visualization, currently: {title}",
+    "visualizationSwitcher.list.ariaLabel": "Visualizations to switch to",
+};
 
 function renderHeader(activeVisualization: IInsightWidget) {
     const restrictedRef: IUnavailableDashboardReference = {
@@ -78,18 +82,24 @@ function renderHeader(activeVisualization: IInsightWidget) {
         selector(state),
     );
 
-    return render(
+    const renderTree = (active: IInsightWidget) => (
         <IntlProvider locale="en-US" messages={messages}>
             <VisualizationSwitcherNavigationHeader
                 widget={switcher}
-                activeVisualization={activeVisualization}
+                activeVisualization={active}
                 onActiveVisualizationChange={vi.fn()}
                 titleId="title-1"
                 clientWidth={400}
                 clientHeight={300}
             />
-        </IntlProvider>,
+        </IntlProvider>
     );
+
+    const result = render(renderTree(activeVisualization));
+    return {
+        ...result,
+        rerenderWith: (active: IInsightWidget) => result.rerender(renderTree(active)),
+    };
 }
 
 describe("VisualizationSwitcherNavigationHeader", () => {
@@ -119,6 +129,46 @@ describe("VisualizationSwitcherNavigationHeader", () => {
         expect(
             container.querySelector(".gd-visualization-switcher-widget-header-title svg"),
         ).toBeInTheDocument();
+    });
+
+    it("names the switcher button by its purpose and the current visualization", () => {
+        renderHeader(readable);
+
+        const button = screen.getByRole("button", {
+            name: "Switch visualization, currently: Revenue by month",
+        });
+        expect(button).toHaveAttribute("aria-haspopup", "listbox");
+        expect(button).toHaveAttribute("aria-expanded", "false");
+    });
+
+    it("updates the switcher button name when the active visualization changes", () => {
+        const { rerenderWith } = renderHeader(readable);
+        const button = screen.getByRole("button", {
+            name: "Switch visualization, currently: Revenue by month",
+        });
+
+        rerenderWith(visualization("other", "Donut chart"));
+
+        expect(button).toHaveAccessibleName("Switch visualization, currently: Donut chart");
+    });
+
+    it("does not expose the stored title in the button name of a restricted active entry", () => {
+        renderHeader(restricted);
+
+        expect(
+            screen.getByRole("button", { name: "Switch visualization, currently: Restricted" }),
+        ).toBeInTheDocument();
+    });
+
+    it("names the opened list as the visualization choices", () => {
+        renderHeader(readable);
+
+        fireEvent.click(screen.getByRole("button", { name: /Switch visualization/ }));
+
+        const listbox = document.querySelector('[role="listbox"]');
+        expect(listbox).toHaveAttribute("aria-label", "Visualizations to switch to");
+        // aria-labelledby would take precedence and name the list by the trigger again
+        expect(listbox).not.toHaveAttribute("aria-labelledby");
     });
 
     it("leaves the closed header of a readable active entry unmarked", () => {

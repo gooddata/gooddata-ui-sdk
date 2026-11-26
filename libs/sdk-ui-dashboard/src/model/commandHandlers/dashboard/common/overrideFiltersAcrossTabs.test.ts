@@ -8,6 +8,7 @@ import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
+    type IDashboardAbsoluteGranularityDateFilter,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
     type ObjRef,
@@ -51,6 +52,17 @@ function thisYear(localIdentifier?: string): IDashboardDateFilter {
             granularity: "GDC.time.year",
             from: 0,
             to: 0,
+            ...(localIdentifier ? { localIdentifier } : {}),
+        },
+    };
+}
+
+function months(localIdentifier?: string): IDashboardAbsoluteGranularityDateFilter {
+    return {
+        dashboardAbsoluteGranularityDateFilter: {
+            granularity: "GDC.time.month",
+            from: "2026-01",
+            to: "2026-03",
             ...(localIdentifier ? { localIdentifier } : {}),
         },
     };
@@ -301,5 +313,60 @@ describe("mergeDashboardOverrideFilters", () => {
         });
 
         expect(merged.mergedFilters).toEqual([lastYear]);
+    });
+});
+
+describe("common date filter of the new type", () => {
+    const saved = [regionFilter("b_region", [])];
+
+    it.each<[string, FilterContextItem, FilterContextItem, FilterContextItem]>([
+        ["the old type by the new type", thisYear("saved_date"), months("embed_date"), months("saved_date")],
+        [
+            "the new type by the old type",
+            months("saved_date"),
+            thisYear("embed_date"),
+            thisYear("saved_date"),
+        ],
+    ])("replaces %s keeping the saved identifier", (_desc, savedDate, override, expected) => {
+        const merged = mergeDashboardOverrideFilters([savedDate, ...saved], [override], {});
+
+        expect(merged.mergedFilters[0]).toEqual(expected);
+    });
+
+    it("adds the new type when the saved filter is all time", () => {
+        const merged = mergeDashboardOverrideFilters(saved, [months()], {});
+
+        expect(merged.mergedFilters).toEqual([months(), ...saved]);
+    });
+
+    it("does not apply the new type to a readonly date filter", () => {
+        const merged = mergeDashboardOverrideFilters([thisYear("saved_date")], [months("embed_date")], {
+            dateFilterConfig: { filterName: "Date range", mode: "readonly" },
+        });
+
+        expect(merged.mergedFilters).toEqual([thisYear("saved_date")]);
+    });
+
+    it("writes the new type onto the other tab's own common date filter", () => {
+        const savedA = [thisYear("a_date"), regionFilter("a_region", [])];
+        const resolved = resolveOverrideFiltersByTab(
+            [tab("tab-A", savedA), tab("tab-B", saved)],
+            [months("b_date")],
+            "tab-B",
+            true,
+        );
+
+        expect(resolved["tab-A"]).toEqual([months("a_date")]);
+    });
+
+    it("writes the new type without an identifier to another tab that is all time", () => {
+        const resolved = resolveOverrideFiltersByTab(
+            [tab("tab-A", [regionFilter("a_region", [])]), tab("tab-B", saved)],
+            [months("b_date")],
+            "tab-B",
+            true,
+        );
+
+        expect(resolved["tab-A"]).toEqual([months()]);
     });
 });

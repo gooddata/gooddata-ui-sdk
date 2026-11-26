@@ -18,6 +18,7 @@ import {
     insightVisualizationUrl,
     isAttributeElementsByRef,
     isComputedAttributeRef,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     isInsightWidget,
@@ -100,6 +101,11 @@ export function buildFiltersContext(
                     title: title ?? displayForms?.get(displayForm)?.title,
                 });
             }
+        }
+        if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+            console.warn(
+                "The AI assistant does not support absolute date filters with granularity yet. The filter is left out of its context.",
+            );
         }
         if (isDashboardDateFilter(filter)) {
             const { type, granularity, from, to, dataSet } = filter.dateFilter;

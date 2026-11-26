@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import {
@@ -9,6 +9,7 @@ import {
     type IDrillToCustomUrl,
     type IDrillToDashboard,
     idRef,
+    isDashboardDateFilterOfAnyType,
     measureLocalId,
     newAttribute,
     newDefForItems,
@@ -16,6 +17,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
+import { ABSOLUTE_GRANULARITY_DATE_FILTER_DRILL_TO_DASHBOARD_NOT_SUPPORTED } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import {
     SimpleDashboardIdentifier,
     SimpleSortedTableWidgetRef,
@@ -393,5 +395,99 @@ describe("drillToDashboardHandler parameter inheritance", () => {
 
         expect(tabSwitched.payload.newTabId).toEqual(targetTabId);
         expect(tabSwitched.payload.source).toEqual("drillToSelf");
+    });
+
+    it("resolves key driver analysis with the common date filter of the new type, dropping it", async () => {
+        Tester.dispatch(
+            tabsActions.upsertDateFilter({
+                type: "absoluteGranularity",
+                granularity: "GDC.time.month",
+                from: "2026-01",
+                to: "2026-03",
+            }),
+        );
+        const dateAttribute = Tester.select(selectCatalogDateAttributes)[0];
+        const descriptor = getDateDescriptor();
+        const keyDriveItem = createKeyDriveItem(descriptor, "m1");
+
+        const event = await Tester.dispatchAndWaitFor(
+            keyDriverAnalysis(
+                { type: "keyDriveAnalysis", origin: selfDrillDefinition.origin, transition: "in-place" },
+                {
+                    ...drillEvent,
+                    dataView: dummyDataView(
+                        newDefForItems("reference-workspace", [
+                            newAttribute(dateAttribute.defaultDisplayForm.ref, (a) => a.localId("date")),
+                            newMeasure("metric", (m) => m.localId("m1")),
+                        ]),
+                    ),
+                    drillContext: {
+                        type: "table",
+                        element: "cell",
+                        intersection: [{ header: descriptor }, { header: keyDriveItem.measure }],
+                    },
+                },
+                Tester.select(selectFilterContextFilters),
+                keyDriveItem,
+            ),
+            "GDC.DASH/EVT.DRILL.KEY_DRIVER_ANALYSIS.RESOLVED",
+        );
+
+        expect(event.payload.keyDriveDefinition.filters.filter(isDashboardDateFilterOfAnyType)).toEqual([]);
+    });
+
+    describe("common date filter of the source dashboard", () => {
+        const otherDashboardDrill: IDrillToDashboard = {
+            ...selfDrillDefinition,
+            target: idRef("other-dashboard", "analyticalDashboard"),
+        };
+
+        const resolvedFilters = async () => {
+            const event = await Tester.dispatchAndWaitFor(
+                drillToDashboard(otherDashboardDrill, drillEvent),
+                "GDC.DASH/EVT.DRILL.DRILL_TO_DASHBOARD.RESOLVED",
+            );
+            return event.payload.filters;
+        };
+
+        afterEach(() => {
+            vi.restoreAllMocks();
+        });
+
+        it("passes the common date filter of the old type to the target", async () => {
+            Tester.dispatch(
+                tabsActions.upsertDateFilter({
+                    type: "relative",
+                    granularity: "GDC.time.year",
+                    from: -1,
+                    to: -1,
+                }),
+            );
+
+            expect(await resolvedFilters()).toContainEqual(
+                expect.objectContaining({
+                    dateFilter: expect.objectContaining({ type: "relative", from: -1, to: -1 }),
+                }),
+            );
+        });
+
+        it("skips the common date filter of the new type with a warning so the target keeps its date filter", async () => {
+            const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+            Tester.dispatch(
+                tabsActions.upsertDateFilter({
+                    type: "absoluteGranularity",
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                }),
+            );
+
+            const filters = await resolvedFilters();
+
+            expect(filters.filter(isDashboardDateFilterOfAnyType)).toEqual([]);
+            expect(warnSpy).toHaveBeenCalledExactlyOnceWith(
+                `${ABSOLUTE_GRANULARITY_DATE_FILTER_DRILL_TO_DASHBOARD_NOT_SUPPORTED} The target dashboard keeps its date filter.`,
+            );
+        });
     });
 });

@@ -9,12 +9,13 @@ import {
     type IDashboardMeasureValueFilter,
     type ObjRef,
     idRef,
+    newDashboardParameterizedDateFilter,
 } from "@gooddata/sdk-model";
 
 import { type ITabState } from "../tabsState.js";
 
 import { type FilterContextState, type WorkingFilterContextItem } from "./filterContextState.js";
-import { findCounterpartFilter } from "./filterSync.js";
+import { findCounterpartFilter, withCommonDateFilterLocalIdentifier } from "./filterSync.js";
 
 const measure = idRef("amount", "measure");
 
@@ -79,5 +80,22 @@ describe("findCounterpartFilter", () => {
         const source = tab("tab-a", [sourceFilter]);
         const target = tab("tab-b", [measureFilter("mvf-b", 2), measureFilter("mvf-c", 3)]);
         expect(findCounterpartFilter(source, sourceFilter, target)).toBeUndefined();
+    });
+});
+
+describe("withCommonDateFilterLocalIdentifier", () => {
+    it("makes a period common and sets the local identifier", () => {
+        const period = newDashboardParameterizedDateFilter(idRef("fiscal_year", "parameter"), {
+            dataSet: idRef("closed", "dataSet"),
+            localIdentifier: "source",
+            emptyValueHandling: "include",
+        });
+
+        expect(withCommonDateFilterLocalIdentifier(period, "target")).toEqual(
+            newDashboardParameterizedDateFilter(idRef("fiscal_year", "parameter"), {
+                localIdentifier: "target",
+                emptyValueHandling: "include",
+            }),
+        );
     });
 });

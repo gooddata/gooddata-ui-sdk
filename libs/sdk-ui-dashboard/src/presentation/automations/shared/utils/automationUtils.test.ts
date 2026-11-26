@@ -8,7 +8,12 @@ import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
     type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+    type IExportDefinitionDashboardContent,
+    type IExportDefinitionRequestPayload,
     type IUser,
+    idRef,
+    newDashboardParameterizedDateFilter,
     uriRef,
 } from "@gooddata/sdk-model";
 
@@ -72,5 +77,50 @@ describe("filters of export definitions with an absolute date filter with granul
             content: { filters: [granularityDateFilter] },
         });
         expect(() => getAutomationVisualizationFilters(automation)).toThrow(NotSupported);
+    });
+});
+
+describe("filters of export definitions with a parameterized date filter", () => {
+    const parameterizedDateFilter = newDashboardParameterizedDateFilter(idRef("period", "parameter"));
+    const automationWith = (
+        requestPayload: IExportDefinitionRequestPayload,
+    ): IAutomationMetadataObjectDefinition => ({
+        type: "automation",
+        exportDefinitions: [{ type: "exportDefinition", requestPayload }],
+    });
+    const dashboardExport = (content: Omit<IExportDefinitionDashboardContent, "dashboard">) =>
+        automationWith({
+            type: "dashboard",
+            fileName: "export",
+            format: "PDF",
+            content: { dashboard: "dashboard", ...content },
+        });
+
+    it.each([
+        [
+            "getAutomationDashboardFilters",
+            () => getAutomationDashboardFilters(dashboardExport({ filters: [parameterizedDateFilter] })),
+        ],
+        [
+            "getAutomationDashboardFiltersByTab",
+            () =>
+                getAutomationDashboardFiltersByTab(
+                    dashboardExport({ filtersByTab: { "tab-A": [parameterizedDateFilter] } }),
+                ),
+        ],
+        [
+            "getAutomationVisualizationFilters",
+            () =>
+                getAutomationVisualizationFilters(
+                    automationWith({
+                        type: "visualizationObject",
+                        fileName: "export",
+                        format: "XLSX",
+                        content: { visualizationObject: "visualization", filters: [parameterizedDateFilter] },
+                    }),
+                ),
+        ],
+    ])("%s should throw", (_name, getFilters) => {
+        expect(getFilters).toThrow(NotSupported);
     });
 });

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -23,11 +23,13 @@ interface IAttributeDropdownBodyProps {
 const TABS: ITab[] = [
     {
         id: CatalogAttributeDataType.ATTRIBUTE,
+        label: messages["hierarchyAttributeTab"],
         iconOnly: true,
         icon: "gd-icon-attribute",
     },
     {
         id: CatalogAttributeDataType.DATE_ATTRIBUTE,
+        label: messages["hierarchyDateAttributeTab"],
         iconOnly: true,
         icon: "gd-icon-date",
     },

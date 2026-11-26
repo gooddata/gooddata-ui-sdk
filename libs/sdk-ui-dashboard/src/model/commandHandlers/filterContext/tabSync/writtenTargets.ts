@@ -5,7 +5,10 @@ import { BATCH, type BatchAction } from "redux-batched-actions";
 
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { type IWrittenTabFilters } from "../../../store/tabs/filterContext/filterContextReducers.js";
+import {
+    type IWrittenTabFilters,
+    upsertDateFilterPayloadDataSet,
+} from "../../../store/tabs/filterContext/filterContextReducers.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type IWrittenTabParameters } from "../../../store/tabs/parameters/parametersReducers.js";
 
@@ -54,7 +57,7 @@ export function writtenFiltersOf(actions: readonly Action[]): IWrittenTabFilters
             }
         } else if (tabsActions.upsertDateFilter.match(action) && !action.payload.isWorkingSelectionChange) {
             const written = forTab(action.payload.tabLocalIdentifier);
-            const { dataSet } = action.payload;
+            const dataSet = upsertDateFilterPayloadDataSet(action.payload);
             if (!dataSet) {
                 written.commonDateFilter = true;
             } else if (

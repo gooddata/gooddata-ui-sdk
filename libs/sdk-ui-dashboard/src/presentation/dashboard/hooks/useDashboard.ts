@@ -19,7 +19,7 @@ import {
     type AttributeFilterComponentProvider,
     type DashboardContentComponentProvider,
     type DashboardLayoutComponentProvider,
-    type DateFilterComponentProvider,
+    type DateFilterOfAnyTypeComponentProvider,
     type DrillDialogExportDropdownComponentProvider,
     type FilterGroupComponentProvider,
     type InsightBodyComponentProvider,
@@ -40,6 +40,7 @@ import {
 } from "../../dashboardContexts/types.js";
 import { DefaultDashboardAttributeFilter } from "../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 import { DefaultDashboardAttributeFilterComponentSetFactory } from "../../filterBar/attributeFilter/DefaultDashboardAttributeFilterComponentSetFactory.js";
+import { toDateFilterOfAnyTypeProvider } from "../../filterBar/dateFilter/dateFilterOfAnyTypeProvider.js";
 import { DefaultDashboardDateFilter } from "../../filterBar/dateFilter/DefaultDashboardDateFilter.js";
 import { DefaultDashboardDateFilterComponentSetFactory } from "../../filterBar/dateFilter/DefaultDashboardDateFilterComponentSetFactory.js";
 import { DefaultDashboardFilterGroup } from "../../filterBar/filterBar/DefaultDashboardFilterGroup.js";
@@ -74,7 +75,7 @@ interface IUseDashboardResult {
     hasThemeProvider: boolean;
     attributeFilterProvider: AttributeFilterComponentProvider;
     filterGroupProvider: FilterGroupComponentProvider;
-    dateFilterProvider: DateFilterComponentProvider;
+    dateFilterProvider: DateFilterOfAnyTypeComponentProvider;
     measureValueFilterProvider: MeasureValueFilterComponentProvider;
     widgetProvider: WidgetComponentProvider;
     insightProvider: InsightComponentProvider;
@@ -106,6 +107,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         dashboard,
         DashboardAttributeFilterComponentProvider,
         DashboardDateFilterComponentProvider,
+        DashboardDateFilterOfAnyTypeComponentProvider,
         DashboardMeasureValueFilterComponentProvider,
         DashboardFilterGroupComponentProvider,
         WidgetComponentProvider,
@@ -155,12 +157,22 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [DashboardContentComponentProvider],
     );
 
-    const dateFilterProvider = useCallback<DateFilterComponentProvider>(
+    const convertedDateFilterProvider = useMemo(
+        () =>
+            DashboardDateFilterComponentProvider
+                ? toDateFilterOfAnyTypeProvider(DashboardDateFilterComponentProvider)
+                : undefined,
+        [DashboardDateFilterComponentProvider],
+    );
+
+    const dateFilterProvider = useCallback<DateFilterOfAnyTypeComponentProvider>(
         (filter) => {
-            const userSpecified = DashboardDateFilterComponentProvider?.(filter);
+            const userSpecified =
+                DashboardDateFilterOfAnyTypeComponentProvider?.(filter) ??
+                convertedDateFilterProvider?.(filter);
             return userSpecified ?? DefaultDashboardDateFilter;
         },
-        [DashboardDateFilterComponentProvider],
+        [DashboardDateFilterOfAnyTypeComponentProvider, convertedDateFilterProvider],
     );
 
     const measureValueFilterProvider = useCallback<MeasureValueFilterComponentProvider>(

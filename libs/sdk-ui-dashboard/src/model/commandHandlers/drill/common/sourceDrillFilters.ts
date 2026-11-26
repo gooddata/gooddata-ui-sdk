@@ -22,7 +22,7 @@ import {
     isRankingFilter,
 } from "@gooddata/sdk-model";
 
-import { ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+import { ABSOLUTE_GRANULARITY_DATE_FILTER_DRILL_TO_DASHBOARD_NOT_SUPPORTED } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED } from "../../../../_staging/dashboard/parameterizedDateFilters.js";
 import {
     getSourceMeasureFiltersForDrillDefinition,
@@ -104,7 +104,7 @@ function isSourceFilterSupportedByDashboard<T extends IFilter>(
 ): filter is Exclude<T, IAbsoluteGranularityDateFilter | IParameterizedDateFilter> {
     if (isAbsoluteGranularityDateFilter(filter)) {
         console.warn(
-            `Skipping a source insight filter. ${ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED}`,
+            `${ABSOLUTE_GRANULARITY_DATE_FILTER_DRILL_TO_DASHBOARD_NOT_SUPPORTED} Skipping a source insight filter.`,
             filter,
         );
         return false;

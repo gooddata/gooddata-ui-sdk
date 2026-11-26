@@ -2,16 +2,17 @@
 
 import { type ReactElement } from "react";
 
-import { DashboardParameterModeValues, isIdentifierRef } from "@gooddata/sdk-model";
+import { type IdentifierRef, isIdentifierRef, objRefToString } from "@gooddata/sdk-model";
 import { ParameterPicker } from "@gooddata/sdk-ui-kit";
 
+import { addParameters } from "../../../model/commands/parameters.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
     selectCatalogParameters,
     selectCatalogParametersStatus,
 } from "../../../model/store/catalog/catalogSelectors.js";
-import { tabsActions } from "../../../model/store/tabs/index.js";
 import { selectActiveParameterRefKeys } from "../../../model/store/tabs/parameters/parametersSelectors.js";
+import { selectActiveOrDefaultTabLocalIdentifier } from "../../../model/store/tabs/tabsSelectors.js";
 
 const PICKER_MAX_LIST_HEIGHT = 320;
 
@@ -33,6 +34,7 @@ export function DashboardParameterPicker({ onAdd, onCancel }: IDashboardParamete
     const parameters = useDashboardSelector(selectCatalogParameters);
     const status = useDashboardSelector(selectCatalogParametersStatus);
     const excludedKeys = useDashboardSelector(selectActiveParameterRefKeys);
+    const tabLocalIdentifier = useDashboardSelector(selectActiveOrDefaultTabLocalIdentifier);
 
     const isLoading = status === "loading" || status === "uninitialized";
 
@@ -43,20 +45,14 @@ export function DashboardParameterPicker({ onAdd, onCancel }: IDashboardParamete
             isLoading={isLoading}
             maxListHeight={PICKER_MAX_LIST_HEIGHT}
             onAdd={(selected) => {
-                for (const { ref, definition } of selected) {
-                    if (!isIdentifierRef(ref)) {
-                        continue;
+                const refs: IdentifierRef[] = [];
+                for (const { ref } of selected) {
+                    if (isIdentifierRef(ref) && !excludedKeys.has(objRefToString(ref))) {
+                        refs.push(ref);
                     }
-                    dispatch(
-                        tabsActions.addParameter({
-                            parameter: {
-                                ref,
-                                parameterType: definition.type,
-                                mode: DashboardParameterModeValues.ACTIVE,
-                            },
-                            workspaceDefault: definition.defaultValue,
-                        }),
-                    );
+                }
+                if (refs.length > 0) {
+                    dispatch(addParameters(refs, tabLocalIdentifier));
                 }
                 onAdd?.();
             }}

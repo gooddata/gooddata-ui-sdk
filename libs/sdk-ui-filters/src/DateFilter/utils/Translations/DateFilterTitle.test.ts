@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type DateFilterGranularity } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type DatePeriodGranularity, type WeekStart } from "@gooddata/sdk-model";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "@gooddata/sdk-ui";
 
 import {
@@ -12,7 +12,10 @@ import {
     DEFAULT_DATE_FORMAT_WITH_TIME,
     TIME_FORMAT_WITH_SECONDS_WITH_SEPARATOR,
 } from "../../constants/Platform.js";
-import { type IUiRelativeDateFilterForm } from "../../interfaces/index.js";
+import {
+    type IUiAbsoluteGranularityDateFilterForm,
+    type IUiRelativeDateFilterForm,
+} from "../../interfaces/index.js";
 import {
     absoluteFormFilter,
     absoluteFormFilterOneDay,
@@ -474,5 +477,99 @@ describe("getDateFilterRepresentation", () => {
             );
             expect(actual).toEqual(expected);
         });
+    });
+});
+
+describe("absolute form with whole periods", () => {
+    const periodsFilter = (
+        granularity: DatePeriodGranularity,
+        from: string | undefined,
+        to: string | undefined,
+    ): IUiAbsoluteGranularityDateFilterForm => ({
+        localIdentifier: "ABSOLUTE_FORM",
+        type: "absoluteGranularityForm",
+        granularity,
+        from,
+        to,
+        name: "",
+        visible: true,
+    });
+
+    it.each<[DatePeriodGranularity, string | undefined, string | undefined, WeekStart, string]>([
+        ["GDC.time.week", "2026-10", "2026-12", "Sunday", "03/01/2026 – 03/21/2026"],
+        ["GDC.time.week", "2026-10", "2026-12", "Monday", "03/02/2026 – 03/22/2026"],
+        ["GDC.time.week", "2026-10", "2026-10", "Sunday", "03/01/2026 – 03/07/2026"],
+        ["GDC.time.week", "2026-53", "2027-01", "Sunday", "12/27/2026 – 01/09/2027"],
+        ["GDC.time.week", "2026-53", "2027-01", "Monday", "12/28/2026 – 01/10/2027"],
+        ["GDC.time.week", "2026-10", undefined, "Sunday", "From 03/01/2026"],
+        ["GDC.time.week", "2026-10", undefined, "Monday", "From 03/02/2026"],
+        ["GDC.time.week", undefined, "2026-10", "Sunday", "To 03/07/2026"],
+        ["GDC.time.week", undefined, "2026-10", "Monday", "To 03/08/2026"],
+        ["GDC.time.month", "2026-03", "2026-05", "Sunday", "March 2026 – May 2026"],
+        ["GDC.time.month", "2026-03", "2026-03", "Sunday", "March 2026"],
+        ["GDC.time.month", "2026-03", undefined, "Sunday", "From March 2026"],
+        ["GDC.time.month", undefined, "2026-03", "Sunday", "To March 2026"],
+        ["GDC.time.quarter", "2025-4", "2026-1", "Sunday", "Q4 2025 – Q1 2026"],
+        ["GDC.time.quarter", "2026-2", "2026-2", "Sunday", "Q2 2026"],
+        ["GDC.time.quarter", "2026-2", undefined, "Sunday", "From Q2 2026"],
+        ["GDC.time.quarter", undefined, "2026-2", "Sunday", "To Q2 2026"],
+        ["GDC.time.year", "2025", "2026", "Sunday", "2025 – 2026"],
+        ["GDC.time.year", "2026", "2026", "Sunday", "2026"],
+        ["GDC.time.year", "2026", undefined, "Sunday", "From 2026"],
+        ["GDC.time.year", undefined, "2026", "Sunday", "To 2026"],
+    ])(
+        "%s from %s to %s with the week starting on %s is titled %s",
+        (granularity, from, to, weekStart, expected) => {
+            const actual = getDateFilterRepresentation(
+                periodsFilter(granularity, from, to),
+                "en-US",
+                DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+                "short",
+                DEFAULT_DATE_FORMAT,
+                weekStart,
+            );
+            expect(actual).toEqual(expected);
+        },
+    );
+
+    it.each<DatePeriodGranularity>(["GDC.time.week", "GDC.time.month", "GDC.time.quarter", "GDC.time.year"])(
+        "%s without a range has an empty title",
+        (granularity) => {
+            const actual = getDateFilterRepresentation(
+                periodsFilter(granularity, undefined, undefined),
+                "en-US",
+                DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+                "short",
+            );
+            expect(actual).toEqual("");
+        },
+    );
+
+    it("a week that the year does not have is written as it is", () => {
+        const actual = getDateFilterRepresentation(
+            periodsFilter("GDC.time.week", "2026-52", "2027-53"),
+            "en-US",
+            DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+            "short",
+        );
+        expect(actual).toEqual("12/20/2026 – 2027-53");
+    });
+
+    it("the title of weeks starts them on Sunday by default", () => {
+        const actual = getDateFilterTitleUsingTranslator(
+            periodsFilter("GDC.time.week", "2026-10", "2026-10"),
+            serializingTranslator,
+            "short",
+        );
+        expect(actual).toEqual("03/01/2026 – 03/07/2026");
+    });
+
+    it("the title ignores the option name", () => {
+        const actual = getDateFilterTitleUsingTranslator(
+            { ...periodsFilter("GDC.time.year", "2026", "2026"), name: "foo" },
+            serializingTranslator,
+            "short",
+        );
+        expect(actual).toMatch(/__\{"year":"numeric"\}$/);
     });
 });

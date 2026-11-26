@@ -248,13 +248,11 @@ export interface IChartConfig {
     enableChartSorting?: boolean;
 
     /**
-     * Sort items to apply on the client where the backend cannot.
+     * Sort items the stacked Mekko chart used to apply in the browser.
      *
-     * @remarks
-     * Used by the stacked Mekko chart to order its columns by a single measure: such a measure
-     * sort is not expressible in the execution (it would target the stack dimension), so it is
-     * kept out of the execution and the chart reorders the columns from this config instead.
-     * Other chart types ignore this property.
+     * @deprecated this property is ignored: charts show the data in the order the execution returns
+     * it. Use the `sortBy` prop of the chart component instead. A stacked Mekko chart cannot be
+     * ordered by a measure at all; sort its columns by the `viewBy` attribute instead.
      */
     sortBy?: ISortItem[];
 

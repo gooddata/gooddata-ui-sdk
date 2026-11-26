@@ -5,6 +5,7 @@ import { type ComponentType } from "react";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
+    type DashboardDateFilterOfAnyType,
     type IDashboard,
     type IDashboardDateFilter,
     type IDashboardFilterGroup,
@@ -26,7 +27,10 @@ import {
     type CustomDashboardAttributeFilterComponent,
     type CustomDashboardFilterGroupComponent,
 } from "../filterBar/attributeFilter/types.js";
-import { type CustomDashboardDateFilterComponent } from "../filterBar/dateFilter/types.js";
+import {
+    type CustomDashboardDateFilterComponent,
+    type CustomDashboardDateFilterOfAnyTypeComponent,
+} from "../filterBar/dateFilter/types.js";
 import { type IRestrictedFiltersPlaceholderProps } from "../filterBar/filterBar/RestrictedFiltersPlaceholder.js";
 import { type CustomFilterBarComponent, type IFilterBarProps } from "../filterBar/filterBar/types.js";
 import { type CustomDashboardMeasureValueFilterComponent } from "../filterBar/measureValueFilter/types.js";
@@ -316,6 +320,22 @@ export type DateFilterComponentProvider = (
  * @public
  */
 export type OptionalDateFilterComponentProvider = OptionalProvider<DateFilterComponentProvider>;
+
+/**
+ * Provider of a component that renders a date filter of any type, including the absolute date filter
+ * with granularity.
+ *
+ * @alpha
+ */
+export type DateFilterOfAnyTypeComponentProvider = (
+    filter: DashboardDateFilterOfAnyType,
+) => CustomDashboardDateFilterOfAnyTypeComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalDateFilterOfAnyTypeComponentProvider =
+    OptionalProvider<DateFilterOfAnyTypeComponentProvider>;
 
 /**
  * @public

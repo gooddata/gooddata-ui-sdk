@@ -767,6 +767,7 @@ export interface IInsightPickerProps {
     metadataTimeZone?: string;
     // (undocumented)
     onAuthorFilterChange: (authorIds: string[]) => void;
+    onClose?: () => void;
     // (undocumented)
     onDescriptionPanelOpen?: (description: string) => void;
     // (undocumented)

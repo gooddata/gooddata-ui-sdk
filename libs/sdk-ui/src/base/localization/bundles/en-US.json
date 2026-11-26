@@ -511,6 +511,22 @@
         "text": "Anomalies",
         "crowdinContext": "The default title for the anomalies group"
     },
+    "visualization.forecast.series": {
+        "text": "{name} forecast",
+        "crowdinContext": "Name of the forecast line series in a line chart with forecast enabled. Announced by screen readers and shown in the tooltip. {name} is the name of the forecasted measure, e.g. 'Revenue forecast'."
+    },
+    "visualization.forecast.confidenceInterval": {
+        "text": "{name} confidence interval",
+        "crowdinContext": "Name of the forecast confidence band (range between lower and upper bound) in a line chart with forecast enabled. Announced by screen readers and shown in the tooltip. {name} is the name of the forecasted measure."
+    },
+    "visualization.aria.rangeValue": {
+        "text": "{low} to {high}",
+        "crowdinContext": "Screen reader description of a range data point value in a chart, e.g. a forecast confidence interval. {low} is the lower bound and {high} the upper bound, both already formatted numbers."
+    },
+    "visualization.aria.noValue": {
+        "text": "no value",
+        "crowdinContext": "Screen reader description of a chart data point that has no value (empty/null)."
+    },
     "visualization.ErrorMessageGeneric": {
         "text": "Sorry, we can't display this visualization",
         "crowdinContext": "Generic error message shown when a visualization cannot be displayed due to an unspecified technical issue."
@@ -1506,6 +1522,14 @@
     "filters.staticPeriod.rangePreview": {
         "text": "Preview: {range}",
         "crowdinContext": "Shown below the period range picker. The {range} placeholder is the selected period range resolved to exact days, e.g. '3/1/2026 – 5/31/2026'."
+    },
+    "filters.staticPeriod.openEnd.title": {
+        "text": "From {from}",
+        "crowdinContext": "Title of a date filter that selects whole weeks, months, quarters or years with only the first period set, so it has no end. Also the range of a named date period (a date range parameter, e.g. 'Most Recent 13 Months') that has a start but no end, shown next to the period's name in the date filter and in the catalog. The {from} placeholder is the first period, e.g. 'March 2026', the first day of the first week, e.g. '3/1/2026', or a day with a time, e.g. '3/1/2026, 09:00'."
+    },
+    "filters.staticPeriod.openStart.title": {
+        "text": "To {to}",
+        "crowdinContext": "Title of a date filter that selects whole weeks, months, quarters or years with only the last period set, so it has no start. Also the range of a named date period (a date range parameter, e.g. 'Most Recent 13 Months') that has an end but no start, shown next to the period's name in the date filter and in the catalog. The {to} placeholder is the last period, e.g. 'March 2026', the last day of the last week, e.g. '3/7/2026', or a day with a time, e.g. '3/7/2026, 17:59'."
     },
     "filters.staticPeriod.previousYears": {
         "text": "Previous {count} years",
@@ -3111,9 +3135,9 @@
         "text": "<b>Note.</b> You and other administrators have full access to all dashboards.",
         "crowdinContext": "Informational message displayed to administrators, indicating they have full access privileges across all dashboards by default."
     },
-    "shareDialog.share.granular.grantee.permission.label": {
-        "text": "Permission",
-        "crowdinContext": "Label for permissions selector"
+    "shareDialog.share.granular.grantee.permission.ariaLabel": {
+        "text": "Permission: {permission}",
+        "crowdinContext": "Accessible name of the permission selector button for a user or group in the share dialog. {permission} is the currently selected permission level shown on the button (e.g. 'Can edit & share')."
     },
     "shareDialog.olp.label.suffix.primary": {
         "text": "(Primary)",
@@ -3634,6 +3658,14 @@
     "attributeHierarchyEditor.attribute.dropdown.search": {
         "text": "Search…",
         "crowdinContext": "Text for dropdown search input placeholder."
+    },
+    "attributeHierarchyEditor.attribute.dropdown.tab.attributes": {
+        "text": "Attributes",
+        "crowdinContext": "Accessible name (read by screen readers) of the icon-only tab in the attribute hierarchy editor's attribute dropdown that lists attributes"
+    },
+    "attributeHierarchyEditor.attribute.dropdown.tab.dates": {
+        "text": "Dates",
+        "crowdinContext": "Accessible name (read by screen readers) of the icon-only tab in the attribute hierarchy editor's attribute dropdown that lists date attributes"
     },
     "attributeHierarchyEditor.note.title": {
         "text": "Note:",

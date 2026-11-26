@@ -795,6 +795,8 @@
     "shareDialog.olp.generalAccess.workspace.description.edit": "Kaikki tämän työtilan jäsenet voivat muokata tätä objektia.",
     "uiKit.autocomplete.searchPlaceholder": "Hae",
     "uiKit.toast.regionLabel": "{count, plural, one {# ilmoitus} other {# ilmoitusta}}",
+    "uiKit.message.showMore": "Näytä lisää",
+    "uiKit.message.showLess": "Näytä vähemmän",
     "uiKit.autocomplete.stateLoading": "Ladataan…",
     "uiKit.autocomplete.stateError": "Vaihtoehtoja ei voitu ladata. Yritä uudelleen.",
     "uiKit.autocomplete.stateNoMatch": "Ei vastaavia vaihtoehtoja.",

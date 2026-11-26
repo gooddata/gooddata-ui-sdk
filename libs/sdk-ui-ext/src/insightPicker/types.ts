@@ -136,6 +136,11 @@ export interface IInsightPickerProps {
     onSelect: (insightRef: ObjRef, item: IInsightPickerItem) => void;
     onDescriptionPanelOpen?: (description: string) => void;
     onItemActivate?: (item: IInsightPickerItem, sourceInsight?: IInsight) => void;
+    /**
+     * Called on Escape in the list. The list keeps Escape from reaching the container, so without
+     * this the key does nothing there.
+     */
+    onClose?: () => void;
 
     // --- Customization ---
     menuActions?: IInsightPickerMenuAction[];

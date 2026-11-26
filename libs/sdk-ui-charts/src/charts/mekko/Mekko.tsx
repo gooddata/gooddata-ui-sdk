@@ -31,6 +31,7 @@ import { CoreMekko } from "./CoreMekko.js";
 const mekkoDefinition: IChartDefinition<IMekkoBucketProps, IMekkoProps> = {
     chartName: "Mekko",
     bucketPropsKeys: ["widthMeasure", "heightMeasure", "viewBy", "stackBy", "filters", "sortBy"],
+    onBeforePropsConversion: warnAboutIgnoredSorts,
     bucketsFactory: (props) => {
         // Bucket order defines the MeasureGroup order consumed by getMekkoSeries:
         // MEASURES (width) -> index 0, SECONDARY_MEASURES (height) -> index 1.
@@ -45,7 +46,7 @@ const mekkoDefinition: IChartDefinition<IMekkoBucketProps, IMekkoProps> = {
         const { backend, workspace, execConfig } = props;
 
         const sortBy = (props.sortBy as ISortItem[]) ?? [];
-        // stacked executions cannot express a measure sort of the columns — it applies client-side
+        // a stacked execution cannot sort the columns by a measure and fails on such a sort
         const executionSortBy = props.stackBy ? sortBy.filter((sort) => !isMeasureSort(sort)) : sortBy;
 
         return backend!
@@ -57,14 +58,19 @@ const mekkoDefinition: IChartDefinition<IMekkoBucketProps, IMekkoProps> = {
             .withDimensions(stackedChartDimensions)
             .withExecConfig(execConfig!);
     },
-    propOverridesFactory: (props) => ({
-        config: {
-            ...props.config,
-            // the sortBy prop wins over config.sortBy; keep a user-set config value otherwise
-            ...(props.sortBy ? { sortBy: props.sortBy as ISortItem[] } : {}),
-        },
-    }),
 };
+
+function warnAboutIgnoredSorts(props: IMekkoProps): void {
+    const sortBy = (props.sortBy as ISortItem[]) ?? [];
+    if (props.stackBy && sortBy.some(isMeasureSort)) {
+        console.warn(
+            "Mekko ignores measure sorts when stackBy is set. Sort the columns by the viewBy attribute instead.",
+        );
+    }
+    if (props.config?.sortBy) {
+        console.warn("Mekko ignores the deprecated config.sortBy. Use the sortBy prop instead.");
+    }
+}
 
 //
 // Public interface
@@ -101,6 +107,10 @@ export interface IMekkoBucketProps {
 
     /**
      * Specify how to sort the data to chart.
+     *
+     * @remarks
+     * With `stackBy` set, measure sorts are ignored: the execution of a stacked chart cannot sort
+     * the columns by a measure.
      */
     sortBy?: SortsOrPlaceholders;
 

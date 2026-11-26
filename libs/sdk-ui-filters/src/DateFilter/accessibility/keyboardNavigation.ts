@@ -68,6 +68,11 @@ const findNextFocusableElement = (
     return items[nextIndex];
 };
 
+// Whether `first` precedes `second` in document order and does not contain it.
+const isBefore = (first: Node, second: Node): boolean =>
+    (first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0 &&
+    !first.contains(second);
+
 // Cycles Tab focus through the visible focusable elements of the dropdown, wrapping at both ends.
 const handleTabNavigation = (
     event: KeyboardEvent,
@@ -83,6 +88,19 @@ const handleTabNavigation = (
     const { focusableElements } = getFocusableElements(dateFilterContainerRef.current);
 
     const active = document.activeElement as HTMLElement;
+
+    // A list box is a single Tab stop (roving tabindex): from any of its options, which may have
+    // tabindex -1 after arrow navigation, Tab leaves the whole list box in the given direction.
+    const listbox = active?.closest<HTMLElement>("[role='listbox']");
+    if (listbox && dateFilterContainerRef.current?.contains(listbox)) {
+        const outside = focusableElements.filter((element) => !listbox.contains(element));
+        const target = event.shiftKey
+            ? outside.filter((element) => isBefore(element, listbox)).pop()
+            : outside.find((element) => isBefore(listbox, element));
+        (target ?? (event.shiftKey ? outside[outside.length - 1] : outside[0]))?.focus();
+        return;
+    }
+
     const currentIndex = focusableElements.indexOf(active);
 
     if (currentIndex === -1) {

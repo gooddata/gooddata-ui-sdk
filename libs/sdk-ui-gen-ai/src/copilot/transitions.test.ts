@@ -103,6 +103,100 @@ function freeze<T>(value: T): T {
 }
 
 describe("pure copilot lifecycle", () => {
+    it.each([false, true])(
+        "retains cancellation after response cleanup until the originating conversation starts a new turn: activated=%s",
+        (skillActivated) => {
+            let state = transition(initial(), event(user()));
+            if (skillActivated) {
+                state = transition(state, event(skill()));
+            }
+            const previous = freeze(state);
+            state = transition(state, { kind: "cancelGeneration", type: Build.Board });
+            expect(previous.requests[0].superseded).toBeUndefined();
+            expect(state.requests[0].superseded).toBe(true);
+            expect(state.cancelledRequests).toEqual([
+                { type: Build.Board, conversationId: "local", threadId: "thread" },
+            ]);
+            expect(selectCopilotStatus(state, scope)).toBe("idle");
+            expect(transition(state, { kind: "cancelGeneration", type: Build.Board })).toBe(state);
+
+            state = transition(state, event(completed()));
+            expect(state.requests).toEqual([]);
+            expect(state.cancelledRequests).toHaveLength(1);
+            state = transition(state, event({ type: "chatReset" }));
+            state = transition(state, event(user("thread", "other-local")));
+            expect(state.cancelledRequests).toHaveLength(1);
+
+            state = transition(state, event(user()));
+            expect(state.cancelledRequests).toEqual([]);
+            expect(state.requests).toEqual([
+                expect.objectContaining({ conversationId: "other-local" }),
+                expect.objectContaining({ conversationId: "local" }),
+            ]);
+        },
+    );
+
+    it.each([undefined, "local"])(
+        "starts a new turn when answering a cancelled clarification with conversationId=%s",
+        (conversationId) => {
+            let state = transition(initial(), event(user()));
+            state = transition(state, event(skill()));
+            state = transition(state, event(questions()));
+            state = transition(state, event(completed()));
+            state = freeze(transition(state, { kind: "cancelGeneration", type: Build.Board }));
+            expect(state.requests).toEqual([]);
+            expect(state.interaction.build).toBeUndefined();
+            expect(state.cancelledRequests).toHaveLength(1);
+            const answers = {
+                type: "chatUserAnswers",
+                threadId: "thread",
+                conversationId,
+                interactionId: "question",
+                answers: [],
+            } satisfies ChatEvent;
+            expect(transition(state, event({ ...answers, conversationId: "other-local" }))).toBe(state);
+
+            const next = transition(state, event(answers));
+            expect(next.cancelledRequests).toEqual([]);
+            expect(state.cancelledRequests).toHaveLength(1);
+            expect(next.revision).toBe(state.revision + 1);
+            expect(next.requests).toEqual([
+                expect.objectContaining({
+                    conversationId,
+                    threadId: "thread",
+                    revision: next.revision,
+                    applicationIds: [],
+                }),
+            ]);
+            state = transition(next, event(skill()));
+            expect(selectCopilotStatus(state, scope)).toBe("building");
+            expect(state.requests[0]).toMatchObject({ type: Build.Board, intent: "edit" });
+        },
+    );
+
+    it("only cancels provisional requests for the current workflow and leaves other activated work intact", () => {
+        let state = transition(initial(), event(user("document-thread", "document-local")));
+        state = transition(
+            state,
+            event({
+                type: "chatAssistantMessage",
+                threadId: "document-thread",
+                useCase: "GENERAL",
+                skills: [{ name: "document_builder", title: "Build document" }],
+            }),
+        );
+        state = transition(state, event(user()));
+        const document = state.requests[0];
+        state = transition(state, { kind: "cancelGeneration", type: Build.Board });
+
+        expect(state.requests[0]).toBe(document);
+        expect(state.requests[1].superseded).toBe(true);
+        expect(state.cancelledRequests).toEqual([
+            { type: Build.Board, conversationId: "local", threadId: "thread" },
+        ]);
+        expect(selectCopilotStatus(state, { type: Build.Document, isBuilder: true })).toBe("building");
+    });
+
     describe("target-reset lifecycle boundaries", () => {
         it.each([
             { name: "unbound provisional", request: {}, retained: false },

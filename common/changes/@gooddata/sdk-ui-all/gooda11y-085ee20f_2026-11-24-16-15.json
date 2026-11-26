@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-vis-commons: Chart legend options expose aria-posinset and aria-setsize counted across all legend groups, so screen readers announce the correct position and number of series (for example \"1 of 3\" instead of \"1 of 1\").",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

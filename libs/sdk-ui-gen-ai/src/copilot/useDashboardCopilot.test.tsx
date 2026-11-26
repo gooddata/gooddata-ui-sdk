@@ -831,6 +831,96 @@ describe("useDashboardCopilot", () => {
     });
 
     describe("definition application combinations", () => {
+        it("cancels a follow-up without undoing the generated dashboard", () => {
+            const { result, dispatch, chatEvent, dashboardEvent, apply } = setup(emptyDashboardState());
+            act(() => result.current.generateDashboard("Create"));
+            chatEvent(userMessage);
+            const correlationId = apply();
+            act(() => result.current.dashboardProps().onStateChange!(dashboardState(), dispatch));
+            dashboardEvent({ type: "GDC.DASH/EVT.DEFINITION_CHANGED", correlationId });
+            chatEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                responseCompleted: true,
+            });
+            const source = result.current.copilot.getAppliedSource(dashboardTarget);
+
+            chatEvent(userMessage);
+            act(() => result.current.cancelGeneration());
+            chatEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                skills: [{ name: "dashboard_editor", title: "Editing" }],
+                responseCompleted: true,
+            });
+            chatEvent(definition);
+
+            expect(dispatch).toHaveBeenCalledOnce();
+            expect(result.current.copilot.getAppliedSource(dashboardTarget)).toBe(source);
+            expect(result.current.assistantProps().dashboardSelector!(selectDashboardId)).toBe("dashboard");
+            expect(result.current.copilot.getStatus(result.current.composingProps.scope)).toBe("idle");
+            expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+        });
+
+        it.each(
+            [false, true].flatMap((skillActivated) =>
+                [false, true].flatMap((completedFirst) =>
+                    [false, true].map((threadAssigned) => ({
+                        skillActivated,
+                        completedFirst,
+                        threadAssigned,
+                    })),
+                ),
+            ),
+        )(
+            "blocks cancelled edits and accepts a new turn: skill=$skillActivated completedFirst=$completedFirst threadAssigned=$threadAssigned",
+            ({ skillActivated, completedFirst, threadAssigned }) => {
+                const { result, dispatch, chatDispatch, chatEvent } = setup();
+                const assistantMessage: ChatEvent = {
+                    type: "chatAssistantMessage",
+                    threadId: "thread",
+                    useCase: "GENERAL",
+                    skills: [{ name: "dashboard_editor", title: "Editing" }],
+                };
+                chatEvent({ ...userMessage, threadId: threadAssigned ? "thread" : undefined });
+                if (skillActivated) {
+                    chatEvent(assistantMessage);
+                }
+
+                act(() => result.current.cancelGeneration());
+                const complete = () => chatEvent({ ...assistantMessage, responseCompleted: true });
+                chatEvent({ type: "chatReasoning", threadId: "thread", title: "Adding a chart" });
+                chatEvent(assistantMessage);
+                if (completedFirst) {
+                    complete();
+                }
+                chatEvent(definition);
+
+                expect(dispatch).not.toHaveBeenCalled();
+                expect(result.current.copilot.getSnapshot().applications).toEqual([]);
+                expect(result.current.copilot.getStatus(result.current.composingProps.scope)).toBe("idle");
+                expect(result.current.dashboardProps().config?.aiMode).toBeUndefined();
+                if (!completedFirst) {
+                    complete();
+                }
+                chatEvent(definition);
+                expect(dispatch).not.toHaveBeenCalled();
+                expect(chatDispatch).not.toHaveBeenCalled();
+
+                chatEvent({ ...userMessage, conversationId: "other-local", threadId: "other-thread" });
+                chatEvent(definition);
+                expect(dispatch).not.toHaveBeenCalled();
+
+                chatEvent(userMessage);
+                chatEvent(assistantMessage);
+                chatEvent(definition);
+                expect(dispatch).toHaveBeenCalledOnce();
+                expect(result.current.dashboardProps().config?.aiMode).toBe("building");
+            },
+        );
+
         it.each(
             ["before-message", "before-thread", "before-skill", "after-skill"].flatMap((phase) =>
                 [false, true].map((completedFirst) => ({ phase, completedFirst })),

@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "Trace ID",
     "automations.icon.tooltip.startsOn": "เริ่มต้นเมื่อ",
     "automations.icon.tooltip.repeats": "ทำซ้ำ",
+    "automations.icon.tooltip.trigger.failed": "แสดงรายละเอียดความล้มเหลว",
+    "automations.icon.tooltip.trigger.details": "แสดงรายละเอียด",
     "automations.menu.trigger": "ส่งตอนนี้",
     "automations.menu.copyId": "คัดลอก ID",
     "automations.message.copyId.success": "คัดลอก ID ไปยังคลิปบอร์ดแล้ว",

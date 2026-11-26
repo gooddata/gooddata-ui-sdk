@@ -14,8 +14,10 @@ import {
     dashboardFilterLocalIdentifier,
     isAllDashboardMeasureValueFilter,
     isAllValuesDashboardAttributeFilter,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
@@ -184,7 +186,7 @@ function withCommonDateFilterAndWithoutCrossFiltering(
     dashboardFilters: FilterContextItem[],
     crossFilteringItems: ICrossFilteringItem[],
 ): FilterContextItem[] {
-    const dashboardFiltersWithCommonDateFilter = dashboardFilters.some(isDashboardCommonDateFilter)
+    const dashboardFiltersWithCommonDateFilter = dashboardFilters.some(isDashboardCommonDateFilterOfAnyType)
         ? dashboardFilters
         : [commonDateFilter, ...dashboardFilters];
 
@@ -397,6 +399,9 @@ export const isFilterContextItemHidden = (
         );
 
         return config?.mode === "hidden";
+    } else if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+        // TODO MC-5776: date filters with a dimension are not checked yet, the dashboard rejects them.
+        return isDashboardCommonDateFilterOfAnyType(filter) && commonDateFilterConfig?.mode === "hidden";
     } else if (isDashboardDateFilter(filter)) {
         if ((isDashboardCommonDateFilter as RelaxedDateFilterGuard)(filter)) {
             return commonDateFilterConfig?.mode === "hidden";
@@ -431,6 +436,9 @@ export const isFilterContextItemLocked = (
         );
 
         return config?.mode === "readonly";
+    } else if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+        // TODO MC-5776: date filters with a dimension are not checked yet, the dashboard rejects them.
+        return isDashboardCommonDateFilterOfAnyType(filter) && commonDateFilterConfig?.mode === "readonly";
     } else if (isDashboardDateFilter(filter)) {
         if ((isDashboardCommonDateFilter as RelaxedDateFilterGuard)(filter)) {
             return commonDateFilterConfig?.mode === "readonly";

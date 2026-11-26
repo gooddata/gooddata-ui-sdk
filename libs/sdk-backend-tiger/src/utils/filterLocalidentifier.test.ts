@@ -2,7 +2,12 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type FilterContextItem, idRef } from "@gooddata/sdk-model";
+import {
+    type FilterContextItem,
+    type IDashboardParameterizedDateFilter,
+    idRef,
+    newDashboardParameterizedDateFilter,
+} from "@gooddata/sdk-model";
 
 import { addFilterLocalIdentifier } from "./filterLocalidentifier.js";
 
@@ -45,6 +50,39 @@ describe("addFilterLocalIdentifier", () => {
                 localIdentifier: "kept",
             },
         };
+
+        expect(addFilterLocalIdentifier(filter, 2)).toBe(filter);
+    });
+
+    it.each<[string, IDashboardParameterizedDateFilter, string]>([
+        [
+            "a common filter",
+            newDashboardParameterizedDateFilter(idRef("period", "parameter")),
+            "2_dateFilter",
+        ],
+        [
+            "a filter with a data set",
+            newDashboardParameterizedDateFilter(idRef("period", "parameter"), {
+                dataSet: idRef("date1", "dataSet"),
+            }),
+            "date1_2_dateFilter",
+        ],
+    ])(
+        "generates a missing local identifier of a parameterized date filter for %s",
+        (_desc, filter, localIdentifier) => {
+            expect(addFilterLocalIdentifier(filter, 2)).toEqual({
+                dashboardParameterizedDateFilter: {
+                    ...filter.dashboardParameterizedDateFilter,
+                    localIdentifier,
+                },
+            });
+        },
+    );
+
+    it("keeps the local identifier of a parameterized date filter", () => {
+        const filter = newDashboardParameterizedDateFilter(idRef("period", "parameter"), {
+            localIdentifier: "kept",
+        });
 
         expect(addFilterLocalIdentifier(filter, 2)).toBe(filter);
     });

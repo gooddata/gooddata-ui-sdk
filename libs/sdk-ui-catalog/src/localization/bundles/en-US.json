@@ -807,22 +807,6 @@
         "text": "{granularity, select, YEAR {Year} QUARTER {Quarter} MONTH {Month} WEEK {Week} DAY {Day} HOUR {Hour} MINUTE {Minute} other {Second}}",
         "crowdinContext": "Granularity of a date range parameter's period, shown in its catalog detail. Translate only the words inside the braces (Year, Quarter, Month, Week, Day, Hour, Minute, Second), not the uppercase keys."
     },
-    "analyticsCatalog.parameter.period.openEnd": {
-        "text": "From {from}",
-        "crowdinContext": "Names a date range parameter's period that has a start but no end, in its catalog detail. {from} is the first period of the range, which is included, e.g. 'Aug 2025', 'Q3 2025' or '2025'. Do not translate the {from} placeholder."
-    },
-    "analyticsCatalog.parameter.period.openStart": {
-        "text": "Until {to}",
-        "crowdinContext": "Names a date range parameter's period that has an end but no start, in its catalog detail. {to} is the last period of the range, which is included, e.g. 'Aug 2026', 'Q2 2026' or '2026'. Use wording that includes that last period. Do not translate the {to} placeholder."
-    },
-    "analyticsCatalog.parameter.period.quarter": {
-        "text": "Q{quarter} {year}",
-        "crowdinContext": "Names one quarter in the range of a date range parameter, e.g. 'Q3 2025'. {quarter} is the quarter number, 1 to 4, and {year} the year. Do not translate the placeholders."
-    },
-    "analyticsCatalog.parameter.period.week": {
-        "text": "W{week} {year}",
-        "crowdinContext": "Names one ISO week in the range of a date range parameter, e.g. 'W33 2025'. {week} is the two-digit week number, 01 to 53, and {year} the ISO week-numbering year. Do not translate the placeholders."
-    },
     "analyticsCatalog.parameter.create.defaultTitle": {
         "text": "My Parameter",
         "crowdinContext": "Default title seeded into the YAML editor when creating a new parameter from the Analytics Catalog."

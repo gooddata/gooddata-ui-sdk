@@ -8,9 +8,9 @@ import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
     type DashboardAttributeFilterItem,
     DashboardDateFilterConfigModeValues,
+    type DashboardDateFilterOfAnyType,
     DashboardParameterModeValues,
     type FilterContextItem,
-    type IDashboardDateFilter,
     type IDashboardMeasureValueFilter,
     type MeasureValueFilterCondition,
     type ObjRef,
@@ -19,10 +19,12 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
     isAllTimeDashboardDateFilter,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardDateFilter,
     isDashboardMeasureValueFilter,
+    isDashboardParameterizedDateFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -31,6 +33,7 @@ import { setDashboardAttributeFilterConfigDisplayAsLabel } from "../../../model/
 import {
     changeAttributeFilterSelection,
     changeDateFilterSelection,
+    changeDateFilterSelectionOfAnyType,
     changeMeasureValueFilterCondition,
     changeMigratedAttributeFilterSelection,
     changeWorkingAttributeFilterSelection,
@@ -237,10 +240,22 @@ export const useFilterBarProps = (): IFilterBarProps => {
 
     const onDateFilterChanged = useCallback(
         (
-            filter: IDashboardDateFilter | undefined,
+            filter: DashboardDateFilterOfAnyType | undefined,
             dateFilterOptionLocalId?: string,
             isWorkingSelectionChange?: boolean,
         ) => {
+            if (
+                isDashboardAbsoluteGranularityDateFilter(filter) ||
+                isDashboardParameterizedDateFilter(filter)
+            ) {
+                dispatch(
+                    changeDateFilterSelectionOfAnyType(filter, {
+                        dateFilterOptionLocalId,
+                        isWorkingSelectionChange: isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
+                    }),
+                );
+                return;
+            }
             if (isUnsupportedDateFilterChange(filter)) {
                 console.warn(
                     "The filter bar ignores a date filter that is not a dashboard date filter.",
@@ -366,7 +381,7 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
     const dashboardParameters = useDashboardSelector(selectDashboardParameters);
 
     const isExport = useDashboardSelector(selectIsExport);
-    const { DashboardDateFilterComponentProvider, RestrictedFiltersPlaceholderComponentProvider } =
+    const { DashboardDateFilterOfAnyTypeComponentProvider, RestrictedFiltersPlaceholderComponentProvider } =
         useDashboardComponentsContext();
     const restrictedFilterCount = useDashboardSelector(selectRestrictedDashboardFilterCount);
     const dispatchRemoveRestrictedFilters = useDispatchDashboardCommand(removeRestrictedFilters);
@@ -404,7 +419,7 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
         dateFilterOptions,
     };
 
-    const CustomCommonDateFilterComponent = DashboardDateFilterComponentProvider(commonDateFilter);
+    const CustomCommonDateFilterComponent = DashboardDateFilterOfAnyTypeComponentProvider(commonDateFilter);
     const CustomRestrictedFiltersPlaceholderComponent = RestrictedFiltersPlaceholderComponentProvider();
 
     return (
@@ -430,6 +445,7 @@ export function DefaultFilterBar(props: IFilterBarProps): ReactElement {
                                 isApplyAllAtOnceEnabledAndSet ? commonWorkingDateFilter : undefined
                             }
                             onFilterChanged={onDateFilterChanged}
+                            isAbsoluteDateFilterGranularityEnabled
                             config={commonDateFilterComponentConfig}
                             readonly={commonDateFilterMode === DashboardDateFilterConfigModeValues.READONLY}
                         />

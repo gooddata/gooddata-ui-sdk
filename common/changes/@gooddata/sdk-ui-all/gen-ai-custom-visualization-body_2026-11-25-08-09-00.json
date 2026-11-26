@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-gen-ai: Add the alpha ConversationVisualizationBody slot to customize AI Assistant chart rendering while preserving the wrapper, title, visualization menu, table toggle, save dialog, and error handling. Table mode always uses the default SDK renderer.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

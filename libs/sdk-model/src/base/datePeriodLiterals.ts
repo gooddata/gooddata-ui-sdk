@@ -1,5 +1,7 @@
 // (C) 2026 GoodData Corporation
 
+import { type DateRangeParameterGranularity } from "../ldm/metadata/parameter/index.js";
+
 import { type DatePeriodGranularity, type DatePeriodLiteral } from "./dateGranularities.js";
 
 const DATE_PERIOD_GRANULARITIES: readonly DatePeriodGranularity[] = [
@@ -20,13 +22,38 @@ function isoWeeksInYear(year: number): number {
     return dayOfWeekOfLastDay(year) === 4 || dayOfWeekOfLastDay(year - 1) === 3 ? 53 : 52;
 }
 
-const PERIOD_FORMATS: Record<DatePeriodGranularity, { pattern: RegExp; maxIndex: (year: number) => number }> =
-    {
-        "GDC.time.week": { pattern: /^(\d{4})-(\d{2})$/, maxIndex: isoWeeksInYear },
-        "GDC.time.month": { pattern: /^(\d{4})-(\d{2})$/, maxIndex: () => 12 },
-        "GDC.time.quarter": { pattern: /^(\d{4})-(\d)$/, maxIndex: () => 4 },
-        "GDC.time.year": { pattern: /^(\d{4})$/, maxIndex: () => 0 },
-    };
+const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+function daysInMonth(year: number, month: number): number {
+    const isLeapYear = year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
+    return month === 2 && isLeapYear ? 29 : DAYS_IN_MONTH[month - 1];
+}
+
+// The numbers of a literal from the year down, so comparing them in order compares the periods.
+type PeriodParts = readonly number[];
+
+const isDay = ([year, month, day]: PeriodParts): boolean =>
+    month >= 1 && month <= 12 && day >= 1 && day <= daysInMonth(year, month);
+
+const isTime = ([year, month, day, hour, minute = 0, second = 0]: PeriodParts): boolean =>
+    isDay([year, month, day]) && hour <= 23 && minute <= 59 && second <= 59;
+
+const PERIOD_FORMATS: Record<
+    DateRangeParameterGranularity,
+    { pattern: RegExp; isValid: (parts: PeriodParts) => boolean }
+> = {
+    "GDC.time.year": { pattern: /^(\d{4})$/, isValid: () => true },
+    "GDC.time.quarter": { pattern: /^(\d{4})-(\d)$/, isValid: ([, quarter]) => quarter >= 1 && quarter <= 4 },
+    "GDC.time.month": { pattern: /^(\d{4})-(\d{2})$/, isValid: ([, month]) => month >= 1 && month <= 12 },
+    "GDC.time.week": {
+        pattern: /^(\d{4})-(\d{2})$/,
+        isValid: ([year, week]) => week >= 1 && week <= isoWeeksInYear(year),
+    },
+    "GDC.time.date": { pattern: /^(\d{4})-(\d{2})-(\d{2})$/, isValid: isDay },
+    "GDC.time.hour": { pattern: /^(\d{4})-(\d{2})-(\d{2}) (\d{2})$/, isValid: isTime },
+    "GDC.time.minute": { pattern: /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/, isValid: isTime },
+    "GDC.time.second": { pattern: /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/, isValid: isTime },
+};
 
 /**
  * Type guard checking whether the provided value is a {@link DatePeriodGranularity}.
@@ -38,31 +65,26 @@ export function isDatePeriodGranularity(value: unknown): value is DatePeriodGran
 }
 
 function parseDatePeriodLiteral(
-    granularity: DatePeriodGranularity,
+    granularity: DatePeriodGranularity | DateRangeParameterGranularity,
     literal: unknown,
-): { year: number; index: number } | undefined {
+): PeriodParts | undefined {
     if (typeof literal !== "string") {
         return undefined;
     }
 
-    const { pattern, maxIndex } = PERIOD_FORMATS[granularity];
+    const { pattern, isValid } = PERIOD_FORMATS[granularity];
     const match = pattern.exec(literal);
     if (!match) {
         return undefined;
     }
 
-    const year = Number(match[1]);
-    const index = match[2] === undefined ? 0 : Number(match[2]);
-    const lastIndex = maxIndex(year);
-    if (lastIndex > 0 && (index < 1 || index > lastIndex)) {
-        return undefined;
-    }
-
-    return { year, index };
+    const parts = match.slice(1).map(Number);
+    return isValid(parts) ? parts : undefined;
 }
 
-function comparePeriods(a: { year: number; index: number }, b: { year: number; index: number }): number {
-    return a.year - b.year || a.index - b.index;
+function comparePeriods(a: PeriodParts, b: PeriodParts): number {
+    const index = a.findIndex((part, i) => part !== b[i]);
+    return index === -1 ? 0 : a[index] - b[index];
 }
 
 /**
@@ -71,9 +93,15 @@ function comparePeriods(a: { year: number; index: number }, b: { year: number; i
  * @remarks
  * A week is accepted up to the number of ISO-8601 weeks in its year, 52 or 53.
  *
+ * The granularities of a date range parameter are accepted too, in the formats described in
+ * {@link IDateRangeParameterPeriod}. A day, hour, minute or second must exist in the calendar.
+ *
  * @alpha
  */
-export function isValidDatePeriodLiteral(granularity: DatePeriodGranularity, literal: unknown): boolean {
+export function isValidDatePeriodLiteral(
+    granularity: DatePeriodGranularity | DateRangeParameterGranularity,
+    literal: unknown,
+): boolean {
     return parseDatePeriodLiteral(granularity, literal) !== undefined;
 }
 
@@ -85,7 +113,7 @@ export function isValidDatePeriodLiteral(granularity: DatePeriodGranularity, lit
  * @alpha
  */
 export function compareDatePeriodLiterals(
-    granularity: DatePeriodGranularity,
+    granularity: DatePeriodGranularity | DateRangeParameterGranularity,
     a: DatePeriodLiteral,
     b: DatePeriodLiteral,
 ): number {
@@ -108,7 +136,7 @@ export function compareDatePeriodLiterals(
  * @alpha
  */
 export function isValidDatePeriodRange(
-    granularity: DatePeriodGranularity,
+    granularity: DatePeriodGranularity | DateRangeParameterGranularity,
     from: unknown,
     to: unknown,
 ): boolean {

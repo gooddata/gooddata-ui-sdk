@@ -11,6 +11,7 @@ import {
     getDateFilterRepresentation,
     getDateFilterTitleUsingTranslator,
 } from "./utils/Translations/DateFilterTitle.js";
+import { formatDateRangeParameterPeriod } from "./utils/Translations/DateRangeParameterPeriod.js";
 import { validateFilterOption } from "./validation/OptionValidation.js";
 
 /**
@@ -27,5 +28,6 @@ export const DateFilterHelpers = {
     mapOptionToAfm,
     formatAbsoluteDateRange,
     formatRelativeDateRange,
+    formatDateRangeParameterPeriod,
     filterVisibleDateFilterOptions,
 };

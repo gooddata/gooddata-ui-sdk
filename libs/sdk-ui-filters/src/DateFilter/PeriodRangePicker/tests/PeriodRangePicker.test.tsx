@@ -3,7 +3,6 @@
 import { type ReactNode, useState } from "react";
 
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { parse } from "date-fns";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { IntlDecorator } from "../../DateRangePicker/IntlDecorators.js";
@@ -14,7 +13,6 @@ import {
     DATE_FNS_PICKER_FORMATS,
     PREVIEW_ANNOUNCEMENT_DELAY,
     PeriodRangePickerImpl,
-    resolveSelectedRange,
 } from "../PeriodRangePickerImpl.js";
 import { ANNOUNCEMENT_LIFETIME } from "../PreviewAnnouncer.js";
 import { type IPeriodRange, type PeriodRangePickerGranularity } from "../types.js";
@@ -22,7 +20,7 @@ import { getYearPageStart } from "../YearRangePanel.js";
 
 const granularities: PeriodRangePickerGranularity[] = [
     "GDC.time.date",
-    "GDC.time.week_us",
+    "GDC.time.week",
     "GDC.time.month",
     "GDC.time.quarter",
     "GDC.time.year",
@@ -30,7 +28,7 @@ const granularities: PeriodRangePickerGranularity[] = [
 
 const PANEL_CLASS_BY_GRANULARITY: Record<PeriodRangePickerGranularity, string> = {
     "GDC.time.date": "rc-picker-date-panel",
-    "GDC.time.week_us": "rc-picker-week-panel",
+    "GDC.time.week": "rc-picker-week-panel",
     "GDC.time.month": "rc-picker-month-panel",
     "GDC.time.quarter": "rc-picker-quarter-panel",
     "GDC.time.year": "rc-picker-year-panel",
@@ -44,9 +42,17 @@ interface IRenderResult {
     rerenderWithRange: (newRange: IPeriodRange) => void;
 }
 
+const DEFAULT_RANGE_BY_GRANULARITY: Record<PeriodRangePickerGranularity, IPeriodRange> = {
+    "GDC.time.date": { from: "2026-03-01", to: "2026-05-31" },
+    "GDC.time.week": { from: "2026-10", to: "2026-23" },
+    "GDC.time.month": { from: "2026-03", to: "2026-05" },
+    "GDC.time.quarter": { from: "2026-1", to: "2026-2" },
+    "GDC.time.year": { from: "2025", to: "2026" },
+};
+
 function renderPicker(
     granularity: PeriodRangePickerGranularity,
-    range: IPeriodRange = { from: "2026-03-01", to: "2026-05-31" },
+    range: IPeriodRange = DEFAULT_RANGE_BY_GRANULARITY[granularity],
     withoutApply = false,
     weekStart?: "Monday" | "Sunday",
     dateFormat?: string,
@@ -257,7 +263,7 @@ describe("PeriodRangePicker", () => {
         });
 
         it("adds a worked example to the Week hint", () => {
-            renderPicker("GDC.time.week_us", FIXED_RANGE);
+            renderPicker("GDC.time.week", FIXED_RANGE);
             expect(hintText()).toBe("Date format: W/YYYY (e.g. 13/2026)");
         });
 
@@ -302,49 +308,37 @@ describe("PeriodRangePicker", () => {
         });
 
         it.each([
-            ["GDC.time.month", { from: "2026-03-01", to: "2026-05-31" }, "Preview: 3/1/2026 – 5/31/2026"],
-            ["GDC.time.quarter", { from: "2026-01-01", to: "2026-06-30" }, "Preview: 1/1/2026 – 6/30/2026"],
-            ["GDC.time.year", { from: "2025-01-01", to: "2026-12-31" }, "Preview: 1/1/2025 – 12/31/2026"],
-            ["GDC.time.week_us", { from: "2026-03-01", to: "2026-03-07" }, "Preview: 3/1/2026 – 3/7/2026"],
+            ["GDC.time.month", { from: "2026-03", to: "2026-05" }, "Preview: 3/1/2026 – 5/31/2026"],
+            ["GDC.time.quarter", { from: "2026-1", to: "2026-2" }, "Preview: 1/1/2026 – 6/30/2026"],
+            ["GDC.time.year", { from: "2025", to: "2026" }, "Preview: 1/1/2025 – 12/31/2026"],
+            ["GDC.time.week", { from: "2026-10", to: "2026-10" }, "Preview: 3/1/2026 – 3/7/2026"],
         ] as const)("renders the day-level range for %s", (granularity, range, expected) => {
             renderPicker(granularity, range, false, undefined, "M/d/yyyy");
             expect(getPreview()).toHaveTextContent(expected);
         });
 
         it("honors a custom dateFormat", () => {
-            renderPicker(
-                "GDC.time.month",
-                { from: "2026-03-01", to: "2026-05-31" },
-                false,
-                undefined,
-                "d.M.y",
-            );
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" }, false, undefined, "d.M.y");
             expect(getPreview()).toHaveTextContent("Preview: 1.3.2026 – 31.5.2026");
         });
 
         it.each([
             ["an empty range", {}],
-            ["a range with only the start set", { from: "2026-03-01" }],
-            ["a range with only the end set", { to: "2026-05-31" }],
+            ["a range with only the start set", { from: "2026-03" }],
+            ["a range with only the end set", { to: "2026-05" }],
         ])("keeps the row with a dash placeholder for %s", (_label, range) => {
             renderPicker("GDC.time.month", range, false, undefined, "M/d/yyyy");
             expect(getPreview()).toHaveTextContent("Preview: –");
         });
 
         it("falls back to the default date format when none is given", () => {
-            renderPicker("GDC.time.month", { from: "2026-03-01", to: "2026-05-31" });
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" });
             expect(getPreview()).toHaveTextContent("Preview: 03/01/2026 – 05/31/2026");
         });
 
         it("falls back to the placeholder while a field holds unparsable text", () => {
             // `liveValue` keeps the last parsed dates, so an unguarded preview contradicts the error.
-            renderPicker(
-                "GDC.time.month",
-                { from: "2026-03-01", to: "2026-05-31" },
-                false,
-                undefined,
-                "M/d/yyyy",
-            );
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" }, false, undefined, "M/d/yyyy");
             openPicker();
             const [startInput] = getFields();
             typeIntoField(startInput, "garbage");
@@ -354,13 +348,7 @@ describe("PeriodRangePicker", () => {
 
         it("falls back to the placeholder while the start is after the end", () => {
             // A backwards range can never be applied, so previewing it contradicts the error on the field.
-            renderPicker(
-                "GDC.time.month",
-                { from: "2026-03-01", to: "2026-05-31" },
-                false,
-                undefined,
-                "M/d/yyyy",
-            );
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" }, false, undefined, "M/d/yyyy");
             openPicker();
             const [startInput] = getFields();
             typeIntoField(startInput, "9/2026");
@@ -372,13 +360,7 @@ describe("PeriodRangePicker", () => {
             // The whole reason the preview reads `liveValue` rather than the committed `range`: the picker's
             // onChange bails out on an incomplete round, so a range-sourced preview would still be showing
             // March-May here while the start field already reads "1/2026".
-            renderPicker(
-                "GDC.time.month",
-                { from: "2026-03-01", to: "2026-05-31" },
-                false,
-                undefined,
-                "M/d/yyyy",
-            );
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" }, false, undefined, "M/d/yyyy");
             expect(getPreview()).toHaveTextContent("Preview: 3/1/2026 – 5/31/2026");
             openPicker();
             clickCell("1/2026");
@@ -407,13 +389,7 @@ describe("PeriodRangePicker", () => {
         });
 
         it("announces the resolved range once typing has stopped", () => {
-            renderPicker(
-                "GDC.time.month",
-                { from: "2026-03-01", to: "2026-05-31" },
-                false,
-                undefined,
-                "M/d/yyyy",
-            );
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" }, false, undefined, "M/d/yyyy");
             expect(getMessages()).toEqual([]);
 
             advance(PREVIEW_ANNOUNCEMENT_DELAY);
@@ -421,13 +397,7 @@ describe("PeriodRangePicker", () => {
         });
 
         it("empties the region again, so it leaves no duplicate of the visible preview behind", () => {
-            renderPicker(
-                "GDC.time.month",
-                { from: "2026-03-01", to: "2026-05-31" },
-                false,
-                undefined,
-                "M/d/yyyy",
-            );
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" }, false, undefined, "M/d/yyyy");
             advance(PREVIEW_ANNOUNCEMENT_DELAY);
             advance(ANNOUNCEMENT_LIFETIME);
 
@@ -439,13 +409,7 @@ describe("PeriodRangePicker", () => {
         it("adds each announcement as a new child instead of rewriting the previous one", () => {
             // Load-bearing, not an implementation detail: screen readers were measured to ignore a live
             // region whose only child is rewritten or swapped, and to announce an added child reliably.
-            renderPicker(
-                "GDC.time.month",
-                { from: "2026-03-01", to: "2026-05-31" },
-                false,
-                undefined,
-                "M/d/yyyy",
-            );
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" }, false, undefined, "M/d/yyyy");
             advance(PREVIEW_ANNOUNCEMENT_DELAY);
 
             openPicker();
@@ -459,13 +423,7 @@ describe("PeriodRangePicker", () => {
         it("expires each announcement on its own clock rather than on the next one", () => {
             // A second message must not postpone the first one's removal, or the region grows without bound
             // and every announcement is read out longer than the last.
-            renderPicker(
-                "GDC.time.month",
-                { from: "2026-03-01", to: "2026-05-31" },
-                false,
-                undefined,
-                "M/d/yyyy",
-            );
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" }, false, undefined, "M/d/yyyy");
             advance(PREVIEW_ANNOUNCEMENT_DELAY);
 
             openPicker();
@@ -493,13 +451,7 @@ describe("PeriodRangePicker", () => {
         });
 
         it("stays silent while a field holds unparsable text", () => {
-            renderPicker(
-                "GDC.time.month",
-                { from: "2026-03-01", to: "2026-05-31" },
-                false,
-                undefined,
-                "M/d/yyyy",
-            );
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" }, false, undefined, "M/d/yyyy");
             advance(PREVIEW_ANNOUNCEMENT_DELAY);
             advance(ANNOUNCEMENT_LIFETIME);
 
@@ -555,21 +507,21 @@ describe("PeriodRangePicker", () => {
         });
 
         it("renders the Week field and header in date-fns notation", () => {
-            renderPicker("GDC.time.week_us", FIXED_RANGE);
+            renderPicker("GDC.time.week", { from: "2026-10", to: "2026-23" });
             expect(fieldTexts()).toEqual(["10/2026", "23/2026"]);
             openPicker();
             expect(panelHeaderText()).toBe("Mar2026");
         });
 
         it("renders the Month field and header in date-fns notation", () => {
-            renderPicker("GDC.time.month", FIXED_RANGE);
+            renderPicker("GDC.time.month", { from: "2026-03", to: "2026-05" });
             expect(fieldTexts()).toEqual(["3/2026", "5/2026"]);
             openPicker();
             expect(panelHeaderText()).toBe("2026");
         });
 
         it("renders the Quarter field and header in date-fns notation", () => {
-            renderPicker("GDC.time.quarter", FIXED_RANGE);
+            renderPicker("GDC.time.quarter", { from: "2026-1", to: "2026-2" });
             expect(fieldTexts()).toEqual(["Q1/2026", "Q2/2026"]);
             openPicker();
             expect(panelHeaderText()).toBe("2026");
@@ -577,7 +529,7 @@ describe("PeriodRangePicker", () => {
 
         it("renders the Year field and header in date-fns notation", () => {
             vi.setSystemTime(new Date(2026, 2, 25));
-            renderPicker("GDC.time.year", FIXED_RANGE);
+            renderPicker("GDC.time.year", { from: "2026", to: "2026" });
             expect(fieldTexts()).toEqual(["2026", "2026"]);
             openPicker();
             expect(panelHeaderText()).toBe("2019 – 2033");
@@ -616,13 +568,13 @@ describe("PeriodRangePicker", () => {
         }
 
         it("renders Sunday as the first weekday column by default", () => {
-            renderPicker("GDC.time.week_us");
+            renderPicker("GDC.time.week");
             openPicker();
             expect(firstHeaderDayName()).toBe("Su");
         });
 
         it("renders Monday as the first weekday column with an explicit Monday week start", () => {
-            renderPicker("GDC.time.week_us", { from: "2026-03-01", to: "2026-05-31" }, false, "Monday");
+            renderPicker("GDC.time.week", { from: "2026-10", to: "2026-23" }, false, "Monday");
             openPicker();
             expect(firstHeaderDayName()).toBe("Mo");
         });
@@ -650,53 +602,53 @@ describe("PeriodRangePicker", () => {
         // rc-picker's RangePicker fires onChange more than once per completed gesture (confirmed empirically —
         // both firings carry the same, correct final value), so assertions key off the LAST call rather than an
         // exact call count, which would just be re-testing rc-picker's own internals.
-        it("resolves a Month selection to the first/last day of the picked months", () => {
+        it("reports a Month selection as the picked months", () => {
             const { onRangeChange } = renderPicker("GDC.time.month");
             openPicker();
             clickCell("1/2026");
             clickCell("6/2026");
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-01-01", to: "2026-06-30" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-01", to: "2026-06" });
         });
 
-        it("resolves a Quarter selection to the first/last day of the picked quarters", () => {
+        it("reports a Quarter selection as the picked quarters", () => {
             const { onRangeChange } = renderPicker("GDC.time.quarter");
             openPicker();
             clickCell("Q1/2026");
             clickCell("Q3/2026");
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-01-01", to: "2026-09-30" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-1", to: "2026-3" });
         });
 
-        it("resolves a Year selection to the first/last day of the picked years", () => {
+        it("reports a Year selection as the picked years", () => {
             const { onRangeChange } = renderPicker("GDC.time.year");
             openPicker();
             clickCell("2025");
             clickCell("2027");
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2025-01-01", to: "2027-12-31" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2025", to: "2027" });
         });
 
-        it("resolves a Week selection to the whole week containing the clicked day", () => {
-            // 2026-03-02 is a Monday; with the default Sunday week start the containing week is Mar 1 - Mar 7
-            const { onRangeChange } = renderPicker("GDC.time.week_us");
+        it("reports a Week selection as the week literal of the Sunday week containing the clicked day", () => {
+            // 2026-03-08 is a Sunday, so the containing week is Mar 8 - Mar 14, the ISO week of its Monday
+            const { onRangeChange } = renderPicker("GDC.time.week");
             openPicker();
-            clickCell("2026-03-02");
-            clickCell("2026-03-02");
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-03-01", to: "2026-03-07" });
+            clickCell("2026-03-08");
+            clickCell("2026-03-08");
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-11", to: "2026-11" });
         });
 
-        it("resolves a Week selection against an explicitly configured Monday week start", () => {
+        it("reports a Week selection against an explicitly configured Monday week start", () => {
             // Exercises the synthetic-locale wiring (weekStartDateFnsLocale.ts), not just resolvePeriodBoundaries
             // directly — confirms the picker itself renders/accepts the cloned locale without erroring.
-            // 2026-03-02 is a Monday, so with Monday week start the containing week is Mar 2 - Mar 8.
+            // 2026-03-08 is a Sunday, so with Monday week start the containing week is Mar 2 - Mar 8.
             const { onRangeChange } = renderPicker(
-                "GDC.time.week_us",
-                { from: "2026-03-01", to: "2026-05-31" },
+                "GDC.time.week",
+                { from: "2026-10", to: "2026-23" },
                 false,
                 "Monday",
             );
             openPicker();
-            clickCell("2026-03-02");
-            clickCell("2026-03-02");
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-03-02", to: "2026-03-08" });
+            clickCell("2026-03-08");
+            clickCell("2026-03-08");
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-10", to: "2026-10" });
         });
 
         it("passes Day selections straight through with no period expansion", () => {
@@ -709,7 +661,7 @@ describe("PeriodRangePicker", () => {
     });
 
     describe("year grid", () => {
-        const YEAR_RANGE: IPeriodRange = { from: "2025-01-01", to: "2026-12-31" };
+        const YEAR_RANGE: IPeriodRange = { from: "2025", to: "2026" };
 
         beforeEach(() => {
             vi.setSystemTime(new Date(2026, 2, 25));
@@ -766,7 +718,7 @@ describe("PeriodRangePicker", () => {
 
         it("renders each year cell once, with no hidden second grid", () => {
             // A start early in its page puts the range picker's second panel, ten years on, on the same page.
-            renderPicker("GDC.time.year", { from: "2020-01-01", to: "2021-12-31" });
+            renderPicker("GDC.time.year", { from: "2020", to: "2021" });
             openPicker();
             expect(document.querySelectorAll(".rc-picker-year-panel")).toHaveLength(1);
             expect(document.querySelectorAll('.rc-picker-cell-in-view[title="2025"]')).toHaveLength(1);
@@ -808,7 +760,7 @@ describe("PeriodRangePicker", () => {
             clickHeaderButton(".rc-picker-header-next-btn");
             expect(headerText()).toBe("2034 – 2048");
             clickCell("2040");
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2020-01-01", to: "2040-12-31" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2020", to: "2040" });
         });
 
         it("keeps the title as plain text, since decades do not line up with the 15-year pages", () => {
@@ -818,7 +770,7 @@ describe("PeriodRangePicker", () => {
         });
 
         describe("page on open", () => {
-            const WIDE_RANGE: IPeriodRange = { from: "2000-01-01", to: "2050-12-31" };
+            const WIDE_RANGE: IPeriodRange = { from: "2000", to: "2050" };
 
             // A real focus, so that the click opening the calendar leaves focus in this field.
             function openFromField(input: HTMLInputElement): void {
@@ -874,7 +826,7 @@ describe("PeriodRangePicker", () => {
             });
 
             it("leaves the month picker's pages to rc-picker", () => {
-                renderPicker("GDC.time.month", { from: "2020-01-01", to: "2030-12-31" });
+                renderPicker("GDC.time.month", { from: "2020-01", to: "2030-12" });
                 openFromField(getFields()[1]);
                 const headers = Array.from(
                     document.querySelectorAll(".rc-picker-month-panel .rc-picker-header-view"),
@@ -1154,7 +1106,7 @@ describe("PeriodRangePicker", () => {
             expect(startInput).toHaveAttribute("aria-invalid", "false");
         });
 
-        it("resolves a typed Month value in the padded MM/yyyy alternate", () => {
+        it("reports a typed Month value in the padded MM/yyyy alternate", () => {
             const { onRangeChange } = renderPicker("GDC.time.month", { from: undefined, to: undefined });
             openPicker();
             const [startInput, endInput] = getFields();
@@ -1162,11 +1114,11 @@ describe("PeriodRangePicker", () => {
             tabToNextField(startInput, endInput);
             typeIntoField(endInput, "06/2026");
             fireEvent.keyDown(endInput, { key: "Enter", code: "Enter" });
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-01-01", to: "2026-06-30" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-01", to: "2026-06" });
         });
 
         it("shows the Week field without zero-padding, as the design spec and the backend spell it", () => {
-            renderPicker("GDC.time.week_us", { from: "2026-02-08", to: "2026-02-14" });
+            renderPicker("GDC.time.week", { from: "2026-07", to: "2026-07" });
             const [startInput] = getFields();
             expect(startInput.value).toBe("7/2026");
         });
@@ -1177,9 +1129,9 @@ describe("PeriodRangePicker", () => {
             ["GDC.time.month", "3/2"],
             ["GDC.time.month", "03/2"],
             ["GDC.time.month", "3/202"],
-            ["GDC.time.week_us", "7/2"],
-            ["GDC.time.week_us", "07/2"],
-            ["GDC.time.week_us", "07/20"],
+            ["GDC.time.week", "7/2"],
+            ["GDC.time.week", "07/2"],
+            ["GDC.time.week", "07/20"],
             ["GDC.time.quarter", "Q1/2"],
             ["GDC.time.quarter", "1/202"],
             ["GDC.time.year", "202"],
@@ -1199,15 +1151,15 @@ describe("PeriodRangePicker", () => {
             // firstWeekContainsDate with a Monday weekStart uses ISO numbering, which puts this week at week 53
             // of 2026 - an unpaired firstWeekContainsDate (inherited from the US-convention base locale) would
             // instead mislabel it week 1 of 2027.
-            renderPicker("GDC.time.week_us", { from: "2026-12-28", to: "2027-01-03" }, false, "Monday");
+            renderPicker("GDC.time.week", { from: "2026-53", to: "2026-53" }, false, "Monday");
             const [startInput] = getFields();
             expect(startInput.value).toBe("53/2026");
         });
 
         it("completes a Week field edit correctly once the intended value is finished", async () => {
-            const { onRangeChange } = renderPicker("GDC.time.week_us", {
-                from: "2026-03-30",
-                to: "2026-04-05",
+            const { onRangeChange } = renderPicker("GDC.time.week", {
+                from: "2026-14",
+                to: "2026-15",
             });
             openPicker();
             const [startInput] = getFields();
@@ -1219,7 +1171,7 @@ describe("PeriodRangePicker", () => {
             // just committed.
             fireEvent.keyDown(startInput, { key: "Enter", code: "Enter" });
             await waitFor(() => {
-                expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-04-05", to: "2026-04-11" });
+                expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-15", to: "2026-15" });
             });
         });
     });
@@ -1227,13 +1179,13 @@ describe("PeriodRangePicker", () => {
     describe("padded and unpadded period entry", () => {
         // Both spellings commit the same range; only the unpadded one is displayed back.
         it.each([
-            ["GDC.time.month", "3/2026", "5/2026", { from: "2026-03-01", to: "2026-05-31" }],
-            ["GDC.time.month", "03/2026", "05/2026", { from: "2026-03-01", to: "2026-05-31" }],
-            ["GDC.time.week_us", "7/2026", "8/2026", { from: "2026-02-08", to: "2026-02-21" }],
-            ["GDC.time.week_us", "07/2026", "08/2026", { from: "2026-02-08", to: "2026-02-21" }],
-            ["GDC.time.quarter", "Q1/2026", "Q2/2026", { from: "2026-01-01", to: "2026-06-30" }],
-            ["GDC.time.quarter", "1/2026", "2/2026", { from: "2026-01-01", to: "2026-06-30" }],
-            ["GDC.time.year", "2025", "2026", { from: "2025-01-01", to: "2026-12-31" }],
+            ["GDC.time.month", "3/2026", "5/2026", { from: "2026-03", to: "2026-05" }],
+            ["GDC.time.month", "03/2026", "05/2026", { from: "2026-03", to: "2026-05" }],
+            ["GDC.time.week", "7/2026", "8/2026", { from: "2026-07", to: "2026-08" }],
+            ["GDC.time.week", "07/2026", "08/2026", { from: "2026-07", to: "2026-08" }],
+            ["GDC.time.quarter", "Q1/2026", "Q2/2026", { from: "2026-1", to: "2026-2" }],
+            ["GDC.time.quarter", "1/2026", "2/2026", { from: "2026-1", to: "2026-2" }],
+            ["GDC.time.year", "2025", "2026", { from: "2025", to: "2026" }],
         ] as const)("commits %s typed as %s - %s", (granularity, from, to, expected) => {
             const { onRangeChange } = renderPicker(granularity, { from: undefined, to: undefined });
             openPicker();
@@ -1247,7 +1199,7 @@ describe("PeriodRangePicker", () => {
 
         it.each([
             ["GDC.time.month", "03/2026", "3/2026"],
-            ["GDC.time.week_us", "07/2026", "7/2026"],
+            ["GDC.time.week", "07/2026", "7/2026"],
             ["GDC.time.quarter", "1/2026", "Q1/2026"],
         ] as const)(
             "re-displays a %s entry typed as %s in the canonical %s spelling",
@@ -1262,7 +1214,7 @@ describe("PeriodRangePicker", () => {
 
         it.each([
             ["GDC.time.month", "13/2026"],
-            ["GDC.time.week_us", "54/2026"],
+            ["GDC.time.week", "54/2026"],
             ["GDC.time.quarter", "5/2026"],
             // A month spelling in a quarter field must error, not silently commit a different quarter.
             ["GDC.time.quarter", "01/2026"],
@@ -1379,7 +1331,7 @@ describe("PeriodRangePicker", () => {
     describe("accessibility", () => {
         it.each([
             ["GDC.time.date", "Start date", "End date"],
-            ["GDC.time.week_us", "Start week", "End week"],
+            ["GDC.time.week", "Start week", "End week"],
             ["GDC.time.month", "Start month", "End month"],
             ["GDC.time.quarter", "Start quarter", "End quarter"],
             ["GDC.time.year", "Start year", "End year"],
@@ -1758,14 +1710,14 @@ describe("PeriodRangePicker", () => {
         });
 
         it.each([
-            ["GDC.time.week_us", "week", "W/YYYY", "13/2026"],
+            ["GDC.time.week", "week", "W/YYYY", "13/2026"],
             ["GDC.time.month", "month", "M/YYYY", "3/2026"],
             ["GDC.time.quarter", "quarter", "Q/YYYY", "Q1/2026"],
             ["GDC.time.year", "year", "YYYY", "2026"],
         ] as const)(
             "names the %s fields by their unit in the empty and invalid messages",
             (granularity, unit, displayFormat, example) => {
-                renderPicker(granularity, { from: "2026-03-01", to: "2026-05-31" });
+                renderPicker(granularity);
                 openPicker();
                 const [startInput, endInput] = getFields();
 
@@ -1865,9 +1817,9 @@ describe("PeriodRangePicker", () => {
             });
 
             it.each([
-                ["GDC.time.year", "2026", "2026-01-01", "2026-12-31", "01/01/2026 – 12/31/2026"],
-                ["GDC.time.month", "5/2026", "2026-05-01", "2026-05-31", "05/01/2026 – 05/31/2026"],
-                ["GDC.time.quarter", "Q2/2026", "2026-04-01", "2026-06-30", "04/01/2026 – 06/30/2026"],
+                ["GDC.time.year", "2026", "2026", "2026", "01/01/2026 – 12/31/2026"],
+                ["GDC.time.month", "5/2026", "2026-05", "2026-05", "05/01/2026 – 05/31/2026"],
+                ["GDC.time.quarter", "Q2/2026", "2026-2", "2026-2", "04/01/2026 – 06/30/2026"],
             ] as const)(
                 "accepts the %s range and applies it on Enter",
                 (granularity, period, from, to, preview) => {
@@ -1892,48 +1844,5 @@ describe("PeriodRangePicker", () => {
                 },
             );
         });
-    });
-});
-
-function day(dateString: string): Date {
-    return parse(dateString, "yyyy-MM-dd", new Date());
-}
-
-describe("resolveSelectedRange", () => {
-    it("expands a Month anchor pair to the first/last day of those months", () => {
-        expect(
-            resolveSelectedRange("GDC.time.month", day("2026-02-01"), day("2026-04-01"), "Sunday"),
-        ).toEqual({
-            from: "2026-02-01",
-            to: "2026-04-30",
-        });
-    });
-
-    it("expands a Quarter anchor pair to the first/last day of those quarters", () => {
-        expect(
-            resolveSelectedRange("GDC.time.quarter", day("2026-01-01"), day("2026-04-01"), "Sunday"),
-        ).toEqual({
-            from: "2026-01-01",
-            to: "2026-06-30",
-        });
-    });
-
-    it("respects an explicit Monday week start", () => {
-        // 2026-07-21 is a Tuesday
-        expect(
-            resolveSelectedRange("GDC.time.week_us", day("2026-07-21"), day("2026-07-21"), "Monday"),
-        ).toEqual({
-            from: "2026-07-20",
-            to: "2026-07-26",
-        });
-    });
-
-    it("passes Day anchors straight through with no expansion", () => {
-        expect(resolveSelectedRange("GDC.time.date", day("2026-07-21"), day("2026-07-23"), "Sunday")).toEqual(
-            {
-                from: "2026-07-21",
-                to: "2026-07-23",
-            },
-        );
     });
 });

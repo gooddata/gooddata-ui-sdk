@@ -6,8 +6,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { type IDashboardReferences } from "@gooddata/sdk-backend-spi";
-import { type IDashboard } from "@gooddata/sdk-model";
+import {
+    type IDashboard,
+    type IDashboardAbsoluteGranularityDateFilter,
+    idRef,
+    newDashboardParameterizedDateFilter,
+} from "@gooddata/sdk-model";
 
+import { ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
 import {
     SimpleDashboardFilterContext,
@@ -17,7 +23,7 @@ import {
 import { changeDashboardDefinition, initializeDashboard } from "../../commands/dashboard.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardDefinitionChanged } from "../../events/dashboard.js";
-import { type IDashboardCommandFailed } from "../../events/general.js";
+import { type IDashboardCommandFailed, isDashboardCommandFailed } from "../../events/general.js";
 import {
     selectDashboardDescription,
     selectDashboardDescriptor,
@@ -26,7 +32,10 @@ import {
     selectPersistedDashboard,
 } from "../../store/meta/metaSelectors.js";
 import { selectEffectiveDateFilterConfig } from "../../store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
-import { selectFilterContextAttributeFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextAttributeFilters,
+    selectFilterContextDateFilterOfAnyType,
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
 
@@ -86,7 +95,7 @@ describe("change dashboard definition handler", () => {
             expect(selectLayout(newState).sections).toEqual(SimpleDashboardLayout.sections);
         });
 
-        it("should reject a definition with an absolute date filter with granularity", async () => {
+        it("should reject a definition with an absolute date filter with granularity for a date dataset", async () => {
             const titleBefore = selectDashboardTitle(Tester.state());
 
             const event: IDashboardCommandFailed<any> = await Tester.dispatchAndWaitFor(
@@ -101,6 +110,7 @@ describe("change dashboard definition handler", () => {
                                     granularity: "GDC.time.month",
                                     from: "2026-01",
                                     to: "2026-03",
+                                    dataSet: ReferenceMd.DateDatasets.Closed.ref,
                                 },
                             },
                         ],
@@ -110,6 +120,54 @@ describe("change dashboard definition handler", () => {
             );
 
             expect(event.payload.reason).toEqual("USER_ERROR");
+            expect(event.payload.message).toEqual(
+                ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
+            );
+            expect(selectDashboardTitle(Tester.state())).toEqual(titleBefore);
+        });
+
+        it("should accept a definition with a common absolute date filter with granularity", async () => {
+            const commonFilter: IDashboardAbsoluteGranularityDateFilter = {
+                dashboardAbsoluteGranularityDateFilter: {
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                    localIdentifier: "common_date",
+                },
+            };
+
+            await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition({
+                    ...UpdatedDashboardDefinition,
+                    filterContext: {
+                        ...SimpleDashboardFilterContext,
+                        filters: [commonFilter, ...SimpleDashboardFilterContext.filters],
+                    },
+                }),
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
+            );
+
+            expect(selectFilterContextDateFilterOfAnyType(Tester.state())).toEqual(commonFilter);
+        });
+
+        it("should reject a definition with a parameterized date filter", async () => {
+            const titleBefore = selectDashboardTitle(Tester.state());
+
+            const event: unknown = await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition({
+                    ...UpdatedDashboardDefinition,
+                    filterContext: {
+                        ...SimpleDashboardFilterContext,
+                        filters: [
+                            ...SimpleDashboardFilterContext.filters,
+                            newDashboardParameterizedDateFilter(idRef("period", "parameter")),
+                        ],
+                    },
+                }),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(isDashboardCommandFailed(event) && event.payload.reason).toEqual("USER_ERROR");
             expect(selectDashboardTitle(Tester.state())).toEqual(titleBefore);
         });
 

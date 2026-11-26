@@ -12,6 +12,17 @@ const BAR_TEMPLATE: HighchartsOptions = {
     chart: {
         type: "bar",
     },
+    accessibility: {
+        keyboardNavigation: {
+            seriesNavigation: {
+                // Bar charts are inverted, so Highcharts swaps the arrow keys: Up/Down move between
+                // points and Left/Right between series. Serialize the points so that every arrow key
+                // walks through them (Right/Down next, Left/Up previous) and moves on into the next
+                // series after the last point of a series. PageUp/PageDown still jump between series.
+                mode: "serialize",
+            },
+        },
+    },
     plotOptions: {
         bar: {
             maxPointWidth: MAX_POINT_WIDTH,

@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { useState } from "react";
+import { type RefObject, useState } from "react";
 
 import { act, fireEvent, render, renderHook, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -8,6 +8,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { _omit, suppressConsole } from "@gooddata/util";
 
 import { FocusHandoffContext, type IFocusHandoff, createFocusHandoff } from "../focusHandoff.js";
+import { FormProvider } from "../Form/Form.js";
+import { useFormFieldElementRef } from "../Form/useFormFieldElementRef.js";
 
 import { useTabs } from "./hooks/useTabs.js";
 import { type ITab, TabSpace, TabState } from "./Tab.js";
@@ -1020,6 +1022,67 @@ describe("Tabs keyboard focus", () => {
 
         expect(document.activeElement).toBe(field);
         field.remove();
+    });
+
+    describe("content with an initial focus", () => {
+        type FormData = { name: string };
+
+        function NameField() {
+            const element = useFormFieldElementRef<FormData>("name");
+            return <input aria-label="Name" ref={element as RefObject<HTMLInputElement>} />;
+        }
+
+        function FormContent({ tab }: ITabContentProps) {
+            return (
+                <FormProvider
+                    key={tab.id}
+                    data={{ name: tab.title }}
+                    // the form is typed loosely (unknown data), its fields are keys of the data
+                    initialFocus={"name" as never}
+                    onSave={async () => {}}
+                    onSaveAs={async () => {}}
+                    onClose={() => {}}
+                >
+                    <NameField />
+                </FormProvider>
+            );
+        }
+
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
+        it("keeps the focus on the tab when an arrow key selects it", () => {
+            vi.useFakeTimers();
+            const { container, rerender } = render(<Tabs active={0} tabs={tabs} content={FormContent} />);
+            // opening the editor focuses the field of the first tab
+            act(() => vi.runOnlyPendingTimers());
+            expect(document.activeElement).toBe(container.querySelector("input"));
+
+            tabElements(container)[0].focus();
+            for (const [key, active] of [
+                ["ArrowRight", 1],
+                ["ArrowLeft", 0],
+                ["ArrowRight", 1],
+            ] as const) {
+                fireEvent.keyDown(document.activeElement!, { key });
+                rerender(<Tabs active={active} tabs={tabs} content={FormContent} />);
+                act(() => vi.advanceTimersByTime(500));
+
+                expect(document.activeElement).toBe(tabElements(container)[active]);
+            }
+        });
+
+        it("still focuses the field of a tab selected from outside the tab list", () => {
+            vi.useFakeTimers();
+            const { container, rerender } = render(<Tabs active={0} tabs={tabs} content={FormContent} />);
+            act(() => vi.runOnlyPendingTimers());
+
+            rerender(<Tabs active={1} tabs={tabs} content={FormContent} />);
+            act(() => vi.advanceTimersByTime(500));
+
+            expect(document.activeElement).toBe(container.querySelector("input"));
+        });
     });
 });
 

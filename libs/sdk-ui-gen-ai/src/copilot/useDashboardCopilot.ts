@@ -70,7 +70,13 @@ export interface IUseDashboardCopilotResult {
      * assistant message identifies an agent without any registered dashboard skills; chat continues normally.
      */
     generateDashboard: (message: string) => void;
-    /** Clear creation intent and persistent AI mode; does not cancel an assistant response already streaming. */
+    /**
+     * Prevent new definition applications for pending dashboard creation or edits and clear persistent AI mode.
+     *
+     * @remarks
+     * Does not stop the assistant stream or undo applied changes. A definition application already started
+     * is not interrupted and may still complete or be acknowledged after cancellation.
+     */
     cancelGeneration: () => void;
     /** Select the waiting workflow's originating conversation in the shared assistant. */
     replyInChat: () => void;

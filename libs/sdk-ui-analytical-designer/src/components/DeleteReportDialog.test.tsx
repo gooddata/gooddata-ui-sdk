@@ -93,10 +93,10 @@ describe("DeleteReportDialog", () => {
         });
         renderDialog();
 
-        const message = await screen.findByText(/used in some reports\. To delete/);
+        const message = await screen.findByText(/used in some documents\. To delete/);
         expect(message.textContent).not.toContain("dashboards");
         expect(isDeleteDisabled()).toBe(true);
-        expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 report");
+        expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 document");
 
         const toggle = document.querySelector(".s-delete-report-dialog-usage-more button")!;
         expect(toggle.textContent).toBe("Show more");
@@ -109,7 +109,7 @@ describe("DeleteReportDialog", () => {
         expect(link.getAttribute("href")).toMatch(/\/reports\/document\/q3%2Fpack$/);
     });
 
-    it("groups dashboards and reports in one message when both use the visualization", async () => {
+    it("groups dashboards and documents in one message when both use the visualization", async () => {
         useBackend(
             {
                 analyticalDashboards: [metadataObject("analyticalDashboard", "board", "Board")],
@@ -119,7 +119,7 @@ describe("DeleteReportDialog", () => {
         );
         renderDialog();
 
-        expect(await screen.findByText(/used in dashboards and reports/)).toBeTruthy();
+        expect(await screen.findByText(/used in dashboards and documents/)).toBeTruthy();
         expect(screen.getByText(/The visualization is used in/).textContent).toContain("2 places");
         expect(document.querySelectorAll(".s-delete-report-dialog-usage-more")).toHaveLength(1);
         expect(isDeleteDisabled()).toBe(true);
@@ -128,7 +128,7 @@ describe("DeleteReportDialog", () => {
         const headings = document.querySelectorAll("h4.gd-delete-report-dialog-usage-group-heading");
         expect(Array.from(headings, (heading) => heading.textContent)).toEqual([
             "Dashboards (1)",
-            "Reports (1)",
+            "Documents (1)",
         ]);
         expect(screen.getByText("Board")).toBeTruthy();
         expect(screen.getByText("Q3 board pack")).toBeTruthy();
@@ -152,12 +152,12 @@ describe("DeleteReportDialog", () => {
         );
         renderDialog({ canCreateDocument: false, canManageProject: false });
 
-        expect(await screen.findByText(/used in some reports\. To delete/)).toBeTruthy();
-        expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 report");
+        expect(await screen.findByText(/used in some documents\. To delete/)).toBeTruthy();
+        expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 document");
         expect(isDeleteDisabled()).toBe(true);
 
         fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
-        expect(screen.getByText("Report is not shared with you.")).toBeTruthy();
+        expect(screen.getByText("Document is not shared with you.")).toBeTruthy();
         expect(screen.queryByText("Q3 board pack")).toBeNull();
     });
 
@@ -175,11 +175,11 @@ describe("DeleteReportDialog", () => {
         );
         renderDialog({ canCreateDocument: false, canManageProject: false });
 
-        expect(await screen.findByText(/used in some reports\. To delete/)).toBeTruthy();
+        expect(await screen.findByText(/used in some documents\. To delete/)).toBeTruthy();
         fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
 
         expect(screen.getByText("Q3 board pack")).toBeTruthy();
-        expect(screen.queryByText("Report is not shared with you.")).toBeNull();
+        expect(screen.queryByText("Document is not shared with you.")).toBeNull();
     });
 
     it("counts the reports as not shared when their creators cannot be loaded", async () => {
@@ -190,7 +190,7 @@ describe("DeleteReportDialog", () => {
         );
         renderDialog({ canCreateDocument: false, canManageProject: false });
 
-        expect(await screen.findByText(/used in some reports\. To delete/)).toBeTruthy();
+        expect(await screen.findByText(/used in some documents\. To delete/)).toBeTruthy();
         expect(isDeleteDisabled()).toBe(true);
 
         fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
@@ -207,13 +207,13 @@ describe("DeleteReportDialog", () => {
             );
             renderDialog({ canCreateDocument: false, canManageProject: false });
 
-            expect(await screen.findByText(/used in some reports\. To delete/)).toBeTruthy();
-            expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 report");
+            expect(await screen.findByText(/used in some documents\. To delete/)).toBeTruthy();
+            expect(screen.getByText(/The visualization is used in/).textContent).toContain("1 document");
             expect(isDeleteDisabled()).toBe(true);
 
             fireEvent.click(document.querySelector(".s-delete-report-dialog-usage-more button")!);
             expect(screen.getByText("Monthly review").closest("a")).toBeNull();
-            expect(screen.queryByText("Report is not shared with you.")).toBeNull();
+            expect(screen.queryByText("Document is not shared with you.")).toBeNull();
         },
     );
 
@@ -222,7 +222,7 @@ describe("DeleteReportDialog", () => {
         renderDialog();
 
         expect(
-            await screen.findByText("The visualization is not used on any dashboard or in any report."),
+            await screen.findByText("The visualization is not used on any dashboard or in any document."),
         ).toBeTruthy();
         expect(isDeleteDisabled()).toBe(false);
     });

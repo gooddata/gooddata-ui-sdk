@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { type AxiosProgressEvent, type AxiosPromise } from "axios";
-import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
     GenAiApi_PostConversations,
@@ -1008,6 +1008,60 @@ describe("ChatConversationThreadQuery userContext conversion", () => {
                     filter: expect.objectContaining({ state: { include: ["Europe"] } }),
                 },
             ]);
+        });
+
+        describe("absolute date filter with granularity", () => {
+            const wholeMonths: FilterContextItem = {
+                dashboardAbsoluteGranularityDateFilter: {
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                    localIdentifier: "0_dateFilter",
+                },
+            };
+
+            afterEach(() => {
+                vi.restoreAllMocks();
+            });
+
+            it("sends the dashboard without its definition when the saved one has the filter", () => {
+                const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+                const dashboard = flatDashboard([wholeMonths, regionFilter([])]);
+
+                const sent = sendDashboard(dashboard, flatDashboard([wholeMonths, regionFilter(["Europe"])]));
+
+                expect(sent).toMatchObject({ id: "dashboard-1", widgets: [] });
+                expect(sent).not.toHaveProperty("definition");
+                expect(sent).not.toHaveProperty("viewFilters");
+                expect(warn).toHaveBeenCalledExactlyOnceWith(
+                    "The dashboard has an absolute date filter with granularity, which cannot be written as code yet. Sending the AI assistant no definition.",
+                );
+            });
+
+            it("sends the dashboard without its definition when only the screen has the filter", () => {
+                const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+                const sent = sendDashboard(
+                    flatDashboard([regionFilter([])]),
+                    flatDashboard([wholeMonths, regionFilter(["Europe"])]),
+                );
+
+                expect(sent).toMatchObject({ id: "dashboard-1", widgets: [] });
+                expect(sent).not.toHaveProperty("definition");
+                expect(sent).not.toHaveProperty("viewFilters");
+                expect(warn).toHaveBeenCalledExactlyOnceWith(
+                    "The dashboard has an absolute date filter with granularity, which cannot be written as code yet. Sending the AI assistant no definition.",
+                );
+            });
+
+            it("does not warn about a dashboard it can write as code", () => {
+                const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+                const sent = sendDashboard(flatDashboard([regionFilter([])]));
+
+                expect(sent).toHaveProperty("definition");
+                expect(warn).not.toHaveBeenCalled();
+            });
         });
     });
 

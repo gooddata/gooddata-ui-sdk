@@ -133,6 +133,7 @@ export const StaticLegend: NamedExoticComponent<IStaticLegendProps> = memo(funct
         <div className={classNames}>
             <LegendSeries
                 series={pagedSeries}
+                allSeries={series}
                 label={label}
                 style={{ height: seriesHeight }}
                 onToggleItem={onItemClick ?? (() => {})}

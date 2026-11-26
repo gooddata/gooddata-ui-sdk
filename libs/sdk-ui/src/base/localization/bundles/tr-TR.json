@@ -795,6 +795,8 @@
     "shareDialog.olp.generalAccess.workspace.description.edit": "Bu çalışma alanındaki herkes bu nesneyi düzenleyebilir.",
     "uiKit.autocomplete.searchPlaceholder": "Ara",
     "uiKit.toast.regionLabel": "{count, plural, one {# bildirim} other {# bildirim}}",
+    "uiKit.message.showMore": "Daha fazla göster",
+    "uiKit.message.showLess": "Daha az göster",
     "uiKit.autocomplete.stateLoading": "Yükleniyor…",
     "uiKit.autocomplete.stateError": "Seçenekler yüklenemedi. Lütfen tekrar deneyin.",
     "uiKit.autocomplete.stateNoMatch": "Eşleşen seçenek yok.",

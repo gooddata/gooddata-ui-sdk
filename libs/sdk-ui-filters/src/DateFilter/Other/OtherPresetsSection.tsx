@@ -2,6 +2,8 @@
 
 import { FormattedMessage } from "react-intl";
 
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
+
 import { type DateFilterOption, type IDateFilterOptionsByType } from "../interfaces/index.js";
 import { ListHeading } from "../ListHeading/ListHeading.js";
 import { ListItem } from "../ListItem/ListItem.js";
@@ -23,15 +25,20 @@ export function OtherPresetsSection({
     onSelectedFilterOptionChange,
     enableEmptyDateValues,
 }: IOtherPresetsSectionProps) {
+    const titleId = useIdPrefixed("group-title");
+
     if (!enableEmptyDateValues || !filterOptions.emptyValues) {
         return null;
     }
 
     const option = filterOptions.emptyValues;
 
+    // Wrap in a labelled group (like the relative preset groups) so assistive technology
+    // announces the "Other" section and does not count "Empty values" together with
+    // the ungrouped options at the top of the listbox.
     return (
-        <>
-            <ListHeading className={isMobile ? ITEM_CLASS_MOBILE : undefined}>
+        <ul role="group" className="gd-list-items-group" aria-labelledby={titleId}>
+            <ListHeading className={isMobile ? ITEM_CLASS_MOBILE : undefined} id={titleId}>
                 <FormattedMessage id="filters.other.heading" />
             </ListHeading>
             <ListItem
@@ -41,6 +48,6 @@ export function OtherPresetsSection({
             >
                 {option.name ? option.name : <FormattedMessage id="filters.emptyValues.title" />}
             </ListItem>
-        </>
+        </ul>
     );
 }

@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "Идентификатор трассировки",
     "automations.icon.tooltip.startsOn": "Начинается с",
     "automations.icon.tooltip.repeats": "Повторы",
+    "automations.icon.tooltip.trigger.failed": "Показать сведения об ошибке",
+    "automations.icon.tooltip.trigger.details": "Показать сведения",
     "automations.menu.trigger": "Отправить сейчас",
     "automations.menu.copyId": "Скопировать ID",
     "automations.message.copyId.success": "ID скопирован в буфер обмена",

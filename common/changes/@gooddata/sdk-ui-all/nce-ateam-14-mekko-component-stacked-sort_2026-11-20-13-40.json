@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-charts: The Mekko component no longer orders the columns of a stacked chart by a measure sort in the browser. With stackBy set, measure sorts in sortBy are ignored with a console warning, so the chart shows the columns in the same order as its exports. IChartConfig.sortBy is deprecated and ignored.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "nikola.cech@gooddata.com"
+}

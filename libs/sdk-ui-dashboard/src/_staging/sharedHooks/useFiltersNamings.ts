@@ -9,17 +9,19 @@ import {
     type ICatalogMeasure,
     type ISeparators,
     type ObjRef,
+    type WeekStart,
     areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
+    dashboardFilterLocalIdentifier,
     getAttributeElementsItems,
     isAllDashboardMeasureValueFilter,
     isAllTimeDashboardDateFilter,
     isAllValuesDashboardAttributeFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
-    isDashboardCommonDateFilter,
-    isDashboardDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
+    isDashboardDateFilterOfAnyType,
     isDashboardDateFilterWithDimension,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
@@ -41,7 +43,12 @@ import {
     selectAllCatalogAttributesMap,
     selectCatalogMeasures,
 } from "../../model/store/catalog/catalogSelectors.js";
-import { selectLocale, selectSeparators, selectSettings } from "../../model/store/config/configSelectors.js";
+import {
+    selectLocale,
+    selectSeparators,
+    selectSettings,
+    selectWeekStart,
+} from "../../model/store/config/configSelectors.js";
 import { convertDateFilterConfigToDateFilterOptions } from "../dateFilterConfig/dateFilterConfigConverters.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../dateFilterConfig/dateFilterOptionMapping.js";
 import { defaultDateFilterConfig } from "../dateFilterConfig/defaultConfig.js";
@@ -71,6 +78,7 @@ type FilterNamingDependencies = {
     separators: ISeparators;
     commonDateFilterTitle: string | undefined;
     allDateFiltersTitlesObj: Record<string, string>;
+    weekStart: WeekStart;
 };
 
 const PERCENT_FORMAT_REGEX = /%/;
@@ -100,6 +108,7 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
     const dateFiltersForTitles = filtersForTitles.filter(isDashboardDateFilterWithDimension);
     const commonDateFilterTitle = useCommonDateFilterTitle(intl);
     const allDateFiltersTitlesObj = useDateFiltersTitles(dateFiltersForTitles, intl);
+    const weekStart = useDashboardSelector(selectWeekStart);
 
     return {
         intl,
@@ -111,6 +120,7 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
         separators,
         commonDateFilterTitle,
         allDateFiltersTitlesObj,
+        weekStart,
     };
 }
 
@@ -131,6 +141,7 @@ function transformFiltersToNamings(
         separators,
         commonDateFilterTitle,
         allDateFiltersTitlesObj,
+        weekStart,
     } = deps;
 
     // we want to show all time filter in the list of filters even if it is not stored
@@ -167,7 +178,7 @@ function transformFiltersToNamings(
                 title: filter.attributeFilter.title ?? attribute.attribute.title,
                 subtitle,
             };
-        } else if (isDashboardDateFilter(filter)) {
+        } else if (isDashboardDateFilterOfAnyType(filter)) {
             /**
              * Shenanigans inspired by core date filter and dashboard date filter implementation
              * to get the date filter option for its subtitle.
@@ -186,6 +197,7 @@ function transformFiltersToNamings(
                 intl,
                 "full",
                 dateFormat,
+                weekStart,
             );
 
             const a = filter;
@@ -202,12 +214,12 @@ function transformFiltersToNamings(
             }
 
             const b = filter;
-            if (isDashboardCommonDateFilter(b)) {
+            if (isDashboardCommonDateFilterOfAnyType(b)) {
                 return {
                     type: "dateFilter",
                     common: true,
                     all: isAllTimeDashboardDateFilter(b),
-                    id: b.dateFilter.localIdentifier ?? uuidv4(),
+                    id: dashboardFilterLocalIdentifier(b) ?? uuidv4(),
                     title: commonDateFilterTitle || intl.formatMessage({ id: "dateFilterDropdown.title" }),
                     subtitle,
                 };

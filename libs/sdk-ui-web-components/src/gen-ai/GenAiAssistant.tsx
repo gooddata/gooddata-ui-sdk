@@ -1,5 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
+import { type GenAIObjectType } from "@gooddata/sdk-model";
 import type { LinkHandlerEvent, GenAIAssistant as OriginalGenAIAssistant } from "@gooddata/sdk-ui-gen-ai";
 
 import { CustomElementAdapter, GET_COMPONENT, LOAD_COMPONENT } from "../common/CustomElementAdapter.js";
@@ -14,6 +15,9 @@ export class GenAIAssistant
     extends CustomElementAdapter<IGenAIAssistant>
     implements ICommonPropertiesDefinition
 {
+    //HANDLERS: Policy type check
+    declare isLinkEnabled?: (type: GenAIObjectType) => boolean;
+
     //HANDLES: CLICK
 
     declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined;

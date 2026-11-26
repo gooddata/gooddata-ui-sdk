@@ -185,18 +185,31 @@ function getValueOrDefault<K extends keyof INewRangeState, T>(
     return Object.prototype.hasOwnProperty.call(state, valueKey) ? state[valueKey] : defaultValue;
 }
 
+// A missing bound starts at the edge of the day, otherwise a date entered into it is dropped for missing time.
+const DAY_START: ITime = { hours: 0, minutes: 0, seconds: 0 };
+const getDayEnd = (isSecondsEnabled: boolean): ITime => ({
+    hours: 23,
+    minutes: 59,
+    seconds: isSecondsEnabled ? 59 : 0,
+});
+
 const useRangeState = (
     range: IDateRange,
     onRangeChange: (range: IDateRange) => void,
     closeCalendarPopup: () => void,
     selectedInput: DateRangePosition | undefined,
     submitForm: () => void,
+    isSecondsEnabled: boolean,
 ) => {
     const [startDate, setStartDate] = useState<Date | undefined>(range.from);
-    const [startTime, setStartTime] = useState<ITime | undefined>(() => getTimeFromDate(range.from));
+    const [startTime, setStartTime] = useState<ITime | undefined>(
+        () => getTimeFromDate(range.from) ?? DAY_START,
+    );
 
     const [endDate, setEndDate] = useState<Date | undefined>(range.to);
-    const [endTime, setEndTime] = useState<ITime | undefined>(() => getTimeFromDate(range.to));
+    const [endTime, setEndTime] = useState<ITime | undefined>(
+        () => getTimeFromDate(range.to) ?? getDayEnd(isSecondsEnabled),
+    );
 
     const [startDateTimeErrors, setStartDateTimeErrors] = useState<IDateTimePickerErrors | undefined>();
     const [endDateTimeErrors, setEndDateTimeErrors] = useState<IDateTimePickerErrors | undefined>();
@@ -358,7 +371,7 @@ export function DateRangePicker({
         onStartTimeChange,
         onEndDateChange,
         onEndTimeChange,
-    } = useRangeState(range, onRangeChange, closeCalendarPopup, selectedInput, submitForm);
+    } = useRangeState(range, onRangeChange, closeCalendarPopup, selectedInput, submitForm, isSecondsEnabled);
 
     const StartDateField = (
         <StartDateInputField

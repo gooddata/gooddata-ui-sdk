@@ -16,7 +16,7 @@ import {
     isAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardAttributeFilterReference,
-    isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
     isDashboardDateFilterReference,
     isDashboardMeasureValueFilter,
@@ -41,7 +41,7 @@ export function removeIgnoredWidgetFilters(
     }
 
     return filters.filter((filter) =>
-        isDashboardCommonDateFilter(filter)
+        isDashboardCommonDateFilterOfAnyType(filter)
             ? !!widget.dateDataSet
             : !widget.ignoreDashboardFilters.some((ignoredFilter) => {
                   if (isDashboardDateFilter(filter) && ignoredFilter.type === "dateFilterReference") {

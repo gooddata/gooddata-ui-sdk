@@ -795,6 +795,8 @@
     "shareDialog.olp.generalAccess.workspace.description.edit": "このワークスペース内の全員がこのオブジェクトを編集できます。",
     "uiKit.autocomplete.searchPlaceholder": "検索",
     "uiKit.toast.regionLabel": "{count, plural, one {# 件の通知} other {# 件の通知}}",
+    "uiKit.message.showMore": "もっと表示",
+    "uiKit.message.showLess": "表示を減らす",
     "uiKit.autocomplete.stateLoading": "読み込んでいます…",
     "uiKit.autocomplete.stateError": "オプションを読み込めませんでした。再試行してください。",
     "uiKit.autocomplete.stateNoMatch": "一致するオプションがありません。",

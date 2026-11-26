@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "추적 ID",
     "automations.icon.tooltip.startsOn": "시작 날짜",
     "automations.icon.tooltip.repeats": "반복",
+    "automations.icon.tooltip.trigger.failed": "실패 세부 정보 표시",
+    "automations.icon.tooltip.trigger.details": "세부 정보 표시",
     "automations.menu.trigger": "지금 전송",
     "automations.menu.copyId": "ID 복사",
     "automations.message.copyId.success": "ID가 클립보드에 복사되었습니다",

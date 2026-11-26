@@ -12,6 +12,7 @@ import {
     DescriptionPanelContent,
     UiTooltip,
     isActionKey,
+    isEscapeKey,
     useIdPrefixed,
 } from "@gooddata/sdk-ui-kit";
 
@@ -61,9 +62,28 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
             if (isActionKey(event)) {
                 event.preventDefault();
                 switchIsOpen();
+            } else if (isOpen && isEscapeKey(event)) {
+                // Dismiss only the description overlay; keep focus on the trigger
+                event.preventDefault();
+                event.stopPropagation();
+                handleClose();
             }
         },
-        [switchIsOpen],
+        [switchIsOpen, handleClose, isOpen],
+    );
+
+    // Focus can move into the description (links in its rich text). Escape pressed there closes the
+    // description and returns focus to the trigger. Escape pressed in unrelated UI is left to that UI.
+    const onContentKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLDivElement>) => {
+            if (isEscapeKey(event)) {
+                event.preventDefault();
+                event.stopPropagation();
+                handleClose();
+                iconRef.current?.focus();
+            }
+        },
+        [handleClose],
     );
 
     const iconClassName = cx("dash-item-action-description", "dash-item-action-placeholder", props.className);
@@ -122,7 +142,11 @@ export function DescriptionClickTrigger(props: IDescriptionClickTriggerProps) {
                     alignTo={`.${props.className}`}
                     ensureVisibility
                 >
-                    {isOpen ? <DescriptionPanelContent {...props} /> : null}
+                    {isOpen ? (
+                        <div onKeyDown={onContentKeyDown}>
+                            <DescriptionPanelContent {...props} />
+                        </div>
+                    ) : null}
                 </Bubble>
             }
         </>

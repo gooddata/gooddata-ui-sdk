@@ -4,9 +4,11 @@ import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
+    type IDashboardAbsoluteGranularityDateFilter,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
     type IDashboardObjectIdentity,
+    type IDashboardParameterizedDateFilter,
     type IFilterContextDefinition,
     type MeasureValueFilterCondition,
     type ObjRef,
@@ -42,6 +44,8 @@ export type WorkingDashboardMeasureValueFilter = {
 export type WorkingFilterContextItem =
     | WorkingDashboardAttributeFilter
     | IDashboardDateFilter
+    | IDashboardAbsoluteGranularityDateFilter
+    | IDashboardParameterizedDateFilter
     | WorkingDashboardMeasureValueFilter;
 
 /**

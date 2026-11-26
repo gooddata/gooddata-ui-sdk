@@ -730,7 +730,7 @@ removed without a major version bump.
 | `composingProps` | Prop object to spread directly onto `CopilotInteractionComposingWithHandler` around the dashboard only. Includes the handler, dashboard scope, and reply-in-chat callback. |
 | `sendMessage(message)` | Sends a non-blank message in the current conversation. Ignored until the shared store is ready. |
 | `generateDashboard(message)` | Starts a new conversation and sends a non-blank generation request. Requires a ready shared store and an initialized, empty dashboard in edit mode, without a saved identifier. Does not navigate or save the result. |
-| `cancelGeneration()` | Clears creation intent. Does not cancel a response already streaming. |
+| `cancelGeneration()` | Prevents new definition applications for pending dashboard creation or edits and clears AI mode. Does not stop a response already streaming or undo changes already applied. A definition application already started is not interrupted and may still complete or be acknowledged after cancellation. A new user message in the same conversation allows new dashboard changes. |
 | `replyInChat()` | Selects the conversation that originated the waiting workflow so you can answer clarification questions. |
 | `copilot` | Hook-owned `CopilotHandler`, available for custom progress presentations and route-change cleanup with `cancelStaleBuild`. The hook manages its lifecycle. |
 

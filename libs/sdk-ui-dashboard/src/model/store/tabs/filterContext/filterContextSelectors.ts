@@ -7,6 +7,7 @@ import { invariant } from "ts-invariant";
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
+    type DashboardDateFilterOfAnyType,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type IDashboardAttributeFilter,
@@ -26,6 +27,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
@@ -532,6 +534,42 @@ export const selectWorkingFilterContextDateFilter: DashboardSelector<IDashboardD
     );
 
 /**
+ * This selector returns dashboard's applied filter context common date filter of any type.
+ *
+ * @remarks
+ * Unlike {@link selectFilterContextDateFilter}, it also returns the common date filter that selects whole
+ * weeks, months, quarters or years.
+ *
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectFilterContextDateFilterOfAnyType: DashboardSelector<
+    DashboardDateFilterOfAnyType | undefined
+> = createSelector(selectFilterContextFilters, (filters): DashboardDateFilterOfAnyType | undefined =>
+    filters.find(isDashboardCommonDateFilterOfAnyType),
+);
+
+/**
+ * This selector returns dashboard's working filter context common date filter of any type.
+ *
+ * @remarks
+ * Unlike {@link selectWorkingFilterContextDateFilter}, it also returns the common date filter that selects
+ * whole weeks, months, quarters or years.
+ *
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectWorkingFilterContextDateFilterOfAnyType: DashboardSelector<
+    DashboardDateFilterOfAnyType | undefined
+> = createSelector(selectWorkingFilterContextFilters, (filters): DashboardDateFilterOfAnyType | undefined =>
+    filters.find(isDashboardCommonDateFilterOfAnyType),
+);
+
+/**
  * This selector returns dashboard's filter context draggable filters (element-based attribute filters and date filters).
  *
  * @remarks
@@ -713,11 +751,11 @@ export const selectFilterContextDateFiltersWithDimensionForTab: (
  */
 export const selectFilterContextDateFilterForTab: (
     tabLocalIdentifier: string,
-) => DashboardSelector<IDashboardDateFilter | undefined> = createMemoizedSelector(
+) => DashboardSelector<DashboardDateFilterOfAnyType | undefined> = createMemoizedSelector(
     (tabLocalIdentifier: string) =>
-        createSelector(selectFiltersByTab, (filtersByTab): IDashboardDateFilter | undefined => {
+        createSelector(selectFiltersByTab, (filtersByTab): DashboardDateFilterOfAnyType | undefined => {
             const filters = filtersByTab[tabLocalIdentifier] ?? [];
-            return filters.find(isDashboardCommonDateFilter);
+            return filters.find(isDashboardCommonDateFilterOfAnyType);
         }),
 );
 
@@ -1371,12 +1409,12 @@ export const selectWorkingFilterContextDateFiltersWithDimensionForTab: (
  */
 export const selectWorkingFilterContextDateFilterForTab: (
     tabLocalIdentifier: string,
-) => DashboardSelector<IDashboardDateFilter | undefined> = createMemoizedSelector(
+) => DashboardSelector<DashboardDateFilterOfAnyType | undefined> = createMemoizedSelector(
     (tabLocalIdentifier: string) =>
         createSelector(
             selectWorkingFiltersForTab(tabLocalIdentifier),
-            (filters): IDashboardDateFilter | undefined => {
-                return filters.find(isDashboardCommonDateFilter);
+            (filters): DashboardDateFilterOfAnyType | undefined => {
+                return filters.find(isDashboardCommonDateFilterOfAnyType);
             },
         ),
 );

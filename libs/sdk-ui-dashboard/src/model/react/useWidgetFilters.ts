@@ -15,7 +15,9 @@ import {
     filterObjRef,
     isAllTimeDashboardDateFilter,
     isAllValuesDashboardAttributeFilter,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardAttributeFilterItem,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
@@ -351,7 +353,7 @@ function filtersDigest(
                 const isNoop = isAllTimeDashboardDateFilter(filter.dateFilter);
 
                 return !isNoop || !isInEditMode;
-            } else if (isDashboardDateFilter(filter)) {
+            } else if (isDashboardCommonDateFilterOfAnyType(filter)) {
                 // Common date filter: if the widget ignores date filters, remove it from the digest to avoid false positives
                 // when date filter changes to or from All time (this effectively adds/removes the date filter in the filters set,
                 // but we do not care either way, so remove it altogether)
@@ -364,6 +366,8 @@ function filtersDigest(
                 return `df_${safeSerializeObjRef(dashboardAttributeFilterItemDisplayForm(filter))}_${dashboardAttributeFilterItemLocalIdentifier(filter)}`;
             } else if (isDashboardDateFilter(filter)) {
                 return `ds_${safeSerializeObjRef(filter.dateFilter.dataSet)}`;
+            } else if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+                return `ds_${safeSerializeObjRef(filter.dashboardAbsoluteGranularityDateFilter.dataSet)}`;
             }
             return `unknown_${stringify(filter)}`;
         })

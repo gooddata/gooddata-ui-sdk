@@ -2,6 +2,7 @@
 
 import { v4 as uuid } from "uuid";
 
+import { type GenAIObjectType } from "@gooddata/sdk-model";
 import type {
     GenAiStoreProps,
     LinkHandlerEvent,
@@ -31,8 +32,21 @@ export class GenAiProvider extends HTMLElement implements ICommonPropertiesDefin
     private storeEle: GenAiStore | null = null;
     private store: string = Math.random().toString(36).substring(2, 15);
 
+    _isLinkEnabled?: (type: GenAIObjectType) => boolean;
     _onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined;
     _onDispatcher?: Required<GenAiStoreProps>["onDispatcher"];
+
+    set isLinkEnabled(isLinkEnabled: ((type: GenAIObjectType) => boolean) | undefined) {
+        this._isLinkEnabled = isLinkEnabled;
+        const store = this.storeEle;
+        if (store) {
+            store.isLinkEnabled = isLinkEnabled;
+        }
+    }
+
+    get isLinkEnabled(): ((type: GenAIObjectType) => boolean) | undefined {
+        return this._isLinkEnabled;
+    }
 
     set onLinkClick(
         onLinkClick: ((event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined) | undefined,
@@ -82,6 +96,7 @@ export class GenAiProvider extends HTMLElement implements ICommonPropertiesDefin
 
             const store = (this.storeEle = document.createElement(componentRandomName) as GenAiStore);
             store.onLinkClick = this.onLinkClick;
+            store.isLinkEnabled = this.isLinkEnabled;
             if (this.onDispatcher) {
                 store.onDispatcher = this.onDispatcher;
             }
@@ -108,6 +123,10 @@ function deferredStore<T>() {
 }
 
 class GenAiStore extends CustomElementAdapter<IGenAiStore> {
+    //HANDLER: Policy check
+
+    declare isLinkEnabled?: (type: GenAIObjectType) => boolean;
+
     //HANDLES: CLICK
 
     declare onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined;

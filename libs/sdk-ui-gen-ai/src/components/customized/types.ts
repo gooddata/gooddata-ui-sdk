@@ -12,8 +12,16 @@ import {
     type IChatConversationVisualisationContent,
     type IChatKdaDefinition,
     type IChatSuggestion,
+    type IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
-import { type GenAIChatEffort } from "@gooddata/sdk-model";
+import {
+    type GenAIChatEffort,
+    type IColorPalette,
+    type IExecutionConfig,
+    type ISeparators,
+} from "@gooddata/sdk-model";
+import { type GoodDataSdkError, type IDrillEvent } from "@gooddata/sdk-ui";
+import { type IDashboardKeyDriverCombinationItem } from "@gooddata/sdk-ui-dashboard";
 import {
     type ISlotProps,
     type IUiMenuGroupItemProps,
@@ -425,6 +433,79 @@ export type IGenAIAssistantConversationVisualizationContentProps = {
 };
 
 /**
+ * Properties for the ConversationVisualizationBody slot.
+ * @alpha
+ */
+export type IGenAIAssistantConversationVisualisationProps = {
+    /**
+     * The message containing the visualization.
+     */
+    message: IChatConversationLocalItem;
+    /**
+     * The visualization payload to render.
+     */
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    /**
+     * The color palette for the visualization.
+     */
+    colorPalette?: IColorPalette;
+    /**
+     * The number separators for the visualization.
+     */
+    separators?: ISeparators;
+    /**
+     * Execution configuration, including any what-if scenario overrides.
+     */
+    execConfig?: IExecutionConfig;
+    /**
+     * The workspace settings for the visualization.
+     */
+    settings?: IUserWorkspaceSettings;
+    /**
+     * The AG Grid license token for table rendering.
+     */
+    agGridToken?: string;
+    /**
+     * Whether the body should render as a table instead of the original visualization.
+     * Table mode always uses the default SDK renderer, bypassing the custom body slot.
+     */
+    isTable?: boolean;
+    /**
+     * Reports a rendering error to the surrounding content and its menu.
+     */
+    onVisualisationError?: (error: GoodDataSdkError) => void;
+    /**
+     * Reports a successful render and clears the surrounding content's current error.
+     */
+    onVisualisationSuccess?: () => void;
+    /**
+     * Opens key driver analysis drill options, or clears them when passed null.
+     */
+    onDrillFired?: (
+        data: {
+            keyDriverData: IDashboardKeyDriverCombinationItem[];
+            event: IDrillEvent;
+        } | null,
+    ) => void;
+    /**
+     * Whether drilling is enabled. Defaults to true in the SDK renderer.
+     */
+    enableDrilling?: boolean;
+    /**
+     * Whether change analysis is enabled. Defaults to false in the SDK renderer.
+     */
+    enableChangeAnalysis?: boolean;
+    /**
+     * Whether second-level date granularities are enabled. Defaults to false in the SDK renderer.
+     */
+    enableSecondGranularities?: boolean;
+    /**
+     * Whether accessible chart tooltips are enabled. Defaults to false in the SDK renderer.
+     */
+    enableAccessibleChartTooltip?: boolean;
+};
+
+/**
  * Item of the visualization menu.
  * @alpha
  */
@@ -734,6 +815,14 @@ export interface IGenAIAssistantSlots {
     ConversationVisualizationContent?: ComponentType<
         ISlotProps<IGenAIAssistantConversationVisualizationContentProps>
     >;
+
+    /**
+     * Custom React component rendered as the visualization body, preserving the wrapper,
+     * title, menu, table toggle, save dialog, and error boundary.
+     * Table mode always uses the default SDK renderer instead of this slot.
+     * @alpha
+     */
+    ConversationVisualizationBody?: ComponentType<ISlotProps<IGenAIAssistantConversationVisualisationProps>>;
 
     /**
      * @alpha

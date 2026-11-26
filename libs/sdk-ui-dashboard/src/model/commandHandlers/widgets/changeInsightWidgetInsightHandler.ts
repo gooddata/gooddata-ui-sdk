@@ -34,6 +34,7 @@ import { uiActions } from "../../store/ui/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { shouldRevalidateDrillsAfterInsightChange } from "../common/drillRevalidationUtils.js";
 import { validateDrills } from "../common/validateDrills.js";
+import { revalidateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
 
 import { loadInsight } from "./common/loadInsight.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
@@ -142,6 +143,8 @@ export function* changeInsightWidgetInsightHandler(
             }),
         );
     }
+
+    yield call(revalidateDrillToCustomUrlParams);
 
     return insightWidgetInsightChanged(ctx, ref, insight, correlationId);
 }

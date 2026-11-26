@@ -2,11 +2,15 @@
 
 import {
     type DateFilterGranularity,
+    type DateFilterOptionAbsoluteGranularityFormType,
+    type DatePeriodGranularity,
+    type DatePeriodLiteral,
     type DateString,
     type EmptyValues,
     type IAbsoluteDateFilterForm,
     type IAbsoluteDateFilterPreset,
     type IAllTimeDateFilterOption,
+    type IDateFilterOption,
     type IEmptyValuesDateFilterOption,
     type ILowerBoundedFilter,
     type IRelativeDateFilterForm,
@@ -45,6 +49,47 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
      */
     emptyValueHandling?: EmptyValues;
 }
+
+/**
+ * Represents the global absolute date filter with selected whole weeks, months, quarters or years.
+ *
+ * @remarks
+ * It shares the local identifier with the absolute form option {@link IUiAbsoluteDateFilterForm} of the same
+ * date filter.
+ *
+ * @public
+ */
+export interface IUiAbsoluteGranularityDateFilterForm extends IDateFilterOption {
+    /**
+     * Type to identify the global absolute date filter with granularity
+     */
+    type: DateFilterOptionAbsoluteGranularityFormType;
+    /**
+     * Granularity of the selected periods
+     */
+    granularity: DatePeriodGranularity;
+    /**
+     * First selected period
+     */
+    from?: DatePeriodLiteral;
+    /**
+     * Last selected period
+     */
+    to?: DatePeriodLiteral;
+    /**
+     * Optional configuration for how this option should treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IUiAbsoluteGranularityDateFilterForm}.
+ * @alpha
+ */
+export const isUiAbsoluteGranularityDateFilterForm = (
+    obj: unknown,
+): obj is IUiAbsoluteGranularityDateFilterForm =>
+    !_isEmpty(obj) && (obj as IUiAbsoluteGranularityDateFilterForm).type === "absoluteGranularityForm";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IUiRelativeDateFilterForm}.
@@ -122,6 +167,7 @@ export type DateFilterOption =
     | IAllTimeDateFilterOption
     | IEmptyValuesDateFilterOption
     | AbsoluteDateFilterOption
+    | IUiAbsoluteGranularityDateFilterForm
     | RelativeDateFilterOption;
 
 /**

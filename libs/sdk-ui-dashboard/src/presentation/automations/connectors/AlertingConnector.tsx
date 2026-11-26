@@ -18,8 +18,10 @@ import { AlertingManagementDialog } from "../alerting/AlertingManagementDialog.j
 import { AlertingDialogContextProvider } from "../contexts/AlertingDialogContext.js";
 import { AlertingManagementDialogContextProvider } from "../contexts/AlertingManagementDialogContext.js";
 import { AutomationsContextProvider } from "../contexts/AutomationsContext.js";
+import { AbsoluteGranularityDateFilterNotSupportedDialog } from "../shared/components/AbsoluteGranularityDateFilterNotSupportedDialog.js";
 import { type IAutomationDialogCallbacks } from "../shared/types.js";
 
+import { useAbsoluteGranularityDateFilterBlocksAutomation } from "./hooks/useAbsoluteGranularityDateFilterBlocksAutomation.js";
 import { useAutomationManagementEditRouting } from "./hooks/useAutomationManagementEditRouting.js";
 import { useBuildAlertingDialogContext } from "./hooks/useBuildAlertingDialogContext.js";
 import { useBuildAlertingManagementDialogContext } from "./hooks/useBuildAlertingManagementDialogContext.js";
@@ -151,10 +153,29 @@ interface IAlertingCreateEditConnectorProps extends IAutomationDialogCallbacks {
 }
 
 /**
+ * Shows the not-supported dialog without building the create/edit context when the dashboard filters block
+ * the alert.
+ */
+function AlertingCreateEditConnector(props: IAlertingCreateEditConnectorProps): ReactElement {
+    const isBlocked = useAbsoluteGranularityDateFilterBlocksAutomation(false);
+
+    if (isBlocked) {
+        return (
+            <AbsoluteGranularityDateFilterNotSupportedDialog
+                automationType="alert"
+                onCancel={props.onCancel}
+            />
+        );
+    }
+
+    return <AlertingCreateEditDialogConnector {...props} />;
+}
+
+/**
  * Hydrates the alerting create/edit context. Lives here rather than in the parent so that opening only
  * the management dialog — which does not consume it — skips the work.
  */
-function AlertingCreateEditConnector(props: IAlertingCreateEditConnectorProps): ReactElement {
+function AlertingCreateEditDialogConnector(props: IAlertingCreateEditConnectorProps): ReactElement {
     const {
         alertToEdit,
         notificationChannels,

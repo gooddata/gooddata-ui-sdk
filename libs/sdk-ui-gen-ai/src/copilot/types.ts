@@ -135,6 +135,15 @@ export interface ICopilotSnapshot<TBuild extends string = CopilotBuildType> {
     readonly interaction: ICopilotInteraction<TBuild>;
     /** Running responses and workflows waiting for user input across conversations. */
     readonly requests: readonly ICopilotRequest<TBuild>[];
+    /** Cancelled response origins, retained until the next user turn in the same conversation. */
+    readonly cancelledRequests?: readonly {
+        /** Cancelled workflow. */
+        readonly type: TBuild;
+        /** Originating local conversation. */
+        readonly conversationId?: string;
+        /** Backend thread, when already assigned. */
+        readonly threadId?: string;
+    }[];
     /** In-progress host installations. */
     readonly applications: readonly ICopilotApplication<TBuild>[];
     /** Last applied origin for each object, including unknown-origin tombstones. */

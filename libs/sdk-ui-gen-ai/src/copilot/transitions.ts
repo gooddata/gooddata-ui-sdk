@@ -46,11 +46,20 @@ function transitionEvent<TBuild extends string>(
     event: ChatEvent,
     configuration: ICopilotConfiguration<TBuild>,
 ): ICopilotSnapshot<TBuild> {
+    const resumesCancelledRequest = (request: {
+        readonly conversationId?: string;
+        readonly threadId?: string;
+    }) => matches(request, event.threadId, conversationId(event));
+    const cancelledRequests =
+        isUserInputEvent(event) && state.cancelledRequests?.some(resumesCancelledRequest)
+            ? state.cancelledRequests.filter((request) => !resumesCancelledRequest(request))
+            : state.cancelledRequests;
     const index = eventRequestIndex(state, event);
     const pending = state.requests[index];
     if (
         event.type === "chatUserAnswers" &&
         !pending &&
+        cancelledRequests === state.cancelledRequests &&
         !matches(state.interaction, event.threadId, conversationId(event))
     ) {
         return state;
@@ -93,11 +102,15 @@ function transitionEvent<TBuild extends string>(
     if (sameInteraction(interaction, state.interaction)) {
         interaction = state.interaction;
     }
-    return requests === state.requests && interaction === state.interaction && generation === state.generation
+    return requests === state.requests &&
+        cancelledRequests === state.cancelledRequests &&
+        interaction === state.interaction &&
+        generation === state.generation
         ? state
         : {
               ...state,
               requests,
+              ...(cancelledRequests === state.cancelledRequests ? {} : { cancelledRequests }),
               interaction,
               generation,
               revision: isUserInputEvent(event) ? state.revision + 1 : state.revision,
@@ -154,25 +167,53 @@ export function transitionCopilot<TBuild extends string = CopilotBuildType>(
                 interaction: emptyInteraction(),
             };
         case "cancelGeneration": {
+            const cancelled = state.requests.filter(
+                (request) =>
+                    !request.superseded &&
+                    (request.type ?? request.generation ?? state.context.type) === input.type,
+            );
+            const cancelledRequests = cancelled.length
+                ? [
+                      ...(state.cancelledRequests ?? []).filter(
+                          (request) =>
+                              request.type !== input.type ||
+                              !cancelled.some((entry) =>
+                                  matches(request, entry.threadId, entry.conversationId),
+                              ),
+                      ),
+                      ...cancelled.map(({ conversationId, threadId }) => ({
+                          type: input.type,
+                          conversationId,
+                          threadId,
+                      })),
+                  ]
+                : state.cancelledRequests;
             const requests = state.requests.flatMap((request) => {
                 if (isCompletedGenerationRequest(request, input.type)) {
                     return [];
                 }
-                return (request.type ?? request.generation) === input.type && !request.superseded
-                    ? [{ ...request, superseded: true }]
-                    : [request];
+                return cancelled.includes(request) ? [{ ...request, superseded: true }] : [request];
             });
             const clearForeground =
-                state.generation === input.type || state.interaction.build?.type === input.type;
+                state.generation === input.type ||
+                state.interaction.build?.type === input.type ||
+                cancelled.some((request) =>
+                    matches(request, state.interaction.threadId, state.interaction.conversationId),
+                );
             return clearForeground ||
+                cancelledRequests !== state.cancelledRequests ||
                 requests.some((request, i) => request !== state.requests[i]) ||
                 requests.length !== state.requests.length
                 ? {
                       ...state,
                       ...(clearForeground
-                          ? { generation: undefined, interaction: emptyInteraction<TBuild>() }
+                          ? {
+                                generation: state.generation === input.type ? undefined : state.generation,
+                                interaction: emptyInteraction<TBuild>(),
+                            }
                           : {}),
                       requests,
+                      ...(cancelledRequests === state.cancelledRequests ? {} : { cancelledRequests }),
                   }
                 : state;
         }

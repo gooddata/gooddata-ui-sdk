@@ -48,6 +48,7 @@ import {
     readJumpText,
     selectWeek,
     trimWeekWindow,
+    weekLiteralsToDays,
     weekSelectionToPeriodRange,
 } from "./weeks.js";
 
@@ -71,7 +72,9 @@ const messages = defineMessages({
  * @internal
  */
 export interface IWeekRangeListProps {
-    /** The selected weeks. Every range reported by `onRangeChange` has to come back here. */
+    /**
+     * The selected weeks as week literals. Every range reported by `onRangeChange` has to come back here.
+     */
     range: IPeriodRange;
     onRangeChange: (range: IPeriodRange) => void;
     /** Defaults to "Sunday". */
@@ -180,12 +183,16 @@ export function WeekRangeList({
     const listRef = useRef<HTMLDivElement | null>(null);
     const getOptionId = useCallback((key: string) => `${listboxId}-${key}`, [listboxId]);
 
-    const [weekWindow, setWeekWindow] = useState(() => createOpeningWeekWindow(range, getToday()));
+    const [weekWindow, setWeekWindow] = useState(() =>
+        createOpeningWeekWindow(weekLiteralsToDays(range, weekStart), getToday()),
+    );
     const [anchor, setAnchor] = useState<IWeek | undefined>(undefined);
     // Days rather than week starts, so that they still name a listed week after the week start changes.
     const [activeDay, setActiveDay] = useState<DateString | undefined>(undefined);
     // A new object on every request, so that centring the same week again scrolls too.
-    const [centreRequest, setCentreRequest] = useState(() => ({ day: getOpeningDay(range, getToday()) }));
+    const [centreRequest, setCentreRequest] = useState(() => ({
+        day: getOpeningDay(weekLiteralsToDays(range, weekStart), getToday()),
+    }));
 
     const [text, setText, debouncedText] = useDebouncedState("", JUMP_DELAY);
     // The error waits until the field is left or Enter is pressed, so that it does not flash while typing.
@@ -226,9 +233,9 @@ export function WeekRangeList({
         (week: IWeek) => {
             const next = selectWeek(selectionRef.current, week);
             setAnchor(next.anchor);
-            onRangeChangeRef.current(weekSelectionToPeriodRange(next));
+            onRangeChangeRef.current(weekSelectionToPeriodRange(next, weekStart));
         },
-        [selectionRef, onRangeChangeRef],
+        [selectionRef, onRangeChangeRef, weekStart],
     );
 
     const isRangeSelected = selection !== undefined;

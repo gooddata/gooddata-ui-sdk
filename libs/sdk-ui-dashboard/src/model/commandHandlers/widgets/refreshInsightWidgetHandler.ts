@@ -13,6 +13,7 @@ import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { restrictedDataActions } from "../../store/restrictedData/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { revalidateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
 
 import { loadInsight } from "./common/loadInsight.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
@@ -39,6 +40,7 @@ export function* refreshInsightWidgetHandler(
     yield put(insightsActions.upsertInsight(newInsight));
     // an explicit refresh executes the widget again even when it was refused for restricted data
     yield put(restrictedDataActions.clearRefusal(serializeObjRef(insightWidget.ref)));
+    yield call(revalidateDrillToCustomUrlParams);
 
     return insightWidgetRefreshed(ctx, newInsight, cmd.correlationId);
 }

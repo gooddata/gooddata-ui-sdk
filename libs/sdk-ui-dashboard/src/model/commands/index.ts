@@ -43,6 +43,7 @@ import { type IUpsertExecutionResult } from "./executionResults.js";
 import {
     type ChangeAttributeFilterSelection,
     type ChangeDateFilterSelection,
+    type ChangeDateFilterSelectionOfAnyType,
     type ChangeFilterContextSelection,
     type IAddAttributeFilter,
     type IAddDateFilter,
@@ -123,7 +124,7 @@ import {
     type IToggleLayoutSectionHeaders,
     type IUndoLayoutChanges,
 } from "./layout.js";
-import { type IChangeParameterValues } from "./parameters.js";
+import { type IAddParameters, type IChangeParameterValues, type IRemoveParameters } from "./parameters.js";
 import { type RequestAsyncRender, type ResolveAsyncRender } from "./render.js";
 import { type IChangeRenderMode } from "./renderMode.js";
 import { type IChangeRichTextWidgetContent, type IChangeRichTextWidgetFilterSettings } from "./richText.js";
@@ -168,6 +169,7 @@ export type DashboardCommands =
     | ResolveAsyncRender
     | ChangeFilterContextSelection
     | ChangeDateFilterSelection
+    | ChangeDateFilterSelectionOfAnyType
     | ChangeAttributeFilterSelection
     | ReplaceAttributeFilterItemSelection
     //beta
@@ -299,4 +301,6 @@ export type DashboardCommands =
     | IExportSlidesInsightWidget
     | IExportImageInsightWidget
     | ISetShowWidgetAsTable
-    | IChangeParameterValues;
+    | IChangeParameterValues
+    | IAddParameters
+    | IRemoveParameters;

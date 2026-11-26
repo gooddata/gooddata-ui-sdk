@@ -7,6 +7,7 @@ import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
     type DashboardAttributeFilterSelectionType,
+    type DashboardDateFilterOfAnyType,
     type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IDashboardAttributeFilter,
@@ -25,16 +26,15 @@ import {
     dashboardFilterObjRef,
     dashboardMeasureValueFilterLocalIdentifier,
     getAttributeElementsItems,
-    isAbsoluteGranularityDateFilter,
     isAllTimeDashboardDateFilter,
     isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
-    isDashboardCommonDateFilter,
-    isDashboardDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilterOfAnyType,
     isDashboardMeasureValueFilter,
+    isDashboardParameterizedDateFilter,
     isDashboardTextAttributeFilter,
     isParameterizedDateFilter,
     isSingleSelectionFilter,
@@ -45,7 +45,10 @@ import {
 } from "@gooddata/sdk-model";
 import { _compact, _partition, _uniqBy } from "@gooddata/util";
 
-import { ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+import {
+    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
+    containsAbsoluteGranularityDateFilterWithDataSet,
+} from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED } from "../../../_staging/dashboard/parameterizedDateFilters.js";
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
@@ -101,6 +104,7 @@ import {
     findDisabledComputedAttributeRef,
 } from "./attributeFilter/validation/computedAttributesEnabledValidation.js";
 import { canApplyDateFilter } from "./common.js";
+import { toUpsertDateFilterPayload } from "./tabSync/tabSyncRules.js";
 import { type ITabSyncSession, beginTabSync, endTabSync, putTabSynced } from "./tabSync/tabSyncSaga.js";
 import { writtenFiltersOf } from "./tabSync/writtenTargets.js";
 
@@ -345,17 +349,9 @@ export function* changeFilterContextSelectionHandler(
 
     if (
         filters.some(
-            (filter) =>
-                isDashboardAbsoluteGranularityDateFilter(filter) || isAbsoluteGranularityDateFilter(filter),
+            (filter) => isDashboardParameterizedDateFilter(filter) || isParameterizedDateFilter(filter),
         )
     ) {
-        yield dispatchDashboardEvent(
-            invalidArgumentsProvided(ctx, cmd, ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED),
-        );
-        return;
-    }
-
-    if (filters.some(isParameterizedDateFilter)) {
         yield dispatchDashboardEvent(
             invalidArgumentsProvided(ctx, cmd, PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED),
         );
@@ -423,6 +419,13 @@ export function* changeFilterContextSelectionHandler(
             ) && !(matchByLocalIdentifier && addressesRestrictedFilter(filter)),
     );
 
+    if (containsAbsoluteGranularityDateFilterWithDataSet(normalizedFilters)) {
+        yield dispatchDashboardEvent(
+            invalidArgumentsProvided(ctx, cmd, ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED),
+        );
+        return;
+    }
+
     const disabledComputedAttributeRef: SagaReturnType<typeof findDisabledComputedAttributeRef> = yield call(
         findDisabledComputedAttributeRef,
         [
@@ -459,8 +462,8 @@ export function* changeFilterContextSelectionHandler(
     ).reverse();
 
     const supportedFilters = normalizedFilters.filter(
-        (filter): filter is IDashboardAttributeFilter | IDashboardDateFilter =>
-            isDashboardAttributeFilter(filter) || isDashboardDateFilter(filter),
+        (filter): filter is IDashboardAttributeFilter | DashboardDateFilterOfAnyType =>
+            isDashboardAttributeFilter(filter) || isDashboardDateFilterOfAnyType(filter),
     );
 
     // Measure value filters use whole-condition replacement keyed by localIdentifier; deduplicate
@@ -481,7 +484,7 @@ export function* changeFilterContextSelectionHandler(
         }
         const identification = isDashboardAttributeFilter(filter)
             ? dashboardAttributeFilterItemDisplayForm(filter)
-            : filter.dateFilter.dataSet;
+            : dashboardFilterObjRef(filter);
         let config;
         if (isDashboardAttributeFilter(filter)) {
             config = attributeFilterConfigs.find(
@@ -495,11 +498,11 @@ export function* changeFilterContextSelectionHandler(
             : identification + secondaryIdentification;
     });
 
-    const [dateFilters, attributeFilters] = _partition(uniqueFilters, isDashboardDateFilter);
+    const [dateFilters, attributeFilters] = _partition(uniqueFilters, isDashboardDateFilterOfAnyType);
 
     const [[commonDateFilter], dateFiltersWithDimension] = _partition(
         dateFilters,
-        isDashboardCommonDateFilter,
+        isDashboardCommonDateFilterOfAnyType,
     );
 
     const selectionTypeMap: ReturnType<typeof selectAttributeFilterConfigsSelectionTypeMap> = yield call(
@@ -529,7 +532,13 @@ export function* changeFilterContextSelectionHandler(
             selectionTypeMap,
             matchByLocalIdentifier,
         ),
-        call(getDateFilterUpdateActions, commonDateFilter, resetOthers, tabLocalIdentifier),
+        call(
+            getDateFilterUpdateActions,
+            commonDateFilter,
+            resetOthers,
+            restorePerTabOriginals,
+            tabLocalIdentifier,
+        ),
         call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers, tabLocalIdentifier),
         call(getMeasureValueFiltersUpdateActions, measureValueFilters, resetOthers, tabLocalIdentifier),
     ]);
@@ -1225,49 +1234,25 @@ function* getAttributeFiltersUpdateActions(
 }
 
 function* getDateFilterUpdateActions(
-    dateFilter: IDashboardDateFilter | undefined,
+    dateFilter: DashboardDateFilterOfAnyType | undefined,
     resetOthers: boolean,
+    restorePerTabOriginals: boolean,
     tabLocalIdentifier?: string,
 ): SagaIterator<SelectionUpdateAction[]> {
     if (dateFilter) {
-        const canApply: SagaReturnType<typeof canApplyDateFilter> = yield call(
-            canApplyDateFilter,
-            dateFilter,
-        );
+        // a reset restores the stored filter with granularity, which loads without the check too
+        const canApply: SagaReturnType<typeof canApplyDateFilter> =
+            restorePerTabOriginals && isDashboardAbsoluteGranularityDateFilter(dateFilter)
+                ? true
+                : yield call(canApplyDateFilter, dateFilter);
 
         if (!canApply) {
             return [];
         }
 
-        const localIdentifierObj = dateFilter.dateFilter.localIdentifier
-            ? { localIdentifier: dateFilter.dateFilter.localIdentifier }
-            : {};
-        const emptyValueHandlingObj = dateFilter.dateFilter.emptyValueHandling
-            ? { emptyValueHandling: dateFilter.dateFilter.emptyValueHandling }
-            : {};
-        const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
-            ? {
-                  type: "allTime",
-                  dataSet: dateFilter.dateFilter.dataSet,
-                  ...localIdentifierObj,
-                  ...emptyValueHandlingObj,
-                  tabLocalIdentifier,
-              }
-            : {
-                  type: dateFilter.dateFilter.type,
-                  granularity: dateFilter.dateFilter.granularity,
-                  from: dateFilter.dateFilter.from,
-                  to: dateFilter.dateFilter.to,
-                  dataSet: dateFilter.dateFilter.dataSet,
-                  ...localIdentifierObj,
-                  ...(dateFilter.dateFilter.boundedFilter
-                      ? { boundedFilter: dateFilter.dateFilter.boundedFilter }
-                      : {}),
-                  ...emptyValueHandlingObj,
-                  tabLocalIdentifier,
-              };
-
-        return [tabsActions.upsertDateFilter(upsertPayload)];
+        return [
+            tabsActions.upsertDateFilter({ ...toUpsertDateFilterPayload(dateFilter), tabLocalIdentifier }),
+        ];
     } else if (resetOthers) {
         return [
             tabsActions.upsertDateFilter({

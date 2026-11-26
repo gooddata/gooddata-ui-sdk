@@ -795,6 +795,8 @@
     "shareDialog.olp.generalAccess.workspace.description.edit": "Mọi người trong không gian làm việc này có thể chỉnh sửa đối tượng này.",
     "uiKit.autocomplete.searchPlaceholder": "Tìm kiếm",
     "uiKit.toast.regionLabel": "{count, plural, other {# thông báo}}",
+    "uiKit.message.showMore": "Hiện thêm",
+    "uiKit.message.showLess": "Hiện ít",
     "uiKit.autocomplete.stateLoading": "Đang tải…",
     "uiKit.autocomplete.stateError": "Không thể tải tùy chọn. Vui lòng thử lại.",
     "uiKit.autocomplete.stateNoMatch": "Không có tùy chọn phù hợp.",

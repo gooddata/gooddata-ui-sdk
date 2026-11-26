@@ -3,20 +3,22 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { type IInsightReferencing } from "@gooddata/sdk-backend-spi";
+import { type IInsightReferencing, type IPublisherDocumentSummaryV2 } from "@gooddata/sdk-backend-spi";
 import { type IInsight, type IMetadataObject, type ObjectType, idRef } from "@gooddata/sdk-model";
 import type * as SdkUi from "@gooddata/sdk-ui";
 
 import { newMapForObjectWithIdentity } from "../../../../_staging/metadata/objRefMap.js";
 import { selectAccessibleDashboardsMap } from "../../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectDashboardId } from "../../../../model/store/meta/metaSelectors.js";
+import { selectPermissions } from "../../../../model/store/permissions/permissionsSelectors.js";
 import { IntlWrapper } from "../../../localization/IntlWrapper.js";
 
 import { DeleteInsightDialog } from "./DeleteInsightDialog.js";
 
 const USED_ON_THIS_DASHBOARD = "usedOnThisDashboard";
 const mockReferencing = vi.fn<() => Promise<IInsightReferencing>>();
-const mockSelectorState = vi.hoisted(() => ({ usedOnThisDashboard: false }));
+const mockDocumentSummaries = vi.fn<() => Promise<IPublisherDocumentSummaryV2[]>>();
+const mockSelectorState = vi.hoisted(() => ({ usedOnThisDashboard: false, canCreateDocument: true }));
 
 // vitest runs with isolate: false; reset the module registry so the mocks below apply.
 vi.hoisted(() => {
@@ -30,6 +32,9 @@ vi.mock("../../../../model/react/DashboardStoreProvider.js", () => ({
         }
         if (selector === selectDashboardId) {
             return "current";
+        }
+        if (selector === selectPermissions) {
+            return { canCreateDocument: mockSelectorState.canCreateDocument };
         }
         if (selector === USED_ON_THIS_DASHBOARD) {
             return mockSelectorState.usedOnThisDashboard;
@@ -48,8 +53,16 @@ vi.mock("../../../../model/react/useDashboardCommandProcessing.js", () => ({
 
 vi.mock("@gooddata/sdk-ui", async (importOriginal) => {
     const actual = await importOriginal<typeof SdkUi>();
+    const documentsQuery = {
+        withFilter: () => documentsQuery,
+        withSize: () => documentsQuery,
+        query: () => mockDocumentSummaries().then((items) => ({ items })),
+    };
     const backend = {
-        workspace: () => ({ insights: () => ({ getInsightReferencingObjects: () => mockReferencing() }) }),
+        workspace: () => ({
+            insights: () => ({ getInsightReferencingObjects: () => mockReferencing() }),
+            publisherV2: () => ({ getDocumentsQuery: () => documentsQuery }),
+        }),
     };
     return { ...actual, useBackendStrict: () => backend, useWorkspaceStrict: () => "workspace" };
 });
@@ -90,6 +103,10 @@ function metadataObject(id: string, type: ObjectType): IMetadataObject {
     };
 }
 
+function documentSummary(id: string): IPublisherDocumentSummaryV2 {
+    return { ref: idRef(id, "document") } as IPublisherDocumentSummaryV2;
+}
+
 function renderDialog(referencing: IInsightReferencing) {
     mockReferencing.mockResolvedValue(referencing);
     render(
@@ -114,7 +131,9 @@ function isDeleteDisabled() {
 describe("DeleteInsightDialog", () => {
     beforeEach(() => {
         mockReferencing.mockReset();
+        mockDocumentSummaries.mockReset();
         mockSelectorState.usedOnThisDashboard = false;
+        mockSelectorState.canCreateDocument = true;
     });
 
     it("blocks the delete and names the document when only a document uses the visualization", async () => {
@@ -150,6 +169,54 @@ describe("DeleteInsightDialog", () => {
         ).toBeTruthy();
         expect(screen.getByText(/1 dashboard/)).toBeTruthy();
         expect(screen.getByText(/1 document/)).toBeTruthy();
+    });
+
+    it("counts a document the user may not open without naming it", async () => {
+        mockSelectorState.canCreateDocument = false;
+        mockDocumentSummaries.mockResolvedValue([]);
+        renderDialog({ analyticalDashboards: [], documents: [metadataObject("board-pack", "document")] });
+
+        expect(
+            await screen.findByText(/cannot be deleted because it is used in some documents\. To delete/),
+        ).toBeTruthy();
+        expect(screen.getByText(/1 document/)).toBeTruthy();
+        expect(isDeleteDisabled()).toBe(true);
+        fireEvent.click(screen.getByText("Show more"));
+        expect(screen.getByText("1 document not shared with you")).toBeTruthy();
+        expect(screen.queryByText("board-pack title")).toBeNull();
+    });
+
+    it("names the documents the user may open and counts the rest", async () => {
+        mockSelectorState.canCreateDocument = false;
+        mockDocumentSummaries.mockResolvedValue([documentSummary("own-pack")]);
+        renderDialog({
+            analyticalDashboards: [],
+            documents: [
+                metadataObject("own-pack", "document"),
+                metadataObject("board-pack", "document"),
+                metadataObject("layout", "documentTemplate"),
+            ],
+        });
+
+        expect(await screen.findByText(/3 documents/)).toBeTruthy();
+        fireEvent.click(screen.getByText("Show more"));
+        expect(screen.getByText("own-pack title")).toBeTruthy();
+        expect(screen.getByText("layout title")).toBeTruthy();
+        expect(screen.queryByText("board-pack title")).toBeNull();
+        expect(screen.getByText(/not shared with you/).textContent).toBe("and 1 more not shared with you");
+        expect(isDeleteDisabled()).toBe(true);
+    });
+
+    it("counts every document as not shared when they cannot be loaded", async () => {
+        mockSelectorState.canCreateDocument = false;
+        mockDocumentSummaries.mockRejectedValue(new Error("unavailable"));
+        renderDialog({ analyticalDashboards: [], documents: [metadataObject("board-pack", "document")] });
+
+        expect(await screen.findByText(/1 document/)).toBeTruthy();
+        expect(isDeleteDisabled()).toBe(true);
+        fireEvent.click(screen.getByText("Show more"));
+        expect(screen.queryByText("board-pack title")).toBeNull();
+        expect(screen.getByText("1 document not shared with you")).toBeTruthy();
     });
 
     it("allows the delete when nothing uses the visualization", async () => {

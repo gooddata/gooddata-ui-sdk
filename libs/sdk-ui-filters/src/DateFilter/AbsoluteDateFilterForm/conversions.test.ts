@@ -4,12 +4,17 @@
 
 import { describe, expect, it } from "vitest";
 
-import { type IUiAbsoluteDateFilterForm } from "../interfaces/index.js";
+import {
+    type IUiAbsoluteDateFilterForm,
+    type IUiAbsoluteGranularityDateFilterForm,
+} from "../interfaces/index.js";
 
 import {
     dateFilterValueToPeriodRange,
     dateRangeToDateFilterValue,
+    periodRangeToAbsoluteGranularityForm,
     periodRangeToDateFilterValue,
+    switchAbsoluteFormTab,
 } from "./conversions.js";
 
 const baseOption: IUiAbsoluteDateFilterForm = {
@@ -64,7 +69,6 @@ describe("periodRangeToDateFilterValue", () => {
                 range,
                 localIdentifier: "ABS",
                 isTimeForAbsoluteRangeEnabled: false,
-                granularity: "GDC.time.date",
             }),
         ).toMatchObject({ from: "2026-04-01", to: "2026-04-30" });
     });
@@ -75,7 +79,6 @@ describe("periodRangeToDateFilterValue", () => {
                 range,
                 localIdentifier: "ABS",
                 isTimeForAbsoluteRangeEnabled: true,
-                granularity: "GDC.time.date",
             }),
         ).toMatchObject({ from: "2026-04-01 00:00", to: "2026-04-30 23:59" });
     });
@@ -86,7 +89,6 @@ describe("periodRangeToDateFilterValue", () => {
                 range,
                 localIdentifier: "ABS",
                 isTimeForAbsoluteRangeEnabled: true,
-                granularity: "GDC.time.date",
                 isSecondsForAbsoluteRangeEnabled: true,
             }),
         ).toMatchObject({ from: "2026-04-01 00:00:00", to: "2026-04-30 23:59:59" });
@@ -98,42 +100,88 @@ describe("periodRangeToDateFilterValue", () => {
                 range: {},
                 localIdentifier: "ABS",
                 isTimeForAbsoluteRangeEnabled: true,
-                granularity: "GDC.time.date",
             }),
         ).toMatchObject({ from: undefined, to: undefined });
     });
 
-    it("keeps bare days at month granularity even when time is enabled", () => {
+    it("writes day granularity", () => {
         expect(
             periodRangeToDateFilterValue({
-                range: { from: "2026-04-01", to: "2026-04-30" },
-                localIdentifier: "ABS",
-                isTimeForAbsoluteRangeEnabled: true,
-                granularity: "GDC.time.month",
-            }),
-        ).toMatchObject({ from: "2026-04-01", to: "2026-04-30" });
-    });
-
-    it("keeps bare days at week granularity even when seconds are enabled", () => {
-        expect(
-            periodRangeToDateFilterValue({
-                range: { from: "2026-04-01", to: "2026-04-30" },
-                localIdentifier: "ABS",
-                isTimeForAbsoluteRangeEnabled: true,
-                granularity: "GDC.time.week_us",
-                isSecondsForAbsoluteRangeEnabled: true,
-            }),
-        ).toMatchObject({ from: "2026-04-01", to: "2026-04-30" });
-    });
-
-    it("carries the granularity of the period picker", () => {
-        expect(
-            periodRangeToDateFilterValue({
-                range: { from: "2026-03-30", to: "2026-04-12" },
+                range,
                 localIdentifier: "ABS",
                 isTimeForAbsoluteRangeEnabled: false,
-                granularity: "GDC.time.week_us",
             }),
-        ).toMatchObject({ granularity: "GDC.time.week_us" });
+        ).toMatchObject({ type: "absoluteForm", granularity: "GDC.time.date" });
+    });
+});
+
+describe("dateFilterValueToPeriodRange of whole periods", () => {
+    it("passes the period literals through", () => {
+        const option: IUiAbsoluteGranularityDateFilterForm = {
+            localIdentifier: "ABSOLUTE_FORM",
+            type: "absoluteGranularityForm",
+            name: "",
+            visible: true,
+            granularity: "GDC.time.week",
+            from: "2026-07",
+            to: "2026-09",
+        };
+        expect(dateFilterValueToPeriodRange(option)).toEqual({ from: "2026-07", to: "2026-09" });
+    });
+});
+
+describe("periodRangeToAbsoluteGranularityForm", () => {
+    it("writes the period literals with their granularity", () => {
+        expect(
+            periodRangeToAbsoluteGranularityForm(
+                { from: "2026-04", to: "2026-06" },
+                "GDC.time.month",
+                "ABS",
+                "exclude",
+            ),
+        ).toEqual({
+            type: "absoluteGranularityForm",
+            localIdentifier: "ABS",
+            name: "",
+            visible: true,
+            granularity: "GDC.time.month",
+            from: "2026-04",
+            to: "2026-06",
+            emptyValueHandling: "exclude",
+        });
+    });
+});
+
+describe("switchAbsoluteFormTab", () => {
+    const dayOption: IUiAbsoluteDateFilterForm = {
+        ...baseOption,
+        from: "2026-04-01",
+        to: "2026-04-30",
+        emptyValueHandling: "include",
+    };
+
+    it("switches days to the empty week option, keeping the identity and empty value handling", () => {
+        expect(switchAbsoluteFormTab(dayOption, "GDC.time.week_us")).toEqual({
+            localIdentifier: "ABSOLUTE_FORM",
+            type: "absoluteGranularityForm",
+            name: "",
+            visible: true,
+            granularity: "GDC.time.week",
+            emptyValueHandling: "include",
+        });
+    });
+
+    it("switches whole periods to the empty day option", () => {
+        const monthOption = switchAbsoluteFormTab(dayOption, "GDC.time.month");
+        expect(
+            switchAbsoluteFormTab({ ...monthOption, from: "2026-04", to: "2026-05" }, "GDC.time.date"),
+        ).toEqual({
+            localIdentifier: "ABSOLUTE_FORM",
+            type: "absoluteForm",
+            name: "",
+            visible: true,
+            granularity: "GDC.time.date",
+            emptyValueHandling: "include",
+        });
     });
 });

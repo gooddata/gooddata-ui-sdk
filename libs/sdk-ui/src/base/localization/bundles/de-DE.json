@@ -795,6 +795,8 @@
     "shareDialog.olp.generalAccess.workspace.description.edit": "Alle in diesem Workspace können dieses Objekt bearbeiten.",
     "uiKit.autocomplete.searchPlaceholder": "Suche",
     "uiKit.toast.regionLabel": "{count, plural, one {# Benachrichtigung} other {# Benachrichtigungen}}",
+    "uiKit.message.showMore": "Mehr anzeigen",
+    "uiKit.message.showLess": "Weniger anzeigen",
     "uiKit.autocomplete.stateLoading": "Lädt…",
     "uiKit.autocomplete.stateError": "Optionen konnten nicht geladen werden. Bitte versuchen Sie es erneut.",
     "uiKit.autocomplete.stateNoMatch": "Keine passenden Optionen.",

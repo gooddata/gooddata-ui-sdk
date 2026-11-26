@@ -134,7 +134,7 @@ export class CopilotHandler<TBuild extends string = CopilotBuildType> {
         this.update({ kind: "startGeneration", type });
     };
 
-    /** Clear a matching foreground generation intent or build. */
+    /** Cancel pending creation or edits of this type without stopping the assistant stream or undoing applied work. */
     public cancelGeneration = (type: TBuild): void => {
         this.update({ kind: "cancelGeneration", type });
     };
@@ -300,6 +300,15 @@ export class CopilotHandler<TBuild extends string = CopilotBuildType> {
         event: ChatDefinitionReceivedEvent,
         target: ICopilotTarget<TBuild>,
     ): boolean {
+        if (
+            !event.interactionId &&
+            this.state.cancelledRequests?.some(
+                (request) =>
+                    request.type === target.type && matches(request, event.threadId, event.conversationId),
+            )
+        ) {
+            return false;
+        }
         const { context } = this.state;
         const builderTarget = context.builderTarget?.type === target.type ? context.builderTarget : undefined;
         if (builderTarget?.objectId === target.objectId) {

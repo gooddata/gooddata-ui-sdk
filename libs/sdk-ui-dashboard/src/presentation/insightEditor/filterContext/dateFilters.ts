@@ -23,6 +23,8 @@ import {
 } from "@gooddata/sdk-model";
 import { _compact } from "@gooddata/util";
 
+import { ABSOLUTE_GRANULARITY_DATE_FILTER_INSIGHT_EDITOR_NOT_SUPPORTED } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+
 const ALL_TIME_GRANULARITY = "ALL_TIME_GRANULARITY";
 
 function getDateFilterItem(
@@ -122,9 +124,7 @@ function getDateFilterContext(dateFilter: DateFilterOfAnyType): DateFilterItem |
             },
         };
     } else if (isAbsoluteGranularityDateFilter(dateFilter)) {
-        throw new Error(
-            "Absolute date filters with granularity are not supported in the insight editor yet.",
-        );
+        throw new Error(ABSOLUTE_GRANULARITY_DATE_FILTER_INSIGHT_EDITOR_NOT_SUPPORTED);
     } else if (isParameterizedDateFilter(dateFilter)) {
         throw new Error("Parameterized date filters are not supported in the insight editor yet.");
     } else if (isRelativeDateFilter(dateFilter)) {

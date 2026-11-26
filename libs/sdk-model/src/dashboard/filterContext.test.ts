@@ -17,14 +17,18 @@ import {
     exportOverrideFilterContextIdentifier,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterReference,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
+    isDashboardDateFilterOfAnyType,
     isDashboardDateFilterReference,
+    isDashboardParameterizedDateFilter,
     isExportOverrideFilterContext,
     isFilterContext,
     isFilterContextDefinition,
     isFilterContextItem,
     isFilterContextItemOfAnyType,
     isTempFilterContext,
+    newDashboardParameterizedDateFilter,
 } from "./filterContext.js";
 import {
     dashboardAttributeFilter,
@@ -228,5 +232,100 @@ describe("absolute date filter with granularity in the filter context", () => {
 
     it("returns its local identifier", () => {
         expect(dashboardFilterLocalIdentifier(granularityDateFilter)).toBe("granularityDateFilter");
+    });
+
+    it.each<[boolean, string, unknown]>([
+        ...InvalidInputTestCases,
+        [false, "absolute date filter with granularity and data set", granularityDateFilter],
+        [
+            true,
+            "absolute date filter with granularity without data set",
+            {
+                dashboardAbsoluteGranularityDateFilter: {
+                    ...granularityDateFilter.dashboardAbsoluteGranularityDateFilter,
+                    dataSet: undefined,
+                },
+            },
+        ],
+        [true, "dashboard date filter without data set", dashboardDateFilter],
+        [
+            false,
+            "dashboard date filter with data set",
+            { dateFilter: { ...dashboardDateFilter.dateFilter, dataSet } },
+        ],
+        [false, "dashboard attribute filter", dashboardAttributeFilter],
+    ])(
+        "isDashboardCommonDateFilterOfAnyType should return %s when input is %s",
+        (expectedResult, _desc, input) => {
+            expect(isDashboardCommonDateFilterOfAnyType(input)).toBe(expectedResult);
+        },
+    );
+});
+
+describe("parameterized date filter in the filter context", () => {
+    const dataSet = idRef("closed", "dataSet");
+    const parameter = idRef("period", "parameter");
+    const parameterizedDateFilter = newDashboardParameterizedDateFilter(parameter, {
+        dataSet,
+        localIdentifier: "periodFilter",
+        emptyValueHandling: "include",
+    });
+
+    it("is created with the given properties", () => {
+        expect(parameterizedDateFilter).toEqual({
+            dashboardParameterizedDateFilter: {
+                parameter,
+                dataSet,
+                localIdentifier: "periodFilter",
+                emptyValueHandling: "include",
+            },
+        });
+    });
+
+    it("is created without a data set", () => {
+        expect(newDashboardParameterizedDateFilter(parameter)).toEqual({
+            dashboardParameterizedDateFilter: { parameter },
+        });
+    });
+
+    it("is created from a parameter identifier", () => {
+        expect(newDashboardParameterizedDateFilter("period")).toEqual({
+            dashboardParameterizedDateFilter: { parameter },
+        });
+    });
+
+    it.each<[boolean, string, unknown]>([
+        ...InvalidInputTestCases,
+        [true, "parameterized date filter", parameterizedDateFilter],
+        [false, "dashboard date filter", dashboardDateFilter],
+        [false, "execution parameterized date filter", { parameterizedDateFilter: { dataSet, parameter } }],
+        [false, "null body", { dashboardParameterizedDateFilter: null }],
+    ])(
+        "isDashboardParameterizedDateFilter should return %s when input is %s",
+        (expectedResult, _desc, input) => {
+            expect(isDashboardParameterizedDateFilter(input)).toBe(expectedResult);
+        },
+    );
+
+    it("is a common date filter only without a data set", () => {
+        expect(isDashboardCommonDateFilterOfAnyType(parameterizedDateFilter)).toBe(false);
+        expect(isDashboardCommonDateFilterOfAnyType(newDashboardParameterizedDateFilter(parameter))).toBe(
+            true,
+        );
+    });
+
+    it("is covered only by the guards of any type", () => {
+        expect(isFilterContextItemOfAnyType(parameterizedDateFilter)).toBe(true);
+        expect(isDashboardDateFilterOfAnyType(parameterizedDateFilter)).toBe(true);
+        expect(isFilterContextItem(parameterizedDateFilter)).toBe(false);
+        expect(isDashboardDateFilter(parameterizedDateFilter)).toBe(false);
+    });
+
+    it("returns its data set as the object reference", () => {
+        expect(dashboardFilterObjRef(parameterizedDateFilter)).toEqual(dataSet);
+    });
+
+    it("returns its local identifier", () => {
+        expect(dashboardFilterLocalIdentifier(parameterizedDateFilter)).toBe("periodFilter");
     });
 });

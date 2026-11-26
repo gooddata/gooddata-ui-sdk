@@ -10,10 +10,12 @@ import {
 } from "@gooddata/sdk-model";
 import { _isEmpty } from "@gooddata/util";
 
+import { datePeriodGranularityToTab } from "../AbsoluteDateFilterForm/conversions.js";
 import {
     type DateFilterOption,
     type DateFilterRelativeOptionGroup,
     type IDateFilterOptionsByType,
+    isUiAbsoluteGranularityDateFilterForm,
     isUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
 
@@ -26,6 +28,9 @@ export function getDateFilterOptionGranularity(
         isAbsoluteDateFilterForm(dateFilterOption)
     ) {
         return dateFilterOption.granularity;
+    }
+    if (isUiAbsoluteGranularityDateFilterForm(dateFilterOption)) {
+        return datePeriodGranularityToTab(dateFilterOption.granularity);
     }
     return undefined;
 }

@@ -394,6 +394,48 @@ function setupStackKeyboardNavigation(
     container.addEventListener("keydown", handler as EventListener, true);
 }
 
+function isEmptyPointValue(value: unknown): boolean {
+    return value === null || value === undefined || value === "";
+}
+
+function formatPointValue(value: unknown, format: string | undefined, config?: IChartConfig): string {
+    return (
+        formatValueForTooltip(value as number | string | null | undefined, format, config?.separators) ??
+        String(value ?? "")
+    );
+}
+
+/**
+ * Describes the value of a point for screen readers. Range points (e.g. forecast confidence band)
+ * are described by both their bounds and points without a value by an explicit "no value" text,
+ * so that no point is announced with an empty value.
+ */
+export function getPointValueDescription(
+    point: UnsafeInternals,
+    config: IChartConfig | undefined,
+    intl: IntlShape | undefined,
+): string {
+    const isRangePoint =
+        typeof point.series?.type === "string" &&
+        point.series.type.endsWith("range") &&
+        !isEmptyPointValue(point.low) &&
+        !isEmptyPointValue(point.high);
+
+    if (isRangePoint) {
+        const low = formatPointValue(point.low, point.format, config);
+        const high = formatPointValue(point.high, point.format, config);
+        return (
+            intl?.formatMessage({ id: "visualization.aria.rangeValue" }, { low, high }) ?? `${low} to ${high}`
+        );
+    }
+
+    if (point.isNull) {
+        return intl?.formatMessage({ id: "visualization.aria.noValue" }) ?? "no value";
+    }
+
+    return formatPointValue(point.y, point.format, config);
+}
+
 function getThemedConfiguration(
     theme: ITheme | undefined,
     config?: IChartConfig,
@@ -443,9 +485,7 @@ function getThemedConfiguration(
                     );
                     const seriesName: string = decodeHtmlEntities(point.series.name);
                     const pointName: string = decodeHtmlEntities(anyPoint.name ?? "");
-                    const yValue: string =
-                        formatValueForTooltip(point.y, anyPoint.format, config?.separators) ??
-                        String(point.y ?? "");
+                    const yValue = getPointValueDescription(anyPoint, config, intl);
 
                     let xPart: string;
                     if (parentCategory && category) {

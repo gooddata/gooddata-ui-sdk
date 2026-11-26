@@ -44,7 +44,9 @@ A **Mekko chart** (also known as a Marimekko or mosaic chart) shows two measures
 
 ## Sorting
 
-`Mekko` applies no default sorting. To sort the data, pass sort items in the `sortBy` prop. With `stackBy` set, measure sorts don't go to the execution. The chart applies the first measure sort in `sortBy` in the browser, provided it sorts by `widthMeasure` or `heightMeasure`, and orders the columns by their total value of that measure. Other measure sorts are ignored. Attribute sorts go to the execution.
+`Mekko` applies no default sorting. To sort the data, pass sort items in the `sortBy` prop.
+
+With `stackBy` set, the chart ignores measure sorts, because the execution of a stacked chart can't order the columns by a measure. Sort the columns by the `viewBy` attribute instead. With only one of the two measures set, an area sort of the `viewBy` attribute (`newAttributeAreaSort`) orders the columns by their totals.
 
 ## Configuration
 

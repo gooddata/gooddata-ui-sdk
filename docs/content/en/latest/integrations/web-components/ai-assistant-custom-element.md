@@ -104,7 +104,7 @@ Wrap the chat and the conversation list in `gd-ai-provider`. When the provider c
 | `workspace`, `locale`, `objectTypes` | Applied to the shared store. Same values as on `gd-ai-assistant`. |
 | `store` | Optional ID of the store. The provider generates one when the attribute is absent. Child elements look up the nearest ancestor with a `store` attribute, so the provider doesn't have to be their direct parent. |
 
-The provider reads its attributes once, when it connects; changing them later has no effect. The provider itself dispatches no DOM events; listen on the `gd-ai-assistant` and `gd-ai-conversations` elements.
+The provider reads its attributes once, when it connects; changing them later has no effect. Set `isLinkEnabled` during initialization, before connecting the element. Listen for chat events on the `gd-ai-assistant` and `gd-ai-conversations` elements, not the provider.
 
 ### JavaScript properties and methods
 
@@ -112,6 +112,7 @@ The provider reads its attributes once, when it connects; changing them later ha
 
 | Property or method | Description |
 | --- | --- |
+| `isLinkEnabled` | Optional `(type: GenAIObjectType) => boolean` predicate controlling which object references are interactive. On the provider, it applies to the shared store and its child elements. See [Object-link policy](#object-link-policy). |
 | `onLinkClick` | Callback invoked when the user clicks a link in the chat, with a `CustomEvent` whose `detail` is the `linkClick` payload described below. The element always suppresses the chat's own navigation and dispatches the `linkClick` event before it calls the callback. |
 | `onDispatcher` | Callback that receives the store's `dispatch` function once the store exists. Use it to dispatch the actions exported by `@gooddata/sdk-ui-gen-ai`. |
 | `startNewConversationAction()` | Dispatches the start-new-conversation action to the store. The method is attached asynchronously after the element connects, so guard early calls with `?.`. |
@@ -139,6 +140,32 @@ On `gd-ai-provider`, assigning `onLinkClick` or `onDispatcher` forwards the call
 ```
 
 The `linkClick` event `detail` carries `type` (the linked object type, `"setting"`, or `"report"`), `id`, `workspaceId`, `itemUrl`, `newTab`, and `action` (`"open"` or `"copy"`), and, depending on the link, `section`, `dashboard`, `insights`, `dashboardStatus`, `visualization`, and `visualizationStatus`.
+
+## Object-link policy
+
+Assign `isLinkEnabled` as a JavaScript property on `gd-ai-assistant`, `gd-ai-chat`, `gd-ai-conversations`, or `gd-ai-provider` during initialization, before connecting the element to the DOM. It is not an HTML attribute, and changing the policy during the element's lifetime is not supported. The predicate receives a `GenAIObjectType`; built-in answer references and search results use `metric`, `visualization`, `dashboard`, and `document`.
+
+For example, allow only dashboard links throughout a shared chat:
+
+```html
+<script type="module">
+    await customElements.whenDefined("gd-ai-provider");
+    const providerEl = document.createElement("gd-ai-provider");
+    providerEl.setAttribute("workspace", "my-workspace-id");
+    providerEl.isLinkEnabled = (type) => type === "dashboard";
+    providerEl.innerHTML = `
+        <gd-ai-conversations></gd-ai-conversations>
+        <gd-ai-assistant></gd-ai-assistant>
+    `;
+    document.body.append(providerEl);
+</script>
+```
+
+Returning `false` renders answer references as plain text and makes search-result rows non-clickable with no Open/Edit actions. Disabled references do not navigate or invoke `onLinkClick` / `linkClick` through mouse or keyboard activation. Results remain visible, and expansion, hover details, and keyboard navigation remain available. Related destinations are evaluated independently.
+
+A child element inherits the nearest provider's policy unless it supplies its own predicate, which replaces the inherited policy. With no policy, or a predicate returning `true`, links behave as before.
+
+The policy does not filter search results (`objectTypes` does), grant permissions, or replace `onLinkClick` handling for enabled links. It applies only to built-in answer references and search results, not settings links, visualization action menus, or custom renderers. Legacy `report` references are evaluated as `document`; `linkClick` payloads retain `type: "report"`. See the React [Object-link policy](../../../ai-modules/ai-assistant/#object-link-policy) for the full behavior.
 
 [1]: https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-model/src/base/localization.ts
 [2]: ../web-components-auth/

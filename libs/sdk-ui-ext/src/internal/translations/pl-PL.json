@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "ID śledzenia",
     "automations.icon.tooltip.startsOn": "Zaczyna się od",
     "automations.icon.tooltip.repeats": "Powtórzenia",
+    "automations.icon.tooltip.trigger.failed": "Pokaż szczegóły niepowodzenia",
+    "automations.icon.tooltip.trigger.details": "Pokaż szczegóły",
     "automations.menu.trigger": "Wyślij teraz",
     "automations.menu.copyId": "Skopiuj ID",
     "automations.message.copyId.success": "ID skopiowane do schowka",

@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "Jäljitystunnus",
     "automations.icon.tooltip.startsOn": "Alkaa",
     "automations.icon.tooltip.repeats": "Toistuu",
+    "automations.icon.tooltip.trigger.failed": "Näytä virheen tiedot",
+    "automations.icon.tooltip.trigger.details": "Näytä tiedot",
     "automations.menu.trigger": "Lähetä nyt",
     "automations.menu.copyId": "Kopioi tunnus",
     "automations.message.copyId.success": "Tunnus kopioitu leikepöydälle",

@@ -4,14 +4,20 @@ import { createContext, useCallback, useContext, useMemo } from "react";
 
 import { createContextStore } from "@gooddata/sdk-ui";
 
-import { type ISeriesItem } from "./types.js";
+import { type ISeriesItem, isSeriesItemMetric } from "./types.js";
 
 export const useLegendSeriesContextValue = ({
     series,
+    allSeries = series,
     focusedIndex,
     id,
 }: {
     series: ISeriesItem[];
+    /**
+     * The whole legend when `series` is only its current page. Option positions and set size
+     * are counted from it, so they stay correct across pages.
+     */
+    allSeries?: ISeriesItem[];
     focusedIndex: number;
     id: string;
 }) => {
@@ -20,12 +26,29 @@ export const useLegendSeriesContextValue = ({
         [id, series],
     );
 
+    // Options are rendered inside groups and wrapper elements, so browsers can't compute
+    // their position and set size from the DOM. Compute them explicitly across the whole legend,
+    // including items on other pages of a paged legend.
+    const optionItems = useMemo(
+        () => allSeries.filter((item) => isSeriesItemMetric(item) && !item.anomaly),
+        [allSeries],
+    );
+
+    const getItemPosition = useCallback(
+        (item: ISeriesItem) => {
+            const index = optionItems.indexOf(item);
+            return index === -1 ? undefined : { posInSet: index + 1, setSize: optionItems.length };
+        },
+        [optionItems],
+    );
+
     return useMemo(
         () => ({
             focusedItem: series[focusedIndex],
             makeItemId,
+            getItemPosition,
         }),
-        [focusedIndex, makeItemId, series],
+        [focusedIndex, makeItemId, getItemPosition, series],
     );
 };
 

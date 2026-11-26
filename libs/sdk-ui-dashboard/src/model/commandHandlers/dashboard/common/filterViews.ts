@@ -27,10 +27,11 @@ import {
     dashboardAttributeFilterItemValidateElementsBy,
     dashboardFilterLocalIdentifier,
     dashboardMeasureValueFilterLocalIdentifier,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
-    isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
@@ -42,9 +43,13 @@ import {
 import { _isEqual, _omit } from "@gooddata/util";
 
 import {
-    ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED,
-    containsAbsoluteGranularityDateFilter,
+    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
+    containsAbsoluteGranularityDateFilterWithDataSet,
 } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+import {
+    PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED,
+    containsDashboardParameterizedDateFilter,
+} from "../../../../_staging/dashboard/parameterizedDateFilters.js";
 import { type RenderMode } from "../../../../types.js";
 import { filterLocalIdentifiers } from "../../../store/filtering/dashboardFilterSelectors.js";
 import { getRestrictedDashboardFilters } from "../../../store/filtering/restrictedFilterUtils.js";
@@ -52,6 +57,7 @@ import {
     applyMirroredFilterValue,
     findCounterpartFilter,
     targetAcceptsAttributeFilterValue,
+    withCommonDateFilterLocalIdentifier,
 } from "../../../store/tabs/filterContext/filterSync.js";
 import { type ITabState } from "../../../store/tabs/tabsState.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../../../utils/attributeFilterSelectionTypeCompatibility.js";
@@ -240,8 +246,7 @@ const createResetTextFilter = (filter: DashboardTextAttributeFilter): IDashboard
     };
 };
 
-const isCommonDateFilter = (filter: FilterContextItem) =>
-    isDashboardDateFilter(filter) && filter.dateFilter.dataSet === undefined;
+const isCommonDateFilter = (filter: FilterContextItem) => isDashboardCommonDateFilterOfAnyType(filter);
 
 const handleCommonDateFilter = (
     filterContextFilters: FilterContextItem[],
@@ -334,10 +339,24 @@ export const changeFilterContextSelection = (
         (attributeFilterConfigs ?? []).map((config) => [config.localIdentifier, config]),
     );
     const configUpdates = new Map<string, DisplayAsLabelUpdate>();
+    const viewCommonDateFilter = filterViewFilters.find(isDashboardCommonDateFilterOfAnyType);
     const mergedFilters: FilterContextItem[] = filterContext.filters.map((filter) => {
         // a restricted filter keeps its stored value
         if (restrictedLocalIdentifiers.has(dashboardFilterLocalIdentifier(filter) ?? "")) {
             return filter;
+        }
+        // whole periods replace the filter as a whole, the common filter without one in the view is removed below
+        if (
+            isDashboardCommonDateFilterOfAnyType(filter) &&
+            (isDashboardAbsoluteGranularityDateFilter(filter) ||
+                isDashboardAbsoluteGranularityDateFilter(viewCommonDateFilter))
+        ) {
+            return viewCommonDateFilter
+                ? withCommonDateFilterLocalIdentifier(
+                      viewCommonDateFilter,
+                      dashboardFilterLocalIdentifier(filter),
+                  )
+                : filter;
         }
         if (isDashboardAttributeFilter(filter)) {
             const filterLocalId = filter.attributeFilter.localIdentifier;
@@ -553,9 +572,15 @@ export function findTabDefaultFilterView(
 function supportedDefaultFilterView(
     view: IDashboardFilterView | undefined,
 ): IDashboardFilterView | undefined {
-    if (view && containsAbsoluteGranularityDateFilter(view.filterContext.filters)) {
+    if (view && containsAbsoluteGranularityDateFilterWithDataSet(view.filterContext.filters)) {
         console.warn(
-            `The default filter view "${view.name}" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED}`,
+            `The default filter view "${view.name}" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED}`,
+        );
+        return undefined;
+    }
+    if (view && containsDashboardParameterizedDateFilter(view.filterContext.filters)) {
+        console.warn(
+            `The default filter view "${view.name}" was not applied. ${PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED}`,
         );
         return undefined;
     }
@@ -770,14 +795,12 @@ function mirrorTabSelection(
         .filter((filter) => !isCommonDateFilter(filter))
         .map((filter) => replacements.get(filter) ?? filter);
     // the common date filter is all time when it is absent, so it is shared even without a counterpart
-    const sourceCommonDate = sourceAfter.filterContext.filters.find(isDashboardCommonDateFilter);
-    const targetCommonDate = target.filterContext.filters.find(isDashboardCommonDateFilter);
+    const sourceCommonDate = sourceAfter.filterContext.filters.find(isDashboardCommonDateFilterOfAnyType);
+    const targetCommonDate = target.filterContext.filters.find(isDashboardCommonDateFilterOfAnyType);
     const commonDate = sourceCommonDate
         ? targetCommonDate
             ? applyMirroredFilterValue(sourceCommonDate, targetCommonDate)
-            : {
-                  dateFilter: _omit(sourceCommonDate.dateFilter, ["localIdentifier"]),
-              }
+            : withCommonDateFilterLocalIdentifier(sourceCommonDate, undefined)
         : undefined;
 
     return {

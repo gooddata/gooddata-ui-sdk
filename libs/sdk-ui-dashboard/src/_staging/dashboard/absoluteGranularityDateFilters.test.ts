@@ -15,11 +15,12 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    assertNoAbsoluteGranularityDateFilterInDashboards,
+    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
+    assertNoAbsoluteGranularityDateFilterWithDataSetInDashboards,
     automationContainsAbsoluteGranularityDateFilter,
 } from "./absoluteGranularityDateFilters.js";
 
-const granularityDateFilter: FilterContextItem = {
+const commonGranularityDateFilter: FilterContextItem = {
     dashboardAbsoluteGranularityDateFilter: {
         granularity: "GDC.time.year",
         from: "2025",
@@ -27,17 +28,29 @@ const granularityDateFilter: FilterContextItem = {
     },
 };
 
+const granularityDateFilter: FilterContextItem = {
+    dashboardAbsoluteGranularityDateFilter: {
+        granularity: "GDC.time.year",
+        from: "2025",
+        to: "2026",
+        dataSet: idRef("date"),
+    },
+};
+
 const dashboardWithFilters = (filters: FilterContextItem[]) =>
     ({ filterContext: { title: "", description: "", filters } }) as unknown as IDashboard;
 
-const supportedDashboard = dashboardWithFilters([newAllTimeDashboardDateFilter()]);
+const supportedDashboard = dashboardWithFilters([
+    newAllTimeDashboardDateFilter(),
+    commonGranularityDateFilter,
+]);
 
-describe("assertNoAbsoluteGranularityDateFilterInDashboards", () => {
-    it("accepts dashboards and default filter overrides without the filter", () => {
+describe("assertNoAbsoluteGranularityDateFilterWithDataSetInDashboards", () => {
+    it("accepts dashboards and default filter overrides with the common filter only", () => {
         expect(() =>
-            assertNoAbsoluteGranularityDateFilterInDashboards(
+            assertNoAbsoluteGranularityDateFilterWithDataSetInDashboards(
                 [supportedDashboard, undefined],
-                [newAllTimeDashboardDateFilter()],
+                [commonGranularityDateFilter],
             ),
         ).not.toThrow();
     });
@@ -49,10 +62,10 @@ describe("assertNoAbsoluteGranularityDateFilterInDashboards", () => {
             undefined,
         ],
         ["the default filter overrides", [supportedDashboard], [granularityDateFilter]],
-    ])("rejects the filter in %s", (_desc, dashboards, overrideDefaultFilters) => {
+    ])("rejects the filter for a date dataset in %s", (_desc, dashboards, overrideDefaultFilters) => {
         expect(() =>
-            assertNoAbsoluteGranularityDateFilterInDashboards(dashboards, overrideDefaultFilters),
-        ).toThrow(NotSupported);
+            assertNoAbsoluteGranularityDateFilterWithDataSetInDashboards(dashboards, overrideDefaultFilters),
+        ).toThrow(new NotSupported(ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED));
     });
 });
 

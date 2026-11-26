@@ -30,10 +30,20 @@ function getForecastLineColor(color: string | IPatternObject): string {
     return getLighterColor(color.pattern.color!, FORECAST_LINE_COLOR_PERCENT);
 }
 
+/**
+ * Builds names of the forecast series from the name of the forecasted (actual data) series.
+ * The names identify the series for screen reader users and in the tooltip.
+ */
+export interface IForecastSeriesNames {
+    forecast: (seriesName: string) => string;
+    confidenceInterval: (seriesName: string) => string;
+}
+
 export function assignForecastAxes(
     type: VisType | undefined,
     series: ISeriesItem[],
     forecastValues: ForecastDataValue[][],
+    forecastSeriesNames?: IForecastSeriesNames,
 ): ISeriesItem[] {
     //in case of line chart, we need to add forecast axis
     if (type !== "line") {
@@ -93,10 +103,13 @@ export function assignForecastAxes(
         }),
     ];
 
+    const seriesName = firstSeries.name ?? "";
+
     return [
         { ...firstSeries, data: seriesData as ISeriesDataItem[] },
         {
             ...firstSeries,
+            ...(forecastSeriesNames ? { name: forecastSeriesNames.confidenceInterval(seriesName) } : {}),
             data: rangeData as ISeriesDataItem[],
             type: "arearange",
             marker: {
@@ -109,6 +122,7 @@ export function assignForecastAxes(
         },
         {
             ...firstSeries,
+            ...(forecastSeriesNames ? { name: forecastSeriesNames.forecast(seriesName) } : {}),
             data: predictedData as ISeriesDataItem[],
             dashStyle: "dash",
             showInLegend: false,

@@ -27,6 +27,7 @@ import {
     readJumpText,
     selectWeek,
     trimWeekWindow,
+    weekLiteralsToDays,
     weekSelectionToPeriodRange,
     widenWeekWindow,
 } from "./weeks.js";
@@ -339,37 +340,77 @@ describe("selectWeek", () => {
         expect(selectWeek(closed, july19)).toEqual({ from: "2026-07-19", to: "2026-07-25", anchor: july19 });
     });
 
-    it("reports the days from the first week's first day to the last week's last day", () => {
+    it("reports the first and the last week as week literals", () => {
         const selection = selectWeek(
             selectWeek(undefined, getWeek("2026-12-27", "Sunday")),
             getWeek("2027-01-17", "Sunday"),
         );
 
-        expect(weekSelectionToPeriodRange(selection)).toStrictEqual({ from: "2026-12-27", to: "2027-01-23" });
+        expect(weekSelectionToPeriodRange(selection, "Sunday")).toStrictEqual({
+            from: "2026-53",
+            to: "2027-03",
+        });
+    });
+
+    it("reports the Monday weeks as their ISO weeks", () => {
+        const selection = selectWeek(
+            selectWeek(undefined, getWeek("2026-12-28", "Monday")),
+            getWeek("2027-01-04", "Monday"),
+        );
+
+        expect(weekSelectionToPeriodRange(selection, "Monday")).toStrictEqual({
+            from: "2026-53",
+            to: "2027-01",
+        });
+    });
+});
+
+describe("weekLiteralsToDays", () => {
+    it.each([
+        ["Sunday", "2026-07-19", "2026-08-08"],
+        ["Monday", "2026-07-20", "2026-08-09"],
+    ] as [WeekStart, string, string][])(
+        "resolves the weeks 2026-30 - 2026-32 under %s to %s - %s",
+        (weekStart, from, to) => {
+            expect(weekLiteralsToDays({ from: "2026-30", to: "2026-32" }, weekStart)).toStrictEqual({
+                from,
+                to,
+            });
+        },
+    );
+
+    it("leaves a missing or invalid week undefined", () => {
+        expect(weekLiteralsToDays({ from: "2026-54", to: undefined }, "Sunday")).toStrictEqual({
+            from: undefined,
+            to: undefined,
+        });
     });
 });
 
 describe("periodRangeToWeekSelection", () => {
     it.each([
-        ["Sunday", "2026-07-19", "2026-07-25"],
-        ["Sunday", "2026-07-19", "2026-08-08"],
-        ["Monday", "2026-07-20", "2026-07-26"],
-    ] as [WeekStart, string, string][])("selects the %s weeks %s - %s", (weekStart, from, to) => {
-        expect(periodRangeToWeekSelection({ from, to }, weekStart)).toStrictEqual<IWeekSelection>({
-            from,
-            to,
-        });
-    });
+        ["Sunday", "2026-30", "2026-30", "2026-07-19", "2026-07-25"],
+        ["Sunday", "2026-30", "2026-32", "2026-07-19", "2026-08-08"],
+        ["Monday", "2026-30", "2026-30", "2026-07-20", "2026-07-26"],
+    ] as [WeekStart, string, string, string, string][])(
+        "selects the %s weeks %s - %s as %s - %s",
+        (weekStart, fromWeek, toWeek, from, to) => {
+            expect(
+                periodRangeToWeekSelection({ from: fromWeek, to: toWeek }, weekStart),
+            ).toStrictEqual<IWeekSelection>({
+                from,
+                to,
+            });
+        },
+    );
 
     it.each([
-        ["Monday", "2026-07-19", "2026-07-25"],
-        ["Sunday", "2026-07-20", "2026-07-26"],
-        ["Sunday", "2026-07-22", "2026-07-28"],
-        ["Sunday", "2026-07-26", "2026-07-25"],
-        ["Sunday", "2026-07-19", undefined],
-        ["Sunday", undefined, "2026-07-25"],
-        ["Sunday", "2026-07-19 00:00", "2026-07-25 23:59"],
-        ["Sunday", "2026-7-19", "2026-07-25"],
+        ["Sunday", "2026-31", "2026-30"],
+        ["Sunday", "2026-30", undefined],
+        ["Sunday", undefined, "2026-30"],
+        ["Sunday", "2026-54", "2026-54"],
+        ["Sunday", "2026-7", "2026-30"],
+        ["Sunday", "2026-07-19", "2026-07-25"],
     ] as [WeekStart, string | undefined, string | undefined][])(
         "selects nothing under %s for %s - %s",
         (weekStart, from, to) => {
@@ -378,10 +419,10 @@ describe("periodRangeToWeekSelection", () => {
     );
 
     it.each([
-        ["Sunday", "1850-03-03", "1850-03-09"],
-        ["Sunday", "1899-12-24", "1900-01-06"],
-        ["Monday", "2101-01-03", "2101-01-09"],
-        ["Sunday", "9999-12-26", "9999-12-31"],
+        ["Sunday", "1850-10", "1850-10"],
+        ["Sunday", "1899-52", "1900-01"],
+        ["Monday", "2101-01", "2101-01"],
+        ["Sunday", "9999-52", "9999-52"],
     ] as [WeekStart, string, string][])(
         "selects nothing under %s for the weeks %s - %s outside the listed years",
         (weekStart, from, to) => {
@@ -390,11 +431,17 @@ describe("periodRangeToWeekSelection", () => {
     );
 
     it.each([
-        ["Sunday", "1899-12-31", "1900-01-06"],
-        ["Monday", "2100-12-27", "2101-01-02"],
-    ] as [WeekStart, string, string][])("selects the %s edge week %s - %s", (weekStart, from, to) => {
-        expect(periodRangeToWeekSelection({ from, to }, weekStart)).toStrictEqual({ from, to });
-    });
+        ["Sunday", "1900-01", "1899-12-31", "1900-01-06"],
+        ["Monday", "2100-52", "2100-12-27", "2101-01-02"],
+    ] as [WeekStart, string, string, string][])(
+        "selects the %s edge week %s as %s - %s",
+        (weekStart, week, from, to) => {
+            expect(periodRangeToWeekSelection({ from: week, to: week }, weekStart)).toStrictEqual({
+                from,
+                to,
+            });
+        },
+    );
 });
 
 describe("labels", () => {

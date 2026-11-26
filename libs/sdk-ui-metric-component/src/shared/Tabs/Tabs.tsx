@@ -7,6 +7,7 @@ import {
     type MouseEvent,
     type ReactElement,
     type RefObject,
+    useCallback,
     useEffect,
     useRef,
     useState,
@@ -32,6 +33,7 @@ import { useTabCallbacks } from "./hooks/useTabCallbacks.js";
 import { useTabsCallbacks } from "./hooks/useTabsCallbacks.js";
 import { type ITabsLabels, useTabsLabels } from "./hooks/useTabsLabels.js";
 import { NameButton, Tab, TabActive, TabRoot, TitleText } from "./Tab.js";
+import { TabListFocusContext } from "./tabListFocus.js";
 import { TabsClasses } from "./Tabs.classes.js";
 import { type ITabContentProps, type ITabsProps, TabMaxWidth, TabsIconSize } from "./Tabs.data.js";
 
@@ -250,6 +252,11 @@ export function Tabs({
     );
 
     const onTabListKeyDown = useTabListKeyboard(tabsElement, tabs, active, onTabActiveHandler);
+    // the content of a newly selected tab leaves the focus on the tab when the user is in the tab list
+    const isFocusInTabList = useCallback(
+        () => !!tabsElement?.contains(document.activeElement),
+        [tabsElement],
+    );
 
     const Content: ComponentClass<ITabContentProps> | FunctionComponent<ITabContentProps> | undefined =
         content;
@@ -360,8 +367,10 @@ export function Tabs({
                     />
                 </div>
             </div>
-            {Content && tabs[active] && <Content tab={tabs[active]} />}
-            {render && tabs[active] && render({ tab: tabs[active] })}
+            <TabListFocusContext.Provider value={isFocusInTabList}>
+                {Content && tabs[active] && <Content tab={tabs[active]} />}
+                {render && tabs[active] && render({ tab: tabs[active] })}
+            </TabListFocusContext.Provider>
         </div>
     );
 }

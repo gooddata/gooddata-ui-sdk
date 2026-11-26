@@ -3,7 +3,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { idRef } from "@gooddata/sdk-model";
+import { type FilterContextItem, idRef } from "@gooddata/sdk-model";
 
 import { changeParameterValues } from "../../../../model/commands/parameters.js";
 import { selectSupportsCrossFiltering } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -29,6 +29,12 @@ import { useResetFiltersButton } from "./useResetFiltersButton.js";
 
 const topNRef = idRef("topN", "parameter");
 const NO_FILTERS: never[] = [];
+
+const fixtures: {
+    parameterResetTargets: unknown[];
+    originalFilters: FilterContextItem[];
+    currentFilters: FilterContextItem[];
+} = { parameterResetTargets: [], originalFilters: NO_FILTERS, currentFilters: NO_FILTERS };
 
 const mockUseDashboardSelector = vi.fn();
 const mockDispatch = vi.fn<(action: { type: string }) => void>();
@@ -62,12 +68,18 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
 describe("useResetFiltersButton", () => {
     beforeEach(() => {
         mockDispatch.mockReset();
+        fixtures.parameterResetTargets = [{ ref: topNRef, value: 10 }];
+        fixtures.originalFilters = NO_FILTERS;
+        fixtures.currentFilters = NO_FILTERS;
         mockUseDashboardSelector.mockImplementation((selector: unknown) => {
             if (selector === selectActiveTabParameterResetTargets) {
-                return [{ ref: topNRef, value: 10 }];
+                return fixtures.parameterResetTargets;
             }
-            if (selector === selectOriginalFilterContextFilters || selector === selectFilterContextFilters) {
-                return NO_FILTERS;
+            if (selector === selectOriginalFilterContextFilters) {
+                return fixtures.originalFilters;
+            }
+            if (selector === selectFilterContextFilters) {
+                return fixtures.currentFilters;
             }
             if (selector === selectActiveTabLocalIdentifier) {
                 return "tab-1";
@@ -106,5 +118,64 @@ describe("useResetFiltersButton", () => {
         expect(mockDispatch.mock.calls.map(([action]) => action.type)).not.toContain(
             "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
         );
+    });
+
+    describe("common date filter of the new type", () => {
+        const months = (to: string | undefined, localIdentifier?: string): FilterContextItem => ({
+            dashboardAbsoluteGranularityDateFilter: {
+                granularity: "GDC.time.month",
+                from: "2026-01",
+                to,
+                ...(localIdentifier ? { localIdentifier } : {}),
+            } as never,
+        });
+
+        beforeEach(() => {
+            fixtures.parameterResetTargets = [];
+        });
+
+        it("cannot reset when only undefined bounds differ", () => {
+            fixtures.originalFilters = [
+                {
+                    dashboardAbsoluteGranularityDateFilter: {
+                        granularity: "GDC.time.month",
+                        from: "2026-01",
+                    },
+                },
+            ];
+            fixtures.currentFilters = [months(undefined)];
+
+            const { result } = renderHook(() => useResetFiltersButton());
+
+            expect(result.current.canReset).toBe(false);
+        });
+
+        it("cannot reset when the original filter has no local identifier yet", () => {
+            fixtures.originalFilters = [months("2026-03")];
+            fixtures.currentFilters = [months("2026-03", "date")];
+
+            const { result } = renderHook(() => useResetFiltersButton());
+
+            expect(result.current.canReset).toBe(false);
+        });
+
+        it("resets a changed filter to the original new type", () => {
+            fixtures.originalFilters = [months("2026-03", "date")];
+            fixtures.currentFilters = [months("2026-06", "date")];
+
+            const { result } = renderHook(() => useResetFiltersButton());
+
+            expect(result.current.canReset).toBe(true);
+            act(() => {
+                result.current.resetFilters();
+            });
+
+            expect(mockDispatch).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
+                    payload: expect.objectContaining({ filters: [months("2026-03", "date")] }),
+                }),
+            );
+        });
     });
 });

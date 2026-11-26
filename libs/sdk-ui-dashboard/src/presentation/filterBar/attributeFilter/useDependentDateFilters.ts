@@ -10,6 +10,7 @@ import {
     type IDashboardDateFilter,
     type ObjRef,
     dashboardAttributeFilterItemFilterElementsByDate,
+    isDashboardDateFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
@@ -73,7 +74,10 @@ export const useDependentDateFilters = (
     const commonDateFilter = isApplyAllAtOnceEnabledAndSet
         ? commonWorkingDateFilter
         : commonAppliedDateFilter;
-    const commonDateFilterWithAllTime = getCommonDateFilterWithAllTime(commonDateFilter);
+    // Whole periods of the common date filter do not limit the values of a dependent filter yet.
+    const commonDateFilterWithAllTime = getCommonDateFilterWithAllTime(
+        isDashboardDateFilter(commonDateFilter) ? commonDateFilter : undefined,
+    );
 
     const filterElementsByDate = dashboardAttributeFilterItemFilterElementsByDate(filter);
 

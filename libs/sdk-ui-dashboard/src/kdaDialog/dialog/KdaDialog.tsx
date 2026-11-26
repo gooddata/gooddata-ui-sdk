@@ -24,7 +24,11 @@ import { useCloseOnEscape } from "./hooks/useCloseOnEscape.js";
 import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
 import { useValidAttributes } from "./hooks/useValidAttributes.js";
 import { KdaDialogControls } from "./KdaDialogControls.js";
-import { KdaDialogFloatingStatusBar, getFloatingStatus } from "./KdaDialogFloatingStatusBar.js";
+import {
+    KdaDialogFloatingStatusBar,
+    KdaDialogStatusAnnouncer,
+    getFloatingStatus,
+} from "./KdaDialogFloatingStatusBar.js";
 import { KdaDialogSections } from "./KdaDialogSections.js";
 
 const overlayController = OverlayController.getInstance(KDA_DIALOG_OVERS_Z_INDEX);
@@ -79,6 +83,11 @@ export function KdaDialog({
 
     return (
         <OverlayControllerProvider overlayController={effectiveOverlayController}>
+            <KdaDialogStatusAnnouncer
+                dialogTitle={accessibilityConfig.title}
+                status={status}
+                isMinimized={isMinimized}
+            />
             {isMinimized ? (
                 <Dialog
                     autofocusOnOpen
@@ -115,6 +124,10 @@ export function KdaDialog({
                     accessibilityConfig={{
                         ...accessibilityConfig,
                         title: undefined,
+                        // The visible header title names the expanded dialog. It is not used as
+                        // a description, so the header controls do not repeat it on every focus.
+                        titleElementId: accessibilityConfig.descriptionElementId,
+                        descriptionElementId: undefined,
                     }}
                     displayCloseButton={displayCloseButton}
                     onClose={onClose}

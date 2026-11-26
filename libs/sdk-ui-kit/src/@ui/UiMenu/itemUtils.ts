@@ -206,6 +206,33 @@ export const getSiblingItems = <T extends IUiMenuItemData = object>(
 };
 
 /**
+ * Gets the position of a menu item (1-based) and the total number of menu items on its menu level,
+ * counted across all groups on that level. Only interactive and content items (rendered as menu items)
+ * are counted.
+ *
+ * Groups render their items inside separate `role="group"` elements, which makes assistive technologies
+ * count positions per group ("1 of 1"); these values are used for `aria-posinset` and `aria-setsize`
+ * so positions reflect the whole menu level instead.
+ *
+ * @internal
+ */
+export const getItemPositionInMenuLevel = <T extends IUiMenuItemData = object>(
+    items: IUiMenuItem<T>[],
+    itemId: string,
+): { posInSet: number; setSize: number } | undefined => {
+    const menuItems = unwrapGroupItems(getSiblingItems(items, itemId) ?? []).filter(
+        (item) => item.type === "interactive" || item.type === "content",
+    );
+    const index = menuItems.findIndex((item) => item.id === itemId);
+
+    if (index === -1) {
+        return undefined;
+    }
+
+    return { posInSet: index + 1, setSize: menuItems.length };
+};
+
+/**
  * Gets all next sibling items of a menu item with wraparound.
  * @internal
  */

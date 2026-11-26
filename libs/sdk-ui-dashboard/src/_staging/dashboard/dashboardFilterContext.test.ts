@@ -4,7 +4,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { uriRef } from "@gooddata/sdk-model";
+import { idRef, newAbsoluteGranularityDateFilter, uriRef } from "@gooddata/sdk-model";
 
 import { EmptyDashboardWithReferences } from "../../tests/Dashboard.test.helpers.js";
 import { SimpleDashboardWithReferences } from "../../tests/SimpleDashboard.test.helpers.js";
@@ -13,6 +13,7 @@ import { defaultDateFilterConfig } from "../dateFilterConfig/defaultConfig.js";
 import {
     dashboardFilterContextDefinition,
     dashboardFilterContextSanitize,
+    dashboardFilterToFilterContextItem,
 } from "./dashboardFilterContext.js";
 import {
     TestFilterContext,
@@ -95,5 +96,49 @@ describe("omitNonExistingParentsFromFilterContext", () => {
                 },
             },
         ]);
+    });
+});
+
+describe("dashboardFilterToFilterContextItem", () => {
+    const dataSet = idRef("closed", "dataSet");
+    const filter = newAbsoluteGranularityDateFilter(dataSet, "GDC.time.week", "2026-05", "2026-08", {
+        localIdentifier: "date",
+        emptyValueHandling: "include",
+    });
+
+    it("should convert an absolute date filter with granularity to the common date filter", () => {
+        expect(dashboardFilterToFilterContextItem(filter, false)).toStrictEqual({
+            dashboardAbsoluteGranularityDateFilter: {
+                granularity: "GDC.time.week",
+                from: "2026-05",
+                to: "2026-08",
+                emptyValueHandling: "include",
+                localIdentifier: "date",
+            },
+        });
+    });
+
+    it("should keep the date dataset of an absolute date filter with granularity", () => {
+        expect(dashboardFilterToFilterContextItem(filter, true)).toEqual({
+            dashboardAbsoluteGranularityDateFilter: {
+                granularity: "GDC.time.week",
+                from: "2026-05",
+                to: "2026-08",
+                emptyValueHandling: "include",
+                localIdentifier: "date",
+                dataSet,
+            },
+        });
+    });
+
+    it("should convert only one bound without a local identifier", () => {
+        expect(
+            dashboardFilterToFilterContextItem(
+                newAbsoluteGranularityDateFilter(dataSet, "GDC.time.month", "2026-03"),
+                false,
+            ),
+        ).toStrictEqual({
+            dashboardAbsoluteGranularityDateFilter: { granularity: "GDC.time.month", from: "2026-03" },
+        });
     });
 });

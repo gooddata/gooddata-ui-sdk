@@ -10,11 +10,15 @@ import {
     type DashboardTextAttributeFilter,
     type DateFilterGranularity,
     type DateFilterType,
+    type DatePeriodGranularity,
+    type DatePeriodLiteral,
+    type DatePeriodRange,
     type DateString,
     type EmptyValues,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type IAttributeElements,
+    type IDashboardAbsoluteGranularityDateFilter,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterByDate,
     type IDashboardAttributeFilterParent,
@@ -31,12 +35,15 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     isAttributeElementsByRef,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
-    isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
+    isDashboardDateFilterOfAnyType,
     isDashboardDateFilterWithDimension,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
@@ -324,9 +331,64 @@ export interface IUpsertDateFilterNonAllTimePayload {
 }
 
 /**
+ * Whole periods of the common date filter.
+ *
  * @internal
  */
-export type IUpsertDateFilterPayload = IUpsertDateFilterAllTimePayload | IUpsertDateFilterNonAllTimePayload;
+export interface IUpsertDateFilterAbsoluteGranularityPayload {
+    readonly type: "absoluteGranularity";
+    readonly granularity: DatePeriodGranularity;
+    readonly from?: DatePeriodLiteral;
+    readonly to?: DatePeriodLiteral;
+    readonly isWorkingSelectionChange?: boolean;
+    readonly localIdentifier?: string;
+    readonly emptyValueHandling?: EmptyValues;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    readonly tabLocalIdentifier?: string;
+    /**
+     * When true, tabs this change is synced to restore their own saved initial date filter instead of this payload.
+     */
+    readonly restoreTargetOriginal?: boolean;
+}
+
+/**
+ * @internal
+ */
+export type IUpsertDateFilterPayload =
+    | IUpsertDateFilterAllTimePayload
+    | IUpsertDateFilterNonAllTimePayload
+    | IUpsertDateFilterAbsoluteGranularityPayload;
+
+/**
+ * The date data set of the upserted date filter, undefined for the common date filter.
+ *
+ * @internal
+ */
+export function upsertDateFilterPayloadDataSet(payload: IUpsertDateFilterPayload): ObjRef | undefined {
+    return payload.type === "absoluteGranularity" ? undefined : payload.dataSet;
+}
+
+function newDashboardAbsoluteGranularityDateFilter(
+    payload: IUpsertDateFilterAbsoluteGranularityPayload,
+    localIdentifier: string | undefined,
+): IDashboardAbsoluteGranularityDateFilter {
+    const { granularity, from, to, emptyValueHandling } = payload;
+    return {
+        dashboardAbsoluteGranularityDateFilter: {
+            granularity,
+            ...((from === undefined
+                ? { to }
+                : to === undefined
+                  ? { from }
+                  : { from, to }) as DatePeriodRange),
+            ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
+        },
+    };
+}
 
 const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayload>> = (state, action) => {
     const tab = getTabOrActive(state, action.payload.tabLocalIdentifier);
@@ -346,7 +408,7 @@ function upsertDateFilterOnTab(targetTab: ITabState, payload: IUpsertDateFilterP
         : targetTab.filterContext.filterContextDefinition;
     invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
 
-    const dateDataSet = payload.dataSet;
+    const dateDataSet = upsertDateFilterPayloadDataSet(payload);
 
     let existingFilterIndex: number = -1;
 
@@ -356,11 +418,28 @@ function upsertDateFilterOnTab(targetTab: ITabState, payload: IUpsertDateFilterP
         );
     } else {
         existingFilterIndex = filterContextDefinition.filters.findIndex((item) =>
-            isDashboardCommonDateFilter(item),
+            isDashboardCommonDateFilterOfAnyType(item),
         );
     }
 
-    if (payload.isWorkingSelectionChange && payload.type === "allTime") {
+    // A change of the type of the common date filter keeps its local identifier.
+    const existingFilter = filterContextDefinition.filters[existingFilterIndex];
+    const existingLocalIdentifier =
+        isDashboardAbsoluteGranularityDateFilter(existingFilter) || isDashboardDateFilter(existingFilter)
+            ? dashboardFilterLocalIdentifier(existingFilter)
+            : undefined;
+
+    if (payload.type === "absoluteGranularity") {
+        const dateFilter = newDashboardAbsoluteGranularityDateFilter(
+            payload,
+            payload.localIdentifier ?? existingLocalIdentifier,
+        );
+        if (existingFilterIndex >= 0) {
+            filterContextDefinition.filters[existingFilterIndex] = dateFilter;
+        } else {
+            filterContextDefinition.filters.unshift(dateFilter);
+        }
+    } else if (payload.isWorkingSelectionChange && payload.type === "allTime") {
         // we need to allways set working filter to distinguish between "not changed" and "all time" filter
         if (existingFilterIndex >= 0) {
             const dateFilter = filterContextDefinition.filters[existingFilterIndex];
@@ -368,6 +447,12 @@ function upsertDateFilterOnTab(targetTab: ITabState, payload: IUpsertDateFilterP
                 filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
                     dateFilter.dateFilter.dataSet,
                     dateFilter.dateFilter.localIdentifier,
+                    payload.emptyValueHandling,
+                );
+            } else if (isDashboardAbsoluteGranularityDateFilter(dateFilter)) {
+                filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
+                    undefined,
+                    existingLocalIdentifier,
                     payload.emptyValueHandling,
                 );
             }
@@ -397,7 +482,7 @@ function upsertDateFilterOnTab(targetTab: ITabState, payload: IUpsertDateFilterP
                     // Preserve all-time common DF when it carries additional config (e.g. emptyValueHandling).
                     filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
                         undefined,
-                        payload.localIdentifier,
+                        payload.localIdentifier ?? existingLocalIdentifier,
                         payload.emptyValueHandling,
                     );
                 } else {
@@ -436,6 +521,19 @@ function upsertDateFilterOnTab(targetTab: ITabState, payload: IUpsertDateFilterP
             } else {
                 delete dateFilter.dateFilter.emptyValueHandling;
             }
+        } else if (isDashboardAbsoluteGranularityDateFilter(dateFilter)) {
+            const filterLocalIdentifier = localIdentifier ?? existingLocalIdentifier;
+            filterContextDefinition.filters[existingFilterIndex] = {
+                dateFilter: {
+                    granularity,
+                    type,
+                    from,
+                    to,
+                    ...(filterLocalIdentifier ? { localIdentifier: filterLocalIdentifier } : {}),
+                    ...(boundedFilter ? { boundedFilter } : {}),
+                    ...(emptyValueHandling ? { emptyValueHandling } : {}),
+                },
+            };
         }
     } else {
         const { type, granularity, from, to, dataSet, localIdentifier, boundedFilter, emptyValueHandling } =
@@ -1366,7 +1464,7 @@ const addDateFilter: FilterContextReducer<PayloadAction<IAddDateFilterReducerPay
     };
 
     // Only draggable filters are indexed, if DateFilter is present should be always first item
-    const isCommonDateFilterPresent = definition.filters.findIndex(isDashboardCommonDateFilter) >= 0;
+    const isCommonDateFilterPresent = definition.filters.findIndex(isDashboardCommonDateFilterOfAnyType) >= 0;
 
     if (index === -1) {
         definition.filters.push(filter);
@@ -1420,7 +1518,7 @@ const addMeasureValueFilter: FilterContextReducer<PayloadAction<IAddMeasureValue
         },
     };
 
-    const isCommonDateFilterPresent = definition.filters.findIndex(isDashboardCommonDateFilter) >= 0;
+    const isCommonDateFilterPresent = definition.filters.findIndex(isDashboardCommonDateFilterOfAnyType) >= 0;
 
     if (index === -1) {
         definition.filters.push(filter);
@@ -1497,7 +1595,7 @@ const moveMeasureValueFilter: FilterContextReducer<PayloadAction<IMoveMeasureVal
     const filter = filters[currentFilterIndex];
     filters.splice(currentFilterIndex, 1);
 
-    const isCommonDateFilterPresent = filters.findIndex(isDashboardCommonDateFilter) >= 0;
+    const isCommonDateFilterPresent = filters.findIndex(isDashboardCommonDateFilterOfAnyType) >= 0;
 
     if (index === -1) {
         filters.push(filter);
@@ -1641,7 +1739,7 @@ const moveDateFilter: FilterContextReducer<PayloadAction<IMoveDateFilterPayload>
     filters.splice(currentFilterIndex, 1);
 
     // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
-    const isCommonDateFilterPresent = filters.findIndex(isDashboardCommonDateFilter) >= 0;
+    const isCommonDateFilterPresent = filters.findIndex(isDashboardCommonDateFilterOfAnyType) >= 0;
 
     if (index === -1) {
         filters.push(filter);
@@ -1952,8 +2050,8 @@ export interface IWrittenTabFilters {
 }
 
 function isWrittenFilter(filter: FilterContextItem, written: IWrittenTabFilters): boolean {
-    if (isDashboardDateFilter(filter)) {
-        const { dataSet } = filter.dateFilter;
+    if (isDashboardDateFilterOfAnyType(filter)) {
+        const dataSet = dashboardFilterObjRef(filter);
         return dataSet
             ? written.dateDataSets.some((writtenDataSet) => areObjRefsEqual(writtenDataSet, dataSet))
             : written.commonDateFilter;
@@ -2020,7 +2118,7 @@ const adoptAppliedFiltersAsOriginal: FilterContextReducer<PayloadAction<IWritten
             if (matchedOriginals.has(original) || isWrittenFilter(original, written)) {
                 continue;
             }
-            if (isDashboardCommonDateFilter(original)) {
+            if (isDashboardCommonDateFilterOfAnyType(original)) {
                 adopted.unshift(_cloneDeep(original));
             } else {
                 adopted.push(_cloneDeep(original));

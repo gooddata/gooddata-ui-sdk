@@ -319,6 +319,7 @@ function UiTreeview<Levels extends unknown[], Level>({
                     key={index}
                     treeViewId={treeViewId}
                     path={[index]}
+                    setSize={items.length}
                 />
             ))}
         </UiTreeviewRoot>

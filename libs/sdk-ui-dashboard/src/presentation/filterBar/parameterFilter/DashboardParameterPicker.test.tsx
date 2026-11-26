@@ -5,7 +5,9 @@ import { describe, expect, it, vi } from "vitest";
 
 import { type IScalarParameterMetadataObject, type IdentifierRef, idRef } from "@gooddata/sdk-model";
 
-import { tabsActions } from "../../../model/store/tabs/index.js";
+import { addParameters } from "../../../model/commands/parameters.js";
+import { selectActiveParameterRefKeys } from "../../../model/store/tabs/parameters/parametersSelectors.js";
+import { selectActiveOrDefaultTabLocalIdentifier } from "../../../model/store/tabs/tabsSelectors.js";
 
 import { DashboardParameterPicker } from "./DashboardParameterPicker.js";
 
@@ -35,6 +37,7 @@ const stringParameter: IScalarParameterMetadataObject = {
 };
 
 const mockDispatch = vi.fn();
+let activeParameterRefKeys: ReadonlySet<string> = new Set();
 const pickerCaptured: { onAdd?: (selected: ReadonlyArray<IScalarParameterMetadataObject>) => void } = {};
 
 // `isolate: false` shares one module graph per worker, so the modules mocked below may already have
@@ -47,7 +50,12 @@ vi.hoisted(() => {
 });
 
 vi.mock("../../../model/react/DashboardStoreProvider.js", () => ({
-    useDashboardSelector: () => undefined,
+    useDashboardSelector: (selector: unknown) => {
+        if (selector === selectActiveParameterRefKeys) {
+            return activeParameterRefKeys;
+        }
+        return selector === selectActiveOrDefaultTabLocalIdentifier ? "tab1" : undefined;
+    },
     useDashboardDispatch: () => mockDispatch,
 }));
 
@@ -65,25 +73,19 @@ vi.mock("@gooddata/sdk-ui-kit", async (importOriginal) => {
 });
 
 describe("DashboardParameterPicker", () => {
-    it.each([
-        ["NUMBER", numberParameter, topNRef, 10],
-        ["STRING", stringParameter, scenarioRef, "Actual"],
-    ] as const)(
-        "adds a %s parameter with its type tag and workspace default",
-        (parameterType, workspaceParameter, ref, workspaceDefault) => {
-            mockDispatch.mockReset();
-            render(<DashboardParameterPicker />);
-            pickerCaptured.onAdd!([workspaceParameter]);
-            expect(mockDispatch).toHaveBeenCalledWith(
-                tabsActions.addParameter({
-                    parameter: {
-                        ref,
-                        parameterType,
-                        mode: "active",
-                    },
-                    workspaceDefault,
-                }),
-            );
-        },
-    );
+    it("adds the whole selection with one command", () => {
+        mockDispatch.mockReset();
+        activeParameterRefKeys = new Set();
+        render(<DashboardParameterPicker />);
+        pickerCaptured.onAdd!([numberParameter, stringParameter]);
+        expect(mockDispatch.mock.calls).toEqual([[addParameters([topNRef, scenarioRef], "tab1")]]);
+    });
+
+    it("leaves out a selected parameter that is already on the active tab", () => {
+        mockDispatch.mockReset();
+        activeParameterRefKeys = new Set(["topN"]);
+        render(<DashboardParameterPicker />);
+        pickerCaptured.onAdd!([numberParameter, stringParameter]);
+        expect(mockDispatch.mock.calls).toEqual([[addParameters([scenarioRef], "tab1")]]);
+    });
 });

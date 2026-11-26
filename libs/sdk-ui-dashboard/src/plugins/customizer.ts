@@ -21,6 +21,7 @@ import type {
     OptionalAttributeFilterComponentProvider,
     OptionalDashboardContentComponentProvider,
     OptionalDateFilterComponentProvider,
+    OptionalDateFilterOfAnyTypeComponentProvider,
     OptionalFilterBarComponentProvider,
     OptionalFilterGroupComponentProvider,
     OptionalInsightBodyComponentProvider,
@@ -1307,6 +1308,24 @@ export interface IDateFiltersCustomizer {
      * @returns self, for call chaining sakes
      */
     withCustomProvider(provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
+
+    /**
+     * Register a provider for React components to render date filters of any type, including the absolute
+     * date filter with granularity.
+     *
+     * @remarks
+     * Providers registered by this method and by {@link IDateFiltersCustomizer.withCustomProvider} form one
+     * chain evaluated in the order you register them. A provider registered by
+     * {@link IDateFiltersCustomizer.withCustomProvider} is skipped for an absolute date filter with
+     * granularity.
+     *
+     * @param provider - provider to register
+     * @returns self, for call chaining sakes
+     * @alpha
+     */
+    withCustomProviderOfAnyType(
+        provider: OptionalDateFilterOfAnyTypeComponentProvider,
+    ): IDateFiltersCustomizer;
 }
 
 /**

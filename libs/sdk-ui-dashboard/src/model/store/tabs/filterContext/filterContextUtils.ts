@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type DashboardDateFilterOfAnyType,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type IDashboardAttributeFilter,
@@ -11,21 +12,89 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
     dashboardMeasureValueFilterLocalIdentifier,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
-    isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
+    isDashboardParameterizedDateFilter,
     isNoopAllTimeDashboardDateFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { _partition } from "@gooddata/util";
+import { _omitBy, _partition } from "@gooddata/util";
 
 import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
 
 import type { FilterContextState, IWorkingFilterContextDefinition } from "./filterContextState.js";
+
+/**
+ * The working common date filter replaces the applied one, also when its type differs. The applied local
+ * identifier is kept.
+ */
+function mergeCommonDateFilter(
+    appliedFilter: DashboardDateFilterOfAnyType,
+    workingFilter: DashboardDateFilterOfAnyType,
+): DashboardDateFilterOfAnyType {
+    const localIdentifier = dashboardFilterLocalIdentifier(appliedFilter);
+    if (isDashboardAbsoluteGranularityDateFilter(workingFilter)) {
+        return {
+            dashboardAbsoluteGranularityDateFilter: {
+                ...workingFilter.dashboardAbsoluteGranularityDateFilter,
+                ...(localIdentifier ? { localIdentifier } : {}),
+            },
+        };
+    }
+    if (isDashboardParameterizedDateFilter(workingFilter)) {
+        return {
+            dashboardParameterizedDateFilter: {
+                ...workingFilter.dashboardParameterizedDateFilter,
+                ...(localIdentifier ? { localIdentifier } : {}),
+            },
+        };
+    }
+    if (
+        isDashboardAbsoluteGranularityDateFilter(appliedFilter) ||
+        isDashboardParameterizedDateFilter(appliedFilter)
+    ) {
+        const { type, granularity, ...rest } = workingFilter.dateFilter;
+        // a stored filter has no keys with undefined values
+        return {
+            dateFilter: {
+                ..._omitBy(rest, (value) => value === undefined),
+                type,
+                granularity,
+                ...(localIdentifier ? { localIdentifier } : {}),
+            },
+        };
+    }
+    return mergeDateFilter(appliedFilter, workingFilter);
+}
+
+function mergeDateFilter(appliedFilter: IDashboardDateFilter, workingFilter: IDashboardDateFilter) {
+    const dateFilter = {
+        dateFilter: {
+            ...appliedFilter.dateFilter,
+            type: workingFilter.dateFilter.type,
+            granularity: workingFilter.dateFilter.granularity,
+            from: workingFilter.dateFilter.from,
+            to: workingFilter.dateFilter.to,
+            boundedFilter: workingFilter.dateFilter.boundedFilter,
+            emptyValueHandling: workingFilter.dateFilter.emptyValueHandling,
+        },
+    };
+
+    const { from, to } = dateFilter.dateFilter;
+
+    if (from === undefined && to === undefined) {
+        delete dateFilter.dateFilter.from;
+        delete dateFilter.dateFilter.to;
+    }
+
+    return dateFilter;
+}
 
 /**
  * Deeply merges partial working filter context into filter context definition.
@@ -88,38 +157,24 @@ export function applyFilterContext(
                     dashboardAttributeFilterItemLocalIdentifier(item) === appliedLocalId,
             );
             return (workingFilter ?? appliedFilter) as FilterContextItem;
+        } else if (isDashboardCommonDateFilterOfAnyType(appliedFilter)) {
+            const workingFilter = workingFilterContext?.filters.find(isDashboardCommonDateFilterOfAnyType);
+            return workingFilter ? mergeCommonDateFilter(appliedFilter, workingFilter) : appliedFilter;
         } else if (isDashboardDateFilter(appliedFilter)) {
             const workingFilter: IDashboardDateFilter | undefined = workingFilterContext?.filters
                 ?.filter(isDashboardDateFilter)
-                .find(
-                    (item) =>
-                        areObjRefsEqual(item.dateFilter.dataSet, appliedFilter.dateFilter.dataSet) ||
-                        (!item.dateFilter.dataSet && !appliedFilter.dateFilter.dataSet), // common date filter
-                );
+                .find((item) => areObjRefsEqual(item.dateFilter.dataSet, appliedFilter.dateFilter.dataSet));
             if (!workingFilter?.dateFilter) {
                 return appliedFilter;
             }
 
-            const dateFilter = {
-                dateFilter: {
-                    ...appliedFilter.dateFilter,
-                    type: workingFilter.dateFilter.type,
-                    granularity: workingFilter.dateFilter.granularity,
-                    from: workingFilter.dateFilter.from,
-                    to: workingFilter.dateFilter.to,
-                    boundedFilter: workingFilter.dateFilter.boundedFilter,
-                    emptyValueHandling: workingFilter.dateFilter.emptyValueHandling,
-                },
-            };
-
-            const { from, to } = dateFilter.dateFilter;
-
-            if (from === undefined && to === undefined) {
-                delete dateFilter.dateFilter.from;
-                delete dateFilter.dateFilter.to;
-            }
-
-            return dateFilter;
+            return mergeDateFilter(appliedFilter, workingFilter);
+        } else if (
+            isDashboardAbsoluteGranularityDateFilter(appliedFilter) ||
+            isDashboardParameterizedDateFilter(appliedFilter)
+        ) {
+            // TODO MC-5776: date filters with a dimension are not merged yet, the dashboard rejects them.
+            return appliedFilter;
         } else if (isDashboardMeasureValueFilter(appliedFilter)) {
             const workingFilter = workingFilterContext?.filters
                 ?.filter(isDashboardMeasureValueFilter)
@@ -144,8 +199,8 @@ export function applyFilterContext(
         }
     });
 
-    const appliedCommonDateFilter = filterContext.filters.find(isDashboardCommonDateFilter);
-    const workingCommonDateFilter = workingFilterContext?.filters.find(isDashboardCommonDateFilter);
+    const appliedCommonDateFilter = filterContext.filters.find(isDashboardCommonDateFilterOfAnyType);
+    const workingCommonDateFilter = workingFilterContext?.filters.find(isDashboardCommonDateFilterOfAnyType);
 
     if (
         appliedCommonDateFilter ||
@@ -219,7 +274,10 @@ export function initializeFilterContextDefinition(
     // (when DateFilter is set to all time it's missing in filterContextDefinition and originalFilterContextDefinition)
     // We have to keep order of rest of array (attributeFilters and date filters with dimension)
     // it represents order of filters in filter bar
-    const [commonDateFilter, otherFilters] = _partition(filtersWithLocalId, isDashboardCommonDateFilter);
+    const [commonDateFilter, otherFilters] = _partition(
+        filtersWithLocalId,
+        isDashboardCommonDateFilterOfAnyType,
+    );
     const filters = [...commonDateFilter, ...otherFilters];
 
     return {
@@ -283,6 +341,14 @@ export function getFilterIdentifier(filter: FilterContextItem): string {
         return (
             (filter.dateFilter.dataSet && objRefToString(filter.dateFilter.dataSet)) ?? "default_date_filter"
         );
+    }
+    if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+        const { dataSet } = filter.dashboardAbsoluteGranularityDateFilter;
+        return (dataSet && objRefToString(dataSet)) ?? "default_date_filter";
+    }
+    if (isDashboardParameterizedDateFilter(filter)) {
+        const { dataSet } = filter.dashboardParameterizedDateFilter;
+        return (dataSet && objRefToString(dataSet)) ?? "default_date_filter";
     }
     if (isDashboardMeasureValueFilter(filter)) {
         return dashboardMeasureValueFilterLocalIdentifier(filter);
