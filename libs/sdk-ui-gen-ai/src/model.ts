@@ -113,6 +113,10 @@ export type IChatConversationErrorContent = {
     type: "error";
     message: string;
     code?: number;
+    /**
+     * Machine-readable failure reason. `NOT_AUTHENTICATED` identifies an authentication failure;
+     * `EMPTY_RESPONSE` identifies a completed stream with no visible assistant content.
+     */
     reason?: IChatConversationError["reason"];
     traceId?: string;
 };

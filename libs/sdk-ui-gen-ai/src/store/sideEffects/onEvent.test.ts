@@ -811,13 +811,19 @@ describe("assistant message events", () => {
         );
     });
 
-    it("does not mark an error message as a successful response completion", async () => {
+    it("reports structured prompt errors without marking successful response completion", async () => {
         const dispatch = vi.fn<(event: ChatEvent) => void>();
         const message = {
             id: "interaction-id",
             localId: "local-id",
             role: "assistant",
-            content: { type: "error", message: "Failed" },
+            content: {
+                type: "error",
+                code: 401,
+                reason: "NOT_AUTHENTICATED",
+                message: "Failed",
+                traceId: "trace",
+            },
         } as unknown as IChatConversationLocalItem;
 
         await runSaga(
@@ -838,7 +844,11 @@ describe("assistant message events", () => {
         ).toPromise();
 
         expect(dispatch).toHaveBeenCalledWith(
-            expect.objectContaining({ type: "chatAssistantMessage", useCase: "INVALID" }),
+            expect.objectContaining({
+                type: "chatAssistantMessage",
+                useCase: "INVALID",
+                error: message.content,
+            }),
         );
         expect(dispatch.mock.calls[0][0]).not.toHaveProperty("responseCompleted");
     });

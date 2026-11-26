@@ -10,7 +10,12 @@ import { type IAiAssistantDefinitionReceivedPayload } from "@gooddata/sdk-plugga
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import { type GenAIAssistantMode } from "../components/ConfigContext.js";
-import { type GenAIAgent, type IChatConversationLocal, type TextContentObject } from "../model.js";
+import {
+    type GenAIAgent,
+    type IChatConversationErrorContent,
+    type IChatConversationLocal,
+    type TextContentObject,
+} from "../model.js";
 
 /**
  * A common event definition for the Chat component.
@@ -316,6 +321,11 @@ export type ChatAssistantMessageEvent = BaseEvent & {
      * Whether this event marks the end of the full assistant response rather than an intermediate message.
      */
     responseCompleted?: boolean;
+    /**
+     * Structured prompt failure. Authentication failures use code 401 and reason `NOT_AUTHENTICATED`;
+     * permission failures retain code 403 and are not treated as expired sessions.
+     */
+    error?: IChatConversationErrorContent;
     /**
      * Skills activated while processing the message. Reported as soon as the skill item is streamed
      * and may be repeated when that item completes; activation alone does not mean the response has ended.

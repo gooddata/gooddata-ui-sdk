@@ -20,6 +20,34 @@ const App = () => {
 };
 ```
 
+## Authentication and conversation errors
+
+Reuse the authentication provider configured on the `backend`, including its `onNotAuthenticated`
+handling for sign-in or redirection. The assistant does not need a second authentication lifecycle,
+token store, or chat-specific sign-in callback. Let the existing provider and embedding application
+own authentication recovery; the assistant displays an actionable sign-in-again message for HTTP 401
+or `NOT_AUTHENTICATED` errors. An ordinary HTTP 403 means insufficient permissions, not failed
+authentication, and should not start a sign-in flow.
+
+HTTP 404 means the requested result or conversation is no longer available; it does not necessarily
+mean an expired sign-in session or a cache miss. The assistant suggests starting a new conversation
+and trying again. A response stream that closes without visible assistant content shows an
+`EMPTY_RESPONSE` error asking the user to send their question again. Backend errors end the
+response rather than leaving the assistant generating indefinitely, preserving any partial answer
+and displaying the error in a separate message. Client-side item conversion errors (`code: 0`)
+are displayed without stopping the remaining response.
+
+The existing `eventHandlers.chatAssistantMessage` event payload includes an optional
+`error: IChatConversationErrorContent` field. When present, it provides the structured error,
+including its `reason` and HTTP status `code` when available. Use this field rather than parsing
+the displayed message; no additional error callback is required. Raw error details and trace IDs
+remain available through **Show more** in the assistant UI.
+
+## UI language
+
+The `locale` prop controls the assistant's localized UI, including error messages. It does not
+guarantee the language of server-generated conversation titles or other generated content.
+
 ## Custom input placeholder
 
 Set `inputPlaceholder` on `GenAIAssistant` to override the chat input placeholder:

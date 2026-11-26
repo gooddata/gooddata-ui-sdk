@@ -330,6 +330,52 @@ describe("UiMenu", () => {
         expect(menu).toHaveAttribute("aria-activedescendant", expect.stringContaining("item4"));
     });
 
+    it.each(["click", "ArrowRight", "Enter"] as const)(
+        "should close only the submenu with Escape when it was opened by %s",
+        (openWith) => {
+            const onClose = vi.fn();
+            renderMenu({ onClose });
+
+            const menu = screen.getByRole("menu");
+
+            if (openWith === "click") {
+                fireEvent.click(screen.getByText("Item 4"));
+            } else {
+                // item1 -> item2 -> item3 (disabled) -> item4 (static skipped)
+                fireEvent.keyDown(menu, { code: "ArrowDown" });
+                fireEvent.keyDown(menu, { code: "ArrowDown" });
+                fireEvent.keyDown(menu, { code: "ArrowDown" });
+                fireEvent.keyDown(menu, { code: openWith });
+            }
+
+            expect(screen.getByRole("menu")).toHaveAttribute(
+                "aria-activedescendant",
+                expect.stringContaining("subitem1"),
+            );
+
+            fireEvent.keyDown(screen.getByRole("menu"), { code: "Escape", key: "Escape" });
+
+            // submenu closed, focus back on the parent item, the menu stays open
+            expect(onClose).not.toHaveBeenCalled();
+            expect(screen.getByRole("menu")).toHaveAttribute(
+                "aria-activedescendant",
+                "item-test-dropdown-menu-item4",
+            );
+            expect(screen.getByText("Item 1")).toBeInTheDocument();
+
+            // the parent level keeps arrow navigation
+            fireEvent.keyDown(screen.getByRole("menu"), { code: "ArrowUp" });
+            expect(screen.getByRole("menu")).toHaveAttribute(
+                "aria-activedescendant",
+                "item-test-dropdown-menu-item3",
+            );
+
+            // a second Escape closes the whole menu
+            fireEvent.keyDown(screen.getByRole("menu"), { code: "Escape", key: "Escape" });
+            expect(onClose).toHaveBeenCalledTimes(1);
+        },
+    );
+
     it("should render with custom InteractiveItemComponent", () => {
         function CustomInteractiveItemComponent({
             item,

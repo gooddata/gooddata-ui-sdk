@@ -11,6 +11,8 @@ import {
     type IChatConversationInteractionStep,
     type IChatConversationItem,
     type IChatConversationThreadQuery,
+    NotAuthenticated,
+    UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { type IPublisherDocumentDefinitionV2, type IUserWorkspaceSettings } from "@gooddata/sdk-model";
 
@@ -20,6 +22,7 @@ import { type EventDispatcher } from "../events.js";
 import { conversationMessagesByIdSelector } from "../messages/messagesSelectors.js";
 import {
     evaluateMessageCompleteAction,
+    evaluateMessageErrorAction,
     evaluateMessageStreamingAction,
     loadConversationsSuccessAction,
     messagesSliceReducer,
@@ -202,8 +205,8 @@ function setup(text = "How are sales?", current = conversation) {
             controller.close();
             await task.toPromise();
         },
-        async fail() {
-            controller.error(new Error("Stream failed"));
+        async fail(error: unknown) {
+            controller.error(error);
             await task.toPromise();
         },
     };
@@ -218,6 +221,243 @@ const clearEvent = {
 function titleEvent(title: string, interactionId = "reasoning-1") {
     return { type: "chatReasoning", threadId: conversation.id, interactionId, title };
 }
+
+describe("onUserMessage failed responses", () => {
+    function expectFinished(run: ReturnType<typeof setup>) {
+        const state = run.store.getState();
+        expect(state.messages.conversationsData[conversation.localId].asyncProcess).toBeUndefined();
+        expect(state.messages.currentConversation?.inProgress).toBe(false);
+        const messages = conversationMessagesByIdSelector(state, conversation.localId);
+        expect(
+            messages
+                .filter((message) => message.role === "assistant")
+                .every((message) => message.complete && !message.streaming),
+        ).toBe(true);
+        expect(run.events().at(-1)).toEqual(clearEvent);
+        return messages;
+    }
+
+    it("finishes typed session failures with an observable authentication error", async () => {
+        const run = setup();
+        await run.send(reasoning("# Thinking"));
+        await run.fail(new NotAuthenticated("No session or session expired"));
+
+        expect(expectFinished(run).at(-1)?.content).toMatchObject({
+            type: "error",
+            code: 401,
+            reason: "NOT_AUTHENTICATED",
+        });
+    });
+
+    it.each([401, 403, 404, 503])(
+        "terminates a streamed %s error without waiting for the stream to close",
+        async (code) => {
+            const run = setup();
+            await run.send(reasoning("# Thinking", "reasoning-1"));
+            await run.send(item({ type: "text", text: "Partial answer" }, "answer-1"));
+            await run.send({ type: "error", code, message: "Request failed", traceId: "trace-1" });
+
+            expect(run.task.isRunning()).toBe(false);
+            await run.task.toPromise();
+            const messages = expectFinished(run);
+            expect(messages).toHaveLength(4);
+            expect(messages.at(-2)).toMatchObject({
+                id: "answer-1",
+                content: { type: "text", text: "Partial answer" },
+            });
+            expect(messages.at(-1)).toMatchObject({
+                id: "",
+                content: {
+                    type: "error",
+                    code,
+                    message: "Request failed",
+                    traceId: "trace-1",
+                    ...(code === 401 ? { reason: "NOT_AUTHENTICATED" } : {}),
+                },
+            });
+            expect(run.cancelStream).toHaveBeenCalledOnce();
+        },
+    );
+
+    it("preserves a partial answer when the stream throws", async () => {
+        const run = setup();
+        await run.send(item({ type: "text", text: "Partial answer" }, "answer-1"));
+        await run.fail(new NotAuthenticated("No session or session expired"));
+
+        const messages = expectFinished(run);
+        expect(messages).toHaveLength(3);
+        expect(messages.at(-2)).toMatchObject({
+            id: "answer-1",
+            content: { type: "text", text: "Partial answer" },
+        });
+        expect(messages.at(-1)?.content).toMatchObject({
+            type: "error",
+            code: 401,
+            reason: "NOT_AUTHENTICATED",
+        });
+    });
+
+    describe.each([false, true])("falsy stream rejections (partial answer: %s)", (hasPartialAnswer) => {
+        it.each([0, false, "", null, undefined, NaN])("reports rejection %s as a failure", async (error) => {
+            const run = setup();
+            if (hasPartialAnswer) {
+                await run.send(item({ type: "text", text: "Partial answer" }, "answer-1"));
+            }
+            await run.fail(error);
+
+            const messages = expectFinished(run);
+            expect(messages.slice(1).map((message) => message.content)).toMatchObject([
+                ...(hasPartialAnswer ? [{ type: "text", text: "Partial answer" }] : []),
+                { type: "error", message: String(error) },
+            ]);
+            expect(run.actions.filter(evaluateMessageErrorAction.match)).toHaveLength(1);
+            expect(
+                run.actions.filter(evaluateMessageCompleteAction.match).at(-1)?.payload,
+            ).not.toHaveProperty("responseCompleted");
+        });
+    });
+
+    it.each(["answer-1", "answer-2"])(
+        "continues with item %s after a conversion error without losing earlier content",
+        async (nextItemId) => {
+            const run = setup();
+            await run.send(item({ type: "text", text: "Partial answer" }, "answer-1"));
+            const error: IChatConversationError = { type: "error", code: 0, message: "Invalid YAML" };
+            await run.send(error);
+
+            expect(run.task.isRunning()).toBe(true);
+            expect(run.cancelStream).not.toHaveBeenCalled();
+            expect(run.store.getState().messages.currentConversation?.inProgress).toBe(true);
+            expect(run.store.getState().messages.conversationsData[conversation.localId].asyncProcess).toBe(
+                "evaluating",
+            );
+
+            await run.send(item({ type: "text", text: "Remaining answer" }, nextItemId));
+            await run.finish();
+
+            expect(
+                expectFinished(run)
+                    .slice(1)
+                    .map((message) => message.content),
+            ).toEqual([
+                { type: "text", text: "Partial answer" },
+                error,
+                { type: "text", text: "Remaining answer" },
+            ]);
+            expect(run.actions.filter(evaluateMessageErrorAction.match)).toHaveLength(0);
+            expect(run.cancelStream).not.toHaveBeenCalled();
+        },
+    );
+
+    it("keeps consecutive conversion errors visible when the stream closes", async () => {
+        const run = setup();
+        const errors: IChatConversationError[] = [
+            { type: "error", code: 0, message: "Invalid visualization YAML" },
+            { type: "error", code: 0, message: "Invalid document YAML" },
+        ];
+        for (const error of errors) {
+            await run.send(error);
+            expect(run.task.isRunning()).toBe(true);
+        }
+        await run.finish();
+
+        expect(
+            expectFinished(run)
+                .slice(1)
+                .map((message) => message.content),
+        ).toEqual(errors);
+        expect(run.actions.filter(evaluateMessageErrorAction.match)).toHaveLength(0);
+        expect(run.cancelStream).not.toHaveBeenCalled();
+    });
+
+    it("terminates a backend error after a recoverable conversion error", async () => {
+        const run = setup();
+        const conversionError: IChatConversationError = { type: "error", code: 0, message: "Invalid YAML" };
+        await run.send(conversionError);
+        await run.send({ type: "error", code: 401, message: "Unauthorized" });
+
+        expect(run.task.isRunning()).toBe(false);
+        await run.task.toPromise();
+        const messages = expectFinished(run);
+        expect(messages.at(-2)?.content).toEqual(conversionError);
+        expect(messages.at(-1)?.content).toMatchObject({
+            type: "error",
+            code: 401,
+            reason: "NOT_AUTHENTICATED",
+        });
+        expect(run.cancelStream).toHaveBeenCalledOnce();
+    });
+
+    it.each(["pending", "rejected"])(
+        "does not let %s reader cancellation strand an error",
+        async (cleanup) => {
+            const run = setup();
+            run.cancelStream.mockImplementationOnce(() =>
+                cleanup === "pending"
+                    ? new Promise<void>(() => undefined)
+                    : Promise.reject(new Error("Cleanup failed")),
+            );
+            await run.send({ type: "error", code: 401, message: "Unauthorized" });
+
+            expect(run.task.isRunning()).toBe(false);
+            await run.task.toPromise();
+            expect(expectFinished(run).at(-1)?.content).toMatchObject({
+                type: "error",
+                code: 401,
+                reason: "NOT_AUTHENTICATED",
+            });
+        },
+    );
+
+    it("keeps structured HTTP errors on the last assistant message", async () => {
+        const run = setup();
+        await run.send(reasoning("# Thinking"));
+        await run.fail(
+            new UnexpectedResponseError("Request failed", 404, {
+                detail: "Result not found in result cache.",
+                traceId: "trace-cache",
+            }),
+        );
+
+        expect(expectFinished(run).at(-1)?.content).toMatchObject({
+            type: "error",
+            code: 404,
+            traceId: "trace-cache",
+        });
+    });
+
+    it.each([
+        { name: "empty stream", chunks: [] },
+        { name: "user echo only", chunks: [item({ type: "text", text: "Question" }, "user-1", "user")] },
+        { name: "empty reasoning", chunks: [reasoning("")] },
+        { name: "whitespace answer", chunks: [item({ type: "text", text: "  \n" })] },
+        {
+            name: "tool only",
+            chunks: [
+                item({ type: "toolCall", id: "call-1", callId: "call-1", name: "search", arguments: {} }),
+            ],
+        },
+    ])("surfaces an actionable error for $name", async ({ chunks }) => {
+        const run = setup();
+        for (const chunk of chunks) {
+            await run.send(chunk);
+        }
+        await run.finish();
+
+        expect(expectFinished(run).at(-1)?.content).toMatchObject({
+            type: "error",
+            reason: "EMPTY_RESPONSE",
+        });
+    });
+
+    it("does not replace a successful answer when the stream closes", async () => {
+        const run = setup();
+        await run.send(item({ type: "text", text: "Sales are growing." }));
+        await run.finish();
+
+        expect(expectFinished(run).at(-1)?.content).toEqual({ type: "text", text: "Sales are growing." });
+    });
+});
 
 describe("onUserMessage raw content", () => {
     it.each([
@@ -359,12 +599,14 @@ describe("onUserMessage conversation identity", () => {
                 run.task.cancel();
                 await run.task.toPromise();
             } else if (outcome === "failed") {
-                await run.fail();
+                await run.fail(new Error("Stream failed"));
             } else {
                 if (outcome === "error chunk") {
                     await run.send({ type: "error", code: 500, message: "Failed" });
+                    await run.task.toPromise();
+                } else {
+                    await run.finish();
                 }
-                await run.finish();
             }
 
             const streaming = run.actions.filter(evaluateMessageStreamingAction.match);
@@ -379,6 +621,88 @@ describe("onUserMessage conversation identity", () => {
                     }),
                 );
             }
+        },
+    );
+});
+
+describe("onUserMessage cancellation with replacement messages", () => {
+    it.each(["item", "conversion error", "content after conversion error"] as const)(
+        "completes the active message once when cancelled after %s",
+        async (kind) => {
+            const run = setup();
+            await run.send(item({ type: "text", text: "Partial answer" }, "answer-1"));
+            if (kind === "item") {
+                await run.send(item({ type: "text", text: "More content" }, "answer-2"));
+            } else {
+                await run.send({ type: "error", code: 0, message: "Invalid YAML" });
+                if (kind === "content after conversion error") {
+                    await run.send(item({ type: "text", text: "More content" }, "answer-2"));
+                }
+            }
+            const messagesBeforeCancellation = conversationMessagesByIdSelector(
+                run.store.getState(),
+                conversation.localId,
+            ).slice(1);
+
+            run.task.cancel();
+            await run.task.toPromise();
+
+            const completions = run.actions.filter(evaluateMessageCompleteAction.match);
+            expect(completions.map(({ payload }) => payload.assistantMessageId)).toEqual(
+                messagesBeforeCancellation.map((message) => message.localId),
+            );
+            expect(completions.at(-1)?.payload).toMatchObject({
+                assistantMessageId: messagesBeforeCancellation.at(-1)?.localId,
+                cancelled: true,
+            });
+            expect(completions.at(-1)?.payload.responseCompleted).toBeUndefined();
+            const messages = conversationMessagesByIdSelector(run.store.getState(), conversation.localId);
+            expect(messages.slice(1).every((message) => message.complete && !message.streaming)).toBe(true);
+            expect(messages.at(-1)?.cancelled).toBe(true);
+            expect(messages.slice(1).map((message) => message.content)).toEqual(
+                messagesBeforeCancellation.map((message) => message.content),
+            );
+            expect(run.cancelStream).toHaveBeenCalledOnce();
+        },
+    );
+
+    it.each(["item", "conversion error", "backend error"] as const)(
+        "tracks the replacement if cancelled while creating it for %s",
+        async (kind) => {
+            const run = setup();
+            await run.send(item({ type: "text", text: "Partial answer" }, "answer-1"));
+            const unsubscribe = run.store.subscribe(() => {
+                const messages = conversationMessagesByIdSelector(run.store.getState(), conversation.localId);
+                if (messages.length === 3 && run.task.isRunning()) {
+                    run.task.cancel();
+                }
+            });
+
+            await run.send(
+                kind === "item"
+                    ? item({ type: "text", text: "More content" }, "answer-2")
+                    : { type: "error", code: kind === "conversion error" ? 0 : 500, message: "Failed" },
+            );
+            await run.task.toPromise();
+            unsubscribe();
+
+            const [, first, replacement] = conversationMessagesByIdSelector(
+                run.store.getState(),
+                conversation.localId,
+            );
+            expect(first).toMatchObject({
+                complete: true,
+                content: { type: "text", text: "Partial answer" },
+            });
+            expect(replacement).toMatchObject({ complete: true, streaming: false, cancelled: true });
+            const completions = run.actions.filter(evaluateMessageCompleteAction.match);
+            expect(completions.map(({ payload }) => payload.assistantMessageId)).toEqual([
+                first.localId,
+                replacement.localId,
+            ]);
+            expect(completions.at(-1)?.payload.cancelled).toBe(true);
+            expect(completions.at(-1)?.payload.responseCompleted).toBeUndefined();
+            expect(run.cancelStream).toHaveBeenCalledOnce();
         },
     );
 });
@@ -471,7 +795,7 @@ describe("onUserMessage reasoning titles", () => {
     it("clears when reading the stream throws", async () => {
         const run = setup();
         await run.send(reasoning("# Plan\nPrivate body"));
-        await run.fail();
+        await run.fail(new Error("Stream failed"));
 
         expect(run.events()).toStrictEqual([clearEvent, titleEvent("Plan"), clearEvent]);
         expect(
@@ -479,14 +803,17 @@ describe("onUserMessage reasoning titles", () => {
         ).toBe(undefined);
     });
 
-    it("puts a stream failure on the message being streamed, not the first one", async () => {
+    it("keeps streamed reasoning before a separate stream failure", async () => {
         const run = setup();
         await run.send(reasoning("# Plan"));
         await run.send(reasoning("# Collecting data", "reasoning-2"));
-        await run.fail();
+        await run.fail(new Error("Stream failed"));
 
-        const [, first, last] = conversationMessagesByIdSelector(run.store.getState(), conversation.localId);
+        const messages = conversationMessagesByIdSelector(run.store.getState(), conversation.localId);
+        expect(messages).toHaveLength(4);
+        const [, first, second, last] = messages;
         expect(first.content).toEqual({ type: "reasoning", summary: "# Plan" });
+        expect(second.content).toEqual({ type: "reasoning", summary: "# Collecting data" });
         expect(last.content.type).toBe("error");
         expect(last.streaming).toBe(false);
     });
@@ -495,7 +822,7 @@ describe("onUserMessage reasoning titles", () => {
         const run = setup();
         await run.send(reasoning("# Plan"));
         await run.send({ type: "error", code: 500, message: "Failed" });
-        await run.finish();
+        await run.task.toPromise();
 
         expect(run.events()).toStrictEqual([clearEvent, titleEvent("Plan"), clearEvent]);
     });
@@ -510,13 +837,14 @@ describe("onUserMessage reasoning titles", () => {
         expect(completions.map(({ payload }) => payload.responseCompleted)).toEqual([undefined, true]);
     });
 
-    it("completes the previous interaction before streaming an error with a new interaction ID", async () => {
+    it("does not mistake an error message for a new interaction ID", async () => {
         const run = setup();
         await run.send(item({ type: "text", text: "Working" }, "interaction-1"));
         await run.send({ type: "error", code: 500, message: "error-interaction" });
-        await run.finish();
+        await run.task.toPromise();
 
-        const [first, last] = run.actions.filter(evaluateMessageStreamingAction.match);
+        const [first] = run.actions.filter(evaluateMessageStreamingAction.match);
+        const [failure] = run.actions.filter(evaluateMessageErrorAction.match);
         const completions = run.actions.filter(evaluateMessageCompleteAction.match);
         expect(completions.map(({ payload }) => payload)).toStrictEqual([
             {
@@ -525,18 +853,21 @@ describe("onUserMessage reasoning titles", () => {
                 threadId: conversation.id,
             },
             {
-                assistantMessageId: last.payload.assistantMessageId,
+                assistantMessageId: failure.payload.assistantMessageId,
                 conversationId: conversation.localId,
                 threadId: conversation.id,
                 cancelled: false,
-                responseCompleted: true,
             },
         ]);
-        expect(first.payload.assistantMessageId).not.toBe(last.payload.assistantMessageId);
-        expect(run.actions.indexOf(completions[0])).toBeLessThan(run.actions.indexOf(last));
+        expect(failure.payload.assistantMessageId).not.toBe(first.payload.assistantMessageId);
+        expect(failure.payload.error.message).toBe("error-interaction");
+        expect(run.actions.indexOf(failure)).toBeLessThan(run.actions.indexOf(completions[1]));
+        const messages = conversationMessagesByIdSelector(run.store.getState(), conversation.localId);
+        expect(messages.at(-2)?.id).toBe("interaction-1");
+        expect(messages.at(-1)?.id).toBe("");
     });
 
-    it.each(["item", "error"] as const)(
+    it.each(["item", "error", "conversion error"] as const)(
         "does not complete a removed message when a new %s interaction arrives",
         async (kind) => {
             const run = setup();
@@ -545,21 +876,33 @@ describe("onUserMessage reasoning titles", () => {
             await run.send(
                 kind === "item"
                     ? item({ type: "text", text: "Answer" }, "interaction-2")
-                    : { type: "error", code: 500, message: "error-interaction" },
+                    : { type: "error", code: kind === "error" ? 500 : 0, message: "error-interaction" },
             );
-            await run.finish();
+            await (kind === "item" ? run.finish() : run.task.toPromise());
 
             const [first, last] = run.actions.filter(evaluateMessageStreamingAction.match);
             const completions = run.actions.filter(evaluateMessageCompleteAction.match);
-            expect(completions).toHaveLength(1);
-            expect(completions[0].payload).toStrictEqual({
-                assistantMessageId: last.payload.assistantMessageId,
-                conversationId: conversation.localId,
-                threadId: conversation.id,
-                cancelled: false,
-                responseCompleted: true,
-            });
-            expect(completions[0].payload.assistantMessageId).not.toBe(first.payload.assistantMessageId);
+            expect(completions.map(({ payload }) => payload)).toStrictEqual(
+                kind === "item"
+                    ? [
+                          {
+                              assistantMessageId: last.payload.assistantMessageId,
+                              conversationId: conversation.localId,
+                              threadId: conversation.id,
+                              cancelled: false,
+                              responseCompleted: true,
+                          },
+                      ]
+                    : [],
+            );
+            expect(completions.map(({ payload }) => payload.assistantMessageId)).not.toContain(
+                first.payload.assistantMessageId,
+            );
+            expect(
+                conversationMessagesByIdSelector(run.store.getState(), conversation.localId).map(
+                    (message) => message.content,
+                ),
+            ).toEqual(kind === "item" ? [{ type: "text", text: "Answer" }] : []);
         },
     );
 

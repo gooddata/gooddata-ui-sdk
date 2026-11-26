@@ -408,7 +408,16 @@ export function useKeyNavigation<T extends IUiMenuItemData = object, M extends o
                 });
             },
             onClose: () => {
-                menuContextRef.current.onClose?.();
+                const { setFocusedId, focusedItem, items, onClose } = menuContextRef.current;
+                const parentItem = focusedItem ? getItemInteractiveParent(items, focusedItem.id) : undefined;
+
+                // Escape in a submenu closes just that submenu and returns focus to its parent item
+                if (parentItem) {
+                    setFocusedId(parentItem.id);
+                    return;
+                }
+
+                onClose?.();
             },
             onUnhandledKeyDown: (event) => {
                 onUnhandledKeyDown?.(event, menuContextRef.current);

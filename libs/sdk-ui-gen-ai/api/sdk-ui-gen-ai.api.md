@@ -76,6 +76,7 @@ export type ChatAssistantMessageEvent = BaseEvent & {
     agent?: GenAIAgent;
     cancelled?: boolean;
     responseCompleted?: boolean;
+    error?: IChatConversationErrorContent;
     skills?: {
         name: AgentCustomSkill;
         title: string;
