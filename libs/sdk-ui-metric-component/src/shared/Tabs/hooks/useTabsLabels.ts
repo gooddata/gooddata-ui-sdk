@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { IntlContext, type IntlShape, createIntl } from "react-intl";
 
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../translations/translations.js";
+import { TabState } from "../Tab.js";
 import { type ITabsProps } from "../Tabs.data.js";
 
 /**
@@ -20,6 +21,8 @@ export interface ITabsLabels {
     closeTab: (title: string) => string;
     scrollLeft: string;
     scrollRight: string;
+    // the states the flag of a tab shows, for assistive technology
+    tabStates: Partial<Record<TabState, string>>;
 }
 
 let fallbackIntl: IntlShape | undefined;
@@ -49,5 +52,9 @@ export function useTabsLabels(locales: NonNullable<ITabsProps["locales"]>): ITab
             ((title: string) => intl.formatMessage({ id: "metricComponent.tabs.closeTab" }, { title })),
         scrollLeft: locales.scrollLeft ?? intl.formatMessage({ id: "metricComponent.tabs.scrollLeft" }),
         scrollRight: locales.scrollRight ?? intl.formatMessage({ id: "metricComponent.tabs.scrollRight" }),
+        tabStates: {
+            [TabState.Dirty]: intl.formatMessage({ id: "metricComponent.tabs.state.dirty" }),
+            [TabState.Invalid]: intl.formatMessage({ id: "metricComponent.tabs.state.invalid" }),
+        },
     };
 }

@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { createIntl } from "react-intl";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { idRef, newAbsoluteGranularityDateFilter } from "@gooddata/sdk-model";
 
@@ -9,6 +9,10 @@ import { translateDateFilter } from "./dateFilterNaming.js";
 
 describe("translateDateFilter", () => {
     const intl = createIntl({ locale: "en-US", messages: {} });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+    });
 
     it("should return undefined with a warning for the absolute date filter with granularity", () => {
         const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
@@ -24,7 +28,6 @@ describe("translateDateFilter", () => {
             "Notification titles do not support absolute date filters with granularity yet.",
             filter,
         );
-        warn.mockRestore();
     });
 
     it("should return undefined with a warning for a date filter of an unknown type", () => {
@@ -33,6 +36,5 @@ describe("translateDateFilter", () => {
 
         expect(translateDateFilter(intl, unknownFilter as never, "MM/dd/yyyy")).toBeUndefined();
         expect(warn).toHaveBeenCalledWith("Cannot name a date filter of an unknown type.", unknownFilter);
-        warn.mockRestore();
     });
 });

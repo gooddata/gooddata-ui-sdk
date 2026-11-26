@@ -9,7 +9,7 @@ import type {
 import { CustomElementAdapter, GET_COMPONENT, LOAD_COMPONENT } from "../common/CustomElementAdapter.js";
 import { type CustomElementContext } from "../context.js";
 
-import { type ICommonPropertiesDefinition, getProperties, setActions } from "./common.js";
+import { type ICommonPropertiesDefinition, getProperties, loadGenAi, setActions } from "./common.js";
 
 type IGenAIAssistantLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
 type IGenAIConversations = typeof OriginalGenAIConversations;
@@ -52,7 +52,7 @@ export class GenAIConversations extends CustomElementAdapter<IGenAIConversations
     }
 
     override async [LOAD_COMPONENT]() {
-        return (await import("@gooddata/sdk-ui-gen-ai")).GenAIConversations;
+        return (await loadGenAi()).GenAIConversations;
     }
 
     override [GET_COMPONENT](Component: IGenAIConversations, { backend, workspaceId }: CustomElementContext) {

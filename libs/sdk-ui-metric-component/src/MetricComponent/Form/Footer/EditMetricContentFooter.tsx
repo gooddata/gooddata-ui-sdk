@@ -118,7 +118,6 @@ function EditMetricContentFooterComponent({
                 {mode === FormMode.Edit && !isLocked && isEditable && (
                     <Button
                         type="button"
-                        tagName="a"
                         value={intl.formatMessage({ id: "metricComponent.editMetric.delete" })}
                         onClick={onDelete}
                         className="gd-button-link-dimmed s-button-delete"

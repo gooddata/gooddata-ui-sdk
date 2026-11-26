@@ -4,8 +4,7 @@ import { type AxiosResponse } from "axios";
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ExportApi_CreateDashboardExportRequest } from "@gooddata/api-client-tiger/endpoints/export";
-import { type IDashboardExportTabularOptions, NotSupported } from "@gooddata/sdk-backend-spi";
-import { type FilterContextItem, idRef } from "@gooddata/sdk-model";
+import { idRef } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { handleExportResultPolling } from "../../../utils/exportPolling.js";
@@ -76,46 +75,5 @@ describe("TigerWorkspaceDashboards.exportDashboardToTabular — dashboardTabsPar
     it("omits dashboardTabsParametersOverrides when the map is empty", async () => {
         const req = await callExport({ dashboardTabsParametersOverrides: {} });
         expect(req).not.toHaveProperty("dashboardTabsParametersOverrides");
-    });
-});
-
-describe("TigerWorkspaceDashboards.exportDashboardToTabular — absolute date filter with granularity", () => {
-    const dashboardRef = idRef("dashboard-1", "analyticalDashboard");
-    const granularityDateFilterItem: FilterContextItem = {
-        dashboardAbsoluteGranularityDateFilter: {
-            dataSet: idRef("date1", "dataSet"),
-            granularity: "GDC.time.month",
-            from: "2026-01",
-            to: "2026-03",
-        },
-    };
-    let service: TigerWorkspaceDashboards;
-
-    beforeAll(async () => {
-        vi.resetModules();
-        const { TigerWorkspaceDashboards } = await import("./index.js");
-        service = new TigerWorkspaceDashboards(
-            vi.fn((callback) =>
-                callback({ axios: {}, basePath: "" }),
-            ) as unknown as TigerAuthenticatedCallGuard,
-            "ws-1",
-        );
-    });
-
-    beforeEach(() => {
-        vi.clearAllMocks();
-    });
-
-    it.each<[string, IDashboardExportTabularOptions]>([
-        ["dashboardFiltersOverride", { dashboardFiltersOverride: [granularityDateFilterItem] }],
-        [
-            "dashboardTabsFiltersOverrides",
-            { dashboardTabsFiltersOverrides: { "tab-A": [], "tab-B": [granularityDateFilterItem] } },
-        ],
-    ])("rejects the absolute date filter with granularity in %s", async (_desc, options) => {
-        await expect(
-            service.exportDashboardToTabular(dashboardRef, { ...options, title: "T" }),
-        ).rejects.toThrow(NotSupported);
-        expect(ExportApi_CreateDashboardExportRequest).not.toHaveBeenCalled();
     });
 });

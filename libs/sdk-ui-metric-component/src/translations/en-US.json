@@ -539,6 +539,14 @@
         "text": "Close {title}",
         "crowdinContext": "Accessible name of the icon button that closes one metric tab in the metric editor. {title} is the metric name"
     },
+    "metricComponent.tabs.state.dirty": {
+        "text": "unsaved changes",
+        "crowdinContext": "Text read by screen readers after the metric name on a metric editor tab whose metric has unsaved changes. Shown visually as a colored dot on the tab"
+    },
+    "metricComponent.tabs.state.invalid": {
+        "text": "contains errors",
+        "crowdinContext": "Text read by screen readers after the metric name on a metric editor tab whose metric has errors (for example an invalid expression). Shown visually as a red dot on the tab"
+    },
     "metricComponent.minimize.editing": {
         "text": "Editing:",
         "crowdinContext": "Status label when metric is in editing mode"

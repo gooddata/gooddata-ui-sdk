@@ -54,7 +54,8 @@ describe("apply filter view handler", () => {
                 }),
             },
         );
-        Tester.dispatch(tabsActions.addParameter({ parameter: topNParameter, workspaceDefault: 5 }));
+        Tester.dispatch(tabsActions.addParameter({ parameter: topNParameter, workspaceDefault: 10 }));
+        Tester.dispatch(tabsActions.setParameterRuntimeValues({ values: [{ ref: topNRef, value: 3 }] }));
         warn = vi.spyOn(console, "warn").mockImplementation(() => {});
     });
 
@@ -96,7 +97,7 @@ describe("apply filter view handler", () => {
         );
 
         expect(selectFilterContextFilters(Tester.state())).toEqual(filtersBefore);
-        expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(5);
+        expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(3);
         expect(warn).toHaveBeenCalledWith(
             `The filter view "View" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED}`,
         );
@@ -169,7 +170,7 @@ describe("apply filter view handler", () => {
         );
 
         expect(selectFilterContextFilters(Tester.state())).toEqual(filtersBefore);
-        expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(5);
+        expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(3);
         expect(warn).toHaveBeenCalled();
     });
 });

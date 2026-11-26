@@ -6,7 +6,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import { createPortal } from "react-dom";
 import { describe, expect, it } from "vitest";
 
-import { UiAutofocus } from "./UiAutofocus.js";
+import { type IUiAutofocusOptions, UiAutofocus } from "./UiAutofocus.js";
 import { UiModalOwnerProvider, modalOwnerAttributes } from "./UiModalOwner.js";
 
 interface IHarnessProps {
@@ -126,6 +126,121 @@ describe("UiAutofocus", () => {
             expect(field).toHaveFocus();
         },
     );
+
+    describe("stealFocusFrom", () => {
+        function FieldHarness({
+            fieldType = "textarea",
+            modal = false,
+            ...options
+        }: IUiAutofocusOptions & { fieldType?: string; modal?: boolean }) {
+            const field = (
+                <div className="reply-box">
+                    {fieldType === "textarea" ? (
+                        <textarea aria-label="Reply" />
+                    ) : fieldType === "contenteditable" ? (
+                        <div contentEditable role="textbox" aria-label="Reply" />
+                    ) : (
+                        <input type={fieldType} aria-label="Reply" />
+                    )}
+                </div>
+            );
+
+            return (
+                <>
+                    <UiAutofocus {...options}>
+                        <button type="button">target</button>
+                        <button type="button">other target</button>
+                    </UiAutofocus>
+                    {modal ? (
+                        <div role="dialog" aria-modal="true" aria-label="Dialog" {...modalOwnerAttributes}>
+                            {field}
+                        </div>
+                    ) : (
+                        field
+                    )}
+                </>
+            );
+        }
+
+        it.each(["text", "search", "textarea", "contenteditable"])(
+            "takes focus from a %s field within an allowed class selector",
+            async (fieldType) => {
+                const { rerender } = render(<FieldHarness active={false} fieldType={fieldType} />);
+                screen.getByLabelText("Reply").focus();
+
+                rerender(<FieldHarness fieldType={fieldType} stealFocusFrom={[".reply-box"]} />);
+
+                await waitFor(() => expect(screen.getByText("target")).toHaveFocus());
+            },
+        );
+
+        it("takes focus from a field matching an allowed element selector", async () => {
+            const { rerender } = render(<FieldHarness active={false} />);
+            screen.getByLabelText("Reply").focus();
+
+            rerender(<FieldHarness stealFocusFrom={["textarea"]} />);
+
+            await waitFor(() => expect(screen.getByText("target")).toHaveFocus());
+        });
+
+        it.each([false, true])(
+            "takes focus from an allowed DOM element (container: %s)",
+            async (container) => {
+                const { rerender } = render(<FieldHarness active={false} />);
+                const field = screen.getByLabelText("Reply");
+                field.focus();
+
+                rerender(<FieldHarness stealFocusFrom={[container ? field.parentElement! : field]} />);
+
+                await waitFor(() => expect(screen.getByText("target")).toHaveFocus());
+            },
+        );
+
+        it.each([undefined, [], [".unrelated"]])(
+            "preserves focus when no source matches (%s)",
+            async (sources) => {
+                const { rerender } = render(<FieldHarness active={false} />);
+                const field = screen.getByLabelText("Reply");
+                field.focus();
+
+                rerender(<FieldHarness stealFocusFrom={sources} />);
+                await settle();
+
+                expect(field).toHaveFocus();
+            },
+        );
+
+        it("does not take focus while inactive even when the source matches", async () => {
+            render(<FieldHarness active={false} stealFocusFrom={[".reply-box"]} />);
+            const field = screen.getByLabelText("Reply");
+            field.focus();
+            await settle();
+
+            expect(field).toHaveFocus();
+        });
+
+        it("preserves focus inside its own area even when the source matches", async () => {
+            const { rerender } = render(<FieldHarness active={false} />);
+            const button = screen.getByText("other target");
+            button.focus();
+
+            rerender(<FieldHarness stealFocusFrom={["button"]} />);
+            await settle();
+
+            expect(button).toHaveFocus();
+        });
+
+        it("does not take focus from an unrelated modal even when the source matches", async () => {
+            const { rerender } = render(<FieldHarness active={false} modal />);
+            const field = screen.getByLabelText("Reply");
+            field.focus();
+
+            rerender(<FieldHarness modal stealFocusFrom={[".reply-box"]} />);
+            await settle();
+
+            expect(field).toHaveFocus();
+        });
+    });
 
     describe("with a modal that owns what it renders", () => {
         interface IOwnedHarnessProps {

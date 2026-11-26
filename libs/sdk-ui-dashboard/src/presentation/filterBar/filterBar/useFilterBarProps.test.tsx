@@ -13,7 +13,10 @@ import {
 } from "@gooddata/sdk-model";
 
 import { initializeDashboard } from "../../../model/commands/dashboard.js";
-import { changeDateFilterSelectionOfAnyType } from "../../../model/commands/filters.js";
+import {
+    changeDateFilterSelectionOfAnyType,
+    clearDateFilterSelection,
+} from "../../../model/commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../model/DashboardTester.js";
 import { ReactDashboardContext } from "../../../model/react/DashboardStoreProvider.js";
 import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
@@ -135,6 +138,14 @@ describe("useFilterBarProps", () => {
                     }),
                 }),
             );
+        });
+
+        it("clears the date filter selection when the filter is removed", async () => {
+            const { dispatch, props } = renderFilterBarProps(await createTester());
+
+            props.onDateFilterChanged(undefined);
+
+            expect(dispatch).toHaveBeenCalledWith(clearDateFilterSelection());
         });
     });
 });

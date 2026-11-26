@@ -1124,6 +1124,25 @@ describe("Tabs accessible names", () => {
         expect(toggle()).toHaveAttribute("aria-label", "Exit full screen");
     });
 
+    it("names the unsaved changes and errors of a tab as its flag shows them", () => {
+        const tab = (states?: ITab["states"]): ITab[] => [{ ...tabs[0], states }];
+        const { container, rerender } = render(<Tabs active={0} tabs={tab()} />);
+        const tabElement = () => container.querySelector('[role="tab"]');
+
+        expect(tabElement()).not.toHaveTextContent("unsaved changes");
+
+        rerender(<Tabs active={0} tabs={tab({ [TabState.Dirty]: true })} />);
+        expect(tabElement()).toHaveTextContent(/^Revenue, unsaved changes$/);
+
+        rerender(<Tabs active={0} tabs={tab({ [TabState.Dirty]: true, [TabState.Invalid]: true })} />);
+        expect(tabElement()).toHaveTextContent(/^Revenue, unsaved changes, contains errors$/);
+
+        // saved or reverted: the flag and its text go away together
+        rerender(<Tabs active={0} tabs={tab({ [TabState.Dirty]: false, [TabState.Invalid]: false })} />);
+        expect(tabElement()).toHaveTextContent(/^Revenue$/);
+        expect(tabElement()).toHaveAttribute("aria-selected", "true");
+    });
+
     it("lets locales override a default name", () => {
         const { container } = render(
             <Tabs active={0} tabs={tabs} minimizable locales={{ minimize: "Collapse" }} />,

@@ -10,6 +10,21 @@ import { stringToObjectTypes } from "../common/typeGuards/stringToObjectTypes.js
 import { getStore } from "../context.js";
 import { findParentWithAttribute } from "../utils.js";
 
+function importGenAi() {
+    return import("@gooddata/sdk-ui-gen-ai");
+}
+
+let genAiModule: ReturnType<typeof importGenAi> | undefined;
+
+/**
+ * Loads the gen-ai package once and shares the same promise with all callers.
+ * Concurrent dynamic imports can resolve to different module instances (for example, under vitest mocks).
+ */
+export function loadGenAi(): ReturnType<typeof importGenAi> {
+    genAiModule ??= importGenAi();
+    return genAiModule;
+}
+
 export type CommonProperties = Pick<
     GenAIAssistantProps,
     | "locale"
@@ -114,7 +129,7 @@ export function getProperties<T>(
 }
 
 export async function setActions(element: HTMLElement & ICommonPropertiesDefinition) {
-    const api = await import("@gooddata/sdk-ui-gen-ai");
+    const api = await loadGenAi();
 
     element.startNewConversationAction = () => {
         const { startNewConversationAction } = api;

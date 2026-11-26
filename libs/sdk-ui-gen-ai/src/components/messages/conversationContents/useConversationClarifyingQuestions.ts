@@ -9,6 +9,7 @@ import { makeLinearKeyboardNavigation, useUiAutofocusConnectors } from "@gooddat
 
 import { type IChatConversationLocalItem, type TextContentObject, makeUserItem } from "../../../model.js";
 import { filledFormAction, newMessageAction } from "../../../store/messages/messagesSlice.js";
+import { REPLY_BOX_FOCUS_SOURCES } from "../../constants.js";
 
 export const SKIP_BUTTON_ID = "skip-button";
 
@@ -29,8 +30,10 @@ export function useConversationClarifyingQuestions(props: IUseConversationClarif
     >([]);
     const [index, setIndex] = useState(0);
 
+    const shouldAutofocus = Boolean(isLast && !message.complete && !message.filled);
     const ref = useUiAutofocusConnectors<HTMLDivElement>({
-        active: isLast,
+        active: shouldAutofocus,
+        stealFocusFrom: REPLY_BOX_FOCUS_SOURCES,
     });
 
     const onFinishAnswers = useCallback(

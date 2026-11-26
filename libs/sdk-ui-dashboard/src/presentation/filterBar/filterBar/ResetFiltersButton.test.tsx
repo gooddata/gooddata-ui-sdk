@@ -10,6 +10,11 @@ import { createInternalIntl } from "../../localization/createInternalIntl.js";
 import { useResetFiltersButton } from "./hooks/useResetFiltersButton.js";
 import { ResetFiltersButton } from "./ResetFiltersButton.js";
 
+// `isolate: false` shares one module graph per worker; drop it so the imports below resolve through the mocks.
+vi.hoisted(() => {
+    vi.resetModules();
+});
+
 vi.mock("./hooks/useResetFiltersButton.js", () => ({
     useResetFiltersButton: vi.fn(),
 }));

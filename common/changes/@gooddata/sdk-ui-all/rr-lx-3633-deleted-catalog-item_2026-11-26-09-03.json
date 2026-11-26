@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-catalog: Saving a change to a catalog item that was removed elsewhere now says the changes were not saved because the item has been removed or is no longer accessible, instead of asking to try again later.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

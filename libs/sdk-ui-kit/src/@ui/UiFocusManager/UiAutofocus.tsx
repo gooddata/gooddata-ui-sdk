@@ -11,7 +11,12 @@ import {
     useState,
 } from "react";
 
-import { getFocusableElements, isElementFocusable, isElementTextInput } from "../../utils/domUtilities.js";
+import {
+    canStealFocusFrom,
+    getFocusableElements,
+    isElementFocusable,
+    isElementTextInput,
+} from "../../utils/domUtilities.js";
 
 import { type IUiFocusHelperConnectors } from "./types.js";
 import { isOwnershipAwareModal, useUiModalOwners } from "./UiModalOwner.js";
@@ -24,6 +29,12 @@ export interface IUiAutofocusOptions {
     active?: boolean;
     refocusKey?: unknown;
     initialFocus?: string | RefObject<HTMLElement | null>;
+    /**
+     * CSS selectors or DOM elements from which autofocus may take text-entry focus.
+     * Matches the focused element or its ancestors. Defaults to no exceptions.
+     * Focus within this autofocus area or an unrelated modal remains protected.
+     */
+    stealFocusFrom?: readonly (string | HTMLElement)[];
 }
 
 /**
@@ -35,6 +46,7 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
     active = true,
     refocusKey,
     initialFocus,
+    stealFocusFrom,
 }: IUiAutofocusOptions = {}): IUiFocusHelperConnectors<T> => {
     const [element, setElement] = useState<HTMLElement | null>(null);
     const [modalsBeforeMount] = useState(getOpenModals);
@@ -91,10 +103,14 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
             }
         };
 
-        const isFocusSettled = () =>
-            element.contains(document.activeElement) ||
-            isElementTextEntry(document.activeElement) ||
-            isFocusInModalItDoesNotBelongTo(element, owners, modalsBeforeMount);
+        const isFocusSettled = () => {
+            const focusedElement = document.activeElement;
+            return (
+                element.contains(focusedElement) ||
+                (isElementTextEntry(focusedElement) && !canStealFocusFrom(focusedElement, stealFocusFrom)) ||
+                isFocusInModalItDoesNotBelongTo(element, owners, modalsBeforeMount)
+            );
+        };
 
         const attemptFocus = () => {
             if (isFocusSettled()) {
@@ -142,13 +158,14 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
         scheduleAttempt();
 
         return stop;
-    }, [refocusKey, element, initialFocus, active, owners, modalsBeforeMount]);
+    }, [refocusKey, element, initialFocus, active, owners, modalsBeforeMount, stealFocusFrom]);
 
     return useMemo(() => ({ ref, element: element as T }), [ref, element]);
 };
 
 // A field the user is typing into (or that focused itself, such as a search field with `autofocus`)
-// already holds focus on purpose, so autofocus elsewhere must not take it away. Search inputs count too:
+// already holds focus on purpose, so autofocus elsewhere must not take it away unless explicitly allowed.
+// Search inputs count too:
 // `isElementTextInput` leaves them out because it also decides whether Enter submits a dialog.
 function isElementTextEntry(element: Element | null): boolean {
     return (

@@ -19,7 +19,13 @@ import {
 } from "../context.js";
 import { defineCustomElement } from "../utils.js";
 
-import { type ICommonPropertiesDefinition, getProperties, mimicActions, setActions } from "./common.js";
+import {
+    type ICommonPropertiesDefinition,
+    getProperties,
+    loadGenAi,
+    mimicActions,
+    setActions,
+} from "./common.js";
 
 type IGenAiStore = typeof OriginalGenAiStore;
 type IGenAIAssistantLinkClick = Omit<LinkHandlerEvent, "preventDefault">;
@@ -162,7 +168,7 @@ class GenAiStore extends CustomElementAdapter<IGenAiStore> {
     }
 
     override async [LOAD_COMPONENT]() {
-        return (await import("@gooddata/sdk-ui-gen-ai")).GenAiStore;
+        return (await loadGenAi()).GenAiStore;
     }
 
     override [GET_COMPONENT](Component: IGenAiStore, { backend, workspaceId }: CustomElementContext) {

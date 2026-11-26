@@ -8,6 +8,7 @@ import {
     type IChatConversation,
     type IChatConversationItem,
     type IChatConversationThreadQuery,
+    NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 
 import { type IChatConversationLocal, makeUserItem } from "../../model.js";
@@ -20,6 +21,7 @@ import {
     evaluateMessageAction,
     evaluateMessageCompleteAction,
     evaluateMessageErrorAction,
+    evaluateMessageStreamingAction,
     messagesSliceReducer,
     newMessageAction,
     pinConversationSuccessAction,
@@ -91,7 +93,19 @@ function setup({
     const trace: string[] = [];
     const stream = vi.fn(() => {
         trace.push("stream");
-        return new ReadableStream({ start: (controller) => controller.close() });
+        return new ReadableStream<IChatConversationItem>({
+            start(controller) {
+                controller.enqueue({
+                    type: "item",
+                    id: "answer",
+                    responseId: "response-1",
+                    role: "assistant",
+                    content: { type: "text", text: "Sales are growing." },
+                    createdAt: 1,
+                });
+                controller.close();
+            },
+        });
     });
     const queryBuilder: IChatConversationThreadQuery = {
         withSearchLimit: () => queryBuilder,
@@ -312,6 +326,7 @@ describe("onUserMessage conversation preparation", () => {
         expect(run.getChatConversations).toHaveBeenCalledExactlyOnceWith();
         expect(run.actions.map((action) => action.type)).toEqual([
             evaluateMessageAction.type,
+            evaluateMessageStreamingAction.type,
             evaluateMessageCompleteAction.type,
         ]);
     });
@@ -368,6 +383,7 @@ describe("onUserMessage conversation preparation", () => {
                 "reasoning",
                 "query",
                 "stream",
+                evaluateMessageStreamingAction.type,
                 "reasoning",
                 evaluateMessageCompleteAction.type,
             ]);
@@ -421,16 +437,70 @@ describe("onUserMessage conversation preparation", () => {
             expect(run.actions.map((action) => action.type)).toEqual([
                 evaluateMessageAction.type,
                 evaluateMessageErrorAction.type,
+                evaluateMessageCompleteAction.type,
             ]);
             expect(run.messages().at(-1)?.content).toMatchObject({
                 type: "error",
                 message: "Error: Preparation failed",
             });
             expect(run.store.getState().messages.currentConversation?.id).toBe("");
+            expect(run.store.getState().messages.currentConversation?.inProgress).toBe(false);
+            expect(run.messages().at(-1)).toMatchObject({ complete: true, streaming: false });
             expect(run.query).not.toHaveBeenCalled();
             expect(run.dispatchEvent).not.toHaveBeenCalled();
         },
     );
+
+    it.each(["create", "update"] as const)("finalizes an expired session during draft %s", async (stage) => {
+        const run = setup({ current: draft });
+        run.api[stage].mockRejectedValueOnce(new NotAuthenticated("No session or session expired"));
+
+        await run.start().toPromise();
+
+        expect(run.messages().at(-1)).toMatchObject({
+            content: { type: "error", code: 401, reason: "NOT_AUTHENTICATED" },
+            complete: true,
+            streaming: false,
+        });
+        expect(run.store.getState().messages.currentConversation?.inProgress).toBe(false);
+        expect(run.store.getState().messages.conversationsData[draft.localId].asyncProcess).toBeUndefined();
+        expect(run.stream).not.toHaveBeenCalled();
+        expect(run.actions.filter(evaluateMessageCompleteAction.match)).toHaveLength(1);
+    });
+
+    it("finishes every prompt consistently after session expiry and allows recovery", async () => {
+        const run = setup();
+        for (let attempt = 0; attempt < 3; attempt++) {
+            run.stream.mockImplementationOnce(
+                () =>
+                    new ReadableStream<IChatConversationItem>({
+                        start(controller) {
+                            controller.error(new NotAuthenticated("No session or session expired"));
+                        },
+                    }),
+            );
+            const action = newMessageAction(makeUserItem({ type: "text", text: `Question ${attempt}` }));
+            run.store.dispatch(action);
+            await run.start(action).toPromise();
+
+            expect(run.messages().at(-1)).toMatchObject({
+                content: { type: "error", code: 401, reason: "NOT_AUTHENTICATED" },
+                complete: true,
+                streaming: false,
+            });
+            expect(run.store.getState().messages.currentConversation?.inProgress).toBe(false);
+            expect(
+                run.store.getState().messages.conversationsData[conversation.localId].asyncProcess,
+            ).toBeUndefined();
+        }
+
+        await run.start().toPromise();
+        expect(run.messages().at(-1)).toMatchObject({
+            content: { type: "text", text: "Sales are growing." },
+            complete: true,
+            streaming: false,
+        });
+    });
 
     it("does not commit creation or start a stream after cancellation", async () => {
         const run = setup({ current: draft });
@@ -443,7 +513,11 @@ describe("onUserMessage conversation preparation", () => {
         pending.resolve(created);
         await Promise.resolve();
 
-        expect(run.actions.map((action) => action.type)).toEqual([evaluateMessageAction.type]);
+        expect(run.actions.map((action) => action.type)).toEqual([
+            evaluateMessageAction.type,
+            evaluateMessageCompleteAction.type,
+        ]);
+        expect(run.messages().at(-1)).toMatchObject({ complete: true, streaming: false, cancelled: true });
         expect(run.api.update).not.toHaveBeenCalled();
         expect(run.query).not.toHaveBeenCalled();
         expect(run.store.getState().messages.currentConversation?.id).toBe("");
@@ -574,6 +648,7 @@ describe("onUserMessage deferred agent switching", () => {
             upsertConversationAction.type,
             "query",
             "stream",
+            evaluateMessageStreamingAction.type,
             "reasoning",
             evaluateMessageCompleteAction.type,
         ]);
