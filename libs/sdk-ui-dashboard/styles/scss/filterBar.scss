@@ -219,6 +219,10 @@ $attribute-filter-drag-handle-left: 10px;
     cursor: pointer;
     transition: all 0.25s ease-in-out;
 
+    &:focus-visible {
+        @include mixins.focus-ring;
+    }
+
     &:hover {
         .gd-button-text,
         .gd-button-icon {

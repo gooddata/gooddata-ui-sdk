@@ -35,6 +35,7 @@ import {
     type OptionalDashboardContentComponentProvider,
     type OptionalDashboardLayoutComponentProvider,
     type OptionalDateFilterComponentProvider,
+    type OptionalDateFilterOfAnyTypeComponentProvider,
     type OptionalDrillDialogExportDropdownComponentProvider,
     type OptionalFilterGroupComponentProvider,
     type OptionalInsightBodyComponentProvider,
@@ -486,6 +487,18 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     DashboardDateFilterComponentProvider?: OptionalDateFilterComponentProvider;
+
+    /**
+     * Specify component to use for rendering the date filters of any type, including the absolute date filter
+     * with granularity.
+     *
+     * @remarks
+     * For a date filter of the other types, a component provided here is used before the one of
+     * {@link IDashboardCustomComponentProps.DashboardDateFilterComponentProvider}.
+     *
+     * @alpha
+     */
+    DashboardDateFilterOfAnyTypeComponentProvider?: OptionalDateFilterOfAnyTypeComponentProvider;
 
     /**
      * Specify component to use for rendering the measure value filters.

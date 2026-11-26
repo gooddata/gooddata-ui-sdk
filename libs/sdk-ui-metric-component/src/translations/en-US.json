@@ -91,6 +91,10 @@
         "text": "How to create metrics?",
         "crowdinContext": "Link text for help documentation about creating metrics"
     },
+    "metricComponent.editMetric.helpText.opensInNewTab": {
+        "text": "(opens in a new tab)",
+        "crowdinContext": "Text read by screen readers after the 'How to create metrics?' help link, warning that the documentation opens in a new browser tab"
+    },
     "metricComponent.editMetric.cancel": {
         "text": "Cancel",
         "crowdinContext": "Cancel button in metric editor"

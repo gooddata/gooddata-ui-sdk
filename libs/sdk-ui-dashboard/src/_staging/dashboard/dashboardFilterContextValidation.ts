@@ -1,10 +1,10 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type DashboardDateFilterOfAnyType,
     type FilterContextItem,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
-    type IDashboardDateFilter,
     type IDashboardDateFilterConfig,
     type IDashboardDateFilterConfigItem,
     type IDashboardMeasureValueFilter,
@@ -16,7 +16,8 @@ import {
     dashboardFilterObjRef,
     dashboardMeasureValueFilterLocalIdentifier,
     isDashboardAttributeFilter,
-    isDashboardDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
+    isDashboardDateFilterOfAnyType,
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isSingleSelectionFilter,
@@ -109,13 +110,13 @@ function findMatchingFilterToMerge(
     filtersToMerge: FilterContextItem[],
 ): FilterContextItem | undefined {
     // Special case for common date filters (without dataSet)
-    if (isDashboardDateFilter(originalFilter) && !originalFilter.dateFilter.dataSet) {
+    if (isDashboardCommonDateFilterOfAnyType(originalFilter)) {
         // Match by localIdentifier for common date filters
+        const localIdentifier = dashboardFilterLocalIdentifier(originalFilter);
         return filtersToMerge.find(
             (filter) =>
-                isDashboardDateFilter(filter) &&
-                !filter.dateFilter.dataSet &&
-                filter.dateFilter.localIdentifier === originalFilter.dateFilter.localIdentifier,
+                isDashboardCommonDateFilterOfAnyType(filter) &&
+                dashboardFilterLocalIdentifier(filter) === localIdentifier,
         );
     }
 
@@ -462,20 +463,20 @@ function mergeTextAttributeFilter(
  * @returns Object containing the merged filter and validation results
  */
 function mergeDateFilter(
-    originalFilter: IDashboardDateFilter,
+    originalFilter: DashboardDateFilterOfAnyType,
     filterToMerge: FilterContextItem | undefined,
     dateFilterConfig?: IDashboardDateFilterConfig,
     dateFilterConfigs?: IDashboardDateFilterConfigItem[],
 ): { mergedFilter: FilterContextItem; validationResults: ValidationResult[] } {
     // No matching filter found, keep original
-    if (!filterToMerge || !isDashboardDateFilter(filterToMerge)) {
+    if (!filterToMerge || !isDashboardDateFilterOfAnyType(filterToMerge)) {
         return {
             mergedFilter: originalFilter,
             validationResults: [],
         };
     }
 
-    const isCommonDateFilter = !originalFilter.dateFilter.dataSet;
+    const isCommonDateFilter = isDashboardCommonDateFilterOfAnyType(originalFilter);
     const validationResults: ValidationResult[] = [];
 
     // Apply the appropriate validation rules based on filter type
@@ -494,7 +495,7 @@ function mergeDateFilter(
         }
     } else {
         // For date filters with dimensions (with dataSet)
-        const dateDataSet = originalFilter.dateFilter.dataSet;
+        const dateDataSet = dashboardFilterObjRef(originalFilter);
         if (dateDataSet) {
             const dateFilterConfigsMap = createDateFilterConfigsMap(dateFilterConfigs || []);
             const filterConfig = dateFilterConfigsMap.get(dateDataSet);
@@ -642,7 +643,7 @@ export function mergeFilterContextFilters(
                 config.attributeFilterConfigs,
                 missingAttributeFilterLocalIdentifiers,
             );
-        } else if (isDashboardDateFilter(originalFilter)) {
+        } else if (isDashboardDateFilterOfAnyType(originalFilter)) {
             return mergeDateFilter(
                 originalFilter,
                 filterToMerge,

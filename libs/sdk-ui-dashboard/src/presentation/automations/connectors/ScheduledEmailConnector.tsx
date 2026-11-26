@@ -28,9 +28,11 @@ import { ScheduledEmailDialogContextProvider } from "../contexts/ScheduledEmailD
 import { ScheduledEmailManagementDialogContextProvider } from "../contexts/ScheduledEmailManagementDialogContext.js";
 import { ScheduledEmailDialog } from "../scheduledEmail/ScheduledEmailDialog.js";
 import { ScheduledEmailManagementDialog } from "../scheduledEmail/ScheduledEmailManagementDialog.js";
+import { AbsoluteGranularityDateFilterNotSupportedDialog } from "../shared/components/AbsoluteGranularityDateFilterNotSupportedDialog.js";
 import { getAppliedDashboardFilters } from "../shared/filters/index.js";
 import { type IAutomationDialogCallbacks } from "../shared/types.js";
 
+import { useAbsoluteGranularityDateFilterBlocksAutomation } from "./hooks/useAbsoluteGranularityDateFilterBlocksAutomation.js";
 import { useAutomationManagementEditRouting } from "./hooks/useAutomationManagementEditRouting.js";
 import { useBuildAutomationsContext } from "./hooks/useBuildAutomationsContext.js";
 import { useBuildScheduledEmailDialogContext } from "./hooks/useBuildScheduledEmailDialogContext.js";
@@ -189,10 +191,31 @@ interface IScheduledEmailCreateEditConnectorProps extends IAutomationDialogCallb
 }
 
 /**
+ * Shows the not-supported dialog without building the create/edit context when the dashboard filters block
+ * the scheduled export.
+ */
+function ScheduledEmailCreateEditConnector(props: IScheduledEmailCreateEditConnectorProps): ReactElement {
+    const isBlocked = useAbsoluteGranularityDateFilterBlocksAutomation(!props.widget);
+
+    if (isBlocked) {
+        return (
+            <AbsoluteGranularityDateFilterNotSupportedDialog
+                automationType="scheduledExport"
+                onCancel={props.onCancel}
+            />
+        );
+    }
+
+    return <ScheduledEmailCreateEditDialogConnector {...props} />;
+}
+
+/**
  * Hydrates the scheduled-email create/edit context. Lives here rather than in the parent so that
  * opening only the management dialog — which does not consume it — skips the work.
  */
-function ScheduledEmailCreateEditConnector(props: IScheduledEmailCreateEditConnectorProps): ReactElement {
+function ScheduledEmailCreateEditDialogConnector(
+    props: IScheduledEmailCreateEditConnectorProps,
+): ReactElement {
     const {
         scheduledExportToEdit,
         notificationChannels,

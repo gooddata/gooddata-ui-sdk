@@ -2408,24 +2408,24 @@
         "crowdinContext": "Link to collapse and show fewer visualization usage details"
     },
     "dialogs.deleteReportConfirmation.usage.notUsed": {
-        "text": "The visualization is not used on any dashboard or in any report.",
-        "crowdinContext": "Message indicating visualization is not currently used on any dashboards or in any Publisher reports"
+        "text": "The visualization is not used on any dashboard or in any document.",
+        "crowdinContext": "Message indicating visualization is not currently used on any dashboards or in any documents (made in the Reports app)"
     },
     "dialogs.deleteReportConfirmation.usage.documents": {
-        "text": "The visualization is used in <strong>{documentsCount, plural, one {# report} other {# reports}}</strong>.",
-        "crowdinContext": "Shows number of Publisher reports using the visualization. Example: 'used in 1 report' or 'used in 3 reports'"
+        "text": "The visualization is used in <strong>{documentsCount, plural, one {# document} other {# documents}}</strong>.",
+        "crowdinContext": "Shows number of documents (made in the Reports app) using the visualization. Example: 'used in 1 document' or 'used in 3 documents'"
     },
     "dialogs.deleteReportConfirmation.usage.dashboardsAndDocuments": {
         "text": "The visualization is used in <strong>{count, plural, one {# place} other {# places}}</strong>.",
-        "crowdinContext": "Shows how many dashboards and Publisher reports together use the visualization. {count} is their total. Example: 'used in 3 places'"
+        "crowdinContext": "Shows how many dashboards and documents (made in the Reports app) together use the visualization. {count} is their total. Example: 'used in 3 places'"
     },
     "dialogs.deleteReportConfirmation.usage.group.dashboards": {
         "text": "Dashboards ({count})",
         "crowdinContext": "Heading of the list of dashboards that use the visualization, shown in the delete dialog. {count} is the number of dashboards"
     },
     "dialogs.deleteReportConfirmation.usage.group.documents": {
-        "text": "Reports ({count})",
-        "crowdinContext": "Heading of the list of Publisher reports that use the visualization, shown in the delete dialog. {count} is the number of reports"
+        "text": "Documents ({count})",
+        "crowdinContext": "Heading of the list of documents (made in the Reports app) that use the visualization, shown in the delete dialog. {count} is the number of documents"
     },
     "dialogs.deleteReportConfirmation.usage.inaccessibleDashboards": {
         "text": "and <b>{count} more</b> not shared with you.",
@@ -2437,11 +2437,11 @@
     },
     "dialogs.deleteReportConfirmation.usage.inaccessibleDocuments": {
         "text": "and <b>{count} more</b> not shared with you.",
-        "crowdinContext": "Follows the list of Publisher reports using the visualization, counting the reports the user may not open. Example: 'and 2 more not shared with you.'"
+        "crowdinContext": "Follows the list of documents (made in the Reports app) using the visualization, counting the documents the user may not open. Example: 'and 2 more not shared with you.'"
     },
     "dialogs.deleteReportConfirmation.usage.inaccessibleDocumentsOnly": {
-        "text": "{count, plural, one {Report is} other {Reports are}} not shared with you.",
-        "crowdinContext": "Shown instead of the list when the user may open none of the Publisher reports using the visualization. Example: 'Report is not shared with you.' or 'Reports are not shared with you.'"
+        "text": "{count, plural, one {Document is} other {Documents are}} not shared with you.",
+        "crowdinContext": "Shown instead of the list when the user may open none of the documents (made in the Reports app) using the visualization. Example: 'Document is not shared with you.' or 'Documents are not shared with you.'"
     },
     "dialogs.usage.inaccessibleDashboards": {
         "text": "and <b>{count} more</b> not shared with you",
@@ -2453,23 +2453,23 @@
     },
     "dialogs.usage.inaccessibleDocuments": {
         "text": "and <b>{count} more</b> not shared with you",
-        "crowdinContext": "Follows the list of Publisher reports using the visualization, counting the reports the user may not open. Example: 'and 2 more not shared with you'"
+        "crowdinContext": "Follows the list of documents (made in the Reports app) using the visualization, counting the documents the user may not open. Example: 'and 2 more not shared with you'"
     },
     "dialogs.usage.inaccessibleDocumentsOnly": {
-        "text": "{count, plural, one {# report} other {# reports}} not shared with you",
-        "crowdinContext": "Shown instead of the list when the user may open none of the Publisher reports using the visualization. Example: '1 report not shared with you' or '3 reports not shared with you'"
+        "text": "{count, plural, one {# document} other {# documents}} not shared with you",
+        "crowdinContext": "Shown instead of the list when the user may open none of the documents (made in the Reports app) using the visualization. Example: '1 document not shared with you' or '3 documents not shared with you'"
     },
     "dialogs.deleteReportConfirmation.deleteProhibited": {
         "text": "The visualization <strong>{deletedReportTitle}</strong> cannot be deleted because it is used on some dashboards. To delete this visualization, remove it from all dashboards first.",
         "crowdinContext": "Error message when visualization cannot be deleted due to usage. {deletedReportTitle} is replaced with the visualization name"
     },
     "dialogs.deleteReportConfirmation.deleteProhibitedDocuments": {
-        "text": "The visualization <strong>{deletedReportTitle}</strong> cannot be deleted because it is used in some reports. To delete this visualization, remove it from all reports first.",
-        "crowdinContext": "Error message when visualization cannot be deleted because Publisher reports use it. {deletedReportTitle} is replaced with the visualization name"
+        "text": "The visualization <strong>{deletedReportTitle}</strong> cannot be deleted because it is used in some documents. To delete this visualization, remove it from all documents first.",
+        "crowdinContext": "Error message when visualization cannot be deleted because documents (made in the Reports app) use it. {deletedReportTitle} is replaced with the visualization name"
     },
     "dialogs.deleteReportConfirmation.deleteProhibitedDocumentsAndDashboards": {
-        "text": "The visualization <strong>{deletedReportTitle}</strong> cannot be deleted because it is used in dashboards and reports. To delete this visualization, remove it from all of them first.",
-        "crowdinContext": "Error message when visualization cannot be deleted because both dashboards and Publisher reports use it. {deletedReportTitle} is replaced with the visualization name"
+        "text": "The visualization <strong>{deletedReportTitle}</strong> cannot be deleted because it is used in dashboards and documents. To delete this visualization, remove it from all of them first.",
+        "crowdinContext": "Error message when visualization cannot be deleted because both dashboards and documents (made in the Reports app) use it. {deletedReportTitle} is replaced with the visualization name"
     },
     "dialogs.savingUntitledReportConfirmation.headline": {
         "text": "Name your visualization",
@@ -2509,19 +2509,19 @@
     },
     "dialogs.saveReportFromKD.headline.documents": {
         "text": "Visualization is used in other places",
-        "crowdinContext": "Title of the dialog shown when saving a visualization, edited from a dashboard, that other dashboards or Publisher reports also use"
+        "crowdinContext": "Title of the dialog shown when saving a visualization, edited from a dashboard, that other dashboards or documents (made in the Reports app) also use"
     },
     "dialogs.saveReportFromKD.usage.dashboards": {
         "text": "Dashboards ({count})",
         "crowdinContext": "Title of the collapsible section listing the dashboards that use the visualization, in the dialog shown when saving a visualization edited from a dashboard. {count} is the number of dashboards"
     },
     "dialogs.saveReportFromKD.usage.documents": {
-        "text": "Reports ({count})",
-        "crowdinContext": "Title of the collapsible section listing the Publisher reports that use the visualization, in the dialog shown when saving a visualization edited from a dashboard. {count} is the number of reports"
+        "text": "Documents ({count})",
+        "crowdinContext": "Title of the collapsible section listing the documents (made in the Reports app) that use the visualization, in the dialog shown when saving a visualization edited from a dashboard. {count} is the number of documents"
     },
     "dialogs.saveReportFromKD.radio.saveEverywhere": {
         "text": "Save visualization everywhere it is used",
-        "crowdinContext": "Radio button option to update the visualization on every dashboard and in every Publisher report that uses it"
+        "crowdinContext": "Radio button option to update the visualization on every dashboard and in every document that uses it"
     },
     "dialogs.saveReportFormKD.reportNamePlaceholder": {
         "text": "Copy of {name}",
@@ -2760,24 +2760,24 @@
         "crowdinContext": "Tooltip and accessible label of the button showing on how many dashboards the visualization is used. {dashboardsCount} is replaced with the count"
     },
     "insight.usages.button.label.documents": {
-        "text": "Used in {documentsCount, plural, one {# report} other {# reports}}",
-        "crowdinContext": "Tooltip and accessible label of the button showing in how many Publisher reports the visualization is used, when no dashboard uses it. {documentsCount} is replaced with the count"
+        "text": "Used in {documentsCount, plural, one {# document} other {# documents}}",
+        "crowdinContext": "Tooltip and accessible label of the button showing in how many documents (made in the Reports app) the visualization is used, when no dashboard uses it. {documentsCount} is replaced with the count"
     },
     "insight.usages.button.label.dashboardsAndDocuments": {
-        "text": "Used in {dashboardsCount, plural, one {# dashboard} other {# dashboards}} and {documentsCount, plural, one {# report} other {# reports}}",
-        "crowdinContext": "Tooltip and accessible label of the button showing on how many dashboards and in how many Publisher reports the visualization is used. Example: 'Used in 2 dashboards and 1 report'"
+        "text": "Used in {dashboardsCount, plural, one {# dashboard} other {# dashboards}} and {documentsCount, plural, one {# document} other {# documents}}",
+        "crowdinContext": "Tooltip and accessible label of the button showing on how many dashboards and in how many documents (made in the Reports app) the visualization is used. Example: 'Used in 2 dashboards and 1 document'"
     },
     "insight.usages.overlay.header": {
         "text": "Used in",
-        "crowdinContext": "Header of the overlay that lists the dashboards and Publisher reports that use the visualization"
+        "crowdinContext": "Header of the overlay that lists the dashboards and documents (made in the Reports app) that use the visualization"
     },
     "insight.usages.overlay.group.dashboards": {
         "text": "Dashboards ({count})",
         "crowdinContext": "Heading of the collapsible group of dashboards in the visualization usage overlay. {count} is the number of dashboards that use the visualization"
     },
     "insight.usages.overlay.group.documents": {
-        "text": "Reports ({count})",
-        "crowdinContext": "Heading of the collapsible group of Publisher reports in the visualization usage overlay. {count} is the number of reports that use the visualization"
+        "text": "Documents ({count})",
+        "crowdinContext": "Heading of the collapsible group of documents (made in the Reports app) in the visualization usage overlay. {count} is the number of documents that use the visualization"
     },
     "dashboard.editing.now": {
         "text": "Editing now",

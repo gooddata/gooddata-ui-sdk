@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type AriaAttributes,
@@ -187,7 +187,7 @@ export type UiTreeViewAriaAttributes = Pick<AriaAttributes, "aria-label" | "aria
  */
 export type UiTreeViewItemAriaAttributes = Pick<
     AriaAttributes,
-    "aria-level" | "aria-expanded" | "aria-selected" | "aria-disabled"
+    "aria-level" | "aria-posinset" | "aria-setsize" | "aria-expanded" | "aria-selected" | "aria-disabled"
 > & {
     id: string;
     role: "treeitem";

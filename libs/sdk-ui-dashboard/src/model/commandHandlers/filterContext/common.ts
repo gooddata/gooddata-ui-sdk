@@ -5,9 +5,11 @@ import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
+    type DashboardDateFilterOfAnyType,
     type IDashboardAttributeFilterConfig,
-    type IDashboardDateFilter,
     type IFilterContextDefinition,
+    isDashboardAbsoluteGranularityDateFilter,
+    isDashboardParameterizedDateFilter,
 } from "@gooddata/sdk-model";
 import { _isEqual } from "@gooddata/util";
 
@@ -16,7 +18,10 @@ import { type IDashboardCommand } from "../../commands/base.js";
 import { removeAttributeFilters } from "../../commands/filters.js";
 import { filterContextChanged, filterContextWorkingSelectionApplied } from "../../events/filters.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { selectEnableImmediateAttributeFilterDisplayAsLabelMigration } from "../../store/config/configSelectors.js";
+import {
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    selectSettings,
+} from "../../store/config/configSelectors.js";
 import {
     selectCrossFilteringFiltersLocalIdentifiers,
     selectIsCrossFiltering,
@@ -138,10 +143,28 @@ export function* dispatchFilterContextChanged(
     );
 }
 
-export function* canApplyDateFilter(dateFilter: IDashboardDateFilter): SagaIterator<boolean> {
+export function* canApplyDateFilter(dateFilter: DashboardDateFilterOfAnyType): SagaIterator<boolean> {
     const effectiveDateFilterOptions: ReturnType<typeof selectEffectiveDateFilterOptions> = yield select(
         selectEffectiveDateFilterOptions,
     );
+
+    if (isDashboardAbsoluteGranularityDateFilter(dateFilter)) {
+        const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+        const absoluteForm = effectiveDateFilterOptions?.absoluteForm;
+        const { granularity } = dateFilter.dashboardAbsoluteGranularityDateFilter;
+        // the configuration lists the week as the US week
+        const tab = granularity === "GDC.time.week" ? "GDC.time.week_us" : granularity;
+
+        return (
+            !!settings.enableAbsoluteDateFilterGranularity &&
+            !!absoluteForm?.visible &&
+            !!absoluteForm.availableGranularities?.includes(tab)
+        );
+    }
+    // periods are not among the date filter options yet
+    if (isDashboardParameterizedDateFilter(dateFilter)) {
+        return false;
+    }
 
     const targetOption = findDateFilterOptionByValue(dateFilter, effectiveDateFilterOptions);
 

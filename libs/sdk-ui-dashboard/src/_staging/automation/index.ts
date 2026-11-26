@@ -28,7 +28,15 @@ import {
 } from "@gooddata/sdk-model";
 import { _isEqual, _omit } from "@gooddata/util";
 
-import { assertNoAbsoluteGranularityDateFilter } from "../dashboard/absoluteGranularityDateFilters.js";
+import {
+    assertNoAbsoluteGranularityDateFilter,
+    automationExportFilters,
+    containsAbsoluteGranularityDateFilter,
+} from "../dashboard/absoluteGranularityDateFilters.js";
+import {
+    assertNoDashboardParameterizedDateFilter,
+    containsDashboardParameterizedDateFilter,
+} from "../dashboard/parameterizedDateFilters.js";
 
 export const isDashboardAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
@@ -111,6 +119,14 @@ export const isXlsxVisualizationExportDefinition = (
     );
 };
 
+// The getters below throw on granularity and parameterized date filter items, so dialogs must skip them.
+export const automationHasUneditableDateFilter = (automation: IAutomationMetadataObject): boolean => {
+    const filters = automationExportFilters(automation);
+    return (
+        containsAbsoluteGranularityDateFilter(filters) || containsDashboardParameterizedDateFilter(filters)
+    );
+};
+
 export const getAutomationDashboardFilters = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
 ): FilterContextItem[] | undefined => {
@@ -124,8 +140,9 @@ export const getAutomationDashboardFilters = (
         })?.requestPayload as IExportDefinitionDashboardRequestPayload
     )?.content.filters;
 
-    // The filter below drops absolute date filters with granularity, so saving would lose them.
+    // The filter below drops absolute granularity and parameterized date filters, so saving would lose them.
     assertNoAbsoluteGranularityDateFilter(filters);
+    assertNoDashboardParameterizedDateFilter(filters);
     return filters?.filter((f) => isFilterContextItem(f));
 };
 
@@ -146,8 +163,11 @@ export const getAutomationDashboardFiltersByTab = (
         })?.requestPayload as IExportDefinitionDashboardRequestPayload
     )?.content.filtersByTab;
 
-    // Tab filters go to the edit dialog as is, which cannot show absolute date filters with granularity.
-    Object.values(filtersByTab ?? {}).forEach((filters) => assertNoAbsoluteGranularityDateFilter(filters));
+    // Tab filters go to the edit dialog as is, which cannot show granularity or parameterized date filters.
+    Object.values(filtersByTab ?? {}).forEach((filters) => {
+        assertNoAbsoluteGranularityDateFilter(filters);
+        assertNoDashboardParameterizedDateFilter(filters);
+    });
     return filtersByTab;
 };
 
@@ -309,8 +329,9 @@ export const getAutomationVisualizationFilters = (
             return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
         })?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
     )?.content.filters;
-    // The filter below drops absolute date filters with granularity, so saving would lose them.
+    // The filter below drops absolute granularity and parameterized date filters, so saving would lose them.
     assertNoAbsoluteGranularityDateFilter(visualizationFilters);
+    assertNoDashboardParameterizedDateFilter(visualizationFilters);
     const filterContextItems = visualizationFilters?.filter((f) => isFilterContextItem(f));
 
     return {

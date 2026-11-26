@@ -9,7 +9,7 @@ import {
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 
-import { type DateFilterOption } from "../interfaces/index.js";
+import { type DateFilterOption, isUiAbsoluteGranularityDateFilterForm } from "../interfaces/index.js";
 
 /**
  * Returns the date filter option with excludeCurrentPeriod applied if applicable.
@@ -28,6 +28,7 @@ export const applyExcludeCurrentPeriod = (
         isAllTimeDateFilterOption(dateFilterOption) ||
         isEmptyValuesDateFilterOption(dateFilterOption) ||
         isAbsoluteDateFilterForm(dateFilterOption) ||
+        isUiAbsoluteGranularityDateFilterForm(dateFilterOption) ||
         isAbsoluteDateFilterPreset(dateFilterOption) ||
         isRelativeDateFilterForm(dateFilterOption)
     ) {

@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "轨迹 ID",
     "automations.icon.tooltip.startsOn": "开始于",
     "automations.icon.tooltip.repeats": "重复",
+    "automations.icon.tooltip.trigger.failed": "显示失败详细信息",
+    "automations.icon.tooltip.trigger.details": "显示详情",
     "automations.menu.trigger": "立即发送",
     "automations.menu.copyId": "复制身份证",
     "automations.message.copyId.success": "ID已复制到剪贴板",

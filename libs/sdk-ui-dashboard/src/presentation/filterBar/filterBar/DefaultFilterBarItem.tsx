@@ -106,7 +106,7 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
 
     const {
         AttributeFilterComponentSet,
-        DashboardDateFilterComponentProvider,
+        DashboardDateFilterOfAnyTypeComponentProvider,
         DashboardMeasureValueFilterComponentProvider,
         DashboardFilterGroupComponentProvider,
     } = useDashboardComponentsContext();
@@ -281,7 +281,7 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
     if (item.filter.dateFilter.dataSet) {
         const { filter, workingFilter, filterIndex } = item;
 
-        const CustomDateFilterComponent = DashboardDateFilterComponentProvider(filter);
+        const CustomDateFilterComponent = DashboardDateFilterOfAnyTypeComponentProvider(filter);
 
         const dateFilterMode =
             dateFiltersModeMap.get(serializeObjRef(filter.dateFilter.dataSet!)) ||

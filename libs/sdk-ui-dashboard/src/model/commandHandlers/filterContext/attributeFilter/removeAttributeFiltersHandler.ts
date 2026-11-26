@@ -10,7 +10,6 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemFilterElementsBy,
     dashboardAttributeFilterItemLocalIdentifier,
-    isInsightWidget,
 } from "@gooddata/sdk-model";
 import { _partition } from "@gooddata/util";
 
@@ -20,9 +19,8 @@ import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { selectFilterContextAttributeFilterItems } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
-import { selectAllAnalyticalWidgets } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
-import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
+import { revalidateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
 import { dispatchFilterContextChanged } from "../common.js";
 
 export function* removeAttributeFiltersHandler(
@@ -109,6 +107,5 @@ export function* removeAttributeFiltersHandler(
 
     yield call(dispatchFilterContextChanged, ctx, cmd);
 
-    const widgets: ReturnType<typeof selectAllAnalyticalWidgets> = yield select(selectAllAnalyticalWidgets);
-    yield call(validateDrillToCustomUrlParams, widgets.filter(isInsightWidget));
+    yield call(revalidateDrillToCustomUrlParams);
 }

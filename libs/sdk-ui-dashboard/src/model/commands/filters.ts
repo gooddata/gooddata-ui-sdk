@@ -4,12 +4,15 @@ import {
     type DashboardAttributeFilterConfigMode,
     type DashboardAttributeFilterItem,
     type DashboardAttributeFilterSelectionMode,
+    type DashboardDateFilterOfAnyType,
     type DashboardTextAttributeFilter,
     type DateFilterGranularity,
+    type DateFilterOfAnyType,
     type DateFilterType,
     type DateString,
     type EmptyValues,
     type FilterContextItem,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeElements,
     type IAttributeFilter,
     type IDashboardAttributeFilterByDate,
@@ -21,6 +24,7 @@ import {
     type MeasureValueFilterCondition,
     type ObjRef,
     absoluteDateFilterValues,
+    absoluteGranularityDateFilterValues,
     filterAttributeElements,
     filterLocalIdentifier,
     filterObjRef,
@@ -133,7 +137,7 @@ export type DateFilterSelection = {
  * Command for date filter selection change.
  *
  * @remarks
- * See {@link changeDateFilterSelection} and {@link applyDateFilter} factory functions you can use to create
+ * See {@link changeDateFilterSelection} and {@link (applyDateFilter:2)} factory functions you can use to create
  * this command more easily from raw data and {@link @gooddata/sdk-model#IDateFilter}, respectively.
  *
  * @public
@@ -198,6 +202,26 @@ export function changeDateFilterSelection(
 }
 
 /**
+ * Creates the ChangeDateFilterSelectionOfAnyType command for an absolute date filter with granularity.
+ *
+ * @remarks
+ * Dispatching this command will result in change of dashboard's common date filter, or error in case of invalid
+ * update (e.g. hidden date filter option by dateFilterConfig). The filter must not have a date dataset, the
+ * dashboard does not support absolute date filters with granularity for a date dataset yet.
+ *
+ * See {@link ChangeDateFilterSelectionOfAnyType} for a more complete description of the different parameters
+ *
+ * @param filter - date filter to apply
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @public
+ */
+export function applyDateFilter(
+    filter: IAbsoluteGranularityDateFilter,
+    correlationId?: string,
+): ChangeDateFilterSelectionOfAnyType;
+/**
  * Creates the ChangeDateFilterSelection command.
  *
  * @remarks
@@ -205,8 +229,7 @@ export function changeDateFilterSelection(
  * update (e.g. hidden date filter option by dateFilterConfig).
  *
  * All parameters for {@link ChangeDateFilterSelection} command is derived from the provided date filter.
- * An absolute date filter with granularity or a parameterized date filter is not supported yet and throws
- * an error.
+ * A parameterized date filter is not supported yet and throws an error.
  *
  * See {@link ChangeDateFilterSelection} for a more complete description of the different parameters
  *
@@ -216,7 +239,11 @@ export function changeDateFilterSelection(
  *
  * @public
  */
-export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection {
+export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection;
+export function applyDateFilter(
+    filter: DateFilterOfAnyType,
+    correlationId?: string,
+): ChangeDateFilterSelection | ChangeDateFilterSelectionOfAnyType {
     if (isAllTimeDateFilter(filter)) {
         const values = relativeDateFilterValues(filter, true);
         const emptyValueHandling = filter.relativeDateFilter.emptyValueHandling;
@@ -261,7 +288,17 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             emptyValueHandling,
         );
     } else if (isAbsoluteGranularityDateFilter(filter)) {
-        throw new Error("Absolute date filters with granularity are not supported yet.");
+        const { dataSet, localIdentifier } = filter.absoluteGranularityDateFilter;
+        return changeDateFilterSelectionOfAnyType(
+            {
+                dashboardAbsoluteGranularityDateFilter: {
+                    ...absoluteGranularityDateFilterValues(filter),
+                    dataSet,
+                    ...(localIdentifier ? { localIdentifier } : {}),
+                },
+            },
+            { correlationId },
+        );
     } else if (isParameterizedDateFilter(filter)) {
         throw new Error("Parameterized date filters are not supported yet.");
     } else if (isAbsoluteDateFilter(filter)) {
@@ -314,6 +351,96 @@ export function clearDateFilterSelection(
             isWorkingSelectionChange,
             localIdentifier,
             emptyValueHandling,
+        },
+    };
+}
+
+/**
+ * Payload type for {@link ChangeDateFilterSelectionOfAnyType} command.
+ *
+ * @alpha
+ */
+export type DateFilterOfAnyTypeSelection = {
+    /**
+     * The date filter to set, undefined for the common date filter set to All time.
+     *
+     * @remarks
+     * An absolute date filter with granularity must not have a date dataset, the dashboard does not support
+     * it yet.
+     */
+    readonly filter: DashboardDateFilterOfAnyType | undefined;
+
+    /**
+     * The localId of the DateFilterOption selected.
+     */
+    readonly dateFilterOptionLocalId?: string;
+
+    /**
+     * Determines if this command should change working (staged for application) filters or applied filters (used to compute data).
+     */
+    readonly isWorkingSelectionChange?: boolean;
+};
+
+/**
+ * Command for date filter selection change, for a date filter of any type.
+ *
+ * @remarks
+ * See {@link changeDateFilterSelectionOfAnyType} factory function you can use to create this command more easily.
+ *
+ * @alpha
+ */
+export type ChangeDateFilterSelectionOfAnyType = IDashboardCommand & {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.CHANGE_SELECTION";
+    readonly payload: DateFilterOfAnyTypeSelection;
+};
+
+/**
+ * Options of the {@link changeDateFilterSelectionOfAnyType} factory function.
+ *
+ * @alpha
+ */
+export interface IChangeDateFilterSelectionOfAnyTypeOptions {
+    /**
+     * The localId of the DateFilterOption selected.
+     */
+    dateFilterOptionLocalId?: string;
+
+    /**
+     * Determines if this command should change working (staged for application) filters or applied filters (used to compute data).
+     */
+    isWorkingSelectionChange?: boolean;
+
+    /**
+     * Specify correlation id to use for this command. This will be included in all events that will be emitted
+     * during the command processing.
+     */
+    correlationId?: string;
+}
+
+/**
+ * Creates the ChangeDateFilterSelectionOfAnyType command.
+ *
+ * @remarks
+ * Dispatching this command will result in change of dashboard's date filter, or error in case of invalid
+ * update (e.g. hidden date filter option by dateFilterConfig).
+ *
+ * @param filter - the date filter to set, undefined for the common date filter set to All time
+ * @param options - the selected date filter option, working selection change and correlation id
+ *
+ * @alpha
+ */
+export function changeDateFilterSelectionOfAnyType(
+    filter: DashboardDateFilterOfAnyType | undefined,
+    options: IChangeDateFilterSelectionOfAnyTypeOptions = {},
+): ChangeDateFilterSelectionOfAnyType {
+    const { dateFilterOptionLocalId, isWorkingSelectionChange, correlationId } = options;
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.CHANGE_SELECTION",
+        correlationId,
+        payload: {
+            filter,
+            dateFilterOptionLocalId,
+            isWorkingSelectionChange,
         },
     };
 }

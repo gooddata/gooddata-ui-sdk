@@ -62,7 +62,7 @@ type MessageIdPair = Record<PeriodRangeSide, string>;
  */
 export const EMPTY_MESSAGE_IDS: Record<PeriodRangePickerGranularity, MessageIdPair> = {
     "GDC.time.date": { start: messages.emptyStartDate.id, end: messages.emptyEndDate.id },
-    "GDC.time.week_us": { start: messages.emptyStartWeek.id, end: messages.emptyEndWeek.id },
+    "GDC.time.week": { start: messages.emptyStartWeek.id, end: messages.emptyEndWeek.id },
     "GDC.time.month": { start: messages.emptyStartMonth.id, end: messages.emptyEndMonth.id },
     "GDC.time.quarter": { start: messages.emptyStartQuarter.id, end: messages.emptyEndQuarter.id },
     "GDC.time.year": { start: messages.emptyStartYear.id, end: messages.emptyEndYear.id },
@@ -74,7 +74,7 @@ export const EMPTY_MESSAGE_IDS: Record<PeriodRangePickerGranularity, MessageIdPa
  * its messages following is a compile error.
  */
 export const INVALID_MESSAGE_IDS_WITH_EXAMPLE: Record<GranularityWithHintExample, MessageIdPair> = {
-    "GDC.time.week_us": {
+    "GDC.time.week": {
         start: messages.invalidStartWeekWithExample.id,
         end: messages.invalidEndWeekWithExample.id,
     },

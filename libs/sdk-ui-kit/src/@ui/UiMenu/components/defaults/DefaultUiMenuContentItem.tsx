@@ -23,6 +23,8 @@ import {
     type IUiMenuContentItemWrapperProps,
     type IUiMenuItemData,
 } from "../../types.js";
+
+import { useMenuItemPosition } from "./useMenuItemPosition.js";
 /**
  * Default component for rendering content menu items.
  * @internal
@@ -53,6 +55,8 @@ export const DefaultUiMenuContentItemWrapper = memo<IUiMenuContentItemWrapperPro
             ContentItemComponent,
             isFocused,
         } = useContextStore(selector);
+
+        const position = useMenuItemPosition(item.id);
 
         const scrollToItem = (element: HTMLLIElement | null) => {
             if (!element || !isFocused) {
@@ -100,6 +104,8 @@ export const DefaultUiMenuContentItemWrapper = memo<IUiMenuContentItemWrapperPro
                 tabIndex={-1}
                 onClick={item.isDisabled ? undefined : handleSelect}
                 aria-disabled={item.isDisabled}
+                aria-posinset={position?.posInSet}
+                aria-setsize={position?.setSize}
                 id={makeItemId(item)}
                 onMouseMove={handleMouseFocus}
                 data-testid={dataTestId}

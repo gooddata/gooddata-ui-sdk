@@ -3,6 +3,7 @@
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
+    type DashboardDateFilterOfAnyType,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type IDashboardDateFilter,
@@ -16,13 +17,16 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemValidateElementsBy,
     dashboardFilterLocalIdentifier,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
-    isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
+    isDashboardDateFilterOfAnyType,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
+    isDashboardParameterizedDateFilter,
     isSingleSelectionFilter,
 } from "@gooddata/sdk-model";
 
@@ -33,6 +37,9 @@ import { type ITabState } from "../tabsState.js";
 import { type WorkingFilterContextItem } from "./filterContextState.js";
 
 type StagedFilter = FilterContextItem | WorkingFilterContextItem;
+
+// Not a type guard, so that a false result does not narrow out the date filters with a data set.
+const isCommonDateFilter = (item: unknown): boolean => isDashboardCommonDateFilterOfAnyType(item);
 
 /**
  * Cross-tab identity match.
@@ -124,13 +131,52 @@ export function findCounterpartFilter(
         );
         return result.status === "matched" ? result.counterpart : undefined;
     }
-    if (isDashboardDateFilter(sourceFilter)) {
+    if (isDashboardDateFilterOfAnyType(sourceFilter)) {
         return findDateCounterpart(sourceFilter, targets);
     }
     if (isDashboardMeasureValueFilter(sourceFilter)) {
         return findMeasureValueCounterpart(sourceFilter, targets);
     }
     return undefined;
+}
+
+/**
+ * The common date filter with the local identifier, also when the identifier is undefined.
+ *
+ * @internal
+ */
+export function withCommonDateFilterLocalIdentifier(
+    filter: DashboardDateFilterOfAnyType,
+    localIdentifier: string | undefined,
+): DashboardDateFilterOfAnyType {
+    if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+        const {
+            localIdentifier: _localIdentifier,
+            dataSet: _dataSet,
+            ...body
+        } = filter.dashboardAbsoluteGranularityDateFilter;
+        return {
+            dashboardAbsoluteGranularityDateFilter: {
+                ...body,
+                ...(localIdentifier ? { localIdentifier } : {}),
+            },
+        };
+    }
+    if (isDashboardParameterizedDateFilter(filter)) {
+        const {
+            localIdentifier: _localIdentifier,
+            dataSet: _dataSet,
+            ...body
+        } = filter.dashboardParameterizedDateFilter;
+        return {
+            dashboardParameterizedDateFilter: {
+                ...body,
+                ...(localIdentifier ? { localIdentifier } : {}),
+            },
+        };
+    }
+    const { localIdentifier: _localIdentifier, dataSet: _dataSet, ...body } = filter.dateFilter;
+    return { dateFilter: { ...body, ...(localIdentifier ? { localIdentifier } : {}) } };
 }
 
 /**
@@ -270,6 +316,10 @@ export function applyMirroredFilterValue(
         };
     }
 
+    if (isDashboardCommonDateFilterOfAnyType(source) && isDashboardCommonDateFilterOfAnyType(target)) {
+        return withCommonDateFilterLocalIdentifier(source, dashboardFilterLocalIdentifier(target));
+    }
+
     if (isDashboardDateFilter(source) && isDashboardDateFilter(target)) {
         const dateFilter: IDashboardDateFilter["dateFilter"] = {
             ...source.dateFilter,
@@ -343,7 +393,7 @@ export function writeMirroredSelection(tab: ITabState, selection: IMirroredSelec
         const current = findAppliedFilterWithIdentityOf(tab, filter);
         if (current) {
             writeFilter(tab, current, filter);
-        } else if (isDashboardCommonDateFilter(filter)) {
+        } else if (isDashboardCommonDateFilterOfAnyType(filter)) {
             tab.filterContext?.filterContextDefinition?.filters.unshift(filter);
         } else {
             continue;
@@ -373,10 +423,10 @@ export function findAppliedFilterForStaged(
     staged: StagedFilter,
 ): FilterContextItem | undefined {
     const filters = appliedFilters(tab);
+    if (isCommonDateFilter(staged)) {
+        return filters.find(isDashboardCommonDateFilterOfAnyType);
+    }
     if ("dateFilter" in staged && staged.dateFilter) {
-        if (!staged.dateFilter.dataSet) {
-            return filters.find(isDashboardCommonDateFilter);
-        }
         return filters.find(
             (filter) =>
                 isDashboardDateFilter(filter) &&
@@ -411,16 +461,17 @@ function dropStagedOverlay(tab: ITabState, applied: FilterContextItem): void {
     if (!filterContext || !working?.filters.length) {
         return;
     }
-    const overlays = isDashboardDateFilter(applied)
-        ? (item: StagedFilter) =>
-              "dateFilter" in item &&
-              !!item.dateFilter &&
-              (areObjRefsEqual(item.dateFilter.dataSet, applied.dateFilter.dataSet) ||
-                  (!item.dateFilter.dataSet && !applied.dateFilter.dataSet))
-        : (item: StagedFilter) =>
-              !("dateFilter" in item) &&
-              stagedLocalIdentifier(item) !== undefined &&
-              stagedLocalIdentifier(item) === dashboardFilterLocalIdentifier(applied);
+    const overlays = isDashboardCommonDateFilterOfAnyType(applied)
+        ? (item: StagedFilter) => isDashboardCommonDateFilterOfAnyType(item)
+        : isDashboardDateFilter(applied)
+          ? (item: StagedFilter) =>
+                "dateFilter" in item &&
+                !!item.dateFilter &&
+                areObjRefsEqual(item.dateFilter.dataSet, applied.dateFilter.dataSet)
+          : (item: StagedFilter) =>
+                !isDashboardDateFilterOfAnyType(item) &&
+                stagedLocalIdentifier(item) !== undefined &&
+                stagedLocalIdentifier(item) === dashboardFilterLocalIdentifier(applied);
     const remaining = working.filters.filter((item) => !overlays(item));
     if (remaining.length !== working.filters.length) {
         filterContext.workingFilterContextDefinition = { filters: remaining };
@@ -431,7 +482,7 @@ function findAppliedFilterWithIdentityOf(
     tab: ITabState,
     filter: FilterContextItem,
 ): FilterContextItem | undefined {
-    if (isDashboardDateFilter(filter)) {
+    if (isDashboardDateFilterOfAnyType(filter)) {
         return findDateCounterpart(filter, appliedFilters(tab));
     }
     const localIdentifier = dashboardFilterLocalIdentifier(filter);
@@ -452,6 +503,9 @@ function stagedLocalIdentifier(item: StagedFilter): string | undefined {
     }
     if ("dateFilter" in item && item.dateFilter) {
         return item.dateFilter.localIdentifier;
+    }
+    if ("dashboardAbsoluteGranularityDateFilter" in item && item.dashboardAbsoluteGranularityDateFilter) {
+        return item.dashboardAbsoluteGranularityDateFilter.localIdentifier;
     }
     if ("dashboardMeasureValueFilter" in item && item.dashboardMeasureValueFilter) {
         return item.dashboardMeasureValueFilter.localIdentifier;
@@ -545,16 +599,19 @@ function samePresentation(left: IAttributeFilterPresentation, right: IAttributeF
 }
 
 function findDateCounterpart(
-    sourceFilter: IDashboardDateFilter,
+    sourceFilter: DashboardDateFilterOfAnyType,
     targets: FilterContextItem[],
-): IDashboardDateFilter | undefined {
-    // Check the data set directly. `isDashboardCommonDateFilter` is typed as
-    // `obj is IDashboardDateFilter`, so using it as a guard would narrow the
-    // remaining source to `never`.
-    const dataSet = sourceFilter.dateFilter.dataSet;
-    if (!dataSet) {
-        return targets.find(isDashboardCommonDateFilter);
+): DashboardDateFilterOfAnyType | undefined {
+    if (isCommonDateFilter(sourceFilter)) {
+        return targets.find(isDashboardCommonDateFilterOfAnyType);
     }
+    if (
+        isDashboardAbsoluteGranularityDateFilter(sourceFilter) ||
+        isDashboardParameterizedDateFilter(sourceFilter)
+    ) {
+        return undefined;
+    }
+    const dataSet = sourceFilter.dateFilter.dataSet;
     return targets.find(
         (filter): filter is IDashboardDateFilter =>
             isDashboardDateFilter(filter) && areObjRefsEqual(filter.dateFilter.dataSet, dataSet),

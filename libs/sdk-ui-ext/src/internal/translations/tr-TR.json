@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "İzleme Kimliği",
     "automations.icon.tooltip.startsOn": "Başlangıç tarihi",
     "automations.icon.tooltip.repeats": "Tekrarlar",
+    "automations.icon.tooltip.trigger.failed": "Hata ayrıntılarını göster",
+    "automations.icon.tooltip.trigger.details": "Ayrıntıları göster",
     "automations.menu.trigger": "Şimdi gönder",
     "automations.menu.copyId": "Kimliği Kopyala",
     "automations.message.copyId.success": "Kimlik panoya kopyalandı",

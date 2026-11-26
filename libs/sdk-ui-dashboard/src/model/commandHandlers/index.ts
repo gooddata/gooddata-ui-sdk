@@ -60,7 +60,10 @@ import { setAttributeFilterParentsHandler } from "./filterContext/attributeFilte
 import { changeFilterContextSelectionHandler } from "./filterContext/changeFilterContextSelectionHandler.js";
 import { applyWorkingSelectionHandler, resetWorkingSelectionHandler } from "./filterContext/common.js";
 import { addDateFilterHandler } from "./filterContext/dateFilter/addDateFilterHandler.js";
-import { changeDateFilterSelectionHandler } from "./filterContext/dateFilter/changeDateFilterSelectionHandler.js";
+import {
+    changeDateFilterSelectionHandler,
+    changeDateFilterSelectionOfAnyTypeHandler,
+} from "./filterContext/dateFilter/changeDateFilterSelectionHandler.js";
 import { moveDateFilterHandler } from "./filterContext/dateFilter/moveDateFilterHandler.js";
 import { removeDateFiltersHandler } from "./filterContext/dateFilter/removeDateFiltersHandler.js";
 import {
@@ -94,7 +97,9 @@ import { setScreenSizeHandler } from "./layout/setScreenSizeHandler.js";
 import { toggleLayoutDirectionHandler } from "./layout/toggleLayoutDirectionHandler.js";
 import { toggleLayoutSectionHeadersHandler } from "./layout/toggleLayoutSectionHeadersHandler.js";
 import { undoLayoutChangesHandler } from "./layout/undoLayoutChangesHandler.js";
+import { addParametersHandler } from "./parameters/addParametersHandler.js";
 import { changeParameterValuesHandler } from "./parameters/changeParameterValuesHandler.js";
+import { removeParametersHandler } from "./parameters/removeParametersHandler.js";
 import { requestAsyncRenderHandler } from "./render/requestAsyncRenderHandler.js";
 import { resolveAsyncRenderHandler } from "./render/resolveAsyncRenderHandler.js";
 import { changeRenderModeHandler } from "./renderMode/changeRenderModeHandler.js";
@@ -171,6 +176,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT": upsertExecutionResultHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION": changeFilterContextSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION": changeDateFilterSelectionHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.CHANGE_SELECTION":
+        changeDateFilterSelectionOfAnyTypeHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD": addAttributeFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.TEXT_ATTRIBUTE_FILTER.ADD": addTextAttributeFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE": removeAttributeFiltersHandler,
@@ -295,4 +302,6 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.TAB.RENAME_MODE.CANCEL": cancelRenamingDashboardTabHandler,
     "GDC.DASH/CMD.TAB.RENAME": renameDashboardTabHandler,
     "GDC.DASH/CMD.PARAMETERS.CHANGE_VALUES": changeParameterValuesHandler,
+    "GDC.DASH/CMD.PARAMETERS.ADD": addParametersHandler,
+    "GDC.DASH/CMD.PARAMETERS.REMOVE": removeParametersHandler,
 };

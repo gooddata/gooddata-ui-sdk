@@ -12,7 +12,7 @@ import {
     isExecutionRunningSelector,
     isReportSavedSelector,
 } from "./report_selector.js";
-import { isSaveDisabledSelector } from "./save_report_selector.js";
+import { hasUnsavedChangesSelector, isSaveDisabledSelector } from "./save_report_selector.js";
 
 export const getConfirmUnsavedChangesDialogStatus = createSelector(
     getDialogsState,
@@ -24,12 +24,14 @@ const getConfirmUnsavedChangesDialogData = createSelector(
     (dialogs) => dialogs.confirmUnsavedChanges.data,
 );
 
+// A running execution alone is no change: the first execution of an opened visualization runs too.
 export const isReportChanging = createSelector(
     isSaveDisabledSelector,
     isComputingShortcutSelector,
     isExecutionRunningSelector,
-    (isSaveDisabled: boolean, isComputing: boolean, isExecuting: boolean) =>
-        !isSaveDisabled || isComputing || isExecuting,
+    hasUnsavedChangesSelector,
+    (isSaveDisabled: boolean, isComputing: boolean, isExecuting: boolean, hasUnsavedChanges: boolean) =>
+        !isSaveDisabled || isComputing || (isExecuting && hasUnsavedChanges),
 );
 
 export const confirmUnsavedChangesDialogSelector = createSelector(

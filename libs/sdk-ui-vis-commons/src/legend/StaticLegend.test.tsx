@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { withIntlForTest } from "@gooddata/sdk-ui";
@@ -56,6 +56,35 @@ describe("StaticLegend", () => {
 
         renderComponent({ series, position: "right" });
         expect(screen.getAllByTestId("legend-item")).toHaveLength(6);
+    });
+
+    it("should count option positions and set size across all pages of a paged legend", () => {
+        const series: IPushpinCategoryLegendItem[] = Array.from({ length: 20 }, (_, index) => ({
+            type: "line",
+            name: `Series ${index + 1}`,
+            color: "#333",
+            isVisible: true,
+            uri: "/url",
+            legendIndex: index,
+        }));
+
+        renderComponent({ series, position: "right", containerHeight: 150 });
+
+        const firstPageOptions = screen.getAllByRole("option");
+        expect(firstPageOptions.length).toBeLessThan(series.length);
+        firstPageOptions.forEach((option, index) => {
+            expect(option).toHaveAttribute("aria-posinset", String(index + 1));
+            expect(option).toHaveAttribute("aria-setsize", String(series.length));
+        });
+
+        const pagingButtons = within(screen.getByTestId("Paging")).getAllByRole("button");
+        fireEvent.click(pagingButtons[pagingButtons.length - 1]);
+
+        const secondPageOptions = screen.getAllByRole("option");
+        secondPageOptions.forEach((option, index) => {
+            expect(option).toHaveAttribute("aria-posinset", String(firstPageOptions.length + index + 1));
+            expect(option).toHaveAttribute("aria-setsize", String(series.length));
+        });
     });
 });
 

@@ -24,8 +24,7 @@ export function ShowAllFiltersButton({
             <button
                 className="button-filter-bar-show-all"
                 type="button"
-                tabIndex={-1}
-                aria-hidden="true"
+                aria-expanded={isFilterBarExpanded}
                 onClick={() => onToggle(!isFilterBarExpanded)}
             >
                 <span className="gd-button-text gd-label">
@@ -34,7 +33,7 @@ export function ShowAllFiltersButton({
                     ) : (
                         <FormattedMessage id="filterBar.showAll" />
                     )}
-                    <i className={`gd-button-icon gd-icon ${icon}`} />
+                    <i className={`gd-button-icon gd-icon ${icon}`} aria-hidden="true" />
                 </span>
             </button>
         </div>

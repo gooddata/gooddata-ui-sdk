@@ -29,6 +29,9 @@ const fixtures = vi.hoisted(() => {
     let managementDialogProps: Record<string, unknown> | undefined;
     let dialogProps: Record<string, unknown> | undefined;
     let automationsError: Error | undefined;
+    let notSupportedDialogProps: Record<string, unknown> | undefined;
+    const blocksAutomation = vi.fn((_isDashboardExport: boolean) => false);
+    const buildDialogContext = vi.fn(() => ({}));
     const alertsState = { isAlertDialogOpen: false, isAlertManagementDialogOpen: true };
 
     return {
@@ -56,6 +59,14 @@ const fixtures = vi.hoisted(() => {
         },
         get automationsError() {
             return automationsError;
+        },
+        blocksAutomation,
+        buildDialogContext,
+        get notSupportedDialogProps() {
+            return notSupportedDialogProps;
+        },
+        set notSupportedDialogProps(value: Record<string, unknown> | undefined) {
+            notSupportedDialogProps = value;
         },
         set automationsError(value: Error | undefined) {
             automationsError = value;
@@ -141,7 +152,7 @@ vi.mock("../contexts/AutomationsContext.js", () => ({
 }));
 
 vi.mock("./hooks/useBuildAlertingDialogContext.js", () => ({
-    useBuildAlertingDialogContext: () => ({}),
+    useBuildAlertingDialogContext: fixtures.buildDialogContext,
 }));
 
 vi.mock("./hooks/useBuildAlertingManagementDialogContext.js", () => ({
@@ -165,6 +176,17 @@ vi.mock("./hooks/useBuildAutomationsContext.js", () => ({
     useBuildAutomationsContext: () => ({}),
 }));
 
+vi.mock("./hooks/useAbsoluteGranularityDateFilterBlocksAutomation.js", () => ({
+    useAbsoluteGranularityDateFilterBlocksAutomation: fixtures.blocksAutomation,
+}));
+
+vi.mock("../shared/components/AbsoluteGranularityDateFilterNotSupportedDialog.js", () => ({
+    AbsoluteGranularityDateFilterNotSupportedDialog: (props: Record<string, unknown>) => {
+        fixtures.notSupportedDialogProps = props;
+        return null;
+    },
+}));
+
 import { AlertingConnector } from "./AlertingConnector.js";
 
 describe("AlertingConnector", () => {
@@ -175,6 +197,10 @@ describe("AlertingConnector", () => {
         fixtures.managementDialogProps = undefined;
         fixtures.dialogProps = undefined;
         fixtures.automationsError = undefined;
+        fixtures.notSupportedDialogProps = undefined;
+        fixtures.blocksAutomation.mockReset();
+        fixtures.blocksAutomation.mockReturnValue(false);
+        fixtures.buildDialogContext.mockClear();
         fixtures.alertsState.isAlertDialogOpen = false;
         fixtures.alertsState.isAlertManagementDialogOpen = true;
     });
@@ -247,5 +273,28 @@ describe("AlertingConnector", () => {
         render(<AlertingConnector />);
 
         expect(fixtures.managementDialogProps).toBeDefined();
+    });
+
+    it("shows the not supported dialog without building the alert dialog when the filters block it", () => {
+        fixtures.alertsState.isAlertDialogOpen = true;
+        fixtures.alertsState.isAlertManagementDialogOpen = false;
+        fixtures.blocksAutomation.mockReturnValue(true);
+
+        render(<AlertingConnector />);
+
+        expect(fixtures.blocksAutomation).toHaveBeenCalledWith(false);
+        expect(fixtures.notSupportedDialogProps?.["automationType"]).toBe("alert");
+        expect(fixtures.dialogProps).toBeUndefined();
+        expect(fixtures.buildDialogContext).not.toHaveBeenCalled();
+    });
+
+    it("shows the alert dialog when the filters do not block it", () => {
+        fixtures.alertsState.isAlertDialogOpen = true;
+        fixtures.alertsState.isAlertManagementDialogOpen = false;
+
+        render(<AlertingConnector />);
+
+        expect(fixtures.notSupportedDialogProps).toBeUndefined();
+        expect(fixtures.dialogProps).toBeDefined();
     });
 });

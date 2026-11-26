@@ -66,10 +66,7 @@ import {
 import { VisualizationErrorBoundary } from "../components/VisualizationErrorBoundary.js";
 import { DrillSelectDropdownMenu } from "../contents/drill/DrillSelectDropdownMenu.js";
 
-import {
-    ConversationVisualisation,
-    type ConversationVisualisationProps,
-} from "./ConversationVisualisation.js";
+import { type ConversationVisualisationProps } from "./ConversationVisualisation.js";
 import { SaveVisualizationDialog } from "./SaveVisualizationDialog.js";
 import { useKdaEnabled } from "./useKdaEnabled.js";
 import { useInsightSaveCheck } from "./useSaveCheck.js";
@@ -451,6 +448,8 @@ function VisualisationMenu({
 }
 
 function VisualisationWrapper(props: ConversationVisualisationProps) {
+    const { ConversationVisualizationBodyComponent } = useCustomization();
+
     return (
         <div
             className={cx(
@@ -459,7 +458,7 @@ function VisualisationWrapper(props: ConversationVisualisationProps) {
             )}
         >
             <VisualizationErrorBoundary>
-                <ConversationVisualisation {...props} />
+                <ConversationVisualizationBodyComponent {...props} />
             </VisualizationErrorBoundary>
         </div>
     );

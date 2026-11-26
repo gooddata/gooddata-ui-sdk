@@ -5,6 +5,7 @@ import {
     type FilterContextItem,
     isDashboardAbsoluteGranularityDateFilter,
     isDashboardDateFilter,
+    isDashboardParameterizedDateFilter,
 } from "@gooddata/sdk-model";
 
 export const addFilterLocalIdentifier = (filter: FilterContextItem, index: number): FilterContextItem => {
@@ -27,6 +28,20 @@ export const addFilterLocalIdentifier = (filter: FilterContextItem, index: numbe
                 localIdentifier: generateDateFilterLocalIdentifier(
                     index,
                     filter.dashboardAbsoluteGranularityDateFilter.dataSet,
+                ),
+            },
+        };
+    } else if (
+        isDashboardParameterizedDateFilter(filter) &&
+        !filter.dashboardParameterizedDateFilter.localIdentifier
+    ) {
+        return {
+            ...filter,
+            dashboardParameterizedDateFilter: {
+                ...filter.dashboardParameterizedDateFilter,
+                localIdentifier: generateDateFilterLocalIdentifier(
+                    index,
+                    filter.dashboardParameterizedDateFilter.dataSet,
                 ),
             },
         };

@@ -3,7 +3,7 @@
 import { type MutableRefObject, useCallback, useEffect, useMemo, useState } from "react";
 
 import cx from "classnames";
-import { useIntl } from "react-intl";
+import { defineMessages, useIntl } from "react-intl";
 
 import {
     type ICatalogAttribute,
@@ -11,6 +11,8 @@ import {
     type IdentifierRef,
     isCatalogAttribute,
     isCatalogMeasure,
+    isIdentifierRef,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import {
     Dropdown,
@@ -91,11 +93,44 @@ const WIDTH = 253;
 
 type AttributesDropdownTabId = "attributes" | "dateDatasets" | "metrics" | "parameters";
 
+// Accessible names of the icon-only tabs.
+const tabMessages = defineMessages({
+    attributes: { id: "attributesDropdown.tab.attributes" },
+    dateDatasets: { id: "attributesDropdown.tab.dateDatasets" },
+    metrics: { id: "attributesDropdown.tab.metrics" },
+    parameters: { id: "attributesDropdown.tab.parameters" },
+});
+
 type AddFilterListItem =
     | ICatalogAttribute
     | ICatalogDateDataset
     | IMetricDropdownListItem
     | IParameterDropdownItem;
+
+/**
+ * Unique key of a selectable list item, used for the ids of the listbox options.
+ * Only called for lists without static (header and separator) items.
+ */
+function getAddFilterListItemKey(item: AddFilterListItem): string {
+    if (isParameterDropdownListItem(item)) {
+        return `parameter-${objRefToString(item.ref)}`;
+    }
+    if (isCatalogAttribute(item)) {
+        // Computed attributes are listed adapted to catalog attributes (see catalogComputedAttributeAsCatalogAttribute);
+        // only their ref keeps the computedAttribute type, and their identifiers may clash with normal attributes.
+        if (isIdentifierRef(item.attribute.ref) && item.attribute.ref.type === "computedAttribute") {
+            return `computedAttribute-${objRefToString(item.attribute.ref)}`;
+        }
+        return `attribute-${objRefToString(item.attribute.ref)}`;
+    }
+    if (isCatalogMeasure(item)) {
+        return `measure-${objRefToString(item.measure.ref)}`;
+    }
+    if (isHeaderListItem(item) || isSeparatorListItem(item)) {
+        return item.type;
+    }
+    return `dateDataset-${objRefToString(item.dataSet.ref)}`;
+}
 
 /**
  * @internal
@@ -268,17 +303,33 @@ export function AttributesDropdown({
     const tabs = useMemo(() => {
         const newTabs: ITab[] = [];
         if (attributes.length) {
-            newTabs.push({ id: "attributes", iconOnly: true, icon: "gd-icon-attribute" });
+            newTabs.push({
+                id: "attributes",
+                label: tabMessages.attributes,
+                iconOnly: true,
+                icon: "gd-icon-attribute",
+            });
         }
         if (enableMeasureValueFilterKD && metricMeasures.length) {
-            newTabs.push({ id: "metrics", iconOnly: true, icon: "gd-icon-metric" });
+            newTabs.push({
+                id: "metrics",
+                label: tabMessages.metrics,
+                iconOnly: true,
+                icon: "gd-icon-metric",
+            });
         }
         if (supportsMultipleDateFilters && dateDatasets.length) {
-            newTabs.push({ id: "dateDatasets", iconOnly: true, icon: "gd-icon-date" });
+            newTabs.push({
+                id: "dateDatasets",
+                label: tabMessages.dateDatasets,
+                iconOnly: true,
+                icon: "gd-icon-date",
+            });
         }
         if (parameters.length) {
             newTabs.push({
                 id: "parameters",
+                label: tabMessages.parameters,
                 iconOnly: true,
                 iconNode: <UiIcon type="parameter" size={16} layout="block" color="currentColor" />,
             });
@@ -320,6 +371,13 @@ export function AttributesDropdown({
         metricDropdownItems,
         parameterDropdownItems,
     ]);
+
+    // Header and separator rows are not selectable, so they cannot be listbox options.
+    // Lists without them are exposed as a listbox driven by the search combobox.
+    const isListbox = useMemo(
+        () => !items.some((item) => isHeaderListItem(item) || isSeparatorListItem(item)),
+        [items],
+    );
 
     const showTabs = useMemo(() => {
         return tabs.length > 1;
@@ -409,6 +467,16 @@ export function AttributesDropdown({
                                 return getDateAttributeListItemTitle(item, getCustomItemTitle?.(item));
                             }}
                             renderNoData={renderNoData}
+                            getItemKey={isListbox ? getAddFilterListItemKey : undefined}
+                            accessibilityConfig={
+                                isListbox
+                                    ? {
+                                          role: "listbox",
+                                          ariaLabel: buttonTitle,
+                                          ariaLabelledBy: accessibilityConfig?.ariaLabelledBy,
+                                      }
+                                    : undefined
+                            }
                             renderItem={({ item }) => {
                                 if (isHeaderListItem(item)) {
                                     return <SingleSelectListItem type={item.type} title={item.title} />;

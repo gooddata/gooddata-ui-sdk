@@ -7,9 +7,11 @@ import { describe, expect, it } from "vitest";
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
 
 import {
-    type IUiAbsoluteDateFilterFormLike,
-    ensureCompatibleAbsoluteGranularity,
-} from "./presetFilterUtils.js";
+    type IUiAbsoluteDateFilterForm,
+    type IUiAbsoluteGranularityDateFilterForm,
+} from "../interfaces/index.js";
+
+import { ensureCompatibleAbsoluteGranularity } from "./presetFilterUtils.js";
 
 describe("ensureCompatibleAbsoluteGranularity", () => {
     const availableGranularities: DateFilterGranularity[] = [
@@ -18,38 +20,68 @@ describe("ensureCompatibleAbsoluteGranularity", () => {
         "GDC.time.month",
     ];
 
+    const dayOption: IUiAbsoluteDateFilterForm = {
+        localIdentifier: "ABSOLUTE_FORM",
+        type: "absoluteForm",
+        name: "",
+        visible: true,
+        from: "2026-01-01",
+        to: "2026-01-31",
+    };
+
+    const monthOption: IUiAbsoluteGranularityDateFilterForm = {
+        localIdentifier: "ABSOLUTE_FORM",
+        type: "absoluteGranularityForm",
+        name: "",
+        visible: true,
+        granularity: "GDC.time.month",
+        from: "2026-01",
+        to: "2026-03",
+    };
+
     it("is a no-op when availableGranularities is empty", () => {
-        const filterOption: IUiAbsoluteDateFilterFormLike = { from: "2026-01-01", to: "2026-01-31" };
-        expect(ensureCompatibleAbsoluteGranularity(filterOption, [])).toBe(filterOption);
+        expect(ensureCompatibleAbsoluteGranularity(dayOption, [])).toBe(dayOption);
     });
 
-    it("is a no-op when the current granularity is already available", () => {
-        const filterOption: IUiAbsoluteDateFilterFormLike = {
-            granularity: "GDC.time.month",
-            from: "2026-01-01",
-            to: "2026-01-31",
-        };
-        expect(ensureCompatibleAbsoluteGranularity(filterOption, availableGranularities)).toBe(filterOption);
+    it("is a no-op for whole periods whose tab is available", () => {
+        expect(ensureCompatibleAbsoluteGranularity(monthOption, availableGranularities)).toBe(monthOption);
     });
 
-    it("preserves from/to when granularity is absent (implicit Day) and Day is available", () => {
-        const filterOption: IUiAbsoluteDateFilterFormLike = { from: "2026-01-01", to: "2026-01-31" };
-        expect(ensureCompatibleAbsoluteGranularity(filterOption, availableGranularities)).toBe(filterOption);
-    });
-
-    it("resets granularity and clears from/to when granularity is absent and Day is not available", () => {
-        const filterOption: IUiAbsoluteDateFilterFormLike = { from: "2026-01-01", to: "2026-01-31" };
-        const result = ensureCompatibleAbsoluteGranularity(filterOption, ["GDC.time.month", "GDC.time.year"]);
-        expect(result).toEqual({ granularity: "GDC.time.month", from: undefined, to: undefined });
-    });
-
-    it("resets to the first available granularity and clears from/to when the current one is unavailable", () => {
-        const filterOption: IUiAbsoluteDateFilterFormLike = {
+    it("keeps whole periods whose tab is not available", () => {
+        const quarterOption: IUiAbsoluteGranularityDateFilterForm = {
+            ...monthOption,
             granularity: "GDC.time.quarter",
-            from: "2026-01-01",
-            to: "2026-03-31",
+            from: "2026-1",
+            to: "2026-2",
         };
-        const result = ensureCompatibleAbsoluteGranularity(filterOption, availableGranularities);
-        expect(result).toEqual({ granularity: "GDC.time.date", from: undefined, to: undefined });
+        expect(ensureCompatibleAbsoluteGranularity(quarterOption, ["GDC.time.date", "GDC.time.year"])).toBe(
+            quarterOption,
+        );
+    });
+
+    it("preserves days when Day is available", () => {
+        expect(ensureCompatibleAbsoluteGranularity(dayOption, availableGranularities)).toBe(dayOption);
+    });
+
+    it("resets days to the empty option of the first available tab when Day is not available", () => {
+        const result = ensureCompatibleAbsoluteGranularity({ ...dayOption, emptyValueHandling: "include" }, [
+            "GDC.time.month",
+            "GDC.time.year",
+        ]);
+        expect(result).toEqual({
+            localIdentifier: "ABSOLUTE_FORM",
+            type: "absoluteGranularityForm",
+            name: "",
+            visible: true,
+            granularity: "GDC.time.month",
+            emptyValueHandling: "include",
+        });
+    });
+
+    it("resets days to the empty week option when the week is the first available tab", () => {
+        const result = ensureCompatibleAbsoluteGranularity(dayOption, ["GDC.time.week_us", "GDC.time.year"]);
+        expect(result).toMatchObject({ type: "absoluteGranularityForm", granularity: "GDC.time.week" });
+        expect(result.from).toBeUndefined();
+        expect(result.to).toBeUndefined();
     });
 });

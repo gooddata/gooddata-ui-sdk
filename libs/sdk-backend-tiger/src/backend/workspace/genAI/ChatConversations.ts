@@ -70,6 +70,7 @@ import {
     type IPublisherDocumentDefinition,
     type IPublisherDocumentDefinitionV2,
     type ITempFilterContext,
+    isDashboardAbsoluteGranularityDateFilter,
     isIdentifierRef,
     isTempFilterContext,
     objRefToString,
@@ -891,12 +892,7 @@ function convertReferencedObjects(userContext: IGenAIUserContext) {
 }
 
 function convertDashboardView(dashboard: IGenAIDashboardContext) {
-    const saved = dashboard.definition as IDashboardDefinition | undefined;
-    const definition = saved ? convertDashboard(saved) : undefined;
-    const viewFilters =
-        saved && definition && dashboard.liveFilters
-            ? convertViewFilters(definition, convertDashboard(withLiveFilters(saved, dashboard.liveFilters)))
-            : [];
+    const { definition, viewFilters } = convertDashboardDefinitionAndViewFilters(dashboard);
     return {
         id: objRefToString(dashboard.ref),
         ...(dashboard.title ? { title: dashboard.title } : {}),
@@ -912,6 +908,45 @@ function convertDashboardView(dashboard: IGenAIDashboardContext) {
         ...(definition ? { definition } : {}),
         ...(viewFilters.length ? { viewFilters } : {}),
     };
+}
+
+function convertDashboardDefinitionAndViewFilters(dashboard: IGenAIDashboardContext): {
+    definition: ReturnType<typeof convertDashboard> | undefined;
+    viewFilters: ReturnType<typeof convertViewFilters>;
+} {
+    const saved = dashboard.definition as IDashboardDefinition | undefined;
+    if (!saved) {
+        return { definition: undefined, viewFilters: [] };
+    }
+    if (hasAbsoluteGranularityDateFilter(saved, dashboard.liveFilters)) {
+        console.warn(
+            "The dashboard has an absolute date filter with granularity, which cannot be written as code yet. Sending the AI assistant no definition.",
+        );
+        return { definition: undefined, viewFilters: [] };
+    }
+
+    const definition = convertDashboard(saved);
+    const viewFilters = dashboard.liveFilters
+        ? convertViewFilters(definition, convertDashboard(withLiveFilters(saved, dashboard.liveFilters)))
+        : [];
+    return { definition, viewFilters };
+}
+
+/**
+ * Whether the saved definition or the filters on screen, tabs included, have an absolute date filter with
+ * granularity, which the convertor cannot write as code.
+ */
+function hasAbsoluteGranularityDateFilter(
+    definition: IDashboardDefinition,
+    live: IGenAIDashboardLiveFilters | undefined,
+): boolean {
+    const filterLists = [
+        definition.filterContext?.filters,
+        ...(definition.tabs ?? []).map((tab) => tab.filterContext?.filters),
+        live?.filters,
+        ...Object.values(live?.tabs ?? {}),
+    ];
+    return filterLists.some((filters) => filters?.some(isDashboardAbsoluteGranularityDateFilter));
 }
 
 /**

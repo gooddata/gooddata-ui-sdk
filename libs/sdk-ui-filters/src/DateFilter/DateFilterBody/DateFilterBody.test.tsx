@@ -13,7 +13,11 @@ import {
     DateFilterButtonLocalized,
     type IDateFilterButtonLocalizedProps,
 } from "../DateFilterButtonLocalized/DateFilterButtonLocalized.js";
-import { type IUiAbsoluteDateFilterForm, type IUiRelativeDateFilterForm } from "../interfaces/index.js";
+import {
+    type IUiAbsoluteDateFilterForm,
+    type IUiAbsoluteGranularityDateFilterForm,
+    type IUiRelativeDateFilterForm,
+} from "../interfaces/index.js";
 
 import { DateFilterBody, type IDateFilterBodyProps } from "./DateFilterBody.js";
 
@@ -235,6 +239,45 @@ describe("ExtendedDateFilterBody", () => {
             );
         });
 
+        it("should keep the name and visibility of stored whole periods when days are entered while isAbsoluteDateFilterGranularityEnabled is not set", () => {
+            const storedMonths: IUiAbsoluteGranularityDateFilterForm = {
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteGranularityForm",
+                name: "Custom range",
+                visible: true,
+                granularity: "GDC.time.month",
+                from: "2026-02",
+                to: "2026-04",
+            };
+            const onSelectedFilterOptionChange = vi.fn();
+
+            renderDateFilterBody({
+                filterOptions: { absoluteForm: { ...absoluteForm, name: "Custom range" } },
+                selectedFilterOption: storedMonths,
+                onSelectedFilterOptionChange,
+                isTimeForAbsoluteRangeEnabled: false,
+            });
+
+            fireEvent.click(screen.getByRole("button", { name: /Custom range/i }));
+            const [fromInput, toInput] = Array.from(
+                document.querySelectorAll(".s-date-range-picker-input-field"),
+            );
+            fireEvent.change(fromInput, { target: { value: "03/02/2026" } });
+            fireEvent.blur(fromInput);
+            fireEvent.change(toInput, { target: { value: "03/20/2026" } });
+            fireEvent.blur(toInput);
+
+            expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteForm",
+                name: "Custom range",
+                visible: true,
+                granularity: "GDC.time.date",
+                from: "2026-03-02",
+                to: "2026-03-20",
+            });
+        });
+
         it("should still offer Month/Quarter/Year even when the fiscal tab is the default (fiscal calendar active)", () => {
             renderDateFilterBody({
                 filterOptions: {
@@ -276,11 +319,10 @@ describe("ExtendedDateFilterBody", () => {
             expect(document.querySelector(".s-granularity-year")).not.toBeNull();
         });
 
-        it("should reset to the first available granularity and clear from/to when reopening after the selected granularity was hidden", () => {
+        it("should reset days to the empty option of the first available granularity when reopening after Day was hidden", () => {
             const staleSelection: IUiAbsoluteDateFilterForm = {
                 ...absoluteForm,
-                availableGranularities: ["GDC.time.date", "GDC.time.week_us", "GDC.time.year"],
-                granularity: "GDC.time.month",
+                availableGranularities: ["GDC.time.week_us", "GDC.time.year"],
                 from: "2026-03-01",
                 to: "2026-03-31",
             };
@@ -295,14 +337,143 @@ describe("ExtendedDateFilterBody", () => {
 
             fireEvent.click(screen.getByRole("button", { name: /Static period/i }));
 
-            expect(onSelectedFilterOptionChange).toHaveBeenCalledWith(
-                expect.objectContaining({
-                    granularity: "GDC.time.date",
-                    from: undefined,
-                    to: undefined,
-                }),
-            );
+            expect(onSelectedFilterOptionChange).toHaveBeenCalledWith({
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteGranularityForm",
+                name: "",
+                visible: true,
+                granularity: "GDC.time.week",
+            });
         });
+
+        it("should keep stored whole periods when reopening after their granularity was hidden", () => {
+            const storedMonths: IUiAbsoluteGranularityDateFilterForm = {
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteGranularityForm",
+                name: "",
+                visible: true,
+                granularity: "GDC.time.month",
+                from: "2026-03",
+                to: "2026-05",
+            };
+            const onSelectedFilterOptionChange = vi.fn();
+
+            renderDateFilterBody({
+                filterOptions: {
+                    absoluteForm: {
+                        ...absoluteForm,
+                        availableGranularities: ["GDC.time.date", "GDC.time.year"],
+                    },
+                },
+                selectedFilterOption: storedMonths,
+                onSelectedFilterOptionChange,
+                isAbsoluteDateFilterGranularityEnabled: true,
+            } as Partial<IDateFilterBodyProps>);
+
+            fireEvent.click(screen.getByRole("button", { name: /Static period/i }));
+
+            expect(onSelectedFilterOptionChange).not.toHaveBeenCalled();
+        });
+
+        it("should report whole months picked on the Month tab, keeping the name and visibility", async () => {
+            const emptyMonths: IUiAbsoluteGranularityDateFilterForm = {
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteGranularityForm",
+                name: "Custom range",
+                visible: true,
+                granularity: "GDC.time.month",
+                emptyValueHandling: "exclude",
+            };
+            const onSelectedFilterOptionChange = vi.fn();
+
+            renderDateFilterBody({
+                filterOptions: { absoluteForm: { ...absoluteForm, name: "Custom range" } },
+                selectedFilterOption: emptyMonths,
+                onSelectedFilterOptionChange,
+                isAbsoluteDateFilterGranularityEnabled: true,
+            });
+
+            fireEvent.click(screen.getByRole("button", { name: /Custom range/i }));
+
+            const [startInput, endInput] = await waitFor(() => {
+                const elements = document.querySelectorAll<HTMLInputElement>(".rc-picker input");
+                expect(elements).toHaveLength(2);
+                return Array.from(elements);
+            });
+            fireEvent.focus(startInput);
+            fireEvent.change(startInput, { target: { value: "3/2026" } });
+            fireEvent.keyDown(startInput, { key: "Tab", code: "Tab" });
+            fireEvent.blur(startInput);
+            fireEvent.focus(endInput);
+            fireEvent.change(endInput, { target: { value: "6/2026" } });
+            fireEvent.keyDown(endInput, { key: "Enter", code: "Enter" });
+
+            await waitFor(() => {
+                expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
+                    ...emptyMonths,
+                    from: "2026-03",
+                    to: "2026-06",
+                });
+            });
+        });
+
+        it("should switch to the empty option of the clicked granularity tab, keeping the identity and empty value handling", () => {
+            const days: IUiAbsoluteDateFilterForm = {
+                ...absoluteForm,
+                from: "2026-03-01",
+                to: "2026-03-31",
+                emptyValueHandling: "include",
+            };
+            const onSelectedFilterOptionChange = vi.fn();
+
+            renderDateFilterBody({
+                filterOptions: { absoluteForm },
+                selectedFilterOption: days,
+                onSelectedFilterOptionChange,
+                isAbsoluteDateFilterGranularityEnabled: true,
+            });
+
+            fireEvent.click(screen.getByRole("button", { name: /Static period/i }));
+            fireEvent.click(document.querySelector<HTMLElement>(".s-granularity-month")!);
+
+            expect(onSelectedFilterOptionChange).toHaveBeenLastCalledWith({
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteGranularityForm",
+                name: "",
+                visible: true,
+                granularity: "GDC.time.month",
+                emptyValueHandling: "include",
+            });
+        });
+
+        it.each([
+            [true, "false"],
+            [false, "true"],
+        ])(
+            "should set Apply aria-disabled for selected whole periods with isAbsoluteDateFilterGranularityEnabled=%s to %s",
+            (isAbsoluteDateFilterGranularityEnabled, disabled) => {
+                const storedMonths: IUiAbsoluteGranularityDateFilterForm = {
+                    localIdentifier: "ABSOLUTE_FORM",
+                    type: "absoluteGranularityForm",
+                    name: "",
+                    visible: true,
+                    granularity: "GDC.time.month",
+                    from: "2026-03",
+                    to: "2026-05",
+                };
+
+                renderDateFilterBody({
+                    filterOptions: { absoluteForm, allTime },
+                    selectedFilterOption: storedMonths,
+                    isAbsoluteDateFilterGranularityEnabled,
+                });
+
+                expect(document.querySelector(".s-date-filter-apply")).toHaveAttribute(
+                    "aria-disabled",
+                    disabled,
+                );
+            },
+        );
 
         it("does not navigate back to the option list when ArrowLeft is pressed inside a PeriodRangePicker field", async () => {
             renderDateFilterBody({
@@ -422,18 +593,26 @@ describe("ExtendedDateFilterBody", () => {
         });
 
         describe("week list", () => {
-            const weekForm: IUiAbsoluteDateFilterForm = { ...absoluteForm, granularity: "GDC.time.week_us" };
-            const storedWeekForm: IUiAbsoluteDateFilterForm = {
+            const weekForm: IUiAbsoluteGranularityDateFilterForm = {
+                localIdentifier: "ABSOLUTE_FORM",
+                type: "absoluteGranularityForm",
+                name: "",
+                visible: true,
+                granularity: "GDC.time.week",
+            };
+            const storedWeekForm: IUiAbsoluteGranularityDateFilterForm = {
                 ...weekForm,
-                from: "2026-04-06",
-                to: "2026-04-19",
+                from: "2026-15",
+                to: "2026-16",
             };
 
             const openWeekList = (
-                props: Partial<IDateFilterBodyProps> & { selectedFilterOption: IUiAbsoluteDateFilterForm },
+                props: Partial<IDateFilterBodyProps> & {
+                    selectedFilterOption: IUiAbsoluteGranularityDateFilterForm;
+                },
             ) => {
                 const result = renderStatefulDateFilterBody({
-                    filterOptions: { absoluteForm: props.selectedFilterOption },
+                    filterOptions: { absoluteForm },
                     isAbsoluteDateFilterGranularityEnabled: true,
                     ...props,
                 });
@@ -453,19 +632,16 @@ describe("ExtendedDateFilterBody", () => {
                 ).toEqual(["Apr 6 – Apr 12", "Apr 13 – Apr 19"]);
             });
 
-            it("lists the weeks by a changed week start and selects only whole weeks of it", () => {
+            it("lists the weeks by a changed week start and keeps the stored weeks selected", () => {
                 const { rerenderWith } = openWeekList({
-                    selectedFilterOption: { ...weekForm, from: "2026-04-05", to: "2026-04-18" },
+                    selectedFilterOption: storedWeekForm,
                     weekStart: "Sunday",
                 });
                 expect(getSelectedWeeks()).toEqual(["Apr 5 – Apr 11", "Apr 12 – Apr 18"]);
 
                 rerenderWith({ weekStart: "Monday" });
 
-                expect(screen.getAllByRole("option").map((option) => option.textContent)).toContain(
-                    "Apr 6 – Apr 12",
-                );
-                expect(getSelectedWeeks()).toEqual([]);
+                expect(getSelectedWeeks()).toEqual(["Apr 6 – Apr 12", "Apr 13 – Apr 19"]);
             });
 
             it("keeps Apply disabled until a week is selected", () => {

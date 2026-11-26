@@ -54,6 +54,24 @@ const disabledSubmenuItem: IInsightMenuItem = {
     SubmenuComponent: () => null,
 };
 
+const noDestinationAlertItem: IInsightMenuItem = {
+    type: "button",
+    itemId: "AlertsManagement",
+    itemName: "Alert",
+    tooltip: (
+        <>
+            No destination available.{" "}
+            <a href="/settings" rel="noopener noreferrer" target="_blank">
+                Create a destination
+            </a>{" "}
+            to set up an alert.
+        </>
+    ),
+    icon: "gd-icon-bell",
+    disabled: true,
+    onClick: vi.fn(),
+};
+
 function appendButton(name: string) {
     const button = document.createElement("button");
     button.textContent = name;
@@ -226,5 +244,37 @@ describe("DashboardInsightMenuBody", () => {
         expect(dialog).not.toHaveAttribute("aria-labelledby");
         const item = screen.getByRole("menuitem", { name: "Snapshot (.png)" });
         expect(submenu).toHaveAttribute("aria-activedescendant", item.id);
+    });
+
+    it("closes on a single Tab when the reason of a disabled item holds a link", async () => {
+        const user = userEvent.setup();
+        const { opener, after } = appendOpenerBetweenTwoButtons();
+        const { onClose } = renderMenuOpenedFrom(opener, [exploreItem, noDestinationAlertItem]);
+        screen.getByRole("menu", { name: "Widget options" }).focus();
+
+        await user.tab();
+
+        expect(onClose).toHaveBeenCalledTimes(1);
+        expect(after).toHaveFocus();
+    });
+
+    it("keeps the link of a hidden disabled reason out of the Tab order", () => {
+        const { opener } = appendOpenerBetweenTwoButtons();
+        renderMenuOpenedFrom(opener, [exploreItem, noDestinationAlertItem]);
+
+        expect(screen.queryByRole("tooltip")).toBeNull();
+        const tabbable = Array.from(
+            document.querySelectorAll<HTMLElement>("a[href], button, [tabindex]"),
+        ).filter((element) => element.tabIndex >= 0 && element.closest(".sr-only"));
+        expect(tabbable).toEqual([]);
+    });
+
+    it("still describes a disabled item with the full reason that holds a link", () => {
+        const { opener } = appendOpenerBetweenTwoButtons();
+        renderMenuOpenedFrom(opener, [exploreItem, noDestinationAlertItem]);
+
+        expect(screen.getByRole("menuitem", { name: "Alert" })).toHaveAccessibleDescription(
+            /No destination available/,
+        );
     });
 });

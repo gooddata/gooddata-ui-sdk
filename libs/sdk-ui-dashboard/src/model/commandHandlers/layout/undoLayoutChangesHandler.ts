@@ -1,7 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
 
 import {
     type DashboardLayoutCommands,
@@ -13,6 +13,7 @@ import { type IDashboardLayoutChanged, layoutChanged } from "../../events/layout
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectLayout, selectUndoableLayoutCommands } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { revalidateDrillToCustomUrlParams } from "../common/validateDrillToCustomUrlParams.js";
 
 /*
  * Default impl returns 0 -> meaning drop everything that the latest command achieved.
@@ -48,6 +49,7 @@ export function* undoLayoutChangesHandler(
             undoDownTo: selectedCommand.firstOccurrenceOnStack,
         }),
     );
+    yield call(revalidateDrillToCustomUrlParams);
 
     const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
 

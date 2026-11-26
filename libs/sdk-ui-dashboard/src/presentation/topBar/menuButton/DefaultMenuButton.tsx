@@ -47,6 +47,11 @@ import {
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
+const byDocumentOrder = (a: Node, b: Node): number => {
+    const isBFollowing = !!(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
+    return isBFollowing ? -1 : 1;
+};
+
 /**
  * @alpha
  */
@@ -80,10 +85,23 @@ export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonPr
     const menuId = `menu-${id}`;
     const dropdownAnchorClassName = `dash-header-options-anchor-${id}`;
 
+    // The Overlay stays hidden until it is aligned and focus cannot move into a hidden menu, so the
+    // autofocus is retried once the alignment is done (same as Dropdown does with `autofocusOnOpen`).
+    const [isOverlayAligned, setIsOverlayAligned] = useState(false);
+    const onOverlayAlign = useCallback(() => setIsOverlayAligned(true), []);
+
     const onMenuButtonClick = useCallback(() => {
         setIsOpen((prevIsOpen) => !prevIsOpen);
         setSelectedMenuItem(null);
+        setIsOverlayAligned(false);
     }, []);
+
+    // Returns the menu items in the order they are rendered. The map order is not reliable,
+    // because an item whose ref callback changes is removed from the map and added again at its end.
+    const getMenuItemElements = useCallback(
+        () => Array.from(menuItemRefs.current.values()).sort(byDocumentOrder),
+        [],
+    );
 
     const onClose = useCallback(() => {
         setIsOpen(false);
@@ -118,7 +136,7 @@ export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonPr
             }
         },
         onFocusNext: () => {
-            const elements = Array.from(menuItemRefs.current.values());
+            const elements = getMenuItemElements();
             const currentIndex = elements.indexOf(document.activeElement as HTMLElement);
             const nextElement =
                 currentIndex === elements.length - 1 ? elements[0] : elements[currentIndex + 1];
@@ -126,7 +144,7 @@ export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonPr
             nextElement?.focus();
         },
         onFocusPrevious: () => {
-            const elements = Array.from(menuItemRefs.current.values());
+            const elements = getMenuItemElements();
             const currentIndex = elements.indexOf(document.activeElement as HTMLElement);
             const previousElement =
                 currentIndex <= 0 ? elements[elements.length - 1] : elements[currentIndex - 1];
@@ -176,7 +194,7 @@ export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonPr
 
     useEffect(() => {
         if (autofocusSubmenu && selectedMenuItem) {
-            const firstElement = Array.from(menuItemRefs.current.values())[0];
+            const firstElement = getMenuItemElements()[0];
             firstElement?.focus();
             setAutofocusSubmenu(false);
         }
@@ -188,7 +206,27 @@ export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonPr
             setAutofocusSubmenu(false);
             setParentItemId(null);
         }
-    }, [selectedMenuItem, parentItemId, menuItemRefs, autofocusSubmenu]);
+    }, [selectedMenuItem, parentItemId, menuItemRefs, autofocusSubmenu, getMenuItemElements]);
+
+    // Down Arrow on the trigger opens the menu; the autofocus then moves focus to its first item.
+    // When the menu is already open, focus moves to its first item directly. The event is consumed
+    // here, so focus moves by exactly one step.
+    const onTriggerKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLButtonElement>) => {
+            if (event.code !== "ArrowDown") {
+                return;
+            }
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (isOpen) {
+                getMenuItemElements()[0]?.focus();
+                return;
+            }
+            onMenuButtonClick();
+        },
+        [isOpen, getMenuItemElements, onMenuButtonClick],
+    );
 
     useEffect(() => {
         if (!isEnabled && isOpen) {
@@ -210,8 +248,9 @@ export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonPr
                 closeOnMouseDrag
                 closeOnOutsideClick
                 onClose={onMenuButtonClick}
+                onAlign={onOverlayAlign}
             >
-                <UiFocusManager enableAutofocus enableReturnFocusOnUnmount>
+                <UiFocusManager enableAutofocus={{ refocusKey: isOverlayAligned }} enableReturnFocusOnUnmount>
                     <div onKeyDown={menuKeyboardNavigationHandler}>
                         <ItemsWrapper smallItemsSpacing className="gd-menu" wrapperRef={menuWrapperRef}>
                             {selectedMenuItem ? (
@@ -259,6 +298,7 @@ export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonPr
                         <UiIconButton
                             ref={triggerButtonRef}
                             onClick={onMenuButtonClick}
+                            onKeyDown={onTriggerKeyDown}
                             icon="ellipsis"
                             id={DEFAULT_MENU_BUTTON_ID}
                             dataTestId="s-header-options-button"

@@ -22,10 +22,10 @@ const YEAR_STORY_NOW = new Date(2026, 2, 25);
 
 const initialRangeByGranularity: Record<PeriodRangePickerGranularity, IPeriodRange> = {
     "GDC.time.date": { from: "2026-03-02", to: "2026-03-10" },
-    "GDC.time.week_us": { from: "2026-03-01", to: "2026-03-07" },
-    "GDC.time.month": { from: "2026-03-01", to: "2026-05-31" },
-    "GDC.time.quarter": { from: "2026-01-01", to: "2026-06-30" },
-    "GDC.time.year": { from: "2025-01-01", to: "2026-12-31" },
+    "GDC.time.week": { from: "2026-10", to: "2026-10" },
+    "GDC.time.month": { from: "2026-03", to: "2026-05" },
+    "GDC.time.quarter": { from: "2026-1", to: "2026-2" },
+    "GDC.time.year": { from: "2025", to: "2026" },
 };
 
 function PeriodRangePickerExample({
@@ -124,12 +124,12 @@ DayWithCustomHint.parameters = {
 } satisfies IStoryParameters;
 
 export function Week() {
-    return <PeriodRangePickerExample granularity="GDC.time.week_us" />;
+    return <PeriodRangePickerExample granularity="GDC.time.week" />;
 }
 Week.parameters = { kind: "week", screenshots: openedScreenshot } satisfies IStoryParameters;
 
 export function WeekMondayStart() {
-    return <PeriodRangePickerExample granularity="GDC.time.week_us" weekStart="Monday" />;
+    return <PeriodRangePickerExample granularity="GDC.time.week" weekStart="Monday" />;
 }
 WeekMondayStart.parameters = {
     kind: "week monday start",
@@ -161,11 +161,11 @@ DayThemed.parameters = {
     screenshots: { ...openedScreenshotWithEndField, ...errorScreenshot },
 } satisfies IStoryParameters;
 
-export const WeekThemed = () => wrapWithTheme(<PeriodRangePickerExample granularity="GDC.time.week_us" />);
+export const WeekThemed = () => wrapWithTheme(<PeriodRangePickerExample granularity="GDC.time.week" />);
 WeekThemed.parameters = { kind: "week themed", screenshots: openedScreenshot } satisfies IStoryParameters;
 
 export const WeekMondayStartThemed = () =>
-    wrapWithTheme(<PeriodRangePickerExample granularity="GDC.time.week_us" weekStart="Monday" />);
+    wrapWithTheme(<PeriodRangePickerExample granularity="GDC.time.week" weekStart="Monday" />);
 WeekMondayStartThemed.parameters = {
     kind: "week monday start themed",
     screenshots: openedScreenshot,

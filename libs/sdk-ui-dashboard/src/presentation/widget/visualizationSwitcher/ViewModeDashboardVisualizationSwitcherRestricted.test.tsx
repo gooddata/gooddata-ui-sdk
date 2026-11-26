@@ -71,6 +71,8 @@ const switcher: IVisualizationSwitcherWidget = {
 
 const messages = {
     "visualizationSwitcher.restrictedEntry": "Restricted",
+    "visualizationSwitcher.button.ariaLabel": "Switch visualization, currently: {title}",
+    "visualizationSwitcher.list.ariaLabel": "Visualizations to switch to",
     "widget.error.restricted_insight.message": "No access to this visualization",
     "widget.error.restricted_insight.description": "Ask your administrator for access",
 };

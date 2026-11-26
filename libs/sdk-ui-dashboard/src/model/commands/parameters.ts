@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IdentifierRef, type ParameterValue } from "@gooddata/sdk-model";
+import { type IdentifierRef, type ObjRef, type ParameterValue } from "@gooddata/sdk-model";
 
 import { type IDashboardCommand } from "./base.js";
 
@@ -100,6 +100,115 @@ export function changeParameterValues({
             tabLocalIdentifier,
             ...(restorePerTabOriginals ? { restorePerTabOriginals } : {}),
             ...(setAsOriginalToo ? { setAsOriginalToo } : {}),
+        },
+    };
+}
+
+/**
+ * Payload of the {@link IAddParameters} command.
+ *
+ * @internal
+ */
+export interface IAddParametersPayload {
+    readonly refs: IdentifierRef[];
+    /**
+     * The tab the user added the parameters on. The command fails when this tab is not the active tab.
+     */
+    readonly tabLocalIdentifier: string;
+}
+
+/**
+ * Command for adding workspace parameters to the active tab.
+ *
+ * @remarks
+ * See {@link addParameters} for a factory function that will help you create this command.
+ *
+ * @internal
+ */
+export interface IAddParameters extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.PARAMETERS.ADD";
+    readonly payload: IAddParametersPayload;
+}
+
+/**
+ * Creates the {@link IAddParameters} command.
+ *
+ * @remarks
+ * Dispatching this command adds the workspace parameters to the active tab in active mode. The command
+ * fails when the tab is not the active tab, when a ref is not in the parameter catalog or when a ref is
+ * already on the tab.
+ *
+ * @param refs - refs of the workspace parameters to add
+ * @param tabLocalIdentifier - local identifier of the tab the user added the parameters on
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ * @internal
+ */
+export function addParameters(
+    refs: IdentifierRef[],
+    tabLocalIdentifier: string,
+    correlationId?: string,
+): IAddParameters {
+    return {
+        type: "GDC.DASH/CMD.PARAMETERS.ADD",
+        correlationId,
+        payload: {
+            refs,
+            tabLocalIdentifier,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link IRemoveParameters} command.
+ *
+ * @internal
+ */
+export interface IRemoveParametersPayload {
+    readonly refs: ObjRef[];
+    /**
+     * The tab the user removed the parameters from. The command fails when this tab is not the active tab.
+     */
+    readonly tabLocalIdentifier: string;
+}
+
+/**
+ * Command for removing parameters from the active tab.
+ *
+ * @remarks
+ * See {@link removeParameters} for a factory function that will help you create this command.
+ *
+ * @internal
+ */
+export interface IRemoveParameters extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.PARAMETERS.REMOVE";
+    readonly payload: IRemoveParametersPayload;
+}
+
+/**
+ * Creates the {@link IRemoveParameters} command.
+ *
+ * @remarks
+ * Dispatching this command removes the parameters from the active tab. The command fails when the tab
+ * is not the active tab or when a ref is not on the tab.
+ *
+ * @param refs - refs of the parameters to remove
+ * @param tabLocalIdentifier - local identifier of the tab the user removed the parameters from
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ * @internal
+ */
+export function removeParameters(
+    refs: ObjRef[],
+    tabLocalIdentifier: string,
+    correlationId?: string,
+): IRemoveParameters {
+    return {
+        type: "GDC.DASH/CMD.PARAMETERS.REMOVE",
+        correlationId,
+        payload: {
+            refs,
+            tabLocalIdentifier,
         },
     };
 }

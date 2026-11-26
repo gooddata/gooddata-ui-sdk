@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { useEffect, useRef, useState } from "react";
+
 import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
 import { LoadingSpinner, UiIcon } from "@gooddata/sdk-ui-kit";
@@ -44,9 +46,6 @@ export function KdaDialogFloatingStatusBar({
             <span id={labelElementId} className="sr-only">
                 {dialogTitle}
             </span>
-            <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
-                {status === "done" || status === "error" ? statusText : null}
-            </div>
             <div className="gd-kda-floating-status-bar__content">
                 <StatusIndicator status={status} />
                 <p className="gd-kda-floating-status-bar__text" id={descriptionElementId} tabIndex={0}>
@@ -61,6 +60,78 @@ export function KdaDialogFloatingStatusBar({
                 onClose={onClose}
             />
         </div>
+    );
+}
+
+const announcementMessages = defineMessages({
+    announcement: { id: "kdaDialog.floatingStatus.announcement" },
+});
+
+function isFinishedStatus(status: KdaFloatingStatus) {
+    return status === "done" || status === "error";
+}
+
+interface IKdaDialogStatusAnnouncerProps {
+    dialogTitle: string;
+    status: KdaFloatingStatus;
+    isMinimized: boolean;
+}
+
+interface IKdaAnnouncement {
+    text: string;
+    isError: boolean;
+}
+
+const EMPTY_ANNOUNCEMENT: IKdaAnnouncement = { text: "", isError: false };
+
+/**
+ * Live regions announcing when the analysis finishes while the dialog is minimized.
+ * Completion is announced politely (`role="status"`), failure assertively (`role="alert"`).
+ *
+ * They must be rendered outside the dialog overlay, so that they are in the accessibility tree for the whole
+ * life of the analysis, independently of the overlay mounting, positioning and minimizing / expanding.
+ * Both regions stay mounted all the time. The text is set once per completion and cleared when a new
+ * computation starts, so the same text is never re-inserted while nothing changes.
+ *
+ * @internal
+ */
+export function KdaDialogStatusAnnouncer({
+    dialogTitle,
+    status,
+    isMinimized,
+}: IKdaDialogStatusAnnouncerProps) {
+    const intl = useIntl();
+    const [announcement, setAnnouncement] = useState<IKdaAnnouncement>(EMPTY_ANNOUNCEMENT);
+    const previousStatus = useRef(status);
+
+    useEffect(() => {
+        const wasFinished = isFinishedStatus(previousStatus.current);
+        previousStatus.current = status;
+
+        if (!isFinishedStatus(status)) {
+            setAnnouncement(EMPTY_ANNOUNCEMENT);
+            return;
+        }
+        if (!wasFinished && isMinimized) {
+            setAnnouncement({
+                text: intl.formatMessage(announcementMessages.announcement, {
+                    title: dialogTitle,
+                    status: intl.formatMessage(floatingStatusMessages[status]),
+                }),
+                isError: status === "error",
+            });
+        }
+    }, [status, isMinimized, dialogTitle, intl]);
+
+    return (
+        <>
+            <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+                {announcement.isError ? "" : announcement.text}
+            </div>
+            <div className="sr-only" role="alert" aria-atomic="true">
+                {announcement.isError ? announcement.text : ""}
+            </div>
+        </>
     );
 }
 

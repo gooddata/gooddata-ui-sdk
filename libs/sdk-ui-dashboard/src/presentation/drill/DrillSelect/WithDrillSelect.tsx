@@ -203,6 +203,7 @@ export function WithDrillSelect({
         insight,
         isDrillRestricted,
         handleClose,
+        returnFocusToInsight,
     });
     const onSelect = useCallback(
         (
@@ -229,6 +230,18 @@ export function WithDrillSelect({
             const isNavigatingByKeyboard = document.querySelector(":focus-visible") !== null;
             handleClose();
 
+            // onSelect may be a stale closure (useDrills keeps the first-render success handler),
+            // so read the return-focus callback from the ref when the focus is actually returned.
+            const returnFocusLater = (force: boolean, delay: number) => {
+                window.setTimeout(() => {
+                    onSelectDepsRef.current.returnFocusToInsight?.(force);
+                }, delay);
+            };
+
+            // URL drills keep the dashboard in place (the link usually opens in a new tab),
+            // so return focus to the drilled data point once the menu is gone.
+            const returnFocusAfterMenuClose = (force: boolean) => returnFocusLater(force, 0);
+
             if (isDrillDownDefinition(drillDefinition)) {
                 drills.drillDown.run(
                     effectiveInsight,
@@ -251,11 +264,13 @@ export function WithDrillSelect({
 
             if (isDrillToAttributeUrl(drillDefinition)) {
                 drills.drillToAttributeUrl.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
+                returnFocusAfterMenuClose(isNavigatingByKeyboard);
                 return;
             }
 
             if (isDrillToCustomUrl(drillDefinition)) {
                 drills.drillToCustomUrl.run(drillDefinition, effectiveDrillEvent, effectiveCorrelationId);
+                returnFocusAfterMenuClose(isNavigatingByKeyboard);
                 return;
             }
 
@@ -267,14 +282,8 @@ export function WithDrillSelect({
                     effectiveCorrelationId,
                 );
 
-                if (!returnFocusToInsight) {
-                    return;
-                }
-
                 // We need to wait a bit so the chart reloads after the filter changes
-                window.setTimeout(() => {
-                    returnFocusToInsight(isNavigatingByKeyboard);
-                }, 150);
+                returnFocusLater(isNavigatingByKeyboard, 150);
 
                 return;
             }
@@ -289,7 +298,7 @@ export function WithDrillSelect({
                 );
             }
         },
-        [onSelectDepsRef, returnFocusToInsight, filters],
+        [onSelectDepsRef, filters],
     );
 
     const dropDownAnchorClass = `s-drill-picker-${drillPickerId}`;

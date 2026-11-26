@@ -74,6 +74,7 @@ export function InsightPickerCore({
     onSelect,
     onDescriptionPanelOpen,
     onItemActivate,
+    onClose,
     menuActions,
     renderMenu,
     renderItem: renderItemProp,
@@ -300,6 +301,7 @@ export function InsightPickerCore({
                 }
                 showSearch={false}
                 searchString={searchState.query}
+                closeDropdown={onClose}
                 onKeyDownConfirm={(entry) => {
                     if (onItemActivate) {
                         const sourceInsight = insightsByIdentifier.get(entry.identifier);

@@ -20,6 +20,7 @@ describe("LegendItem", () => {
         focusedItem: undefined as unknown as ISeriesItem,
         makeItemId: (item?: ISeriesItem) =>
             item && isSeriesItemMetric(item) ? `test-id-${item.name}` : "test-id",
+        getItemPosition: () => undefined,
     };
 
     let onItemClick: MockInstance;

@@ -163,6 +163,11 @@ export const ChartTransformation = memo(
             clusterTitleFromIntl(intl),
             anomaliesTitleFromIntl(intl),
             referenceTheme,
+            {
+                forecast: (name) => intl.formatMessage({ id: "visualization.forecast.series" }, { name }),
+                confidenceInterval: (name) =>
+                    intl.formatMessage({ id: "visualization.forecast.confidenceInterval" }, { name }),
+            },
         );
 
         if (config.customTooltip?.enabled) {

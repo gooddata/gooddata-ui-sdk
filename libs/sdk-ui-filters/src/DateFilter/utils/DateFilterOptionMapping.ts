@@ -1,12 +1,16 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type DashboardDateFilterOfAnyType,
     type DateFilterOptionType,
     type IAbsoluteDateFilterPreset,
     type IAllTimeDateFilterOption,
+    type IDashboardAbsoluteGranularityDateFilter,
     type IDashboardDateFilter,
     type IRelativeDateFilterPreset,
     isAllTimeDashboardDateFilter,
+    isDashboardAbsoluteGranularityDateFilter,
+    isDashboardParameterizedDateFilter,
     isLowerBound,
     isUpperBound,
 } from "@gooddata/sdk-model";
@@ -16,6 +20,7 @@ import {
     type DateFilterOption,
     type IDateFilterOptionsByType,
     type IUiAbsoluteDateFilterForm,
+    type IUiAbsoluteGranularityDateFilterForm,
     type IUiRelativeDateFilterForm,
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,
@@ -41,15 +46,52 @@ export interface IDateFilterOptionInfo {
     excludeCurrentPeriod: boolean;
 }
 
-const isAllTimeDateFilter = (dateFilter: IDashboardDateFilter | undefined) =>
-    dateFilter && isAllTimeDashboardDateFilter(dateFilter);
+const isAllTimeDateFilter = (dateFilter: DashboardDateFilterOfAnyType | undefined) =>
+    !!dateFilter &&
+    !isDashboardAbsoluteGranularityDateFilter(dateFilter) &&
+    !isDashboardParameterizedDateFilter(dateFilter) &&
+    isAllTimeDashboardDateFilter(dateFilter);
+
+const getEmptyValueHandling = (dateFilter: DashboardDateFilterOfAnyType | undefined) => {
+    if (isDashboardAbsoluteGranularityDateFilter(dateFilter)) {
+        return dateFilter.dashboardAbsoluteGranularityDateFilter.emptyValueHandling;
+    }
+    if (isDashboardParameterizedDateFilter(dateFilter)) {
+        return dateFilter.dashboardParameterizedDateFilter.emptyValueHandling;
+    }
+    return dateFilter?.dateFilter.emptyValueHandling;
+};
 
 function applyEmptyValueHandling(
     dateFilterOption: DateFilterOption,
-    dateFilter: IDashboardDateFilter | undefined,
+    dateFilter: DashboardDateFilterOfAnyType | undefined,
 ): DateFilterOption {
-    const emptyValueHandling = dateFilter?.dateFilter.emptyValueHandling;
+    const emptyValueHandling = getEmptyValueHandling(dateFilter);
     return emptyValueHandling ? { ...dateFilterOption, emptyValueHandling } : dateFilterOption;
+}
+
+/**
+ * The option of whole periods of the stored filter: the absolute form when it is visible, a hidden option
+ * otherwise.
+ */
+function reconstructAbsoluteGranularityForm(
+    options: IDateFilterOptionsByType,
+    dateFilter: IDashboardAbsoluteGranularityDateFilter,
+): IDateFilterOptionInfo {
+    const { granularity, from, to, emptyValueHandling } = dateFilter.dashboardAbsoluteGranularityDateFilter;
+    const { absoluteForm } = options;
+    const base = isDateFilterOptionVisible(absoluteForm)
+        ? { localIdentifier: absoluteForm!.localIdentifier, name: absoluteForm!.name, visible: true }
+        : virtualPresetBase;
+    const dateFilterOption: IUiAbsoluteGranularityDateFilterForm = {
+        ...base,
+        type: "absoluteGranularityForm",
+        granularity,
+        from,
+        to,
+        ...(emptyValueHandling ? { emptyValueHandling } : {}),
+    };
+    return { dateFilterOption, excludeCurrentPeriod: false };
 }
 
 /**
@@ -65,7 +107,7 @@ function applyEmptyValueHandling(
  * @alpha
  */
 export function matchDateFilterToDateFilterOptionWithPreference(
-    dateFilter: IDashboardDateFilter | undefined,
+    dateFilter: DashboardDateFilterOfAnyType | undefined,
     availableOptions: IDateFilterOptionsByType,
     preferredOptionId: string | undefined,
 ): IDateFilterOptionInfo {
@@ -79,6 +121,8 @@ export function matchDateFilterToDateFilterOptionWithPreference(
     // other cases are correctly handled by the unbiased matching function
     if (
         dateFilter &&
+        !isDashboardAbsoluteGranularityDateFilter(dateFilter) &&
+        !isDashboardParameterizedDateFilter(dateFilter) &&
         !isAllTime &&
         (preferredOption?.type === "absoluteForm" || preferredOption?.type === "relativeForm") &&
         canReconstructFormForStoredFilter(availableOptions, dateFilter)
@@ -91,19 +135,31 @@ export function matchDateFilterToDateFilterOptionWithPreference(
 
 /**
  * Tries to match a preset or a form with the provided value. Prioritizes presets over forms.
+ *
+ * @remarks
+ * Whole periods are matched to the absolute form, days of the deprecated absolute filter with granularity
+ * to days of the absolute form. Throws on a parameterized date filter, which date filters do not support yet.
+ *
  * @param dateFilter - value to match against
  * @param availableOptions - date options available
  * @alpha
  */
 export function matchDateFilterToDateFilterOption(
-    dateFilter: IDashboardDateFilter | undefined,
+    dateFilter: DashboardDateFilterOfAnyType | undefined,
     availableOptions: IDateFilterOptionsByType,
 ): IDateFilterOptionInfo {
+    if (isDashboardAbsoluteGranularityDateFilter(dateFilter)) {
+        return reconstructAbsoluteGranularityForm(availableOptions, dateFilter);
+    }
+    if (isDashboardParameterizedDateFilter(dateFilter)) {
+        throw new Error("Parameterized date filters cannot be matched to date filter options yet.");
+    }
+
     // no value means common All Time, try matching against All time (if it is available) or create virtual preset for it
     const isAllTime = isAllTimeDateFilter(dateFilter);
 
     if (!dateFilter || isAllTime) {
-        const emptyValueHandling = dateFilter?.dateFilter.emptyValueHandling;
+        const emptyValueHandling = getEmptyValueHandling(dateFilter);
 
         if (emptyValueHandling === "only") {
             const { emptyValues: emptyValuesOption } = availableOptions;
@@ -224,7 +280,6 @@ function reconstructFormForStoredFilter(
             from: dateFilter.dateFilter.from!.toString(),
             to: dateFilter.dateFilter.to!.toString(),
             type: "absoluteForm",
-            granularity: dateFilter.dateFilter.granularity,
             ...(dateFilter.dateFilter.emptyValueHandling
                 ? { emptyValueHandling: dateFilter.dateFilter.emptyValueHandling }
                 : {}),
@@ -259,10 +314,13 @@ function findDateFilterOptionById(id: string, dateFilterOptions: IDateFilterOpti
  * @alpha
  */
 export function findDateFilterOptionByValue(
-    dateFilter: IDashboardDateFilter,
+    dateFilter: DashboardDateFilterOfAnyType,
     dateFilterOptions: IDateFilterOptionsByType,
 ) {
-    return flattenDateFilterOptions(dateFilterOptions).find(filterMatchesData(dateFilter));
+    return isDashboardAbsoluteGranularityDateFilter(dateFilter) ||
+        isDashboardParameterizedDateFilter(dateFilter)
+        ? undefined
+        : flattenDateFilterOptions(dateFilterOptions).find(filterMatchesData(dateFilter));
 }
 
 function findDateFilterOptionByValueAndType(

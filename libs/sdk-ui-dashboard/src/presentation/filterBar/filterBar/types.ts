@@ -4,8 +4,8 @@ import { type ComponentType } from "react";
 
 import {
     type DashboardAttributeFilterItem,
+    type DashboardDateFilterOfAnyType,
     type FilterContextItem,
-    type IDashboardDateFilter,
     type IDashboardFilterGroupsConfig,
     type IDashboardMeasureValueFilter,
     type MeasureValueFilterCondition,
@@ -41,12 +41,15 @@ export interface IFilterBarProps {
 
     /**
      * When value of a date filter that is part of the FilterBar changes, the filter bar MUST propagate the event
-     * using this callback.
+     * using this callback. The filter can also be the absolute date filter with granularity.
      *
      * @param filter - filter that has changed, undefined if All time date filter was selected
      * @param dateFilterOptionLocalId - localId of the {@link @gooddata/sdk-backend-spi#IDateFilterOption} selected
      */
-    onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
+    onDateFilterChanged: (
+        filter: DashboardDateFilterOfAnyType | undefined,
+        dateFilterOptionLocalId?: string,
+    ) => void;
 
     /**
      * When the condition of a dashboard measure value filter changes, the filter bar MUST propagate the event

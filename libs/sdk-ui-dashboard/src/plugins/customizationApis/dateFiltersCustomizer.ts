@@ -2,45 +2,52 @@
 
 import { InvariantError } from "ts-invariant";
 
+import { type DashboardDateFilterOfAnyType } from "@gooddata/sdk-model";
+
 import {
-    type DateFilterComponentProvider,
+    type DateFilterOfAnyTypeComponentProvider,
     type OptionalDateFilterComponentProvider,
+    type OptionalDateFilterOfAnyTypeComponentProvider,
 } from "../../presentation/dashboardContexts/types.js";
+import { toDateFilterOfAnyTypeProvider } from "../../presentation/filterBar/dateFilter/dateFilterOfAnyTypeProvider.js";
 import { DefaultDashboardDateFilter } from "../../presentation/filterBar/dateFilter/DefaultDashboardDateFilter.js";
+import { type CustomDashboardDateFilterOfAnyTypeComponent } from "../../presentation/filterBar/dateFilter/types.js";
 import { type IDateFiltersCustomizer } from "../customizer.js";
 
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 
-const DefaultDateFilterRendererProvider: DateFilterComponentProvider = () => {
+const DefaultDateFilterRendererProvider: DateFilterOfAnyTypeComponentProvider = () => {
     return DefaultDashboardDateFilter;
 };
 
 interface IDateFiltersCustomizerState {
-    addCustomProvider(provider: OptionalDateFilterComponentProvider): void;
-    getRootProvider(): DateFilterComponentProvider;
-    switchRootProvider(provider: DateFilterComponentProvider): void;
+    addCustomProvider(provider: OptionalDateFilterOfAnyTypeComponentProvider): void;
+    resolve(filter: DashboardDateFilterOfAnyType): CustomDashboardDateFilterOfAnyTypeComponent;
 }
 
 class DefaultDateFiltersCustomizerState implements IDateFiltersCustomizerState {
     /*
-     * Chain of 'core' providers. Core providers are evaluated from last to first. As soon as some provider
-     * returns a Component, then that component will be used for rendering. If provider returns undefined,
-     * the evaluation continues to next provider in the chain.
+     * Chain of providers. Providers are evaluated from last to first. As soon as some provider returns
+     * a Component, then that component will be used for rendering. If provider returns undefined, the evaluation
+     * continues to next provider in the chain.
      *
-     * Note: the chain is 'primed' with a provider that always returns the default DateFilter renderer. This is
-     * essential to allow the decorations to work - purely because decorations can only work if there is
-     * something to decorate. See constructor.
+     * Note: the chain is 'primed' with a provider that always returns the default DateFilter renderer.
      */
-    private readonly coreProviderChain: DateFilterComponentProvider[];
+    private readonly providerChain: OptionalDateFilterOfAnyTypeComponentProvider[];
 
-    /*
-     * Core provider encapsulates resolution using the chain of core providers.
-     */
-    private readonly coreProvider: DateFilterComponentProvider = (dateFilter) => {
-        const providerStack = [...this.coreProviderChain].reverse();
+    constructor(defaultProvider: DateFilterOfAnyTypeComponentProvider) {
+        this.providerChain = [defaultProvider];
+    }
+
+    addCustomProvider(provider: OptionalDateFilterOfAnyTypeComponentProvider): void {
+        this.providerChain.push(provider);
+    }
+
+    resolve(filter: DashboardDateFilterOfAnyType): CustomDashboardDateFilterOfAnyTypeComponent {
+        const providerStack = [...this.providerChain].reverse();
 
         for (const provider of providerStack) {
-            const Component = provider(dateFilter);
+            const Component = provider(filter);
 
             if (Component) {
                 return Component;
@@ -50,32 +57,6 @@ class DefaultDateFiltersCustomizerState implements IDateFiltersCustomizerState {
         // if this happens then the provider chain got messed up. by default the chain contains the default
         // provider which never returns undefined
         throw new InvariantError();
-    };
-
-    /*
-     * Root provider is THE provider that should be used in the dashboard extension properties. The
-     * provider function included here will reflect the setup where there may be N registered decorators
-     * sitting on top of a chain of core providers.
-     *
-     * In the initial state the root provider IS the core provider - meaning no decorations. As the
-     * decorators get registered, the rootProvider changes.
-     */
-    private rootProvider: DateFilterComponentProvider = this.coreProvider;
-
-    constructor(defaultProvider: DateFilterComponentProvider) {
-        this.coreProviderChain = [defaultProvider];
-    }
-
-    addCustomProvider(provider: DateFilterComponentProvider): void {
-        this.coreProviderChain.push(provider);
-    }
-
-    getRootProvider(): DateFilterComponentProvider {
-        return this.rootProvider;
-    }
-
-    switchRootProvider(provider: DateFilterComponentProvider): void {
-        this.rootProvider = provider;
     }
 }
 
@@ -94,20 +75,14 @@ class SealedDateFiltersCustomizerState implements IDateFiltersCustomizerState {
         private readonly state: IDateFiltersCustomizerState,
     ) {}
 
-    public addCustomProvider = (_provider: DateFilterComponentProvider): void => {
+    public addCustomProvider = (_provider: OptionalDateFilterOfAnyTypeComponentProvider): void => {
         this.logger.warn(
             `Attempting to customize DateFilter rendering outside of plugin registration. Ignoring.`,
         );
     };
 
-    public switchRootProvider = (_provider: DateFilterComponentProvider): void => {
-        this.logger.warn(
-            `Attempting to customize DateFilter rendering outside of plugin registration. Ignoring.`,
-        );
-    };
-
-    public getRootProvider = (): DateFilterComponentProvider => {
-        return this.state.getRootProvider();
+    public resolve = (filter: DashboardDateFilterOfAnyType): CustomDashboardDateFilterOfAnyTypeComponent => {
+        return this.state.resolve(filter);
     };
 }
 
@@ -128,20 +103,28 @@ export class DefaultDateFiltersCustomizer implements IDateFiltersCustomizer {
 
     constructor(
         logger: IDashboardCustomizationLogger,
-        defaultProvider: DateFilterComponentProvider = DefaultDateFilterRendererProvider,
+        defaultProvider: DateFilterOfAnyTypeComponentProvider = DefaultDateFilterRendererProvider,
     ) {
         this.logger = logger;
         this.state = new DefaultDateFiltersCustomizerState(defaultProvider);
     }
 
     public withCustomProvider = (provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer => {
+        this.state.addCustomProvider(toDateFilterOfAnyTypeProvider(provider));
+
+        return this;
+    };
+
+    public withCustomProviderOfAnyType = (
+        provider: OptionalDateFilterOfAnyTypeComponentProvider,
+    ): IDateFiltersCustomizer => {
         this.state.addCustomProvider(provider);
 
         return this;
     };
 
-    public getDateFilterProvider = (): DateFilterComponentProvider => {
-        return this.state.getRootProvider();
+    public getDateFilterOfAnyTypeProvider = (): DateFilterOfAnyTypeComponentProvider => {
+        return (filter) => this.state.resolve(filter);
     };
 
     public sealCustomizer = (): void => {

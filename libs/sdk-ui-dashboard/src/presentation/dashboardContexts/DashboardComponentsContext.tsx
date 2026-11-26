@@ -49,7 +49,7 @@ import { type CustomDashboardLayoutComponent } from "../widget/dashboardLayout/t
 import {
     type AttributeFilterComponentProvider,
     type DashboardContentComponentProvider,
-    type DateFilterComponentProvider,
+    type DateFilterOfAnyTypeComponentProvider,
     type DrillDialogExportDropdownComponentProvider,
     type FilterGroupComponentProvider,
     type InsightBodyComponentProvider,
@@ -106,7 +106,7 @@ interface IDashboardComponentsContext {
     ShareDialogComponent: CustomShareDialogComponent;
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
     DashboardAttributeFilterComponentProvider: AttributeFilterComponentProvider;
-    DashboardDateFilterComponentProvider: DateFilterComponentProvider;
+    DashboardDateFilterOfAnyTypeComponentProvider: DateFilterOfAnyTypeComponentProvider;
     DashboardMeasureValueFilterComponentProvider: MeasureValueFilterComponentProvider;
     DashboardFilterGroupComponentProvider: FilterGroupComponentProvider;
     FilterBarComponent: CustomFilterBarComponent;
@@ -182,7 +182,9 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     DashboardAttributeFilterComponentProvider: ThrowMissingComponentError(
         "DashboardAttributeFilterComponentProvider",
     ),
-    DashboardDateFilterComponentProvider: ThrowMissingComponentError("DashboardDateFilterComponentProvider"),
+    DashboardDateFilterOfAnyTypeComponentProvider: ThrowMissingComponentError(
+        "DashboardDateFilterOfAnyTypeComponentProvider",
+    ),
     DashboardMeasureValueFilterComponentProvider: ThrowMissingComponentError(
         "DashboardMeasureValueFilterComponentProvider",
     ),

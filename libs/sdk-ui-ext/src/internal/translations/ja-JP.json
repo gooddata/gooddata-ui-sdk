@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "トレースID",
     "automations.icon.tooltip.startsOn": "開始日：",
     "automations.icon.tooltip.repeats": "反復",
+    "automations.icon.tooltip.trigger.failed": "失敗の詳細を表示",
+    "automations.icon.tooltip.trigger.details": "詳細を表示",
     "automations.menu.trigger": "今すぐ送信",
     "automations.menu.copyId": "コピーID",
     "automations.message.copyId.success": "クリップボードにコピーされたID",

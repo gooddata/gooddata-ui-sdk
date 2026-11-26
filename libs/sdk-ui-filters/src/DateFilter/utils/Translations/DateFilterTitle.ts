@@ -1,6 +1,5 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { format } from "date-fns";
 import { capitalize } from "lodash-es";
 
 import {
@@ -10,6 +9,7 @@ import {
     type ILowerBoundedFilter,
     type IRelativeDateFilterPreset,
     type IUpperBoundedFilter,
+    type WeekStart,
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isAllTimeDateFilterOption,
@@ -31,26 +31,17 @@ import {
     type DateFilterOption,
     type IUiAbsoluteDateFilterForm,
     type IUiRelativeDateFilterForm,
+    isUiAbsoluteGranularityDateFilterForm,
 } from "../../interfaces/index.js";
 import { convertPlatformDateStringToDate } from "../DateConversions.js";
-import { convertLocale } from "../dateFnsLocale.js";
 import { formatAbsoluteDateRange } from "../FormattingUtils.js";
 
+import { formatDateRangeParameterPeriod, formatPeriodRangeLabel } from "./DateRangeParameterPeriod.js";
 import {
     type IDateAndMessageTranslator,
     type IDateTranslator,
     type IMessageTranslator,
 } from "./Translators.js";
-
-// Intl.DateTimeFormat options for Month/Year period labels; Quarter is handled separately below.
-const MONTH_AND_YEAR_INTL_OPTIONS: Partial<Record<DateFilterGranularity, Intl.DateTimeFormatOptions>> = {
-    "GDC.time.month": { month: "long", year: "numeric" },
-    "GDC.time.year": { year: "numeric" },
-};
-
-// Intl.DateTimeFormat has no "quarter" field, so format it with date-fns instead, localized.
-const formatQuarterLabel = (date: Date, locale?: string): string =>
-    format(date, "QQQ y", { locale: convertLocale(locale) });
 
 const STATIC_PERIOD_LABEL_GRANULARITIES = new Set<DateFilterGranularity>([
     "GDC.time.month",
@@ -71,13 +62,7 @@ const formatStaticPeriodDateRange = (
         return "";
     }
 
-    const intlOptions = MONTH_AND_YEAR_INTL_OPTIONS[granularity];
-    const formatPeriodBoundaryLabel = (date: Date) =>
-        intlOptions ? translator.formatDate(date, intlOptions) : formatQuarterLabel(date, translator.locale);
-
-    const fromLabel = formatPeriodBoundaryLabel(fromDate);
-    const toLabel = formatPeriodBoundaryLabel(toDate);
-    return fromLabel === toLabel ? fromLabel : `${fromLabel} \u2013 ${toLabel}`;
+    return formatPeriodRangeLabel(fromDate, toDate, granularity, translator);
 };
 
 const relativeDateRangeFormatters: Array<{
@@ -256,9 +241,20 @@ const getDateFilterRepresentationByFilterType = (
     translator: IDateAndMessageTranslator,
     dateFormat: string,
     labelMode: DateFilterLabelMode,
+    weekStart: WeekStart,
 ) => {
-    if (isAbsoluteDateFilterForm(filter) || isRelativeDateFilterForm(filter)) {
-        return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode);
+    if (
+        isAbsoluteDateFilterForm(filter) ||
+        isUiAbsoluteGranularityDateFilterForm(filter) ||
+        isRelativeDateFilterForm(filter)
+    ) {
+        return getDateFilterRepresentationUsingTranslator(
+            filter,
+            translator,
+            dateFormat,
+            labelMode,
+            weekStart,
+        );
     } else if (isEmptyValuesDateFilterOption(filter)) {
         return filter.name || getEmptyValuesFilterRepresentation(translator);
     } else if (
@@ -268,7 +264,7 @@ const getDateFilterRepresentationByFilterType = (
     ) {
         return (
             filter.name ||
-            getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode)
+            getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode, weekStart)
         );
     } else {
         throw new Error("Unknown DateFilterOption type");
@@ -297,6 +293,8 @@ const getDateFilterRepresentationByFilterType = (
  *
  * The dedicated "Empty values" preset is represented by its own title and is not further decorated.
  *
+ * Whole weeks are represented by their days, which depend on `weekStart` (defaults to Sunday).
+ *
  * @returns Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
  * @beta
  */
@@ -305,12 +303,19 @@ export const getDateFilterTitleUsingTranslator = (
     translator: IDateAndMessageTranslator,
     labelMode: DateFilterLabelMode,
     dateFormat: string = DEFAULT_DATE_FORMAT,
+    weekStart: WeekStart = "Sunday",
 ): string => {
     if (isAllTimeDateFilterOption(filter) && filter.emptyValueHandling === "exclude") {
         return translator.formatMessage({ id: "filters.allTime.exceptEmptyValues.title" });
     }
 
-    const baseTitle = getDateFilterRepresentationByFilterType(filter, translator, dateFormat, labelMode);
+    const baseTitle = getDateFilterRepresentationByFilterType(
+        filter,
+        translator,
+        dateFormat,
+        labelMode,
+        weekStart,
+    );
 
     // Special case for that can potentially be persisted but is equal to regular "All time"
     if (isAllTimeDateFilterOption(filter) && filter.emptyValueHandling === "include") {
@@ -333,9 +338,13 @@ const getDateFilterRepresentationUsingTranslator = (
     translator: IDateAndMessageTranslator,
     dateFormat: string,
     labelMode: DateFilterLabelMode,
+    weekStart: WeekStart,
 ): string => {
     if (isAbsoluteDateFilterForm(filter)) {
         return getAbsoluteFormFilterRepresentation(filter, translator, dateFormat);
+    } else if (isUiAbsoluteGranularityDateFilterForm(filter)) {
+        // whole weeks to years read the same as the period of a date range parameter
+        return formatDateRangeParameterPeriod(filter, translator, dateFormat, weekStart) ?? "";
     } else if (isAbsoluteDateFilterPreset(filter)) {
         return getAbsolutePresetFilterRepresentation(filter, dateFormat);
     } else if (isAllTimeDateFilterOption(filter)) {
@@ -352,6 +361,9 @@ const getDateFilterRepresentationUsingTranslator = (
 };
 
 /**
+ * Gets the filter representation regardless of custom name. Whole weeks are represented by their days, which
+ * depend on `weekStart` (defaults to Sunday).
+ *
  * @beta
  */
 export const getDateFilterRepresentation = (
@@ -360,8 +372,9 @@ export const getDateFilterRepresentation = (
     messages: ITranslations,
     labelMode: DateFilterLabelMode,
     dateFormat: string = DEFAULT_DATE_FORMAT,
+    weekStart: WeekStart = "Sunday",
 ): string => {
     const translator = getIntl(locale, messages);
 
-    return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode);
+    return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode, weekStart);
 };

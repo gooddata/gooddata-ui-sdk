@@ -16,6 +16,8 @@ import {
     type IUiMenuItemData,
 } from "../../types.js";
 
+import { useMenuItemPosition } from "./useMenuItemPosition.js";
+
 // The tooltip anchor wrapper defaults to fit-content; the title must be allowed to shrink and clip.
 const TITLE_ANCHOR_STYLE = { display: "block", minWidth: 0, flex: "1 1 0%" } as const;
 
@@ -69,6 +71,8 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
         isFocused,
         isMenuFocusVisible,
     } = useContextStore(selector);
+
+    const position = useMenuItemPosition(item.id);
 
     const scrollToItem = (element: HTMLLIElement | null) => {
         if (!element || !isFocused) {
@@ -141,6 +145,8 @@ export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = 
             }
             aria-disabled={item.isDisabled}
             aria-label={item.ariaAttributes?.["aria-label"]}
+            aria-posinset={position?.posInSet}
+            aria-setsize={position?.setSize}
             onMouseMove={handleMouseFocus}
             onClick={item.isDisabled ? undefined : handleSelect}
             tabIndex={-1}

@@ -2,7 +2,9 @@
 
 import { type PayloadAction } from "@reduxjs/toolkit";
 
+import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
+    type DashboardDateFilterOfAnyType,
     type FilterContextItem,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
@@ -12,16 +14,22 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
     isAllTimeDashboardDateFilter,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
-    isDashboardCommonDateFilter,
-    isDashboardDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
+    isDashboardDateFilterOfAnyType,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
+    isDashboardParameterizedDateFilter,
     isNoopAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { type IUpsertDateFilterPayload } from "../../../store/tabs/filterContext/filterContextReducers.js";
+import { PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED } from "../../../../_staging/dashboard/parameterizedDateFilters.js";
+import {
+    type IUpsertDateFilterPayload,
+    upsertDateFilterPayloadDataSet,
+} from "../../../store/tabs/filterContext/filterContextReducers.js";
 import {
     type IMirroredParameterValue,
     applyMirroredFilterValue,
@@ -252,11 +260,33 @@ function findMeasureValueCounterpart(
 function findAppliedDateFilter(
     tab: ITabState,
     dataSet: ObjRef | undefined,
-): IDashboardDateFilter | undefined {
-    return dataSet ? findDimensionDateFilter(tab, dataSet) : filtersOf(tab).find(isDashboardCommonDateFilter);
+): DashboardDateFilterOfAnyType | undefined {
+    return dataSet
+        ? findDimensionDateFilter(tab, dataSet)
+        : filtersOf(tab).find(isDashboardCommonDateFilterOfAnyType);
 }
 
-function toUpsertDateFilterPayload(filter: IDashboardDateFilter): IUpsertDateFilterPayload {
+/**
+ * The upsert payload that writes the date filter.
+ *
+ * @internal
+ */
+export function toUpsertDateFilterPayload(filter: DashboardDateFilterOfAnyType): IUpsertDateFilterPayload {
+    if (isDashboardParameterizedDateFilter(filter)) {
+        throw new NotSupported(PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED);
+    }
+    if (isDashboardAbsoluteGranularityDateFilter(filter)) {
+        const { granularity, from, to, localIdentifier, emptyValueHandling } =
+            filter.dashboardAbsoluteGranularityDateFilter;
+        return {
+            type: "absoluteGranularity",
+            granularity,
+            from,
+            to,
+            ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
+        };
+    }
     const { dataSet, localIdentifier, emptyValueHandling, boundedFilter, type, granularity, from, to } =
         filter.dateFilter;
     const shared = {
@@ -283,7 +313,7 @@ function toUpsertDateFilterPayload(filter: IDashboardDateFilter): IUpsertDateFil
  */
 function savedDateFilterPayload(
     target: ITabState,
-    applied: IDashboardDateFilter | undefined,
+    applied: DashboardDateFilterOfAnyType | undefined,
     dataSet: ObjRef | undefined,
 ): IUpsertDateFilterPayload | undefined {
     const original = findOriginalFilter(
@@ -292,7 +322,7 @@ function savedDateFilterPayload(
             dateFilter: { type: "relative", granularity: "GDC.time.date" },
         },
     );
-    if (isDashboardDateFilter(original)) {
+    if (isDashboardDateFilterOfAnyType(original)) {
         return toUpsertDateFilterPayload(original);
     }
     return dataSet ? undefined : { type: "allTime" };
@@ -333,8 +363,18 @@ function committedFilterValues(ctx: ITabSyncRuleContext, target: ITabState): Fil
         }
         // A tab without a common date filter is all time, so it receives the committed value
         // without the local identifier of the source.
-        if (!isDashboardCommonDateFilter(committed) || isNoopAllTimeDashboardDateFilter(committed)) {
+        if (!isDashboardCommonDateFilterOfAnyType(committed) || isNoopAllTimeDashboardDateFilter(committed)) {
             return [];
+        }
+        if (isDashboardAbsoluteGranularityDateFilter(committed)) {
+            const { localIdentifier: _sourceLocalIdentifier, ...dateFilter } =
+                committed.dashboardAbsoluteGranularityDateFilter;
+            return [{ dashboardAbsoluteGranularityDateFilter: dateFilter }];
+        }
+        if (isDashboardParameterizedDateFilter(committed)) {
+            const { localIdentifier: _sourceLocalIdentifier, ...dateFilter } =
+                committed.dashboardParameterizedDateFilter;
+            return [{ dashboardParameterizedDateFilter: dateFilter }];
         }
         const { localIdentifier: _sourceLocalIdentifier, ...dateFilter } = committed.dateFilter;
         return [{ dateFilter }];
@@ -551,13 +591,14 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
         if (payload.isWorkingSelectionChange || !target.filterContext?.filterContextDefinition) {
             return undefined;
         }
-        const counterpart = findAppliedDateFilter(target, payload.dataSet);
+        const dataSet = upsertDateFilterPayloadDataSet(payload);
+        const counterpart = findAppliedDateFilter(target, dataSet);
         // A common date filter always has a counterpart: all time is stored as its absence.
-        if (!counterpart && payload.dataSet) {
+        if (!counterpart && dataSet) {
             return undefined;
         }
         const value = payload.restoreTargetOriginal
-            ? savedDateFilterPayload(target, counterpart, payload.dataSet)
+            ? savedDateFilterPayload(target, counterpart, dataSet)
             : payload;
         if (!value) {
             return undefined;
@@ -566,7 +607,7 @@ const selectionRules: Array<[string, AnyTabSyncRule]> = [
         const ownValue = payload.restoreTargetOriginal ? value.localIdentifier : undefined;
         return {
             ...value,
-            localIdentifier: counterpart?.dateFilter.localIdentifier ?? ownValue,
+            localIdentifier: (counterpart && dashboardFilterLocalIdentifier(counterpart)) ?? ownValue,
         };
     }),
     defineRule(tabsActions.changeMeasureValueFilterCondition, (payload, target, ctx) => {

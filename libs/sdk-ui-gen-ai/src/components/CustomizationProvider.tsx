@@ -1,6 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type PropsWithChildren, useContext, useMemo } from "react";
+import { type PropsWithChildren, useCallback, useContext, useMemo } from "react";
+
+import { useDispatch } from "react-redux";
+
+import { type GoodDataSdkError } from "@gooddata/sdk-ui";
+
+import { saveVisualisationRenderStatusAction } from "../store/messages/messagesSlice.js";
 
 import { customizationContext } from "./CustomizationContext.js";
 import { DefaultAgentChooser } from "./customized/AgentChooser.js";
@@ -14,6 +20,7 @@ import { DefaultConversationHeader } from "./customized/ConversationHeader.js";
 import { DefaultConversationItem } from "./customized/ConversationItem.js";
 import { DefaultConversationKdaContent } from "./customized/ConversationKdaContent.js";
 import { DefaultConversationRenameDialog } from "./customized/ConversationRenameDialog.js";
+import { DefaultConversationVisualizationBody } from "./customized/ConversationVisualizationBody.js";
 import { DefaultConversationVisualizationContent } from "./customized/ConversationVisualizationContent.js";
 import { DefaultDisclaimer } from "./customized/Disclaimer.js";
 import { DefaultFeedback } from "./customized/Feedback.js";
@@ -37,6 +44,7 @@ import {
     type IGenAIAssistantConversationItemProps,
     type IGenAIAssistantConversationKdaContentProps,
     type IGenAIAssistantConversationRenameDialogProps,
+    type IGenAIAssistantConversationVisualisationProps,
     type IGenAIAssistantConversationVisualizationContentProps,
     type IGenAIAssistantFeedbackProps,
     type IGenAIAssistantFollowUpButtonsProps,
@@ -259,6 +267,64 @@ function ConversationVisualizationContentSlotRenderer(
     return <DefaultConversationVisualizationContent {...props} />;
 }
 
+function ConversationVisualizationBodySlotRenderer(props: IGenAIAssistantConversationVisualisationProps) {
+    const { slots } = useContext(customizationContext);
+    const ConversationVisualizationBodySlot = slots?.ConversationVisualizationBody;
+    const dispatch = useDispatch();
+
+    const { message, visualization, onVisualisationError, onVisualisationSuccess } = props;
+    const clearReporting = useCallback(
+        (status: ReturnType<typeof saveVisualisationRenderStatusAction>["payload"]["status"]) => {
+            dispatch(
+                saveVisualisationRenderStatusAction({
+                    visualizationId: visualization.insight.identifier,
+                    assistantMessageId: message.localId,
+                    status,
+                }),
+            );
+        },
+        [dispatch, message.localId, visualization.insight.identifier],
+    );
+
+    const handleSuccess = useCallback(() => {
+        onVisualisationSuccess?.();
+        clearReporting("SUCCESSFUL");
+    }, [clearReporting, onVisualisationSuccess]);
+
+    const handleError = useCallback(
+        (error: GoodDataSdkError) => {
+            onVisualisationError?.(error);
+            switch (error.seType) {
+                case "NO_DATA":
+                    clearReporting("NO_DATA");
+                    break;
+                case "DATA_TOO_LARGE_TO_COMPUTE":
+                case "DATA_TOO_LARGE_TO_DISPLAY":
+                    clearReporting("TOO_MANY_DATA_POINTS");
+                    break;
+                default:
+                    clearReporting("UNEXPECTED_ERROR");
+                    break;
+            }
+        },
+        [clearReporting, onVisualisationError],
+    );
+
+    if (ConversationVisualizationBodySlot && !props.isTable) {
+        return (
+            <ConversationVisualizationBodySlot
+                Default={DefaultConversationVisualizationBody}
+                defaultProps={{
+                    ...props,
+                    onVisualisationSuccess: handleSuccess,
+                    onVisualisationError: handleError,
+                }}
+            />
+        );
+    }
+    return <DefaultConversationVisualizationBody {...props} />;
+}
+
 function VisualizationMenuSlotRenderer(props: IGenAIAssistantVisualizationMenuProps) {
     const { slots } = useContext(customizationContext);
     const VisualizationMenuSlot = slots?.VisualizationMenu;
@@ -340,6 +406,7 @@ export function CustomizationProvider({ children, slots }: PropsWithChildren<Cus
             MessageReasoningContentComponent: MessageReasoningContentSlotRenderer,
             MessageMultipartContentComponent: MessageMultipartContentSlotRenderer,
             ConversationVisualizationContentComponent: ConversationVisualizationContentSlotRenderer,
+            ConversationVisualizationBodyComponent: ConversationVisualizationBodySlotRenderer,
             VisualizationMenuComponent: VisualizationMenuSlotRenderer,
             ConversationKdaContentComponent: ConversationKdaContentSlotRenderer,
             FollowUpButtonsComponent: FollowUpButtonsSlotRenderer,

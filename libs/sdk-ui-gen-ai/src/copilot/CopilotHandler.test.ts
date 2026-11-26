@@ -538,6 +538,89 @@ describe("CopilotHandler", () => {
         expect(handler.hasDefinition(target)).toBe(false);
     });
 
+    describe("cancelGeneration", () => {
+        it("allows dashboard edits after answering a cancelled clarification", () => {
+            const { handler, onApplyDefinition } = setup();
+            handler.handleEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                skills: [{ name: "dashboard_builder", title: "Build" }],
+            });
+            handler.handleEvent({
+                type: "chatClarificationQuestions",
+                threadId: "thread",
+                interactionId: "question",
+                questions: [],
+            });
+            handler.handleEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                responseCompleted: true,
+            });
+            handler.cancelGeneration(type);
+            expect(handler.getSnapshot().requests).toEqual([]);
+            expect(handler.getStatus({ ...target, isEditing: true })).toBe("idle");
+            handler.handleEvent(definition);
+            expect(onApplyDefinition).not.toHaveBeenCalled();
+
+            handler.handleEvent({
+                type: "chatClarificationQuestions",
+                threadId: "thread",
+                interactionId: "question",
+                questions: [],
+                responses: { answer: "Yes" },
+            });
+            handler.handleEvent({
+                type: "chatUserAnswers",
+                threadId: "thread",
+                conversationId: "local",
+                interactionId: "question",
+                answers: [],
+            });
+            handler.handleEvent(definition);
+
+            expect(onApplyDefinition).toHaveBeenCalledOnce();
+        });
+
+        it("blocks cancelled live builder updates but preserves explicit historic definition opening", () => {
+            const { handler, onApplyDefinition } = setup();
+            handler.setContext({ ...target, builderTarget: target, isEditing: true });
+            handler.cancelGeneration(type);
+            handler.handleEvent({
+                type: "chatAssistantMessage",
+                threadId: "thread",
+                useCase: "GENERAL",
+                responseCompleted: true,
+            });
+            const snapshot = handler.getSnapshot();
+
+            handler.handleEvent(definition);
+            expect(onApplyDefinition).not.toHaveBeenCalled();
+            expect(handler.getSnapshot()).toBe(snapshot);
+
+            handler.handleEvent({ ...definition, interactionId: "historic" });
+            expect(onApplyDefinition).toHaveBeenCalledOnce();
+        });
+
+        it("does not interrupt applications already started or undo their source attribution", () => {
+            const { handler, onApplyDefinition } = setup();
+            handler.handleEvent(definition);
+            const applicationId = onApplyDefinition.mock.calls[0][1];
+            const applications = handler.getSnapshot().applications;
+
+            handler.cancelGeneration(type);
+            expect(handler.getSnapshot().applications).toBe(applications);
+            handler.definitionApplied(applicationId, target);
+            expect(handler.getAppliedSource(target)).toEqual({ conversationId: "local", threadId: "thread" });
+
+            handler.handleEvent(definition);
+            expect(onApplyDefinition).toHaveBeenCalledOnce();
+            expect(handler.getSnapshot().applications).toEqual([]);
+        });
+    });
+
     describe("cancelStaleBuild", () => {
         it.each([undefined, "next-object"])(
             "cancels generation and interrupts applications when navigating to %s",

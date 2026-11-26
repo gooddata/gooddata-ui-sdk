@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "ID de la trace",
     "automations.icon.tooltip.startsOn": "Débute la",
     "automations.icon.tooltip.repeats": "Se répète",
+    "automations.icon.tooltip.trigger.failed": "Afficher les détails de l’échec",
+    "automations.icon.tooltip.trigger.details": "Afficher les détails",
     "automations.menu.trigger": "Envoyer maintenant",
     "automations.menu.copyId": "Copie de l'ID",
     "automations.message.copyId.success": "ID copié dans le presse-papiers",

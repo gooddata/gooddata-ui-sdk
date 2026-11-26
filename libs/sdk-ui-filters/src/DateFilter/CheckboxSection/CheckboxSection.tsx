@@ -1,12 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import { type KeyboardEvent, type ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, isSpaceKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { ExcludeCurrentPeriodToggleLabel } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggleLabel.js";
 
@@ -67,17 +67,7 @@ function CheckboxItem({
     const descriptionId = useIdPrefixed("date-filter-checkbox-description");
     const hasDescription = !!disabled && !!tooltip;
 
-    const handleKeyDown = (e: KeyboardEvent) => {
-        if (disabled) {
-            return;
-        }
-
-        if (isSpaceKey(e)) {
-            e.preventDefault();
-            onChange(!checked);
-        }
-    };
-
+    // Space is left to the native checkbox so assistive technologies announce the state change.
     return (
         <>
             <BubbleHoverTrigger>
@@ -88,7 +78,6 @@ function CheckboxItem({
                         checked={checked}
                         onChange={(e) => onChange(e.target.checked)}
                         disabled={disabled}
-                        onKeyDown={handleKeyDown}
                         aria-labelledby={labelId}
                         aria-describedby={hasDescription ? descriptionId : undefined}
                         {...(testId ? { "data-testid": testId } : {})}

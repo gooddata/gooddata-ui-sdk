@@ -131,8 +131,16 @@ describe("WeekRangeList", () => {
 
             fireEvent.click(option("2026-07-26")!);
 
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-07-26", to: "2026-08-01" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-31", to: "2026-31" });
             expect(selectedStarts()).toEqual(["2026-07-26"]);
+        });
+
+        it("reports a clicked Monday week as its ISO week", () => {
+            const { onRangeChange } = renderList({ weekStart: "Monday" });
+
+            fireEvent.click(option("2026-12-28")!);
+
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-53", to: "2026-53" });
         });
 
         it("closes the range at an earlier second week", () => {
@@ -141,7 +149,7 @@ describe("WeekRangeList", () => {
             fireEvent.click(option("2026-07-26")!);
             fireEvent.click(option("2026-07-05")!);
 
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-07-05", to: "2026-08-01" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-28", to: "2026-31" });
             expect(selectedStarts()).toEqual(["2026-07-05", "2026-07-12", "2026-07-19", "2026-07-26"]);
         });
 
@@ -152,7 +160,7 @@ describe("WeekRangeList", () => {
             fireEvent.click(option("2026-07-05")!);
             fireEvent.click(option("2026-08-09")!);
 
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-08-09", to: "2026-08-15" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-33", to: "2026-33" });
             expect(selectedStarts()).toEqual(["2026-08-09"]);
         });
 
@@ -205,7 +213,7 @@ describe("WeekRangeList", () => {
             press("ArrowDown");
             const isNotPrevented = press("Enter");
 
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-09-27", to: "2026-10-03" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-40", to: "2026-40" });
             expect(isNotPrevented).toBe(false);
             expect(onParentKeyDown).not.toHaveBeenCalled();
         });
@@ -232,7 +240,7 @@ describe("WeekRangeList", () => {
             press("Enter");
 
             expect(submitForm).not.toHaveBeenCalled();
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-07-12", to: "2026-07-18" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-29", to: "2026-29" });
             expect(selectedStarts()).toEqual(["2026-07-12"]);
         });
 
@@ -245,7 +253,7 @@ describe("WeekRangeList", () => {
             press("Enter");
 
             expect(submitForm).not.toHaveBeenCalled();
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-07-12", to: "2026-07-18" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-29", to: "2026-29" });
         });
 
         it("starts a new range on Enter outside a closed range", () => {
@@ -257,7 +265,7 @@ describe("WeekRangeList", () => {
             press("Enter");
 
             expect(submitForm).not.toHaveBeenCalled();
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-08-09", to: "2026-08-15" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-33", to: "2026-33" });
         });
 
         it("closes an open range on Enter without applying it", () => {
@@ -268,12 +276,12 @@ describe("WeekRangeList", () => {
             press("Enter");
 
             expect(submitForm).not.toHaveBeenCalled();
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-07-26", to: "2026-08-15" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-31", to: "2026-33" });
         });
 
         it("applies a closed range on Enter with nothing typed or active", () => {
             const { onRangeChange, submitForm } = renderList({
-                range: { from: "2026-07-05", to: "2026-08-01" },
+                range: { from: "2026-28", to: "2026-31" },
             });
 
             press("Enter");
@@ -284,7 +292,7 @@ describe("WeekRangeList", () => {
 
         it("leaves Enter with nothing typed or active to the parent without an Apply button", () => {
             const { onRangeChange, onParentKeyDown, submitForm } = renderList({
-                range: { from: "2026-07-05", to: "2026-08-01" },
+                range: { from: "2026-28", to: "2026-31" },
                 withoutApply: true,
             });
 
@@ -330,7 +338,7 @@ describe("WeekRangeList", () => {
             fireEvent.change(search(), { target: { value: "12/29/2026" } });
             press("Enter");
 
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-12-27", to: "2027-01-02" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-53", to: "2026-53" });
         });
 
         it("selects the week moved to from a typed date on Enter", () => {
@@ -340,7 +348,7 @@ describe("WeekRangeList", () => {
             press("ArrowDown");
             press("Enter");
 
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2027-01-03", to: "2027-01-09" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2027-01", to: "2027-01" });
         });
 
         it("does not jump to the typed date again once a week is selected", () => {
@@ -401,7 +409,7 @@ describe("WeekRangeList", () => {
             "shows the error of %s on Enter and neither selects nor applies the active week",
             (text) => {
                 const { onRangeChange, submitForm } = renderList({
-                    range: { from: "2026-07-05", to: "2026-08-01" },
+                    range: { from: "2026-28", to: "2026-31" },
                 });
 
                 fireEvent.mouseMove(option("2026-07-12")!);
@@ -462,7 +470,7 @@ describe("WeekRangeList", () => {
 
     describe("stored range", () => {
         it("selects the stored weeks and lists the years around them only", () => {
-            renderList({ range: { from: "2010-03-07", to: "2010-03-13" } });
+            renderList({ range: { from: "2010-10", to: "2010-10" } });
 
             expect(selectedStarts()).toEqual(["2010-03-07"]);
             expect(headings().at(0)).toBe("March 2008");
@@ -471,7 +479,7 @@ describe("WeekRangeList", () => {
 
         it("applies the stored range on Enter on one of its weeks", () => {
             const { onRangeChange, submitForm } = renderList({
-                range: { from: "2010-03-07", to: "2010-03-13" },
+                range: { from: "2010-10", to: "2010-10" },
             });
 
             fireEvent.mouseMove(option("2010-03-07")!);
@@ -481,8 +489,8 @@ describe("WeekRangeList", () => {
             expect(onRangeChange).not.toHaveBeenCalled();
         });
 
-        it("selects and previews nothing for a range that is not whole weeks", () => {
-            const { onValidityChange } = renderList({ range: { from: "2026-07-22", to: "2026-07-28" } });
+        it("selects and previews nothing for weeks out of order", () => {
+            const { onValidityChange } = renderList({ range: { from: "2026-31", to: "2026-30" } });
 
             expect(selectedStarts()).toEqual([]);
             expect(screen.getByText("Preview: –")).toBeInTheDocument();
@@ -490,9 +498,9 @@ describe("WeekRangeList", () => {
         });
 
         it("follows a range the parent replaces", () => {
-            const { replaceRange } = renderList({ range: { from: "2026-07-05", to: "2026-07-11" } });
+            const { replaceRange } = renderList({ range: { from: "2026-28", to: "2026-28" } });
 
-            replaceRange({ from: "2026-08-09", to: "2026-08-22" });
+            replaceRange({ from: "2026-33", to: "2026-34" });
 
             expect(selectedStarts()).toEqual(["2026-08-09", "2026-08-16"]);
             expect(screen.getByText("Preview: 08/09/2026 – 08/22/2026")).toBeInTheDocument();
@@ -502,10 +510,10 @@ describe("WeekRangeList", () => {
             const { onRangeChange, replaceRange } = renderList();
 
             fireEvent.click(option("2026-07-26")!);
-            replaceRange({ from: "2026-08-09", to: "2026-08-15" });
+            replaceRange({ from: "2026-33", to: "2026-33" });
             fireEvent.click(option("2026-07-05")!);
 
-            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-07-05", to: "2026-07-11" });
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-28", to: "2026-28" });
         });
 
         it("keeps the active day in its week of the new week start", () => {
@@ -544,13 +552,13 @@ describe("WeekRangeList", () => {
         }
 
         it("centres the stored week on open", () => {
-            renderList({ range: { from: "2026-07-05", to: "2026-07-11" } });
+            renderList({ range: { from: "2026-28", to: "2026-28" } });
 
             expect(rowOffset("2026-07-05")).toBe((LIST_HEIGHT - ROW_HEIGHT) / 2);
         });
 
         it("centres the week of a typed date", () => {
-            renderList({ range: { from: "2026-07-05", to: "2026-07-11" } });
+            renderList({ range: { from: "2026-28", to: "2026-28" } });
 
             type("03/07/2010");
 

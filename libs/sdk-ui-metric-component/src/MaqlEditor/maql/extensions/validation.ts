@@ -199,6 +199,8 @@ function diagnosticAtCursor(diagnostics: readonly Diagnostic[], cursor: number):
 
 /**
  * Shows the next diagnostic: the one at the cursor first, then the following one on each call.
+ * The message is also announced to screen readers through the editor's live region, as the
+ * widget is only visual and the focus stays in the editor.
  */
 export const showNextDiagnostic: Command = (view) => {
     const diagnostics = orderedDiagnostics(view.state);
@@ -219,7 +221,7 @@ export const showNextDiagnostic: Command = (view) => {
 
     view.dispatch({
         selection: { anchor: next.from },
-        effects: showDiagnostic.of(next),
+        effects: [showDiagnostic.of(next), EditorView.announce.of(next.message)],
         scrollIntoView: true,
     });
     return true;

@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-filters: the \"Select a date range\" list box in the date filter dropdown is a single Tab stop, so one Tab or Shift+Tab leaves it from any option, including options reached with the arrow keys.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

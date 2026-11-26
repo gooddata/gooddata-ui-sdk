@@ -9,6 +9,7 @@ import {
     isInsightWidget,
 } from "@gooddata/sdk-model";
 
+import { automationHasUneditableDateFilter } from "../../../_staging/automation/index.js";
 import { switchDashboardTab } from "../../commands/tabs.js";
 import { selectInsights } from "../../store/insights/insightsSelectors.js";
 import { selectWidgetLocalIdToTabIdMap, selectWidgets } from "../../store/tabs/layout/layoutSelectors.js";
@@ -31,6 +32,13 @@ export const useDashboardAlertsCommands = () => {
     // Single Alert Dialog
     const openAlertDialog = useCallback(
         (widget?: IWidget, alert?: IAutomationMetadataObject) => {
+            if (alert && automationHasUneditableDateFilter(alert)) {
+                console.warn(
+                    `Cannot edit automation ${alert.id}. Dashboards do not support its date filters yet.`,
+                );
+                return;
+            }
+
             const widgetLocalId = widget?.localIdentifier ?? alert?.metadata?.widget;
             if (widgetLocalId) {
                 const targetTabId = widgetTabMap[widgetLocalId];

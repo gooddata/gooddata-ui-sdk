@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "Traceer-ID",
     "automations.icon.tooltip.startsOn": "Begint op",
     "automations.icon.tooltip.repeats": "Herhaalt",
+    "automations.icon.tooltip.trigger.failed": "Foutdetails weergeven",
+    "automations.icon.tooltip.trigger.details": "Details tonen",
     "automations.menu.trigger": "Nu verzenden",
     "automations.menu.copyId": "ID kopiëren",
     "automations.message.copyId.success": "ID gekopieerd naar klembord",

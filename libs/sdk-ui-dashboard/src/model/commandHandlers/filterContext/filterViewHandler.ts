@@ -15,9 +15,13 @@ import {
 import { defaultErrorHandler } from "@gooddata/sdk-ui";
 
 import {
-    ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED,
-    containsAbsoluteGranularityDateFilter,
+    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
+    containsAbsoluteGranularityDateFilterWithDataSet,
 } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+import {
+    PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED,
+    containsDashboardParameterizedDateFilter,
+} from "../../../_staging/dashboard/parameterizedDateFilters.js";
 import { type IDashboardCommand } from "../../commands/base.js";
 import {
     type IApplyFilterView,
@@ -190,9 +194,14 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: IApplyFilter
         cmd.payload.ref,
     );
 
-    if (filterView && containsAbsoluteGranularityDateFilter(filterView.filterContext.filters)) {
+    if (filterView && containsAbsoluteGranularityDateFilterWithDataSet(filterView.filterContext.filters)) {
         console.warn(
-            `The filter view "${filterView.name}" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED}`,
+            `The filter view "${filterView.name}" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED}`,
+        );
+        yield put(filterViewApplicationFailed(ctx));
+    } else if (filterView && containsDashboardParameterizedDateFilter(filterView.filterContext.filters)) {
+        console.warn(
+            `The filter view "${filterView.name}" was not applied. ${PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED}`,
         );
         yield put(filterViewApplicationFailed(ctx));
     } else if (filterView) {

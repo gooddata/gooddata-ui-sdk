@@ -2,7 +2,6 @@
 
 import {
     type DateFilterGranularity,
-    type DateString,
     type IActiveCalendars,
     belongsToCalendar,
     getDateFilterGranularities,
@@ -11,7 +10,12 @@ import {
     isDateFilterGranularity,
 } from "@gooddata/sdk-model";
 
-import { type DateFilterOption, type DateFilterRelativeOptionGroup } from "../interfaces/index.js";
+import { type AbsoluteFormOption, switchAbsoluteFormTab } from "../AbsoluteDateFilterForm/conversions.js";
+import {
+    type DateFilterOption,
+    type DateFilterRelativeOptionGroup,
+    isUiAbsoluteGranularityDateFilterForm,
+} from "../interfaces/index.js";
 
 // Granularity sets derived from the shared sdk-model registry (single source of truth).
 const STANDARD_GRANULARITIES = getDateFilterGranularities({ calendars: [{ type: "standard" }] });
@@ -95,6 +99,10 @@ export function getDefaultCalendarTab(
     activeCalendars?: IActiveCalendars,
     currentPreset?: DateFilterOption,
 ): CalendarTabType {
+    if (isUiAbsoluteGranularityDateFilterForm(currentPreset)) {
+        return "standard";
+    }
+
     if (currentPreset) {
         const granularity = "granularity" in currentPreset ? currentPreset.granularity : undefined;
 
@@ -347,44 +355,29 @@ export function ensureCompatibleGranularity<T extends IUiRelativeDateFilterFormL
 }
 
 /**
- * @internal
- */
-export interface IUiAbsoluteDateFilterFormLike {
-    granularity?: DateFilterGranularity;
-    from?: DateString;
-    to?: DateString;
-}
-
-/**
- * Ensures the granularity in an absolute filter option is compatible with the available granularities.
- * Simpler than {@link ensureCompatibleGranularity} - the absolute form has no fiscal variants, so there is no
- * equivalent-mapping attempt: if the current (or, when absent, the implied "GDC.time.date") granularity isn't
- * available, it resets to the first available one, clearing from/to since a half-selected range from a
- * different granularity is not a valid state.
+ * Ensures the absolute form option can be shown on one of the available granularity tabs.
+ *
+ * @remarks
+ * Days are shown on the day tab. When it is not available, the option resets to the empty option of the first
+ * available tab. An option of whole periods is kept also when its tab is not available, so that a stored
+ * selection is never lost. Empty availableGranularities means granularity switching isn't active at all.
+ *
  * @param filterOption - The filter option to check/correct
  * @param availableGranularities - List of available granularities
  * @returns The filter option with a compatible granularity
  * @internal
  */
-export function ensureCompatibleAbsoluteGranularity<T extends IUiAbsoluteDateFilterFormLike>(
-    filterOption: T,
+export function ensureCompatibleAbsoluteGranularity(
+    filterOption: AbsoluteFormOption,
     availableGranularities: DateFilterGranularity[],
-): T {
-    // Empty availableGranularities means granularity switching isn't active at all - nothing to correct
-    // against, so this must stay a no-op rather than clearing from/to.
-    if (availableGranularities.length === 0) {
+): AbsoluteFormOption {
+    if (
+        availableGranularities.length === 0 ||
+        isUiAbsoluteGranularityDateFilterForm(filterOption) ||
+        availableGranularities.includes("GDC.time.date")
+    ) {
         return filterOption;
     }
 
-    const effectiveGranularity = filterOption.granularity ?? "GDC.time.date";
-    if (availableGranularities.includes(effectiveGranularity)) {
-        return filterOption;
-    }
-
-    return {
-        ...filterOption,
-        granularity: availableGranularities[0],
-        from: undefined,
-        to: undefined,
-    };
+    return switchAbsoluteFormTab(filterOption, availableGranularities[0]);
 }

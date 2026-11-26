@@ -28,13 +28,14 @@ import { isEscapeKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { _isEmpty } from "@gooddata/util";
 
 import { isEditableElement } from "../../shared/utils/domUtilities.js";
+import { type AbsoluteFormOption } from "../AbsoluteDateFilterForm/conversions.js";
 import { CheckboxSection } from "../CheckboxSection/CheckboxSection.js";
 import {
     type DateFilterOption,
     type IDateFilterOptionsByType,
     type IExtendedDateFilterErrors,
-    type IUiAbsoluteDateFilterForm,
     type IUiRelativeDateFilterForm,
+    isUiAbsoluteGranularityDateFilterForm,
 } from "../interfaces/index.js";
 import { getDateFilterOptionGranularity } from "../utils/OptionUtils.js";
 import {
@@ -193,7 +194,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
             selectionBeforeForm.current = { selectedFilterOption, excludeCurrentPeriod };
             const baseOption =
                 selectedFilterOption.localIdentifier === filterOptions.absoluteForm.localIdentifier
-                    ? (selectedFilterOption as IUiAbsoluteDateFilterForm)
+                    ? (selectedFilterOption as AbsoluteFormOption)
                     : filterOptions.absoluteForm;
 
             const correctedOption = ensureCompatibleAbsoluteGranularity(
@@ -312,7 +313,10 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         }
 
         didSyncInitialMobileRoute.current = true;
-        if (isAbsoluteDateFilterForm(selectedFilterOption)) {
+        if (
+            isAbsoluteDateFilterForm(selectedFilterOption) ||
+            isUiAbsoluteGranularityDateFilterForm(selectedFilterOption)
+        ) {
             changeRoute("absoluteForm");
 
             // Correct a stale/incompatible granularity before the absolute form renders with it.
@@ -363,6 +367,11 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         wrapperStyle = { display: "block", height: `${bodyHeight}px` };
         scrollerStyle = { minHeight: `${bodyHeight}px` };
     }
+
+    // Without granularity switching, whole periods cannot be shown nor applied, only replaced by another option.
+    const isReadOnlyGranularityOption =
+        !props.isAbsoluteDateFilterGranularityEnabled &&
+        isUiAbsoluteGranularityDateFilterForm(selectedFilterOption);
 
     const hasFormOptions = !!(
         filterOptions.absoluteForm ||
@@ -596,7 +605,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                                 isMobile ? "gd-button-medium" : "gd-button-small",
                                 "s-date-filter-apply",
                             )}
-                            disabled={!_isEmpty(errors) || !isPeriodRangeValid}
+                            disabled={!_isEmpty(errors) || !isPeriodRangeValid || isReadOnlyGranularityOption}
                             onClick={() => {
                                 onApplyClick();
                                 closeDropdown();

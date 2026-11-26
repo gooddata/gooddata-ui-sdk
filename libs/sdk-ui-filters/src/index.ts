@@ -35,12 +35,14 @@ export {
     type IDateFilterRelativeFormErrors,
     type RelativeDateFilterOption,
     type IUiAbsoluteDateFilterForm,
+    type IUiAbsoluteGranularityDateFilterForm,
     type IUiRelativeDateFilterForm,
     type DateRangePosition,
     type IDateFilterAbsoluteDateTimeFormErrors,
     isAbsoluteDateFilterOption,
     isRelativeDateFilterOption,
     isRelativeDateFilterWithBoundOption,
+    isUiAbsoluteGranularityDateFilterForm,
     isUiRelativeDateFilterForm,
 } from "./DateFilter/interfaces/index.js";
 
@@ -68,6 +70,7 @@ export {
     getDateFilterRepresentation,
     getDateFilterTitleUsingTranslator,
 } from "./DateFilter/utils/Translations/DateFilterTitle.js";
+export { formatDateRangeParameterPeriod } from "./DateFilter/utils/Translations/DateRangeParameterPeriod.js";
 export {
     formatAbsoluteDateRange,
     getLocalizedIcuDateFormatPattern,

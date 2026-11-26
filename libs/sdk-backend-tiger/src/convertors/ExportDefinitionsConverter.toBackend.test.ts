@@ -18,6 +18,7 @@ import {
     type IFilter,
     idRef,
     newAbsoluteDateFilter,
+    newDashboardParameterizedDateFilter,
     newMeasureValueFilterWithOptions,
 } from "@gooddata/sdk-model";
 
@@ -477,6 +478,50 @@ describe("ExportDefinitionsConverter toBackend", () => {
             ]);
         },
     );
+
+    describe("parameterized date filter in a dashboard tabular export", () => {
+        const parameterizedDateFilter = newDashboardParameterizedDateFilter(idRef("period", "parameter"), {
+            localIdentifier: "periodFilter",
+        });
+        const tigerParameterizedDateFilter = {
+            dashboardParameterizedDateFilter: {
+                parameter: { identifier: { id: "period", type: "parameter" } },
+                localIdentifier: "periodFilter",
+            },
+        };
+
+        it("is kept for a widget", () => {
+            const result = convertVisualizationToDashboardTabularExportRequest({
+                type: "visualizationObject",
+                fileName: "xlsx-export",
+                format: "XLSX",
+                content: {
+                    visualizationObject: "visId",
+                    widget: "widgetId",
+                    dashboard: "dashboardId",
+                    filters: [parameterizedDateFilter],
+                },
+            });
+
+            expect(result.dashboardFiltersOverride).toEqual([tigerParameterizedDateFilter]);
+        });
+
+        it("is kept for a dashboard and its tabs", () => {
+            const result = convertToDashboardTabularExportRequest({
+                type: "dashboard",
+                fileName: "dashboard-tabular",
+                format: "XLSX",
+                content: {
+                    dashboard: "dashboardId",
+                    filters: [parameterizedDateFilter],
+                    filtersByTab: { tab1: [parameterizedDateFilter] },
+                },
+            });
+
+            expect(result.dashboardFiltersOverride).toEqual([tigerParameterizedDateFilter]);
+            expect(result.dashboardTabsFiltersOverrides).toEqual({ tab1: [tigerParameterizedDateFilter] });
+        });
+    });
 
     it("emits metadata.parametersByTab from dashboard content in visual export", () => {
         const parameter: IDashboardExportParameter = { id: "p1", value: "42", title: "Param 1" };

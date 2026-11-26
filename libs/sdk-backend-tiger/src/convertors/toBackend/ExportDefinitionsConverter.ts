@@ -5,6 +5,8 @@ import { omitBy } from "lodash-es";
 import {
     type AutomationRawExportAutomationRequest,
     type DashboardTabularExportRequestV2,
+    type ITigerDashboardAbsoluteGranularityDateFilter,
+    type ITigerFilter,
     type ITigerFilterContextItem,
     type ImageExportRequest,
     type JsonApiExportDefinitionInDocument,
@@ -427,6 +429,13 @@ export const convertToTabularExportRequest = (
     throw new UnexpectedError("Export definition must be CSV or XLSX tabular");
 };
 
+// The filter with granularity is rejected before, tabular exports accept the parameterized date filter.
+function isTabularExportFilterContextItem(
+    item: ITigerFilter | ITigerFilterContextItem,
+): item is Exclude<ITigerFilterContextItem, ITigerDashboardAbsoluteGranularityDateFilter> {
+    return isTigerFilterContextItem(item) || "dashboardParameterizedDateFilter" in item;
+}
+
 export const convertVisualizationToDashboardTabularExportRequest = (
     exportRequest: IExportDefinitionVisualizationObjectRequestPayload,
 ): DashboardTabularExportRequestV2 => {
@@ -465,7 +474,7 @@ export const convertVisualizationToDashboardTabularExportRequest = (
         format: exportRequest.format === "PDF_TABULAR" ? "PDF" : "XLSX",
         dashboardId: dashboard,
         widgetIds: [widget],
-        dashboardFiltersOverride: convertSdkFiltersToTiger(filters)?.filter(isTigerFilterContextItem),
+        dashboardFiltersOverride: convertSdkFiltersToTiger(filters)?.filter(isTabularExportFilterContextItem),
         dashboardTabsParametersOverrides: parametersByTab,
         ...(exportRequest.timezoneId ? { executionSettings: { timezone: exportRequest.timezoneId } } : {}),
         settings,

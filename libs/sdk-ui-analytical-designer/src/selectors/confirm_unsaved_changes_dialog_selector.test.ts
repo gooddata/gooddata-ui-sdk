@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { type IWorkspacePermissions, uriRef } from "@gooddata/sdk-model";
 
+import { getVisualizationObjectForSave } from "../services/report_service.js";
 import { dialogsInitialState } from "../store/dialogs/dialogs_state.js";
 import { type IFilterBarState } from "../store/filter_bar/filter_bar_state.js";
 import { initialMetricEditorState } from "../store/metric_editor/metric_editor_reducer.js";
@@ -464,6 +465,48 @@ describe("confirm unsaved changed selector", () => {
             expect(isReportChangingSelector).toBe(expected);
         },
     );
+
+    describe("saved visualization that is still computing", () => {
+        // the state of a saved visualization right after it opens: the first execution is running,
+        // there is no data yet, and the current content is what was last saved
+        const computing = withReport(state, {
+            execution: { ...state.report.execution, running: true, hasData: false },
+        });
+        const unchangedSaved = withReport(computing, {
+            lastSavedObject: {
+                visualizationObject: {
+                    ...getVisualizationObjectForSave(computing).visualizationObject,
+                    meta: {
+                        uri: "/gdc/md/pid1/obj/1",
+                        title: computing.report.lastSavedObject?.visualizationObject?.meta?.title,
+                        summary: computing.report.lastSavedObject?.visualizationObject?.meta?.summary,
+                    },
+                },
+            } as never,
+        });
+
+        it("should not report changes while an unchanged visualization is still computing", () => {
+            expect(isReportChanging(unchangedSaved)).toBe(false);
+        });
+
+        it("should not report changes for the same unchanged visualization once it stopped computing", () => {
+            const done = withReport(unchangedSaved, {
+                execution: { ...unchangedSaved.report.execution, running: false },
+            });
+
+            expect(isReportChanging(done)).toBe(false);
+        });
+
+        it("should report changes while a changed visualization is recomputing", () => {
+            const changed = withReport(unchangedSaved, {
+                lastSavedObject: withMdObjectMeta(unchangedSaved.report.lastSavedObject, {
+                    title: "A title that is not the current one",
+                }),
+            });
+
+            expect(isReportChanging(changed)).toBe(true);
+        });
+    });
 
     it("should confirmUnsavedChangesDialogSelector return correct value", () => {
         // saving a saved visualization in place needs the ANALYZE role

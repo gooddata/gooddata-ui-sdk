@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "Ідентифікатор трасування",
     "automations.icon.tooltip.startsOn": "Починається",
     "automations.icon.tooltip.repeats": "Повторюється",
+    "automations.icon.tooltip.trigger.failed": "Показати відомості про помилку",
+    "automations.icon.tooltip.trigger.details": "Показати подробиці",
     "automations.menu.trigger": "Надіслати зараз",
     "automations.menu.copyId": "Копіювати ID",
     "automations.message.copyId.success": "ID скопійовано в буфер обміну",

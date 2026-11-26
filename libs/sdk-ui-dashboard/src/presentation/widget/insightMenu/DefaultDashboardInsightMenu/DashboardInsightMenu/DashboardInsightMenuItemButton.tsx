@@ -1,12 +1,37 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type ReactElement, type ReactNode } from "react";
+import { type ReactElement, type ReactNode, useLayoutEffect, useRef } from "react";
 
 import cx from "classnames";
 
 import { Item, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { type IInsightMenuItemButton } from "../../types.js";
+
+const NON_TABBABLE_SELECTOR =
+    "a[href], area[href], button, input, select, textarea, iframe, summary, [tabindex], [contenteditable]:not([contenteditable='false'])";
+
+/**
+ * The copy is only a text source for aria-describedby / screen readers. A link inside it
+ * (e.g. "Create a destination") must not be a hidden Tab stop, otherwise Tab from the menu
+ * lands on it instead of closing the menu.
+ */
+function DisabledReasonCopy({ id, children }: { id?: string; children: ReactNode }) {
+    const ref = useRef<HTMLSpanElement>(null);
+
+    // no dependency array: the tooltip content is a ReactNode that may change on any render
+    useLayoutEffect(() => {
+        ref.current
+            ?.querySelectorAll<HTMLElement>(NON_TABBABLE_SELECTOR)
+            .forEach((element) => element.setAttribute("tabindex", "-1"));
+    });
+
+    return (
+        <span ref={ref} id={id} className="sr-only" aria-hidden={id ? true : undefined}>
+            {children}
+        </span>
+    );
+}
 
 export const DashboardInsightMenuItemButton = (
     props: Omit<IInsightMenuItemButton, "type"> & {
@@ -74,9 +99,7 @@ function renderButtonWithTooltip(
                     of the item's aria-describedby and hidden from the item's name content (a directly
                     referenced hidden element still provides the description); without it, it is
                     plain screen-reader text next to the item. */}
-                <span id={descriptionId} className="sr-only" aria-hidden={descriptionId ? true : undefined}>
-                    {tooltip}
-                </span>
+                <DisabledReasonCopy id={descriptionId}>{tooltip}</DisabledReasonCopy>
             </>
         );
     } else {

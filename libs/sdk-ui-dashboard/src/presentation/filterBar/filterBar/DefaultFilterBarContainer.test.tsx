@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 
 import { act, render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -14,8 +14,10 @@ import { selectNamesOfFiltersWithInvalidSelection } from "../../../model/store/t
 import { createInternalIntl } from "../../localization/createInternalIntl.js";
 
 import { DefaultFilterBarContainer } from "./DefaultFilterBarContainer.js";
+import { useFilterBarState } from "./hooks/useFilterBarState.js";
 import { useResetFiltersButton } from "./hooks/useResetFiltersButton.js";
 import { ResetFiltersButton } from "./ResetFiltersButton.js";
+import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
 
 vi.mock("../../../model/react/DashboardStoreProvider.js", () => ({
     useDashboardSelector: vi.fn(),
@@ -25,14 +27,7 @@ vi.mock("../../localization/IntlWrapper.js", () => ({
     IntlWrapper: ({ children }: { children?: ReactNode }) => children,
 }));
 vi.mock("./hooks/useFilterBarState.js", () => ({
-    useFilterBarState: () => ({
-        rows: [],
-        height: 40,
-        isFilterBarExpanded: false,
-        scrollable: false,
-        setFilterBarExpanded: vi.fn(),
-        setCalculatedRows: vi.fn(),
-    }),
+    useFilterBarState: vi.fn(),
 }));
 vi.mock("./hooks/useFilterExpansionByDragAndDrop.js", () => ({
     useFilterExpansionByDragAndDrop: () => undefined,
@@ -47,7 +42,7 @@ vi.mock("./filterViews/FilterViews.js", () => ({
     FilterViews: () => <button type="button">My views</button>,
 }));
 vi.mock("./ShowAllFiltersButton.js", () => ({
-    ShowAllFiltersButton: () => null,
+    ShowAllFiltersButton: vi.fn(() => null),
 }));
 vi.mock("./hooks/useResetFiltersButton.js", () => ({
     useResetFiltersButton: vi.fn(),
@@ -66,6 +61,14 @@ describe("DefaultFilterBarContainer", () => {
             resetType: "all",
             resetFilters: vi.fn(),
         });
+        vi.mocked(useFilterBarState).mockReturnValue({
+            rows: [],
+            height: 40,
+            isFilterBarExpanded: false,
+            scrollable: false,
+            setFilterBarExpanded: vi.fn(),
+            setCalculatedRows: vi.fn(),
+        } as unknown as ReturnType<typeof useFilterBarState>);
     });
 
     function renderContainer() {
@@ -122,5 +125,90 @@ describe("DefaultFilterBarContainer", () => {
 
         await user.keyboard("{ArrowRight}{ArrowRight}");
         expect(screen.getByRole("button", { name: "Reset all to defaults" })).toHaveFocus();
+    });
+
+    it("exposes the Show all toggle as a collapsed Tab stop after the auto-expanded filters", async () => {
+        const actual = await vi.importActual<{ ShowAllFiltersButton: typeof ShowAllFiltersButton }>(
+            "./ShowAllFiltersButton.js",
+        );
+        vi.mocked(ShowAllFiltersButton).mockImplementation(actual.ShowAllFiltersButton);
+        vi.mocked(useFilterBarState).mockImplementation(function useStatefulFilterBarState() {
+            const [isFilterBarExpanded, setFilterBarExpanded] = useState(false);
+            return {
+                rows: [40, 40],
+                height: 40,
+                isFilterBarExpanded,
+                scrollable: false,
+                setFilterBarExpanded,
+                setCalculatedRows: vi.fn(),
+            } as unknown as ReturnType<typeof useFilterBarState>;
+        });
+
+        renderContainer();
+        const user = userEvent.setup();
+
+        // Tab into the filters auto-expands the bar
+        await user.tab();
+        expect(screen.getByRole("button", { name: "Date range" })).toHaveFocus();
+        expect(screen.getByRole("region")).toHaveAccessibleName(/auto-expanded/);
+
+        await user.tab();
+        expect(screen.getByRole("button", { name: "My views" })).toHaveFocus();
+
+        // Leaving the filters for the toggle collapses the auto-expanded bar
+        await user.tab();
+        const toggle = screen.getByRole("button", { name: "Show all" });
+        expect(toggle).toHaveFocus();
+        expect(toggle).toHaveAttribute("aria-expanded", "false");
+
+        await user.keyboard("{Enter}");
+        expect(screen.getByRole("button", { name: "Show less" })).toBe(toggle);
+        expect(toggle).toHaveAttribute("aria-expanded", "true");
+        expect(toggle).toHaveFocus();
+
+        // A manually expanded bar stays expanded while focus moves through the filters
+        await user.tab({ shift: true });
+        await user.tab({ shift: true });
+        expect(toggle).toHaveAttribute("aria-expanded", "true");
+
+        await user.tab();
+        await user.tab();
+        expect(toggle).toHaveFocus();
+        await user.keyboard(" ");
+        expect(screen.getByRole("button", { name: "Show all" })).toBe(toggle);
+        expect(toggle).toHaveAttribute("aria-expanded", "false");
+        expect(toggle).toHaveFocus();
+    });
+
+    it("does not announce a manual collapse as an auto-collapse", async () => {
+        const actual = await vi.importActual<{ ShowAllFiltersButton: typeof ShowAllFiltersButton }>(
+            "./ShowAllFiltersButton.js",
+        );
+        vi.mocked(ShowAllFiltersButton).mockImplementation(actual.ShowAllFiltersButton);
+        vi.mocked(useFilterBarState).mockImplementation(function useStatefulFilterBarState() {
+            const [isFilterBarExpanded, setFilterBarExpanded] = useState(false);
+            return {
+                rows: [40, 40],
+                height: 40,
+                isFilterBarExpanded,
+                scrollable: false,
+                setFilterBarExpanded,
+                setCalculatedRows: vi.fn(),
+            } as unknown as ReturnType<typeof useFilterBarState>;
+        });
+
+        renderContainer();
+        const user = userEvent.setup();
+
+        await user.tab();
+        await user.tab();
+        // Leaving the auto-expanded filters for the toggle is announced as an auto-collapse
+        await user.tab();
+        expect(screen.getByRole("alert")).toHaveTextContent(/auto-collapsed/);
+
+        await user.keyboard("{Enter}");
+        await user.keyboard("{Enter}");
+        expect(screen.getByRole("button", { name: "Show all" })).toHaveFocus();
+        expect(screen.queryByRole("alert")).not.toBeInTheDocument();
     });
 });

@@ -5,18 +5,7 @@ import { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { useDispatch } from "react-redux";
 
-import {
-    type IChatConversationVisualisationContent,
-    type IUserWorkspaceSettings,
-} from "@gooddata/sdk-backend-spi";
-import {
-    DefaultLocale,
-    type IColorPalette,
-    type IExecutionConfig,
-    type IInsight,
-    type ISeparators,
-    isLocale,
-} from "@gooddata/sdk-model";
+import { DefaultLocale, type IInsight, isLocale } from "@gooddata/sdk-model";
 import {
     ErrorCodes,
     ErrorComponent,
@@ -26,7 +15,6 @@ import {
     IntlWrapper as SdkUiIntlWrapper,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
-import { type IDashboardKeyDriverCombinationItem } from "@gooddata/sdk-ui-dashboard";
 import { InsightRenderer, convertInsightToTableDefinition } from "@gooddata/sdk-ui-ext";
 import { useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { ScopedThemeProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -35,12 +23,12 @@ import { mapVisualizationAnomalyDetectionToChartConfig } from "../../../anomalyD
 import { mapVisualizationClusteringToChartConfig } from "../../../clustering/clusteringMapping.js";
 import { mapVisualizationForecastToChartConfig } from "../../../forecast/forecastMapping.js";
 import { getKdaDrillCombinations, getKdaDrillableItems } from "../../../keyDriverAnalysis/drilling.js";
-import { type IChatConversationLocalItem } from "../../../model.js";
 import {
     saveVisualisationRenderStatusAction,
     visualizationErrorAction,
 } from "../../../store/messages/messagesSlice.js";
 import { storeKdaReturnFocusFromDrillContext } from "../../../utils/kdaReturnFocus.js";
+import { type IGenAIAssistantConversationVisualisationProps } from "../../customized/types.js";
 
 import { isViewableError } from "./utils/errors.js";
 
@@ -104,28 +92,7 @@ function analyticsConfigFor(insight: IInsight["insight"]) {
     return {};
 }
 
-export type ConversationVisualisationProps = {
-    message: IChatConversationLocalItem;
-    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
-    colorPalette?: IColorPalette;
-    separators?: ISeparators;
-    execConfig?: IExecutionConfig;
-    settings?: IUserWorkspaceSettings;
-    agGridToken?: string;
-    isTable?: boolean;
-    onVisualisationError?: (error: GoodDataSdkError) => void;
-    onVisualisationSuccess?: () => void;
-    onDrillFired?: (
-        data: {
-            keyDriverData: IDashboardKeyDriverCombinationItem[];
-            event: IDrillEvent;
-        } | null,
-    ) => void;
-    enableDrilling?: boolean;
-    enableChangeAnalysis?: boolean;
-    enableSecondGranularities?: boolean;
-    enableAccessibleChartTooltip?: boolean;
-};
+export type ConversationVisualisationProps = IGenAIAssistantConversationVisualisationProps;
 
 export function ConversationVisualisation({
     message,

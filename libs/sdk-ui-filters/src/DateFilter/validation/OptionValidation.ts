@@ -1,6 +1,11 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
+import {
+    compareDatePeriodLiterals,
+    isAbsoluteDateFilterForm,
+    isRelativeDateFilterForm,
+    isValidDatePeriodLiteral,
+} from "@gooddata/sdk-model";
 
 import {
     type DateFilterOption,
@@ -9,7 +14,9 @@ import {
     type IDateFilterRelativeFormErrors,
     type IExtendedDateFilterErrors,
     type IUiAbsoluteDateFilterForm,
+    type IUiAbsoluteGranularityDateFilterForm,
     type IUiRelativeDateFilterForm,
+    isUiAbsoluteGranularityDateFilterForm,
 } from "../interfaces/index.js";
 import { convertPlatformDateStringToDate } from "../utils/DateConversions.js";
 
@@ -17,7 +24,7 @@ const validateVisibility = (filterOption: DateFilterOption): IExtendedDateFilter
     const errors: { [key in keyof IDateFilterOptionsByType]?: object } = {};
     if (!filterOption.visible) {
         // indicate that the Apply button should be disabled, it makes no sense for hidden forms
-        errors[filterOption.type] = {};
+        errors[isUiAbsoluteGranularityDateFilterForm(filterOption) ? "absoluteForm" : filterOption.type] = {};
     }
     return errors;
 };
@@ -61,6 +68,27 @@ const validateAbsoluteForm = (filterOption: IUiAbsoluteDateFilterForm): IExtende
     return errors.absoluteForm === undefined ? {} : errors;
 };
 
+const validateAbsoluteGranularityForm = (
+    filterOption: IUiAbsoluteGranularityDateFilterForm,
+): IExtendedDateFilterErrors => {
+    const { granularity, from, to } = filterOption;
+    let errors = validateVisibility(filterOption);
+
+    if (!isValidDatePeriodLiteral(granularity, from)) {
+        errors = setError(errors, "invalidStartDate");
+    }
+
+    if (!isValidDatePeriodLiteral(granularity, to)) {
+        errors = setError(errors, "invalidEndDate");
+    }
+
+    if (errors.absoluteForm === undefined && compareDatePeriodLiterals(granularity, from!, to!) > 0) {
+        errors = setError(errors, "startDateAfterEndDate");
+    }
+
+    return errors.absoluteForm === undefined ? {} : errors;
+};
+
 const validateRelativeForm = (filterOption: IUiRelativeDateFilterForm): IExtendedDateFilterErrors => {
     const errors = validateVisibility(filterOption);
     const relativeFormKeys: Array<keyof IDateFilterRelativeFormErrors> = ["from", "to"];
@@ -79,6 +107,8 @@ const validateRelativeForm = (filterOption: IUiRelativeDateFilterForm): IExtende
 export const validateFilterOption = (filterOption: DateFilterOption): IExtendedDateFilterErrors => {
     if (isAbsoluteDateFilterForm(filterOption)) {
         return validateAbsoluteForm(filterOption);
+    } else if (isUiAbsoluteGranularityDateFilterForm(filterOption)) {
+        return validateAbsoluteGranularityForm(filterOption);
     } else if (isRelativeDateFilterForm(filterOption)) {
         return validateRelativeForm(filterOption);
     } else {

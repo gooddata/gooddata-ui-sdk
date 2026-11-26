@@ -5794,6 +5794,7 @@ export interface ITab {
     iconOnly?: boolean;
     // (undocumented)
     id: string;
+    label?: MessageDescriptor;
     // (undocumented)
     values?: Record<string, string | number | boolean | null | undefined | Date | FormatXMLElementFn<string, string>>;
 }
@@ -10473,7 +10474,7 @@ export function UiTreeViewEventsProvider(input: PropsWithChildren): JSX.Element;
 export type UiTreeViewEventType = keyof UiTreeViewEvents;
 
 // @internal (undocumented)
-export type UiTreeViewItemAriaAttributes = Pick<AriaAttributes, "aria-level" | "aria-expanded" | "aria-selected" | "aria-disabled"> & {
+export type UiTreeViewItemAriaAttributes = Pick<AriaAttributes, "aria-level" | "aria-posinset" | "aria-setsize" | "aria-expanded" | "aria-selected" | "aria-disabled"> & {
     id: string;
     role: "treeitem";
 };

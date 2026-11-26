@@ -28,6 +28,17 @@ const useStyles = makeStyles<void>()((theme: DefaultTheme) => {
         helpText: {
             marginLeft: 6,
         },
+        visuallyHidden: {
+            position: "absolute",
+            width: 1,
+            height: 1,
+            padding: 0,
+            margin: -1,
+            overflow: "hidden",
+            clip: "rect(0, 0, 0, 0)",
+            whiteSpace: "nowrap",
+            border: 0,
+        },
 
         help: {
             display: "flex",
@@ -95,6 +106,10 @@ function EditMetricContentFooterComponent({
                         <div className={classes.helpText}>
                             <FormattedMessage id="metricComponent.editMetric.helpText" />
                         </div>
+                        <span className={classes.visuallyHidden}>
+                            {" "}
+                            <FormattedMessage id="metricComponent.editMetric.helpText.opensInNewTab" />
+                        </span>
                     </a>
                 )}
             </div>

@@ -55,7 +55,7 @@
     "metricComponent.editMetric.metric.definition": "指標定義",
     "metricComponent.editMetric.metric.definition.tooltip": "創建MAQL語句以查詢您的數據。",
     "metricComponent.editMetric.metric.definition.moreActions": "指標定義的更多操作",
-    "metricComponent.partHeader.moreActions": "更多作",
+    "metricComponent.partHeader.moreActions": "更多操作",
     "metricComponent.editMetric.metric.result.context": "查看方式",
     "metricComponent.editMetric.metric.result.context.unrelated": "{unrelated} 隱藏不相關的屬性",
     "metricComponent.editMetric.metric.result.context.displayTitle": "顯示",

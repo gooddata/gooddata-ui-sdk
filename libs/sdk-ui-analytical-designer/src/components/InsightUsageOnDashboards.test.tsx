@@ -352,7 +352,7 @@ describe("InsightUsageOnDashboards", () => {
         it("should count and describe documents when no dashboard uses the visualization", () => {
             renderComponent({ insightUsageOnDashboard: NO_DASHBOARDS, documents });
 
-            const button = screen.getByRole("button", { name: "Used in 2 reports" });
+            const button = screen.getByRole("button", { name: "Used in 2 documents" });
             expect(button).toHaveTextContent("2");
         });
 
@@ -364,7 +364,7 @@ describe("InsightUsageOnDashboards", () => {
                 documents,
             });
 
-            const button = screen.getByRole("button", { name: "Used in 1 dashboard and 2 reports" });
+            const button = screen.getByRole("button", { name: "Used in 1 dashboard and 2 documents" });
             expect(button).toHaveTextContent("3");
         });
 
@@ -375,11 +375,11 @@ describe("InsightUsageOnDashboards", () => {
                 ]),
                 documents,
             });
-            fireEvent.click(screen.getByRole("button", { name: "Used in 1 dashboard and 2 reports" }));
+            fireEvent.click(screen.getByRole("button", { name: "Used in 1 dashboard and 2 documents" }));
 
             const overlay = within(document.querySelector<HTMLElement>(".s-usages-overlay-body"));
             expect(overlay.getByText("Dashboards (1)").closest("button")).toBeInTheDocument();
-            expect(overlay.getByText("Reports (2)").closest("button")).toBeInTheDocument();
+            expect(overlay.getByText("Documents (2)").closest("button")).toBeInTheDocument();
             expect(document.querySelectorAll(".s-usage-item")).toHaveLength(1);
             expect(
                 Array.from(document.querySelectorAll(".s-usage-document-item")).map(
@@ -390,9 +390,9 @@ describe("InsightUsageOnDashboards", () => {
 
         it("should collapse a group", () => {
             renderComponent({ insightUsageOnDashboard: NO_DASHBOARDS, documents });
-            fireEvent.click(screen.getByRole("button", { name: "Used in 2 reports" }));
+            fireEvent.click(screen.getByRole("button", { name: "Used in 2 documents" }));
             const overlay = within(document.querySelector<HTMLElement>(".s-usages-overlay-body"));
-            const groupToggle = overlay.getByText("Reports (2)").closest("button");
+            const groupToggle = overlay.getByText("Documents (2)").closest("button");
 
             fireEvent.click(groupToggle);
 
@@ -400,9 +400,9 @@ describe("InsightUsageOnDashboards", () => {
             expect(document.querySelectorAll(".s-usage-document-item")).toHaveLength(0);
         });
 
-        it("should link the report to a new tab", () => {
+        it("should link the document to a new tab", () => {
             renderComponent({ insightUsageOnDashboard: NO_DASHBOARDS, documents });
-            fireEvent.click(screen.getByRole("button", { name: "Used in 2 reports" }));
+            fireEvent.click(screen.getByRole("button", { name: "Used in 2 documents" }));
             const link = document.querySelector<HTMLAnchorElement>(".s-usage-document-item a");
 
             expect(link.href).toEqual("http://localhost:3000/document/doc1");
@@ -420,20 +420,20 @@ describe("InsightUsageOnDashboards", () => {
                     allDocumentsCount: 1,
                 },
             });
-            fireEvent.click(screen.getByRole("button", { name: "Used in 1 report" }));
+            fireEvent.click(screen.getByRole("button", { name: "Used in 1 document" }));
 
             expect(document.querySelector(".s-usage-document-item").textContent).toEqual("Monthly review");
             expect(document.querySelector(".s-usage-document-item a")).toBeNull();
         });
 
-        it("should not link the report in embedded mode", () => {
+        it("should not link the document in embedded mode", () => {
             renderComponent({ insightUsageOnDashboard: NO_DASHBOARDS, documents, isEmbedded: true });
-            fireEvent.click(screen.getByRole("button", { name: "Used in 2 reports" }));
+            fireEvent.click(screen.getByRole("button", { name: "Used in 2 documents" }));
 
             expect(document.querySelector(".s-usage-document-item a")).toBeNull();
         });
 
-        it("should count reports the user may not open without naming them", () => {
+        it("should count documents the user may not open without naming them", () => {
             renderComponent({
                 insightUsageOnDashboard: NO_DASHBOARDS,
                 documents: {
@@ -442,26 +442,26 @@ describe("InsightUsageOnDashboards", () => {
                     allDocumentsCount: 3,
                 },
             });
-            fireEvent.click(screen.getByRole("button", { name: "Used in 3 reports" }));
+            fireEvent.click(screen.getByRole("button", { name: "Used in 3 documents" }));
 
             const overlay = within(document.querySelector<HTMLElement>(".s-usages-overlay-body"));
-            expect(overlay.getByText("Reports (3)")).toBeInTheDocument();
+            expect(overlay.getByText("Documents (3)")).toBeInTheDocument();
             expect(document.querySelectorAll(".s-usage-document-item")).toHaveLength(1);
             expect(document.querySelector(".s-usages-inaccessible-documents").textContent).toEqual(
                 "and 2 more not shared with you",
             );
         });
 
-        it("should only count the reports when the user may open none of them", () => {
+        it("should only count the documents when the user may open none of them", () => {
             renderComponent({
                 insightUsageOnDashboard: NO_DASHBOARDS,
                 documents: { accessibleDocuments: [], inaccessibleDocumentsCount: 1, allDocumentsCount: 1 },
             });
-            fireEvent.click(screen.getByRole("button", { name: "Used in 1 report" }));
+            fireEvent.click(screen.getByRole("button", { name: "Used in 1 document" }));
 
             expect(document.querySelectorAll(".s-usage-document-item")).toHaveLength(0);
             expect(document.querySelector(".s-usages-inaccessible-documents-only").textContent).toEqual(
-                "1 report not shared with you",
+                "1 document not shared with you",
             );
         });
     });

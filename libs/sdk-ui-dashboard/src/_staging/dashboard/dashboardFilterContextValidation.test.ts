@@ -11,6 +11,7 @@ import {
     type DashboardDateFilterConfigMode,
     type FilterContextItem,
     type IAttributeElements,
+    type IDashboardAbsoluteGranularityDateFilter,
     type IDashboardArbitraryAttributeFilter,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
@@ -85,7 +86,7 @@ const measureRef2 = idRef("measureId2");
 const createMeasureValueFilter = (
     measure: ObjRef,
     localIdentifier: string,
-    conditions?: MeasureValueFilterCondition[] | undefined,
+    conditions?: MeasureValueFilterCondition[],
 ): IDashboardMeasureValueFilter => ({
     dashboardMeasureValueFilter: {
         measure,
@@ -630,6 +631,63 @@ describe("dashboardFilterContextValidation", () => {
 
                 // With readonly config, dimension date filter should preserve original values
                 expect(result.mergedFilters[0]).toBe(dimensionOriginalFilter);
+            });
+        });
+
+        describe("Common date filter of the new type", () => {
+            const createGranularityDateFilter = (
+                localIdentifier: string,
+            ): IDashboardAbsoluteGranularityDateFilter => ({
+                dashboardAbsoluteGranularityDateFilter: {
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                    localIdentifier,
+                },
+            });
+
+            it.each<[string, FilterContextItem, FilterContextItem]>([
+                [
+                    "the old type by the new type",
+                    createDateFilter(undefined, "date1"),
+                    createGranularityDateFilter("date1"),
+                ],
+                [
+                    "the new type by the old type",
+                    createGranularityDateFilter("date1"),
+                    createDateFilter(undefined, "date1", -5),
+                ],
+            ])("should replace %s with the same local identifier", (_desc, originalFilter, filterToMerge) => {
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {});
+
+                expect(result.validationResults).toEqual([]);
+                expect(result.mergedFilters).toEqual([filterToMerge]);
+            });
+
+            it("should keep the original filter when the local identifier differs", () => {
+                const originalFilter = createDateFilter(undefined, "date1");
+
+                const result = mergeFilterContextFilters(
+                    [originalFilter],
+                    [createGranularityDateFilter("date2")],
+                    {},
+                );
+
+                expect(result.mergedFilters).toEqual([originalFilter]);
+            });
+
+            it("should respect hidden config for the new type", () => {
+                const originalFilter = createDateFilter(undefined, "date1");
+                const filterToMerge = createGranularityDateFilter("date1");
+
+                const result = mergeFilterContextFilters([originalFilter], [filterToMerge], {
+                    dateFilterConfig: { mode: "hidden", filterName: "testFilter" },
+                });
+
+                expect(
+                    hasValidationError(result.validationResults, filterToMerge, "cannot-apply-hidden"),
+                ).toBe(true);
+                expect(result.mergedFilters).toEqual([originalFilter]);
             });
         });
 

@@ -795,6 +795,8 @@
     "shareDialog.olp.generalAccess.workspace.description.edit": "此工作区中的所有人都可以编辑此对象。",
     "uiKit.autocomplete.searchPlaceholder": "搜索",
     "uiKit.toast.regionLabel": "{count, plural, one {# 条通知} other {# 条通知}}",
+    "uiKit.message.showMore": "显示更多",
+    "uiKit.message.showLess": "显示更少",
     "uiKit.autocomplete.stateLoading": "正在加载…",
     "uiKit.autocomplete.stateError": "无法加载选项。请重试。",
     "uiKit.autocomplete.stateNoMatch": "没有匹配的选项。",

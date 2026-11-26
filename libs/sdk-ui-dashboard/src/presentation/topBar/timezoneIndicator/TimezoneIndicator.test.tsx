@@ -35,6 +35,18 @@ describe("TimezoneIndicator", () => {
         vi.restoreAllMocks();
     });
 
+    it("renders a decorative timezone icon that inherits the label colour", () => {
+        const { container } = renderIndicator(
+            { timezoneId: "Europe/Prague", showTimezoneInfo: true },
+            { timezoneId: "Europe/Prague", name: "Prague", offsetLabel: "GMT+02:00" },
+        );
+
+        const icon = container.querySelector(".gd-timezone-indicator-icon svg");
+        expect(icon).toHaveAttribute("aria-hidden", "true");
+        expect(icon).toHaveClass("gd-ui-kit-icon--color-currentColor");
+        expect(icon?.querySelector("[fill]")).toBeNull();
+    });
+
     it("renders only the friendly timezone name in the badge, without the offset", () => {
         const { container } = renderIndicator(
             { timezoneId: "Europe/Prague", showTimezoneInfo: true },

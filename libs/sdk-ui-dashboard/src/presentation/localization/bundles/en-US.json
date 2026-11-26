@@ -1131,6 +1131,22 @@
         "text": "Scheduled exports",
         "crowdinContext": "Title of the scheduled exports management dialog"
     },
+    "dialogs.automation.absoluteGranularityDateFilter.alert.title": {
+        "text": "Alerts are not available",
+        "crowdinContext": "Title of the dialog shown instead of the alert dialog when the dashboard date filter selects whole weeks, months, quarters or years."
+    },
+    "dialogs.automation.absoluteGranularityDateFilter.alert.description": {
+        "text": "Alerts do not support a date filter set to whole weeks, months, quarters or years yet. Change the date filter to create or edit an alert.",
+        "crowdinContext": "Text of the dialog shown instead of the alert dialog when the dashboard date filter selects whole weeks, months, quarters or years."
+    },
+    "dialogs.automation.absoluteGranularityDateFilter.scheduledExport.title": {
+        "text": "Scheduled exports are not available",
+        "crowdinContext": "Title of the dialog shown instead of the scheduled export dialog when a dashboard date filter selects whole weeks, months, quarters or years."
+    },
+    "dialogs.automation.absoluteGranularityDateFilter.scheduledExport.description": {
+        "text": "Scheduled exports do not support a date filter set to whole weeks, months, quarters or years yet. Change the date filter to create or edit a scheduled export.",
+        "crowdinContext": "Text of the dialog shown instead of the scheduled export dialog when a dashboard date filter selects whole weeks, months, quarters or years."
+    },
     "dialogs.schedule.management.delete.dialog": {
         "text": "Delete schedule?",
         "crowdinContext": "Title of the confirmation dialog when deleting a scheduled export"
@@ -1679,6 +1695,22 @@
         "text": "Ungrouped",
         "crowdinContext": "Section header in the alert/schedule dialog add-parameter dropdown, listing parameters that have no tag"
     },
+    "attributesDropdown.tab.attributes": {
+        "text": "Attributes",
+        "crowdinContext": "Accessible name (read by screen readers) of the icon-only tab in the add-filter dropdown that lists attributes"
+    },
+    "attributesDropdown.tab.dateDatasets": {
+        "text": "Dates",
+        "crowdinContext": "Accessible name (read by screen readers) of the icon-only tab in the add-filter dropdown that lists date datasets"
+    },
+    "attributesDropdown.tab.metrics": {
+        "text": "Metrics",
+        "crowdinContext": "Accessible name (read by screen readers) of the icon-only tab in the add-filter dropdown that lists metrics"
+    },
+    "attributesDropdown.tab.parameters": {
+        "text": "Parameters",
+        "crowdinContext": "Accessible name (read by screen readers) of the icon-only tab in the add-filter dropdown that lists parameters"
+    },
     "attributesDropdown.configuration": {
         "text": "Configuration",
         "crowdinContext": "Configuration button label in attribute filter dropdown"
@@ -1938,6 +1970,14 @@
     "deleteInsightDialog.inaccessibleDashboardsOnly": {
         "text": "{count, plural, one {# dashboard} other {# dashboards}} not shared with you",
         "crowdinContext": "Shown instead of the list in the delete visualization dialog when the current user cannot open any of the dashboards using the visualization; {count} is their number"
+    },
+    "deleteInsightDialog.inaccessibleDocuments": {
+        "text": "and <strong>{count} more</strong> not shared with you",
+        "crowdinContext": "Appended to the list of documents using the visualization for the documents the current user cannot open; {count} is their number"
+    },
+    "deleteInsightDialog.inaccessibleDocumentsOnly": {
+        "text": "{count, plural, one {# document} other {# documents}} not shared with you",
+        "crowdinContext": "Shown instead of the list in the delete visualization dialog when the current user cannot open any of the documents using the visualization; {count} is their number"
     },
     "deleteInsightDialog.usedOnThisDashboard": {
         "text": "The visualization <strong>{title}</strong> cannot be deleted because it is used on the dashboard you are currently editing. To delete this visualization, remove it from this dashboard first.",
@@ -2767,6 +2807,14 @@
         "text": "Restricted",
         "crowdinContext": "Stands in for the title of a visualization switcher entry the user is not permitted to see; the real title would name the restricted object"
     },
+    "visualizationSwitcher.button.ariaLabel": {
+        "text": "Switch visualization, currently: {title}",
+        "crowdinContext": "Accessible name (screen reader label) of the button in a dashboard widget header that opens the list of visualizations to switch between. {title} is the title of the visualization currently shown, e.g. 'Revenue by region'."
+    },
+    "visualizationSwitcher.list.ariaLabel": {
+        "text": "Visualizations to switch to",
+        "crowdinContext": "Accessible name (screen reader label) of the list of visualizations opened from a visualization switcher widget on a dashboard; the user picks which visualization the widget shows."
+    },
     "visualizationSwitcher.emptyContent": {
         "text": "No visualization in switcher",
         "crowdinContext": "Message shown when visualization switcher has no visualizations"
@@ -3582,6 +3630,10 @@
     "kdaDialog.floatingStatus.error.opener": {
         "text": "See details",
         "crowdinContext": "Status message shown in the minimized floating status bar when the analysis fails. Instructs the user to expand the dialog to see error details."
+    },
+    "kdaDialog.floatingStatus.announcement": {
+        "text": "{title}: {status}",
+        "crowdinContext": "Screen reader announcement made when the key driver analysis finishes while shown in the minimized floating status bar. {title} is the analysis title (e.g. 'Key driver analysis for Revenue'), {status} is the final status (e.g. 'Analysis is ready' or 'Analysis failed'). Keep the order natural for your language."
     },
     "kdaDialog.floatingStatus.expand": {
         "text": "Expand to a dialog",

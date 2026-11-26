@@ -25,6 +25,11 @@ import { convertPathToKey, type itemsState, makeItemId } from "./utils.js";
 interface IUITreeviewItemProps<Levels extends [], Level> {
     treeViewId: string;
     path: number[];
+    /**
+     * Number of sibling items at this item's level. Needed because each treeitem is
+     * wrapped in its own elements, so browsers cannot compute the set size themselves.
+     */
+    setSize: number;
     item: UiStaticTreeView<Level | LevelTypesUnion<Levels>>;
     getState: ReturnType<typeof itemsState>;
     focusedItem?: UiStaticTreeView<Level>;
@@ -59,6 +64,7 @@ export function UITreeviewItem<Levels extends [], Level>(props: IUITreeviewItemP
         itemsRef,
         treeViewId,
         path,
+        setSize,
     } = props;
 
     const [state, { toggle }] = getState(props.path);
@@ -66,6 +72,7 @@ export function UITreeviewItem<Levels extends [], Level>(props: IUITreeviewItemP
 
     const childCount = children?.length ?? 0;
     const level = props.path.length;
+    const posInSet = (path[path.length - 1] ?? 0) + 1;
 
     const id = makeItemId(treeViewId, path);
     const isFocused = item === focusedItem?.item;
@@ -78,11 +85,13 @@ export function UITreeviewItem<Levels extends [], Level>(props: IUITreeviewItemP
             id,
             role: "treeitem",
             "aria-level": level,
+            "aria-posinset": posInSet,
+            "aria-setsize": setSize,
             "aria-expanded": isExpanded,
             "aria-selected": isFocused,
             "aria-disabled": isDisabled,
         }),
-        [id, level, isExpanded, isFocused, isDisabled],
+        [id, level, posInSet, setSize, isExpanded, isFocused, isDisabled],
     );
 
     const handleToggle = useCallback(
@@ -145,6 +154,7 @@ export function UITreeviewItem<Levels extends [], Level>(props: IUITreeviewItemP
                             key={i}
                             treeViewId={treeViewId}
                             path={[...props.path, i]}
+                            setSize={children.length}
                         />
                     ))}
                 </div>

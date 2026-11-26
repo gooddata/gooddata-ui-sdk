@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "ID theo dõi",
     "automations.icon.tooltip.startsOn": "Bắt đầu vào",
     "automations.icon.tooltip.repeats": "Lặp lại",
+    "automations.icon.tooltip.trigger.failed": "Hiển thị chi tiết lỗi",
+    "automations.icon.tooltip.trigger.details": "Hiển thị chi tiết",
     "automations.menu.trigger": "Gửi ngay",
     "automations.menu.copyId": "Sao chép ID",
     "automations.message.copyId.success": "ID đã được sao chép vào bảng tạm",

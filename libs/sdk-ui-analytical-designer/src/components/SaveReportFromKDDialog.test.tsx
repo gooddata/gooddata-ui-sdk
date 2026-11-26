@@ -293,7 +293,7 @@ describe("Test SaveReportFromKDDialog", () => {
             expect(screen.getByText("Save visualization everywhere it is used")).toBeInTheDocument();
             expect(
                 Array.from(document.querySelectorAll(".s-view-usage summary")).map((s) => s.textContent),
-            ).toEqual(["Dashboards (1)", "Reports (1)"]);
+            ).toEqual(["Dashboards (1)", "Documents (1)"]);
             expect(document.querySelector(".s-insight-usage-document-item").textContent).toEqual(
                 "Board pack",
             );
@@ -312,9 +312,9 @@ describe("Test SaveReportFromKDDialog", () => {
             expect(screen.getByText("Visualization is used in other places")).toBeInTheDocument();
             expect(
                 Array.from(document.querySelectorAll(".s-view-usage summary")).map((s) => s.textContent),
-            ).toEqual(["Dashboards (1)", "Reports (2)"]);
+            ).toEqual(["Dashboards (1)", "Documents (2)"]);
             expect(document.querySelector(".s-insight-usage-document-item")).toBeNull();
-            expect(screen.getByText("Reports are not shared with you.")).toBeInTheDocument();
+            expect(screen.getByText("Documents are not shared with you.")).toBeInTheDocument();
         });
     });
 });

@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "ID Pelacakan",
     "automations.icon.tooltip.startsOn": "Mulai pada",
     "automations.icon.tooltip.repeats": "Berulang",
+    "automations.icon.tooltip.trigger.failed": "Tampilkan detail kegagalan",
+    "automations.icon.tooltip.trigger.details": "Tampilkan detail",
     "automations.menu.trigger": "Kirim sekarang",
     "automations.menu.copyId": "Salin ID",
     "automations.message.copyId.success": "ID disalin ke clipboard",

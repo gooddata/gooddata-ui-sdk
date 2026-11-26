@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "11.70.0-alpha.4",
+    "version": "11.70.0-alpha.5",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -76,7 +76,7 @@
         "@gooddata/oxlint-config": "workspace:*",
         "@microsoft/api-documenter": "7.30.20",
         "@microsoft/api-extractor": "7.59.2",
-        "@openapitools/openapi-generator-cli": "2.42.0",
+        "@openapitools/openapi-generator-cli": "2.43.0",
         "@types/lodash-es": "4.17.12",
         "@typescript-eslint/eslint-plugin": "8.58.0",
         "@typescript-eslint/parser": "8.58.0",

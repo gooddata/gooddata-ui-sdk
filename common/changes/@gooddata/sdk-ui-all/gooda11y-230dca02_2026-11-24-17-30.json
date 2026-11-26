@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: The attribute list of the \"Add filter\" dropdown is exposed as a labelled listbox driven by the search combobox, so screen readers announce each attribute as it becomes active and the one added on Enter.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -1007,6 +1007,31 @@ describe("UiTreeview", () => {
             expect(items[6]).toHaveAttribute("aria-disabled", "true");
         });
 
+        it("should set aria-posinset and aria-setsize relative to siblings on each level", () => {
+            renderStaticTreeView();
+
+            const items = screen.getAllByRole("treeitem");
+            const positions = items.map((item) => [
+                item.getAttribute("aria-level"),
+                item.getAttribute("aria-posinset"),
+                item.getAttribute("aria-setsize"),
+            ]);
+
+            expect(positions).toEqual([
+                ["1", "1", "4"], // Parent A
+                ["2", "1", "4"], // Parent A Folder A
+                ["3", "1", "1"], // Parent A Folder A File A1
+                ["2", "2", "4"], // Parent A Folder B
+                ["3", "1", "1"], // Parent A Folder B File A2
+                ["2", "3", "4"], // Parent A File A3
+                ["2", "4", "4"], // Parent A File B3
+                ["1", "2", "4"], // Parent B
+                ["2", "1", "1"], // Parent B File A4
+                ["1", "3", "4"], // File A5
+                ["1", "4", "4"], // File B5
+            ]);
+        });
+
         it("should not close on select when shouldCloseOnSelect is false", () => {
             const onSelect = vi.fn();
             const onClose = vi.fn();

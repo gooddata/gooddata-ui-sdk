@@ -1,45 +1,53 @@
 // (C) 2026 GoodData Corporation
 
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { idRef } from "@gooddata/sdk-model";
-import { type DateFilterHelpers, type DateFilterOption } from "@gooddata/sdk-ui-filters";
+import { type IUiAbsoluteGranularityDateFilterForm } from "@gooddata/sdk-ui-filters";
 
 import { dateFilterOptionToDashboardDateFilter } from "./dashboardFilterConverter.js";
 
-const { mapOptionToAfm } = vi.hoisted(() => ({ mapOptionToAfm: vi.fn() }));
-
-vi.mock("@gooddata/sdk-ui-filters", async (importOriginal) => {
-    const original = await importOriginal<{ DateFilterHelpers: typeof DateFilterHelpers }>();
-    return {
-        ...original,
-        DateFilterHelpers: { ...original.DateFilterHelpers, mapOptionToAfm },
-    };
-});
-
 describe("dateFilterOptionToDashboardDateFilter", () => {
     const dataSet = idRef("date", "dataSet");
-    const option = { localIdentifier: "option", type: "futureForm", visible: true } as unknown;
 
-    it("should fall back to All time with a warning for a date filter of an unknown type", () => {
-        const unknownFilter = { futureDateFilter: { dataSet } };
-        mapOptionToAfm.mockReturnValue(unknownFilter);
-        const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    it("should convert whole periods to the absolute date filter with granularity", () => {
+        const option: IUiAbsoluteGranularityDateFilterForm = {
+            localIdentifier: "option",
+            type: "absoluteGranularityForm",
+            visible: true,
+            granularity: "GDC.time.quarter",
+            from: "2026-1",
+            to: "2026-3",
+            emptyValueHandling: "exclude",
+        };
 
-        expect(
-            dateFilterOptionToDashboardDateFilter(option as DateFilterOption, false, dataSet, "df"),
-        ).toEqual({
-            dateFilter: {
-                type: "relative",
-                granularity: "GDC.time.date",
-                dataSet,
+        expect(dateFilterOptionToDashboardDateFilter(option, false, undefined, "df")).toStrictEqual({
+            dashboardAbsoluteGranularityDateFilter: {
+                granularity: "GDC.time.quarter",
+                from: "2026-1",
+                to: "2026-3",
+                dataSet: undefined,
                 localIdentifier: "df",
+                emptyValueHandling: "exclude",
             },
         });
-        expect(warn).toHaveBeenCalledWith(
-            "A date filter of an unknown type is replaced by All time.",
-            unknownFilter,
-        );
-        warn.mockRestore();
+    });
+
+    it("should keep the date dataset and only one bound of whole periods", () => {
+        const option: IUiAbsoluteGranularityDateFilterForm = {
+            localIdentifier: "option",
+            type: "absoluteGranularityForm",
+            visible: true,
+            granularity: "GDC.time.year",
+            to: "2026",
+        };
+
+        expect(dateFilterOptionToDashboardDateFilter(option, false, dataSet)).toEqual({
+            dashboardAbsoluteGranularityDateFilter: {
+                granularity: "GDC.time.year",
+                to: "2026",
+                dataSet,
+            },
+        });
     });
 });

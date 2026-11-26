@@ -19,7 +19,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     filterContextItemsToDashboardFiltersByWidget,
     isDashboardAttributeFilterItem,
-    isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardLayout,
     isInsightWidget,
     isKpiWidget,
@@ -462,7 +462,7 @@ function calculateWidgetFilters(
 
     const [commonDateFilters, otherFilters] = _partition(
         filtersWithoutAllCrossFiltering,
-        isDashboardCommonDateFilter,
+        isDashboardCommonDateFilterOfAnyType,
     );
 
     const dateFilters = filterContextItemsToDashboardFiltersByWidget(commonDateFilters, widget);

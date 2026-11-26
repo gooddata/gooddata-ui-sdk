@@ -30,7 +30,7 @@ import {
     idRef,
     isBrowserDetectedTimezone,
     isDashboardAttributeFilter,
-    isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilterWithDimension,
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
@@ -1026,8 +1026,8 @@ export const selectIsDateFilterChanged: DashboardSelector<boolean> = createSelec
         return tabIdentifiers.some((tabId) => {
             const persistedFilters = persistedFiltersByTab[tabId] ?? [];
             const workingFilters = workingFiltersByTab[tabId] ?? [];
-            const persistedDateFilter = persistedFilters.find(isDashboardCommonDateFilter);
-            const workingDateFilter = workingFilters.find(isDashboardCommonDateFilter);
+            const persistedDateFilter = persistedFilters.find(isDashboardCommonDateFilterOfAnyType);
+            const workingDateFilter = workingFilters.find(isDashboardCommonDateFilterOfAnyType);
 
             return !_isEqual(persistedDateFilter, workingDateFilter);
         });

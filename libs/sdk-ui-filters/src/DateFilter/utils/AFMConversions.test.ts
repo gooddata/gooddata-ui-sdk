@@ -10,7 +10,11 @@ import {
     type IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
 
-import { type IUiAbsoluteDateFilterForm, type IUiRelativeDateFilterForm } from "../interfaces/index.js";
+import {
+    type IUiAbsoluteDateFilterForm,
+    type IUiAbsoluteGranularityDateFilterForm,
+    type IUiRelativeDateFilterForm,
+} from "../interfaces/index.js";
 
 import { mapAbsoluteFilterToAfm, mapOptionToAfm, mapRelativeFilterToAfm } from "./AFMConversions.js";
 
@@ -55,6 +59,16 @@ const relativeDateFilterPresetValue: IRelativeDateFilterPreset = {
     from: 1,
     to: 2,
     granularity: "GDC.time.date",
+};
+
+const absoluteGranularityDateFilterFormValue: IUiAbsoluteGranularityDateFilterForm = {
+    localIdentifier: "baz",
+    name: "bar",
+    visible: true,
+    type: "absoluteGranularityForm",
+    granularity: "GDC.time.week",
+    from: "2026-53",
+    to: "2027-01",
 };
 
 describe("mapAbsoluteFilterToAfm", () => {
@@ -117,6 +131,52 @@ describe("mapOptionToAfm", () => {
     it("should convert relative date filter preset value to AFM relative date filter definition with excluding current period", () => {
         const actual = mapOptionToAfm({ ...relativeDateFilterPresetValue, from: -30, to: 0 }, dataSet, true);
         expect(actual).toMatchObject({ relativeDateFilter: { from: -31, to: -1 } });
+    });
+
+    it("should convert whole periods to AFM absolute date filter with granularity", () => {
+        const actual = mapOptionToAfm(absoluteGranularityDateFilterFormValue, dataSet, false);
+        expect(actual).toEqual({
+            absoluteGranularityDateFilter: {
+                dataSet: { uri: "foo" },
+                granularity: "GDC.time.week",
+                from: "2026-53",
+                to: "2027-01",
+            },
+        });
+    });
+
+    it.each([
+        ["only from", { from: "2026-53", to: undefined }, { from: "2026-53" }],
+        ["only to", { from: undefined, to: "2027-01" }, { to: "2027-01" }],
+    ])("should convert whole periods with %s to AFM without the other end", (_, range, expectedRange) => {
+        const actual = mapOptionToAfm(
+            { ...absoluteGranularityDateFilterFormValue, ...range },
+            dataSet,
+            false,
+        );
+        expect(actual).toEqual({
+            absoluteGranularityDateFilter: {
+                dataSet: { uri: "foo" },
+                granularity: "GDC.time.week",
+                ...expectedRange,
+            },
+        });
+    });
+
+    it("should convert whole periods without both ends to null", () => {
+        const actual = mapOptionToAfm(
+            { ...absoluteGranularityDateFilterFormValue, from: undefined, to: undefined },
+            dataSet,
+            false,
+        );
+        expect(actual).toBeNull();
+    });
+
+    it("should not shift whole periods when excluding the current period", () => {
+        const actual = mapOptionToAfm(absoluteGranularityDateFilterFormValue, dataSet, true);
+        expect(actual).toMatchObject({
+            absoluteGranularityDateFilter: { from: "2026-53", to: "2027-01" },
+        });
     });
 
     it("should throw error when type is uknown and TS is not used", () => {

@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "Trace-ID",
     "automations.icon.tooltip.startsOn": "Beginnt am",
     "automations.icon.tooltip.repeats": "Wiederholt",
+    "automations.icon.tooltip.trigger.failed": "Fehlerdetails anzeigen",
+    "automations.icon.tooltip.trigger.details": "Details anzeigen",
     "automations.menu.trigger": "Jetzt senden",
     "automations.menu.copyId": "ID kopieren",
     "automations.message.copyId.success": "Ausweis in Zwischenablage kopiert",

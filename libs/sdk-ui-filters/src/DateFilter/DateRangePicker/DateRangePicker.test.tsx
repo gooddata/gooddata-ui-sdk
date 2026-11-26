@@ -323,6 +323,51 @@ describe("DateRangePicker", () => {
         });
     });
 
+    describe("empty range", () => {
+        const emptyRange: IDateRange = { from: undefined, to: undefined };
+        const getDateInput = (position: "from" | "to") =>
+            document.querySelector(`.s-date-range-picker-${position} .s-date-range-picker-input-field`)!;
+        const getTimeInput = (position: "from" | "to") =>
+            document.querySelector(
+                `.s-date-range-picker-${position} .s-date-range-picker-input-time .input-text`,
+            );
+
+        it("should report the entered dates", () => {
+            const onRangeChange = vi.fn();
+            renderComponent({ range: emptyRange, onRangeChange });
+            writeToInput("05/01/2019", getDateInput("from"));
+            writeToInput("05/15/2019", getDateInput("to"));
+
+            expect(onRangeChange).toHaveBeenLastCalledWith({
+                from: new Date(2019, 4, 1),
+                to: new Date(2019, 4, 15, 23, 59),
+            });
+        });
+
+        // jsdom drops zero seconds from the value of a time input.
+        it.each([
+            [false, "00:00", "23:59", 0],
+            [true, "00:00", "23:59:59", 59],
+        ])(
+            "should start at the edges of the day with isSecondsEnabled=%s",
+            (isSecondsEnabled, startTime, endTime, endSeconds) => {
+                const onRangeChange = vi.fn();
+                renderComponent({ range: emptyRange, onRangeChange, isTimeEnabled: true, isSecondsEnabled });
+
+                expect(getTimeInput("from")).toHaveValue(startTime);
+                expect(getTimeInput("to")).toHaveValue(endTime);
+
+                writeToInput("05/01/2019", getDateInput("from"));
+                writeToInput("05/15/2019", getDateInput("to"));
+
+                expect(onRangeChange).toHaveBeenLastCalledWith({
+                    from: new Date(2019, 4, 1, 0, 0, 0),
+                    to: new Date(2019, 4, 15, 23, 59, endSeconds),
+                });
+            },
+        );
+    });
+
     describe("time enabled", () => {
         it("should call the appropriate callback when FROM time configured to 11", () => {
             const onRangeChange = vi.fn();

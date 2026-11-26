@@ -12,7 +12,7 @@ import {
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
-    isDashboardCommonDateFilter,
+    isDashboardCommonDateFilterOfAnyType,
     isDashboardMatchAttributeFilter,
     isNoopAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
@@ -26,6 +26,7 @@ import {
     applyMirroredFilterValue,
     findCounterpartFilter,
     targetAcceptsAttributeFilterValue,
+    withCommonDateFilterLocalIdentifier,
 } from "../../../store/tabs/filterContext/filterSync.js";
 import { type ITabState } from "../../../store/tabs/tabsState.js";
 
@@ -121,12 +122,12 @@ function applyCommonDateOverride(
     overrideFilters: readonly FilterContextItem[],
     dateFilterConfig: IDashboardDateFilterConfig | undefined,
 ): FilterContextItem[] {
-    const incoming = overrideFilters.find(isDashboardCommonDateFilter);
+    const incoming = overrideFilters.find(isDashboardCommonDateFilterOfAnyType);
     if (!incoming || isDateFilterLocked(dateFilterConfig)) {
         return mergedFilters;
     }
 
-    const current = mergedFilters.find(isDashboardCommonDateFilter);
+    const current = mergedFilters.find(isDashboardCommonDateFilterOfAnyType);
     if (current) {
         return mergedFilters.map((filter) =>
             filter === current ? applyMirroredFilterValue(incoming, current) : filter,
@@ -158,8 +159,8 @@ function retargetOverrideFilters(
     const targetFilters = filtersOf(target);
 
     return overrideFilters.flatMap((override): FilterContextItem[] => {
-        if (isDashboardCommonDateFilter(override)) {
-            const targetDate = targetFilters.find(isDashboardCommonDateFilter);
+        if (isDashboardCommonDateFilterOfAnyType(override)) {
+            const targetDate = targetFilters.find(isDashboardCommonDateFilterOfAnyType);
             if (targetDate) {
                 return [applyMirroredFilterValue(override, targetDate)];
             }
@@ -167,8 +168,7 @@ function retargetOverrideFilters(
                 return [];
             }
             // The target is all time, so it has no local identifier to keep.
-            const { localIdentifier: _localIdentifier, ...dateFilter } = override.dateFilter;
-            return [{ dateFilter }];
+            return [withCommonDateFilterLocalIdentifier(override, undefined)];
         }
 
         const counterpart = findCounterpartFilter(

@@ -10,8 +10,9 @@ import {
     removeDateFilter,
     removeMeasureValueFilter,
 } from "../../model/commands/filters.js";
-import { useDashboardDispatch } from "../../model/react/DashboardStoreProvider.js";
-import { tabsActions } from "../../model/store/tabs/index.js";
+import { removeParameters } from "../../model/commands/parameters.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectActiveOrDefaultTabLocalIdentifier } from "../../model/store/tabs/tabsSelectors.js";
 
 import {
     isAttributeFilterDraggableItem,
@@ -28,6 +29,7 @@ import { useDashboardDrop } from "./useDashboardDrop.js";
  */
 export function useFilterDeleteDrop() {
     const dispatch = useDashboardDispatch();
+    const tabLocalIdentifier = useDashboardSelector(selectActiveOrDefaultTabLocalIdentifier);
     return useDashboardDrop(
         ["attributeFilter", "dateFilter", "parameter", "measureValueFilter"],
         {
@@ -42,10 +44,10 @@ export function useFilterDeleteDrop() {
                     const identifier = dashboardFilterLocalIdentifier(item.filter)!;
                     dispatch(removeMeasureValueFilter(identifier));
                 } else if (isParameterDraggableItem(item)) {
-                    dispatch(tabsActions.removeParameter({ ref: item.ref }));
+                    dispatch(removeParameters([item.ref], tabLocalIdentifier));
                 }
             },
         },
-        [dispatch],
+        [dispatch, tabLocalIdentifier],
     );
 }

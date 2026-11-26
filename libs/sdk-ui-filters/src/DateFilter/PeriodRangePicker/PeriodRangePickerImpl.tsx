@@ -43,7 +43,8 @@ import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { DEFAULT_DATE_FORMAT, platformDateFnsFormat } from "../constants/Platform.js";
 import { InputErrorMessage } from "../DateRangePicker/InputErrorMessage.js";
 import { formatAbsoluteDateRange } from "../utils/FormattingUtils.js";
-import { resolvePeriodBoundaries, resolvePeriodBoundary } from "../utils/StaticPeriodConversions.js";
+import { dateToPeriodLiteral, periodLiteralToFirstDate } from "../utils/periodLiterals.js";
+import { type StaticPeriodGranularity, resolvePeriodBoundary } from "../utils/StaticPeriodConversions.js";
 import { getWeekStartDateFnsLocale, resolveWeekStartLocale } from "../utils/weekStartDateFnsLocale.js";
 
 import { AccessibleFieldInput } from "./AccessibleFieldInput.js";
@@ -120,7 +121,7 @@ const GRANULARITY_TO_FIELD_FORMATS: Record<
     Exclude<PeriodRangePickerGranularity, "GDC.time.date">,
     string[]
 > = {
-    "GDC.time.week_us": [DATE_FNS_PICKER_FORMATS.fieldWeekFormat, "ww/YYYY"],
+    "GDC.time.week": [DATE_FNS_PICKER_FORMATS.fieldWeekFormat, "ww/YYYY"],
     "GDC.time.month": [DATE_FNS_PICKER_FORMATS.fieldMonthFormat, "MM/yyyy"],
     "GDC.time.quarter": [DATE_FNS_PICKER_FORMATS.fieldQuarterFormat, "Q/yyyy"],
     "GDC.time.year": [DATE_FNS_PICKER_FORMATS.fieldYearFormat],
@@ -134,7 +135,7 @@ const GRANULARITY_TO_DISPLAY_FORMAT: Record<
     Exclude<PeriodRangePickerGranularity, "GDC.time.date">,
     string
 > = {
-    "GDC.time.week_us": "W/YYYY",
+    "GDC.time.week": "W/YYYY",
     "GDC.time.month": "M/YYYY",
     "GDC.time.quarter": "Q/YYYY",
     "GDC.time.year": "YYYY",
@@ -207,7 +208,7 @@ const GRANULARITY_TO_PICKER_MODE: Record<
     "date" | "week" | "month" | "quarter" | "year"
 > = {
     "GDC.time.date": "date",
-    "GDC.time.week_us": "week",
+    "GDC.time.week": "week",
     "GDC.time.month": "month",
     "GDC.time.quarter": "quarter",
     "GDC.time.year": "year",
@@ -232,15 +233,28 @@ const GRANULARITY_TO_FIELD_LABELS: Record<
     Record<PeriodRangeSide, MessageDescriptor>
 > = {
     "GDC.time.date": { start: fieldLabelMessages.dateFrom, end: fieldLabelMessages.dateTo },
-    "GDC.time.week_us": { start: fieldLabelMessages.weekFrom, end: fieldLabelMessages.weekTo },
+    "GDC.time.week": { start: fieldLabelMessages.weekFrom, end: fieldLabelMessages.weekTo },
     "GDC.time.month": { start: fieldLabelMessages.monthFrom, end: fieldLabelMessages.monthTo },
     "GDC.time.quarter": { start: fieldLabelMessages.quarterFrom, end: fieldLabelMessages.quarterTo },
     "GDC.time.year": { start: fieldLabelMessages.yearFrom, end: fieldLabelMessages.yearTo },
 };
 
-function parsePeriodBoundary(value: string | undefined): Date | null {
+type WeekStartSetting = NonNullable<IPeriodRangePickerProps["weekStart"]>;
+
+// The day boundaries are resolved with the week of the configured week start.
+const toStaticPeriodGranularity = (granularity: PeriodRangePickerGranularity): StaticPeriodGranularity =>
+    granularity === "GDC.time.week" ? "GDC.time.week_us" : granularity;
+
+function parsePeriodBoundary(
+    value: string | undefined,
+    granularity: PeriodRangePickerGranularity,
+    weekStart: WeekStartSetting,
+): Date | null {
     if (!value) {
         return null;
+    }
+    if (granularity !== "GDC.time.date") {
+        return periodLiteralToFirstDate(granularity, value, weekStart) ?? null;
     }
     const date = parse(value, platformDateFnsFormat, new Date());
     // date-fns returns an Invalid Date rather than throwing; handing that to rc-picker renders a
@@ -257,44 +271,47 @@ function parsePeriodBoundary(value: string | undefined): Date | null {
  * its `EMPTY_VALUE` and `useCalendarValue`'s effect then resets the rendered calendar value to `[]`.
  * A `[Date, null]` tuple is kept verbatim and clears only the field whose entry is `null`.
  */
-function parseRangeValue(range: IPeriodRange): [Date | null, Date | null] {
-    return [parsePeriodBoundary(range.from), parsePeriodBoundary(range.to)];
-}
-
-/**
- * Resolves the picker's raw selected [start, end] into the exact day-level range this component reports.
- *
- * @remarks
- * rc-picker's month/quarter/year panels hand back a start-of-unit anchor for BOTH ends of the range, so the end
- * anchor still needs expanding to the last day of its period. `resolvePeriodBoundaries` already accepts "any date
- * within the period" for either bound, so a start-of-unit anchor works as input either way. Day needs no expansion,
- * and `resolvePeriodBoundaries` handles it as a no-op period (start/end of day), so it's routed through uniformly.
- */
-export function resolveSelectedRange(
+function parseRangeValue(
+    range: IPeriodRange,
     granularity: PeriodRangePickerGranularity,
-    start: Date,
-    end: Date,
-    weekStart: NonNullable<IPeriodRangePickerProps["weekStart"]>,
-): IPeriodRange {
-    return resolvePeriodBoundaries(
-        granularity,
-        format(start, platformDateFnsFormat),
-        format(end, platformDateFnsFormat),
-        weekStart,
-    );
+    weekStart: WeekStartSetting,
+): [Date | null, Date | null] {
+    return [
+        parsePeriodBoundary(range.from, granularity, weekStart),
+        parsePeriodBoundary(range.to, granularity, weekStart),
+    ];
 }
 
 /**
- * Single-sided counterpart to {@link resolveSelectedRange}, used by the blur handler which commits
- * one field at a time.
+ * Expands a picked date to the first or last day of its period.
  */
 export function resolveSelectedBoundary(
     granularity: PeriodRangePickerGranularity,
     date: Date,
     side: PeriodRangeSide,
-    weekStart: NonNullable<IPeriodRangePickerProps["weekStart"]>,
+    weekStart: WeekStartSetting,
 ): string {
-    return resolvePeriodBoundary(granularity, format(date, platformDateFnsFormat), side, weekStart);
+    return resolvePeriodBoundary(
+        toStaticPeriodGranularity(granularity),
+        format(date, platformDateFnsFormat),
+        side,
+        weekStart,
+    );
+}
+
+/**
+ * The value the picker reports for one side: the day for the "GDC.time.date" granularity, the period literal
+ * for the others.
+ */
+function toRangeEdge(
+    granularity: PeriodRangePickerGranularity,
+    date: Date,
+    side: PeriodRangeSide,
+    weekStart: WeekStartSetting,
+): string {
+    return granularity === "GDC.time.date"
+        ? resolveSelectedBoundary(granularity, date, side, weekStart)
+        : dateToPeriodLiteral(granularity, date, weekStart);
 }
 
 /**
@@ -305,7 +322,7 @@ function isPeriodOrderReversed(
     granularity: PeriodRangePickerGranularity,
     start: Date,
     end: Date,
-    weekStart: NonNullable<IPeriodRangePickerProps["weekStart"]>,
+    weekStart: WeekStartSetting,
 ): boolean {
     return (
         resolveSelectedBoundary(granularity, start, "start", weekStart) >
@@ -315,7 +332,7 @@ function isPeriodOrderReversed(
 
 /**
  * A grid picker for selecting a Week/Month/Quarter/Year period range. Renders the rc-picker panel matching
- * {@link IPeriodRangePickerProps.granularity} and reports the resolved day-level range via `onRangeChange`.
+ * {@link IPeriodRangePickerProps.granularity} and reports the selected range via `onRangeChange`.
  *
  * @remarks
  * Loaded lazily by `PeriodRangePicker`, which is the public entry point - this module has to stay out of the
@@ -345,7 +362,10 @@ export function PeriodRangePickerImpl({
     const inputIds = useMemo(() => ({ start: startInputId, end: endInputId }), [startInputId, endInputId]);
 
     const pickerMode = GRANULARITY_TO_PICKER_MODE[granularity];
-    const value = useMemo(() => parseRangeValue({ from: range.from, to: range.to }), [range.from, range.to]);
+    const value = useMemo(
+        () => parseRangeValue({ from: range.from, to: range.to }, granularity, weekStart),
+        [range.from, range.to, granularity, weekStart],
+    );
 
     // Enter is handled in a DOM event handler several component layers down (AccessibleFieldInput),
     // and blur fires before the state from the last keystroke has been re-rendered here. Both need
@@ -457,7 +477,7 @@ export function PeriodRangePickerImpl({
             const date = liveValueRef.current[side === "start" ? 0 : 1];
             return raw.hasParseError || raw.isBlank || !date
                 ? undefined
-                : resolveSelectedBoundary(granularity, date, side, weekStart);
+                : toRangeEdge(granularity, date, side, weekStart);
         },
         [granularity, weekStart],
     );
@@ -704,7 +724,7 @@ export function PeriodRangePickerImpl({
     // locale's own defaults for them (see weekStartDateFnsLocale.ts); Month/Quarter/Year need no override.
     const locale = useMemo((): PickerLocale => {
         const baseLocale = getPickerLocale(intl.locale as ILocale);
-        if (granularity !== "GDC.time.date" && granularity !== "GDC.time.week_us") {
+        if (granularity !== "GDC.time.date" && granularity !== "GDC.time.week") {
             return baseLocale;
         }
         return dateFormat && granularity === "GDC.time.date"
@@ -727,7 +747,10 @@ export function PeriodRangePickerImpl({
                 // to, would discard the value blur had just committed.
                 return;
             }
-            onRangeChange(resolveSelectedRange(granularity, dates[0], dates[1], weekStart));
+            onRangeChange({
+                from: toRangeEdge(granularity, dates[0], "start", weekStart),
+                to: toRangeEdge(granularity, dates[1], "end", weekStart),
+            });
         },
         [granularity, weekStart, onRangeChange],
     );

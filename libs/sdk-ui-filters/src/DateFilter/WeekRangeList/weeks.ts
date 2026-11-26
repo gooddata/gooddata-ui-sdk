@@ -16,6 +16,11 @@ import { type DateString, type WeekStart } from "@gooddata/sdk-model";
 import { platformDateFnsFormat } from "../constants/Platform.js";
 import { parseDate } from "../DateRangePicker/utils.js";
 import { type IPeriodRange } from "../PeriodRangePicker/types.js";
+import {
+    dayToPeriodLiteral,
+    periodLiteralToFirstDay,
+    periodLiteralToLastDay,
+} from "../utils/periodLiterals.js";
 
 const MONTH_FORMAT = "yyyy-MM";
 const WINDOW_YEARS = 2;
@@ -144,7 +149,7 @@ export function createWeekWindow(days: [DateString, ...DateString[]]): IWeekWind
 }
 
 /**
- * The window the list opens with: around the stored range, around its `from` alone when that would span
+ * The window the list opens with, from a range of days: around the stored range, around its `from` alone when that would span
  * more than ten years, and around today without a stored `from`.
  */
 export function createOpeningWeekWindow({ from, to }: IPeriodRange, today: DateString): IWeekWindow {
@@ -160,7 +165,7 @@ export function createOpeningWeekWindow({ from, to }: IPeriodRange, today: DateS
 }
 
 /**
- * The day whose week the list centres on open: the stored `from`, or today without one.
+ * The day whose week the list centres on open, from a range of days: the stored `from`, or today without one.
  */
 export function getOpeningDay({ from }: IPeriodRange, today: DateString): DateString {
     return clampDay(readDay(from) ?? today);
@@ -265,28 +270,44 @@ export function selectWeek(selection: IWeekSelection | undefined, week: IWeek): 
         : { from: anchor.start, to: week.end };
 }
 
-export function weekSelectionToPeriodRange({ from, to }: IWeekSelection): IPeriodRange {
-    return { from, to };
+/**
+ * The weeks of the selection as week literals.
+ */
+export function weekSelectionToPeriodRange({ from, to }: IWeekSelection, weekStart: WeekStart): IPeriodRange {
+    return {
+        from: dayToPeriodLiteral("GDC.time.week", from, weekStart),
+        to: dayToPeriodLiteral("GDC.time.week", to, weekStart),
+    };
 }
 
 /**
- * The closed selection of a stored range, or none when the range is not whole weeks by the week start or
- * its first or last week is not listed.
+ * The first day of the first week and the last day of the last week of a range of week literals.
+ */
+export function weekLiteralsToDays({ from, to }: IPeriodRange, weekStart: WeekStart): IPeriodRange {
+    return {
+        from: periodLiteralToFirstDay("GDC.time.week", from, weekStart),
+        to: periodLiteralToLastDay("GDC.time.week", to, weekStart),
+    };
+}
+
+/**
+ * The closed selection of a stored range of week literals, or none when the range has not both weeks, they
+ * are not valid or not in order, or its first or last week is not listed.
  */
 export function periodRangeToWeekSelection(
-    { from, to }: IPeriodRange,
+    range: IPeriodRange,
     weekStart: WeekStart,
 ): IWeekSelection | undefined {
-    if (!from || !to || !isValid(parseDay(from)) || !isValid(parseDay(to))) {
+    const { from: firstDay, to: lastDay } = weekLiteralsToDays(range, weekStart);
+    if (!firstDay || !lastDay || firstDay > lastDay) {
         return undefined;
     }
 
-    const isWholeWeeks =
-        from <= to && getWeek(from, weekStart).start === from && getWeek(to, weekStart).end === to;
     const isListed =
-        from >= getWeek(FIRST_LISTED_DAY, weekStart).start && to <= getWeek(LAST_LISTED_DAY, weekStart).end;
+        firstDay >= getWeek(FIRST_LISTED_DAY, weekStart).start &&
+        lastDay <= getWeek(LAST_LISTED_DAY, weekStart).end;
 
-    return isWholeWeeks && isListed ? { from, to } : undefined;
+    return isListed ? { from: firstDay, to: lastDay } : undefined;
 }
 
 type DateTimeFormatKind = "weekLabel" | "weekName" | "monthHeading";

@@ -4,27 +4,32 @@ import { type ReactNode, type RefObject } from "react";
 
 import { type DayPickerProps } from "react-day-picker";
 
-import {
-    DEFAULT_ABSOLUTE_DATE_FILTER_GRANULARITIES,
-    type DateFilterGranularity,
-    type WeekStart,
-} from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type WeekStart } from "@gooddata/sdk-model";
 import { type IAccessibilityConfigBase } from "@gooddata/sdk-ui-kit";
 
 import { DATE_FILTER_ABSOLUTE_GRANULARITY_TAB_ID } from "../accessibility/elementId.js";
 import { DateRangePicker } from "../DateRangePicker/DateRangePicker.js";
 import { type IDateRange } from "../DateRangePicker/types.js";
 import { GranularityTabs } from "../GranularityTabs.js";
-import { type DateFilterOption, type IUiAbsoluteDateFilterForm } from "../interfaces/index.js";
+import {
+    type DateFilterOption,
+    type IUiAbsoluteDateFilterForm,
+    isUiAbsoluteGranularityDateFilterForm,
+} from "../interfaces/index.js";
 import { PeriodRangePicker } from "../PeriodRangePicker/PeriodRangePicker.js";
-import { type IPeriodRange, type PeriodRangePickerGranularity } from "../PeriodRangePicker/types.js";
+import { type IPeriodRange } from "../PeriodRangePicker/types.js";
 import { WeekRangeList } from "../WeekRangeList/WeekRangeList.js";
 
 import {
+    type AbsoluteFormOption,
     dateFilterValueToDateRange,
     dateFilterValueToPeriodRange,
     dateRangeToDateFilterValue,
+    getAbsoluteFormTab,
+    periodRangeToAbsoluteGranularityForm,
     periodRangeToDateFilterValue,
+    switchAbsoluteFormTab,
+    tabToDatePeriodGranularity,
 } from "./conversions.js";
 
 /**
@@ -42,7 +47,7 @@ export interface IAbsoluteDateFilterFormAccessibilityConfig extends IAccessibili
  */
 export interface IAbsoluteDateFilterFormProps {
     dateFormat: string;
-    selectedFilterOption: IUiAbsoluteDateFilterForm;
+    selectedFilterOption: AbsoluteFormOption;
     isMobile: boolean;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     isTimeEnabled: boolean;
@@ -63,7 +68,7 @@ export interface IAbsoluteDateFilterFormProps {
      * @remarks
      * When false (the default), this component renders without the granularity tabs - regardless of
      * what `availableGranularities` is set to, or what `granularity` flows in through
-     * `selectedFilterOption`.
+     * `selectedFilterOption`. An option of whole periods is then not shown and the day picker stays empty.
      */
     isGranularityEnabled?: boolean;
     /**
@@ -86,10 +91,7 @@ const dayPickerProps: DayPickerProps = {
     weekStartsOn: 0, // Sunday, regardless of locale
 };
 
-const isPeriodPickerGranularity = (
-    granularity: DateFilterGranularity,
-): granularity is PeriodRangePickerGranularity =>
-    DEFAULT_ABSOLUTE_DATE_FILTER_GRANULARITIES.includes(granularity);
+const EMPTY_DATE_RANGE: IDateRange = { from: undefined, to: undefined };
 
 /**
  * @internal
@@ -112,50 +114,70 @@ export function AbsoluteDateFilterForm({
     accessibilityConfig,
     granularityTabsRef,
 }: IAbsoluteDateFilterFormProps) {
-    const selectedGranularity = selectedFilterOption.granularity ?? availableGranularities[0];
+    const selectedGranularity = getAbsoluteFormTab(selectedFilterOption);
+    const periodGranularity = tabToDatePeriodGranularity(selectedGranularity);
     const showGranularityTabs = isGranularityEnabled && availableGranularities.length > 0;
+    const isPeriodOption = isUiAbsoluteGranularityDateFilterForm(selectedFilterOption);
+
+    // A range replacing whole periods keeps their name and visibility, so the option matches the configured one.
+    const withPeriodIdentity = <T extends AbsoluteFormOption>(option: T): T => ({
+        ...option,
+        ...(selectedFilterOption.name === undefined ? {} : { name: selectedFilterOption.name }),
+        visible: selectedFilterOption.visible,
+    });
+
+    const toDayOption = (days: IUiAbsoluteDateFilterForm): IUiAbsoluteDateFilterForm =>
+        isPeriodOption ? withPeriodIdentity(days) : { ...selectedFilterOption, ...days };
 
     const handleRangeChange = (range: IDateRange): void => {
-        onSelectedFilterOptionChange({
-            ...selectedFilterOption,
-            ...dateRangeToDateFilterValue(
-                range,
-                selectedFilterOption.localIdentifier,
-                isTimeEnabled,
-                selectedFilterOption.emptyValueHandling,
-                isSecondsEnabled,
+        onSelectedFilterOptionChange(
+            toDayOption(
+                dateRangeToDateFilterValue(
+                    range,
+                    selectedFilterOption.localIdentifier,
+                    isTimeEnabled,
+                    selectedFilterOption.emptyValueHandling,
+                    isSecondsEnabled,
+                ),
             ),
-        });
+        );
     };
 
     const handlePeriodRangeChange = (range: IPeriodRange): void => {
-        onSelectedFilterOptionChange({
-            ...selectedFilterOption,
-            ...periodRangeToDateFilterValue({
-                range,
-                localIdentifier: selectedFilterOption.localIdentifier,
-                isTimeForAbsoluteRangeEnabled: isTimeEnabled,
-                granularity: selectedGranularity,
-                emptyValueHandling: selectedFilterOption.emptyValueHandling,
-                isSecondsForAbsoluteRangeEnabled: isSecondsEnabled,
-            }),
-        });
+        onSelectedFilterOptionChange(
+            periodGranularity
+                ? withPeriodIdentity(
+                      periodRangeToAbsoluteGranularityForm(
+                          range,
+                          periodGranularity,
+                          selectedFilterOption.localIdentifier,
+                          selectedFilterOption.emptyValueHandling,
+                      ),
+                  )
+                : toDayOption(
+                      periodRangeToDateFilterValue({
+                          range,
+                          localIdentifier: selectedFilterOption.localIdentifier,
+                          isTimeForAbsoluteRangeEnabled: isTimeEnabled,
+                          emptyValueHandling: selectedFilterOption.emptyValueHandling,
+                          isSecondsForAbsoluteRangeEnabled: isSecondsEnabled,
+                      }),
+                  ),
+        );
     };
 
     const handleGranularityChange = (granularity: DateFilterGranularity): void => {
-        onSelectedFilterOptionChange({
-            ...selectedFilterOption,
-            ...(selectedGranularity === granularity ? {} : { from: undefined, to: undefined }),
-            granularity,
-        });
+        if (granularity !== selectedGranularity) {
+            onSelectedFilterOptionChange(switchAbsoluteFormTab(selectedFilterOption, granularity));
+        }
     };
 
     // TODO MC-5322: time granularity is not supported in the new picker yet - the hour/minute/second can't be
     // modified, so the selected range always spans the whole day (00:00-23:59[:59] once time is enabled).
     // This will be added as part of MC-5322.
-    const isPeriodPicker = showGranularityTabs && isPeriodPickerGranularity(selectedGranularity);
+    const isPeriodPicker = isGranularityEnabled && (showGranularityTabs || isPeriodOption);
     const picker =
-        isPeriodPicker && selectedGranularity === "GDC.time.week_us" ? (
+        isPeriodPicker && periodGranularity === "GDC.time.week" ? (
             <WeekRangeList
                 range={dateFilterValueToPeriodRange(selectedFilterOption)}
                 onRangeChange={handlePeriodRangeChange}
@@ -170,7 +192,7 @@ export function AbsoluteDateFilterForm({
         ) : isPeriodPicker ? (
             <PeriodRangePicker
                 key={selectedGranularity}
-                granularity={selectedGranularity}
+                granularity={periodGranularity ?? "GDC.time.date"}
                 range={dateFilterValueToPeriodRange(selectedFilterOption)}
                 onRangeChange={handlePeriodRangeChange}
                 isMobile={isMobile}
@@ -185,7 +207,11 @@ export function AbsoluteDateFilterForm({
             <DateRangePicker
                 dateFormat={dateFormat}
                 onRangeChange={handleRangeChange}
-                range={dateFilterValueToDateRange(selectedFilterOption, isTimeEnabled, isSecondsEnabled)}
+                range={
+                    isPeriodOption
+                        ? EMPTY_DATE_RANGE
+                        : dateFilterValueToDateRange(selectedFilterOption, isTimeEnabled, isSecondsEnabled)
+                }
                 isMobile={isMobile}
                 dayPickerProps={dayPickerProps}
                 isTimeEnabled={isTimeEnabled}

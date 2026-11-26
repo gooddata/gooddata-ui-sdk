@@ -7,9 +7,13 @@ api_symbols:
   - "@gooddata/sdk-ui-gen-ai:GenAIAssistant"
   - "@gooddata/sdk-ui-gen-ai:IGenAIAssistantSendButtonProps"
   - "@gooddata/sdk-ui-gen-ai:DefaultSendButton"
+  - "@gooddata/sdk-ui-gen-ai:IGenAIAssistantConversationVisualisationProps"
+  - "@gooddata/sdk-ui-gen-ai:DefaultConversationVisualizationBody"
 source_files:
   - src/components/customized/types.ts
   - src/components/customized/SendButton.tsx
+  - src/components/customized/ConversationVisualizationBody.tsx
+  - src/components/messages/conversationContents/ConversationVisualizationContent.tsx
   - src/components/GenAIChat.tsx
   - src/components/GenAIStandaloneInput.tsx
 related_pages:
@@ -529,6 +533,7 @@ For granular control over message rendering, you can customize specific content 
 - `MessageReasoningContent`: Customizes the rendering of the assistant's reasoning or thought process.
 - `MessageMultipartContent`: Customizes the rendering of complex messages containing multiple parts.
 - `ConversationVisualizationContent`: Customizes rendering and menu actions of visualization parts in multipart content.
+- `ConversationVisualizationBody`: Replaces only the chart body while preserving the surrounding visualization controls (`@alpha`).
 - `ConversationKdaContent`: Customizes rendering of Key Driver Analysis parts in multipart content (`@alpha`).
 
 Default components you can reuse:
@@ -538,6 +543,7 @@ Default components you can reuse:
 - `DefaultMessageReasoningContent`
 - `DefaultMessageMultipartContent`
 - `DefaultConversationVisualizationContent`
+- `DefaultConversationVisualizationBody`
 - `DefaultConversationKdaContent`
 
 The slots get these props in `defaultProps`:
@@ -547,6 +553,7 @@ The slots get these props in `defaultProps`:
 - `MessageReasoningContent`: the reasoning `summary`, the referenced `objects`, optional `durationMs` (`number`), optional `agent` (`{ id: string; name?: string }`), and `isLoading`.
 - `MessageMultipartContent`: the `message`, its `parts` (text, visualization, dashboard, and so on), the shared `references`, and `isLast`.
 - `ConversationVisualizationContent`: the `message`, the `part`, the `visualization` to render, an optional what-if `scenario`, `className`, `menuItems`, and `enableKeyDriverAnalysis` (alpha), which turns explain on charts on or off. It defaults to whether `GenAiKeyDriverAnalysis` is mounted and the workspace setting is on.
+- `ConversationVisualizationBody`: the `message`, the `visualization`, `isTable`, rendering configuration, feature flags, and rendering and drilling callbacks. See [Customize the visualization body](#customize-the-visualization-body).
 - `ConversationKdaContent`: the `kda` definition, `className`, and `enableKeyDriverAnalysis`, with the same default.
 
 `durationMs` is the reasoning-group duration in milliseconds, matching the built-in reasoning header. It is the absolute difference between the last message's `createdAt` timestamp in the reasoning group and the last message's timestamp in the preceding group. It includes tool activity grouped with reasoning, but excludes answer generation; it is not the total response duration or a measurement of reasoning-text streaming alone.
@@ -640,6 +647,54 @@ export const App = () => (
     />
 );
 ```
+
+## Customize the visualization body
+
+Use `slots.ConversationVisualizationBody` (`@alpha`) when you only need to replace the chart rendering, for example to show headlines as your application's KPI cards. Unlike replacing the whole `ConversationVisualizationContent`, this keeps the SDK wrapper, title, visualization menu, **Show as table** toggle, save dialog, and error boundary. You do not need to recreate the menu handlers or hide the SDK chart with CSS.
+
+When **Show as table** is active (`isTable` is `true`), the SDK always uses its default renderer and does not render the custom body slot. Table rendering cannot be customized through this slot. Switching back to the chart restores the custom body.
+
+The slot follows the same `Default` / `defaultProps` contract. This example replaces headlines but delegates other chart types to the SDK:
+
+```tsx
+import {
+    GenAIAssistant,
+    type IGenAIAssistantConversationVisualisationProps,
+} from "@gooddata/sdk-ui-gen-ai";
+import { type ISlotProps } from "@gooddata/sdk-ui-kit";
+
+import { HostHeadline } from "./HostHeadline";
+
+const CustomVisualizationBody = ({
+    Default,
+    defaultProps,
+}: ISlotProps<IGenAIAssistantConversationVisualisationProps>) => {
+    if (defaultProps.visualization.insight.visualizationUrl === "local:headline") {
+        return <HostHeadline {...defaultProps} />;
+    }
+
+    return <Default {...defaultProps} />;
+};
+
+export const App = () => (
+    <GenAIAssistant
+        slots={{
+            ConversationVisualizationBody: CustomVisualizationBody,
+        }}
+    />
+);
+```
+
+`HostHeadline` is your application's renderer accepting `IGenAIAssistantConversationVisualisationProps`. In chart mode, the SDK chart renderer is not mounted and does not run its visualization query unless the slot renders `Default`. In table mode, the SDK automatically mounts its default renderer instead of the slot. Omitting the slot preserves the default SDK rendering. `DefaultConversationVisualizationBody` is also exported for reuse.
+
+The body receives the following in `defaultProps`:
+
+- `message` and `visualization`: the conversation message and the original visualization payload, including its `insight`.
+- `isTable`: the state of the surrounding table toggle. The custom slot is only rendered when this is `false`; table mode always uses the default SDK renderer.
+- `colorPalette`, `separators`, `settings`, `agGridToken`, and `execConfig`: rendering configuration. `execConfig` includes any what-if scenario overrides.
+- `enableDrilling`, `enableChangeAnalysis`, `enableSecondGranularities`, and `enableAccessibleChartTooltip`: flags controlling rendering features.
+- `onVisualisationError` and `onVisualisationSuccess`: call these when your renderer fails or succeeds to keep the surrounding error report and menu state synchronized.
+- `onDrillFired`: call this with `{ keyDriverData, event }` when your renderer provides Key Driver Analysis drill options, or with `null` to clear them. Honor `enableDrilling` when implementing custom drilling.
 
 ## Customize the visualization menu
 

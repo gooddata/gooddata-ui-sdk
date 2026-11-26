@@ -4,7 +4,16 @@ import { type ReactNode, useState } from "react";
 
 import { FormattedMessage, type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
-import { type IInsight, type ObjRef, insightRef, insightTitle, serializeObjRef } from "@gooddata/sdk-model";
+import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    type IInsight,
+    type IMetadataObject,
+    type ObjRef,
+    insightRef,
+    insightTitle,
+    objRefToString,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog, LoadingSpinner, Message, useToastMessage } from "@gooddata/sdk-ui-kit";
 
@@ -14,6 +23,7 @@ import { useDashboardCommandProcessing } from "../../../../model/react/useDashbo
 import { selectAccessibleDashboardsMap } from "../../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectIsInsightUsedByDashboard } from "../../../../model/store/insights/insightUsageSelectors.js";
 import { selectDashboardId } from "../../../../model/store/meta/metaSelectors.js";
+import { selectPermissions } from "../../../../model/store/permissions/permissionsSelectors.js";
 
 const messages = defineMessages({
     headline: { id: "deleteInsightDialog.headline" },
@@ -33,6 +43,8 @@ const messages = defineMessages({
     showLess: { id: "deleteInsightDialog.usage.showLess" },
     inaccessibleDashboards: { id: "deleteInsightDialog.inaccessibleDashboards" },
     inaccessibleDashboardsOnly: { id: "deleteInsightDialog.inaccessibleDashboardsOnly" },
+    inaccessibleDocuments: { id: "deleteInsightDialog.inaccessibleDocuments" },
+    inaccessibleDocumentsOnly: { id: "deleteInsightDialog.inaccessibleDocumentsOnly" },
     usedOnThisDashboard: { id: "deleteInsightDialog.usedOnThisDashboard" },
     success: { id: "deleteInsightDialog.success" },
     error: { id: "deleteInsightDialog.error" },
@@ -52,10 +64,18 @@ export interface IDeleteInsightDialogProps {
 interface IUsageWarningProps {
     usage: MessageDescriptor;
     titles: string[];
-    inaccessibleCount?: number;
+    inaccessibleCount: number;
+    inaccessible: MessageDescriptor;
+    inaccessibleOnly: MessageDescriptor;
 }
 
-function UsageWarning({ usage, titles, inaccessibleCount = 0 }: IUsageWarningProps) {
+function UsageWarning({
+    usage,
+    titles,
+    inaccessibleCount,
+    inaccessible,
+    inaccessibleOnly,
+}: IUsageWarningProps) {
     const intl = useIntl();
     const [isExpanded, setIsExpanded] = useState(false);
     const count = titles.length + inaccessibleCount;
@@ -87,9 +107,7 @@ function UsageWarning({ usage, titles, inaccessibleCount = 0 }: IUsageWarningPro
                     {inaccessibleCount > 0 ? (
                         <p className="gd-delete-insight-dialog__usage-inaccessible s-delete-insight-dialog-inaccessible">
                             <FormattedMessage
-                                {...(titles.length > 0
-                                    ? messages.inaccessibleDashboards
-                                    : messages.inaccessibleDashboardsOnly)}
+                                {...(titles.length > 0 ? inaccessible : inaccessibleOnly)}
                                 values={{ count: inaccessibleCount, strong }}
                             />
                         </p>
@@ -98,6 +116,44 @@ function UsageWarning({ usage, titles, inaccessibleCount = 0 }: IUsageWarningPro
             ) : null}
         </Message>
     );
+}
+
+async function loadAccessibleDocumentIds(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    documentIds: string[],
+): Promise<string[]> {
+    try {
+        const result = await backend
+            .workspace(workspace)
+            .publisherV2()
+            .getDocumentsQuery()
+            .withFilter({ id: documentIds })
+            .withSize(documentIds.length)
+            .query();
+        return result.items.map((document) => objRefToString(document.ref));
+    } catch {
+        return [];
+    }
+}
+
+/**
+ * The documents the user may open: all of them when the user may create documents, otherwise the ones the
+ * backend returns. When they cannot be loaded, none count as open, so no document the user may not see is named.
+ * Templates are visible to every user.
+ */
+async function loadVisibleDocuments(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    documents: IMetadataObject[],
+    canCreateDocument: boolean,
+): Promise<IMetadataObject[]> {
+    const documentIds = documents.filter(({ type }) => type === "document").map(({ id }) => id);
+    if (documentIds.length === 0 || canCreateDocument) {
+        return documents;
+    }
+    const accessibleIds = await loadAccessibleDocumentIds(backend, workspace, documentIds);
+    return documents.filter(({ id, type }) => type !== "document" || accessibleIds.includes(id));
 }
 
 export function DeleteInsightDialog({ insight, onClose, onDeleted }: IDeleteInsightDialogProps) {
@@ -110,19 +166,30 @@ export function DeleteInsightDialog({ insight, onClose, onDeleted }: IDeleteInsi
     const title = insightTitle(insight);
     const refKey = serializeObjRef(ref);
 
+    const canCreateDocument = useDashboardSelector(selectPermissions).canCreateDocument ?? false;
+
     const usage = useCancelablePromise(
         {
-            promise: () =>
-                backend
+            promise: async () => {
+                const references = await backend
                     .workspace(workspace)
                     .insights()
-                    .getInsightReferencingObjects(ref)
-                    .then((references) => ({
-                        dashboards: references.analyticalDashboards ?? [],
-                        documents: references.documents ?? [],
-                    })),
+                    .getInsightReferencingObjects(ref);
+                const documents = references.documents ?? [];
+                const visibleDocuments = await loadVisibleDocuments(
+                    backend,
+                    workspace,
+                    documents,
+                    canCreateDocument,
+                );
+                return {
+                    dashboards: references.analyticalDashboards ?? [],
+                    documentsCount: documents.length,
+                    visibleDocumentTitles: visibleDocuments.map((document) => document.title),
+                };
+            },
         },
-        [backend, workspace, refKey],
+        [backend, workspace, refKey, canCreateDocument],
     );
     const accessibleDashboards = useDashboardSelector(selectAccessibleDashboardsMap);
     const usedOnThisDashboard = useDashboardSelector(selectIsInsightUsedByDashboard(ref));
@@ -143,7 +210,8 @@ export function DeleteInsightDialog({ insight, onClose, onDeleted }: IDeleteInsi
     });
 
     const dashboards = usage.result?.dashboards ?? [];
-    const documentTitles = (usage.result?.documents ?? []).map((document) => document.title);
+    const documentsCount = usage.result?.documentsCount ?? 0;
+    const documentTitles = usage.result?.visibleDocumentTitles ?? [];
     const otherDashboards = dashboards.filter((dashboard) => dashboard.id !== dashboardId);
     const accessibleTitles = otherDashboards
         .map((dashboard) => accessibleDashboards.get(dashboard.ref)?.title)
@@ -154,11 +222,17 @@ export function DeleteInsightDialog({ insight, onClose, onDeleted }: IDeleteInsi
     const canDelete =
         usage.status === "success" &&
         otherDashboards.length === 0 &&
-        documentTitles.length === 0 &&
+        documentsCount === 0 &&
         !usedOnThisDashboard;
     const documentsWarning =
-        documentTitles.length > 0 ? (
-            <UsageWarning usage={messages.documentsUsage} titles={documentTitles} />
+        documentsCount > 0 ? (
+            <UsageWarning
+                usage={messages.documentsUsage}
+                titles={documentTitles}
+                inaccessibleCount={documentsCount - documentTitles.length}
+                inaccessible={messages.inaccessibleDocuments}
+                inaccessibleOnly={messages.inaccessibleDocumentsOnly}
+            />
         ) : null;
     const isDeleting = status === "running";
 
@@ -184,7 +258,7 @@ export function DeleteInsightDialog({ insight, onClose, onDeleted }: IDeleteInsi
             <>
                 <p className="s-delete-insight-dialog-used-on-dashboards">
                     <FormattedMessage
-                        {...(documentTitles.length > 0
+                        {...(documentsCount > 0
                             ? messages.usedInDocumentsAndDashboards
                             : messages.usedOnDashboards)}
                         values={{ title, strong }}
@@ -194,11 +268,13 @@ export function DeleteInsightDialog({ insight, onClose, onDeleted }: IDeleteInsi
                     usage={messages.usage}
                     titles={accessibleTitles}
                     inaccessibleCount={inaccessibleCount}
+                    inaccessible={messages.inaccessibleDashboards}
+                    inaccessibleOnly={messages.inaccessibleDashboardsOnly}
                 />
                 {documentsWarning}
             </>
         );
-    } else if (documentTitles.length > 0) {
+    } else if (documentsCount > 0) {
         body = (
             <>
                 <p className="s-delete-insight-dialog-used-in-documents">

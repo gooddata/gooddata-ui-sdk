@@ -93,7 +93,7 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
 
         const isFocusSettled = () =>
             element.contains(document.activeElement) ||
-            isElementTextInput(document.activeElement) ||
+            isElementTextEntry(document.activeElement) ||
             isFocusInModalItDoesNotBelongTo(element, owners, modalsBeforeMount);
 
         const attemptFocus = () => {
@@ -146,6 +146,16 @@ export const useUiAutofocusConnectors = <T extends HTMLElement = HTMLElement>({
 
     return useMemo(() => ({ ref, element: element as T }), [ref, element]);
 };
+
+// A field the user is typing into (or that focused itself, such as a search field with `autofocus`)
+// already holds focus on purpose, so autofocus elsewhere must not take it away. Search inputs count too:
+// `isElementTextInput` leaves them out because it also decides whether Enter submits a dialog.
+function isElementTextEntry(element: Element | null): boolean {
+    return (
+        isElementTextInput(element) ||
+        (element instanceof HTMLInputElement && element.type.toLowerCase() === "search")
+    );
+}
 
 const MODAL_SELECTOR = '[aria-modal="true"]';
 

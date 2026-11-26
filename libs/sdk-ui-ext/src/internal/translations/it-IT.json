@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "Trace ID",
     "automations.icon.tooltip.startsOn": "Inizia il",
     "automations.icon.tooltip.repeats": "Ripetizioni",
+    "automations.icon.tooltip.trigger.failed": "Mostra i dettagli dell'errore",
+    "automations.icon.tooltip.trigger.details": "Mostra dettagli",
     "automations.menu.trigger": "Invia ora",
     "automations.menu.copyId": "Copia ID",
     "automations.message.copyId.success": "ID copiato negli appunti",

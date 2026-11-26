@@ -6,10 +6,10 @@ import { invariant } from "ts-invariant";
 
 import {
     type DashboardAttributeFilterItem,
+    type DashboardDateFilterOfAnyType,
     type FilterContextItem,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
-    type IDashboardDateFilter,
     type IDashboardMeasureValueFilter,
     type IFilter,
     type IInsight,
@@ -22,9 +22,11 @@ import {
     dashboardFilterLocalIdentifier,
     dashboardMeasureValueFilterToMeasureValueFilter,
     insightMeasures,
+    isDashboardAbsoluteGranularityDateFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardMeasureValueFilter,
+    isDashboardParameterizedDateFilter,
     isDateFilterOfAnyType,
     isSimpleMeasure,
     measureFilters,
@@ -32,6 +34,8 @@ import {
 } from "@gooddata/sdk-model";
 import { _compact, _isEmpty, _isEqual } from "@gooddata/util";
 
+import { ABSOLUTE_GRANULARITY_DATE_FILTER_DRILL_TO_DASHBOARD_NOT_SUPPORTED } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+import { PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED } from "../../../_staging/dashboard/parameterizedDateFilters.js";
 import { type IDashboardFilter } from "../../../types.js";
 import { type IDrillToDashboard } from "../../commands/drill.js";
 import { switchDashboardTab } from "../../commands/tabs.js";
@@ -51,7 +55,7 @@ import {
 } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectFilterContextAttributeFilterItems,
-    selectFilterContextDateFilter,
+    selectFilterContextDateFilterOfAnyType,
     selectFilterContextDraggableFilterItems,
     selectFilterContextMeasureValueFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
@@ -96,12 +100,18 @@ export function* drillToDashboardHandler(
     const ignoredDashboardFilterIds = new Set(cmd.payload.drillDefinition.ignoredDashboardFilters ?? []);
     const shouldUseDateFilter = !!widget.dateDataSet && !isDateFilterDisabled(insight);
     // widget's dateDataSet is not needed in common date filter because target dashboard widget's will use their own dateDataSet
-    const commonDateFilter: ReturnType<typeof selectDrillingDateFilter> | undefined = shouldUseDateFilter
-        ? removeIgnoredDashboardFilters(
-              [yield select(selectDrillingDateFilter)],
-              ignoredDashboardFilterIds,
-          )[0]
+    const drillingDateFilter: ReturnType<typeof selectDrillingDateFilter> | undefined = shouldUseDateFilter
+        ? yield select(selectDrillingDateFilter)
         : undefined;
+    if (isDashboardAbsoluteGranularityDateFilter(drillingDateFilter)) {
+        console.warn(
+            `${ABSOLUTE_GRANULARITY_DATE_FILTER_DRILL_TO_DASHBOARD_NOT_SUPPORTED} The target dashboard keeps its date filter.`,
+        );
+    }
+    const commonDateFilter =
+        drillingDateFilter && !isDashboardAbsoluteGranularityDateFilter(drillingDateFilter)
+            ? removeIgnoredDashboardFilters([drillingDateFilter], ignoredDashboardFilterIds)[0]
+            : undefined;
 
     // get proper attr filters
     const isDrillingToSelf = areObjRefsEqual(ctx.dashboardRef, cmd.payload.drillDefinition.target);
@@ -260,9 +270,9 @@ function transformToPrimaryLabelFilters(
     return [transformedFilters, attributeFilterConfigs];
 }
 
-// result needs to be IDashboardDateFilter to allow optional dateDataSet
-function selectDrillingDateFilter(state: DashboardState): IDashboardDateFilter {
-    const globalDateFilter = selectFilterContextDateFilter(state);
+// result needs to be a dashboard date filter to allow optional dateDataSet
+function selectDrillingDateFilter(state: DashboardState): DashboardDateFilterOfAnyType {
+    const globalDateFilter = selectFilterContextDateFilterOfAnyType(state);
 
     return globalDateFilter ?? newAllTimeDashboardDateFilter();
 }
@@ -294,6 +304,10 @@ function convertFilterItemsToFilters(
     }
     if (isDashboardAttributeFilterItem(filter)) {
         return dashboardAttributeFilterItemToAttributeFilter(filter);
+    }
+    if (isDashboardParameterizedDateFilter(filter)) {
+        console.warn(`Skipping a dashboard filter. ${PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED}`, filter);
+        return undefined;
     }
     const unknownFilter: never = filter;
     console.warn("Skipping a filter of an unknown type.", unknownFilter);

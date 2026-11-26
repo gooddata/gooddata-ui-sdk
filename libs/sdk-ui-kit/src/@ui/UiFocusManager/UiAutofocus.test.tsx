@@ -100,6 +100,33 @@ describe("UiAutofocus", () => {
         expect(screen.getByText("in dialog")).toHaveFocus();
     });
 
+    it.each([["text"], ["search"]])(
+        "does not take focus from a %s field that focused itself, such as a dropdown search field",
+        async (type) => {
+            function FieldHarness({ menu }: { menu: boolean }) {
+                return (
+                    <>
+                        {menu ? (
+                            <UiAutofocus>
+                                <button type="button">More options</button>
+                            </UiAutofocus>
+                        ) : null}
+                        <input type={type} aria-label="Search" />
+                    </>
+                );
+            }
+            const { rerender } = render(<FieldHarness menu={false} />);
+            const field = screen.getByLabelText("Search");
+            field.focus();
+
+            rerender(<FieldHarness menu />);
+            await settle();
+
+            expect(screen.getByLabelText("Search")).toBe(field);
+            expect(field).toHaveFocus();
+        },
+    );
+
     describe("with a modal that owns what it renders", () => {
         interface IOwnedHarnessProps {
             menu?: boolean;

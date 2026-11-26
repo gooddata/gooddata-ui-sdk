@@ -57,6 +57,7 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
+    isDashboardParameterizedDateFilter,
     isFilterContextItemOfAnyType,
 } from "./filterContext.js";
 import { type IWidgetDefinition } from "./widget.js";
@@ -104,6 +105,9 @@ export function isDashboardFilterOfAnyType(obj: unknown): obj is IDashboardFilte
 /**
  * Gets {@link IDashboardFilter} items for filters specified in given filterContext in relation to the given widget.
  *
+ * @remarks
+ * Throws on {@link IDashboardParameterizedDateFilter}, which dashboards cannot apply yet.
+ *
  * @param filterContext - filter context to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
  * @alpha
@@ -122,6 +126,9 @@ export function filterContextToDashboardFiltersByWidget(
 /**
  * Gets {@link IDashboardFilter} items for filters specified in given filterContext in relation to the
  * given dateDataSet.
+ *
+ * @remarks
+ * Throws on {@link IDashboardParameterizedDateFilter}, which dashboards cannot apply yet.
  *
  * @param filterContext - filter context to get filters for
  * @param dateDataSet - widget to use to get dateDataSet for date filters
@@ -428,8 +435,21 @@ export function dashboardMeasureValueFilterToMeasureValueFilter(
     };
 }
 
+// Dashboards cannot apply parameterized date filters yet, and leaving one out would return wider data.
+function convertibleFilterContextItems(items: FilterContextItem[]) {
+    return items.filter(isFilterContextItemOfAnyType).map((item) => {
+        if (isDashboardParameterizedDateFilter(item)) {
+            throw new Error("Parameterized date filters cannot be converted to dashboard filters yet.");
+        }
+        return item;
+    });
+}
+
 /**
  * Gets {@link IDashboardFilter} items for filters specified as {@link FilterContextItem} instances.
+ *
+ * @remarks
+ * Throws on {@link IDashboardParameterizedDateFilter}, which dashboards cannot apply yet.
  *
  * @param filterContextItems - filter context items to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
@@ -439,7 +459,7 @@ export function filterContextItemsToDashboardFiltersByWidget(
     filterContextItems: FilterContextItem[],
     widget?: Partial<IFilterableWidget>,
 ): IDashboardFilter[] {
-    return filterContextItems.filter(isFilterContextItemOfAnyType).map((filter) => {
+    return convertibleFilterContextItems(filterContextItems).map((filter) => {
         if (isDashboardAttributeFilterItem(filter)) {
             return dashboardAttributeFilterItemToAttributeFilter(filter);
         }
@@ -456,6 +476,9 @@ export function filterContextItemsToDashboardFiltersByWidget(
 /**
  * Gets {@link IDashboardFilter} items for filters specified as {@link FilterContextItem} instances.
  *
+ * @remarks
+ * Throws on {@link IDashboardParameterizedDateFilter}, which dashboards cannot apply yet.
+ *
  * @param filterContextItems - filter context items to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
  * @alpha
@@ -464,8 +487,7 @@ export function filterContextItemsToDashboardFiltersByRichTextWidget(
     filterContextItems: FilterContextItem[],
     widget?: Partial<IFilterableWidget>,
 ): IDashboardFilter[] {
-    return filterContextItems
-        .filter(isFilterContextItemOfAnyType)
+    return convertibleFilterContextItems(filterContextItems)
         .map((filter) => {
             if (isDashboardAttributeFilterItem(filter)) {
                 return dashboardAttributeFilterItemToAttributeFilter(filter);
@@ -484,6 +506,9 @@ export function filterContextItemsToDashboardFiltersByRichTextWidget(
 /**
  * Gets {@link IDashboardFilter} items for filters specified as {@link FilterContextItem} instances.
  *
+ * @remarks
+ * Throws on {@link IDashboardParameterizedDateFilter}, which dashboards cannot apply yet.
+ *
  * @param filterContextItems - filter context items to get filters for
  * @param dateDataSet - date data set to define {@link IDateFilter}
  * @alpha
@@ -492,7 +517,7 @@ export function filterContextItemsToDashboardFiltersByDateDataSet(
     filterContextItems: FilterContextItem[],
     dateDataSet: ObjRef,
 ): IDashboardFilter[] {
-    return filterContextItems.filter(isFilterContextItemOfAnyType).map((filter) => {
+    return convertibleFilterContextItems(filterContextItems).map((filter) => {
         if (isDashboardAttributeFilterItem(filter)) {
             return dashboardAttributeFilterItemToAttributeFilter(filter);
         }

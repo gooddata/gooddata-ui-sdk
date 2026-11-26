@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-model, sdk-ui-filters, sdk-ui-dashboard: The date filter creates an absolute date filter with granularity (week, month, quarter, year) and dashboards use it as the common date filter. New alpha channels with the OfAnyType suffix carry it; the existing public ones never receive it. A date filter with a dimension of this type, alerts and scheduled exports with it, and drills to a dashboard do not support it yet.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

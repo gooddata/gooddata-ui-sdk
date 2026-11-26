@@ -29,6 +29,12 @@ export type DateFilterOptionAllTimeType = "allTime";
 export type DateFilterOptionAbsoluteFormType = "absoluteForm";
 
 /**
+ * Type that identifies the absolute date filter form that selects whole weeks, months, quarters or years
+ * @alpha
+ */
+export type DateFilterOptionAbsoluteGranularityFormType = "absoluteGranularityForm";
+
+/**
  * Type that identifies the relative date filter form
  * @alpha
  */
@@ -59,6 +65,7 @@ export type DateFilterOptionEmptyValuesType = "emptyValues";
 export type DateFilterOptionType =
     | DateFilterOptionAllTimeType
     | DateFilterOptionAbsoluteFormType
+    | DateFilterOptionAbsoluteGranularityFormType
     | DateFilterOptionRelativeFormType
     | DateFilterOptionAbsolutePresetType
     | DateFilterOptionRelativePresetType

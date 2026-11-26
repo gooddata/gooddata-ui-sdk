@@ -4,14 +4,14 @@ import { type Ref } from "react";
 
 import classNames from "classnames";
 
-import { type IDashboardDateFilter } from "@gooddata/sdk-model";
+import { type DashboardDateFilterOfAnyType, type IDashboardDateFilter } from "@gooddata/sdk-model";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectCanAddMoreFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import {
-    type CustomDashboardDateFilterComponent,
+    type CustomDashboardDateFilterOfAnyTypeComponent,
     type IDashboardDateFilterConfig,
 } from "../../filterBar/dateFilter/types.js";
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
@@ -24,9 +24,9 @@ type DraggableDateFilterProps = {
     config: IDashboardDateFilterConfig;
     autoOpen: boolean;
     readonly: boolean;
-    FilterComponent: CustomDashboardDateFilterComponent;
+    FilterComponent: CustomDashboardDateFilterOfAnyTypeComponent;
     onDateFilterChanged: (
-        filter: IDashboardDateFilter | undefined,
+        filter: DashboardDateFilterOfAnyType | undefined,
         dateFilterOptionLocalId?: string,
         isWorkingSelectionChange?: boolean,
     ) => void;

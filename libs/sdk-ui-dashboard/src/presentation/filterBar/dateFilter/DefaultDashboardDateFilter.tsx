@@ -6,10 +6,15 @@ import { useIntl } from "react-intl";
 
 import {
     DashboardDateFilterConfigModeValues,
+    type DashboardDateFilterOfAnyType,
     type DateFilterGranularity,
     type ICatalogDateDataset,
     type ObjRef,
     areObjRefsEqual,
+    dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
+    isDashboardAbsoluteGranularityDateFilter,
+    isDashboardParameterizedDateFilter,
 } from "@gooddata/sdk-model";
 import {
     DateFilter,
@@ -35,7 +40,7 @@ import { useCurrentDateFilterConfig } from "../../dragAndDrop/useCurrentDateFilt
 import { getVisibilityIcon } from "../utils.js";
 
 import { DateFilterConfigurationBody } from "./configuration/DateFilterConfigurationBody.js";
-import { type IDashboardDateFilterProps } from "./types.js";
+import { type IDefaultDashboardDateFilterProps } from "./types.js";
 
 /**
  * Whether the date dimension relevant to the filter exposes the second-level attribute (`GDC.time.second`):
@@ -61,18 +66,42 @@ function relevantDateDimensionHasSeconds(
  *
  * @alpha
  */
-export function DefaultDashboardDateFilter({
-    filter,
-    workingFilter,
-    onFilterChanged,
-    config,
-    readonly,
-    autoOpen,
-    ButtonComponent,
-    overlayPositionType,
-    tabId,
-    customRangeHint,
-}: IDashboardDateFilterProps): ReactElement {
+export function DefaultDashboardDateFilter(props: IDefaultDashboardDateFilterProps): ReactElement {
+    const {
+        filter,
+        workingFilter,
+        config,
+        readonly,
+        autoOpen,
+        ButtonComponent,
+        overlayPositionType,
+        tabId,
+        customRangeHint,
+    } = props;
+    const onAnyTypeFilterChanged =
+        props.isAbsoluteDateFilterGranularityEnabled === true ? props.onFilterChanged : undefined;
+    const onOldTypeFilterChanged =
+        props.isAbsoluteDateFilterGranularityEnabled === true ? undefined : props.onFilterChanged;
+    const onFilterChanged = useCallback(
+        (
+            changedFilter: DashboardDateFilterOfAnyType | undefined,
+            dateFilterOptionLocalId?: string,
+            isWorkingSelectionChange?: boolean,
+        ) => {
+            if (onAnyTypeFilterChanged) {
+                onAnyTypeFilterChanged(changedFilter, dateFilterOptionLocalId, isWorkingSelectionChange);
+            } else if (
+                !isDashboardAbsoluteGranularityDateFilter(changedFilter) &&
+                !isDashboardParameterizedDateFilter(changedFilter)
+            ) {
+                // the filter offers no whole periods and no periods in this case
+                onOldTypeFilterChanged?.(changedFilter, dateFilterOptionLocalId, isWorkingSelectionChange);
+            }
+        },
+        [onAnyTypeFilterChanged, onOldTypeFilterChanged],
+    );
+    const dataSet = filter ? dashboardFilterObjRef(filter) : undefined;
+    const localIdentifier = filter ? dashboardFilterLocalIdentifier(filter) : undefined;
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
@@ -85,24 +114,20 @@ export function DefaultDashboardDateFilter({
     // the date filter config marks the option as visible. Hiding it via the config does not strip an
     // already-set emptyValueHandling - that value is still applied to executions.
     const enableEmptyDateValues = config.dateFilterOptions.emptyValues?.visible ?? true;
-    const isAbsoluteDateFilterGranularityEnabled = !!settings.enableAbsoluteDateFilterGranularity;
+    const isAbsoluteDateFilterGranularityEnabled =
+        !!settings.enableAbsoluteDateFilterGranularity && !!onAnyTypeFilterChanged;
 
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     let defaultDateFilterName: string;
-    if (filter?.dateFilter.dataSet) {
-        const dateDataSetName = allDateDatasets.find((ds) =>
-            areObjRefsEqual(ds.dataSet.ref, filter?.dateFilter.dataSet),
-        )?.dataSet?.title;
+    if (dataSet) {
+        const dateDataSetName = allDateDatasets.find((ds) => areObjRefsEqual(ds.dataSet.ref, dataSet))
+            ?.dataSet?.title;
         defaultDateFilterName = config.customFilterName ?? dateDataSetName ?? "";
     } else {
         defaultDateFilterName =
             config.customFilterName ?? intl.formatMessage({ id: "dateFilterDropdown.title" });
     }
-    const { title, mode } = useCurrentDateFilterConfig(
-        filter?.dateFilter.dataSet,
-        defaultDateFilterName,
-        tabId,
-    );
+    const { title, mode } = useCurrentDateFilterConfig(dataSet, defaultDateFilterName, tabId);
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
 
     const dateFilterOptions = useMemo(() => {
@@ -133,32 +158,22 @@ export function DefaultDashboardDateFilter({
         (option, exclude) => {
             setLastSelectedOptionId(option.localIdentifier);
             onFilterChanged(
-                dateFilterOptionToDashboardDateFilter(
-                    option,
-                    exclude,
-                    filter?.dateFilter.dataSet,
-                    filter?.dateFilter.localIdentifier,
-                ),
+                dateFilterOptionToDashboardDateFilter(option, exclude, dataSet, localIdentifier),
                 option.localIdentifier,
             );
         },
-        [onFilterChanged, filter?.dateFilter.dataSet, filter?.dateFilter.localIdentifier],
+        [onFilterChanged, dataSet, localIdentifier],
     );
     const onSelect = useCallback<NonNullable<IDateFilterProps["onSelect"]>>(
         (option, exclude) => {
             setLastSelectedOptionId(option.localIdentifier);
             onFilterChanged(
-                dateFilterOptionToDashboardDateFilter(
-                    option,
-                    exclude,
-                    filter?.dateFilter.dataSet,
-                    filter?.dateFilter.localIdentifier,
-                ),
+                dateFilterOptionToDashboardDateFilter(option, exclude, dataSet, localIdentifier),
                 option.localIdentifier,
                 true,
             );
         },
-        [onFilterChanged, filter?.dateFilter.dataSet, filter?.dateFilter.localIdentifier],
+        [onFilterChanged, dataSet, localIdentifier],
     );
     const dateFormat = settings.formatLocale
         ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
@@ -202,7 +217,7 @@ export function DefaultDashboardDateFilter({
     const isSecondsForAbsoluteRangeEnabled =
         isTimeForAbsoluteRangeEnabled &&
         !!settings.enableSecondGranularities &&
-        relevantDateDimensionHasSeconds(allDateDatasets, filter?.dateFilter.dataSet);
+        relevantDateDimensionHasSeconds(allDateDatasets, dataSet);
 
     const isConfigurationEnabled =
         isInEditMode &&
@@ -214,14 +229,14 @@ export function DefaultDashboardDateFilter({
                 <DateFilterConfigurationBody
                     {...props}
                     intl={intl}
-                    dateDataSet={filter?.dateFilter.dataSet}
+                    dateDataSet={dataSet}
                     defaultDateFilterName={defaultDateFilterName}
                 />
             );
         }
 
         return ElementsSelect;
-    }, [intl, filter?.dateFilter.dataSet, defaultDateFilterName]);
+    }, [intl, dataSet, defaultDateFilterName]);
 
     return (
         <DateFilter
@@ -250,7 +265,7 @@ export function DefaultDashboardDateFilter({
             openOnInit={autoOpen}
             weekStart={weekStart}
             customIcon={visibilityIcon}
-            showDropDownHeaderMessage={!filter?.dateFilter.dataSet}
+            showDropDownHeaderMessage={!dataSet}
             FilterConfigurationComponent={isConfigurationEnabled ? FilterConfigurationComponent : undefined}
             withoutApply={isApplyAllAtOnceEnabledAndSet}
             ButtonComponent={ButtonComponent}

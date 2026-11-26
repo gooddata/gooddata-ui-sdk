@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IInsightParameterValue } from "@gooddata/sdk-model";
+import { type IInsightParameterValue, type IdentifierRef, type ObjRef } from "@gooddata/sdk-model";
 
 import { type DashboardContext } from "../types/commonTypes.js";
 
@@ -95,3 +95,77 @@ export function parametersChanged(
 export const isDashboardParametersChanged = eventGuard<IDashboardParametersChanged>(
     "GDC.DASH/EVT.PARAMETERS.CHANGED",
 );
+
+/**
+ * Payload of the {@link IDashboardParametersAdded} event.
+ *
+ * @internal
+ */
+export interface IDashboardParametersAddedPayload {
+    readonly refs: IdentifierRef[];
+}
+
+/**
+ * This event is emitted after workspace parameters have been added to the active tab.
+ *
+ * @internal
+ */
+export interface IDashboardParametersAdded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.PARAMETERS.ADDED";
+    readonly payload: IDashboardParametersAddedPayload;
+}
+
+/**
+ * @internal
+ */
+export function parametersAdded(
+    ctx: DashboardContext,
+    refs: IdentifierRef[],
+    correlationId?: string,
+): IDashboardParametersAdded {
+    return {
+        type: "GDC.DASH/EVT.PARAMETERS.ADDED",
+        ctx,
+        correlationId,
+        payload: {
+            refs,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link IDashboardParametersRemoved} event.
+ *
+ * @internal
+ */
+export interface IDashboardParametersRemovedPayload {
+    readonly refs: ObjRef[];
+}
+
+/**
+ * This event is emitted after parameters have been removed from the active tab.
+ *
+ * @internal
+ */
+export interface IDashboardParametersRemoved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.PARAMETERS.REMOVED";
+    readonly payload: IDashboardParametersRemovedPayload;
+}
+
+/**
+ * @internal
+ */
+export function parametersRemoved(
+    ctx: DashboardContext,
+    refs: ObjRef[],
+    correlationId?: string,
+): IDashboardParametersRemoved {
+    return {
+        type: "GDC.DASH/EVT.PARAMETERS.REMOVED",
+        ctx,
+        correlationId,
+        payload: {
+            refs,
+        },
+    };
+}

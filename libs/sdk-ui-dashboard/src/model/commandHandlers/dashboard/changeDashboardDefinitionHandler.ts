@@ -17,9 +17,13 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED,
-    dashboardContainsAbsoluteGranularityDateFilter,
+    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
+    dashboardContainsAbsoluteGranularityDateFilterWithDataSet,
 } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+import {
+    PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED,
+    dashboardContainsParameterizedDateFilter,
+} from "../../../_staging/dashboard/parameterizedDateFilters.js";
 import { deriveAbsoluteFormGranularitiesFromRelativeForm } from "../../../_staging/dateFilterConfig/merge.js";
 import { type IChangeDashboardDefinition } from "../../commands/dashboard.js";
 import { type IDashboardDefinitionChanged, dashboardDefinitionChanged } from "../../events/dashboard.js";
@@ -109,8 +113,15 @@ export function* changeDashboardDefinitionHandler(
               }
             : cmd.payload.dashboard;
 
-    if (dashboardContainsAbsoluteGranularityDateFilter(dashboard)) {
-        throw invalidArgumentsProvided(ctx, cmd, ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED);
+    if (dashboardContainsAbsoluteGranularityDateFilterWithDataSet(dashboard)) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
+        );
+    }
+    if (dashboardContainsParameterizedDateFilter(dashboard)) {
+        throw invalidArgumentsProvided(ctx, cmd, PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED);
     }
 
     const effectiveReferences: Partial<IDashboardReferences> =

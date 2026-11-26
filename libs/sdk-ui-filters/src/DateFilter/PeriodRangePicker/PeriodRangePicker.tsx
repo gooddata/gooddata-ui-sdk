@@ -20,7 +20,7 @@ const PeriodRangePickerImpl = lazy(async () => ({
 
 /**
  * A grid picker for selecting a Week/Month/Quarter/Year period range. Renders the rc-picker panel matching
- * {@link IPeriodRangePickerProps.granularity} and reports the resolved day-level range via `onRangeChange`.
+ * {@link IPeriodRangePickerProps.granularity} and reports the selected range via `onRangeChange`.
  *
  * @alpha
  */

@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { type KeyboardEvent, type UIEvent, useCallback, useEffect, useMemo, useRef } from "react";
+import { type KeyboardEvent, type UIEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import stringify from "json-stable-stringify";
 import { type IntlShape, useIntl } from "react-intl";
@@ -212,6 +212,15 @@ export function DrillSelectDropdown({
         return calculateAlignPoints(dropDownAnchorClass, drillEvent);
     }, [dropDownAnchorClass, drillEvent]);
 
+    // `.focus()` silently no-ops while the overlay is still `visibility: hidden` awaiting
+    // alignment, so re-arm autofocus on the first align. A boolean, not a counter — the
+    // overlay realigns after every update, so a per-align value would feed a render loop.
+    const [overlayAligned, setOverlayAligned] = useState(false);
+    if (!isOpen && overlayAligned) {
+        setOverlayAligned(false);
+    }
+    const handleOverlayAlign = useCallback(() => setOverlayAligned(true), []);
+
     if (!isOpen) {
         return null;
     }
@@ -227,8 +236,9 @@ export function DrillSelectDropdown({
                 alignTo={`.${dropDownAnchorClass}`}
                 alignPoints={alignPoints}
                 onClose={onCloseReturnFocus}
+                onAlign={handleOverlayAlign}
             >
-                <UiFocusManager enableFocusTrap enableAutofocus>
+                <UiFocusManager enableFocusTrap enableAutofocus={{ refocusKey: overlayAligned }}>
                     <div
                         onScroll={stopPropagation}
                         className="gd-drill-modal-picker-dropdown s-drill-item-selector-dropdown"

@@ -47,10 +47,14 @@ import {
     getAutomationExportParametersByTab,
 } from "../../../_staging/automation/index.js";
 import {
-    ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED,
+    ABSOLUTE_GRANULARITY_DATE_FILTER_AUTOMATIONS_NOT_SUPPORTED,
     automationContainsAbsoluteGranularityDateFilter,
 } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
+import {
+    PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED,
+    automationContainsDashboardParameterizedDateFilter,
+} from "../../../_staging/dashboard/parameterizedDateFilters.js";
 import { type IDashboardFilter } from "../../../types.js";
 import {
     changeFilterContextSelection,
@@ -174,12 +178,21 @@ export function* initializeAutomationsHandler(
         ]);
 
         const targetAutomation = automationId ? automations.find((a) => a.id === automationId) : undefined;
-        const skipTargetAutomationContext = automationContainsAbsoluteGranularityDateFilter(targetAutomation);
-        if (skipTargetAutomationContext) {
+        const hasAbsoluteGranularityDateFilter =
+            automationContainsAbsoluteGranularityDateFilter(targetAutomation);
+        if (hasAbsoluteGranularityDateFilter) {
             console.warn(
-                `Skipping the context of automation ${automationId}. ${ABSOLUTE_GRANULARITY_DATE_FILTER_NOT_SUPPORTED}`,
+                `Skipping the context of automation ${automationId}. ${ABSOLUTE_GRANULARITY_DATE_FILTER_AUTOMATIONS_NOT_SUPPORTED}`,
             );
         }
+        const hasParameterizedDateFilter =
+            automationContainsDashboardParameterizedDateFilter(targetAutomation);
+        if (hasParameterizedDateFilter) {
+            console.warn(
+                `Skipping the context of automation ${automationId}. ${PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED}`,
+            );
+        }
+        const skipTargetAutomationContext = hasAbsoluteGranularityDateFilter || hasParameterizedDateFilter;
 
         // Set filters according to provided automationId
         if (automationId && !skipTargetAutomationContext) {

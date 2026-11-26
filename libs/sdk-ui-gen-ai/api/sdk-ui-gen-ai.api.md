@@ -15,6 +15,7 @@ import { EnhancedStore } from '@reduxjs/toolkit';
 import { GenAIChatEffort } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { GenAIPublisherDocumentFormat } from '@gooddata/sdk-backend-spi';
+import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAiAssistantDefinitionReceivedPayload } from '@gooddata/sdk-pluggable-application-model';
 import { IAlertProposal } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -29,6 +30,7 @@ import { IChatSuggestion } from '@gooddata/sdk-backend-spi';
 import { IChatSuggestions } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-model';
+import { IDashboardKeyDriverCombinationItem } from '@gooddata/sdk-ui-dashboard';
 import { IDashboardProps } from '@gooddata/sdk-ui-dashboard';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
@@ -38,6 +40,7 @@ import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IInsight } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
+import { ISeparators } from '@gooddata/sdk-model';
 import { ISlotProps } from '@gooddata/sdk-ui-kit';
 import { IUiButtonProps } from '@gooddata/sdk-ui-kit';
 import { IUiMenuGroupItemProps } from '@gooddata/sdk-ui-kit';
@@ -395,6 +398,9 @@ export function DefaultConversationKdaContent(props: IGenAIAssistantConversation
 export function DefaultConversationRenameDialog(props: IGenAIAssistantConversationRenameDialogProps): JSX.Element;
 
 // @alpha
+export function DefaultConversationVisualizationBody(props: IGenAIAssistantConversationVisualisationProps): JSX.Element;
+
+// @alpha
 export function DefaultConversationVisualizationContent(props: IGenAIAssistantConversationVisualizationContentProps): JSX.Element;
 
 // @alpha
@@ -698,6 +704,11 @@ export interface ICopilotScope<TBuild extends string = CopilotBuildType> {
 // @alpha
 export interface ICopilotSnapshot<TBuild extends string = CopilotBuildType> {
     readonly applications: readonly ICopilotApplication<TBuild>[];
+    readonly cancelledRequests?: readonly {
+        readonly type: TBuild;
+        readonly conversationId?: string;
+        readonly threadId?: string;
+    }[];
     readonly context: ICopilotContext<TBuild>;
     readonly generation?: TBuild;
     readonly generationRevision?: number;
@@ -814,6 +825,28 @@ export type IGenAIAssistantConversationRenameDialogProps = {
 };
 
 // @alpha
+export type IGenAIAssistantConversationVisualisationProps = {
+    message: IChatConversationLocalItem;
+    visualization: NonNullable<IChatConversationVisualisationContent["visualization"]>;
+    colorPalette?: IColorPalette;
+    separators?: ISeparators;
+    execConfig?: IExecutionConfig;
+    settings?: IUserWorkspaceSettings;
+    agGridToken?: string;
+    isTable?: boolean;
+    onVisualisationError?: (error: GoodDataSdkError) => void;
+    onVisualisationSuccess?: () => void;
+    onDrillFired?: (data: {
+        keyDriverData: IDashboardKeyDriverCombinationItem[];
+        event: IDrillEvent;
+    } | null) => void;
+    enableDrilling?: boolean;
+    enableChangeAnalysis?: boolean;
+    enableSecondGranularities?: boolean;
+    enableAccessibleChartTooltip?: boolean;
+};
+
+// @alpha
 export type IGenAIAssistantConversationVisualizationContentProps = {
     message: IChatConversationLocalItem;
     part: IChatConversationMultipartLocalPart;
@@ -923,6 +956,8 @@ export interface IGenAIAssistantSlots {
     ConversationKdaContent?: ComponentType<ISlotProps<IGenAIAssistantConversationKdaContentProps>>;
     // @alpha
     ConversationRenameDialog?: ComponentType<ISlotProps<IGenAIAssistantConversationRenameDialogProps>>;
+    // @alpha
+    ConversationVisualizationBody?: ComponentType<ISlotProps<IGenAIAssistantConversationVisualisationProps>>;
     // @alpha
     ConversationVisualizationContent?: ComponentType<ISlotProps<IGenAIAssistantConversationVisualizationContentProps>>;
     Disclaimer?: ComponentType<ISlotProps<IGenAIAssistantDisclaimerProps>>;

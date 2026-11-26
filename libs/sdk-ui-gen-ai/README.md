@@ -90,6 +90,11 @@ and interrupt applications of that type. It returns `false` without changes when
 to the next object is in progress, preserving intentional draft opening. Applied definitions do not
 prevent cancellation. The host still owns navigation, edit-mode checks, and exiting the editor.
 
+`cancelGeneration(type)` prevents pending creation or edits of that type from being applied,
+including responses whose skill has not yet been identified. Cancellation remains effective after
+the response finishes; a new user turn in the same conversation allows new changes. It does not
+stop the assistant stream, undo applied changes, or interrupt a definition application already in progress.
+
 ```typescript
 import { CopilotBuildType, CopilotHandler } from "@gooddata/sdk-ui-gen-ai";
 

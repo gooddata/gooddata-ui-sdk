@@ -795,6 +795,8 @@
     "shareDialog.olp.generalAccess.workspace.description.edit": "Усі в цій робочій області можуть редагувати цей об’єкт.",
     "uiKit.autocomplete.searchPlaceholder": "Пошук",
     "uiKit.toast.regionLabel": "{count, plural, one {# сповіщення} few {# сповіщення} many {# сповіщень} other {# сповіщення}}",
+    "uiKit.message.showMore": "Показати більше",
+    "uiKit.message.showLess": "Показати менше",
     "uiKit.autocomplete.stateLoading": "Завантаження…",
     "uiKit.autocomplete.stateError": "Не вдалося завантажити параметри. Будь ласка, спробуйте ще раз.",
     "uiKit.autocomplete.stateNoMatch": "Немає відповідних параметрів.",

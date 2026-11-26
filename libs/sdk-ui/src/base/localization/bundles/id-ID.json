@@ -795,6 +795,8 @@
     "shareDialog.olp.generalAccess.workspace.description.edit": "Semua orang di ruang kerja ini dapat mengedit objek ini.",
     "uiKit.autocomplete.searchPlaceholder": "Cari",
     "uiKit.toast.regionLabel": "{count, plural, one {# notifikasi} other {# notifikasi}}",
+    "uiKit.message.showMore": "Tampilkan lebih banyak",
+    "uiKit.message.showLess": "Tampilkan lebih sedikit",
     "uiKit.autocomplete.stateLoading": "Memuat…",
     "uiKit.autocomplete.stateError": "Tidak dapat memuat opsi. Silakan coba lagi.",
     "uiKit.autocomplete.stateNoMatch": "Tidak ada opsi yang cocok.",

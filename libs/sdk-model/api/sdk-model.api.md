@@ -395,7 +395,7 @@ export function colorPaletteToColors(palette: IColorPalette): string[];
 export type ComparatorDirection = "asc" | "desc";
 
 // @alpha
-export function compareDatePeriodLiterals(granularity: DatePeriodGranularity, a: DatePeriodLiteral, b: DatePeriodLiteral): number;
+export function compareDatePeriodLiterals(granularity: DatePeriodGranularity | DateRangeParameterGranularity, a: DatePeriodLiteral, b: DatePeriodLiteral): number;
 
 // @public (undocumented)
 export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
@@ -542,7 +542,7 @@ export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 export const DashboardDateFilterConfigModeValues: Record<Uppercase<DashboardDateFilterConfigMode>, DashboardDateFilterConfigMode>;
 
 // @alpha
-export type DashboardDateFilterOfAnyType = IDashboardDateFilter | IDashboardAbsoluteGranularityDateFilter;
+export type DashboardDateFilterOfAnyType = IDashboardDateFilter | IDashboardAbsoluteGranularityDateFilter | IDashboardParameterizedDateFilter;
 
 // @public
 export function dashboardDateFilterToDateFilterByDateDataSet(filter: IDashboardDateFilter, dateDataSet: ObjRef): IDateFilter;
@@ -639,6 +639,9 @@ export type DateFilterOfAnyType = IDateFilter | IAbsoluteGranularityDateFilter |
 export type DateFilterOptionAbsoluteFormType = "absoluteForm";
 
 // @alpha
+export type DateFilterOptionAbsoluteGranularityFormType = "absoluteGranularityForm";
+
+// @alpha
 export type DateFilterOptionAbsolutePresetType = "absolutePreset";
 
 // @alpha
@@ -654,7 +657,7 @@ export type DateFilterOptionRelativeFormType = "relativeForm";
 export type DateFilterOptionRelativePresetType = "relativePreset";
 
 // @alpha
-export type DateFilterOptionType = DateFilterOptionAllTimeType | DateFilterOptionAbsoluteFormType | DateFilterOptionRelativeFormType | DateFilterOptionAbsolutePresetType | DateFilterOptionRelativePresetType | DateFilterOptionEmptyValuesType;
+export type DateFilterOptionType = DateFilterOptionAllTimeType | DateFilterOptionAbsoluteFormType | DateFilterOptionAbsoluteGranularityFormType | DateFilterOptionRelativeFormType | DateFilterOptionAbsolutePresetType | DateFilterOptionRelativePresetType | DateFilterOptionEmptyValuesType;
 
 // @beta
 export type DateFilterRelativeType = "relative";
@@ -975,7 +978,7 @@ export function filterAttributeElements(filter: IAttributeFilterWithSelection): 
 export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined;
 
 // @alpha
-export type FilterContextItem = DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardAbsoluteGranularityDateFilter | IDashboardMeasureValueFilter;
+export type FilterContextItem = DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardAbsoluteGranularityDateFilter | IDashboardParameterizedDateFilter | IDashboardMeasureValueFilter;
 
 // @alpha
 export function filterContextItemsToDashboardFiltersByDateDataSet(filterContextItems: FilterContextItem[], dateDataSet: ObjRef): IDashboardFilter[];
@@ -2756,6 +2759,19 @@ export interface IDashboardParameter {
     readonly parameterType: ScalarParameterType;
     readonly ref: IdentifierRef;
     readonly value?: ParameterValue;
+}
+
+// @alpha
+export interface IDashboardParameterizedDateFilter {
+    // (undocumented)
+    dashboardParameterizedDateFilter: IDashboardDateFilterBodyBase & {
+        parameter: ObjRef;
+    };
+}
+
+// @alpha
+export interface IDashboardParameterizedDateFilterOptions extends IParameterizedDateFilterOptions {
+    dataSet?: ObjRef;
 }
 
 // @alpha
@@ -7616,6 +7632,9 @@ export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashb
 export function isDashboardCommonDateFilter(obj: unknown): obj is IDashboardDateFilter;
 
 // @alpha
+export function isDashboardCommonDateFilterOfAnyType(obj: unknown): obj is DashboardDateFilterOfAnyType;
+
+// @alpha
 export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter;
 
 // @alpha
@@ -7659,6 +7678,9 @@ export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetada
 
 // @alpha
 export function isDashboardParameter(obj: unknown): obj is IDashboardParameter;
+
+// @alpha
+export function isDashboardParameterizedDateFilter(obj: unknown): obj is IDashboardParameterizedDateFilter;
 
 // @alpha
 export function isDashboardTab(obj: unknown): obj is IDashboardTab;
@@ -7868,7 +7890,7 @@ export function isFilterContext(obj: unknown): obj is IFilterContext;
 export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
 
 // @alpha
-export function isFilterContextItem(obj: unknown): obj is Exclude<FilterContextItem, IDashboardAbsoluteGranularityDateFilter>;
+export function isFilterContextItem(obj: unknown): obj is Exclude<FilterContextItem, IDashboardAbsoluteGranularityDateFilter | IDashboardParameterizedDateFilter>;
 
 // @alpha
 export function isFilterContextItemOfAnyType(obj: unknown): obj is FilterContextItem;
@@ -8548,10 +8570,10 @@ export const isUserWorkspaceAccessGrantee: (obj: unknown) => obj is IUserWorkspa
 export function isValidDashboardTimezoneId(timezoneId: DashboardTimezoneId): boolean;
 
 // @alpha
-export function isValidDatePeriodLiteral(granularity: DatePeriodGranularity, literal: unknown): boolean;
+export function isValidDatePeriodLiteral(granularity: DatePeriodGranularity | DateRangeParameterGranularity, literal: unknown): boolean;
 
 // @alpha
-export function isValidDatePeriodRange(granularity: DatePeriodGranularity, from: unknown, to: unknown): boolean;
+export function isValidDatePeriodRange(granularity: DatePeriodGranularity | DateRangeParameterGranularity, from: unknown, to: unknown): boolean;
 
 // @alpha
 export function isValidIanaTimezoneId(timezoneId: string): boolean;
@@ -10063,6 +10085,9 @@ export function newAttributeSort(attributeOrId: IAttribute | string, sortDirecti
 
 // @public
 export function newBucket(localId: string, ...content: Array<IAttributeOrMeasure | ITotal | undefined>): IBucket;
+
+// @alpha
+export function newDashboardParameterizedDateFilter(parameter: ObjRef | Identifier, options?: IDashboardParameterizedDateFilterOptions): IDashboardParameterizedDateFilter;
 
 // @public
 export function newDefForBuckets(workspace: string, buckets: IBucket[], filters?: INullableFilter[]): IExecutionDefinition;

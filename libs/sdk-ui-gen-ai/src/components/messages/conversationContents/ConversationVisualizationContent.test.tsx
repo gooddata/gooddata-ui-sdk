@@ -2,9 +2,12 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import { defaultImport } from "default-import";
 import type { PropsWithChildren, ReactElement } from "react";
 import { IntlProvider } from "react-intl";
 import { Provider } from "react-redux";
+import createSagaMiddleware from "redux-saga";
+import { takeEvery } from "redux-saga/effects";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
@@ -21,10 +24,16 @@ import {
     chatWindowSliceReducer,
     getInitialChatWindowState,
 } from "../../../store/chatWindow/chatWindowSlice.js";
-import { messagesSliceName, messagesSliceReducer } from "../../../store/messages/messagesSlice.js";
+import {
+    messagesSliceName,
+    messagesSliceReducer,
+    saveVisualisationRenderStatusAction,
+} from "../../../store/messages/messagesSlice.js";
+import { onVisualisationRender } from "../../../store/sideEffects/onVisualisationRender.js";
 import { ConfigProvider, type LinkHandlerEvent } from "../../ConfigContext.js";
 import { CustomizationProvider } from "../../CustomizationProvider.js";
 import {
+    type IGenAIAssistantConversationVisualisationProps,
     type IGenAIAssistantSlots,
     type IGenAIAssistantVisualizationMenuProps,
 } from "../../customized/types.js";
@@ -339,6 +348,15 @@ describe("ConversationVisualizationContent - VisualizationMenu slot", () => {
         linkHandler?: (event: LinkHandlerEvent) => string | undefined;
         part?: IChatConversationMultipartLocalPart;
     }) {
+        const conversation = {
+            id: "conversation-1",
+            localId: "conversation-1",
+            title: "Restored conversation",
+            createdAt: new Date(0).toISOString(),
+            updatedAt: new Date(0).toISOString(),
+        };
+        const message = { ...mockMessage, content: { type: "multipart" as const, parts: [part] } };
+        const sagaMiddleware = defaultImport(createSagaMiddleware)();
         const store = configureStore({
             reducer: {
                 [chatWindowSliceName]: chatWindowSliceReducer,
@@ -346,7 +364,21 @@ describe("ConversationVisualizationContent - VisualizationMenu slot", () => {
             },
             preloadedState: {
                 [chatWindowSliceName]: getInitialChatWindowState(),
+                [messagesSliceName]: {
+                    ...messagesSliceReducer(undefined, { type: "test/init" }),
+                    currentConversation: conversation,
+                    conversationsData: {
+                        [conversation.localId]: {
+                            order: [message.localId],
+                            items: { [message.localId]: message },
+                        },
+                    },
+                },
             },
+            middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
+        });
+        sagaMiddleware.run(function* () {
+            yield takeEvery(saveVisualisationRenderStatusAction, onVisualisationRender);
         });
 
         function Wrapper({ children }: PropsWithChildren) {
@@ -363,14 +395,18 @@ describe("ConversationVisualizationContent - VisualizationMenu slot", () => {
             );
         }
 
-        return render(
-            <ConversationVisualizationContent
-                message={mockMessage}
-                part={part}
-                visualization={mockVisualization}
-            />,
-            { wrapper: Wrapper },
-        );
+        return {
+            ...render(
+                <ConversationVisualizationContent
+                    message={mockMessage}
+                    part={part}
+                    visualization={mockVisualization}
+                />,
+                { wrapper: Wrapper },
+            ),
+            store,
+            conversation,
+        };
     }
 
     const COPY_LINK_TITLE = messages["gd.gen-ai.visualisation.menu.button.copy_visualisation_link"];
@@ -389,6 +425,170 @@ describe("ConversationVisualizationContent - VisualizationMenu slot", () => {
     beforeEach(() => {
         saveCheck.visualisationSaved = false;
         visualisationMock.props = undefined;
+    });
+
+    describe("ConversationVisualizationBody slot", () => {
+        it("renders the SDK body when no slot is supplied", () => {
+            renderContent({});
+
+            expect(screen.getByTestId("mock-conversation-vis")).toBeInTheDocument();
+            expect(visualisationMock.props).toMatchObject({
+                message: mockMessage,
+                visualization: mockVisualization,
+                isTable: false,
+            });
+        });
+
+        it("replaces only the body without mounting the SDK visualization", () => {
+            renderContent({
+                slots: { ConversationVisualizationBody: () => <div>Custom chart</div> },
+            });
+
+            expect(screen.getByTestId("gen-ai-conversation-visualization")).toContainElement(
+                screen.getByText("Custom chart"),
+            );
+            expect(screen.getByText(mockVisualization.insight.title)).toBeInTheDocument();
+            expect(screen.getByTestId("gen-ai-visualization-toggle-button")).toBeInTheDocument();
+            expect(screen.queryByTestId("mock-conversation-vis")).not.toBeInTheDocument();
+            expect(visualisationMock.props).toBeUndefined();
+            openMenu();
+            expect(menuItemTitles()).toEqual(["Save visualization", "Open in Analyze"]);
+        });
+
+        it("bypasses the custom body in table mode and restores it when switching back", () => {
+            const received: IGenAIAssistantConversationVisualisationProps[] = [];
+            renderContent({
+                slots: {
+                    ConversationVisualizationBody: ({ defaultProps }) => {
+                        received.push(defaultProps);
+                        return <div>Custom chart</div>;
+                    },
+                },
+            });
+
+            expect(received.at(-1)).toMatchObject({
+                message: mockMessage,
+                visualization: mockVisualization,
+                isTable: false,
+                enableDrilling: true,
+                onDrillFired: expect.any(Function),
+                onVisualisationError: expect.any(Function),
+                onVisualisationSuccess: expect.any(Function),
+            });
+            const customRenderCount = received.length;
+            fireEvent.click(screen.getByTestId("gen-ai-visualization-toggle-button"));
+
+            expect(received).toHaveLength(customRenderCount);
+            expect(visualisationMock.props).toMatchObject({ isTable: true });
+            expect(screen.getByTestId("mock-conversation-vis")).toBeInTheDocument();
+            expect(screen.queryByText("Custom chart")).not.toBeInTheDocument();
+
+            fireEvent.click(screen.getByTestId("gen-ai-visualization-toggle-button"));
+
+            expect(received.at(-1)?.isTable).toBe(false);
+            expect(screen.getByText("Custom chart")).toBeInTheDocument();
+            expect(screen.queryByTestId("mock-conversation-vis")).not.toBeInTheDocument();
+        });
+
+        it("keeps error reporting and recovery connected to the custom body", () => {
+            let bodyProps: IGenAIAssistantConversationVisualisationProps | undefined;
+            renderContent({
+                slots: {
+                    ConversationVisualizationBody: ({ defaultProps }) => {
+                        bodyProps = defaultProps;
+                        return <div>Custom chart</div>;
+                    },
+                },
+            });
+
+            act(() => bodyProps?.onVisualisationError?.(new NegativeValuesSdkError()));
+            expect(screen.getByText("Negative values found in visualization.")).toBeInTheDocument();
+
+            act(() => bodyProps?.onVisualisationSuccess?.());
+            expect(screen.queryByText("Negative values found in visualization.")).not.toBeInTheDocument();
+
+            act(() => bodyProps?.onVisualisationError?.(new UnexpectedSdkError()));
+            expect(screen.queryByTestId("gen-ai-visualization-menu-button")).not.toBeInTheDocument();
+            expect(screen.queryByTestId("gen-ai-visualization-toggle-button")).not.toBeInTheDocument();
+
+            act(() => bodyProps?.onVisualisationSuccess?.());
+            expect(screen.getByTestId("gen-ai-visualization-menu-button")).toBeInTheDocument();
+            expect(screen.getByTestId("gen-ai-visualization-toggle-button")).toBeInTheDocument();
+        });
+
+        it.each([
+            ["success", false],
+            ["error", false],
+            ["success", true],
+            ["error", true],
+        ] as const)(
+            "clears a restored chart's reporting state on %s (delegating to Default: %s)",
+            (result, delegateDefault) => {
+                const part = { ...mockPart, reporting: true };
+                let bodyProps: IGenAIAssistantConversationVisualisationProps | undefined;
+                const { store, rerender, conversation } = renderContent({
+                    part,
+                    slots: {
+                        ConversationVisualizationBody: ({ Default, defaultProps }) => {
+                            bodyProps = defaultProps;
+                            return delegateDefault ? <Default {...defaultProps} /> : <div>Custom chart</div>;
+                        },
+                    },
+                });
+                expect(screen.getByTestId("gen-ai-visualization-menu-button")).toBeDisabled();
+
+                const renderCallbacks = delegateDefault ? visualisationMock.props : bodyProps;
+                act(() => {
+                    if (result === "success") {
+                        renderCallbacks?.onVisualisationSuccess?.();
+                    } else {
+                        renderCallbacks?.onVisualisationError?.(new NegativeValuesSdkError());
+                    }
+                });
+
+                const restoredMessage =
+                    store.getState().messages.conversationsData[conversation.localId].items[
+                        mockMessage.localId
+                    ];
+                expect(restoredMessage.content.type).toBe("multipart");
+                if (restoredMessage.content.type !== "multipart") {
+                    throw new Error("Expected a multipart message");
+                }
+                const restoredPart = restoredMessage.content.parts[0] as IChatConversationMultipartLocalPart;
+                expect(restoredPart.reporting).toBeUndefined();
+                rerender(
+                    <ConversationVisualizationContent
+                        message={restoredMessage}
+                        part={restoredPart}
+                        visualization={mockVisualization}
+                    />,
+                );
+
+                expect(screen.getByTestId("gen-ai-visualization-menu-button")).not.toBeDisabled();
+                expect(screen.queryAllByTestId("mock-conversation-vis")).toHaveLength(
+                    delegateDefault ? 1 : 0,
+                );
+                expect(visualisationMock.props !== undefined).toBe(delegateDefault);
+                expect(screen.queryAllByText("Negative values found in visualization.")).toHaveLength(
+                    result === "error" ? 1 : 0,
+                );
+            },
+        );
+
+        it.each(["Save visualization", "Open in Analyze"])(
+            "keeps the %s dialog with a custom body",
+            async (menuTitle) => {
+                renderContent({
+                    slots: { ConversationVisualizationBody: () => <div>Custom chart</div> },
+                });
+                openMenu();
+                fireEvent.click(screen.getByText(menuTitle));
+
+                expect(await screen.findByRole("textbox")).toHaveValue(mockVisualization.insight.title);
+                expect(screen.getByText("Custom chart")).toBeInTheDocument();
+                expect(visualisationMock.props).toBeUndefined();
+            },
+        );
     });
 
     describe.each([

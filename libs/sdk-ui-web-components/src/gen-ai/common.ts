@@ -1,5 +1,6 @@
 // (C) 2026 GoodData Corporation
 
+import { type GenAIObjectType } from "@gooddata/sdk-model";
 import { resolveLocale } from "@gooddata/sdk-ui";
 import type { ChatEvent, GenAIAssistantProps, LinkHandlerEvent } from "@gooddata/sdk-ui-gen-ai";
 import { _omit } from "@gooddata/util";
@@ -11,12 +12,19 @@ import { findParentWithAttribute } from "../utils.js";
 
 export type CommonProperties = Pick<
     GenAIAssistantProps,
-    "locale" | "objectTypes" | "onLinkClick" | "onDispatcher" | "eventHandlers" | "providedStore"
+    | "locale"
+    | "objectTypes"
+    | "isLinkEnabled"
+    | "onLinkClick"
+    | "onDispatcher"
+    | "eventHandlers"
+    | "providedStore"
 >;
 
 export interface ICommonPropertiesDefinition {
     _dispatch?: (action: any) => void;
     _onDispatcher?: (action: any) => void;
+    isLinkEnabled?: (type: GenAIObjectType) => boolean;
     onLinkClick?: (event: CustomEvent<IGenAIAssistantLinkClick>) => string | undefined;
     onDispatcher?: Required<GenAIAssistantProps>["onDispatcher"];
 
@@ -60,6 +68,12 @@ export function getProperties<T>(
             }
         }
     }
+
+    // Custom elements share Redux state, but their separate React roots do not share configuration.
+    const linkPolicySource = element.closest<HTMLElement & ICommonPropertiesDefinition>(
+        "gd-ai-provider, [store]",
+    );
+    extraProps.isLinkEnabled = element.isLinkEnabled ?? linkPolicySource?.isLinkEnabled;
 
     // Emit custom DOM event when link is clicked
     extraProps.onLinkClick = (e): string | undefined => {

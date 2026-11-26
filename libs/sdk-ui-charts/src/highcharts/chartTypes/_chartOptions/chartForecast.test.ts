@@ -137,6 +137,15 @@ describe("assignForecastAxes", () => {
         ]);
     });
 
+    it("should name forecast and confidence interval series so they can be told apart", () => {
+        const data = assignForecastAxes("line", [baseSeries], forecastValues, {
+            forecast: (name) => `${name} forecast`,
+            confidenceInterval: (name) => `${name} confidence interval`,
+        });
+
+        expect(data.map((series) => series.name)).toEqual(["A", "A confidence interval", "A forecast"]);
+    });
+
     it("should not assign if there are more series", () => {
         const data = assignForecastAxes("line", [baseSeries, baseSeries], forecastValues);
 

@@ -516,6 +516,8 @@
     "automations.icon.tooltip.traceId": "追蹤 ID",
     "automations.icon.tooltip.startsOn": "開始於",
     "automations.icon.tooltip.repeats": "重複",
+    "automations.icon.tooltip.trigger.failed": "顯示失敗詳細資訊",
+    "automations.icon.tooltip.trigger.details": "顯示詳細資料",
     "automations.menu.trigger": "立即傳送",
     "automations.menu.copyId": "複製身分證",
     "automations.message.copyId.success": "ID已複製到剪貼簿",

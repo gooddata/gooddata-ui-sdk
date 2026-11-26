@@ -22,6 +22,11 @@ import { useVisibilityDetection } from "./visibilityDetection.js";
 
 interface ILegendSeriesProps {
     series: ISeriesItem[];
+    /**
+     * The whole legend when `series` is only its current page; used to announce option positions
+     * and set size across all pages. Defaults to `series`.
+     */
+    allSeries?: ISeriesItem[];
     label?: string;
     children: ReactNode;
     style?: CSSProperties;
@@ -30,7 +35,7 @@ interface ILegendSeriesProps {
 }
 
 export const LegendSeries = forwardRef<HTMLElement, ILegendSeriesProps>(function LegendSeries(
-    { series, label, style, children, onToggleItem, className },
+    { series, allSeries, label, style, children, onToggleItem, className },
     ref,
 ) {
     const { formatMessage } = useIntl();
@@ -56,6 +61,7 @@ export const LegendSeries = forwardRef<HTMLElement, ILegendSeriesProps>(function
 
     const legendContextValue = useLegendSeriesContextValue({
         series,
+        allSeries,
         id,
         focusedIndex,
     });

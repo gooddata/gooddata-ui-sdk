@@ -2,6 +2,8 @@
 
 import { describe, expect, it } from "vitest";
 
+import { idRef, newDashboardParameterizedDateFilter } from "@gooddata/sdk-model";
+
 import { convertExportMetadata } from "./ExportMetadataConverter.js";
 
 const PARAMS = [{ id: "topN", value: "25", title: "Top N" }];
@@ -48,5 +50,31 @@ describe("convertExportMetadata — filters", () => {
     it("keeps an absolute date filter with granularity in the filters of a tab", () => {
         const result = convertExportMetadata({ filtersByTab: { "tab-A": [granularityDateFilter] } });
         expect(result?.filtersByTab).toEqual({ "tab-A": [granularityDateFilter] });
+    });
+
+    describe("parameterized date filter", () => {
+        const storedParameterizedDateFilter = {
+            dashboardParameterizedDateFilter: {
+                parameter: { identifier: { id: "period", type: "parameter" } },
+                dataSet: { identifier: { id: "closed", type: "dataset" } },
+                localIdentifier: "periodFilter",
+            },
+        };
+        const parameterizedDateFilter = newDashboardParameterizedDateFilter("period", {
+            dataSet: idRef("closed", "dataSet"),
+            localIdentifier: "periodFilter",
+        });
+
+        it("is kept in the filters", () => {
+            const result = convertExportMetadata({ filters: [storedParameterizedDateFilter] });
+            expect(result?.filters).toEqual([parameterizedDateFilter]);
+        });
+
+        it("is kept in the filters of a tab", () => {
+            const result = convertExportMetadata({
+                filtersByTab: { "tab-A": [storedParameterizedDateFilter] },
+            });
+            expect(result?.filtersByTab).toEqual({ "tab-A": [parameterizedDateFilter] });
+        });
     });
 });

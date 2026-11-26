@@ -33,7 +33,8 @@ import {
     createDisplayFormMap,
     createDisplayFormMapFromCatalog,
 } from "../../../../_staging/catalog/displayFormMap.js";
-import { assertNoAbsoluteGranularityDateFilterInDashboards } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+import { assertNoAbsoluteGranularityDateFilterWithDataSetInDashboards } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
+import { assertNoParameterizedDateFilterInDashboards } from "../../../../_staging/dashboard/parameterizedDateFilters.js";
 import { deriveAbsoluteFormGranularitiesFromRelativeForm } from "../../../../_staging/dateFilterConfig/merge.js";
 import { type RenderMode } from "../../../../types.js";
 import { type InitializeDashboard } from "../../../commands/dashboard.js";
@@ -344,7 +345,11 @@ function* loadExistingDashboard(
         dashboard: loadedDashboard,
         references: { insights, unavailable },
     } = dashboardWithReferences;
-    assertNoAbsoluteGranularityDateFilterInDashboards(
+    assertNoAbsoluteGranularityDateFilterWithDataSetInDashboards(
+        [loadedDashboard, cmd.payload.persistedDashboard],
+        ctx.config?.overrideDefaultFilters,
+    );
+    assertNoParameterizedDateFilterInDashboards(
         [loadedDashboard, cmd.payload.persistedDashboard],
         ctx.config?.overrideDefaultFilters,
     );
@@ -499,7 +504,8 @@ function* initializeNewDashboard(
     cmd: InitializeDashboard,
 ): SagaIterator<DashboardLoadResult> {
     const { backend } = ctx;
-    assertNoAbsoluteGranularityDateFilterInDashboards([], ctx.config?.overrideDefaultFilters);
+    assertNoAbsoluteGranularityDateFilterWithDataSetInDashboards([], ctx.config?.overrideDefaultFilters);
+    assertNoParameterizedDateFilterInDashboards([], ctx.config?.overrideDefaultFilters);
 
     const [
         {

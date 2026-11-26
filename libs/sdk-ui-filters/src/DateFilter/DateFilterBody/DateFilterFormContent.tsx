@@ -26,8 +26,8 @@ import {
     type DateFilterOption,
     type IDateFilterOptionsByType,
     type IExtendedDateFilterErrors,
-    type IUiAbsoluteDateFilterForm,
     type IUiRelativeDateFilterForm,
+    isUiAbsoluteGranularityDateFilterForm,
 } from "../interfaces/index.js";
 import { RelativeDateFilterForm } from "../RelativeDateFilterForm/RelativeDateFilterForm.js";
 
@@ -94,7 +94,9 @@ export function DateFilterFormContent({
         activeForm === "relativeForm" && filterOptions.relativeForm && availableGranularities.length > 0;
 
     const absoluteSelectedFilterOption =
-        filterOptions.absoluteForm && isAbsoluteDateFilterForm(selectedFilterOption)
+        filterOptions.absoluteForm &&
+        (isAbsoluteDateFilterForm(selectedFilterOption) ||
+            isUiAbsoluteGranularityDateFilterForm(selectedFilterOption))
             ? selectedFilterOption
             : filterOptions.absoluteForm;
 
@@ -140,9 +142,7 @@ export function DateFilterFormContent({
                             <AbsoluteDateFilterForm
                                 dateFormat={dateFormat}
                                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
-                                selectedFilterOption={
-                                    absoluteSelectedFilterOption as IUiAbsoluteDateFilterForm
-                                }
+                                selectedFilterOption={absoluteSelectedFilterOption!}
                                 isMobile={isMobile}
                                 isTimeEnabled={isTimeForAbsoluteRangeEnabled}
                                 isSecondsEnabled={isSecondsForAbsoluteRangeEnabled}
