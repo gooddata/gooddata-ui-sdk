@@ -30,7 +30,6 @@ import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
-import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IDateFilterConfig } from '@gooddata/sdk-model';
@@ -534,7 +533,7 @@ export interface IAttributeElementLoader {
     getLimit(): number;
     getLimitingAttributeFilters(): IElementsQueryAttributeFilter[];
     getLimitingAttributeFiltersAttributes(): IAttributeMetadataObject[];
-    getLimitingDateFilters(): (IRelativeDateFilter | IAbsoluteDateFilter)[];
+    getLimitingDateFilters(): (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[];
     getLimitingMeasures(): IMeasure[];
     getLimitingValidationItems(): ObjRef[];
     getNextElementsPageError(): GoodDataSdkError | undefined;
@@ -573,7 +572,7 @@ export interface IAttributeElementLoader {
     setDisplayForm(displayForm: ObjRef): void;
     setLimit(limit: number): void;
     setLimitingAttributeFilters(filters: IElementsQueryAttributeFilter[]): void;
-    setLimitingDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): void;
+    setLimitingDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[]): void;
     setLimitingMeasures(measures: IMeasure[]): void;
     setLimitingValidationItems(validateBy: ObjRef[]): void;
     setOrder(order: SortDirection): void;
@@ -616,7 +615,7 @@ export interface IAttributeFilterCoreProps {
     // @alpha
     customIcon?: IFilterButtonCustomIcon;
     // @beta
-    dependentDateFilters?: IDashboardDateFilter[];
+    dependentDateFilters?: DashboardDateFilterOfAnyType[];
     // @alpha
     disabled?: boolean;
     // @alpha
@@ -1244,7 +1243,7 @@ export interface ILoadElementsOptions {
     // (undocumented)
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     // (undocumented)
-    limitingDateFilters?: IRelativeDateFilter[] | IAbsoluteDateFilter[];
+    limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[];
     // (undocumented)
     limitingMeasures?: IMeasure[];
     // (undocumented)

@@ -17,10 +17,6 @@ import {
 } from "@gooddata/sdk-model";
 
 import {
-    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
-    dashboardContainsAbsoluteGranularityDateFilterWithDataSet,
-} from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
-import {
     PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED,
     dashboardContainsParameterizedDateFilter,
 } from "../../../_staging/dashboard/parameterizedDateFilters.js";
@@ -113,13 +109,6 @@ export function* changeDashboardDefinitionHandler(
               }
             : cmd.payload.dashboard;
 
-    if (dashboardContainsAbsoluteGranularityDateFilterWithDataSet(dashboard)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            cmd,
-            ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
-        );
-    }
     if (dashboardContainsParameterizedDateFilter(dashboard)) {
         throw invalidArgumentsProvided(ctx, cmd, PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED);
     }
@@ -218,6 +207,11 @@ export function* changeDashboardDefinitionHandler(
         selectPreloadedAttributesWithReferences,
     );
 
+    // Keep the baseline for saved dashboards and refinements of the same draft.
+    // Opening a different unsaved draft must also replace the identity used by Save.
+    const sameDashboard = ctx.dashboardRef || persistedDashboard?.identifier === dashboard.identifier;
+    const dashboardBaseline = sameDashboard ? (persistedDashboard ?? dashboard) : dashboard;
+
     const batch: Array<PayloadAction<any>> = yield call(
         actionsToInitializeExistingDashboard,
         ctx,
@@ -231,7 +225,7 @@ export function* changeDashboardDefinitionHandler(
         dateFilterConfig,
         tabsDateFilterConfigSource,
         displayForms,
-        persistedDashboard ?? dashboard,
+        dashboardBaseline,
         effectiveActiveTabId,
         workspaceParameters,
         unavailableReferences,

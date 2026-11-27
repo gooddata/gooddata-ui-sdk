@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -137,6 +137,8 @@ export function MinimizedMetricComponent({
     const expandButton = useRef<HTMLButtonElement>(null);
     const isShown = edited > 0 && visible;
     const focusHandoff = useFocusHandoff();
+    const groupId = useId();
+    const infoId = useId();
 
     // Catch the focus only when minimizing this chip's editor dropped it (see focusHandoff). The
     // record is taken in any case, so it cannot move the focus later; and should something have taken
@@ -169,20 +171,30 @@ export function MinimizedMetricComponent({
     }
 
     return (
-        <div ref={chip} className={cx(classes.root, where, "s-edit_dialog-minimized")}>
+        // The group's name is its own label followed by the visible "Editing: N metrics" text, so
+        // entering it (also when minimizing moves the focus to the restore button) tells what it holds.
+        <div
+            ref={chip}
+            id={groupId}
+            role="group"
+            aria-label={intl.formatMessage({ id: "metricComponent.minimize.label" })}
+            aria-labelledby={`${groupId} ${infoId}`}
+            className={cx(classes.root, where, "s-edit_dialog-minimized")}
+        >
             <div
+                id={infoId}
                 className={cx(classes.info)}
                 onClick={expandHandler}
                 onMouseEnter={() => setOver(true)}
                 onMouseLeave={() => setOver(false)}
             >
-                <label className={cx(classes.editing)}>
+                <span className={cx(classes.editing)}>
                     {editable ? (
                         <FormattedMessage id="metricComponent.minimize.editing" />
                     ) : (
                         <FormattedMessage id="metricComponent.minimize.viewing" />
                     )}
-                </label>
+                </span>
                 {invalid && <div className={cx(classes.indicator, classes.invalid)} />}
                 {dirty && !invalid && <div className={cx(classes.indicator, classes.dirty)} />}
                 <div className={cx(classes.count, "s-edit_dialog-minimized-counter")}>

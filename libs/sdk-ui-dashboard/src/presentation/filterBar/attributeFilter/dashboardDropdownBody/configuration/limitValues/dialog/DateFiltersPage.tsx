@@ -5,7 +5,11 @@ import { type ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type ICatalogDateDataset, type IDashboardDateFilter, serializeObjRef } from "@gooddata/sdk-model";
+import {
+    type DashboardDateFilterOfAnyType,
+    type ICatalogDateDataset,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 import { DropdownList, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
@@ -28,7 +32,7 @@ import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterToolt
 
 export interface IDateFiltersPageProps {
     availableDatasets: ICatalogDateDataset[];
-    dependentCommonDateFilter: IDashboardDateFilter;
+    dependentCommonDateFilter: DashboardDateFilterOfAnyType;
     dependentDateFilters: IDashboardDependentDateFilter[];
     onSelect: (item: ValuesLimitingItem) => void;
     onGoBack: () => void;

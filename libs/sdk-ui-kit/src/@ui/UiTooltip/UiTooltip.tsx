@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { type KeyboardEvent, useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import {
     FloatingArrow,
@@ -206,6 +206,24 @@ export function UiTooltip({
     });
     useCloseOnEscape(isOpen, handleClose);
 
+    // A tooltip shown on its own hover/focus trigger must be dismissible with Escape without also
+    // closing the surrounding dialog or dropdown (WCAG 1.4.13). Escape pressed within the anchor
+    // bubbles through the anchor wrapper first: hide the tooltip there and stop the key, so the next
+    // Escape reaches the container. Handlers inside the anchor still run first and can take the key
+    // themselves (e.g. a trigger that closes its own panel). Controlled and always-open tooltips leave
+    // Escape to their owner, and popovers stop Escape inside their own content (UiPopover).
+    const dismissesOnEscapeFirst = behaviour === "tooltip" && !isControlled && triggerBy.length > 0;
+    const handleAnchorKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLElement>) => {
+            if (!isOpen || !dismissesOnEscapeFirst || event.key !== "Escape" || event.defaultPrevented) {
+                return;
+            }
+            event.stopPropagation();
+            handleClose();
+        },
+        [isOpen, dismissesOnEscapeFirst, handleClose],
+    );
+
     const { getReferenceProps, getFloatingProps } = useInteractions([
         hover,
         focus,
@@ -221,7 +239,7 @@ export function UiTooltip({
                 className={e("anchor", { inline: inlineAnchor })}
                 ref={refs.setReference}
                 style={anchorWrapperStyles}
-                {...getReferenceProps()}
+                {...getReferenceProps({ onKeyDown: handleAnchorKeyDown })}
             >
                 {anchor}
             </Component>

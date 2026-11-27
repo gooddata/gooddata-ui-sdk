@@ -5,8 +5,8 @@ import { useState } from "react";
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
 import {
+    type DashboardDateFilterOfAnyType,
     type ICatalogDateDataset,
-    type IDashboardDateFilter,
     type ObjRef,
     areObjRefsEqual,
     isObjRef,
@@ -43,7 +43,7 @@ interface ILimitValuesConfigurationProps {
     metricsAndFacts: IMetricsAndFacts;
     availableDatasets: ICatalogDateDataset[];
     dependentDateFilters: IDashboardDependentDateFilter[];
-    dependentCommonDateFilter: IDashboardDateFilter;
+    dependentCommonDateFilter: DashboardDateFilterOfAnyType;
     onLimitingItemUpdate: (items: ObjRef[]) => void;
     onParentFilterUpdate: (localId: string, isSelected: boolean, overAttributes?: ObjRef[]) => void;
     onDependentDateFilterUpdate: (

@@ -7,6 +7,8 @@ import { describe, expect, it } from "vitest";
 import { type FilterContextItem, type IdentifierRef, idRef } from "@gooddata/sdk-model";
 
 import {
+    isFilterContextItemHidden,
+    isFilterContextItemLocked,
     selectAllDashboardFiltersWithoutCrossFiltering,
     selectAutomationAvailableDashboardFilters,
     selectAutomationDefaultSelectedFilters,
@@ -135,4 +137,43 @@ describe("automation filter selectors", () => {
             ),
         ).toEqual([visibleFilter]);
     });
+});
+
+describe("isFilterContextItemHidden and isFilterContextItemLocked", () => {
+    const dataSet = idRef("closed", "dataSet");
+    const withDimension: FilterContextItem = {
+        dashboardAbsoluteGranularityDateFilter: {
+            granularity: "GDC.time.month",
+            from: "2026-03",
+            dataSet,
+        },
+    };
+    const common: FilterContextItem = {
+        dashboardAbsoluteGranularityDateFilter: { granularity: "GDC.time.month", from: "2026-03" },
+    };
+    const configurations = (mode: "hidden" | "readonly", commonMode?: "hidden" | "readonly") => ({
+        commonDateFilterConfig: commonMode ? { filterName: "", mode: commonMode } : undefined,
+        dateFilterWithDimensionConfigs: [
+            { dateDataSet: idRef("closed", "dataSet"), config: { filterName: "", mode } },
+        ],
+        attributeFilterConfigs: [],
+    });
+
+    it.each([
+        ["hidden", isFilterContextItemHidden],
+        ["readonly", isFilterContextItemLocked],
+    ] as const)("follows the %s configuration of the dimension of the new type", (mode, isInMode) => {
+        expect(isInMode(withDimension, configurations(mode))).toBe(true);
+        expect(isInMode(common, configurations(mode))).toBe(false);
+    });
+
+    it.each([
+        ["hidden", isFilterContextItemHidden],
+        ["readonly", isFilterContextItemLocked],
+    ] as const)(
+        "follows the %s configuration of the common date filter of the new type",
+        (mode, isInMode) => {
+            expect(isInMode(common, configurations(mode, mode))).toBe(true);
+        },
+    );
 });

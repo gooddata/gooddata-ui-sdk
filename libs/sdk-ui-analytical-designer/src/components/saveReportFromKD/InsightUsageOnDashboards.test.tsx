@@ -1,7 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { createAnalyticalDashboard } from "../../tests/constants.test.helpers.js";
 import { withIntl } from "../../utils/with_intl.js";
@@ -10,11 +10,6 @@ import { withRedux } from "../../utils/with_redux.js";
 import { Component, type InsightUsageOnDashboardsProps } from "./InsightUsageOnDashboardsList.js";
 
 // This file drives the component through a real store, so it must not reuse module instances that a
-// sibling file (isolate:false shares the module graph) evaluated while "react-redux" was mocked -
-// DashboardItem would keep the mocked useSelector and get undefined for every selector.
-vi.hoisted(() => {
-    vi.resetModules();
-});
 
 describe("InsightUsageOnDashboards", () => {
     const defaultProps: InsightUsageOnDashboardsProps = {

@@ -3,10 +3,14 @@
 import { useMemo } from "react";
 
 import {
+    type DashboardDateFilterOfAnyType,
     type IAbsoluteDateFilter,
-    type IDashboardDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IRelativeDateFilter,
+    dashboardAbsoluteGranularityDateFilterToDateFilterByWidget,
     isAllTimeDashboardDateFilter,
+    isDashboardAbsoluteGranularityDateFilter,
+    isDashboardParameterizedDateFilter,
     isNoopAllTimeDashboardDateFilter,
     isRelativeDashboardDateFilter,
     newAbsoluteDateFilter,
@@ -18,8 +22,8 @@ import {
  * @internal
  */
 export const useResolveDependentDateFiltersInput = (
-    dependentDateFilters?: IDashboardDateFilter[],
-): (IRelativeDateFilter | IAbsoluteDateFilter)[] => {
+    dependentDateFilters?: DashboardDateFilterOfAnyType[],
+): (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[] => {
     return useMemo(() => {
         if (!dependentDateFilters) {
             return [];
@@ -27,6 +31,14 @@ export const useResolveDependentDateFiltersInput = (
 
         return dependentDateFilters
             .map((dependentDateFilter) => {
+                if (isDashboardAbsoluteGranularityDateFilter(dependentDateFilter)) {
+                    return dashboardAbsoluteGranularityDateFilterToDateFilterByWidget(dependentDateFilter);
+                }
+                // its period comes from a parameter value the filter does not hold, so it does not limit
+                if (isDashboardParameterizedDateFilter(dependentDateFilter)) {
+                    return undefined;
+                }
+
                 const { dataSet, granularity, from, to, localIdentifier, boundedFilter, emptyValueHandling } =
                     dependentDateFilter.dateFilter;
                 if (isRelativeDashboardDateFilter(dependentDateFilter)) {
@@ -59,6 +71,9 @@ export const useResolveDependentDateFiltersInput = (
                     });
                 }
             })
-            .filter((f): f is IRelativeDateFilter | IAbsoluteDateFilter => f !== undefined);
+            .filter(
+                (f): f is IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter =>
+                    f !== undefined,
+            );
     }, [dependentDateFilters]);
 };

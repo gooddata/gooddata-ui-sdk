@@ -2,9 +2,14 @@
 
 import { Document } from "yaml";
 
-import { type NumberParameterDefinition, type StringParameterDefinition } from "@gooddata/api-client-tiger";
+import {
+    type DateRangeParameterDefinition,
+    type NumberParameterDefinition,
+    type StringParameterDefinition,
+} from "@gooddata/api-client-tiger";
 import type {
     Parameter,
+    DateRangeParameterDefinition as YamlDateRangeDefinition,
     NumberParameterDefinition as YamlNumberDefinition,
     StringParameterDefinition as YamlStringDefinition,
 } from "@gooddata/sdk-code-schemas/v1";
@@ -13,8 +18,9 @@ import {
     type DeclarativeCodeParameter,
     optionalConstraints,
     toAllowedValue,
+    toDateRangeValue,
 } from "../utils/parameterUtils.js";
-import { PARAMETER_COMMENT } from "../utils/texts.js";
+import { PARAMETER_COMMENT, PERIOD_PARAMETER_COMMENT } from "../utils/texts.js";
 import { entryWithSpace, fillOptionalMetaFields } from "../utils/yamlUtils.js";
 
 /** @public */
@@ -29,7 +35,8 @@ export function declarativeParameterToYaml(parameter: DeclarativeCodeParameter):
     });
 
     // Add intro comment to the document
-    doc.commentBefore = PARAMETER_COMMENT;
+    doc.commentBefore =
+        parameter.content.type === "DATE_RANGE" ? PERIOD_PARAMETER_COMMENT : PARAMETER_COMMENT;
 
     // Add optional meta fields
     fillOptionalMetaFields(doc, parameter);
@@ -50,9 +57,14 @@ export function declarativeParameterToYaml(parameter: DeclarativeCodeParameter):
 function declarativeParameterDefinitionToYaml(
     definition: DeclarativeCodeParameter["content"],
 ): Parameter["definition"] {
-    return definition.type === "NUMBER"
-        ? declarativeNumberDefinitionToYaml(definition)
-        : declarativeStringDefinitionToYaml(definition);
+    switch (definition.type) {
+        case "STRING":
+            return declarativeStringDefinitionToYaml(definition);
+        case "NUMBER":
+            return declarativeNumberDefinitionToYaml(definition);
+        case "DATE_RANGE":
+            return declarativeDateRangeDefinitionToYaml(definition);
+    }
 }
 
 function declarativeStringDefinitionToYaml(definition: StringParameterDefinition): YamlStringDefinition {
@@ -78,5 +90,14 @@ function declarativeNumberDefinitionToYaml(definition: NumberParameterDefinition
         type: "NUMBER",
         defaultValue: definition.defaultValue,
         ...optionalConstraints({ min, max }),
+    };
+}
+
+function declarativeDateRangeDefinitionToYaml(
+    definition: DateRangeParameterDefinition,
+): YamlDateRangeDefinition {
+    return {
+        type: "DATE_RANGE",
+        defaultValue: toDateRangeValue(definition.defaultValue),
     };
 }

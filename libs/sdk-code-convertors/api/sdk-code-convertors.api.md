@@ -18,9 +18,11 @@ import type { ComputedAttribute } from '@gooddata/sdk-code-schemas/v1';
 import type { ContainerWidget } from '@gooddata/sdk-code-schemas/v1';
 import type { Dashboard } from '@gooddata/sdk-code-schemas/v1';
 import type { DashboardFilters } from '@gooddata/sdk-code-schemas/v1';
+import { DashboardParameterizedDateFilter } from '@gooddata/api-client-tiger';
 import type { Dataset } from '@gooddata/sdk-code-schemas/v1';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import type { DateDataset } from '@gooddata/sdk-code-schemas/v1';
+import { DateRangeParameterDefinition } from '@gooddata/api-client-tiger';
 import { DeclarativeAnalyticalDashboard } from '@gooddata/api-client-tiger';
 import { DeclarativeAttribute } from '@gooddata/api-client-tiger';
 import { DeclarativeAttributeHierarchy } from '@gooddata/api-client-tiger';
@@ -1256,6 +1258,10 @@ export enum CoreErrorCode {
     // (undocumented)
     PagesOrSectionsRequired = "core.pagesOrSectionsRequired",
     // (undocumented)
+    PeriodFilterNotSupported = "core.periodFilterNotSupported",
+    // (undocumented)
+    PeriodFilterWithRange = "core.periodFilterWithRange",
+    // (undocumented)
     ReferenceTypeNotSupported = "core.referenceTypeNotSupported",
     // (undocumented)
     TabsAndRootContentMutuallyExclusive = "core.tabsAndRootContentMutuallyExclusive",
@@ -1361,7 +1367,7 @@ export function declarativeAttributeToYaml(def: IAttributeBody, errorContext?: I
 export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucket[], errorContext?: IErrorContext): YamlBuckets;
 
 // @public
-export type DeclarativeCodeParameter = DeclarativeStringParameter | DeclarativeNumberParameter;
+export type DeclarativeCodeParameter = DeclarativeStringParameter | DeclarativeNumberParameter | DeclarativeDateRangeParameter;
 
 // @public (undocumented)
 export function declarativeComputedAttributeToYaml(computedAttribute: DeclarativeComputedAttribute): {
@@ -1387,11 +1393,16 @@ export function declarativeDateInstanceToYaml(dataset: DeclarativeDateDataset): 
     json: DateDataset;
 };
 
+// @public
+export type DeclarativeDateRangeParameter = DeclarativeParameter & {
+    content: DateRangeParameterDefinition;
+};
+
 // @internal (undocumented)
 export function declarativeDrillToYaml(drill: InsightDrillDefinition, entities?: FromEntities, sourceVisualizationId?: string, errorContext?: IErrorContext): YAMLMap<unknown, unknown>;
 
 // @public
-export type DeclarativeEntityData = DeclarativeDataset | DeclarativeDateDataset | DeclarativeMetric | DeclarativeComputedAttribute | DeclarativeStringParameter | DeclarativeVisualizationObject | DeclarativeDashboardPlugin | DeclarativeAttributeHierarchy | {
+export type DeclarativeEntityData = DeclarativeDataset | DeclarativeDateDataset | DeclarativeMetric | DeclarativeComputedAttribute | DeclarativeCodeParameter | DeclarativeVisualizationObject | DeclarativeDashboardPlugin | DeclarativeAttributeHierarchy | {
     dashboard: DeclarativeAnalyticalDashboard;
     filterContext?: DeclarativeFilterContext;
     tabFilterContexts?: DeclarativeFilterContext[];
@@ -1796,7 +1807,7 @@ export type FilterContextDefinition = Pick<IFilterContextDefinition, "filters"> 
 // @internal (undocumented)
 export type FilterContextItem = {
     yaml: YAMLMap;
-    filter: IFilterContextDefinition["filters"][number];
+    filter: IFilterContextDefinition["filters"][number] | DashboardParameterizedDateFilter;
 };
 
 // @public (undocumented)
@@ -2730,6 +2741,9 @@ export interface IScatterChartConfig {
 
 // @public (undocumented)
 export function isDeclarativeCodeParameter(parameter: DeclarativeParameter): parameter is DeclarativeCodeParameter;
+
+// @public (undocumented)
+export function isDeclarativeDateRangeParameter(parameter: DeclarativeParameter): parameter is DeclarativeDateRangeParameter;
 
 // @public (undocumented)
 export function isDeclarativeNumberParameter(parameter: DeclarativeParameter): parameter is DeclarativeNumberParameter;
@@ -4407,7 +4421,7 @@ export type YamlFilters = {
 };
 
 // @internal (undocumented)
-export function yamlFiltersToDeclarative(entities: ExportEntities, filters_by: QueryFilters | Filter[] | undefined, attributeFilterConfigs?: IAttributeFilterConfigs, assignFilterLocalId?: boolean): {
+export function yamlFiltersToDeclarative(entities: ExportEntities, filters_by: QueryFilters | Filter[] | undefined, attributeFilterConfigs?: IAttributeFilterConfigs, assignFilterLocalId?: boolean, errorContext?: IErrorContext): {
     filters: IFilter[];
     attributeFilterConfigs: IAttributeFilterConfigs | undefined;
 };

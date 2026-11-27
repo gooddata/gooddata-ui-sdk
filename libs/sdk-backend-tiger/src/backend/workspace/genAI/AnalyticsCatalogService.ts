@@ -132,5 +132,7 @@ function toGenerateRequestObjectType(
             return "Fact";
         case "attribute":
             return "Attribute";
+        case "document":
+            return "Document";
     }
 }

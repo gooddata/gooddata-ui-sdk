@@ -9,11 +9,9 @@ import {
     type IFilter,
     type IInsight,
     type IInsightWidget,
-    type IInsightWidgetDescriptionConfiguration,
     type ObjRef,
     insightTitle,
     insightVisualizationType,
-    isInsight,
 } from "@gooddata/sdk-model";
 import { type ILocale, type OnLoadingChanged } from "@gooddata/sdk-ui";
 import { supportsShowAsTable } from "@gooddata/sdk-ui-ext";
@@ -49,6 +47,7 @@ import { InsightWidgetWarningPartialResult } from "../../../widget/warningPartia
 
 import { DrillDialog } from "./DrillDialog.js";
 import { DrillDialogInsight } from "./DrillDialogInsight.js";
+import { getDrillDialogInsightDescription } from "./getDrillDialogInsightDescription.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 
 // Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be above header
@@ -79,30 +78,6 @@ const overlayIgnoredClasses = [
     `#${DOWNLOADER_ID}`,
     `[${FLOATING_ELEMENT_DATA_ATTR}]`,
 ];
-
-const defaultDescriptionConfig: IInsightWidgetDescriptionConfiguration = {
-    source: "insight",
-    includeMetrics: false,
-    visible: true,
-};
-
-const getInsightWidgetDescription = (
-    descriptionConfig: IInsightWidgetDescriptionConfiguration,
-    widget: IInsightWidget | undefined,
-    insight: IInsight["insight"] | undefined,
-): string | undefined => {
-    // We will handler description configuration only for insight widget that is
-    // same as insight in dialog
-    if (isInsight(widget) && widget.insight.identifier === insight?.identifier) {
-        if (!descriptionConfig.visible) {
-            return undefined;
-        }
-        const useInsightDescription = descriptionConfig.source === "insight";
-        return useInsightDescription ? insight?.summary : widget?.description;
-    }
-    // If widget is not insight or insight is not same as insight in dialog, we will use insight summary as default
-    return insight?.summary;
-};
 
 export function InsightDrillDialog(props: IInsightDrillDialogProps): ReactElement {
     const {
@@ -173,8 +148,7 @@ export function InsightDrillDialog(props: IInsightDrillDialogProps): ReactElemen
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;
 
     const [isOpen, setIsOpen] = useState(false);
-    const descriptionConfig = widget.configuration?.description ?? defaultDescriptionConfig;
-    const description = getInsightWidgetDescription(descriptionConfig, widget, insight.insight);
+    const description = getDrillDialogInsightDescription(widget, insight.insight);
 
     // Get original widget state but don't use its toggleWidgetAsTable to avoid affecting original widget
     const originalWidgetShowAsTableState = useShowAsTable(widget).isWidgetAsTable;

@@ -1,6 +1,6 @@
 {
     "name": "gdc-host-ui-template-name-module",
-    "version": "11.71.0-alpha.0",
+    "version": "11.71.0-alpha.1",
     "private": true,
     "description": "{applicationTemplateTitle} host UI module",
     "license": "UNLICENSED",
@@ -28,7 +28,6 @@
     },
     "scripts": {
         "_phase:build": "npm run build-check",
-        "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
         "build": "npm-run-all -p build-check dist",
         "build-check": "tsc",
@@ -41,7 +40,6 @@
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
-        "test-once": "vitest run",
         "validate": "npm run lint && npm run format-check"
     },
     "dependencies": {
@@ -52,8 +50,6 @@
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
         "@module-federation/vite": "1.23.9",
-        "@testing-library/dom": "10.4.2",
-        "@testing-library/react": "16.3.0",
         "@types/node": "24.12.0",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",
@@ -67,7 +63,6 @@
         "eslint-plugin-regexp": "3.3.3",
         "eslint-plugin-sonarjs": "4.2.2",
         "eslint-plugin-tsdoc": "0.5.4",
-        "happy-dom": "21.0.4",
         "jiti": "2.6.1",
         "npm-run-all": "4.1.5",
         "oxfmt": "0.68.0",
@@ -78,7 +73,6 @@
         "react-dom": "19.1.1",
         "rolldown": "1.2.14",
         "typescript": "7.0.2",
-        "vite": "8.3.5",
-        "vitest": "5.0.4"
+        "vite": "8.3.5"
     }
 }

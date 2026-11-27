@@ -1362,15 +1362,6 @@ $dataset_color: #952f8e;
             bottom: 0;
             display: none;
         }
-
-        &--focused {
-            border-radius: 3px;
-            outline: 2px solid var(--gd-palette-primary-base);
-
-            #{$block}__option-select {
-                display: flex;
-            }
-        }
     }
 
     &__footer {

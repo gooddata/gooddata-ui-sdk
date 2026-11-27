@@ -98,3 +98,78 @@ describe("formatMaqlSelection", () => {
         view.destroy();
     });
 });
+
+describe("formatting announcements", () => {
+    function announced(view: EditorView): string | null | undefined {
+        return view.dom.querySelector(".cm-announced")?.textContent;
+    }
+
+    it("announces the formatted selection", async () => {
+        const view = createView();
+
+        await formatMaqlSelection(view, formatting);
+        expect(announced(view)).toBe("Selection formatted");
+
+        view.destroy();
+    });
+
+    it("announces the formatted document", async () => {
+        const view = createView();
+
+        await formatMaqlDocument(view, formatting);
+        expect(announced(view)).toBe("Code formatted");
+
+        view.destroy();
+    });
+
+    it("announces that there was nothing to format", async () => {
+        const view = createView();
+        const unchanged = {
+            doFormat: () => Promise.resolve([]),
+            doFormatRange: () => Promise.resolve([]),
+        } as unknown as MaqlLanguageService;
+
+        await expect(formatMaqlSelection(view, unchanged)).resolves.toBe(true);
+        expect(announced(view)).toBe("Nothing to format");
+        expect(view.state.doc.toString()).toBe(DOC);
+
+        view.destroy();
+    });
+
+    it("announces a failed request", async () => {
+        const view = createView();
+
+        await formatMaqlSelection(view, failing);
+        expect(announced(view)).toBe("Formatting failed");
+
+        view.destroy();
+    });
+
+    it("keeps the focus in the editor", async () => {
+        const view = createView();
+        view.focus();
+
+        await formatMaqlSelection(view, formatting);
+        expect(view.hasFocus).toBe(true);
+
+        view.destroy();
+    });
+
+    it("announces the translated phrase", async () => {
+        const parent = document.createElement("div");
+        document.body.appendChild(parent);
+        const view = new EditorView({
+            state: EditorState.create({
+                doc: DOC,
+                selection: { anchor: 0, head: 6 },
+                extensions: [EditorState.phrases.of({ "Selection formatted": "Výběr naformátován" })],
+            }),
+            parent,
+        });
+
+        await formatMaqlSelection(view, formatting);
+        expect(announced(view)).toBe("Výběr naformátován");
+
+        view.destroy();
+    });
+});

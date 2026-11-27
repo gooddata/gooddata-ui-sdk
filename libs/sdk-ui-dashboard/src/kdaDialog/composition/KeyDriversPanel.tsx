@@ -56,12 +56,13 @@ export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
 
     return (
         <div className={cx("gd-kda-key-drivers-panel")}>
-            <div className={cx("gd-kda-key-drivers-panel-title")} id={listTitleId}>
+            <div className={cx("gd-kda-key-drivers-panel-title")}>
                 {loading ? (
                     <UiSkeleton itemHeight={21} itemWidth={70} />
                 ) : (
                     <>
-                        {label}
+                        {/* Only the title text labels the list boxes; the help button has its own name. */}
+                        <span id={listTitleId}>{label}</span>
                         <UiTooltip
                             id={tooltipId}
                             arrowPlacement="left"

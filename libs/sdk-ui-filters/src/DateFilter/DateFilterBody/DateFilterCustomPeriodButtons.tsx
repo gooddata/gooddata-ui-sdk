@@ -3,7 +3,7 @@
 import { type MouseEvent, type RefObject, useCallback } from "react";
 
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { Button } from "@gooddata/sdk-ui-kit";
@@ -45,6 +45,7 @@ export function DateFilterCustomPeriodButtons({
     absoluteFormId,
     relativeFormId,
 }: IDateFilterCustomPeriodButtonsProps) {
+    const intl = useIntl();
     const onStaticButtonClickHandler = useCallback(
         (e: MouseEvent<HTMLButtonElement>) => {
             e.preventDefault();
@@ -64,7 +65,11 @@ export function DateFilterCustomPeriodButtons({
 
     return (
         <div className="gd-date-filter-form-buttons">
-            <div role="group" className="gd-date-filter-form-buttons-container">
+            <div
+                role="group"
+                className="gd-date-filter-form-buttons-container"
+                aria-label={intl.formatMessage({ id: "dateFilterDropdown.customPeriod.ariaLabel" })}
+            >
                 {filterOptions.absoluteForm ? (
                     <Button
                         id={DATE_FILTER_CUSTOM_STATIC_ID}

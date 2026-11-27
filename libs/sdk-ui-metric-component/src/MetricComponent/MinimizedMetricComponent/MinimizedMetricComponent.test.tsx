@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { fireEvent, render } from "@testing-library/react";
+import { fireEvent, render, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { FocusHandoffContext, type IFocusHandoff, createFocusHandoff } from "../../shared/focusHandoff.js";
@@ -34,10 +34,10 @@ describe("MinimizedMetricComponent", () => {
             expect(container.textContent).toContain("Editing");
             expect(container.textContent).toContain("2 metrics");
 
-            const labelElement = container.querySelector("label");
-            expect(labelElement).not.toBeNull();
-            if (labelElement) {
-                fireEvent.click(labelElement);
+            const counterElement = container.querySelector(".s-edit_dialog-minimized-counter");
+            expect(counterElement).not.toBeNull();
+            if (counterElement) {
+                fireEvent.click(counterElement);
             }
             expect(onClose).not.toHaveBeenCalled();
             expect(onExpand).toHaveBeenCalledTimes(1);
@@ -89,6 +89,25 @@ describe("MinimizedMetricComponent", () => {
             expect(container.querySelectorAll("div").length).toBeGreaterThan(1);
             expect(container.textContent).toContain("Viewing");
             expect(container.textContent).toContain("1 metric");
+        });
+
+        it("exposes the bar as a group named with what it holds", () => {
+            const { container } = mountWithIntlComponent(<MinimizedMetricComponent visible edited={1} />);
+
+            const group = within(container).getByRole("group", {
+                name: "Minimized metric editor Editing: 1 metric",
+            });
+            expect(within(group).getByRole("button", { name: "Restore editor" })).toBeTruthy();
+            expect(within(group).getByRole("button", { name: "Close editor" })).toBeTruthy();
+
+            const { container: twoMetrics } = mountWithIntlComponent(
+                <MinimizedMetricComponent visible edited={2} />,
+            );
+            expect(
+                within(twoMetrics).getByRole("group", {
+                    name: "Minimized metric editor Editing: 2 metrics",
+                }),
+            ).toBeTruthy();
         });
 
         it("render with visible false", async () => {

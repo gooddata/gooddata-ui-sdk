@@ -13,7 +13,6 @@ import {
     newDashboardParameterizedDateFilter,
 } from "@gooddata/sdk-model";
 
-import { ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { TestCorrelation } from "../../../tests/Dashboard.test.helpers.js";
 import {
     SimpleDashboardFilterContext,
@@ -23,7 +22,7 @@ import {
 import { changeDashboardDefinition, initializeDashboard } from "../../commands/dashboard.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
 import { type IDashboardDefinitionChanged } from "../../events/dashboard.js";
-import { type IDashboardCommandFailed, isDashboardCommandFailed } from "../../events/general.js";
+import { isDashboardCommandFailed } from "../../events/general.js";
 import {
     selectDashboardDescription,
     selectDashboardDescriptor,
@@ -35,6 +34,7 @@ import { selectEffectiveDateFilterConfig } from "../../store/tabs/dateFilterConf
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilterOfAnyType,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectUnavailableObjects } from "../../store/unavailableObjects/unavailableObjectsSelectors.js";
@@ -95,35 +95,31 @@ describe("change dashboard definition handler", () => {
             expect(selectLayout(newState).sections).toEqual(SimpleDashboardLayout.sections);
         });
 
-        it("should reject a definition with an absolute date filter with granularity for a date dataset", async () => {
-            const titleBefore = selectDashboardTitle(Tester.state());
+        it("should accept a definition with an absolute date filter with granularity for a date dataset", async () => {
+            const filterWithDimension: IDashboardAbsoluteGranularityDateFilter = {
+                dashboardAbsoluteGranularityDateFilter: {
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                    dataSet: ReferenceMd.DateDatasets.Closed.ref,
+                    localIdentifier: "closed_date",
+                },
+            };
 
-            const event: IDashboardCommandFailed<any> = await Tester.dispatchAndWaitFor(
+            await Tester.dispatchAndWaitFor(
                 changeDashboardDefinition({
                     ...UpdatedDashboardDefinition,
                     filterContext: {
                         ...SimpleDashboardFilterContext,
-                        filters: [
-                            ...SimpleDashboardFilterContext.filters,
-                            {
-                                dashboardAbsoluteGranularityDateFilter: {
-                                    granularity: "GDC.time.month",
-                                    from: "2026-01",
-                                    to: "2026-03",
-                                    dataSet: ReferenceMd.DateDatasets.Closed.ref,
-                                },
-                            },
-                        ],
+                        filters: [...SimpleDashboardFilterContext.filters, filterWithDimension],
                     },
                 }),
-                "GDC.DASH/EVT.COMMAND.FAILED",
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
             );
 
-            expect(event.payload.reason).toEqual("USER_ERROR");
-            expect(event.payload.message).toEqual(
-                ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
-            );
-            expect(selectDashboardTitle(Tester.state())).toEqual(titleBefore);
+            expect(selectFilterContextDateFiltersWithDimensionOfAnyType(Tester.state())).toEqual([
+                filterWithDimension,
+            ]);
         });
 
         it("should accept a definition with a common absolute date filter with granularity", async () => {
@@ -590,6 +586,71 @@ describe("change dashboard definition handler", () => {
             );
 
             expect(selectEnablePersistentFiltersAcrossTabs(Tester.state())).toBe(true);
+        });
+
+        it("should replace the baseline identity when opening a different unsaved draft", async () => {
+            await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition(UpdatedDashboardDefinition),
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
+            );
+            const nextDraft: IDashboard = {
+                ...UpdatedDashboardDefinition,
+                identifier: "ai-dash-2",
+                ref: idRef("ai-dash-2"),
+                uri: "/ai-dash-2",
+                title: "Another draft",
+            };
+
+            await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition(nextDraft),
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
+            );
+
+            expect(Tester.ctx.dashboardRef).toBeUndefined();
+            expect(selectPersistedDashboard(Tester.state())).toMatchObject(nextDraft);
+        });
+
+        it("should preserve the baseline when refining the same unsaved draft", async () => {
+            await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition(UpdatedDashboardDefinition),
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
+            );
+            const baseline = selectPersistedDashboard(Tester.state());
+
+            await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition({ ...UpdatedDashboardDefinition, title: "Refined" }),
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
+            );
+
+            expect(selectDashboardTitle(Tester.state())).toBe("Refined");
+            expect(selectPersistedDashboard(Tester.state())).toEqual(baseline);
+        });
+
+        it("should keep the previous draft identity if applying another draft fails", async () => {
+            await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition(UpdatedDashboardDefinition),
+                "GDC.DASH/EVT.DEFINITION_CHANGED",
+            );
+            const baseline = selectPersistedDashboard(Tester.state());
+
+            const event: unknown = await Tester.dispatchAndWaitFor(
+                changeDashboardDefinition({
+                    ...UpdatedDashboardDefinition,
+                    identifier: "invalid-draft",
+                    ref: idRef("invalid-draft"),
+                    uri: "/invalid-draft",
+                    title: "Invalid draft",
+                    filterContext: {
+                        ...SimpleDashboardFilterContext,
+                        filters: [newDashboardParameterizedDateFilter(idRef("period", "parameter"))],
+                    },
+                }),
+                "GDC.DASH/EVT.COMMAND.FAILED",
+            );
+
+            expect(isDashboardCommandFailed(event) && event.payload.reason).toBe("USER_ERROR");
+            expect(selectDashboardTitle(Tester.state())).toBe(NewDashboardTitle);
+            expect(selectPersistedDashboard(Tester.state())).toEqual(baseline);
         });
 
         it("should apply persistent filters across tabs from the definition when it is set", async () => {

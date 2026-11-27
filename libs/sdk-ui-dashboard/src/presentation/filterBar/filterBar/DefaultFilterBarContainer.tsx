@@ -24,6 +24,7 @@ import {
     Message,
     UiButton,
     UiTooltip,
+    findFocusableElementOutsideContainer,
     makeHorizontalKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
 
@@ -417,14 +418,23 @@ function MeasuredDiv({
                     }
                 }
                 // The bar is a toolbar: one Tab stop, items (including the reset button) are reached
-                // with the arrow keys, so the reset button does not add an extra Tab stop.
+                // with the arrow keys, so Tab from any item leaves the bar instead of visiting the others.
                 if (activeFilterIndex === -1) {
                     // First tab into bar: focus first filter
                     e.preventDefault();
                     filterElements[0]?.focus();
                 } else {
-                    // move away from filter bar to next/previous element
-                    // by letting the event bubble up to the browser with focus moved to the edge of container already
+                    const container = containerRef.current;
+                    const outside = container
+                        ? findFocusableElementOutsideContainer(container, e.shiftKey ? "backward" : "forward")
+                        : null;
+                    if (outside) {
+                        e.preventDefault();
+                        outside.focus();
+                        return;
+                    }
+                    // Nothing focusable outside the bar in that direction: move focus to the edge of the
+                    // bar and let the browser's default Tab take it out of the page content.
                     if (e.shiftKey) {
                         const first = filterElements[0];
                         first?.focus();

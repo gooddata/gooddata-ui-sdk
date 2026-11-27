@@ -21,19 +21,6 @@ export const ABSOLUTE_GRANULARITY_DATE_FILTER_DRILL_TO_DASHBOARD_NOT_SUPPORTED =
 export const ABSOLUTE_GRANULARITY_DATE_FILTER_INSIGHT_EDITOR_NOT_SUPPORTED =
     "The insight editor does not support absolute date filters with granularity yet.";
 
-export const ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED =
-    "Dashboards do not support absolute date filters with granularity for a date dataset yet.";
-
-export function containsAbsoluteGranularityDateFilterWithDataSet(
-    filters: (FilterContextItem | IFilter)[] | undefined,
-): boolean {
-    return !!filters?.some(
-        (filter) =>
-            isDashboardAbsoluteGranularityDateFilter(filter) &&
-            !!filter.dashboardAbsoluteGranularityDateFilter.dataSet,
-    );
-}
-
 export function containsAbsoluteGranularityDateFilter(
     filters: (FilterContextItem | IFilter)[] | undefined,
 ): boolean {
@@ -52,12 +39,6 @@ export function dashboardFilterContextFilters(dashboard: IDashboard | undefined)
     return [dashboard?.filterContext, ...(dashboard?.tabs ?? []).map((tab) => tab.filterContext)].flatMap(
         (filterContext) => filterContext?.filters ?? [],
     );
-}
-
-export function dashboardContainsAbsoluteGranularityDateFilterWithDataSet(
-    dashboard: IDashboard | undefined,
-): boolean {
-    return containsAbsoluteGranularityDateFilterWithDataSet(dashboardFilterContextFilters(dashboard));
 }
 
 export function automationExportFilters(
@@ -90,17 +71,4 @@ export function automationContainsAbsoluteGranularityDateFilter(
         (filter) =>
             isDashboardAbsoluteGranularityDateFilter(filter) || isAbsoluteGranularityDateFilter(filter),
     );
-}
-
-/**
- * The dashboard cannot show or apply these filters, so it fails to load instead of dropping them.
- */
-export function assertNoAbsoluteGranularityDateFilterWithDataSetInDashboards(
-    dashboards: (IDashboard | undefined)[],
-    overrideDefaultFilters: FilterContextItem[] | undefined,
-): void {
-    const filters = [...(overrideDefaultFilters ?? []), ...dashboards.flatMap(dashboardFilterContextFilters)];
-    if (containsAbsoluteGranularityDateFilterWithDataSet(filters)) {
-        throw new NotSupported(ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED);
-    }
 }

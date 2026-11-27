@@ -6,9 +6,9 @@ import { invariant } from "ts-invariant";
 
 import {
     type DashboardAttributeFilterItem,
+    type DashboardDateFilterOfAnyType,
     type IAnalyticalWidget,
     type ICatalogDateDataset,
-    type IDashboardDateFilter,
     type IDashboardFilterReference,
     type IDashboardMeasureValueFilter,
     type ObjRef,
@@ -17,7 +17,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterObjRef,
     isDashboardAttributeFilterReference,
-    isDashboardDateFilter,
+    isDashboardDateFilterOfAnyType,
     isDashboardDateFilterReference,
     isDashboardMeasureValueFilter,
     isDashboardMeasureValueFilterReference,
@@ -38,8 +38,8 @@ import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogS
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectFilterContextAttributeFilterItems,
-    selectFilterContextDateFiltersWithDimension,
-    selectFilterContextDraggableFilterItems,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
+    selectFilterContextDraggableFilterItemsOfAnyType,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import {
@@ -95,27 +95,29 @@ function getIgnoredAttributeFilters(
 }
 
 function getIgnoredDateFilters(
-    filters: IDashboardDateFilter[],
+    filters: DashboardDateFilterOfAnyType[],
     ignored: IDashboardFilterReference[],
-): IDashboardDateFilter[] {
+): DashboardDateFilterOfAnyType[] {
     const ignoredRefs = toDateDataSetRefs(ignored);
 
     return filters.filter((filter) => {
-        return ignoredRefs.some((ref) => areObjRefsEqual(filter.dateFilter.dataSet!, ref));
+        return ignoredRefs.some((ref) => areObjRefsEqual(dashboardFilterObjRef(filter)!, ref));
     });
 }
 
 function getIgnoredFilters(
-    filters: Array<IDashboardDateFilter | DashboardAttributeFilterItem | IDashboardMeasureValueFilter>,
+    filters: Array<
+        DashboardDateFilterOfAnyType | DashboardAttributeFilterItem | IDashboardMeasureValueFilter
+    >,
     displayAsLabelMap: Map<string, ObjRef>,
     ignored: IDashboardFilterReference[],
-): Array<IDashboardDateFilter | DashboardAttributeFilterItem | IDashboardMeasureValueFilter> {
+): Array<DashboardDateFilterOfAnyType | DashboardAttributeFilterItem | IDashboardMeasureValueFilter> {
     const ignoredRefs = toRefs(ignored);
 
     return filters.filter((filter) => {
         return ignoredRefs.some((ref) => {
-            if (isDashboardDateFilter(filter)) {
-                return areObjRefsEqual(filter.dateFilter.dataSet!, ref);
+            if (isDashboardDateFilterOfAnyType(filter)) {
+                return areObjRefsEqual(dashboardFilterObjRef(filter)!, ref);
             }
             if (isDashboardMeasureValueFilter(filter)) {
                 return areObjRefsEqual(dashboardFilterObjRef(filter), ref);
@@ -149,7 +151,7 @@ function* replaceFilterSettings(
     }
 
     let ignoredFilters:
-        | Array<DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter>
+        | Array<DashboardAttributeFilterItem | DashboardDateFilterOfAnyType | IDashboardMeasureValueFilter>
         | undefined = undefined;
     if (op.ignoreAttributeFilters) {
         ignoredFilters = yield call(
@@ -196,8 +198,8 @@ function* changeDateFilterIgnore(
     widget: IAnalyticalWidget,
     dateDataSet: ICatalogDateDataset | undefined,
 ): SagaIterator<IFilterOpResult> {
-    const filters: ReturnType<typeof selectFilterContextDraggableFilterItems> = yield select(
-        selectFilterContextDraggableFilterItems,
+    const filters: ReturnType<typeof selectFilterContextDraggableFilterItemsOfAnyType> = yield select(
+        selectFilterContextDraggableFilterItemsOfAnyType,
     );
     const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
         selectAttributeFilterConfigsDisplayAsLabelMap,
@@ -267,7 +269,7 @@ function* enableDateFilter(
 function* changeIgnores(
     widget: IAnalyticalWidget,
     newlyIgnoredFilters:
-        | Array<DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter>
+        | Array<DashboardAttributeFilterItem | DashboardDateFilterOfAnyType | IDashboardMeasureValueFilter>
         | undefined,
 ): SagaIterator<IFilterOpResult> {
     const dateDataSetMap: SagaReturnType<typeof selectAllCatalogDateDatasetsMap> = yield select(
@@ -315,8 +317,8 @@ function* replaceAttributeIgnores(
 }
 
 function* getIgnoredDateFiltersWorWidget(widget: IAnalyticalWidget) {
-    const dateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
-        selectFilterContextDateFiltersWithDimension,
+    const dateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimensionOfAnyType> = yield select(
+        selectFilterContextDateFiltersWithDimensionOfAnyType,
     );
     return getIgnoredDateFilters(dateFilters, widget.ignoreDashboardFilters);
 }
@@ -332,8 +334,8 @@ function* getIgnoredAttributeFiltersWorWidget(widget: IAnalyticalWidget) {
 }
 
 function* getIgnoredMeasureValueFiltersForWidget(widget: IAnalyticalWidget) {
-    const filters: ReturnType<typeof selectFilterContextDraggableFilterItems> = yield select(
-        selectFilterContextDraggableFilterItems,
+    const filters: ReturnType<typeof selectFilterContextDraggableFilterItemsOfAnyType> = yield select(
+        selectFilterContextDraggableFilterItemsOfAnyType,
     );
     const measureValueFilters = filters.filter(isDashboardMeasureValueFilter);
     return getIgnoredMeasureValueFilters(measureValueFilters, widget.ignoreDashboardFilters);
@@ -353,8 +355,8 @@ function getIgnoredMeasureValueFilters(
 }
 
 function* getMeasureValueFiltersByMeasures(measureRefs: ObjRef[]) {
-    const filters: ReturnType<typeof selectFilterContextDraggableFilterItems> = yield select(
-        selectFilterContextDraggableFilterItems,
+    const filters: ReturnType<typeof selectFilterContextDraggableFilterItemsOfAnyType> = yield select(
+        selectFilterContextDraggableFilterItemsOfAnyType,
     );
     return filters.filter(
         (filter): filter is IDashboardMeasureValueFilter =>
@@ -468,13 +470,13 @@ function* ignoreDateFilter(
             widget,
             op.dateDataSetRefs,
         );
-        ignoreFilterDataSetRefs = ignoreDateFilters.map((df) => df.dateFilter.dataSet!);
+        ignoreFilterDataSetRefs = ignoreDateFilters.map((df) => dashboardFilterObjRef(df)!);
     } else {
         ignoreFilterDataSetRefs = op.dateDataSetRefs;
     }
 
-    const dateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
-        selectFilterContextDateFiltersWithDimension,
+    const dateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimensionOfAnyType> = yield select(
+        selectFilterContextDateFiltersWithDimensionOfAnyType,
     );
     const alreadyIgnored: SagaReturnType<typeof getIgnoredDateFiltersWorWidget> = yield call(
         getIgnoredDateFiltersWorWidget,
@@ -484,8 +486,8 @@ function* ignoreDateFilter(
     const addToIgnore = dateFilters.filter((df) => {
         return (
             !alreadyIgnored.some((ignoredFilter) =>
-                areObjRefsEqual(ignoredFilter.dateFilter.dataSet, df.dateFilter.dataSet),
-            ) && ignoreFilterDataSetRefs.some((ds) => areObjRefsEqual(ds, df.dateFilter.dataSet))
+                areObjRefsEqual(dashboardFilterObjRef(ignoredFilter)!, dashboardFilterObjRef(df)!),
+            ) && ignoreFilterDataSetRefs.some((ds) => areObjRefsEqual(ds, dashboardFilterObjRef(df)!))
         );
     });
 
@@ -522,7 +524,7 @@ function* unignoreDateFilter(
             widget,
             op.dateDataSetRefs,
         );
-        unignoreFilterDataSets = ignoreDateFilters.map((df) => df.dateFilter.dataSet!);
+        unignoreFilterDataSets = ignoreDateFilters.map((df) => dashboardFilterObjRef(df)!);
     } else {
         unignoreFilterDataSets = op.dateDataSetRefs;
     }
@@ -534,7 +536,7 @@ function* unignoreDateFilter(
 
     const reducedIgnores = alreadyIgnored.filter((candidate) => {
         return !(unignoreFilterDataSets ?? []).some((toRemove) =>
-            areObjRefsEqual(candidate.dateFilter.dataSet, toRemove),
+            areObjRefsEqual(dashboardFilterObjRef(candidate)!, toRemove),
         );
     });
 
@@ -638,7 +640,7 @@ export interface IFilterOpResult {
      * Attribute filters to ignore on the widget.
      */
     ignoredFilters?: Array<
-        DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter
+        DashboardAttributeFilterItem | DashboardDateFilterOfAnyType | IDashboardMeasureValueFilter
     >;
 }
 
@@ -659,7 +661,7 @@ export type DateFilterValidator<T extends IAnalyticalWidget> = (
     cmd: IDashboardCommand,
     widget: T,
     refs: ObjRef[],
-) => SagaIterator<IDashboardDateFilter[]>;
+) => SagaIterator<DashboardDateFilterOfAnyType[]>;
 export type FilterValidators<T extends IAnalyticalWidget> = {
     dateDatasetValidator: DateDatasetValidator<T>;
     attributeFilterValidator: AttributeFilterValidator<T>;

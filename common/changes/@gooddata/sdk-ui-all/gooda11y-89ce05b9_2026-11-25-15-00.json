@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-metric-component: the metric editor \"Save\" and \"Save as new\" buttons tell screen readers when they are unavailable (aria-disabled), and the state updates as the expression is edited or undone. Activating them on an invalid metric still moves the focus to the invalid field.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

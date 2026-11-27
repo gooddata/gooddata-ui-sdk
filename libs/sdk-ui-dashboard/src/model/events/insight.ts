@@ -2,6 +2,7 @@
 
 import { type IExportResult } from "@gooddata/sdk-backend-spi";
 import {
+    type DashboardDateFilterOfAnyType,
     type DrillDefinition,
     type ICatalogDateDataset,
     type IDashboardAttributeFilter,
@@ -160,6 +161,17 @@ export interface IDashboardInsightWidgetFilterSettingsChangedPayload {
     readonly ignoredDateFilters?: IDashboardDateFilter[];
 
     /**
+     * Date filters with dimension of any type that are ignored for the widget.
+     *
+     * @remarks
+     * Unlike `ignoredDateFilters`, it lists the absolute date filters with granularity too.
+     * If empty, then all date filters defined for the dashboard are in effect.
+     *
+     * @alpha
+     */
+    readonly ignoredDateFiltersOfAnyType?: DashboardDateFilterOfAnyType[];
+
+    /**
      * Date dataset used for date filtering.
      *
      * If undefined, then dashboard's date filter is not in effect for the widget.
@@ -188,6 +200,7 @@ export function insightWidgetFilterSettingsChanged(
     dateDatasetForFiltering: ICatalogDateDataset | undefined,
     correlationId?: string,
     ignoredDateFilters?: IDashboardDateFilter[],
+    ignoredDateFiltersOfAnyType?: DashboardDateFilterOfAnyType[],
 ): IDashboardInsightWidgetFilterSettingsChanged {
     return {
         type: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
@@ -197,6 +210,7 @@ export function insightWidgetFilterSettingsChanged(
             ref,
             ignoredAttributeFilters,
             ignoredDateFilters,
+            ignoredDateFiltersOfAnyType,
             dateDatasetForFiltering,
         },
     };

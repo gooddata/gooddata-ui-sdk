@@ -5,6 +5,7 @@ import { type PayloadAction } from "@reduxjs/toolkit";
 import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeMetadataObject,
     type IMeasure,
     type IRelativeDateFilter,
@@ -98,7 +99,7 @@ const setLimitingValidationItems: AttributeFilterReducer<PayloadAction<{ validat
 };
 
 const setLimitingDateFilters: AttributeFilterReducer<
-    PayloadAction<{ filters: IRelativeDateFilter[] | IAbsoluteDateFilter[] }>
+    PayloadAction<{ filters: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[] }>
 > = (state, action) => {
     state.elements.currentOptions.limitingDateFilters = action.payload.filters;
 };

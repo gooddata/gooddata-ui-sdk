@@ -9,11 +9,20 @@ import { Provider } from "react-redux";
 import { describe, expect, it, vi } from "vitest";
 
 import { type IGenAiClarifyingQuestion } from "@gooddata/sdk-model";
+import { getFocusableElements } from "@gooddata/sdk-ui-kit";
 
 import { DEFAULT_MESSAGES } from "../../../localization/translations.js";
 import { type IChatConversationLocalItem } from "../../../model.js";
 import { chatWindowSliceName, chatWindowSliceReducer } from "../../../store/chatWindow/chatWindowSlice.js";
-import { filledFormAction, newMessageAction } from "../../../store/messages/messagesSlice.js";
+import {
+    filledFormAction,
+    loadConversationSuccessAction,
+    messagesSliceName,
+    messagesSliceReducer,
+    newMessageAction,
+} from "../../../store/messages/messagesSlice.js";
+import { createEmptyConversation } from "../../../store/utils.js";
+import { ConfigProvider } from "../../ConfigContext.js";
 import { REPLY_BOX_CLASS_NAME } from "../../constants.js";
 
 import {
@@ -37,14 +46,28 @@ const MESSAGE: IChatConversationLocalItem = {
     streaming: true,
 };
 
-function renderQuestionnaire(overrides: Partial<ConversationClarifyingQuestionsContentProps> = {}) {
-    const store = configureStore({ reducer: { [chatWindowSliceName]: chatWindowSliceReducer } });
-    const dispatch = vi.spyOn(store, "dispatch");
+function renderQuestionnaire(
+    overrides: Partial<ConversationClarifyingQuestionsContentProps> = {},
+    allowNativeLinks = false,
+) {
+    const store = configureStore({
+        reducer: {
+            [chatWindowSliceName]: chatWindowSliceReducer,
+            [messagesSliceName]: messagesSliceReducer,
+        },
+    });
     const props = { questions: QUESTIONS, message: MESSAGE, isLast: true, ...overrides };
+    store.dispatch(
+        loadConversationSuccessAction({
+            currentConversation: createEmptyConversation(),
+            conversationItems: [props.message],
+        }),
+    );
+    const dispatch = vi.spyOn(store, "dispatch");
     const wrapper = ({ children }: { children: ReactNode }) => (
         <Provider store={store}>
             <IntlProvider locale="en-US" messages={DEFAULT_MESSAGES["en-US"]}>
-                {children}
+                <ConfigProvider allowNativeLinks={allowNativeLinks}>{children}</ConfigProvider>
             </IntlProvider>
         </Provider>
     );
@@ -78,6 +101,61 @@ async function nextFrame() {
 }
 
 describe("ConversationClarifyingQuestionsContent", () => {
+    it.each([false, true])(
+        "excludes option chips and links from the tab order (native links: %s)",
+        async (allowNativeLinks) => {
+            const options = [
+                { text: "{metric/revenue}" },
+                { text: "[Dashboard](gooddata://dashboard?ws=workspace&id=dashboard)" },
+            ];
+            renderQuestionnaire(
+                {
+                    useMarkdown: true,
+                    objects: [{ id: "revenue", type: "metric", title: "Revenue" }],
+                    questions: [
+                        {
+                            text: "Which source?",
+                            control: { options },
+                        },
+                        { ...QUESTIONS[1], control: { options: [...options].reverse() } },
+                    ],
+                },
+                allowNativeLinks,
+            );
+            const questionnaire = screen.getByTestId("gen-ai-clarifying-questions");
+            const skipButton = screen.getByRole("button", { name: "Skip" });
+            await waitFor(() => expect(questionnaire).toHaveFocus());
+
+            const contents = screen.getAllByTestId("gen-ai-clarifying-option-content");
+            expect(contents[0]).toHaveTextContent("Revenue");
+            expect(contents[0]).not.toHaveAttribute("inert");
+            expect(contents[1]).not.toHaveAttribute("inert");
+            expect(
+                screen.getByRole(allowNativeLinks ? "link" : "button", { name: "Dashboard" }),
+            ).toHaveAttribute("tabindex", "-1");
+            expect(getFocusableElements(questionnaire, true).focusableElements).toEqual([skipButton]);
+
+            fireEvent.keyDown(questionnaire, { key: "ArrowDown", code: "ArrowDown" });
+            fireEvent.keyDown(questionnaire, { key: "Enter", code: "Enter" });
+
+            expect(screen.getByTestId("gen-ai-clarifying-question")).toHaveTextContent("Which period?");
+            expect(questionnaire).toHaveFocus();
+            expect(getFocusableElements(questionnaire, true).focusableElements).toEqual([skipButton]);
+        },
+    );
+
+    it("excludes reference chips from the tab order when Markdown is disabled", () => {
+        renderQuestionnaire({
+            isLast: false,
+            objects: [{ id: "revenue", type: "metric", title: "Revenue" }],
+            questions: [{ text: "Which metric?", control: { options: [{ text: "{metric/revenue}" }] } }],
+        });
+
+        const content = screen.getByTestId("gen-ai-clarifying-option-content");
+        expect(content).toHaveTextContent("Revenue");
+        expect(getFocusableElements(content, true).focusableElements).toEqual([]);
+    });
+
     it("takes focus from the reply box for live questions and accepts answers using the keyboard", async () => {
         focusReplyBox();
         const { dispatch } = renderQuestionnaire();

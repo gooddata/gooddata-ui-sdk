@@ -7,7 +7,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
     isDashboardAttributeFilterItem,
-    isDashboardDateFilter,
+    isDashboardDateFilterOfAnyType,
     isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
@@ -26,8 +26,8 @@ function findGroupForFilter(
             if (isDashboardAttributeFilterItem(item)) {
                 return filter.filterLocalIdentifier === dashboardAttributeFilterItemLocalIdentifier(item);
             }
-            if (isDashboardDateFilter(item)) {
-                return filter.filterLocalIdentifier === item.dateFilter.localIdentifier;
+            if (isDashboardDateFilterOfAnyType(item)) {
+                return filter.filterLocalIdentifier === dashboardFilterLocalIdentifier(item);
             }
             if (isDashboardMeasureValueFilter(item)) {
                 return filter.filterLocalIdentifier === dashboardFilterLocalIdentifier(item);

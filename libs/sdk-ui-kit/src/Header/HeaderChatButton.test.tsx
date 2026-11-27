@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { HeaderChatButton } from "./HeaderChatButton.js";
@@ -22,6 +22,38 @@ describe("HeaderChatButton", () => {
         const button = screen.getByRole("button", { name: "Open AI Assistant" });
         expect(button).toHaveAttribute("aria-haspopup", "dialog");
         expect(button).toHaveAttribute("aria-expanded", "false");
+    });
+
+    it("should not repeat its name as its description", () => {
+        render(<Harness isOpen={false} />);
+
+        const button = screen.getByRole("button", { name: "Open AI Assistant" });
+        expect(button).not.toHaveAttribute("title");
+        expect(button).not.toHaveAccessibleDescription("Open AI Assistant");
+    });
+
+    it("should show its visual tooltip on keyboard focus without making it the description", async () => {
+        render(<Harness isOpen={false} />);
+
+        const button = screen.getByRole("button", { name: "Open AI Assistant" });
+        act(() => button.focus());
+
+        const tooltip = await screen.findByText("Open AI Assistant", { selector: "[role='tooltip']" });
+        expect(tooltip).toHaveAttribute("aria-hidden", "true");
+        expect(button).not.toHaveAccessibleDescription("Open AI Assistant");
+
+        act(() => button.blur());
+        await waitFor(() =>
+            expect(screen.queryByText("Open AI Assistant", { selector: "[role='tooltip']" })).toBeNull(),
+        );
+    });
+
+    it("should not show the tooltip while the panel is open", () => {
+        render(<Harness isOpen />);
+
+        act(() => screen.getByRole("button", { name: "Open AI Assistant" }).focus());
+
+        expect(screen.queryByText("Open AI Assistant", { selector: "[role='tooltip']" })).toBeNull();
     });
 
     it("should be expanded when open", () => {

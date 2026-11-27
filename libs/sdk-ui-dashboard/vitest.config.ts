@@ -1,6 +1,6 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 
 export default defineConfig({
     resolve: {
@@ -14,7 +14,6 @@ export default defineConfig({
         pool: "threads",
         maxWorkers: 8, // Thread count for CI
         // Improve performance with these options
-        isolate: false,
         maxConcurrency: 8, // Concurrency for CI
         clearMocks: true,
         mockReset: true,
@@ -33,5 +32,24 @@ export default defineConfig({
                 },
             },
         },
+        projects: [
+            {
+                extends: true,
+                test: {
+                    name: "non-isolated",
+                    include: ["**/*.{test,spec}.?(c|m)[jt]s?(x)"],
+                    exclude: [...configDefaults.exclude, "**/*.isolated.{test,spec}.?(c|m)[jt]s?(x)"],
+                    isolate: false,
+                },
+            },
+            {
+                extends: true,
+                test: {
+                    name: "isolated",
+                    include: ["**/*.isolated.{test,spec}.?(c|m)[jt]s?(x)"],
+                    isolate: true,
+                },
+            },
+        ],
     },
 });

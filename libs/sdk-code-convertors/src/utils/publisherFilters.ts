@@ -21,9 +21,29 @@ import {
 import { yamlFilterContextToDeclarative } from "../to/yamlDashboardToDeclarative.js";
 
 import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "./errors.js";
+import {
+    type StoredFilterContextItem,
+    isDashboardPeriodDateFilter,
+    isPeriodDateFilter,
+} from "./periodDateFilter.js";
 import { referencesAsStored, referencesAsWritten } from "./publisherFilterRefs.js";
 import { assertPublisherGranularityV2 } from "./publisherPeriodV2.js";
 import { createFilterContextItemKeyName } from "./yamlUtils.js";
+
+/**
+ * A document shares the dashboard's filter convertor but cannot hold a date filter set to a period, so
+ * one is refused instead of converted.
+ */
+function refusePeriodFilters(filters: readonly StoredFilterContextItem[], errorContext?: IErrorContext) {
+    const period = filters.find(isDashboardPeriodDateFilter);
+    if (period !== undefined) {
+        throw newError(
+            CoreErrorCode.PeriodFilterNotSupported,
+            [createFilterContextItemKeyName(period, "date", errorContext)],
+            errorContext,
+        );
+    }
+}
 
 /**
  * A document holds its filters the way a dashboard's filter context does, so the same convertor writes
@@ -35,6 +55,7 @@ export function filtersToYaml(filters: FilterContextItem[] | undefined): YAMLMap
     if (!filters?.length) {
         return undefined;
     }
+    refusePeriodFilters(filters);
     const { filters: written } = declarativeFilterContextToYaml(undefined, {
         content: { filters: referencesAsWritten(filters), version: "2" },
     } as DeclarativeFilterContext);
@@ -55,6 +76,7 @@ export function filtersToDeclarative(filters: DashboardFilters | undefined): Fil
     // named does not matter; only the filters inside it are what a document stores.
     const { filterContext } = yamlFilterContextToDeclarative("report", filters);
     const content = filterContext.content as IFilterContextDefinition | undefined;
+    refusePeriodFilters(content?.filters ?? []);
     return content?.filters?.length ? referencesAsStored(content.filters) : undefined;
 }
 
@@ -119,6 +141,9 @@ export function filtersToDeclarativeV2(
 ): IPublisherFiltersV2 {
     const entries = Object.entries(filters);
     for (const [key, filter] of entries) {
+        if (isPeriodDateFilter(filter)) {
+            throw newError(CoreErrorCode.PeriodFilterNotSupported, [key], errorContext);
+        }
         const [lost] = lostSettings(filter, holder);
         if (lost !== undefined) {
             throw newError(CoreErrorCode.FilterSettingNotStorable, [key, lost, holder], errorContext);
@@ -165,6 +190,7 @@ export function filtersToYamlV2(
     { filters, attributeFilterConfigs }: IPublisherFiltersV2,
     errorContext?: IErrorContext,
 ): DashboardFilters {
+    refusePeriodFilters(filters, errorContext);
     const writtenFilters = referencesAsWritten(filters);
     const { filters: written, filtersMap } = declarativeFilterContextToYaml(
         undefined,

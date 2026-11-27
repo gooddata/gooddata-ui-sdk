@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type MutableRefObject, createContext } from "react";
+import { createContext } from "react";
 
 import { defineMessages } from "react-intl";
 
@@ -113,19 +113,15 @@ export interface IPeriodRangeAccessibility {
     start: IPeriodRangeFieldAccessibility;
     end: IPeriodRangeFieldAccessibility;
     onFieldStateChange: (side: PeriodRangeSide, state: { hasParseError: boolean; isBlank: boolean }) => void;
+    /** Invoked when the user's own edit leaves a field's text empty. */
+    onFieldCleared: (side: PeriodRangeSide) => void;
     isCalendarOpen: boolean;
     onRequestOpen: () => void;
+    /** Invoked on an Enter keydown in a field, unless `ignoreEnter` is set. */
+    onEnterCommit: (side: PeriodRangeSide) => void;
     /**
-     * Set by AccessibleFieldInput for the synchronous duration of an Enter keydown, read by
-     * handleChange so that rc-picker's own per-round onChange does not duplicate the work
-     * handleEnterCommit does.
-     */
-    enterCommitRef: MutableRefObject<boolean>;
-    /** Invoked after rc-picker has processed an Enter keydown in either field. */
-    onEnterCommit: () => void;
-    /**
-     * Whether Enter must be swallowed before rc-picker ever sees it. True in ALL_AT_ONCE mode
-     * (`withoutApply`), where there is no Apply button for Enter to stand in for.
+     * Whether Enter does nothing. True in ALL_AT_ONCE mode (`withoutApply`), where there is no Apply button
+     * for Enter to stand in for.
      */
     ignoreEnter: boolean;
 }

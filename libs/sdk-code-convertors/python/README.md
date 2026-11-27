@@ -60,6 +60,7 @@ to trip over).
 - `yaml_metric_to_declarative`
 - `yaml_visualisation_to_declarative`
 - `yaml_dashboard_to_declarative`
+- `yaml_parameter_to_declarative`
 - `yaml_plugin_to_declarative`
 - `yaml_attribute_hierarchy_to_declarative`
 - `yaml_publisher_document_to_declarative`
@@ -71,6 +72,7 @@ to trip over).
 - `declarative_metric_to_yaml`
 - `declarative_visualisation_to_yaml`
 - `declarative_dashboard_to_yaml`
+- `declarative_parameter_to_yaml`
 - `declarative_plugin_to_yaml`
 - `declarative_attribute_hierarchy_to_yaml`
 - `declarative_publisher_document_to_yaml`

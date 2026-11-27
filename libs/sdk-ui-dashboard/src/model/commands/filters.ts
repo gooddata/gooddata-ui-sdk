@@ -365,8 +365,7 @@ export type DateFilterOfAnyTypeSelection = {
      * The date filter to set, undefined for the common date filter set to All time.
      *
      * @remarks
-     * An absolute date filter with granularity must not have a date dataset, the dashboard does not support
-     * it yet.
+     * A filter with a date dataset sets the date filter with that dimension.
      */
     readonly filter: DashboardDateFilterOfAnyType | undefined;
 

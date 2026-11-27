@@ -1,0 +1,25 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-code-schemas: Analytics as Code describes date range parameters (periods), with the format of `from` and `to` checked by granularity and a year also accepted without quotes, and date filters that use one, with `parameter` in place of `granularity`, `from` and `to`, in visualizations and dashboards.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-code-convertors: Date range parameters and the date filters that use one convert between Analytics as Code and the declarative API in visualizations and dashboards; Publisher documents refuse them.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-catalog: The check that the YAML editor accepts what Analytics as Code accepts now covers date range parameters.",
+            "type": "none"
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-backend-tiger: A test compares the Analytics as Code query preview of a period date filter with the backend's filter conversion.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

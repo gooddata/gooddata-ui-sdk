@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type DateRangeParameterDefinition,
     type DeclarativeParameter,
     type NumberParameterDefinition,
     type StringParameterDefinition,
@@ -21,12 +22,22 @@ export type DeclarativeStringParameter = DeclarativeParameter & { content: Strin
 export type DeclarativeNumberParameter = DeclarativeParameter & { content: NumberParameterDefinition };
 
 /**
- * A parameter AAC can represent as code: textual or numeric. Anything else has to stay under
- * whatever tool created it.
+ * A date range parameter (a named period) as the declarative API carries it.
  *
  * @public
  */
-export type DeclarativeCodeParameter = DeclarativeStringParameter | DeclarativeNumberParameter;
+export type DeclarativeDateRangeParameter = DeclarativeParameter & { content: DateRangeParameterDefinition };
+
+/**
+ * A parameter AAC can represent as code: textual, numeric or a date range. Anything else has to stay
+ * under whatever tool created it.
+ *
+ * @public
+ */
+export type DeclarativeCodeParameter =
+    | DeclarativeStringParameter
+    | DeclarativeNumberParameter
+    | DeclarativeDateRangeParameter;
 
 /** @public */
 export function isDeclarativeStringParameter(
@@ -43,10 +54,21 @@ export function isDeclarativeNumberParameter(
 }
 
 /** @public */
+export function isDeclarativeDateRangeParameter(
+    parameter: DeclarativeParameter,
+): parameter is DeclarativeDateRangeParameter {
+    return parameter.content.type === "DATE_RANGE";
+}
+
+/** @public */
 export function isDeclarativeCodeParameter(
     parameter: DeclarativeParameter,
 ): parameter is DeclarativeCodeParameter {
-    return isDeclarativeStringParameter(parameter) || isDeclarativeNumberParameter(parameter);
+    return (
+        isDeclarativeStringParameter(parameter) ||
+        isDeclarativeNumberParameter(parameter) ||
+        isDeclarativeDateRangeParameter(parameter)
+    );
 }
 
 /** Same keys, each narrowed to its defined type — what remains after dropping undefined values. */
@@ -70,4 +92,24 @@ export function toAllowedValue({ value, title }: { value: string; title?: string
     title?: string;
 } {
     return title === undefined ? { value } : { value, title };
+}
+
+/**
+ * A date range as authored: an open end is left out rather than carried as undefined, and a year written
+ * without quotes, which YAML reads as a number, is taken as its text.
+ */
+export function toDateRangeValue<TGranularity extends string>({
+    granularity,
+    from,
+    to,
+}: {
+    granularity: TGranularity;
+    from?: string | number;
+    to?: string | number;
+}): { granularity: TGranularity; from?: string; to?: string } {
+    return {
+        granularity,
+        ...(from === undefined ? {} : { from: String(from) }),
+        ...(to === undefined ? {} : { to: String(to) }),
+    };
 }

@@ -825,6 +825,41 @@ describe("v2 Publisher entities as code: what the convertor rejects", () => {
             }),
     };
 
+    it("rejects a date filter set to a period, either way", () => {
+        const period = {
+            dashboardParameterizedDateFilter: {
+                dataSet: { identifier: "ship_date", type: "dataSet" },
+                parameter: { identifier: "last_13_months", type: "parameter" },
+                localIdentifier: "period",
+            },
+        } as unknown as FilterContextItem;
+        const stored: DeclarativePublisherDocumentV2 = {
+            ...monthlyReview,
+            content: { pages: [], filters: [period] },
+        };
+        const storedOnPage = withPage(monthlyReview, {
+            id: "p",
+            layout: { type: "row", children: [] },
+            filters: [period],
+        });
+        const writtenPeriod = {
+            period: { type: "date_filter", date: "ship_date", parameter: "last_13_months", title: "Period" },
+        } as AacDashboardFilters;
+
+        expect(thrownCode(() => declarativePublisherDocumentToYamlV2(stored))).toBe(
+            CoreErrorCode.PeriodFilterNotSupported,
+        );
+        expect(thrownCode(() => declarativePublisherDocumentToYamlV2(storedOnPage))).toBe(
+            CoreErrorCode.PeriodFilterNotSupported,
+        );
+        expect(thrownCode(() => convertWithFilters.document(writtenPeriod))).toBe(
+            CoreErrorCode.PeriodFilterNotSupported,
+        );
+        expect(thrownCode(() => convertWithFilters["page template"](writtenPeriod))).toBe(
+            CoreErrorCode.PeriodFilterNotSupported,
+        );
+    });
+
     it.each([
         ["page template", "readonly"],
         ["page template", "hidden"],

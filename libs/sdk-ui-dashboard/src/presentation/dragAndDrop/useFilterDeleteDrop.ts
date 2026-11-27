@@ -3,6 +3,7 @@
 import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
 } from "@gooddata/sdk-model";
 
 import {
@@ -38,7 +39,7 @@ export function useFilterDeleteDrop() {
                     const identifier = dashboardAttributeFilterItemLocalIdentifier(item.filter)!;
                     dispatch(removeAttributeFilter(identifier));
                 } else if (isDateFilterDraggableItem(item)) {
-                    const dataSet = item.filter.dateFilter.dataSet!;
+                    const dataSet = dashboardFilterObjRef(item.filter)!;
                     dispatch(removeDateFilter(dataSet));
                 } else if (isMeasureValueFilterDraggableItem(item)) {
                     const identifier = dashboardFilterLocalIdentifier(item.filter)!;

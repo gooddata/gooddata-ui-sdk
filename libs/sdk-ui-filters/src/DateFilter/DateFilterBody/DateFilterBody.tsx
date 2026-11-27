@@ -581,7 +581,11 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
                 }
             />
 
-            <div role="group" className={cx("gd-extended-date-filter-actions")}>
+            <div
+                role="group"
+                className={cx("gd-extended-date-filter-actions")}
+                aria-label={intl.formatMessage({ id: "dateFilterDropdown.actions.ariaLabel" })}
+            >
                 <div className="gd-extended-date-filter-actions-left-content">
                     {isConfigurationEnabled ? (
                         <DateFilterConfigurationButton onConfiguration={onConfigurationClick} />

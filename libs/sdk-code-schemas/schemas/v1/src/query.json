@@ -728,7 +728,7 @@
                     "description": "An identifier of the parameter.",
                     "$semantic": {
                         "type": "reference",
-                        "source": "parameter.id"
+                        "source": "scalarParameter.id"
                     }
                 },
                 "value": {

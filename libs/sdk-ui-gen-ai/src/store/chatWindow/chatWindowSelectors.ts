@@ -10,6 +10,7 @@ import {
     type IColorPalette,
     type IGenAIUserContext,
     areObjRefsEqual,
+    isIdentifierRef,
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
@@ -161,6 +162,19 @@ export const userContextSelector: (state: RootState) => IGenAIUserContext | unde
 export const ambientContextSelector: (state: RootState) => IGenAIUserContext | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.context.ambient,
+);
+
+/**
+ * The id of the Publisher v2 document the host relays as open, never one the user pinned. Absent while no
+ * document is open or the open one was never saved. Publisher names its documents by identifier, the id a
+ * draft card's link carries, so a uri reference names none.
+ */
+export const openPublisherDocumentV2IdSelector: (state: RootState) => string | undefined = createSelector(
+    ambientContextSelector,
+    (ambient) => {
+        const ref = ambient?.view?.publisherDocumentV2?.ref;
+        return ref && isIdentifierRef(ref) ? ref.identifier : undefined;
+    },
 );
 
 export const selectedContextSelector: (state: RootState) => SelectedContext | undefined = createSelector(

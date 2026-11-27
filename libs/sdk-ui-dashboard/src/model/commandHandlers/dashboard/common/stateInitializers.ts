@@ -31,8 +31,9 @@ import {
     type IWidget,
     type ObjRef,
     areObjRefsEqual,
+    dashboardFilterObjRef,
     isDashboardAttributeFilter,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isIdentifierRef,
     isInsightWidget,
     isObjRef,
@@ -496,11 +497,9 @@ const keepOnlyFiltersWithValidRef = (
         return true;
     }
     if (!isDashboardAttributeFilter(filter)) {
-        if (isDashboardDateFilterWithDimension(filter)) {
-            return (
-                isIdentifierRef(filter.dateFilter.dataSet!) &&
-                validDataSetIds.includes(filter.dateFilter.dataSet?.identifier)
-            );
+        if (isDashboardDateFilterWithDimensionOfAnyType(filter)) {
+            const dataSet = dashboardFilterObjRef(filter)!;
+            return isIdentifierRef(dataSet) && validDataSetIds.includes(dataSet.identifier);
         }
         return true; // common date filter is kept always
     }
@@ -574,8 +573,8 @@ function* sanitizeFilterContext(
     // additional date filters, let them validate
     const additionalDateFilters = filterContext.filters
         .filter((filter) => !isDashboardAttributeFilter(filter))
-        .filter(isDashboardDateFilterWithDimension)
-        .map((filter) => filter.dateFilter.dataSet!);
+        .filter(isDashboardDateFilterWithDimensionOfAnyType)
+        .map((filter) => dashboardFilterObjRef(filter)!);
 
     // check which are missing and load them
     const missingDataSets = additionalDateFilters

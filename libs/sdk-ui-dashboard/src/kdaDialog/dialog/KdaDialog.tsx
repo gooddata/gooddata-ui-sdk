@@ -57,6 +57,7 @@ export function KdaDialog({
     const metric = state.definition?.metric.measure;
     const title = metric?.alias ?? metric?.title ?? "";
     const detailsId = useId();
+    const toggleButtonId = useId();
 
     const minimizedAlignPoints = useMemo(
         () => (isMinimized ? [{ align: "tc tc", offset: { x: 0, y: 30 } }] : undefined),
@@ -88,10 +89,14 @@ export function KdaDialog({
                 status={status}
                 isMinimized={isMinimized}
             />
+            {/* Distinct keys make each view a separate dialog element. Reusing one element and only
+                switching its aria attributes keeps focus "inside" the same dialog, so screen readers
+                do not announce the expanded modal (its role and name) when it opens. */}
             {isMinimized ? (
                 <Dialog
+                    key="minimized"
                     autofocusOnOpen
-                    initialFocus={accessibilityConfig.descriptionElementId}
+                    initialFocus={toggleButtonId}
                     className={cx(dialogBaseClassName, "gd-kda-dialog--minimized", {
                         [`gd-kda-dialog--minimized--${status}`]: true,
                     })}
@@ -113,11 +118,13 @@ export function KdaDialog({
                         dialogTitle={accessibilityConfig.title}
                         descriptionElementId={accessibilityConfig.descriptionElementId}
                         status={status}
+                        toggleButtonId={toggleButtonId}
                         onClose={onClose}
                     />
                 </Dialog>
             ) : (
                 <Dialog
+                    key="expanded"
                     className={cx(dialogBaseClassName, "gd-kda-dialog--expanded")}
                     closeOnEscape={closeOnEscape}
                     isModal

@@ -12,7 +12,6 @@ import {
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED } from "../../../../_staging/dashboard/parameterizedDateFilters.js";
 import { TestCorrelation } from "../../../../tests/Dashboard.test.helpers.js";
 import { SimpleDashboardIdentifier } from "../../../../tests/SimpleDashboard.test.helpers.js";
@@ -35,6 +34,7 @@ import {
 import {
     selectFilterContextDateFilter,
     selectFilterContextDateFilterOfAnyType,
+    selectFilterContextDateFilterOfAnyTypeByDataSet,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 
@@ -289,22 +289,71 @@ describe("changeDateFilterSelectionHandler", () => {
             });
         });
 
-        it("rejects the new type for a date dataset", async () => {
-            const before = selectFilterContextDateFilterOfAnyType(Tester.state());
+        describe("for a date dataset", () => {
+            const dataSet = idRef("closed", "dataSet");
+            const weekFilterWithDataSet: IDashboardAbsoluteGranularityDateFilter = {
+                dashboardAbsoluteGranularityDateFilter: {
+                    ...weekFilter.dashboardAbsoluteGranularityDateFilter,
+                    dataSet,
+                },
+            };
 
-            const event: IDashboardCommandFailed<any> = await Tester.dispatchAndWaitFor(
-                changeDateFilterSelectionOfAnyType({
-                    dashboardAbsoluteGranularityDateFilter: {
-                        ...weekFilter.dashboardAbsoluteGranularityDateFilter,
-                        dataSet: idRef("closed", "dataSet"),
-                    },
-                }),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
+            beforeEach(async () => {
+                Tester.dispatch(tabsActions.addDateFilter({ index: -1, dateDataset: dataSet }));
+                Tester.resetMonitors();
+            });
 
-            expect(event.payload.reason).toBe("USER_ERROR");
-            expect(event.payload.message).toBe(ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED);
-            expect(selectFilterContextDateFilterOfAnyType(Tester.state())).toEqual(before);
+            it("sets the date filter for the date dataset to the new type and keeps the common one", async () => {
+                const commonBefore = selectFilterContextDateFilterOfAnyType(Tester.state());
+
+                await Tester.dispatchAndWaitFor(
+                    changeDateFilterSelectionOfAnyType(weekFilterWithDataSet, {
+                        dateFilterOptionLocalId: "ABSOLUTE_FORM",
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(selectFilterContextDateFilterOfAnyTypeByDataSet(dataSet)(Tester.state())).toEqual(
+                    weekFilterWithDataSet,
+                );
+                expect(selectFilterContextDateFilterOfAnyType(Tester.state())).toEqual(commonBefore);
+            });
+
+            it("emits only the event of any type with the filter", async () => {
+                await Tester.dispatchAndWaitFor(
+                    changeDateFilterSelectionOfAnyType(weekFilterWithDataSet, {
+                        dateFilterOptionLocalId: "ABSOLUTE_FORM",
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                const event = Tester.emittedEvents().find(
+                    (e) => e.type === "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.SELECTION_CHANGED",
+                ) as DashboardDateFilterOfAnyTypeSelectionChanged;
+                expect(event.payload.filter).toEqual(weekFilterWithDataSet);
+                expect(eventTypes()).not.toContain(
+                    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.SELECTION_CHANGED",
+                );
+            });
+
+            it("changes the new type back to the old type keeping the date dataset", async () => {
+                await Tester.dispatchAndWaitFor(
+                    changeDateFilterSelectionOfAnyType(weekFilterWithDataSet),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+                await Tester.dispatchAndWaitFor(
+                    changeDateFilterSelectionOfAnyType(
+                        newRelativeDashboardDateFilter("GDC.time.year", -1, -1, dataSet),
+                    ),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(
+                    selectFilterContextDateFilterOfAnyTypeByDataSet(dataSet)(Tester.state()),
+                ).toMatchObject({
+                    dateFilter: { type: "relative", granularity: "GDC.time.year", from: -1, to: -1, dataSet },
+                });
+            });
         });
 
         it("rejects the new type with a granularity the date filter config does not offer", async () => {

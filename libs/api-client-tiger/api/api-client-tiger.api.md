@@ -26512,7 +26512,7 @@ export interface GenerateDescriptionRequest {
 }
 
 // @public (undocumented)
-export type GenerateDescriptionRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute';
+export type GenerateDescriptionRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute' | 'Document';
 
 // @public (undocumented)
 export interface GenerateDescriptionResponse {
@@ -26576,7 +26576,7 @@ export interface GenerateTitleRequest {
 }
 
 // @public (undocumented)
-export type GenerateTitleRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute';
+export type GenerateTitleRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute' | 'Document';
 
 // @public (undocumented)
 export interface GenerateTitleResponse {

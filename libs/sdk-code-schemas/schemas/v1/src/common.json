@@ -207,6 +207,11 @@
                                             },
                                             "required": ["from"]
                                         }
+                                    },
+                                    {
+                                        "not": {
+                                            "required": ["parameter"]
+                                        }
                                     }
                                 ]
                             },
@@ -224,10 +229,26 @@
                                         "type": "number"
                                     }
                                 },
-                                "required": ["type", "from"]
+                                "required": ["type", "from"],
+                                "not": {
+                                    "required": ["parameter"]
+                                }
                             },
                             "then": {
                                 "$ref": "#/$defs/dashboardRelativeDateFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "date_filter"
+                                    }
+                                },
+                                "required": ["type", "parameter"]
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardPeriodDateFilter"
                             }
                         },
                         {
@@ -342,6 +363,11 @@
                                             },
                                             "required": ["from"]
                                         }
+                                    },
+                                    {
+                                        "not": {
+                                            "required": ["parameter"]
+                                        }
                                     }
                                 ]
                             },
@@ -359,10 +385,26 @@
                                         "type": "number"
                                     }
                                 },
-                                "required": ["type", "from"]
+                                "required": ["type", "from"],
+                                "not": {
+                                    "required": ["parameter"]
+                                }
                             },
                             "then": {
                                 "$ref": "#/$defs/dashboardRelativeDateFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "date_filter"
+                                    }
+                                },
+                                "required": ["type", "parameter"]
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardPeriodDateFilter"
                             }
                         },
                         {
@@ -506,6 +548,66 @@
                 }
             },
             "required": ["type", "from", "to"]
+        },
+        "dashboardPeriodDateFilter": {
+            "type": "object",
+            "title": "Dashboard period date filter",
+            "description": "A dashboard date filter set to a period: a date range parameter, whose current range the filter uses at every computation",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Optional title of the filter"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["date_filter"]
+                },
+                "parameter": {
+                    "$ref": "#/$defs/identifier",
+                    "description": "An id of the date range parameter (period) the filter uses",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "dateRangeParameter.id"
+                    }
+                },
+                "mode": {
+                    "type": "string",
+                    "enum": ["readonly", "hidden", "active"],
+                    "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                },
+                "empty_values": {
+                    "type": "string",
+                    "enum": ["only", "include", "exclude"],
+                    "description": "Controls how empty values are handled in the filter."
+                },
+                "date": {
+                    "$ref": "#/$defs/identifier",
+                    "description": "An id of the date dataset to be used for date filter. Without it, the filter is the dashboard's common date filter.",
+                    "$semantic": [
+                        {
+                            "type": "reference",
+                            "source": "dateDataset.id"
+                        },
+                        {
+                            "type": "one_date_dataset_only"
+                        }
+                    ]
+                }
+            },
+            "not": {
+                "anyOf": [
+                    {
+                        "required": ["granularity"]
+                    },
+                    {
+                        "required": ["from"]
+                    },
+                    {
+                        "required": ["to"]
+                    }
+                ]
+            },
+            "required": ["type", "parameter"]
         },
         "dashboardAttributeFilter": {
             "type": "object",
@@ -1427,6 +1529,10 @@
                 "to": {
                     "type": ["string", "number"]
                 },
+                "parameter": {
+                    "type": "string",
+                    "description": "An id of the date range parameter (period) the filter uses, instead of 'granularity', 'from' and 'to'."
+                },
                 "with": {
                     "type": "object",
                     "description": "Attribute filters to apply together with this date filter.",
@@ -1451,7 +1557,10 @@
                                 "type": "string"
                             }
                         },
-                        "required": ["granularity"]
+                        "required": ["granularity"],
+                        "not": {
+                            "required": ["parameter"]
+                        }
                     },
                     "then": {
                         "properties": {
@@ -1525,14 +1634,23 @@
                 },
                 {
                     "if": {
-                        "not": {
-                            "properties": {
-                                "granularity": {
-                                    "type": "string"
+                        "allOf": [
+                            {
+                                "not": {
+                                    "properties": {
+                                        "granularity": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": ["granularity"]
                                 }
                             },
-                            "required": ["granularity"]
-                        }
+                            {
+                                "not": {
+                                    "required": ["parameter"]
+                                }
+                            }
+                        ]
                     },
                     "then": {
                         "properties": {
@@ -1575,6 +1693,64 @@
                             }
                         },
                         "required": ["type", "using"]
+                    }
+                },
+                {
+                    "if": {
+                        "required": ["parameter"]
+                    },
+                    "then": {
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["date_filter"]
+                            },
+                            "using": {
+                                "type": "string",
+                                "description": "Date dataset identifier to use for this field.",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "source": "dateDataset.id"
+                                }
+                            },
+                            "parameter": {
+                                "type": "string",
+                                "description": "An id of the date range parameter (period) the filter uses.",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "source": "dateRangeParameter.id"
+                                }
+                            },
+                            "with": {
+                                "type": "object",
+                                "description": "Attribute filters to apply together with this date filter.",
+                                "additionalProperties": false,
+                                "patternProperties": {
+                                    "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                                        "$ref": "#/$defs/queryAttributeFilter"
+                                    }
+                                }
+                            },
+                            "empty_values": {
+                                "type": "string",
+                                "enum": ["only", "include", "exclude"],
+                                "description": "Controls how empty values are handled in the filter."
+                            }
+                        },
+                        "not": {
+                            "anyOf": [
+                                {
+                                    "required": ["granularity"]
+                                },
+                                {
+                                    "required": ["from"]
+                                },
+                                {
+                                    "required": ["to"]
+                                }
+                            ]
+                        },
+                        "required": ["type", "using", "parameter"]
                     }
                 }
             ],

@@ -2,7 +2,7 @@
 
 import { URL, fileURLToPath } from "node:url";
 
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 
 // Note: all unit tests which iterate on scenarios are skipped, as neoBackstop is now voting on pre-merge.
 // The smoke-and-capture sweep is skipped too unless GDC_STORE_DEFS is set (populate-ref sets it).
@@ -58,7 +58,6 @@ export default defineConfig({
         fileParallelism: false,
         pool: "threads",
         maxWorkers: 8, // Thread count for CI
-        isolate: false,
         maxConcurrency: 8, // Concurrency for CI
         restoreMocks: true,
         unstubEnvs: true,
@@ -75,5 +74,24 @@ export default defineConfig({
                 },
             },
         },
+        projects: [
+            {
+                extends: true,
+                test: {
+                    name: "non-isolated",
+                    include: ["**/*.{test,spec}.?(c|m)[jt]s?(x)"],
+                    exclude: [...configDefaults.exclude, "**/*.isolated.{test,spec}.?(c|m)[jt]s?(x)"],
+                    isolate: false,
+                },
+            },
+            {
+                extends: true,
+                test: {
+                    name: "isolated",
+                    include: ["**/*.isolated.{test,spec}.?(c|m)[jt]s?(x)"],
+                    isolate: true,
+                },
+            },
+        ],
     },
 });

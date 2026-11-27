@@ -12,6 +12,7 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     isDashboardAttributeFilter,
     objRefToString,
     serializeObjRef,
@@ -149,7 +150,7 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
     const dateFilterConfigNarrowedToDimension = useDateFilterConfigNarrowedToDimension(
         commonDateFilterComponentConfig,
         allDateDatasets,
-        isFilterBarDateFilterWithDimension(item) ? item.filter.dateFilter.dataSet : undefined,
+        isFilterBarDateFilterWithDimension(item) ? dashboardFilterObjRef(item.filter) : undefined,
     );
 
     if (isFilterBarFilterPlaceholder(item)) {
@@ -278,27 +279,26 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
         );
     }
 
-    if (item.filter.dateFilter.dataSet) {
+    if (isFilterBarDateFilterWithDimension(item)) {
         const { filter, workingFilter, filterIndex } = item;
+        const dataSet = dashboardFilterObjRef(filter)!;
 
         const CustomDateFilterComponent = DashboardDateFilterOfAnyTypeComponentProvider(filter);
 
         const dateFilterMode =
-            dateFiltersModeMap.get(serializeObjRef(filter.dateFilter.dataSet!)) ||
-            DashboardDateFilterConfigModeValues.ACTIVE;
+            dateFiltersModeMap.get(serializeObjRef(dataSet)) || DashboardDateFilterConfigModeValues.ACTIVE;
 
         if (dateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN) {
             return null;
         }
 
-        const defaultDateFilterName = allDateDatasets.find((ds) =>
-            areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
-        )?.dataSet?.title;
+        const defaultDateFilterName = allDateDatasets.find((ds) => areObjRefsEqual(ds.dataSet.ref, dataSet))
+            ?.dataSet?.title;
 
         return (
             <DraggableDateFilter
-                key={objRefToString(item.filter.dateFilter.dataSet)}
-                autoOpen={areObjRefsEqual(item.filter.dateFilter.dataSet, autoOpenFilter)}
+                key={objRefToString(dataSet)}
+                autoOpen={areObjRefsEqual(dataSet, autoOpenFilter)}
                 filter={filter}
                 workingFilter={isApplyAllAtOnceEnabledAndSet ? workingFilter : undefined}
                 filterIndex={filterIndex}

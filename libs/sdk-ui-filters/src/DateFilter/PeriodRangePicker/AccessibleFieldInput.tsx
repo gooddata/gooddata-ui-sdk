@@ -1,6 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import {
+    type ChangeEvent,
     type InputHTMLAttributes,
     type KeyboardEvent,
     type MouseEvent,
@@ -33,15 +34,15 @@ interface IAccessibleFieldInputProps extends InputHTMLAttributes<HTMLInputElemen
  *
  * Two facts are only observable here: whether the typed text failed to parse, and whether the field is
  * currently blank. Both are reported upward raw, via an effect; the surrounding picker turns them into an
- * error kind or message.
+ * error kind or message. The user emptying the field is reported too, as it happens.
  */
 export const AccessibleFieldInput = forwardRef<HTMLInputElement, IAccessibleFieldInputProps>((props, ref) => {
-    const { "date-range": side, "aria-invalid": rcPickerInvalid, onKeyDown, ...restProps } = props;
+    const { "date-range": side, "aria-invalid": rcPickerInvalid, onKeyDown, onChange, ...restProps } = props;
     const accessibility = useContext(PeriodRangeAccessibilityContext);
     const field = side ? accessibility?.[side] : undefined;
     const isCalendarOpen = accessibility?.isCalendarOpen ?? false;
+    const onFieldCleared = accessibility?.onFieldCleared;
     const onRequestOpen = accessibility?.onRequestOpen;
-    const enterCommitRef = accessibility?.enterCommitRef;
     const onEnterCommit = accessibility?.onEnterCommit;
     const ignoreEnter = accessibility?.ignoreEnter ?? false;
     const hasParseError = rcPickerInvalid === true;
@@ -60,41 +61,33 @@ export const AccessibleFieldInput = forwardRef<HTMLInputElement, IAccessibleFiel
         }
     }, [accessibility, side, hasParseError, isBlank]);
 
-    // rc-picker's own Enter/Escape field-confirmation logic (forwarded as onKeyDown) must still run first;
-    // stopping propagation afterwards for arrow/Home/End keys - without preventDefault - lets the browser move
-    // the caret normally instead of DateFilterBody/DateFilterCore treating it as back/roving-focus navigation.
+    // Read from the change event rather than from `isBlank`: rc-picker also empties the text itself when it
+    // resets a field to an empty value, which is not the user clearing it.
+    const handleChange = useCallback(
+        (e: ChangeEvent<HTMLInputElement>) => {
+            onChange?.(e);
+            if (side && e.target.value === "") {
+                onFieldCleared?.(side);
+            }
+        },
+        [onChange, side, onFieldCleared],
+    );
+
+    // rc-picker's own key handling (forwarded as onKeyDown) must still run first; stopping propagation
+    // afterwards for arrow/Home/End keys - without preventDefault - lets the browser move the caret normally
+    // instead of DateFilterBody/DateFilterCore treating it as back/roving-focus navigation.
     const handleKeyDown = useCallback(
         (e: KeyboardEvent<HTMLInputElement>) => {
-            // rc-picker confirms the field inside the handler forwarded below (its `onSharedKeyDown` calls
-            // `onSubmit()`), but both the resulting `onChange` (when the round completes) and its own
-            // deactivation `onBlur` (rc-picker's `useFocusEvents`, which defers via a microtask so that
-            // tabbing between this picker's own two fields isn't briefly seen as blurring the whole thing)
-            // land one microtask later, not synchronously within this call. The flag has to outlive that
-            // microtask too, so the reset below is deferred with `queueMicrotask` rather than done
-            // immediately - an immediate reset would already have flipped back to false by the time either
-            // callback runs, defeating the guards in handleChange/handleFieldBlur. `finally` still matters
-            // for scheduling the reset even if `onKeyDown`/`onEnterCommit` throws.
-            const isEnter = e.key === "Enter";
-            if (isEnter && ignoreEnter) {
-                // In ALL_AT_ONCE mode the caret has to stay where the user is typing, and
-                // blur is the only commit point.
+            if (e.key === "Enter") {
+                // rc-picker would confirm the field and move focus to the other one. Enter commits in place
+                // instead, keeping the caret where the user is typing. In ALL_AT_ONCE mode blur is the only
+                // commit point.
+                if (!ignoreEnter && side) {
+                    onEnterCommit?.(side);
+                }
                 return;
             }
-            if (isEnter && enterCommitRef) {
-                enterCommitRef.current = true;
-            }
-            try {
-                onKeyDown?.(e);
-                if (isEnter) {
-                    onEnterCommit?.();
-                }
-            } finally {
-                if (isEnter && enterCommitRef) {
-                    queueMicrotask(() => {
-                        enterCommitRef.current = false;
-                    });
-                }
-            }
+            onKeyDown?.(e);
 
             if (isArrowKey(e) || e.key === "Home" || e.key === "End") {
                 e.stopPropagation();
@@ -116,7 +109,7 @@ export const AccessibleFieldInput = forwardRef<HTMLInputElement, IAccessibleFiel
                 onRequestOpen?.();
             }
         },
-        [onKeyDown, isCalendarOpen, onRequestOpen, enterCommitRef, onEnterCommit, ignoreEnter],
+        [onKeyDown, isCalendarOpen, onRequestOpen, onEnterCommit, ignoreEnter, side],
     );
 
     return (
@@ -136,6 +129,7 @@ export const AccessibleFieldInput = forwardRef<HTMLInputElement, IAccessibleFiel
                     ref={ref}
                     {...restProps}
                     date-range={side}
+                    onChange={handleChange}
                     onKeyDown={handleKeyDown}
                     // `hasParseError` looks redundant with `field.errorKind` (resolveFieldErrorKind already
                     // returns "invalid" whenever hasParseError), but isn't: hasParseError reflects this render, while

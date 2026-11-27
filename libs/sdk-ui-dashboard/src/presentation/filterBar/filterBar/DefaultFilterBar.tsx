@@ -18,11 +18,12 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     isAllTimeDashboardDateFilter,
     isDashboardAbsoluteGranularityDateFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
-    isDashboardDateFilter,
+    isDashboardDateFilterOfAnyType,
     isDashboardMeasureValueFilter,
     isDashboardParameterizedDateFilter,
     objRefToString,
@@ -295,8 +296,8 @@ export const useFilterBarProps = (): IFilterBarProps => {
                     emptyValueHandling,
                 } = filter.dateFilter;
                 const filterIndex = filters
-                    .filter(isDashboardDateFilter)
-                    .findIndex((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
+                    .filter(isDashboardDateFilterOfAnyType)
+                    .findIndex((filter) => areObjRefsEqual(dashboardFilterObjRef(filter), dataSet));
                 const sanitizedFilterIndex = filterIndex < 0 ? 0 : filterIndex;
                 const newLocalIdentifier = generateDateFilterLocalIdentifier(sanitizedFilterIndex, dataSet);
                 dispatch(

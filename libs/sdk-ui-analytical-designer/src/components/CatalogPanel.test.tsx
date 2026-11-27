@@ -18,10 +18,6 @@ import { withRedux } from "../utils/with_redux.js";
 
 import { CatalogPanelBase, type ICatalogPanelProps, dropConfig } from "./CatalogPanel.js";
 
-vi.hoisted(() => {
-    vi.resetModules();
-});
-
 describe("Catalog Panel", () => {
     const backend = dummyBackend();
     const workspace = "test-workspace";

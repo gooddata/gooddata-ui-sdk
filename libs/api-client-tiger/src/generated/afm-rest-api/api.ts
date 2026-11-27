@@ -1427,12 +1427,12 @@ export interface GenerateDescriptionRequest {
      */
     'objectId': string;
     /**
-     * Type of the object to describe. One of: visualization, dashboard, metric, fact, attribute
+     * Type of the object to describe. One of: visualization, dashboard, metric, fact, attribute, document
      */
     'objectType': GenerateDescriptionRequestObjectTypeEnum;
 }
 
-export type GenerateDescriptionRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute';
+export type GenerateDescriptionRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute' | 'Document';
 
 export interface GenerateDescriptionResponse {
     /**
@@ -1456,7 +1456,7 @@ export interface GenerateTitleRequest {
     'objectType': GenerateTitleRequestObjectTypeEnum;
 }
 
-export type GenerateTitleRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute';
+export type GenerateTitleRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute' | 'Document';
 
 export interface GenerateTitleResponse {
     /**

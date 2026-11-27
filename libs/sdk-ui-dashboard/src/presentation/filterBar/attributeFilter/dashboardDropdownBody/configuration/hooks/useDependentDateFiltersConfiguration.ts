@@ -6,9 +6,10 @@ import { invariant } from "ts-invariant";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
+    type DashboardDateFilterOfAnyType,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterByDate,
-    type IDashboardDateFilter,
+    dashboardFilterLocalIdentifier,
     isUriRef,
 } from "@gooddata/sdk-model";
 import { _isEqual } from "@gooddata/util";
@@ -23,9 +24,9 @@ import {
 } from "./useDependentDateFilterConfigurationState.js";
 
 export function useDependentDateFiltersConfiguration(
-    neighborDateFilters: IDashboardDateFilter[],
+    neighborDateFilters: DashboardDateFilterOfAnyType[],
     currentFilter: IDashboardAttributeFilter,
-    commonDateFilter?: IDashboardDateFilter,
+    commonDateFilter?: DashboardDateFilterOfAnyType,
 ) {
     const { filterElementsByDate, localIdentifier: currentFilterLocalId } = currentFilter.attributeFilter;
 
@@ -49,7 +50,7 @@ export function useDependentDateFiltersConfiguration(
     const [dependentDateFilters, setDependentDateFilters] =
         useState<IDashboardDependentDateFilter[]>(originalState);
 
-    const [dependentCommonDateFilter, setDependentCommonDateFilter] = useState<IDashboardDateFilter>(
+    const [dependentCommonDateFilter, setDependentCommonDateFilter] = useState<DashboardDateFilterOfAnyType>(
         originalCommonDateFilterState,
     );
 
@@ -107,7 +108,8 @@ export function useDependentDateFiltersConfiguration(
             // dimension in the separate `dataSet` field. Specific date filters are referenced by their
             // localIdentifier and need no dataSet (it is derived from the referenced filter).
             const commonDateLocalId =
-                commonDateFilter?.dateFilter.localIdentifier ?? generateDateFilterLocalIdentifier(0);
+                (commonDateFilter && dashboardFilterLocalIdentifier(commonDateFilter)) ??
+                generateDateFilterLocalIdentifier(0);
 
             // the command replaces the whole list, so carry over date filters the panel cannot show
             const shownLocalIds = new Set([

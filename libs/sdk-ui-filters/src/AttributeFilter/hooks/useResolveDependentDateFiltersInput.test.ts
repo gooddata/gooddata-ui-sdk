@@ -4,11 +4,13 @@ import { renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import {
-    type IDashboardDateFilter,
+    type DashboardDateFilterOfAnyType,
     idRef,
     newAbsoluteDashboardDateFilter,
+    newAbsoluteGranularityDateFilter,
     newAllTimeDashboardDateFilter,
     newAllTimeFilter,
+    newDashboardParameterizedDateFilter,
     newRelativeDashboardDateFilter,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
@@ -17,7 +19,7 @@ import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFi
 
 const dataSet = idRef("date", "dataSet");
 
-function resolve(filters: IDashboardDateFilter[]) {
+function resolve(filters: DashboardDateFilterOfAnyType[]) {
     return renderHook(() => useResolveDependentDateFiltersInput(filters)).result.current;
 }
 
@@ -64,5 +66,43 @@ describe("useResolveDependentDateFiltersInput", () => {
 
     it("drops an All time filter that filters nothing", () => {
         expect(resolve([newAllTimeDashboardDateFilter(dataSet, "local")])).toEqual([]);
+    });
+
+    it("drops a parameterized date filter, it holds no period", () => {
+        const parameterized = newDashboardParameterizedDateFilter(idRef("period", "parameter"), { dataSet });
+
+        expect(resolve([parameterized])).toEqual([]);
+    });
+
+    it("resolves an absolute filter with granularity", () => {
+        const filter: DashboardDateFilterOfAnyType = {
+            dashboardAbsoluteGranularityDateFilter: {
+                dataSet,
+                localIdentifier: "local",
+                granularity: "GDC.time.quarter",
+                from: "2026-1",
+                to: "2026-2",
+            },
+        };
+
+        expect(resolve([filter])).toEqual([
+            newAbsoluteGranularityDateFilter(dataSet, "GDC.time.quarter", "2026-1", "2026-2", {
+                localIdentifier: "local",
+            }),
+        ]);
+    });
+
+    it("resolves an absolute filter with granularity open at the start", () => {
+        const filter: DashboardDateFilterOfAnyType = {
+            dashboardAbsoluteGranularityDateFilter: {
+                dataSet,
+                granularity: "GDC.time.year",
+                to: "2025",
+            },
+        };
+
+        expect(resolve([filter])).toEqual([
+            newAbsoluteGranularityDateFilter(dataSet, "GDC.time.year", undefined, "2025"),
+        ]);
     });
 });

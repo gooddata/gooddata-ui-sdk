@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { useCallback, useMemo } from "react";
+import { type KeyboardEvent, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { type IntlShape, useIntl } from "react-intl";
@@ -11,6 +11,7 @@ import {
     type IAlignPoint,
     UiButton,
     UiReturnFocusOnUnmount,
+    getFocusableElements,
     useIdPrefixed,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
@@ -161,6 +162,21 @@ export function FilterViews() {
     const triggerId = useIdPrefixed("FilterViewsTrigger");
     const dropdownId = useIdPrefixed("FilterViewsDropdown");
 
+    // The panel is portalled to the end of <body>, so Tab from the trigger would follow the DOM order
+    // into the dashboard behind the open panel. Send it into the panel instead. While the overlay is
+    // still hidden for positioning, focus stays on the trigger and the panel's autofocus takes it as
+    // soon as the panel becomes visible.
+    const handleTriggerKeyDown = useCallback(
+        (event: KeyboardEvent<HTMLDivElement>) => {
+            if (!isDialogOpen || event.key !== "Tab" || event.shiftKey) {
+                return;
+            }
+            event.preventDefault();
+            getFocusableElements(document.getElementById(dropdownId), true).firstElement?.focus();
+        },
+        [isDialogOpen, dropdownId],
+    );
+
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     if (isReadOnly) {
         return null;
@@ -170,7 +186,7 @@ export function FilterViews() {
         <div className="gd-filter-views">
             {showDropdownButton ? (
                 <>
-                    <div className={buttonWrapperClassNames}>
+                    <div className={buttonWrapperClassNames} onKeyDown={handleTriggerKeyDown}>
                         <UiButton
                             id={triggerId}
                             variant="tertiary"

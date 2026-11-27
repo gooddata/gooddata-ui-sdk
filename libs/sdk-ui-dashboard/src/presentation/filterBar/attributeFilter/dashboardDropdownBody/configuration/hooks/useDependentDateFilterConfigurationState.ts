@@ -5,9 +5,13 @@ import { useMemo } from "react";
 import { invariant } from "ts-invariant";
 
 import {
+    type DashboardDateFilterOfAnyType,
     type IDashboardAttributeFilterByDate,
-    type IDashboardDateFilter,
     type ObjRef,
+    dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
+    isDashboardAbsoluteGranularityDateFilter,
+    isDashboardParameterizedDateFilter,
     isUriRef,
 } from "@gooddata/sdk-model";
 
@@ -17,13 +21,13 @@ import { type IDashboardDependentDateFilter } from "../../../../../../model/type
  * @internal
  */
 export function useDependentDateFilterConfigurationState(
-    neighborFilters: IDashboardDateFilter[],
-    commonDateFilter?: IDashboardDateFilter,
+    neighborFilters: DashboardDateFilterOfAnyType[],
+    commonDateFilter?: DashboardDateFilterOfAnyType,
     filterElementsByDate?: IDashboardAttributeFilterByDate[],
 ) {
     const neighborDateFiltersWithDimensions: IDashboardDependentDateFilter[] = useMemo(() => {
         return neighborFilters.map((neighborFilter) => {
-            const neighborDataSet = neighborFilter.dateFilter.dataSet;
+            const neighborDataSet = dashboardFilterObjRef(neighborFilter);
 
             invariant(!isUriRef(neighborDataSet));
 
@@ -31,7 +35,7 @@ export function useDependentDateFilterConfigurationState(
             // filters backed by the same dataset can be told apart. Falls back to the dataset identifier
             // for date filters that don't carry a localIdentifier (e.g. older backend records).
             const filterLocalIdentifier =
-                neighborFilter.dateFilter.localIdentifier ?? neighborDataSet?.identifier;
+                dashboardFilterLocalIdentifier(neighborFilter) ?? neighborDataSet?.identifier;
 
             const isSelected =
                 filterElementsByDate?.some(
@@ -50,20 +54,17 @@ export function useDependentDateFilterConfigurationState(
             );
 
             return {
+                ...getDateFilterRange(neighborFilter),
                 localIdentifier: filterLocalIdentifier,
                 isSelected,
-                dataSet: neighborFilter.dateFilter.dataSet,
-                from: neighborFilter.dateFilter.from,
-                to: neighborFilter.dateFilter.to,
-                granularity: neighborFilter.dateFilter.granularity,
-                type: neighborFilter.dateFilter.type,
+                dataSet: neighborDataSet,
                 isCommonDate: false,
             };
         });
     }, [neighborFilters, filterElementsByDate]);
 
     const commonDateFilters: IDashboardDependentDateFilter[] = useMemo(() => {
-        const commonDate = parseCommonDateFilter(commonDateFilter);
+        const commonDateRange = getDateFilterRange(commonDateFilter);
 
         return (filterElementsByDate ?? [])
             .filter((parent) => parent.isCommonDate)
@@ -79,13 +80,10 @@ export function useDependentDateFilterConfigurationState(
                 invariant(!isUriRef(dimension));
 
                 return {
+                    ...commonDateRange,
                     localIdentifier: dimension.identifier,
                     isSelected: true,
                     dataSet: dimension,
-                    from: commonDate.from,
-                    to: commonDate.to,
-                    granularity: commonDate.granularity,
-                    type: commonDate.type,
                     isCommonDate: true,
                 };
             });
@@ -95,8 +93,8 @@ export function useDependentDateFilterConfigurationState(
 }
 
 export function useDependentCommonDateFilterConfigurationState(
-    commonDateFilter?: IDashboardDateFilter,
-): IDashboardDateFilter {
+    commonDateFilter?: DashboardDateFilterOfAnyType,
+): DashboardDateFilterOfAnyType {
     if (commonDateFilter) {
         return commonDateFilter;
     } else {
@@ -109,22 +107,30 @@ export function useDependentCommonDateFilterConfigurationState(
     }
 }
 
-const parseCommonDateFilter = (commonDate?: IDashboardDateFilter): IDashboardDependentDateFilter => {
-    if (commonDate) {
-        return {
-            from: commonDate.dateFilter.from,
-            to: commonDate.dateFilter.to,
-            granularity: commonDate.dateFilter.granularity,
-            type: commonDate.dateFilter.type,
-            localIdentifier: "commonDate",
-            isCommonDate: true,
-        };
-    } else {
-        return {
-            granularity: "GDC.time.date",
-            type: "relative",
-            localIdentifier: "commonDate",
-            isCommonDate: true,
-        };
+/**
+ * Returns the type and the range of a date filter for the parent filter configuration, All time when there is
+ * no filter, for example when the dashboard has no common date filter.
+ *
+ * @remarks
+ * The absolute date filter with granularity is described as an absolute one, its periods are not day dates
+ * and its granularity is not a date filter granularity, so they are left out. The parameterized date filter
+ * holds no period, it is described the same way.
+ *
+ * @internal
+ */
+export function getDateFilterRange(
+    dateFilter?: DashboardDateFilterOfAnyType,
+): Pick<IDashboardDependentDateFilter, "type" | "granularity" | "from" | "to"> {
+    if (!dateFilter) {
+        return { granularity: "GDC.time.date", type: "relative" };
     }
-};
+    if (
+        isDashboardAbsoluteGranularityDateFilter(dateFilter) ||
+        isDashboardParameterizedDateFilter(dateFilter)
+    ) {
+        return { type: "absolute" };
+    }
+    const { from, to, granularity, type } = dateFilter.dateFilter;
+
+    return { from, to, granularity, type };
+}

@@ -2,7 +2,6 @@
 
 import * as z from "zod/mini";
 
-import type { v1 } from "@gooddata/sdk-code-schemas";
 import type { ParameterType } from "@gooddata/sdk-model";
 
 import type { AacSchemaParity, AssertAacParity } from "../asCode/aacParity.js";
@@ -37,20 +36,8 @@ export type ParameterSchema = z.infer<typeof parameterSchema>;
 
 /** Fails the build when this schema drifts from the AAC `parameter` document type. */
 export type ParameterAacParity = AssertAacParity<
-    AacSchemaParity<typeof ObjectTypes.PARAMETER, AacParameterSchema>
+    AacSchemaParity<typeof ObjectTypes.PARAMETER, ParameterSchema>
 >;
-
-/** Breaks the build once AAC defines DATE_RANGE, so the arm stops being exempt from the parity above. */
-export type ParameterAacDateRangeGap = AssertAacParity<
-    [Extract<v1.ParameterDefinition, { type: "DATE_RANGE" }>] extends [never]
-        ? true
-        : { aacDefinesDateRange: true }
->;
-
-// AAC cannot express a DATE_RANGE definition yet, so that arm is left out of the comparison.
-type AacParameterSchema = Omit<ParameterSchema, "definition"> & {
-    definition: Exclude<ParameterSchema["definition"], { type: "DATE_RANGE" }>;
-};
 
 /** Parent key → child-key entry for the schema restricted to `enabledTypes`; powers YAML editor autocompletion. */
 export function parameterSchemaKeys(enabledTypes: ParameterType[]): SchemaKeys {

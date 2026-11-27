@@ -4,12 +4,14 @@ import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
+import { areObjRefsEqual, isDashboardDateFilter } from "@gooddata/sdk-model";
+
 import { type ISetDashboardDateFilterWithDimensionConfigMode } from "../../commands/dashboard.js";
-import { dateFilterModeChanged } from "../../events/filters.js";
+import { dateFilterModeChanged, dateFilterOfAnyTypeModeChanged } from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { selectDateFilterConfigsOverrides } from "../../store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import { selectFilterContextDateFilterByDataSet } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextDateFilterOfAnyTypeByDataSet } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../filterContext/common.js";
@@ -21,8 +23,8 @@ export function* changeDateFilterWithDimensionModeHandler(
     const { dataSet } = cmd.payload;
 
     // validate dataSet
-    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>> =
-        yield select(selectFilterContextDateFilterByDataSet(dataSet));
+    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterOfAnyTypeByDataSet>> =
+        yield select(selectFilterContextDateFilterOfAnyTypeByDataSet(dataSet));
 
     if (!affectedFilter) {
         throw invalidArgumentsProvided(ctx, cmd, `Filter with data set ${dataSet} not found.`);
@@ -30,14 +32,13 @@ export function* changeDateFilterWithDimensionModeHandler(
 
     yield put(tabsActions.changeDateFilterConfigsMode(cmd.payload));
 
-    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>> = yield select(
-        selectFilterContextDateFilterByDataSet(dataSet),
-    );
+    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterOfAnyTypeByDataSet>> =
+        yield select(selectFilterContextDateFilterOfAnyTypeByDataSet(dataSet));
 
     const filterConfigs: ReturnType<typeof selectDateFilterConfigsOverrides> = yield select(
         selectDateFilterConfigsOverrides,
     );
-    const changedFilterConfig = filterConfigs.find((item) => item.dateDataSet === dataSet);
+    const changedFilterConfig = filterConfigs.find((item) => areObjRefsEqual(item.dateDataSet, dataSet));
 
     invariant(
         changedFilter,
@@ -49,6 +50,11 @@ export function* changeDateFilterWithDimensionModeHandler(
         "Inconsistent state in changeDateModeHandler, cannot update date filter config for given data set.",
     );
 
-    yield dispatchDashboardEvent(dateFilterModeChanged(ctx, changedFilter, changedFilterConfig.config));
+    if (isDashboardDateFilter(changedFilter)) {
+        yield dispatchDashboardEvent(dateFilterModeChanged(ctx, changedFilter, changedFilterConfig.config));
+    }
+    yield dispatchDashboardEvent(
+        dateFilterOfAnyTypeModeChanged(ctx, changedFilter, changedFilterConfig.config),
+    );
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }

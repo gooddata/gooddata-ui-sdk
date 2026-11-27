@@ -10,10 +10,6 @@ import { HeaderMenuProvider } from "../../../context/HeaderMenuContext.js";
 
 import { HeaderMenu } from "./HeaderMenu.js";
 
-vi.hoisted(() => {
-    vi.resetModules();
-});
-
 function TestHeaderMenu({ withWrapping = false }: { withWrapping?: boolean }) {
     const [isMenuOpened, onMenuOpenedChange] = useState(false);
     const [wrapCells, setWrapCells] = useState(true);

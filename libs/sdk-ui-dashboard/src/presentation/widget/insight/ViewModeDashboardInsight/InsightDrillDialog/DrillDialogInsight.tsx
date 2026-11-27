@@ -13,7 +13,7 @@ import {
 import { createSelector } from "@reduxjs/toolkit";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { insightSetFilters } from "@gooddata/sdk-model";
+import { insightSetFilters, insightTitle } from "@gooddata/sdk-model";
 import {
     type GoodDataSdkError,
     type OnError,
@@ -51,6 +51,7 @@ import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
 
+import { getDrillDialogInsightDescription } from "./getDrillDialogInsightDescription.js";
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import { useDrillDialogSyncInsightProperties } from "./useDrillDialogSyncInsightProperties.js";
 import { useExcludedDrillDefinitionFilters } from "./useExcludedDrillDefinitionFilters.js";
@@ -211,6 +212,16 @@ export function DrillDialogInsight({
 
     const execConfig = useWidgetExecConfig(widget.ref, insight);
 
+    // The widget is the drill source; the visualization rendered here is the drilled insight,
+    // so its accessible name must come from the insight, not from the source widget. The description
+    // is the same one the drill dialog shows (it respects the widget's description configuration).
+    const drilledInsightTitle = insightTitle(insight);
+    const drilledInsightDescription = getDrillDialogInsightDescription(widget, insight.insight) ?? "";
+    const insightBodyWidget = useMemo(
+        () => ({ ...widget, title: drilledInsightTitle, description: drilledInsightDescription }),
+        [widget, drilledInsightTitle, drilledInsightDescription],
+    );
+
     return (
         <div style={insightStyle}>
             <div style={insightPositionStyle}>
@@ -231,7 +242,7 @@ export function DrillDialogInsight({
                             style={insightWrapperStyle}
                         >
                             <InsightBody
-                                widget={widget}
+                                widget={insightBodyWidget}
                                 insight={finalInsight}
                                 layerTables={layerTables && layerTables.length > 1 ? layerTables : undefined}
                                 backend={effectiveBackend}

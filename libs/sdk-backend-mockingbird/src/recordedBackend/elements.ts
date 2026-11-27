@@ -15,9 +15,10 @@ import {
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type IAbsoluteGranularityDateFilter,
     type IAttributeElement,
+    type IDateFilter,
     type IMeasure,
-    type IRelativeDateFilter,
     type ObjRef,
     filterAttributeElements,
     filterObjRef,
@@ -53,7 +54,7 @@ class RecordedElements implements IElementsQuery {
     private offset = 0;
     private options: IElementsQueryOptions = {};
     private attributeFilters: IElementsQueryAttributeFilter[] = [];
-    private dateFilters: IRelativeDateFilter[] = [];
+    private dateFilters: (IDateFilter | IAbsoluteGranularityDateFilter)[] = [];
     private measures: IMeasure[] = [];
 
     constructor(
@@ -116,7 +117,7 @@ class RecordedElements implements IElementsQuery {
         return this;
     }
 
-    public withDateFilters(filters: IRelativeDateFilter[]): this {
+    public withDateFilters(filters: (IDateFilter | IAbsoluteGranularityDateFilter)[]): this {
         this.dateFilters = filters ?? [];
         return this;
     }

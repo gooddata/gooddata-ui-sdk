@@ -7,6 +7,7 @@ import cx from "classnames";
 import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
 } from "@gooddata/sdk-model";
 
 import {
@@ -92,7 +93,7 @@ export function DraggableFilterDropZoneHint({
                 }
 
                 if (isDateFilterDraggableItem(item)) {
-                    const ref = item.filter.dateFilter.dataSet!;
+                    const ref = dashboardFilterObjRef(item.filter)!;
                     const index = getMoveIndex(item.filterIndex);
                     dispatch(moveDateFilter(ref, index));
                 }

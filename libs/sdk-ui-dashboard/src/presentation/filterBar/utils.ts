@@ -9,6 +9,7 @@ import {
     DashboardDateFilterConfigModeValues,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     isDashboardDateFilter,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -126,7 +127,7 @@ const isDateFilterHidden = (
         return false;
     }
     if (isFilterBarDateFilterWithDimension(filter)) {
-        const dateFilterMode = dateFiltersModeMap.get(serializeObjRef(filter.filter.dateFilter.dataSet!));
+        const dateFilterMode = dateFiltersModeMap.get(serializeObjRef(dashboardFilterObjRef(filter.filter)!));
         return dateFilterMode === DashboardDateFilterConfigModeValues.HIDDEN;
     }
     return false;

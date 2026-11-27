@@ -10,10 +10,10 @@ import {
     type IDashboardParameter,
     idRef,
     isDashboardCommonDateFilterOfAnyType,
+    isDashboardDateFilterWithDimensionOfAnyType,
     newDashboardParameterizedDateFilter,
 } from "@gooddata/sdk-model";
 
-import { ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { SimpleDashboardIdentifier } from "../../../tests/SimpleDashboard.test.helpers.js";
 import { initializeDashboard } from "../../commands/dashboard.js";
 import { applyFilterView } from "../../commands/filters.js";
@@ -22,6 +22,7 @@ import { filterViewsActions } from "../../store/filterViews/index.js";
 import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
 import {
     selectFilterContextDateFilterOfAnyType,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
     selectFilterContextDefinition,
     selectFilterContextFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
@@ -63,7 +64,9 @@ describe("apply filter view handler", () => {
         warn.mockRestore();
     });
 
-    it("should not apply anything from a view with an absolute date filter with granularity for a date dataset", async () => {
+    it("should apply the absolute date filter with granularity for a date dataset of a view", async () => {
+        const dataSet = idRef("closed", "dataSet");
+        Tester.dispatch(tabsActions.addDateFilter({ index: -1, dateDataset: dataSet }));
         const dashboardRef = selectDashboardRef(Tester.state())!;
         const filterContext = selectFilterContextDefinition(Tester.state());
         const filterView: IDashboardFilterView = {
@@ -75,13 +78,15 @@ describe("apply filter view handler", () => {
             filterContext: {
                 ...filterContext,
                 filters: [
-                    ...filterContext.filters,
+                    ...filterContext.filters.filter(
+                        (filter) => !isDashboardDateFilterWithDimensionOfAnyType(filter),
+                    ),
                     {
                         dashboardAbsoluteGranularityDateFilter: {
                             granularity: "GDC.time.month",
                             from: "2026-01",
                             to: "2026-03",
-                            dataSet: idRef("closed", "dataSet"),
+                            dataSet,
                         },
                     },
                 ],
@@ -89,18 +94,24 @@ describe("apply filter view handler", () => {
             parameters: [{ ...topNParameter, value: 7 }],
         };
         Tester.dispatch(filterViewsActions.addFilterView({ dashboard: dashboardRef, filterView }));
-        const filtersBefore = selectFilterContextFilters(Tester.state());
 
         await Tester.dispatchAndWaitFor(
             applyFilterView(filterView.ref),
-            "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.FAILURE",
+            "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS",
         );
 
-        expect(selectFilterContextFilters(Tester.state())).toEqual(filtersBefore);
-        expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(3);
-        expect(warn).toHaveBeenCalledWith(
-            `The filter view "View" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED}`,
-        );
+        expect(selectFilterContextDateFiltersWithDimensionOfAnyType(Tester.state())).toEqual([
+            {
+                dashboardAbsoluteGranularityDateFilter: {
+                    granularity: "GDC.time.month",
+                    from: "2026-01",
+                    to: "2026-03",
+                    dataSet,
+                },
+            },
+        ]);
+        expect(selectParameterRuntimeOverrideByRef(topNRef)(Tester.state())).toBe(7);
+        expect(warn).not.toHaveBeenCalled();
     });
 
     it("should apply the common absolute date filter with granularity of a view", async () => {

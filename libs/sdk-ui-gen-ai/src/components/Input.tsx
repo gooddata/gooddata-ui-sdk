@@ -25,7 +25,7 @@ import { isClarificationQuestionsItem } from "../utils.js";
 import { collectReferences } from "./completion/references.js";
 import { useCompletion } from "./completion/useCompletion.js";
 import { useConfig } from "./ConfigContext.js";
-import { REPLY_BOX_CLASS_NAME } from "./constants.js";
+import { REPLY_BOX_CLASS_NAME, REPLY_BOX_ID } from "./constants.js";
 import { GenAiChatAgentSwitching } from "./GenAiChatAgentSwitching.js";
 import { GenAiChatContextChooser } from "./GenAiChatContextChooser.js";
 import { GenAIChatContextIndicator } from "./GenAIChatContextIndicator.js";
@@ -157,7 +157,7 @@ function InputComponent({ autofocus = false, canManage, canAnalyze, targetRef }:
                         <GenAIChatContextIndicator onUpdate={handleOnFocus} />
                     </div>
                     <div ref={targetRef} onFocus={handleOnFocus} />
-                    <div className={REPLY_BOX_CLASS_NAME} {...ref}>
+                    <div id={REPLY_BOX_ID} className={REPLY_BOX_CLASS_NAME} {...ref}>
                         <DefaultSyntaxHighlightingInput
                             className="gd-gen-ai-chat__input__mc"
                             placeholder={inputPlaceholder ?? intl.formatMessage(msgs.placeholder)}

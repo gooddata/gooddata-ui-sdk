@@ -8,6 +8,7 @@ import {
     type IRichTextWidget,
     isDashboardAttributeFilter,
     isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
 } from "@gooddata/sdk-model";
 
 import { type IChangeRichTextWidgetFilterSettings } from "../../commands/richText.js";
@@ -81,5 +82,6 @@ export function* changeRichTextWidgetFilterSettingsHandler(
         result.dateDataSet,
         cmd.correlationId,
         (ignoredFilters ?? []).filter(isDashboardDateFilterWithDimension),
+        (ignoredFilters ?? []).filter(isDashboardDateFilterWithDimensionOfAnyType),
     );
 }

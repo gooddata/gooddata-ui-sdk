@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: expanding the key driver analysis from its minimized status bar opens a new modal dialog element, so screen readers announce the dialog and its title instead of only the focused Minimize button.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -286,10 +286,10 @@ export function AutomationFiltersSelect({
         filterAnnouncement,
         filterGroupRef,
         makeFilterGroupUnfocusable,
-        setAddFilterButtonRefs,
     } = shouldRenderByTab && tabFiltersData.processedFiltersByTab ? tabFiltersData : flatFiltersData;
 
-    const { focusAddFilterButton } = flatFiltersData;
+    const { focusAddFilterButton, setAddFilterButtonRefs } = flatFiltersData;
+    const { setTabAddFilterButtonRefs, focusTabAddFilterButton } = tabFiltersData;
 
     const filters = shouldRenderByTab ? [] : flatFiltersData.visibleFilters;
     const restrictedFilterCount = shouldRenderByTab ? 0 : flatFiltersData.restrictedFilterCount;
@@ -476,6 +476,7 @@ export function AutomationFiltersSelect({
                                                 onParameterSelect={(ref) => {
                                                     announceParameterAdded(tabAvailableParameters, ref);
                                                     onParameterAddByTab?.(tab.tabId, ref);
+                                                    focusTabAddFilterButton(tab.tabId);
                                                 }}
                                                 attributes={tab.attributes}
                                                 dateDatasets={tab.dateDatasets}
@@ -504,7 +505,11 @@ export function AutomationFiltersSelect({
                                                                 isDisabled={isTabAddButtonDisabled}
                                                                 ariaLabel={tabTooltipText}
                                                                 onRefSet={(element) =>
-                                                                    setAddFilterButtonRefs(element, buttonRef)
+                                                                    setTabAddFilterButtonRefs(
+                                                                        tab.tabId,
+                                                                        element,
+                                                                        buttonRef,
+                                                                    )
                                                                 }
                                                             >
                                                                 <UiIconButton
@@ -515,7 +520,8 @@ export function AutomationFiltersSelect({
                                                                     isDisabled={isTabAddButtonDisabled}
                                                                     ref={(element) => {
                                                                         if (!isTabAddButtonDisabled) {
-                                                                            setAddFilterButtonRefs(
+                                                                            setTabAddFilterButtonRefs(
+                                                                                tab.tabId,
                                                                                 element,
                                                                                 buttonRef,
                                                                             );

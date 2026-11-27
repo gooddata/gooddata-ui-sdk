@@ -118,7 +118,8 @@ export function isCatalogItemTextGenerable(
         isCatalogItemDashboard(item) ||
         isCatalogItemMeasure(item) ||
         isCatalogItemFact(item) ||
-        isCatalogItemAttribute(item)
+        isCatalogItemAttribute(item) ||
+        isCatalogItemDocument(item)
     );
 }
 

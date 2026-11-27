@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: screen readers announce the name of the header \"Open AI Assistant\" button only once; its tooltip is now a visual tooltip shown on hover and keyboard focus instead of a native title.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

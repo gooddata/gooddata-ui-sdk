@@ -52,6 +52,12 @@ QUERY_FILTERS = {
         "from": -3,
         "to": 0,
     },
+    "date_period": {
+        "type": "date_filter",
+        "using": "date_ds",
+        "parameter": "last_13_months",
+        "empty_values": "include",
+    },
     "attribute": {
         "type": "attribute_filter",
         "using": "label/region",
@@ -86,6 +92,7 @@ QUERY_FILTERS = {
 EXPECTED_QUERY_FILTER_MODEL = {
     "date_absolute": "QueryDateFilter",
     "date_relative": "QueryDateFilter",
+    "date_period": "QueryDateFilter",
     "attribute": "QueryAttributeFilter",
     "text": "QueryTextFilter",
     "metric_value_comparison": "QueryMetricValueFilter",
@@ -103,6 +110,14 @@ METADATA_OBJECTS = {
     "dashboard": {"type": "dashboard", "id": "my_dash"},
     "dataset": {"type": "dataset", "id": "orders", "table_path": "public/orders"},
     "plugin": {"type": "plugin", "id": "p1", "url": "https://example.com/p.js"},
+    "date_range_parameter": {
+        "type": "parameter",
+        "id": "last_13_months",
+        "definition": {
+            "type": "DATE_RANGE",
+            "defaultValue": {"granularity": "MONTH", "from": "2024-11", "to": "2025-11"},
+        },
+    },
 }
 
 INTERACTIONS = {
@@ -123,6 +138,17 @@ DASHBOARD_FILTERS = {
     },
     "relative_date": {
         "f1": {"type": "date_filter", "granularity": "MONTH", "from": -3, "to": 0}
+    },
+    "common_period": {
+        "f1": {"type": "date_filter", "parameter": "last_13_months", "title": "Period", "mode": "readonly"}
+    },
+    "dataset_period": {
+        "f1": {
+            "type": "date_filter",
+            "date": "date_ds",
+            "parameter": "last_13_months",
+            "empty_values": "exclude",
+        }
     },
     "text": {
         "f1": {

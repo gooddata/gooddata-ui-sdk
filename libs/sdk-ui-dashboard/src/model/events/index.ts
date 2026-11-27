@@ -60,6 +60,9 @@ import {
     type IDashboardAttributeFilterRemoved,
     type IDashboardAttributeSelectionModeChanged,
     type IDashboardAttributeTitleChanged,
+    type IDashboardDateFilterOfAnyTypeModeChanged,
+    type IDashboardDateFilterOfAnyTypeMoved,
+    type IDashboardDateFilterOfAnyTypeRemoved,
     type IDashboardDateFilterOfAnyTypeTitleChanged,
     type IDashboardMeasureValueFilterAdded,
     type IDashboardMeasureValueFilterConditionChanged,
@@ -215,6 +218,9 @@ export type DashboardEvents =
     | DashboardDateFilterSelectionChanged
     | DashboardDateFilterOfAnyTypeSelectionChanged
     | IDashboardDateFilterOfAnyTypeTitleChanged
+    | IDashboardDateFilterOfAnyTypeModeChanged
+    | IDashboardDateFilterOfAnyTypeRemoved
+    | IDashboardDateFilterOfAnyTypeMoved
     | IDashboardAttributeFilterAdded
     | IDashboardAttributeFilterRemoved
     | IDashboardAttributeFilterMoved

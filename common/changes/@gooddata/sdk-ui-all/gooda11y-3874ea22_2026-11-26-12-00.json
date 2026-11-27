@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: Toast messages shown while a dialog is open, such as \"Metric '…' saved.\" in the metric editor, are announced to screen readers once instead of twice. Only dialogs with aria-modal add their own live region for toasts.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

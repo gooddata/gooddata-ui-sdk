@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-filters: Screen readers announce named groups in the date filter dialog: \"Custom period type\" for the Static period and Relative period buttons and \"Date filter actions\" for the Cancel and Apply buttons, instead of a bare \"group\".",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

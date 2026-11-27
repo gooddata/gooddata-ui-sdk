@@ -3,7 +3,7 @@
 import { type KeyboardEvent, useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type AccessGranularPermission } from "@gooddata/sdk-model";
 
@@ -20,6 +20,7 @@ import {
     type IGranteePermissionsPossibilities,
     type IGranularGrantee,
 } from "../types.js";
+import { getGranteeLabel } from "../utils.js";
 
 import { GranularPermissionSelectItemWithBubble } from "./GranularPermissionItem.js";
 
@@ -84,6 +85,7 @@ export function GranularPermissionsDropdownBody({
     mode,
     id,
 }: IGranularPermissionsDropdownBodyProps) {
+    const intl = useIntl();
     const { permissionsChangeInteraction, permissionsRemoveInteraction } = useShareDialogInteraction();
     const dropdownRef = useRef<HTMLDivElement>(null);
     const selectedItemRef = useRef<HTMLDivElement>(null);
@@ -212,6 +214,10 @@ export function GranularPermissionsDropdownBody({
                 onBlur={(e) => e.stopPropagation()}
                 onKeyDown={handleKeyDown}
                 role="listbox"
+                aria-label={intl.formatMessage(
+                    { id: "shareDialog.share.granular.grantee.permission.list.ariaLabel" },
+                    { grantee: getGranteeLabel(grantee, intl) },
+                )}
             >
                 <ItemsWrapper smallItemsSpacing>
                     {granteePossibilities.assign.items.map((permissionItem) => {

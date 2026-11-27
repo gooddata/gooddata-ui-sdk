@@ -15,10 +15,6 @@ import {
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import {
-    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
-    containsAbsoluteGranularityDateFilterWithDataSet,
-} from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED } from "../../../../_staging/dashboard/parameterizedDateFilters.js";
 import {
     type ChangeDateFilterSelection,
@@ -32,8 +28,8 @@ import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../store/confi
 import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
 import { type IUpsertDateFilterPayload } from "../../../store/tabs/filterContext/filterContextReducers.js";
 import {
-    selectFilterContextDateFilterByDataSet,
     selectFilterContextDateFilterOfAnyType,
+    selectFilterContextDateFilterOfAnyTypeByDataSet,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
@@ -100,13 +96,6 @@ export function* changeDateFilterSelectionOfAnyTypeHandler(
 ): SagaIterator<void> {
     const { filter, dateFilterOptionLocalId, isWorkingSelectionChange } = cmd.payload;
 
-    if (containsAbsoluteGranularityDateFilterWithDataSet(filter ? [filter] : [])) {
-        throw invalidArgumentsProvided(
-            ctx,
-            cmd,
-            ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
-        );
-    }
     if (isDashboardParameterizedDateFilter(filter)) {
         throw invalidArgumentsProvided(ctx, cmd, PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED);
     }
@@ -158,7 +147,7 @@ function* upsertDateFilterSelection(
     }
 
     const affectedFilter: ReturnType<typeof selectFilterContextDateFilterOfAnyType> = dataSet
-        ? yield select(selectFilterContextDateFilterByDataSet(dataSet))
+        ? yield select(selectFilterContextDateFilterOfAnyTypeByDataSet(dataSet))
         : yield select(selectFilterContextDateFilterOfAnyType);
 
     if (!affectedFilter || isDashboardDateFilter(affectedFilter)) {

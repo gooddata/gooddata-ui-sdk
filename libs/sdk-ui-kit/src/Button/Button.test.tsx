@@ -39,6 +39,17 @@ describe("ReactButton", () => {
                 expect(onClick).not.toHaveBeenCalled();
             });
         });
+
+        it("should announce ariaDisabled from accessibilityConfig and still call onClick", () => {
+            const onClick = vi.fn();
+            renderButton({ accessibilityConfig: { ariaDisabled: true }, onClick });
+
+            const button = screen.getByRole("button");
+            expect(button).toHaveAttribute("aria-disabled", "true");
+
+            fireEvent.click(button);
+            expect(onClick).toHaveBeenCalledTimes(1);
+        });
     });
 
     describe("render as link", () => {

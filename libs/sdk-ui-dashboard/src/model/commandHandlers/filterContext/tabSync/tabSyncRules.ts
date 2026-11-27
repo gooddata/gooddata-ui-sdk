@@ -7,19 +7,19 @@ import {
     type DashboardDateFilterOfAnyType,
     type FilterContextItem,
     type IDashboardAttributeFilter,
-    type IDashboardDateFilter,
     type IDashboardMeasureValueFilter,
     type ObjRef,
     areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     isAllTimeDashboardDateFilter,
     isDashboardAbsoluteGranularityDateFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilterOfAnyType,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMeasureValueFilter,
     isDashboardParameterizedDateFilter,
     isNoopAllTimeDashboardDateFilter,
@@ -148,10 +148,11 @@ function counterpartLocalId(
     return counterpart ? dashboardFilterLocalIdentifier(counterpart) : undefined;
 }
 
-function findDimensionDateFilter(tab: ITabState, dataSet: ObjRef): IDashboardDateFilter | undefined {
+function findDimensionDateFilter(tab: ITabState, dataSet: ObjRef): DashboardDateFilterOfAnyType | undefined {
     return filtersOf(tab).find(
-        (item): item is IDashboardDateFilter =>
-            isDashboardDateFilterWithDimension(item) && areObjRefsEqual(item.dateFilter.dataSet, dataSet),
+        (item): item is DashboardDateFilterOfAnyType =>
+            isDashboardDateFilterWithDimensionOfAnyType(item) &&
+            areObjRefsEqual(dashboardFilterObjRef(item), dataSet),
     );
 }
 
@@ -276,13 +277,14 @@ export function toUpsertDateFilterPayload(filter: DashboardDateFilterOfAnyType):
         throw new NotSupported(PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED);
     }
     if (isDashboardAbsoluteGranularityDateFilter(filter)) {
-        const { granularity, from, to, localIdentifier, emptyValueHandling } =
+        const { granularity, from, to, dataSet, localIdentifier, emptyValueHandling } =
             filter.dashboardAbsoluteGranularityDateFilter;
         return {
             type: "absoluteGranularity",
             granularity,
             from,
             to,
+            ...(dataSet ? { dataSet } : {}),
             ...(localIdentifier ? { localIdentifier } : {}),
             ...(emptyValueHandling ? { emptyValueHandling } : {}),
         };

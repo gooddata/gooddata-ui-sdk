@@ -7976,9 +7976,6 @@ importers:
       vite:
         specifier: 8.3.5
         version: 8.3.5(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.9.1)
-      vitest:
-        specifier: 5.0.4
-        version: 5.0.4(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(@vitest/coverage-v8@5.0.4)(happy-dom@21.0.4)(vite@8.3.5(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.9.1))
 
   ../../templates/pluggable-module/host-ui-harness:
     dependencies:
@@ -8101,12 +8098,6 @@ importers:
       '@module-federation/vite':
         specifier: 1.23.9
         version: 1.23.9(typescript@7.0.2)(vite@8.3.5(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.9.1))
-      '@testing-library/dom':
-        specifier: 10.4.2
-        version: 10.4.2
-      '@testing-library/react':
-        specifier: 16.3.0
-        version: 16.3.0(@testing-library/dom@10.4.2)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/node':
         specifier: 24.12.0
         version: 24.12.0
@@ -8146,9 +8137,6 @@ importers:
       eslint-plugin-tsdoc:
         specifier: 0.5.4
         version: 0.5.4(eslint@10.14.0(jiti@2.6.1))
-      happy-dom:
-        specifier: 21.0.4
-        version: 21.0.4
       jiti:
         specifier: 2.6.1
         version: 2.6.1
@@ -8182,9 +8170,6 @@ importers:
       vite:
         specifier: 8.3.5
         version: 8.3.5(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.9.1)
-      vitest:
-        specifier: 5.0.4
-        version: 5.0.4(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(@vitest/coverage-v8@5.0.4)(happy-dom@21.0.4)(vite@8.3.5(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.9.1))
 
   ../../templates/pluggable-module/module:
     dependencies:
@@ -8219,12 +8204,6 @@ importers:
       '@module-federation/vite':
         specifier: 1.23.9
         version: 1.23.9(typescript@7.0.2)(vite@8.3.5(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.9.1))
-      '@testing-library/dom':
-        specifier: 10.4.2
-        version: 10.4.2
-      '@testing-library/react':
-        specifier: 16.3.0
-        version: 16.3.0(@testing-library/dom@10.4.2)(@types/react-dom@19.1.7(@types/react@19.1.11))(@types/react@19.1.11)(react-dom@19.1.1(react@19.1.1))(react@19.1.1)
       '@types/lodash-es':
         specifier: 4.17.12
         version: 4.17.12
@@ -8267,9 +8246,6 @@ importers:
       eslint-plugin-tsdoc:
         specifier: 0.5.4
         version: 0.5.4(eslint@10.14.0(jiti@2.6.1))
-      happy-dom:
-        specifier: 21.0.4
-        version: 21.0.4
       jiti:
         specifier: 2.6.1
         version: 2.6.1
@@ -8306,9 +8282,6 @@ importers:
       vite:
         specifier: 8.3.5
         version: 8.3.5(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.9.1)
-      vitest:
-        specifier: 5.0.4
-        version: 5.0.4(@opentelemetry/api@1.9.0)(@types/node@24.12.0)(@vitest/coverage-v8@5.0.4)(happy-dom@21.0.4)(vite@8.3.5(@types/node@24.12.0)(esbuild@0.28.2)(jiti@2.6.1)(sass@1.104.1)(terser@5.51.2)(yaml@2.9.1))
 
   ../../tools/app-toolkit:
     dependencies:

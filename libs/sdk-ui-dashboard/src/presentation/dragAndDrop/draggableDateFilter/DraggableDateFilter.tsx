@@ -4,7 +4,7 @@ import { type Ref } from "react";
 
 import classNames from "classnames";
 
-import { type DashboardDateFilterOfAnyType, type IDashboardDateFilter } from "@gooddata/sdk-model";
+import { type DashboardDateFilterOfAnyType } from "@gooddata/sdk-model";
 
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
@@ -18,8 +18,8 @@ import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/Draggabl
 import { useDashboardDrag } from "../useDashboardDrag.js";
 
 type DraggableDateFilterProps = {
-    filter: IDashboardDateFilter;
-    workingFilter?: IDashboardDateFilter;
+    filter: DashboardDateFilterOfAnyType;
+    workingFilter?: DashboardDateFilterOfAnyType;
     filterIndex: number;
     config: IDashboardDateFilterConfig;
     autoOpen: boolean;
@@ -87,6 +87,7 @@ export function DraggableDateFilter({
                     workingFilter={isApplyAllAtOnceEnabledAndSet ? workingFilter : undefined}
                     config={config}
                     onFilterChanged={onDateFilterChanged}
+                    isAbsoluteDateFilterGranularityEnabled
                     isDraggable={isInEditMode}
                     readonly={readonly}
                     autoOpen={autoOpen}

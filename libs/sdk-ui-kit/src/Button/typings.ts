@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type AriaAttributes, type MouseEvent, type ReactNode } from "react";
 
@@ -17,7 +17,14 @@ export interface IDropdownButtonAccessibilityConfig {
  * @internal
  */
 export interface IButtonAccessibilityConfig
-    extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {}
+    extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
+    /**
+     * Overrides the aria-disabled state derived from the disabled prop. Use it when the button must
+     * be announced as unavailable but its click handler must still run (for example to move the focus
+     * to the field that makes the action unavailable).
+     */
+    ariaDisabled?: AriaAttributes["aria-disabled"];
+}
 
 /**
  * @internal

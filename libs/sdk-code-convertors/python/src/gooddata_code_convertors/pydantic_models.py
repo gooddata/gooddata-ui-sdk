@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 998f9b6cb47e0f5d3af34ef888344c22d09b497e74dce2081c991dcf85a2efba
+# schema-hash: 0fa27aee5c2368517bbe141c402d4af6af174656abc091f35a40f68969ebac04
 
 from __future__ import annotations
 
@@ -87,6 +87,7 @@ __all__ = [
     "DashboardFiltersNoGroups",
     "DashboardMetricValueFilter",
     "DashboardParameters",
+    "DashboardPeriodDateFilter",
     "DashboardRelativeDateFilter",
     "DashboardStateMultiselect",
     "DashboardStateMultiselect1",
@@ -114,6 +115,16 @@ __all__ = [
     "DateDataset",
     "DateDataset1",
     "DateFilterGranularity",
+    "DateRangeParameterDefinition",
+    "DateRangeParameterValue",
+    "DateRangeParameterValue1",
+    "DateRangeParameterValue2",
+    "DateRangeParameterValue3",
+    "DateRangeParameterValue4",
+    "DateRangeParameterValue5",
+    "DateRangeParameterValue6",
+    "DateRangeParameterValue7",
+    "DateRangeParameterValue8",
     "Description",
     "Description1",
     "Description2",
@@ -135,9 +146,17 @@ __all__ = [
     "GrandTotalsPosition",
     "Granularity",
     "Granularity1",
+    "Granularity10",
+    "Granularity11",
+    "Granularity12",
     "Granularity2",
     "Granularity3",
     "Granularity4",
+    "Granularity5",
+    "Granularity6",
+    "Granularity7",
+    "Granularity8",
+    "Granularity9",
     "GridLineShape",
     "Gridlines",
     "HeadingSlot",
@@ -188,8 +207,8 @@ __all__ = [
     "Metrics",
     "MinSize",
     "Mode",
-    "Mode2",
-    "Mode6",
+    "Mode3",
+    "Mode7",
     "MvfCondition",
     "MvfCondition1",
     "MvfCondition2",
@@ -281,6 +300,7 @@ __all__ = [
     "QueryDateFilter",
     "QueryDateFilter1",
     "QueryDateFilter2",
+    "QueryDateFilter3",
     "QueryField",
     "QueryField1",
     "QueryField2",
@@ -376,19 +396,17 @@ __all__ = [
     "TotalItem",
     "Type",
     "Type1",
-    "Type11",
-    "Type12",
+    "Type10",
+    "Type13",
     "Type14",
-    "Type18",
+    "Type16",
     "Type20",
-    "Type21",
     "Type22",
     "Type23",
     "Type24",
-    "Type27",
-    "Type28",
+    "Type25",
+    "Type26",
     "Type29",
-    "Type3",
     "Type30",
     "Type31",
     "Type32",
@@ -399,6 +417,7 @@ __all__ = [
     "Type37",
     "Type38",
     "Type39",
+    "Type4",
     "Type40",
     "Type41",
     "Type42",
@@ -409,7 +428,6 @@ __all__ = [
     "Type47",
     "Type48",
     "Type49",
-    "Type5",
     "Type50",
     "Type51",
     "Type52",
@@ -420,15 +438,15 @@ __all__ = [
     "Type57",
     "Type58",
     "Type59",
+    "Type6",
+    "Type60",
+    "Type61",
     "Type62",
-    "Type63",
-    "Type64",
     "Type65",
     "Type66",
     "Type67",
     "Type68",
     "Type69",
-    "Type7",
     "Type70",
     "Type71",
     "Type72",
@@ -456,6 +474,9 @@ __all__ = [
     "Type92",
     "Type93",
     "Type94",
+    "Type95",
+    "Type96",
+    "Type97",
     "Using",
     "Value",
     "Value1",
@@ -620,12 +641,31 @@ class EmptyValues(Enum):
     exclude = 'exclude'
 
 
-class Type3(Enum):
+class DashboardPeriodDateFilter(BaseModel):
+    title: str | None = Field(None, description='Optional title of the filter')
+    type: Type1
+    parameter: Identifier = Field(
+        ..., description='An id of the date range parameter (period) the filter uses'
+    )
+    mode: Mode | None = Field(
+        None,
+        description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
+    )
+    empty_values: EmptyValues | None = Field(
+        None, description='Controls how empty values are handled in the filter.'
+    )
+    date: Identifier | None = Field(
+        None,
+        description="An id of the date dataset to be used for date filter. Without it, the filter is the dashboard's common date filter.",
+    )
+
+
+class Type4(Enum):
     attribute_filter = 'attribute_filter'
     attribute_filter_1 = 'attribute_filter'
 
 
-class Mode2(Enum):
+class Mode3(Enum):
     readonly = 'readonly'
     hidden = 'hidden'
     active = 'active'
@@ -654,7 +694,7 @@ class Parents(BaseModel):
     )
 
 
-class Type5(Enum):
+class Type6(Enum):
     text_filter = 'text_filter'
 
 
@@ -677,7 +717,7 @@ class DashboardTextFilter1(BaseModel):
         description='Configures the label used for representing attribute filter elements in UI.',
         title='Display As Label Identifier',
     )
-    mode: Mode2 | None = Field(
+    mode: Mode3 | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
@@ -692,7 +732,7 @@ class DashboardTextFilter1(BaseModel):
         None,
         description='An id of the attributes, labels, facts or metrics to validate the filter by',
     )
-    type: Type5
+    type: Type6
     condition: Condition
     values: list[str | None]
 
@@ -720,7 +760,7 @@ class DashboardTextFilter2(BaseModel):
         description='Configures the label used for representing attribute filter elements in UI.',
         title='Display As Label Identifier',
     )
-    mode: Mode2 | None = Field(
+    mode: Mode3 | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
@@ -735,7 +775,7 @@ class DashboardTextFilter2(BaseModel):
         None,
         description='An id of the attributes, labels, facts or metrics to validate the filter by',
     )
-    type: Type5
+    type: Type6
     condition: Condition1
     value: str
 
@@ -746,17 +786,17 @@ class DashboardTextFilter(RootModel[DashboardTextFilter1 | DashboardTextFilter2]
     )
 
 
-class Type7(Enum):
+class Type8(Enum):
     metric_value_filter = 'metric_value_filter'
 
 
-class Mode6(Enum):
+class Mode7(Enum):
     readonly = 'readonly'
     hidden = 'hidden'
     active = 'active'
 
 
-class Type8(Enum):
+class Type9(Enum):
     filter_group = 'filter_group'
 
 
@@ -855,7 +895,7 @@ class MvfCondition(RootModel[MvfCondition1 | MvfCondition2 | MvfCondition3]):
     )
 
 
-class Type9(Enum):
+class Type10(Enum):
     date_filter = 'date_filter'
 
 
@@ -885,7 +925,7 @@ class Granularity(Enum):
     FISCAL_MONTH = 'FISCAL_MONTH'
 
 
-class Type11(Enum):
+class Type13(Enum):
     attribute_filter = 'attribute_filter'
 
 
@@ -902,7 +942,7 @@ class QueryAttributeFilter(BaseModel):
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type11
+    type: Type13
     using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
@@ -914,7 +954,7 @@ class QueryAttributeFilter(BaseModel):
     state: State | None = Field(None, title='State')
 
 
-class Type12(Enum):
+class Type14(Enum):
     text_filter = 'text_filter'
     text_filter_1 = 'text_filter'
 
@@ -928,7 +968,7 @@ class QueryTextFilter1(BaseModel):
     model_config = ConfigDict(
         regex_engine="python-re",
     )
-    type: Type12
+    type: Type14
     using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
@@ -955,7 +995,7 @@ class QueryTextFilter2(BaseModel):
     model_config = ConfigDict(
         regex_engine="python-re",
     )
-    type: Type12
+    type: Type14
     using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
@@ -973,7 +1013,7 @@ class QueryTextFilter(RootModel[QueryTextFilter1 | QueryTextFilter2]):
     root: QueryTextFilter1 | QueryTextFilter2 = Field(..., title='Text Filter')
 
 
-class Type14(Enum):
+class Type16(Enum):
     metric_value_filter = 'metric_value_filter'
 
 
@@ -981,7 +1021,7 @@ class QueryMetricValueFilter1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type14
+    type: Type16
     using: MetricIdentifier | str = Field(
         ..., description='Metric or local metric to use in this filter.'
     )
@@ -1010,7 +1050,7 @@ class QueryMetricValueFilter2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type14
+    type: Type16
     using: MetricIdentifier | str = Field(
         ..., description='Metric or local metric to use in this filter.'
     )
@@ -1036,7 +1076,7 @@ class QueryMetricValueFilter3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type14
+    type: Type16
     using: MetricIdentifier | str = Field(
         ..., description='Metric or local metric to use in this filter.'
     )
@@ -1060,7 +1100,7 @@ class QueryMetricValueFilter4(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type14
+    type: Type16
     using: MetricIdentifier | str = Field(
         ..., description='Metric or local metric to use in this filter.'
     )
@@ -1092,7 +1132,7 @@ class QueryMetricValueFilter(
     ) = Field(..., title='Metric Value Filter')
 
 
-class Type18(Enum):
+class Type20(Enum):
     ranking_filter = 'ranking_filter'
     ranking_filter_1 = 'ranking_filter'
 
@@ -1101,7 +1141,7 @@ class QueryRankingFilter1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type18
+    type: Type20
     using: MetricIdentifier | str = Field(
         ..., description='Metric identifier to use for this filter.'
     )
@@ -1124,7 +1164,7 @@ class QueryRankingFilter2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type18
+    type: Type20
     using: MetricIdentifier | str = Field(
         ..., description='Metric identifier to use for this filter.'
     )
@@ -1145,7 +1185,7 @@ class QueryRankingFilter(RootModel[QueryRankingFilter1 | QueryRankingFilter2]):
     root: QueryRankingFilter1 | QueryRankingFilter2 = Field(..., title='Ranking Filter')
 
 
-class Type20(Enum):
+class Type22(Enum):
     computed_attribute = 'computed_attribute'
 
 
@@ -1251,7 +1291,7 @@ class ComplexColorItem(
     ) = Field(..., title='Color')
 
 
-class Type21(Enum):
+class Type23(Enum):
     dashboard = 'dashboard'
 
 
@@ -1260,11 +1300,11 @@ class Version(Enum):
     field_3 = '3'
 
 
-class Type22(Enum):
+class Type24(Enum):
     STRING = 'STRING'
 
 
-class Type23(Enum):
+class Type25(Enum):
     NUMBER = 'NUMBER'
 
 
@@ -1395,7 +1435,7 @@ class InteractionFilters(BaseModel):
     include: InteractionFiltersInclude | None = None
 
 
-class Type24(Enum):
+class Type26(Enum):
     dataset = 'dataset'
     dataset_1 = 'dataset'
 
@@ -1412,7 +1452,7 @@ class DatasetType2(Enum):
     auxiliary = 'auxiliary'
 
 
-class Type27(Enum):
+class Type29(Enum):
     date = 'date'
 
 
@@ -1448,7 +1488,7 @@ class Granularity1(Enum):
     FISCAL_MONTH = 'FISCAL_MONTH'
 
 
-class Type28(Enum):
+class Type30(Enum):
     attribute = 'attribute'
 
 
@@ -1457,11 +1497,11 @@ class SortDirection(Enum):
     DESC = 'DESC'
 
 
-class Type29(Enum):
+class Type31(Enum):
     fact = 'fact'
 
 
-class Type30(Enum):
+class Type32(Enum):
     aggregated_fact = 'aggregated_fact'
 
 
@@ -1511,7 +1551,7 @@ class GeoCollectionKind(Enum):
     CUSTOM = 'CUSTOM'
 
 
-class Type31(Enum):
+class Type33(Enum):
     document = 'document'
 
 
@@ -1519,11 +1559,11 @@ class Version1(Enum):
     field_2 = '2'
 
 
-class Type32(Enum):
+class Type34(Enum):
     document_template = 'document_template'
 
 
-class Type33(Enum):
+class Type35(Enum):
     metric = 'metric'
 
 
@@ -1614,16 +1654,16 @@ class PublisherVisualizationDisplayV2(BaseModel):
     data_points: DataPoints | None = Field(None, title='Publisher Auto Visibility V2')
 
 
-class Type34(Enum):
+class Type36(Enum):
     row = 'row'
     column = 'column'
 
 
-class Type35(Enum):
+class Type37(Enum):
     title = 'title'
 
 
-class Type36(Enum):
+class Type38(Enum):
     heading = 'heading'
 
 
@@ -1636,35 +1676,35 @@ class Level(IntEnum):
     integer_6 = 6
 
 
-class Type37(Enum):
+class Type39(Enum):
     text = 'text'
 
 
-class Type38(Enum):
+class Type40(Enum):
     image = 'image'
 
 
-class Type39(Enum):
+class Type41(Enum):
     visualization = 'visualization'
 
 
-class Type40(Enum):
+class Type42(Enum):
     takeaway = 'takeaway'
 
 
-class Type41(Enum):
+class Type43(Enum):
     page_template = 'page_template'
 
 
-class Type42(Enum):
+class Type44(Enum):
     parameter = 'parameter'
 
 
-class Type43(Enum):
+class Type45(Enum):
     STRING = 'STRING'
 
 
-class Type44(Enum):
+class Type46(Enum):
     NUMBER = 'NUMBER'
 
 
@@ -1684,7 +1724,7 @@ class NumberParameterDefinition(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type44
+    type: Type46
     defaultValue: float = Field(
         ..., description='The value used whenever the parameter is not overridden.'
     )
@@ -1692,6 +1732,188 @@ class NumberParameterDefinition(BaseModel):
         None,
         description='Optional bounds the parameter value must satisfy.',
         title='Number Parameter Constraints',
+    )
+
+
+class Type47(Enum):
+    DATE_RANGE = 'DATE_RANGE'
+
+
+class Granularity2(Enum):
+    YEAR = 'YEAR'
+
+
+class DateRangeParameterValue1(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    granularity: Granularity2
+    from_: constr(pattern=r'^[0-9]{4}$') | conint(ge=1000, le=9999) | None = Field(
+        None,
+        alias='from',
+        description='The first year, inclusive: YYYY, with or without quotes.',
+    )
+    to: constr(pattern=r'^[0-9]{4}$') | conint(ge=1000, le=9999) | None = Field(
+        None, description='The last year, inclusive: YYYY, with or without quotes.'
+    )
+
+
+class Granularity3(Enum):
+    QUARTER = 'QUARTER'
+
+
+class DateRangeParameterValue2(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    granularity: Granularity3
+    from_: constr(pattern=r'^[0-9]{4}-[0-9]$') | None = Field(
+        None, alias='from', description='The first quarter, inclusive: YYYY-Q.'
+    )
+    to: constr(pattern=r'^[0-9]{4}-[0-9]$') | None = Field(
+        None, description='The last quarter, inclusive: YYYY-Q.'
+    )
+
+
+class Granularity4(Enum):
+    MONTH = 'MONTH'
+
+
+class DateRangeParameterValue3(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    granularity: Granularity4
+    from_: constr(pattern=r'^[0-9]{4}-[0-9]{2}$') | None = Field(
+        None, alias='from', description='The first month, inclusive: YYYY-MM.'
+    )
+    to: constr(pattern=r'^[0-9]{4}-[0-9]{2}$') | None = Field(
+        None, description='The last month, inclusive: YYYY-MM.'
+    )
+
+
+class Granularity5(Enum):
+    WEEK = 'WEEK'
+
+
+class DateRangeParameterValue4(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    granularity: Granularity5
+    from_: constr(pattern=r'^[0-9]{4}-[0-9]{2}$') | None = Field(
+        None,
+        alias='from',
+        description='The first week, inclusive: YYYY-WW, an ISO week.',
+    )
+    to: constr(pattern=r'^[0-9]{4}-[0-9]{2}$') | None = Field(
+        None, description='The last week, inclusive: YYYY-WW, an ISO week.'
+    )
+
+
+class Granularity6(Enum):
+    DAY = 'DAY'
+
+
+class DateRangeParameterValue5(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    granularity: Granularity6
+    from_: constr(pattern=r'^[0-9]{4}-[0-9]{2}-[0-9]{2}$') | None = Field(
+        None, alias='from', description='The first day, inclusive: YYYY-MM-DD.'
+    )
+    to: constr(pattern=r'^[0-9]{4}-[0-9]{2}-[0-9]{2}$') | None = Field(
+        None, description='The last day, inclusive: YYYY-MM-DD.'
+    )
+
+
+class Granularity7(Enum):
+    HOUR = 'HOUR'
+
+
+class DateRangeParameterValue6(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    granularity: Granularity7
+    from_: constr(pattern=r'^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}$') | None = Field(
+        None, alias='from', description='The first hour, inclusive: YYYY-MM-DD HH.'
+    )
+    to: constr(pattern=r'^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}$') | None = Field(
+        None, description='The last hour, inclusive: YYYY-MM-DD HH.'
+    )
+
+
+class Granularity8(Enum):
+    MINUTE = 'MINUTE'
+
+
+class DateRangeParameterValue7(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    granularity: Granularity8
+    from_: constr(pattern=r'^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$') | None = (
+        Field(
+            None,
+            alias='from',
+            description='The first minute, inclusive: YYYY-MM-DD HH:mm.',
+        )
+    )
+    to: constr(pattern=r'^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$') | None = (
+        Field(None, description='The last minute, inclusive: YYYY-MM-DD HH:mm.')
+    )
+
+
+class Granularity9(Enum):
+    SECOND = 'SECOND'
+
+
+class DateRangeParameterValue8(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    granularity: Granularity9
+    from_: (
+        constr(pattern=r'^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$')
+        | None
+    ) = Field(
+        None,
+        alias='from',
+        description='The first second, inclusive: YYYY-MM-DD HH:mm:ss.',
+    )
+    to: (
+        constr(pattern=r'^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$')
+        | None
+    ) = Field(None, description='The last second, inclusive: YYYY-MM-DD HH:mm:ss.')
+
+
+class DateRangeParameterValue(
+    RootModel[
+        DateRangeParameterValue1
+        | DateRangeParameterValue2
+        | DateRangeParameterValue3
+        | DateRangeParameterValue4
+        | DateRangeParameterValue5
+        | DateRangeParameterValue6
+        | DateRangeParameterValue7
+        | DateRangeParameterValue8
+    ]
+):
+    root: (
+        DateRangeParameterValue1
+        | DateRangeParameterValue2
+        | DateRangeParameterValue3
+        | DateRangeParameterValue4
+        | DateRangeParameterValue5
+        | DateRangeParameterValue6
+        | DateRangeParameterValue7
+        | DateRangeParameterValue8
+    ) = Field(
+        ...,
+        description="A range of whole periods. At least one of 'from' and 'to' is set; a missing one leaves that end open.",
+        title='Date Range Parameter Value',
     )
 
 
@@ -1708,7 +1930,7 @@ class ParameterAllowedValue(BaseModel):
     )
 
 
-class Type45(Enum):
+class Type48(Enum):
     plugin = 'plugin'
 
 
@@ -1731,15 +1953,15 @@ class Operator(Enum):
     CHANGE = 'CHANGE'
 
 
-class Type46(Enum):
+class Type49(Enum):
     PREVIOUS_YEAR = 'PREVIOUS_YEAR'
 
 
-class Type47(Enum):
+class Type50(Enum):
     PREVIOUS_PERIOD = 'PREVIOUS_PERIOD'
 
 
-class Type48(Enum):
+class Type51(Enum):
     attribute_sort = 'attribute_sort'
 
 
@@ -1752,7 +1974,7 @@ class Aggregation1(Enum):
     SUM = 'SUM'
 
 
-class Type49(Enum):
+class Type52(Enum):
     metric_sort = 'metric_sort'
 
 
@@ -1776,15 +1998,15 @@ class QueryParameter(BaseModel):
     )
 
 
-class Type50(Enum):
+class Type53(Enum):
     report = 'report'
 
 
-class Type51(Enum):
+class Type54(Enum):
     report_page_layout = 'report_page_layout'
 
 
-class Type52(Enum):
+class Type55(Enum):
     report_template = 'report_template'
 
 
@@ -1818,7 +2040,7 @@ class BucketGeoAreaItem(RootModel[str]):
     root: str = Field(..., title='Geo Area Bucket')
 
 
-class Type53(Enum):
+class Type56(Enum):
     SUM = 'SUM'
     AVG = 'AVG'
     MAX = 'MAX'
@@ -1831,16 +2053,16 @@ class BucketLocationItem(RootModel[str]):
     root: str = Field(..., title='Location Bucket')
 
 
-class Type54(Enum):
+class Type57(Enum):
     pushpin = 'pushpin'
     area = 'area'
 
 
-class Type55(Enum):
+class Type58(Enum):
     attribute_hierarchy = 'attribute_hierarchy'
 
 
-class Type56(Enum):
+class Type59(Enum):
     computed_attribute = 'computed_attribute'
 
 
@@ -1861,7 +2083,7 @@ class DataLabelsStyle(Enum):
     backplate = 'backplate'
 
 
-class Type57(Enum):
+class Type60(Enum):
     solid = 'solid'
     pattern = 'pattern'
     outline = 'outline'
@@ -1895,7 +2117,7 @@ class PatternNameMapping(Enum):
 
 
 class ChartFill(BaseModel):
-    type: Type57 | None = None
+    type: Type60 | None = None
     pattern_name_mapping: dict[str, PatternNameMapping] | None = None
 
 
@@ -2126,7 +2348,7 @@ class Value1(BaseModel):
     )
 
 
-class Granularity2(Enum):
+class Granularity10(Enum):
     minute = 'minute'
     hour = 'hour'
     day = 'day'
@@ -2140,7 +2362,7 @@ class Relative(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    granularity: Granularity2
+    granularity: Granularity10
     from_: int = Field(..., alias='from')
     to: int
 
@@ -2234,7 +2456,7 @@ class ConditionalFormatting(BaseModel):
     )
 
 
-class Type58(Enum):
+class Type61(Enum):
     dashboard = 'dashboard'
 
 
@@ -2243,7 +2465,7 @@ class Version4(Enum):
     field_3 = '3'
 
 
-class Type59(Enum):
+class Type62(Enum):
     dataset = 'dataset'
     dataset_1 = 'dataset'
 
@@ -2260,11 +2482,11 @@ class DatasetType5(Enum):
     auxiliary = 'auxiliary'
 
 
-class Type62(Enum):
+class Type65(Enum):
     date = 'date'
 
 
-class Granularity3(Enum):
+class Granularity11(Enum):
     SECOND = 'SECOND'
     MINUTE = 'MINUTE'
     HOUR = 'HOUR'
@@ -2308,15 +2530,15 @@ class Locale(RootModel[constr(pattern=r'^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$')]):
     )
 
 
-class Type63(Enum):
+class Type66(Enum):
     metric = 'metric'
 
 
-class Type64(Enum):
+class Type67(Enum):
     parameter = 'parameter'
 
 
-class Type65(Enum):
+class Type68(Enum):
     plugin = 'plugin'
 
 
@@ -2368,7 +2590,7 @@ class TextOverflow(Enum):
     ellipsis = 'ellipsis'
 
 
-class Type66(Enum):
+class Type69(Enum):
     document_template = 'document_template'
 
 
@@ -2376,7 +2598,7 @@ class Version5(Enum):
     field_2 = '2'
 
 
-class Type67(Enum):
+class Type70(Enum):
     document = 'document'
 
 
@@ -2448,11 +2670,11 @@ class PublisherPageProportionV2(RootModel[PositiveFloat]):
     )
 
 
-class Type68(Enum):
+class Type71(Enum):
     page_template = 'page_template'
 
 
-class Granularity4(Enum):
+class Granularity12(Enum):
     SECOND = 'SECOND'
     MINUTE = 'MINUTE'
     HOUR = 'HOUR'
@@ -2471,7 +2693,7 @@ class PublisherPeriodV21(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    granularity: Granularity4
+    granularity: Granularity12
     from_: int = Field(
         ..., alias='from', description='Offset from the current period, for example -1.'
     )
@@ -2539,7 +2761,7 @@ class PublisherWidgetPlaceholderV2(BaseModel):
     required: bool | None = None
 
 
-class Type69(Enum):
+class Type72(Enum):
     report = 'report'
 
 
@@ -2631,11 +2853,11 @@ class ReportWeight(RootModel[float]):
     )
 
 
-class Type70(Enum):
+class Type73(Enum):
     report_page_layout = 'report_page_layout'
 
 
-class Type71(Enum):
+class Type74(Enum):
     report_template = 'report_template'
 
 
@@ -2643,95 +2865,95 @@ class Title(RootModel[constr(max_length=255)]):
     root: constr(max_length=255)
 
 
-class Type72(Enum):
+class Type75(Enum):
     table = 'table'
 
 
-class Type73(Enum):
+class Type76(Enum):
     bar_chart = 'bar_chart'
 
 
-class Type74(Enum):
+class Type77(Enum):
     column_chart = 'column_chart'
 
 
-class Type75(Enum):
+class Type78(Enum):
     line_chart = 'line_chart'
 
 
-class Type76(Enum):
+class Type79(Enum):
     area_chart = 'area_chart'
 
 
-class Type77(Enum):
+class Type80(Enum):
     scatter_chart = 'scatter_chart'
 
 
-class Type78(Enum):
+class Type81(Enum):
     bubble_chart = 'bubble_chart'
 
 
-class Type79(Enum):
+class Type82(Enum):
     pie_chart = 'pie_chart'
 
 
-class Type80(Enum):
+class Type83(Enum):
     donut_chart = 'donut_chart'
 
 
-class Type81(Enum):
+class Type84(Enum):
     treemap_chart = 'treemap_chart'
 
 
-class Type82(Enum):
+class Type85(Enum):
     pyramid_chart = 'pyramid_chart'
 
 
-class Type83(Enum):
+class Type86(Enum):
     funnel_chart = 'funnel_chart'
 
 
-class Type84(Enum):
+class Type87(Enum):
     heatmap_chart = 'heatmap_chart'
 
 
-class Type85(Enum):
+class Type88(Enum):
     bullet_chart = 'bullet_chart'
 
 
-class Type86(Enum):
+class Type89(Enum):
     waterfall_chart = 'waterfall_chart'
 
 
-class Type87(Enum):
+class Type90(Enum):
     dependency_wheel_chart = 'dependency_wheel_chart'
 
 
-class Type88(Enum):
+class Type91(Enum):
     sankey_chart = 'sankey_chart'
 
 
-class Type89(Enum):
+class Type92(Enum):
     headline_chart = 'headline_chart'
 
 
-class Type90(Enum):
+class Type93(Enum):
     combo_chart = 'combo_chart'
 
 
-class Type91(Enum):
+class Type94(Enum):
     geo_chart = 'geo_chart'
 
 
-class Type92(Enum):
+class Type95(Enum):
     geo_area_chart = 'geo_area_chart'
 
 
-class Type93(Enum):
+class Type96(Enum):
     repeater_chart = 'repeater_chart'
 
 
-class Type94(Enum):
+class Type97(Enum):
     radar_chart = 'radar_chart'
 
 
@@ -2989,14 +3211,14 @@ class DashboardAttributeFilter1(BaseModel):
         regex_engine="python-re",
     )
     title: str | None = Field(None, description='Optional title of the filter')
-    type: Type3
+    type: Type4
     using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     multiselect: bool | None = Field(
         None, description='Whether the filter should allow multiple selection'
     )
-    mode: Mode2 | None = Field(
+    mode: Mode3 | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
@@ -3024,14 +3246,14 @@ class DashboardAttributeFilter2(BaseModel):
         regex_engine="python-re",
     )
     title: str | None = Field(None, description='Optional title of the filter')
-    type: Type3
+    type: Type4
     using: AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = Field(
         ..., description='Attribute or label to use in this filter.'
     )
     multiselect: bool | None = Field(
         None, description='Whether the filter should allow multiple selection'
     )
-    mode: Mode2 | None = Field(
+    mode: Mode3 | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
@@ -3065,7 +3287,7 @@ class DashboardAttributeFilter(
 
 
 class DashboardMetricValueFilter(BaseModel):
-    type: Type7
+    type: Type8
     title: str | None = Field(
         None,
         description='Optional custom title of the filter to display in the filter bar.',
@@ -3084,7 +3306,7 @@ class DashboardMetricValueFilter(BaseModel):
     null_values_as_zero: bool | None = Field(
         None, description='Null values will be treated as zero during comparisons.'
     )
-    mode: Mode6 | None = Field(
+    mode: Mode7 | None = Field(
         None,
         description='Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter.',
     )
@@ -3096,6 +3318,7 @@ class DashboardFiltersNoGroups(
             str,
             DashboardAbsoluteDateFilter
             | DashboardRelativeDateFilter
+            | DashboardPeriodDateFilter
             | DashboardAttributeFilter
             | DashboardTextFilter
             | DashboardMetricValueFilter,
@@ -3109,6 +3332,7 @@ class DashboardFiltersNoGroups(
         constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
         DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter,
@@ -3124,7 +3348,7 @@ class QueryDateFilter1(BaseModel):
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type9
+    type: Type10
     using: str = Field(
         ..., description='Date dataset identifier to use for this field.'
     )
@@ -3157,7 +3381,7 @@ class QueryDateFilter2(BaseModel):
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type9
+    type: Type10
     using: str = Field(
         ..., description='Date dataset identifier to use for this field.'
     )
@@ -3193,8 +3417,37 @@ class QueryDateFilter2(BaseModel):
     )
 
 
-class QueryDateFilter(RootModel[QueryDateFilter1 | QueryDateFilter2]):
-    root: QueryDateFilter1 | QueryDateFilter2 = Field(..., title='Date Filter')
+class QueryDateFilter3(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+        regex_engine="python-re",
+    )
+    type: Type10
+    using: str = Field(
+        ..., description='Date dataset identifier to use for this field.'
+    )
+    parameter: str = Field(
+        ..., description='An id of the date range parameter (period) the filter uses.'
+    )
+    with_: (
+        dict[constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'), QueryAttributeFilter]
+        | None
+    ) = Field(
+        None,
+        alias='with',
+        description='Attribute filters to apply together with this date filter.',
+    )
+    empty_values: EmptyValues | None = Field(
+        None, description='Controls how empty values are handled in the filter.'
+    )
+
+
+class QueryDateFilter(
+    RootModel[QueryDateFilter1 | QueryDateFilter2 | QueryDateFilter3]
+):
+    root: QueryDateFilter1 | QueryDateFilter2 | QueryDateFilter3 = Field(
+        ..., title='Date Filter'
+    )
 
 
 class ComputedAttribute1(BaseModel):
@@ -3205,7 +3458,7 @@ class ComputedAttribute1(BaseModel):
         ...,
         description='A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.',
     )
-    type: Type20
+    type: Type22
     title: Title | None = Field(
         None,
         description='An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly.',
@@ -3307,7 +3560,7 @@ class StringDashboardParameter(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='An identifier of the parameter.')
-    type: Type22 = Field(
+    type: Type24 = Field(
         ...,
         description='The data type of the parameter. Must match the type in the parameter definition.',
     )
@@ -3319,7 +3572,7 @@ class StringDashboardParameter(BaseModel):
         None,
         description="The label shown in the filter bar instead of the parameter's title.",
     )
-    mode: Mode6 | None = Field(
+    mode: Mode7 | None = Field(
         None,
         description='Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter.',
     )
@@ -3330,7 +3583,7 @@ class NumberDashboardParameter(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='An identifier of the parameter.')
-    type: Type23 = Field(
+    type: Type25 = Field(
         ...,
         description='The data type of the parameter. Must match the type in the parameter definition.',
     )
@@ -3342,7 +3595,7 @@ class NumberDashboardParameter(BaseModel):
         None,
         description="The label shown in the filter bar instead of the parameter's title.",
     )
-    mode: Mode6 | None = Field(
+    mode: Mode7 | None = Field(
         None,
         description='Setting parameter mode to readonly will disable the parameter. Setting it to hidden will hide the parameter from the dashboard. Setting it to active will enable the parameter.',
     )
@@ -3422,7 +3675,7 @@ class DateDataset1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the date instance.')
-    type: Type27
+    type: Type29
     title: Title | None = Field(
         None,
         description='An optional human readable title for the date instance. Will be derived from id if not provided explicitly.',
@@ -3476,7 +3729,7 @@ class Fact(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type29
+    type: Type31
     title: Title | None = Field(
         None,
         description='A human readable title of the field. Optional, derived from id if not provided explicitly.',
@@ -3515,7 +3768,7 @@ class AggregatedFact(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type30
+    type: Type32
     description: Description | None = Field(
         None, description='An optional description of the field.'
     )
@@ -3583,7 +3836,7 @@ class Metric1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type33
+    type: Type35
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -3675,7 +3928,7 @@ class StringParameterDefinition(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type43
+    type: Type45
     defaultValue: str = Field(
         ..., description='The value used whenever the parameter is not overridden.'
     )
@@ -3686,12 +3939,22 @@ class StringParameterDefinition(BaseModel):
     )
 
 
+class DateRangeParameterDefinition(BaseModel):
+    model_config = ConfigDict(
+        extra='forbid',
+    )
+    type: Type47
+    defaultValue: DateRangeParameterValue = Field(
+        ..., description='The range used whenever the parameter is not overridden.'
+    )
+
+
 class Plugin1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type45
+    type: Type48
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -3753,7 +4016,7 @@ class QueryField6(BaseModel):
         extra='forbid',
     )
     title: Title | None = Field(None, description='A field title.')
-    type: Type46 = Field(
+    type: Type49 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3766,7 +4029,7 @@ class QueryField7(BaseModel):
         extra='forbid',
     )
     title: Title | None = Field(None, description='A field title.')
-    type: Type47 = Field(
+    type: Type50 = Field(
         ...,
         description='Type of relative period metric related to another metric in list.',
     )
@@ -3781,7 +4044,7 @@ class QueryAttributeSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type48
+    type: Type51
     by: str | AttributeIdentifier | LabelIdentifier | ComputedAttributeIdentifier = (
         Field(..., description='Local attribute or label to use in this sort.')
     )
@@ -3810,7 +4073,7 @@ class QueryMetricSort(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type49
+    type: Type52
     direction: Direction = Field(..., description='Sort direction.')
     metrics: list[str | Metrics] = Field(..., min_length=1)
 
@@ -3826,7 +4089,7 @@ class TotalItem(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type53
+    type: Type56
     title: Title | None = Field(None, description='A total title.')
     using: str = Field(
         ..., description='Local metric identifier to use for this total.'
@@ -3840,7 +4103,7 @@ class AttributeHierarchy(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the attribute hierarchy.'
     )
-    type: Type55
+    type: Type58
     title: Title | None = Field(
         None,
         description='An optional human readable title for the attribute hierarchy. Will be derived from id if not provided explicitly.',
@@ -3867,7 +4130,7 @@ class ComputedAttribute(BaseModel):
         ...,
         description='A unique identifier of the computed attribute. Must not collide with the identifier of an attribute or a label.',
     )
-    type: Type56
+    type: Type59
     title: Title | None = Field(
         None,
         description='An optional human readable title for the computed attribute. Will be derived from id if not provided explicitly.',
@@ -4078,7 +4341,7 @@ class DateDataset(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the date instance.')
-    type: Type62
+    type: Type65
     title: Title | None = Field(
         None,
         description='An optional human readable title for the date instance. Will be derived from id if not provided explicitly.',
@@ -4095,7 +4358,7 @@ class DateDataset(BaseModel):
     title_pattern: constr(max_length=255) | None = Field(
         None, description='A pattern for the title formatting'
     )
-    granularities: list[Granularity3] | None = None
+    granularities: list[Granularity11] | None = None
 
 
 class Metric(BaseModel):
@@ -4103,7 +4366,7 @@ class Metric(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the metric.')
-    type: Type63
+    type: Type66
     title: Title | None = Field(
         None,
         description='An optional human readable title for the metric. Will be derived from id if not provided explicitly.',
@@ -4132,7 +4395,7 @@ class Plugin(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the plugin.')
-    type: Type65
+    type: Type68
     title: Title | None = Field(
         None,
         description='An optional human readable title for the plugin. Will be derived from id if not provided explicitly.',
@@ -4534,7 +4797,7 @@ class DashboardFilterGroup(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type8
+    type: Type9
     title: str = Field(..., description='Display title for the filter group')
     filters: DashboardFiltersNoGroups = Field(
         ...,
@@ -4683,7 +4946,7 @@ class PublisherTitleWidgetV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type35
+    type: Type37
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -4699,7 +4962,7 @@ class PublisherHeadingWidgetV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type36
+    type: Type38
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -4715,7 +4978,7 @@ class PublisherTextWidgetV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type37
+    type: Type39
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -4734,7 +4997,7 @@ class PublisherImageWidgetV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type38
+    type: Type40
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -4748,11 +5011,19 @@ class PublisherImageWidgetV2(BaseModel):
 
 
 class ParameterDefinition(
-    RootModel[StringParameterDefinition | NumberParameterDefinition]
+    RootModel[
+        StringParameterDefinition
+        | NumberParameterDefinition
+        | DateRangeParameterDefinition
+    ]
 ):
-    root: StringParameterDefinition | NumberParameterDefinition = Field(
+    root: (
+        StringParameterDefinition
+        | NumberParameterDefinition
+        | DateRangeParameterDefinition
+    ) = Field(
         ...,
-        description='A typed parameter definition: textual or numeric.',
+        description='A typed parameter definition: textual, numeric or a date range.',
         title='Parameter Definition',
     )
 
@@ -4805,7 +5076,7 @@ class LayerItemBase(BaseModel):
         None,
         description='An optional human readable title for the layer. Will be derived from id if not provided explicitly.',
     )
-    type: Type54 | None = Field(
+    type: Type57 | None = Field(
         None, description='Type of visualisation for this layer.'
     )
     config: Config | None = Field(
@@ -4828,6 +5099,7 @@ class DashboardFilters(
             str,
             DashboardAbsoluteDateFilter
             | DashboardRelativeDateFilter
+            | DashboardPeriodDateFilter
             | DashboardAttributeFilter
             | DashboardTextFilter
             | DashboardMetricValueFilter
@@ -4842,6 +5114,7 @@ class DashboardFilters(
         constr(pattern=r'^(?!\.)[.A-Za-z0-9_-]{1,255}$'),
         DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -4854,7 +5127,7 @@ class Parameter(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the parameter.')
-    type: Type64
+    type: Type67
     title: Title | None = Field(
         None,
         description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
@@ -4955,7 +5228,7 @@ class Attribute(BaseModel):
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type28
+    type: Type30
     title: Title | None = Field(
         None,
         description='A human readable title of the field. Optional, derived from id if not provided explicitly.',
@@ -5007,7 +5280,7 @@ class PublisherVisualizationWidgetV2(BaseModel):
         extra='forbid',
         regex_engine="python-re",
     )
-    type: Type39
+    type: Type41
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -5042,7 +5315,7 @@ class PublisherTakeawayWidgetV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type40
+    type: Type42
     id: PublisherPageNodeIdV2 = Field(..., description='Unique within the page.')
     proportion: PublisherPageProportionV2 | None = None
     placeholder: PublisherWidgetPlaceholderV2 | None = None
@@ -5060,7 +5333,7 @@ class Parameter1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the parameter.')
-    type: Type42
+    type: Type44
     title: Title | None = Field(
         None,
         description='An optional human readable title for the parameter. Will be derived from id if not provided explicitly.',
@@ -5244,7 +5517,7 @@ class Dataset5(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type59
+    type: Type62
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5290,7 +5563,7 @@ class Dataset6(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type59
+    type: Type62
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5336,7 +5609,7 @@ class Dataset7(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type59
+    type: Type62
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5394,7 +5667,7 @@ class Dataset2(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type24
+    type: Type26
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5440,7 +5713,7 @@ class Dataset3(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type24
+    type: Type26
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5486,7 +5759,7 @@ class Dataset4(BaseModel):
         regex_engine="python-re",
     )
     id: Identifier = Field(..., description='A unique identifier of the dataset.')
-    type: Type24
+    type: Type26
     title: Title | None = Field(
         None,
         description='An optional human readable title for the dataset. Will be derived from id if not provided explicitly.',
@@ -5526,7 +5799,7 @@ class Visualisation1(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type72 = Field(..., description='Type of visualisation.')
+    type: Type75 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5572,7 +5845,7 @@ class Visualisation2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type73 = Field(..., description='Type of visualisation.')
+    type: Type76 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5615,7 +5888,7 @@ class Visualisation3(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type74 = Field(..., description='Type of visualisation.')
+    type: Type77 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5658,7 +5931,7 @@ class Visualisation4(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type75 = Field(..., description='Type of visualisation.')
+    type: Type78 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5701,7 +5974,7 @@ class Visualisation5(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type76 = Field(..., description='Type of visualisation.')
+    type: Type79 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5744,7 +6017,7 @@ class Visualisation6(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type77 = Field(..., description='Type of visualisation.')
+    type: Type80 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5787,7 +6060,7 @@ class Visualisation7(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type78 = Field(..., description='Type of visualisation.')
+    type: Type81 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5830,7 +6103,7 @@ class Visualisation8(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type79 = Field(..., description='Type of visualisation.')
+    type: Type82 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5870,7 +6143,7 @@ class Visualisation9(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type80 = Field(..., description='Type of visualisation.')
+    type: Type83 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5910,7 +6183,7 @@ class Visualisation10(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type81 = Field(..., description='Type of visualisation.')
+    type: Type84 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5950,7 +6223,7 @@ class Visualisation11(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type82 = Field(..., description='Type of visualisation.')
+    type: Type85 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -5990,7 +6263,7 @@ class Visualisation12(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type83 = Field(..., description='Type of visualisation.')
+    type: Type86 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6030,7 +6303,7 @@ class Visualisation13(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type84 = Field(..., description='Type of visualisation.')
+    type: Type87 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6076,7 +6349,7 @@ class Visualisation14(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type85 = Field(..., description='Type of visualisation.')
+    type: Type88 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6116,7 +6389,7 @@ class Visualisation15(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type86 = Field(..., description='Type of visualisation.')
+    type: Type89 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6156,7 +6429,7 @@ class Visualisation16(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type87 = Field(..., description='Type of visualisation.')
+    type: Type90 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6202,7 +6475,7 @@ class Visualisation17(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type88 = Field(..., description='Type of visualisation.')
+    type: Type91 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6248,7 +6521,7 @@ class Visualisation18(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type89 = Field(..., description='Type of visualisation.')
+    type: Type92 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6286,7 +6559,7 @@ class Visualisation19(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type90 = Field(..., description='Type of visualisation.')
+    type: Type93 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6326,7 +6599,7 @@ class Visualisation20(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type91 = Field(..., description='Type of visualisation.')
+    type: Type94 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6370,7 +6643,7 @@ class Visualisation21(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type92 = Field(..., description='Type of visualisation.')
+    type: Type95 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6414,7 +6687,7 @@ class Visualisation22(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type93 = Field(..., description='Type of visualisation.')
+    type: Type96 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6460,7 +6733,7 @@ class Visualisation23(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type94 = Field(..., description='Type of visualisation.')
+    type: Type97 = Field(..., description='Type of visualisation.')
     id: Identifier = Field(..., description='A unique identifier of the visualisation.')
     title: Title | None = Field(
         None,
@@ -6559,7 +6832,7 @@ class Dashboard1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the dashboard.')
-    type: Type21
+    type: Type23
     version: Version | None = Field(
         None,
         description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters/parameters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout, filters and parameters; root sections/filters/parameters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
@@ -6692,7 +6965,7 @@ class PublisherDocumentV21(BaseModel):
         ...,
         description='A unique identifier of the document. Ids starting with default. are reserved.',
     )
-    type: Type31
+    type: Type33
     version: Version1 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -6710,7 +6983,7 @@ class PublisherDocumentTemplateV21(BaseModel):
         ...,
         description='A unique identifier of the document template. Ids starting with default. are reserved.',
     )
-    type: Type32
+    type: Type34
     version: Version1 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -6722,7 +6995,7 @@ class PublisherContainerV2(BaseModel):
     model_config = ConfigDict(
         extra='forbid',
     )
-    type: Type34
+    type: Type36
     id: PublisherPageNodeIdV2 | None = None
     children: list[PublisherLayoutNodeV2] = Field(
         ...,
@@ -6742,7 +7015,7 @@ class PublisherPageTemplateV21(BaseModel):
         ...,
         description='A unique identifier of the page template. Ids starting with default. are reserved.',
     )
-    type: Type41
+    type: Type43
     version: Version1 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -6758,7 +7031,7 @@ class Report1(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the document.')
-    type: Type50
+    type: Type53
     title: Title = Field(..., description='A human readable title for the document.')
     description: Description | None = Field(
         None, description='An optional description of the document.'
@@ -6827,7 +7100,7 @@ class ReportPageLayout1(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document page layout.'
     )
-    type: Type51
+    type: Type54
     title: Title = Field(
         ..., description='A human readable title for the document page layout.'
     )
@@ -6858,7 +7131,7 @@ class ReportTemplate1(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document template.'
     )
-    type: Type52
+    type: Type55
     title: Title = Field(
         ..., description='A human readable title for the document template.'
     )
@@ -6891,7 +7164,7 @@ class Dashboard(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the dashboard.')
-    type: Type58
+    type: Type61
     version: Version4 | None = Field(
         None,
         description='Dashboard model version. "2" (default if omitted) — legacy shape: root-level sections/filters/parameters are also mirrored into a default tab, producing a declarative model with duplicated content for backward compatibility with older SDK readers. "3" — clean shape: tabs are the sole source of layout, filters and parameters; root sections/filters/parameters in YAML are still allowed as an authoring shortcut but are wrapped into a single synthetic tab without duplication. Use "3" for new dashboards; "2" exists to keep existing files round-trippable.',
@@ -6982,7 +7255,7 @@ class PublisherDocumentTemplateV2(BaseModel):
         ...,
         description='A unique identifier of the document template. Ids starting with default. are reserved.',
     )
-    type: Type66
+    type: Type69
     version: Version5 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -6999,7 +7272,7 @@ class PublisherDocumentV2(BaseModel):
         ...,
         description='A unique identifier of the document. Ids starting with default. are reserved.',
     )
-    type: Type67
+    type: Type70
     version: Version5 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -7037,7 +7310,7 @@ class PublisherPageTemplateV2(BaseModel):
         ...,
         description='A unique identifier of the page template. Ids starting with default. are reserved.',
     )
-    type: Type68
+    type: Type71
     version: Version5 = Field(..., description='Version of the content format.')
     title: PublisherEntityTitleV2
     description: PublisherEntityDescriptionV2 | None = None
@@ -7053,7 +7326,7 @@ class Report(BaseModel):
         extra='forbid',
     )
     id: Identifier = Field(..., description='A unique identifier of the document.')
-    type: Type69
+    type: Type72
     title: Title = Field(..., description='A human readable title for the document.')
     description: Description | None = Field(
         None, description='An optional description of the document.'
@@ -7114,7 +7387,7 @@ class ReportPageLayout(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document page layout.'
     )
-    type: Type70
+    type: Type73
     title: Title = Field(
         ..., description='A human readable title for the document page layout.'
     )
@@ -7145,7 +7418,7 @@ class ReportTemplate(BaseModel):
     id: Identifier = Field(
         ..., description='A unique identifier of the document template.'
     )
-    type: Type71
+    type: Type74
     title: Title = Field(
         ..., description='A human readable title for the document template.'
     )

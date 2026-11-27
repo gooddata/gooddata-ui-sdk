@@ -11,11 +11,6 @@
             "outputFolderNames": []
         },
         {
-            "operationName": "_phase:test",
-            "outputFolderNames": [],
-            "weight": 4
-        },
-        {
             "operationName": "_phase:pack-build",
             "outputFolderNames": [],
             "disableBuildCacheForOperation": true

@@ -6,6 +6,7 @@ import { v4 as uuid } from "uuid";
 import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeElement,
     type IAttributeFilter,
     type IAttributeMetadataObject,
@@ -435,11 +436,17 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getLimitingAttributeFilters();
     };
 
-    setLimitingDateFilters = (filters: IRelativeDateFilter[] | IAbsoluteDateFilter[]): void => {
+    setLimitingDateFilters = (
+        filters: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[],
+    ): void => {
         this.bridge.setLimitingDateFilters(filters);
     };
 
-    getLimitingDateFilters = (): IRelativeDateFilter[] | IAbsoluteDateFilter[] => {
+    getLimitingDateFilters = (): (
+        | IRelativeDateFilter
+        | IAbsoluteDateFilter
+        | IAbsoluteGranularityDateFilter
+    )[] => {
         return this.bridge.getLimitingDateFilters();
     };
 

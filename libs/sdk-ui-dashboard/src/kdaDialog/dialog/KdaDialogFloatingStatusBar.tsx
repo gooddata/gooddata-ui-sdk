@@ -24,6 +24,10 @@ interface IKdaDialogFloatingStatusBarProps {
     dialogTitle: string;
     descriptionElementId: string;
     status: KdaFloatingStatus;
+    /**
+     * Id of the expand (Open) button, so the minimized dialog can focus it.
+     */
+    toggleButtonId?: string;
     onClose?: () => void;
 }
 
@@ -33,6 +37,7 @@ interface IKdaDialogFloatingStatusBarProps {
 export function KdaDialogFloatingStatusBar({
     onClose,
     status,
+    toggleButtonId,
     labelElementId,
     dialogTitle,
     descriptionElementId,
@@ -48,12 +53,13 @@ export function KdaDialogFloatingStatusBar({
             </span>
             <div className="gd-kda-floating-status-bar__content">
                 <StatusIndicator status={status} />
-                <p className="gd-kda-floating-status-bar__text" id={descriptionElementId} tabIndex={0}>
+                <p className="gd-kda-floating-status-bar__text" id={descriptionElementId}>
                     {statusText}
                 </p>
             </div>
             <KdaDialogActionButtons
                 size="small"
+                toggleButtonId={toggleButtonId}
                 status={status}
                 titleElementId={descriptionElementId}
                 toggleAriaDescribedBy={`${labelElementId} ${descriptionElementId}`}

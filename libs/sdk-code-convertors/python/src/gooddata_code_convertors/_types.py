@@ -1,5 +1,5 @@
 # (C) 2026 GoodData Corporation
-# schema-hash: 998f9b6cb47e0f5d3af34ef888344c22d09b497e74dce2081c991dcf85a2efba
+# schema-hash: 0fa27aee5c2368517bbe141c402d4af6af174656abc091f35a40f68969ebac04
 
 from __future__ import annotations
 
@@ -45,6 +45,7 @@ __all__ = [
     "DashboardFiltersNoGroups",
     "DashboardMetricValueFilter",
     "DashboardParameters",
+    "DashboardPeriodDateFilter",
     "DashboardRelativeDateFilter",
     "DashboardStateMultiselect",
     "DashboardStateMultiselect1",
@@ -66,6 +67,16 @@ __all__ = [
     "Dataset7",
     "DateDataset",
     "DateFilterGranularity",
+    "DateRangeParameterDefinition",
+    "DateRangeParameterValue",
+    "DateRangeParameterValue1",
+    "DateRangeParameterValue2",
+    "DateRangeParameterValue3",
+    "DateRangeParameterValue4",
+    "DateRangeParameterValue5",
+    "DateRangeParameterValue6",
+    "DateRangeParameterValue7",
+    "DateRangeParameterValue8",
     "Description",
     "DisplayAsLabelIdentifier",
     "DistinctPointShapes",
@@ -189,6 +200,7 @@ __all__ = [
     "QueryDateFilter",
     "QueryDateFilter1",
     "QueryDateFilter2",
+    "QueryDateFilter3",
     "QueryField",
     "QueryField1",
     "QueryField2",
@@ -340,6 +352,15 @@ class Permission(TypedDict):
     all: NotRequired[bool]
     users: NotRequired[list[str]]
     user_groups: NotRequired[list[str]]
+
+
+class DashboardPeriodDateFilter(TypedDict):
+    title: NotRequired[str]
+    type: Literal['date_filter']
+    parameter: Identifier
+    mode: NotRequired[Literal['readonly', 'hidden', 'active']]
+    empty_values: NotRequired[Literal['only', 'include', 'exclude']]
+    date: NotRequired[Identifier]
 
 
 class Parents(TypedDict):
@@ -690,6 +711,98 @@ class NumberParameterDefinition(TypedDict):
     type: Literal['NUMBER']
     defaultValue: float
     constraints: NotRequired[Constraints1]
+
+
+DateRangeParameterValue1 = TypedDict(
+    'DateRangeParameterValue1',
+    {
+        'granularity': Literal['YEAR'],
+        'from': NotRequired[str | int],
+        'to': NotRequired[str | int],
+    },
+)
+
+
+DateRangeParameterValue2 = TypedDict(
+    'DateRangeParameterValue2',
+    {
+        'granularity': Literal['QUARTER'],
+        'from': NotRequired[str],
+        'to': NotRequired[str],
+    },
+)
+
+
+DateRangeParameterValue3 = TypedDict(
+    'DateRangeParameterValue3',
+    {
+        'granularity': Literal['MONTH'],
+        'from': NotRequired[str],
+        'to': NotRequired[str],
+    },
+)
+
+
+DateRangeParameterValue4 = TypedDict(
+    'DateRangeParameterValue4',
+    {
+        'granularity': Literal['WEEK'],
+        'from': NotRequired[str],
+        'to': NotRequired[str],
+    },
+)
+
+
+DateRangeParameterValue5 = TypedDict(
+    'DateRangeParameterValue5',
+    {
+        'granularity': Literal['DAY'],
+        'from': NotRequired[str],
+        'to': NotRequired[str],
+    },
+)
+
+
+DateRangeParameterValue6 = TypedDict(
+    'DateRangeParameterValue6',
+    {
+        'granularity': Literal['HOUR'],
+        'from': NotRequired[str],
+        'to': NotRequired[str],
+    },
+)
+
+
+DateRangeParameterValue7 = TypedDict(
+    'DateRangeParameterValue7',
+    {
+        'granularity': Literal['MINUTE'],
+        'from': NotRequired[str],
+        'to': NotRequired[str],
+    },
+)
+
+
+DateRangeParameterValue8 = TypedDict(
+    'DateRangeParameterValue8',
+    {
+        'granularity': Literal['SECOND'],
+        'from': NotRequired[str],
+        'to': NotRequired[str],
+    },
+)
+
+
+DateRangeParameterValue: TypeAlias = (
+    DateRangeParameterValue1
+    | DateRangeParameterValue2
+    | DateRangeParameterValue3
+    | DateRangeParameterValue4
+    | DateRangeParameterValue5
+    | DateRangeParameterValue6
+    | DateRangeParameterValue7
+    | DateRangeParameterValue8
+)
 
 
 class ParameterAllowedValue(TypedDict):
@@ -1099,6 +1212,7 @@ DashboardFiltersNoGroups: TypeAlias = dict[
     str,
     DashboardAbsoluteDateFilter
     | DashboardRelativeDateFilter
+    | DashboardPeriodDateFilter
     | DashboardAttributeFilter
     | DashboardTextFilter
     | DashboardMetricValueFilter,
@@ -1132,7 +1246,19 @@ QueryDateFilter2 = TypedDict(
 )
 
 
-QueryDateFilter: TypeAlias = QueryDateFilter1 | QueryDateFilter2
+QueryDateFilter3 = TypedDict(
+    'QueryDateFilter3',
+    {
+        'type': Literal['date_filter'],
+        'using': str,
+        'parameter': str,
+        'with': NotRequired[dict[str, QueryAttributeFilter]],
+        'empty_values': NotRequired[Literal['only', 'include', 'exclude']],
+    },
+)
+
+
+QueryDateFilter: TypeAlias = QueryDateFilter1 | QueryDateFilter2 | QueryDateFilter3
 
 
 class ComputedAttribute(TypedDict):
@@ -1369,6 +1495,11 @@ class StringParameterDefinition(TypedDict):
     type: Literal['STRING']
     defaultValue: str
     constraints: NotRequired[Constraints]
+
+
+class DateRangeParameterDefinition(TypedDict):
+    type: Literal['DATE_RANGE']
+    defaultValue: DateRangeParameterValue
 
 
 class Plugin(TypedDict):
@@ -2004,7 +2135,9 @@ class PublisherImageWidgetV2(TypedDict):
     style: NotRequired[PublisherImageWidgetStyleV2]
 
 
-ParameterDefinition: TypeAlias = StringParameterDefinition | NumberParameterDefinition
+ParameterDefinition: TypeAlias = (
+    StringParameterDefinition | NumberParameterDefinition | DateRangeParameterDefinition
+)
 
 
 QuerySort: TypeAlias = QueryAttributeSort | QueryMetricSort
@@ -2042,6 +2175,7 @@ DashboardFilters: TypeAlias = dict[
     str,
     DashboardAbsoluteDateFilter
     | DashboardRelativeDateFilter
+    | DashboardPeriodDateFilter
     | DashboardAttributeFilter
     | DashboardTextFilter
     | DashboardMetricValueFilter

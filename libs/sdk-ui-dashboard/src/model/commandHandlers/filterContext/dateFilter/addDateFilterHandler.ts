@@ -14,7 +14,7 @@ import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js
 import {
     selectCanAddMoreFilters,
     selectFilterContextDateFilterByDataSet,
-    selectFilterContextDateFiltersWithDimension,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
@@ -52,8 +52,8 @@ export function* addDateFilterHandler(ctx: DashboardContext, cmd: IAddDateFilter
 
     invariant(usedDateDataSet);
 
-    const allFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
-        selectFilterContextDateFiltersWithDimension,
+    const allFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimensionOfAnyType> = yield select(
+        selectFilterContextDateFiltersWithDimensionOfAnyType,
     );
 
     const canBeAdded: ReturnType<typeof canFilterBeAdded> = yield call(

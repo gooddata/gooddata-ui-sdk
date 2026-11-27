@@ -14,6 +14,7 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     getAttributeElementsItems,
     isAllDashboardMeasureValueFilter,
     isAllTimeDashboardDateFilter,
@@ -22,7 +23,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilterOfAnyType,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
     objRefToString,
@@ -105,7 +106,7 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
     const measures = useDashboardSelector(selectCatalogMeasures);
     const separators = useDashboardSelector(selectSeparators);
-    const dateFiltersForTitles = filtersForTitles.filter(isDashboardDateFilterWithDimension);
+    const dateFiltersForTitles = filtersForTitles.filter(isDashboardDateFilterWithDimensionOfAnyType);
     const commonDateFilterTitle = useCommonDateFilterTitle(intl);
     const allDateFiltersTitlesObj = useDateFiltersTitles(dateFiltersForTitles, intl);
     const weekStart = useDashboardSelector(selectWeekStart);
@@ -201,15 +202,15 @@ function transformFiltersToNamings(
             );
 
             const a = filter;
-            if (isDashboardDateFilterWithDimension(a)) {
-                const key = serializeObjRef(a.dateFilter.dataSet!);
+            if (isDashboardDateFilterWithDimensionOfAnyType(a)) {
+                const dataSet = dashboardFilterObjRef(a)!;
                 return {
                     type: "dateFilter",
                     all: isAllTimeDashboardDateFilter(a),
-                    id: a.dateFilter.localIdentifier ?? uuidv4(),
-                    title: allDateFiltersTitlesObj[key],
+                    id: dashboardFilterLocalIdentifier(a) ?? uuidv4(),
+                    title: allDateFiltersTitlesObj[serializeObjRef(dataSet)],
                     subtitle,
-                    dataSet: a.dateFilter.dataSet,
+                    dataSet,
                 };
             }
 

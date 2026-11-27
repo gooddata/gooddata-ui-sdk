@@ -23,12 +23,14 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     getAttributeElementsItems,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isObjRef,
@@ -615,6 +617,31 @@ export const selectFilterContextDraggableFilterItems: DashboardSelector<
 );
 
 /**
+ * This selector returns all dashboard's filter context draggable filters, like
+ * {@link selectFilterContextDraggableFilterItems}, with date filters with a dimension of any type.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectFilterContextDraggableFilterItemsOfAnyType: DashboardSelector<
+    Array<DashboardDateFilterOfAnyType | DashboardAttributeFilterItem | IDashboardMeasureValueFilter>
+> = createSelector(
+    selectFilterContextFilters,
+    (
+        filters,
+    ): Array<DashboardDateFilterOfAnyType | DashboardAttributeFilterItem | IDashboardMeasureValueFilter> =>
+        filters.filter(
+            (f) =>
+                isDashboardDateFilterWithDimensionOfAnyType(f) ||
+                isDashboardAttributeFilterItem(f) ||
+                isDashboardMeasureValueFilter(f),
+        ),
+);
+
+/**
  * This selector returns dashboard's applied filter context measure value filters.
  *
  * @remarks
@@ -693,6 +720,36 @@ export const selectWorkingFilterContextDateFiltersWithDimension: DashboardSelect
     );
 
 /**
+ * This selector returns dashboard's filter context date filters with dimension specified, of any type.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectFilterContextDateFiltersWithDimensionOfAnyType: DashboardSelector<
+    DashboardDateFilterOfAnyType[]
+> = createSelector(selectFilterContextFilters, (filters): DashboardDateFilterOfAnyType[] =>
+    filters.filter(isDashboardDateFilterWithDimensionOfAnyType),
+);
+
+/**
+ * This selector returns dashboard's working filter context date filters with dimension specified, of any type.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectWorkingFilterContextDateFiltersWithDimensionOfAnyType: DashboardSelector<
+    DashboardDateFilterOfAnyType[]
+> = createSelector(selectWorkingFilterContextFilters, (filters): DashboardDateFilterOfAnyType[] =>
+    filters.filter(isDashboardDateFilterWithDimensionOfAnyType),
+);
+
+/**
  * Creates a selector for selecting date filter by its dataset {@link @gooddata/sdk-model#ObjRef}.
  *
  * @remarks
@@ -709,6 +766,23 @@ export const selectFilterContextDateFilterByDataSet: (
 );
 
 /**
+ * Creates a selector for selecting date filter of any type by its dataset {@link @gooddata/sdk-model#ObjRef}.
+ *
+ * @remarks
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @alpha
+ */
+export const selectFilterContextDateFilterOfAnyTypeByDataSet: (
+    dataSet: ObjRef,
+) => (state: DashboardState) => DashboardDateFilterOfAnyType | undefined = createMemoizedSelector(
+    (dataSet: ObjRef) =>
+        createSelector(selectFilterContextDateFiltersWithDimensionOfAnyType, (dateFilters) => {
+            return dateFilters.find((filter) => areObjRefsEqual(dashboardFilterObjRef(filter), dataSet));
+        }),
+);
+
+/**
  * Creates a selector for selecting date filter's index by its dataset {@link @gooddata/sdk-model#ObjRef}.
  *
  * @remarks
@@ -719,8 +793,8 @@ export const selectFilterContextDateFilterByDataSet: (
 export const selectFilterContextDateFilterIndexByDataSet: (
     dataSet: ObjRef,
 ) => (state: DashboardState) => number = createMemoizedSelector((dataSet: ObjRef) =>
-    createSelector(selectFilterContextDateFiltersWithDimension, (dateFilters) => {
-        return dateFilters.findIndex((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
+    createSelector(selectFilterContextDateFiltersWithDimensionOfAnyType, (dateFilters) => {
+        return dateFilters.findIndex((filter) => areObjRefsEqual(dashboardFilterObjRef(filter), dataSet));
     }),
 );
 
@@ -734,11 +808,12 @@ export const selectFilterContextDateFilterIndexByDataSet: (
  */
 export const selectFilterContextDateFiltersWithDimensionForTab: (
     tabLocalIdentifier: string,
-) => DashboardSelector<IDashboardDateFilter[]> = createMemoizedSelector((tabLocalIdentifier: string) =>
-    createSelector(selectFiltersByTab, (filtersByTab): IDashboardDateFilter[] => {
-        const filters = filtersByTab[tabLocalIdentifier] ?? [];
-        return filters.filter(isDashboardDateFilterWithDimension);
-    }),
+) => DashboardSelector<DashboardDateFilterOfAnyType[]> = createMemoizedSelector(
+    (tabLocalIdentifier: string) =>
+        createSelector(selectFiltersByTab, (filtersByTab): DashboardDateFilterOfAnyType[] => {
+            const filters = filtersByTab[tabLocalIdentifier] ?? [];
+            return filters.filter(isDashboardDateFilterWithDimensionOfAnyType);
+        }),
 );
 
 /**
@@ -771,12 +846,12 @@ export const selectFilterContextDateFilterForTab: (
 export const selectFilterContextDateFilterByDataSetForTab: (
     dataSet: ObjRef,
     tabLocalIdentifier: string,
-) => DashboardSelector<IDashboardDateFilter | undefined> = createMemoizedSelector(
+) => DashboardSelector<DashboardDateFilterOfAnyType | undefined> = createMemoizedSelector(
     (dataSet: ObjRef, tabLocalIdentifier: string) =>
         createSelector(
             selectFilterContextDateFiltersWithDimensionForTab(tabLocalIdentifier),
             (dateFilters) => {
-                return dateFilters.find((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
+                return dateFilters.find((filter) => areObjRefsEqual(dashboardFilterObjRef(filter), dataSet));
             },
         ),
 );
@@ -796,8 +871,8 @@ export const selectFilterContextDraggableFilterIndexByRef: (
 ) => (state: DashboardState) => number = createMemoizedSelector((ref: ObjRef | string) =>
     createSelector(selectFilterContextFilters, (filters) => {
         return filters.findIndex((filter) => {
-            if (isDashboardDateFilterWithDimension(filter) && isObjRef(ref)) {
-                return areObjRefsEqual(filter.dateFilter.dataSet, ref);
+            if (isDashboardDateFilterWithDimensionOfAnyType(filter) && isObjRef(ref)) {
+                return areObjRefsEqual(dashboardFilterObjRef(filter), ref);
             }
             if (isDashboardAttributeFilterItem(filter) && typeof ref === "string") {
                 return dashboardAttributeFilterItemLocalIdentifier(filter) === ref;
@@ -1238,7 +1313,7 @@ const MAX_DRAGGABLE_FILTERS_COUNT = 30;
 export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = createSelector(
     selectFilterContextAttributeFilterItems,
     selectFilterContextMeasureValueFilters,
-    selectFilterContextDateFiltersWithDimension,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
     selectCrossFilteringFiltersLocalIdentifiers,
     (attributeFilterItems, measureValueFilters, dateFiltersWithDimension, crossFilters) => {
         return (
@@ -1393,10 +1468,14 @@ export const selectWorkingFilterContextAttributeFilterItemsForTab: (
  */
 export const selectWorkingFilterContextDateFiltersWithDimensionForTab: (
     tabLocalIdentifier: string,
-) => DashboardSelector<IDashboardDateFilter[]> = createMemoizedSelector((tabLocalIdentifier: string) =>
-    createSelector(selectWorkingFiltersForTab(tabLocalIdentifier), (filters): IDashboardDateFilter[] => {
-        return filters.filter(isDashboardDateFilterWithDimension);
-    }),
+) => DashboardSelector<DashboardDateFilterOfAnyType[]> = createMemoizedSelector(
+    (tabLocalIdentifier: string) =>
+        createSelector(
+            selectWorkingFiltersForTab(tabLocalIdentifier),
+            (filters): DashboardDateFilterOfAnyType[] => {
+                return filters.filter(isDashboardDateFilterWithDimensionOfAnyType);
+            },
+        ),
 );
 
 /**

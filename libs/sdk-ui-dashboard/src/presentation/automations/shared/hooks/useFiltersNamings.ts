@@ -94,6 +94,7 @@ function useFilterNamingDependencies(filtersForTitles: FilterContextItem[]): Fil
         ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
         : settings?.responsiveUiDateFormat;
     const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
+    // TODO INE: MC-5777 - date filters with dimension of the whole-period type get no title here yet.
     const dateFiltersForTitles = useMemo(
         () => filtersForTitles.filter(isDashboardDateFilterWithDimension),
         [filtersForTitles],

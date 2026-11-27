@@ -1,0 +1,353 @@
+// (C) 2026 GoodData Corporation
+
+import { act, renderHook } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import {
+    type IAutomationMetadataObject,
+    type IAutomationMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
+import { convertError } from "@gooddata/sdk-ui";
+
+import { IntlWrapper } from "../../../localization/IntlWrapper.js";
+
+// ---------------------------------------------------------------------------
+// Mocks
+// ---------------------------------------------------------------------------
+
+const createAlertMock =
+    vi.fn<(a: IAutomationMetadataObjectDefinition) => Promise<IAutomationMetadataObject>>();
+const saveAlertMock = vi.fn<(a: IAutomationMetadataObject) => Promise<IAutomationMetadataObject>>();
+
+// What the mocked contexts return; each test sets it through renderAlertSubmitHook.
+const contextState = vi.hoisted(() => ({
+    editedAutomation: undefined as IAutomationMetadataObjectDefinition | undefined,
+    alertToEdit: undefined as IAutomationMetadataObject | undefined,
+}));
+
+vi.mock("../../contexts/AlertingDialogContext.js", () => ({
+    useAlertingDialogContext: () => ({
+        createAlert: createAlertMock,
+        saveAlert: saveAlertMock,
+        deleteAlert: vi.fn(),
+        alertToEdit: contextState.alertToEdit,
+    }),
+}));
+
+vi.mock("../../contexts/AutomationsContext.js", () => ({
+    useAutomationsContext: () => ({ separators: undefined }),
+}));
+
+vi.mock("./AlertDraftContext.js", () => ({
+    useAlertDraft: () => ({ editedAutomation: contextState.editedAutomation }),
+}));
+
+vi.mock("./AlertDataContext.js", () => ({
+    useAlertData: () => ({ supportedMeasures: [] }),
+}));
+
+vi.mock("../utils/getters.js", async (importOriginal: () => Promise<Record<string, unknown>>) => {
+    const original = await importOriginal();
+    return {
+        ...original,
+        // The implementation is passed to vi.fn() rather than attached via mockReturnValue so that
+        // the suite-wide mockReset before each test restores it instead of wiping it.
+        getDescription: vi.fn(() => "Derived alert title"),
+    };
+});
+
+import { type IUseAlertSubmitCallbacks } from "./types.js";
+import { useAlertSubmit } from "./useAlertSubmit.js";
+
+// ---------------------------------------------------------------------------
+// Reset mocks between tests
+// ---------------------------------------------------------------------------
+
+beforeEach(() => {
+    vi.clearAllMocks();
+});
+
+// ---------------------------------------------------------------------------
+// Fixtures
+// ---------------------------------------------------------------------------
+
+const baseAutomation: IAutomationMetadataObjectDefinition = {
+    type: "automation",
+    title: "My Alert",
+} as unknown as IAutomationMetadataObjectDefinition;
+
+const automationNoTitle: IAutomationMetadataObjectDefinition = {
+    type: "automation",
+    title: "",
+} as unknown as IAutomationMetadataObjectDefinition;
+
+const alertToEdit: IAutomationMetadataObject = {
+    type: "automation",
+    id: "alert-1",
+    title: "Existing Alert",
+    ref: { identifier: "alert-1" },
+    uri: "/alert-1",
+    identifier: "alert-1",
+    description: "",
+    production: true,
+    deprecated: false,
+    unlisted: false,
+} as unknown as IAutomationMetadataObject;
+
+const savedAlert: IAutomationMetadataObject = {
+    ...alertToEdit,
+    id: "alert-saved",
+} as IAutomationMetadataObject;
+
+const createdAlert: IAutomationMetadataObject = {
+    ...alertToEdit,
+    id: "alert-created",
+} as IAutomationMetadataObject;
+
+// ---------------------------------------------------------------------------
+// Helper
+// ---------------------------------------------------------------------------
+
+type RenderInput = IUseAlertSubmitCallbacks & {
+    editedAutomation?: IAutomationMetadataObjectDefinition;
+    alertToEdit?: IAutomationMetadataObject;
+};
+
+function renderAlertSubmitHook(input: RenderInput = {}) {
+    const { editedAutomation, alertToEdit, ...callbacks } = input;
+    // an explicit `editedAutomation: undefined` must reach the hook as undefined (the no-draft case)
+    contextState.editedAutomation = "editedAutomation" in input ? editedAutomation : baseAutomation;
+    contextState.alertToEdit = alertToEdit;
+    return renderHook(() => useAlertSubmit(callbacks), { wrapper: IntlWrapper });
+}
+
+// ---------------------------------------------------------------------------
+// Tests — create path
+// ---------------------------------------------------------------------------
+
+describe("useAlertSubmit — create path", () => {
+    it("calls createAlert then onCreateSuccess with the result; saveAlert and onUpdateSuccess are untouched", async () => {
+        const onCreateSuccess = vi.fn();
+        const onUpdateSuccess = vi.fn();
+
+        let resolveCreate!: (value: IAutomationMetadataObject) => void;
+        createAlertMock.mockReturnValue(
+            new Promise<IAutomationMetadataObject>((resolve) => {
+                resolveCreate = resolve;
+            }),
+        );
+
+        const { result } = renderAlertSubmitHook({ onCreateSuccess, onUpdateSuccess });
+
+        act(() => {
+            void result.current.submit();
+        });
+
+        expect(createAlertMock).toHaveBeenCalledTimes(1);
+        expect(onCreateSuccess).not.toHaveBeenCalled();
+        expect(saveAlertMock).not.toHaveBeenCalled();
+
+        await act(async () => {
+            resolveCreate(createdAlert);
+        });
+
+        expect(onCreateSuccess).toHaveBeenCalledWith(createdAlert);
+        expect(onUpdateSuccess).not.toHaveBeenCalled();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Tests — save path
+// ---------------------------------------------------------------------------
+
+describe("useAlertSubmit — update path", () => {
+    it("calls saveAlert then onUpdateSuccess with the result; createAlert and onCreateSuccess are untouched", async () => {
+        const onUpdateSuccess = vi.fn();
+        const onCreateSuccess = vi.fn();
+
+        let resolveUpdate!: (value: IAutomationMetadataObject) => void;
+        saveAlertMock.mockReturnValue(
+            new Promise<IAutomationMetadataObject>((resolve) => {
+                resolveUpdate = resolve;
+            }),
+        );
+
+        const { result } = renderAlertSubmitHook({ alertToEdit, onUpdateSuccess, onCreateSuccess });
+
+        act(() => {
+            void result.current.submit();
+        });
+
+        expect(saveAlertMock).toHaveBeenCalledTimes(1);
+        expect(onUpdateSuccess).not.toHaveBeenCalled();
+        expect(createAlertMock).not.toHaveBeenCalled();
+
+        await act(async () => {
+            resolveUpdate(savedAlert);
+        });
+
+        expect(onUpdateSuccess).toHaveBeenCalledWith(savedAlert);
+        expect(onCreateSuccess).not.toHaveBeenCalled();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Tests — error routing
+// ---------------------------------------------------------------------------
+
+describe("useAlertSubmit — error routing", () => {
+    it("createAlert rejects → calls onCreateError with convertError result; onUpdateError untouched", async () => {
+        const onCreateError = vi.fn();
+        const onUpdateError = vi.fn();
+        const rawError = new Error("Create failed");
+        createAlertMock.mockRejectedValue(rawError);
+
+        const { result } = renderAlertSubmitHook({ onCreateError, onUpdateError });
+
+        await act(async () => {
+            await result.current.submit();
+        });
+
+        expect(onCreateError).toHaveBeenCalledWith(convertError(rawError));
+        expect(onUpdateError).not.toHaveBeenCalled();
+    });
+
+    it("saveAlert rejects → calls onUpdateError with convertError result; onCreateError untouched", async () => {
+        const onCreateError = vi.fn();
+        const onUpdateError = vi.fn();
+        const rawError = new Error("Save failed");
+        saveAlertMock.mockRejectedValue(rawError);
+
+        const { result } = renderAlertSubmitHook({ alertToEdit, onCreateError, onUpdateError });
+
+        await act(async () => {
+            await result.current.submit();
+        });
+
+        expect(onUpdateError).toHaveBeenCalledWith(convertError(rawError));
+        expect(onCreateError).not.toHaveBeenCalled();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Tests — title fallback
+// ---------------------------------------------------------------------------
+
+describe("useAlertSubmit — title fallback", () => {
+    it("non-blank title is passed through unchanged", async () => {
+        createAlertMock.mockResolvedValue(createdAlert);
+
+        const { result } = renderAlertSubmitHook({
+            editedAutomation: { ...baseAutomation, title: "My custom title" },
+        });
+
+        await act(async () => {
+            await result.current.submit();
+        });
+
+        expect(createAlertMock).toHaveBeenCalledWith(expect.objectContaining({ title: "My custom title" }));
+    });
+
+    it("blank title gets the getDescription-derived title", async () => {
+        createAlertMock.mockResolvedValue(createdAlert);
+
+        const { result } = renderAlertSubmitHook({
+            editedAutomation: automationNoTitle,
+        });
+
+        await act(async () => {
+            await result.current.submit();
+        });
+
+        const callArg = createAlertMock.mock.calls[0][0];
+        expect(callArg.title).toBe("Derived alert title");
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Tests — undefined draft
+// ---------------------------------------------------------------------------
+
+describe("useAlertSubmit — undefined draft", () => {
+    it("submit is a no-op when editedAutomation is undefined", async () => {
+        const onCreateSuccess = vi.fn();
+        const onCreateError = vi.fn();
+
+        const { result } = renderAlertSubmitHook({
+            editedAutomation: undefined,
+            onCreateSuccess,
+            onCreateError,
+        });
+
+        await act(async () => {
+            await result.current.submit();
+        });
+
+        expect(createAlertMock).not.toHaveBeenCalled();
+        expect(saveAlertMock).not.toHaveBeenCalled();
+        expect(onCreateSuccess).not.toHaveBeenCalled();
+        expect(onCreateError).not.toHaveBeenCalled();
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Tests — loading toggle
+// ---------------------------------------------------------------------------
+
+describe("useAlertSubmit — loading toggle", () => {
+    it("isSaving is true while the backend promise is pending and false after it resolves", async () => {
+        let resolveCreate!: (value: IAutomationMetadataObject) => void;
+        createAlertMock.mockReturnValue(
+            new Promise<IAutomationMetadataObject>((resolve) => {
+                resolveCreate = resolve;
+            }),
+        );
+
+        const { result } = renderAlertSubmitHook({});
+
+        act(() => {
+            void result.current.submit();
+        });
+
+        expect(result.current.isSaving).toBe(true);
+
+        await act(async () => {
+            resolveCreate(createdAlert);
+        });
+
+        expect(result.current.isSaving).toBe(false);
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Tests — re-entrancy guard
+// ---------------------------------------------------------------------------
+
+describe("useAlertSubmit — re-entrancy guard", () => {
+    it("second submit() while in-flight invokes the backend mock exactly once", async () => {
+        let resolveCreate!: (value: IAutomationMetadataObject) => void;
+        const pendingCreate = new Promise<IAutomationMetadataObject>((resolve) => {
+            resolveCreate = resolve;
+        });
+        createAlertMock.mockReturnValue(pendingCreate);
+
+        const onCreateSuccess = vi.fn();
+        const { result } = renderAlertSubmitHook({ onCreateSuccess });
+
+        // Both calls from the same closure, before any state flush — this is
+        // the real double-submit window the synchronous ref guard must block.
+        await act(async () => {
+            void result.current.submit();
+            void result.current.submit();
+        });
+
+        expect(createAlertMock).toHaveBeenCalledTimes(1);
+
+        // Resolve the in-flight request
+        await act(async () => {
+            resolveCreate(createdAlert);
+        });
+
+        expect(onCreateSuccess).toHaveBeenCalledTimes(1);
+    });
+});

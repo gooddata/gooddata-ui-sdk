@@ -27,7 +27,7 @@ import type {
 } from "@gooddata/sdk-code-schemas/v1";
 import { type IDashboardDefinition, type IDashboardFilterGroupsConfig } from "@gooddata/sdk-model";
 
-import { type DeclarativeStringParameter } from "./utils/parameterUtils.js";
+import { type DeclarativeCodeParameter } from "./utils/parameterUtils.js";
 
 /** @public */
 export type Profile = {
@@ -55,7 +55,7 @@ export type DeclarativeEntityData =
     | DeclarativeDateDataset
     | DeclarativeMetric
     | DeclarativeComputedAttribute
-    | DeclarativeStringParameter
+    | DeclarativeCodeParameter
     | DeclarativeVisualizationObject
     | DeclarativeDashboardPlugin
     | DeclarativeAttributeHierarchy

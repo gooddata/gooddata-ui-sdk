@@ -5,9 +5,9 @@ import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import {
     type DashboardAttributeFilterItem,
+    type DashboardDateFilterOfAnyType,
     type IAnalyticalWidget,
     type ICatalogDateDataset,
-    type IDashboardDateFilter,
     type IInsight,
     type IInsightWidget,
     type IKpiWidget,
@@ -16,6 +16,7 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterObjRef,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { _isEmpty, _partition } from "@gooddata/util";
@@ -35,7 +36,7 @@ import { selectEnableUnavailableItemsVisibility } from "../../../store/config/co
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectFilterContextAttributeFilterItems,
-    selectFilterContextDateFiltersWithDimension,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { resolveDisplayFormMetadata } from "../../../utils/displayFormResolver.js";
@@ -285,7 +286,7 @@ export function* validateDateFiltersToIgnore(
     cmd: IDashboardCommand,
     _widget: IAnalyticalWidget,
     toIgnore: ObjRef[],
-): SagaIterator<IDashboardDateFilter[]> {
+): SagaIterator<DashboardDateFilterOfAnyType[]> {
     const allAvailableDateDatasetsMap: ReturnType<typeof selectAllCatalogDateDatasetsMap> = yield select(
         selectAllCatalogDateDatasetsMap,
     );
@@ -301,15 +302,14 @@ export function* validateDateFiltersToIgnore(
         );
     }
 
-    const existingFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield select(
-        selectFilterContextDateFiltersWithDimension,
-    );
+    const existingFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimensionOfAnyType> =
+        yield select(selectFilterContextDateFiltersWithDimensionOfAnyType);
     const badIgnores: ObjRef[] = [];
-    const filtersToIgnore: IDashboardDateFilter[] = [];
+    const filtersToIgnore: DashboardDateFilterOfAnyType[] = [];
 
     for (const toIgnore of resolved.values()) {
         const filterForDateDataSet = existingFilters.find((filter) =>
-            areObjRefsEqual(filter.dateFilter.dataSet, toIgnore),
+            areObjRefsEqual(dashboardFilterObjRef(filter)!, toIgnore),
         );
 
         if (filterForDateDataSet) {

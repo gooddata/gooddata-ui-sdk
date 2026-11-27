@@ -8,6 +8,7 @@ import {
     type IInsightWidget,
     isDashboardAttributeFilter,
     isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
 } from "@gooddata/sdk-model";
 
 import { type IChangeInsightWidgetFilterSettings } from "../../commands/insight.js";
@@ -81,5 +82,6 @@ export function* changeInsightWidgetFilterSettingsHandler(
         result.dateDataSet,
         cmd.correlationId,
         (ignoredFilters ?? []).filter(isDashboardDateFilterWithDimension),
+        (ignoredFilters ?? []).filter(isDashboardDateFilterWithDimensionOfAnyType),
     );
 }

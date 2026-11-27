@@ -80,6 +80,20 @@ export function getPublisherDocumentModifyHref({
     return `${getPublisherDocumentHref(workspaceId, documentId, format)}?${getPublisherDocumentDraftParams(conversationId, itemId)}`;
 }
 
+/**
+ * The document a card's link opens: the one the draft was saved into, else the one it was written from.
+ * Absent for a draft of a new document.
+ */
+export function publisherDocumentTargetId({
+    saved,
+    baseDocumentId,
+}: {
+    saved?: string | null;
+    baseDocumentId?: string | null;
+}): string | undefined {
+    return saved || baseDocumentId || undefined;
+}
+
 export function getPublisherDocumentItemUrl({
     workspaceId,
     saved,
@@ -98,7 +112,7 @@ export function getPublisherDocumentItemUrl({
     if (!conversationId || !itemId) {
         return saved ? getPublisherDocumentHref(workspaceId, saved, format) : undefined;
     }
-    const documentId = saved || baseDocumentId;
+    const documentId = publisherDocumentTargetId({ saved, baseDocumentId });
     return documentId
         ? getPublisherDocumentModifyHref({ workspaceId, documentId, conversationId, itemId, format })
         : getPublisherDocumentDraftHref(workspaceId, conversationId, itemId);

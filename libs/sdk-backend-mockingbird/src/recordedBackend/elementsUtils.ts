@@ -10,12 +10,12 @@ import {
     isElementsQueryOptionsElementsByValue,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type IAbsoluteGranularityDateFilter,
     type IAttributeElement,
     type IAttributeFilter,
     type IDateFilter,
     type IMeasure,
     type IMeasureDefinition,
-    type IRelativeDateFilter,
     type Identifier,
     type ObjRef,
     filterObjRef,
@@ -51,10 +51,9 @@ const attributeFilterPredicateFactory = limiterFilteringPredicateAbstractFactory
     "attribute filter",
 );
 
-const dateFilterPredicateFactory = limiterFilteringPredicateAbstractFactory<IDateFilter>(
-    filterObjRef,
-    "date filter",
-);
+const dateFilterPredicateFactory = limiterFilteringPredicateAbstractFactory<
+    IDateFilter | IAbsoluteGranularityDateFilter
+>(filterObjRef, "date filter");
 
 const measurePredicateFactory = limiterFilteringPredicateAbstractFactory<IMeasure>(measureItem, "measure");
 
@@ -62,7 +61,7 @@ export const resolveLimitingItems =
     (
         attributeElementsFiltering: AttributeElementsFiltering | undefined,
         attributeFilters: IElementsQueryAttributeFilter[],
-        dateFilters: IRelativeDateFilter[],
+        dateFilters: (IDateFilter | IAbsoluteGranularityDateFilter)[],
         measures: IMeasure[],
     ) =>
     (elements: IAttributeElement[]): IAttributeElement[] => {
@@ -133,9 +132,9 @@ export function newAttributeFilterLimitingItem(
  * @internal
  */
 export function newDateFilterLimitingItem(
-    dateFilter: IDateFilter,
-    predicate: AttributeElementsFilteringPredicate<IDateFilter>,
-): Record<Identifier, AttributeElementsFilteringPredicate<IDateFilter>> {
+    dateFilter: IDateFilter | IAbsoluteGranularityDateFilter,
+    predicate: AttributeElementsFilteringPredicate<IDateFilter | IAbsoluteGranularityDateFilter>,
+): Record<Identifier, AttributeElementsFilteringPredicate<IDateFilter | IAbsoluteGranularityDateFilter>> {
     return {
         [objRefToString(filterObjRef(dateFilter))]: predicate,
     };

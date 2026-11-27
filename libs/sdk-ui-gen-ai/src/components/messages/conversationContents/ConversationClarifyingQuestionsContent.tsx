@@ -4,7 +4,7 @@ import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type IGenAiClarifyingQuestion } from "@gooddata/sdk-model";
-import { UiButton, UiIcon, bemFactory, useIdPrefixed } from "@gooddata/sdk-ui-kit";
+import { UiButton, UiIcon, bemFactory, getFocusableElements, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { type IChatConversationLocalItem, type TextContentObject } from "../../../model.js";
 import { MarkdownComponent } from "../contents/Markdown.js";
@@ -63,7 +63,17 @@ export function ConversationClarifyingQuestionsContent(props: ConversationClarif
                     onClick={() => onSelectOption(question, i)}
                 >
                     <div className={bem.e("option-index")}>{i + 1}</div>
-                    <div className={bem.e("option-content")} data-testid="gen-ai-clarifying-option-content">
+                    <div
+                        className={bem.e("option-content")}
+                        data-testid="gen-ai-clarifying-option-content"
+                        ref={(element) => {
+                            getFocusableElements(element, true).focusableElements.forEach(
+                                (focusableElement) => {
+                                    focusableElement.tabIndex = -1;
+                                },
+                            );
+                        }}
+                    >
                         <MarkdownComponent allowMarkdown={useMarkdown} references={objects}>
                             {option.text}
                         </MarkdownComponent>

@@ -6,7 +6,6 @@ import {
     type DashboardAttributeFilterItem,
     type DashboardDateFilterOfAnyType,
     type FilterContextItem,
-    type IDashboardDateFilter,
     type IDashboardFilterGroup,
     type IDashboardMeasureValueFilter,
     type ObjRef,
@@ -15,8 +14,8 @@ import {
     dashboardFilterObjRef,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilterOfAnyType,
-    isDashboardDateFilter,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilterOfAnyType,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import { _partition } from "@gooddata/util";
@@ -79,9 +78,9 @@ export type FilterBarAttributeItems = FilterBarAttributeItem[];
  * @internal
  */
 export type FilterBarDateFilterIndexed = {
-    filter: IDashboardDateFilter;
+    filter: DashboardDateFilterOfAnyType;
     filterIndex: number;
-    workingFilter?: IDashboardDateFilter;
+    workingFilter?: DashboardDateFilterOfAnyType;
 };
 
 /**
@@ -94,9 +93,9 @@ export function isFilterBarDateFilterWithDimension(
         !isFilterBarFilterPlaceholder(object) &&
         !isFilterBarFilterGroupItem(object) &&
         !isFilterBarMeasureValueFilter(object) &&
-        isDashboardDateFilter(object.filter)
+        isDashboardDateFilterOfAnyType(object.filter)
     ) {
-        return !!object.filter.dateFilter.dataSet;
+        return isDashboardDateFilterWithDimensionOfAnyType(object.filter);
     }
     return false;
 }
@@ -154,10 +153,10 @@ export type FilterBarDraggableItems = FilterBarItem[];
 
 function isNotDashboardCommonDateFilter(
     obj: unknown,
-): obj is DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter {
+): obj is DashboardAttributeFilterItem | DashboardDateFilterOfAnyType | IDashboardMeasureValueFilter {
     return (
         isDashboardAttributeFilterItem(obj) ||
-        isDashboardDateFilterWithDimension(obj) ||
+        isDashboardDateFilterWithDimensionOfAnyType(obj) ||
         isDashboardMeasureValueFilter(obj)
     );
 }
@@ -197,7 +196,7 @@ export function useFiltersWithAddedPlaceholder(
     ) as unknown as DashboardDateFilterOfAnyType;
     const [dateFiltersWithDimensions, attributeFilters] = _partition(
         draggableFilters,
-        isDashboardDateFilterWithDimension,
+        isDashboardDateFilterWithDimensionOfAnyType,
     );
 
     const [selectedDisplayForm, setSelectedDisplayForm] = useState<ObjRef | undefined>();
@@ -266,7 +265,7 @@ export function useFiltersWithAddedPlaceholder(
 
             const workingFilter =
                 workingFilters
-                    ?.filter(isDashboardDateFilter)
+                    ?.filter(isDashboardDateFilterOfAnyType)
                     .find((wf) => getFilterIdentifier(wf) === getFilterIdentifier(filter)) ?? filter;
             return {
                 filter,
@@ -287,7 +286,7 @@ export function useFiltersWithAddedPlaceholder(
                 if (isDashboardMeasureValueFilter(draggableFilter)) {
                     return areObjRefsEqual(dashboardFilterObjRef(draggableFilter), selectedDisplayForm);
                 }
-                return areObjRefsEqual(draggableFilter.dateFilter.dataSet, selectedDisplayForm);
+                return areObjRefsEqual(dashboardFilterObjRef(draggableFilter), selectedDisplayForm);
             });
 
         if (addedAttributeFilter === undefined || containsAddedAttributeDisplayForm) {
@@ -332,12 +331,12 @@ export function useFiltersWithAddedPlaceholder(
                 const relatedDateDataset = dateDatasetsMap.get(ref);
 
                 const usedDateDataset = dateFiltersWithDimensions.find((df) =>
-                    areObjRefsEqual(df.dateFilter.dataSet, relatedDateDataset?.dataSet.ref),
+                    areObjRefsEqual(dashboardFilterObjRef(df), relatedDateDataset?.dataSet.ref),
                 );
 
                 // We allowed just one dateFilter for one date dimension,
                 if (usedDateDataset) {
-                    setAutoOpenFilter(usedDateDataset.dateFilter.dataSet);
+                    setAutoOpenFilter(dashboardFilterObjRef(usedDateDataset));
                     clearAddedFilter();
                 } else {
                     setSelectedDisplayForm(ref);

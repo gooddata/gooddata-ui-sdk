@@ -11,6 +11,7 @@ import { type IAnalyticalBackend, type IElementsQueryAttributeFilter } from "@go
 import {
     type DashboardAttributeFilterSelectionMode,
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeDisplayFormMetadataObject,
     type IAttributeElement,
     type IAttributeElements,
@@ -113,7 +114,7 @@ type UpdateFilterProps = {
     displayAsLabel?: ObjRef;
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     limitingAttributesChanged: boolean;
-    limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
+    limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[];
     limitingDateFiltersChanged: boolean;
     filterChanged: boolean;
     setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
@@ -430,7 +431,7 @@ function useInitOrReload(
     props: {
         filter: IAttributeFilter;
         limitingAttributeFilters?: IElementsQueryAttributeFilter[];
-        limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
+        limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[];
         limitingValidationItems?: ObjRef[];
         shouldIncludeLimitingFilters: boolean;
         limit?: number;
@@ -778,7 +779,7 @@ function useCallbacks(
         shouldIncludeLimitingFilters: boolean;
         setShouldIncludeLimitingFilters: (value: boolean) => void;
         limitingAttributeFilters: IElementsQueryAttributeFilter[];
-        limitingDateFilters: (IRelativeDateFilter | IAbsoluteDateFilter)[];
+        limitingDateFilters: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[];
         withoutApply: boolean;
         isSelectionInvalid: boolean;
         filter?: IAttributeFilter;
@@ -1016,7 +1017,9 @@ export interface IElementsFilterControllerProps {
     filter: IAttributeFilter;
     displayAsLabel?: ObjRef;
     limitingAttributeFilters?: IElementsQueryAttributeFilter[] | null;
-    limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[] | null;
+    limitingDateFilters?:
+        | (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[]
+        | null;
     limitingValidationItems?: ObjRef[];
     resetOnParentFilterChange?: boolean;
     onApply?: OnApplyCallbackType;

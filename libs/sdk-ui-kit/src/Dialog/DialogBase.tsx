@@ -98,7 +98,12 @@ export const DialogBase = memo<IDialogBaseProps>(function DialogBase({
                 aria-describedby={accessibilityConfig?.descriptionElementId}
                 {...(isAriaModal ? modalOwnerAttributes : {})}
             >
-                <ScreenReaderToast />
+                {/*
+                 * Only an aria-modal dialog hides the page's toasts live region (ToastsCenter) from
+                 * screen readers, so only such a dialog renders its own. A non-modal dialog relies on
+                 * the page's region, so each toast is announced exactly once.
+                 */}
+                {isAriaModal ? <ScreenReaderToast /> : null}
                 {isAriaModal ? (
                     <UiModalOwnerProvider modal={dialog}>{content}</UiModalOwnerProvider>
                 ) : (

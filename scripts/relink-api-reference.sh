@@ -25,7 +25,8 @@ counts=$(FROM=$FROM TO=$TO REFROOT=$CONTENT_DIR/$TO/api-reference \
       my ($path, $anchor) = $rest =~ /^([^#]*)(#.*)?$/;
       $anchor //= "";
       my $root = $ENV{REFROOT};
-      (my $bare = $path) =~ s{/$}{};
+      # Keep empty braces out of this code: GNU find rejects a second pair with -exec ... +.
+      (my $bare = $path) =~ s#/$##;
       if ($bare ne "") {
         for my $c ($path, "$bare.md", "$bare/_index.md") {
           return $path . $anchor if -f "$root/$c";
@@ -37,6 +38,6 @@ counts=$(FROM=$FROM TO=$TO REFROOT=$CONTENT_DIR/$TO/api-reference \
     }
     $n += s{(\b(?:rel)?ref\s+")/\Q$ENV{FROM}\E/api-reference/([^"]*)"}{$1 . "/$ENV{TO}/api-reference/" . target($2) . "\""}ge;
     END { print STDERR "$n\n" }
-  ' {} + 2>&1 > /dev/null)
+  ' {} + 2>&1 > /dev/null) || { echo "[relink-api-reference] ERROR: $FROM: $counts" >&2; exit 1; }
 total=$(echo "$counts" | awk '{ s += $1 } END { print s + 0 }')
 echo "[relink-api-reference] $FROM: $total reference links now point at $TO"

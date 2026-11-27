@@ -318,6 +318,53 @@ describe("a page's filters", () => {
     });
 });
 
+describe("a date filter set to a period", () => {
+    const content = page({ layout: row(), slots: [] });
+
+    const codeOf = (convert: () => unknown) => {
+        try {
+            convert();
+        } catch (error) {
+            return (error as ICoreError).code;
+        }
+        return undefined;
+    };
+
+    it("is refused when written, rather than converted", () => {
+        const period = {
+            dashboardParameterizedDateFilter: {
+                dataSet: idRef("date", "dataSet"),
+                parameter: idRef("last_13_months", "parameter"),
+                localIdentifier: "period",
+            },
+        } as unknown as FilterContextItem;
+
+        expect(codeOf(() => pageDocument({ ...content, filters: [period] }))).toBe(
+            CoreErrorCode.PeriodFilterNotSupported,
+        );
+    });
+
+    it.each([
+        ["on its own", { period: { type: "date_filter", date: "date", parameter: "last_13_months" } }],
+        [
+            "in a filter group",
+            {
+                group: {
+                    type: "filter_group",
+                    title: "Group",
+                    filters: { period: { type: "date_filter", parameter: "last_13_months" } },
+                },
+            },
+        ],
+    ])("is refused when read %s, rather than converted", (_, filters) => {
+        const written = { ...pageDocument(content), filters };
+
+        expect(codeOf(() => yamlPublisherPageLayoutToDefinition(written))).toBe(
+            CoreErrorCode.PeriodFilterNotSupported,
+        );
+    });
+});
+
 describe("a document", () => {
     const publisherDocument: IPublisherDocumentDefinitionV1 = {
         type: "report",

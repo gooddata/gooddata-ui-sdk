@@ -48,6 +48,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     ariaSortedDescending: { id: "visualizations.table.header.aria.sortedDescending" },
     ariaPriority: { id: "visualizations.table.header.aria.priority" },
     ariaSorted: { id: "visualizations.table.header.aria.sorted" },
+    drillableCellHint: { id: "visualizations.table.cell.aria.drillableHint" },
     // Pagination
     paginationOf: { id: "visualizations.table.pagination.of" },
     ariaPagePrevious: { id: "visualizations.pagination.previous" },

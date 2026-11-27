@@ -6,10 +6,10 @@ import { type IntlShape } from "react-intl";
 import { invariant } from "ts-invariant";
 
 import {
+    type DashboardDateFilterOfAnyType,
     type IAttributeDisplayFormMetadataObject,
     type ICatalogAttribute,
     type ICatalogDateDataset,
-    type IDashboardDateFilter,
     type IDashboardDateFilterConfig,
     type IDashboardDateFilterConfigItem,
     type ObjRef,
@@ -33,6 +33,7 @@ import { selectDateFilterConfigsOverrides } from "../../../../../../../model/sto
 import { type IDashboardAttributeFilterParentItem } from "../../../../../../../model/types/attributeFilterTypes.js";
 import { type IDashboardDependentDateFilter } from "../../../../../../../model/types/dateFilterTypes.js";
 import { type ValuesLimitingItem } from "../../../../types.js";
+import { getDateFilterRange } from "../../hooks/useDependentDateFilterConfigurationState.js";
 
 export interface IValuesLimitingItemWithTitle {
     title?: string;
@@ -233,7 +234,7 @@ export const useFilterItems = (
     validParentFilters: ObjRef[],
     dependentDateFilters: IDashboardDependentDateFilter[],
     availableDatasets: ICatalogDateDataset[],
-    dependentCommonDateFilter: IDashboardDateFilter,
+    dependentCommonDateFilter: DashboardDateFilterOfAnyType,
     isEnabledKDAttributeFilterDatesValidation: boolean,
     isSelected: boolean,
     intl: IntlShape,
@@ -358,7 +359,7 @@ const getDatasetTitle = (
 
 export const useCommonDateItems = (
     availableDatasets: ICatalogDateDataset[],
-    dependentCommonDateFilter: IDashboardDateFilter,
+    dependentCommonDateFilter: DashboardDateFilterOfAnyType,
     dependentDateFilters?: IDashboardDependentDateFilter[],
 ): IValuesLimitingItemWithTitle[] => {
     return useMemo(() => {
@@ -388,16 +389,13 @@ export const useCommonDateItems = (
 };
 
 const parseCommonDateFilter = (
-    commonDate: IDashboardDateFilter,
+    commonDate: DashboardDateFilterOfAnyType,
     dataSet?: ObjRef,
 ): IDashboardDependentDateFilter => {
     invariant(!isUriRef(dataSet));
 
     return {
-        from: commonDate.dateFilter.from,
-        to: commonDate.dateFilter.to,
-        granularity: commonDate.dateFilter.granularity,
-        type: commonDate.dateFilter.type,
+        ...getDateFilterRange(commonDate),
         localIdentifier: dataSet?.identifier ?? "commonDate",
         isSelected: true,
         dataSet: dataSet,

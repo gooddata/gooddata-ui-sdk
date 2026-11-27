@@ -5,6 +5,8 @@ import { difference, mapValues } from "lodash-es";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
+    type DashboardDateFilterConfigMode,
+    type DashboardDateFilterOfAnyType,
     type FilterContextItem,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfig,
@@ -12,14 +14,13 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     isAllDashboardMeasureValueFilter,
     isAllValuesDashboardAttributeFilter,
-    isDashboardAbsoluteGranularityDateFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardCommonDateFilterOfAnyType,
-    isDashboardDateFilter,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilterOfAnyType,
     isDashboardMeasureValueFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
@@ -376,9 +377,47 @@ function removeHiddenFilters(
     });
 }
 
-// Relaxed typing of the common date filter/date filter with dimension guard,
-// to avoid `never` type after checking common date filter and then working with date filters with dimension or the other way around.
-type RelaxedDateFilterGuard = (filter: FilterContextItem) => boolean;
+/**
+ * Mode of the configuration of a date filter of any type: the common date filter configuration for the common
+ * date filter, the configuration of its dimension for a date filter with a dimension.
+ */
+function dateFilterOfAnyTypeMode(
+    filter: DashboardDateFilterOfAnyType,
+    commonDateFilterConfig: IDashboardDateFilterConfig | undefined,
+    dateFilterWithDimensionConfigs: IDashboardDateFilterConfigItem[],
+): DashboardDateFilterConfigMode | undefined {
+    if (isDashboardCommonDateFilterOfAnyType(filter)) {
+        return commonDateFilterConfig?.mode;
+    }
+    const dataSet = dashboardFilterObjRef(filter);
+    return dateFilterWithDimensionConfigs.find((date) => areObjRefsEqual(date.dateDataSet, dataSet))?.config
+        .mode;
+}
+
+function filterContextItemMode(
+    filter: FilterContextItem,
+    filterConfigurations: {
+        commonDateFilterConfig?: IDashboardDateFilterConfig;
+        dateFilterWithDimensionConfigs: IDashboardDateFilterConfigItem[];
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[];
+    },
+): string | undefined {
+    const { dateFilterWithDimensionConfigs, attributeFilterConfigs, commonDateFilterConfig } =
+        filterConfigurations;
+
+    if (isDashboardAttributeFilterItem(filter)) {
+        const attributeFilterLocalIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+        return attributeFilterConfigs.find(
+            (attributeFilterConfig) =>
+                attributeFilterConfig.localIdentifier === attributeFilterLocalIdentifier,
+        )?.mode;
+    }
+    if (isDashboardDateFilterOfAnyType(filter)) {
+        return dateFilterOfAnyTypeMode(filter, commonDateFilterConfig, dateFilterWithDimensionConfigs);
+    }
+
+    return undefined;
+}
 
 export const isFilterContextItemHidden = (
     filter: FilterContextItem,
@@ -387,35 +426,7 @@ export const isFilterContextItemHidden = (
         dateFilterWithDimensionConfigs: IDashboardDateFilterConfigItem[];
         attributeFilterConfigs: IDashboardAttributeFilterConfig[];
     },
-): boolean => {
-    const { dateFilterWithDimensionConfigs, attributeFilterConfigs, commonDateFilterConfig } =
-        filterConfigurations;
-
-    if (isDashboardAttributeFilterItem(filter)) {
-        const attributeFilterLocalIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
-        const config = attributeFilterConfigs.find(
-            (attributeFilterConfig) =>
-                attributeFilterConfig.localIdentifier === attributeFilterLocalIdentifier,
-        );
-
-        return config?.mode === "hidden";
-    } else if (isDashboardAbsoluteGranularityDateFilter(filter)) {
-        // TODO MC-5776: date filters with a dimension are not checked yet, the dashboard rejects them.
-        return isDashboardCommonDateFilterOfAnyType(filter) && commonDateFilterConfig?.mode === "hidden";
-    } else if (isDashboardDateFilter(filter)) {
-        if ((isDashboardCommonDateFilter as RelaxedDateFilterGuard)(filter)) {
-            return commonDateFilterConfig?.mode === "hidden";
-        } else if ((isDashboardDateFilterWithDimension as RelaxedDateFilterGuard)(filter)) {
-            const config = dateFilterWithDimensionConfigs.find((date) =>
-                areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
-            );
-
-            return config?.config.mode === "hidden";
-        }
-    }
-
-    return false;
-};
+): boolean => filterContextItemMode(filter, filterConfigurations) === "hidden";
 
 export const isFilterContextItemLocked = (
     filter: FilterContextItem,
@@ -424,35 +435,7 @@ export const isFilterContextItemLocked = (
         dateFilterWithDimensionConfigs: IDashboardDateFilterConfigItem[];
         attributeFilterConfigs: IDashboardAttributeFilterConfig[];
     },
-): boolean => {
-    const { dateFilterWithDimensionConfigs, attributeFilterConfigs, commonDateFilterConfig } =
-        filterConfigurations;
-
-    if (isDashboardAttributeFilterItem(filter)) {
-        const attributeFilterLocalIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
-        const config = attributeFilterConfigs.find(
-            (attributeFilterConfig) =>
-                attributeFilterConfig.localIdentifier === attributeFilterLocalIdentifier,
-        );
-
-        return config?.mode === "readonly";
-    } else if (isDashboardAbsoluteGranularityDateFilter(filter)) {
-        // TODO MC-5776: date filters with a dimension are not checked yet, the dashboard rejects them.
-        return isDashboardCommonDateFilterOfAnyType(filter) && commonDateFilterConfig?.mode === "readonly";
-    } else if (isDashboardDateFilter(filter)) {
-        if ((isDashboardCommonDateFilter as RelaxedDateFilterGuard)(filter)) {
-            return commonDateFilterConfig?.mode === "readonly";
-        } else if ((isDashboardDateFilterWithDimension as RelaxedDateFilterGuard)(filter)) {
-            const config = dateFilterWithDimensionConfigs.find((date) =>
-                areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
-            );
-
-            return config?.config.mode === "readonly";
-        }
-    }
-
-    return false;
-};
+): boolean => filterContextItemMode(filter, filterConfigurations) === "readonly";
 
 //
 // Per-tab automation filter selectors
