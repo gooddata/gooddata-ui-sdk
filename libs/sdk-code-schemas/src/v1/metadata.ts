@@ -556,15 +556,63 @@ export type Tags13 = string[];
 /**
  * The typed definition of the parameter - its data type, default value and constraints.
  */
-export type ParameterDefinition = ParameterDefinition1 | ParameterDefinition2;
+export type ParameterDefinition = ParameterDefinition1 | ParameterDefinition2 | ParameterDefinition3;
 /**
- * A typed parameter definition: textual or numeric.
+ * A typed parameter definition: textual, numeric or a date range.
  */
 export type ParameterDefinition1 = StringParameterDefinition;
 /**
- * A typed parameter definition: textual or numeric.
+ * A typed parameter definition: textual, numeric or a date range.
  */
 export type ParameterDefinition2 = NumberParameterDefinition;
+/**
+ * A typed parameter definition: textual, numeric or a date range.
+ */
+export type ParameterDefinition3 = DateRangeParameterDefinition;
+/**
+ * The range used whenever the parameter is not overridden.
+ */
+export type DateRangeParameterValue =
+    | DateRangeParameterValue1
+    | DateRangeParameterValue2
+    | DateRangeParameterValue3
+    | DateRangeParameterValue4
+    | DateRangeParameterValue5
+    | DateRangeParameterValue6
+    | DateRangeParameterValue7
+    | DateRangeParameterValue8;
+/**
+ * A range of whole periods. At least one of 'from' and 'to' is set; a missing one leaves that end open.
+ */
+export type DateRangeParameterValue1 = YearPeriod;
+/**
+ * A range of whole periods. At least one of 'from' and 'to' is set; a missing one leaves that end open.
+ */
+export type DateRangeParameterValue2 = QuarterPeriod;
+/**
+ * A range of whole periods. At least one of 'from' and 'to' is set; a missing one leaves that end open.
+ */
+export type DateRangeParameterValue3 = MonthPeriod;
+/**
+ * A range of whole periods. At least one of 'from' and 'to' is set; a missing one leaves that end open.
+ */
+export type DateRangeParameterValue4 = WeekPeriod;
+/**
+ * A range of whole periods. At least one of 'from' and 'to' is set; a missing one leaves that end open.
+ */
+export type DateRangeParameterValue5 = DayPeriod;
+/**
+ * A range of whole periods. At least one of 'from' and 'to' is set; a missing one leaves that end open.
+ */
+export type DateRangeParameterValue6 = HourPeriod;
+/**
+ * A range of whole periods. At least one of 'from' and 'to' is set; a missing one leaves that end open.
+ */
+export type DateRangeParameterValue7 = MinutePeriod;
+/**
+ * A range of whole periods. At least one of 'from' and 'to' is set; a missing one leaves that end open.
+ */
+export type DateRangeParameterValue8 = SecondPeriod;
 /**
  * JSON schema for Gooddata Analytics
  */
@@ -670,7 +718,7 @@ export type MetricFieldGuard = MetricField | MetricFieldGuard1;
  */
 export type Filter = Filter1 | Filter2 | Filter3 | Filter4 | Filter5 | Filter6;
 export type Filter1 = DateFilter;
-export type DateFilter = DateFilter1 | DateFilter2;
+export type DateFilter = DateFilter1 | DateFilter2 | DateFilter3;
 export type DateFilter1 = {
     type: "date_filter";
     /**
@@ -754,6 +802,28 @@ export type DateFilter2 = {
      * A date to which the filter will be applied. YYYY-MM-DD, or YYYY-MM-DD HH:mm for hour/minute, or YYYY-MM-DD HH:mm:ss for hour/minute/second granularities.
      */
     to?: string;
+    /**
+     * Attribute filters to apply together with this date filter.
+     */
+    with?: {
+        [k: string]: AttributeFilter;
+    };
+    /**
+     * Controls how empty values are handled in the filter.
+     */
+    empty_values?: "only" | "include" | "exclude";
+    [k: string]: unknown;
+};
+export type DateFilter3 = {
+    type: "date_filter";
+    /**
+     * Date dataset identifier to use for this field.
+     */
+    using: string;
+    /**
+     * An id of the date range parameter (period) the filter uses.
+     */
+    parameter: string;
     /**
      * Attribute filters to apply together with this date filter.
      */
@@ -2866,6 +2936,7 @@ export interface DashboardFilters {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -2882,6 +2953,13 @@ export interface DashboardAbsoluteDateFilter {
  * A dashboard relative date filter
  */
 export interface DashboardRelativeDateFilter {
+    type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
+    [k: string]: unknown;
+}
+/**
+ * A dashboard date filter set to a period: a date range parameter, whose current range the filter uses at every computation
+ */
+export interface DashboardPeriodDateFilter {
     type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
     [k: string]: unknown;
 }
@@ -3102,6 +3180,7 @@ export interface DashboardFilters1 {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -3349,6 +3428,101 @@ export interface NumberParameterConstraints {
      */
     max?: number;
 }
+/**
+ * A named period: a range of whole periods of one granularity. A date filter that uses the parameter filters by its current range.
+ */
+export interface DateRangeParameterDefinition {
+    type: "DATE_RANGE";
+    defaultValue: DateRangeParameterValue;
+}
+export interface YearPeriod {
+    granularity: "YEAR";
+    /**
+     * The first year, inclusive: YYYY, with or without quotes.
+     */
+    from?: string | number;
+    /**
+     * The last year, inclusive: YYYY, with or without quotes.
+     */
+    to?: string | number;
+}
+export interface QuarterPeriod {
+    granularity: "QUARTER";
+    /**
+     * The first quarter, inclusive: YYYY-Q.
+     */
+    from?: string;
+    /**
+     * The last quarter, inclusive: YYYY-Q.
+     */
+    to?: string;
+}
+export interface MonthPeriod {
+    granularity: "MONTH";
+    /**
+     * The first month, inclusive: YYYY-MM.
+     */
+    from?: string;
+    /**
+     * The last month, inclusive: YYYY-MM.
+     */
+    to?: string;
+}
+export interface WeekPeriod {
+    granularity: "WEEK";
+    /**
+     * The first week, inclusive: YYYY-WW, an ISO week.
+     */
+    from?: string;
+    /**
+     * The last week, inclusive: YYYY-WW, an ISO week.
+     */
+    to?: string;
+}
+export interface DayPeriod {
+    granularity: "DAY";
+    /**
+     * The first day, inclusive: YYYY-MM-DD.
+     */
+    from?: string;
+    /**
+     * The last day, inclusive: YYYY-MM-DD.
+     */
+    to?: string;
+}
+export interface HourPeriod {
+    granularity: "HOUR";
+    /**
+     * The first hour, inclusive: YYYY-MM-DD HH.
+     */
+    from?: string;
+    /**
+     * The last hour, inclusive: YYYY-MM-DD HH.
+     */
+    to?: string;
+}
+export interface MinutePeriod {
+    granularity: "MINUTE";
+    /**
+     * The first minute, inclusive: YYYY-MM-DD HH:mm.
+     */
+    from?: string;
+    /**
+     * The last minute, inclusive: YYYY-MM-DD HH:mm.
+     */
+    to?: string;
+}
+export interface SecondPeriod {
+    granularity: "SECOND";
+    /**
+     * The first second, inclusive: YYYY-MM-DD HH:mm:ss.
+     */
+    from?: string;
+    /**
+     * The last second, inclusive: YYYY-MM-DD HH:mm:ss.
+     */
+    to?: string;
+}
 export interface Metadata28 {
     type:
         | "dataset"
@@ -3509,6 +3683,8 @@ export interface QueryFilters {
     [k: string]: Filter;
 }
 /**
+ * This interface was referenced by `undefined`'s JSON-Schema definition
+ * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
  * This interface was referenced by `undefined`'s JSON-Schema definition
  * via the `patternProperty` "^(?!\.)[.A-Za-z0-9_-]\{1,255\}$".
  * This interface was referenced by `undefined`'s JSON-Schema definition
@@ -14069,6 +14245,7 @@ export interface DashboardFilters2 {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -14188,6 +14365,7 @@ export interface DashboardFilters3 {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -14224,6 +14402,7 @@ export interface DashboardFilters4 {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -14339,6 +14518,7 @@ export interface DashboardFilters5 {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -14451,6 +14631,7 @@ export interface DashboardFilters6 {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -14622,6 +14803,7 @@ export interface DashboardFilters7 {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -14959,6 +15141,7 @@ export interface DashboardFilters8 {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -15200,6 +15383,7 @@ export interface DashboardFilters9 {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter
@@ -15377,6 +15561,7 @@ export interface DashboardFilters10 {
     [k: string]:
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardAttributeFilter
         | DashboardTextFilter
         | DashboardMetricValueFilter

@@ -152,6 +152,25 @@ function clickCell(title: string): void {
     fireEvent.click(cell!);
 }
 
+/**
+ * Presses an element like a mouse does in a browser, where an unprevented mousedown moves focus to the
+ * nearest focusable ancestor. jsdom moves no focus on mousedown.
+ */
+function pressElement(element: Element): void {
+    if (fireEvent.mouseDown(element)) {
+        const focusTarget = element.closest<HTMLElement>("input, button, [tabindex]");
+        act(() => (focusTarget ? focusTarget.focus() : (document.activeElement as HTMLElement).blur()));
+    }
+    fireEvent.mouseUp(element);
+    fireEvent.click(element);
+}
+
+function pressCell(title: string): void {
+    const cell = document.querySelector(`[title="${title}"] .rc-picker-cell-inner`);
+    expect(cell).toBeInTheDocument();
+    pressElement(cell!);
+}
+
 function describedByText(input: HTMLInputElement): string | undefined {
     const id = input.getAttribute("aria-describedby");
     return id ? (document.getElementById(id)?.textContent ?? undefined) : undefined;
@@ -913,7 +932,7 @@ describe("PeriodRangePicker", () => {
             expect(submitForm).toHaveBeenCalledTimes(1);
         });
 
-        it("does not commit or submit when Enter is pressed on the first field while the second is still empty", () => {
+        it("commits only the first field, without submitting, when Enter is pressed while the second is still empty", () => {
             const { onRangeChange, submitForm } = renderPicker("GDC.time.date", {
                 from: undefined,
                 to: undefined,
@@ -922,12 +941,12 @@ describe("PeriodRangePicker", () => {
             const [startInput] = getFields();
             typeIntoField(startInput, "2026-03-02");
             fireEvent.keyDown(startInput, { key: "Enter", code: "Enter" });
-            expect(onRangeChange).not.toHaveBeenCalled();
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-03-02", to: undefined });
             vi.runAllTimers();
             expect(submitForm).not.toHaveBeenCalled();
         });
 
-        it("does not commit or submit when the second field is unparsable", () => {
+        it("commits only its own field, without submitting, when the other field is unparsable", () => {
             const { onRangeChange, submitForm } = renderPicker("GDC.time.date", {
                 from: undefined,
                 to: undefined,
@@ -937,17 +956,13 @@ describe("PeriodRangePicker", () => {
             typeIntoField(startInput, "2026-03-02");
             tabToNextField(startInput, endInput);
             typeIntoField(endInput, "garbage");
-            // rc-picker's own onBlur fires (at least) twice per actual blur/tab (a pre-existing rc-picker
-            // quirk, same reason handleChange's own comment keys off content instead of an exact call
-            // count) - what matters here is that Enter itself adds nothing on top of Tab's own commit.
-            const callsBeforeEnter = onRangeChange.mock.calls.length;
             fireEvent.keyDown(startInput, { key: "Enter", code: "Enter" });
-            expect(onRangeChange).toHaveBeenCalledTimes(callsBeforeEnter);
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-03-02", to: undefined });
             vi.runAllTimers();
             expect(submitForm).not.toHaveBeenCalled();
         });
 
-        it("does not commit or submit when the typed range is reversed (start after end)", () => {
+        it("commits only its own field, without submitting, when the typed range is reversed (start after end)", () => {
             const { onRangeChange, submitForm } = renderPicker("GDC.time.date", {
                 from: undefined,
                 to: undefined,
@@ -957,10 +972,9 @@ describe("PeriodRangePicker", () => {
             typeIntoField(startInput, "2026-03-10");
             tabToNextField(startInput, endInput);
             typeIntoField(endInput, "2026-03-01");
-            const callsBeforeEnter = onRangeChange.mock.calls.length;
             fireEvent.keyDown(startInput, { key: "Enter", code: "Enter" });
-            // Tab already committed "start"; the order error blocks Enter from doing anything more.
-            expect(onRangeChange).toHaveBeenCalledTimes(callsBeforeEnter);
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-03-10", to: undefined });
+            expect(onRangeChange).not.toHaveBeenCalledWith({ from: "2026-03-10", to: "2026-03-01" });
             vi.runAllTimers();
             expect(submitForm).not.toHaveBeenCalled();
         });
@@ -1404,7 +1418,7 @@ describe("PeriodRangePicker", () => {
             expect(emptyMessage).not.toBe(invalidMessage);
         });
 
-        it("flags a start date typed after the end date only on the last-edited field, and blocks Enter from committing the mis-ordered range", () => {
+        it("flags a start date typed after the end date only on the last-edited field, and Enter commits only that field", () => {
             const { onRangeChange } = renderPicker("GDC.time.date", { from: undefined, to: undefined });
             openPicker();
             const [startInput, endInput] = getFields();
@@ -1418,11 +1432,9 @@ describe("PeriodRangePicker", () => {
             expect(endInput).toHaveAttribute("aria-invalid", "true");
             expect(describedByText(endInput)).toBeTruthy();
 
-            // Tab already committed "start" via blur; Enter on a mis-ordered range is a no-op - it adds
-            // no further commit.
-            const callsBeforeEnter = onRangeChange.mock.calls.length;
             fireEvent.keyDown(endInput, { key: "Enter", code: "Enter" });
-            expect(onRangeChange).toHaveBeenCalledTimes(callsBeforeEnter);
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: undefined, to: "2026-03-01" });
+            expect(onRangeChange).not.toHaveBeenCalledWith({ from: "2026-03-10", to: "2026-03-01" });
         });
     });
 
@@ -1843,6 +1855,370 @@ describe("PeriodRangePicker", () => {
                     expect(onRangeChange).toHaveBeenLastCalledWith({ from, to });
                 },
             );
+        });
+    });
+
+    describe("clearing a field and picking its period again", () => {
+        const PICK_ORDERS = ["click", "hover, press"] as const;
+
+        function getField(side: "start" | "end"): HTMLInputElement {
+            const [startInput, endInput] = getFields();
+            return side === "start" ? startInput : endInput;
+        }
+
+        function clearAndPick(
+            side: "start" | "end",
+            cellTitle: string,
+            order: (typeof PICK_ORDERS)[number],
+            { typedText, fromOtherField = false }: { typedText?: string; fromOtherField?: boolean } = {},
+        ): void {
+            const field = getField(side);
+            if (fromOtherField) {
+                const otherField = getField(side === "start" ? "end" : "start");
+                act(() => otherField.focus());
+                fireEvent.click(otherField);
+            }
+            act(() => field.focus());
+            fireEvent.click(field);
+            if (typedText !== undefined) {
+                typeIntoField(field, typedText);
+            }
+            typeIntoField(field, "");
+            if (order === "hover, press") {
+                // A mouse shows the hovered cell in the field before pressing it.
+                fireEvent.mouseEnter(document.querySelector(`[title="${cellTitle}"]`)!);
+                pressCell(cellTitle);
+            } else {
+                clickCell(cellTitle);
+            }
+        }
+
+        async function leavePicker(): Promise<void> {
+            act(() => (document.activeElement as HTMLElement).blur());
+            await waitFor(() => {
+                expect(isCalendarVisuallyOpen()).toBe(false);
+            });
+        }
+
+        function previewText(): string | undefined {
+            return document.querySelector(".s-period-range-picker-preview")?.textContent ?? undefined;
+        }
+
+        const committedCases = (
+            [
+                [
+                    "GDC.time.date",
+                    { from: "2026-03-02", to: "2026-03-10" },
+                    "2026-03-02",
+                    "2026-03-10",
+                    undefined,
+                ],
+                [
+                    "GDC.time.month",
+                    { from: "2026-03", to: "2026-05" },
+                    "3/2026",
+                    "5/2026",
+                    "Preview: 03/01/2026 – 05/31/2026",
+                ],
+                [
+                    "GDC.time.quarter",
+                    { from: "2026-1", to: "2026-3" },
+                    "Q1/2026",
+                    "Q3/2026",
+                    "Preview: 01/01/2026 – 09/30/2026",
+                ],
+                [
+                    "GDC.time.year",
+                    { from: "2026", to: "2026" },
+                    "2026",
+                    "2026",
+                    "Preview: 01/01/2026 – 12/31/2026",
+                ],
+            ] as const
+        ).flatMap(([granularity, range, startText, endText, preview]) =>
+            (["start", "end"] as const).flatMap((side) =>
+                PICK_ORDERS.map(
+                    (order) =>
+                        [
+                            granularity,
+                            side,
+                            order,
+                            range,
+                            side === "start" ? startText : endText,
+                            preview,
+                        ] as const,
+                ),
+            ),
+        );
+
+        it.each(committedCases)(
+            "%s: restores the committed %s field (%s)",
+            async (granularity, side, order, range, text, preview) => {
+                const { onRangeChange } = renderControlledPicker(granularity, range);
+                const field = getField(side);
+                clearAndPick(side, text, order);
+
+                expect(field.value).toBe(text);
+                expect(field).toHaveAttribute("aria-invalid", "false");
+                expect(describedByText(field)).toBe(hintText());
+                expect(previewText()).toBe(preview);
+                await leavePicker();
+                expect(onRangeChange).toHaveBeenLastCalledWith(range);
+            },
+        );
+
+        const weekCases = (
+            [
+                ["start", "2026-03-01", "10/2026"],
+                ["start", "2026-03-04", "10/2026"],
+                ["end", "2026-03-08", "11/2026"],
+                ["end", "2026-03-12", "11/2026"],
+            ] as const
+        ).flatMap(([side, day, text]) => PICK_ORDERS.map((order) => [side, day, order, text] as const));
+
+        it.each(weekCases)(
+            "GDC.time.week: restores the committed %s field picked by its day %s (%s)",
+            async (side, day, order, text) => {
+                const range = { from: "2026-10", to: "2026-11" };
+                const { onRangeChange } = renderControlledPicker("GDC.time.week", range);
+                const field = getField(side);
+                clearAndPick(side, day, order);
+
+                expect(field.value).toBe(text);
+                expect(field).toHaveAttribute("aria-invalid", "false");
+                expect(describedByText(field)).toBe(hintText());
+                expect(previewText()).toBe("Preview: 03/01/2026 – 03/14/2026");
+                await leavePicker();
+                expect(onRangeChange).toHaveBeenLastCalledWith(range);
+            },
+        );
+
+        const typedCases = (
+            [
+                ["start", { from: undefined, to: "2028" }, "2026"],
+                ["end", { from: "2026", to: undefined }, "2028"],
+            ] as const
+        ).flatMap(([side, range, text]) => PICK_ORDERS.map((order) => [side, order, range, text] as const));
+
+        it.each(typedCases)(
+            "restores a typed and uncommitted %s year (%s)",
+            async (side, order, range, text) => {
+                const { onRangeChange } = renderControlledPicker("GDC.time.year", range);
+                const field = getField(side);
+                clearAndPick(side, text, order, { typedText: text });
+
+                expect(field.value).toBe(text);
+                expect(field).toHaveAttribute("aria-invalid", "false");
+                expect(previewText()).toBe("Preview: 01/01/2026 – 12/31/2028");
+                await leavePicker();
+                expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026", to: "2028" });
+            },
+        );
+
+        it.each(["start", "end"] as const)(
+            "restores the committed %s year when the pick completes a range started in the other field",
+            async (side) => {
+                const range = { from: "2026", to: "2026" };
+                const { onRangeChange } = renderControlledPicker("GDC.time.year", range);
+                const field = getField(side);
+                clearAndPick(side, "2026", "hover, press", { fromOtherField: true });
+
+                expect(field.value).toBe("2026");
+                expect(field).toHaveAttribute("aria-invalid", "false");
+                await leavePicker();
+                expect(onRangeChange).toHaveBeenLastCalledWith(range);
+            },
+        );
+    });
+
+    describe("a period committed while the other field is empty", () => {
+        const PICK_CASES = [
+            ["GDC.time.date", "2026-03-10", "2026-03-10", "2026-03-10"],
+            ["GDC.time.month", "5/2026", "2026-05", "2026-05"],
+            ["GDC.time.year", "2026", "2026", "2026"],
+        ] as const;
+
+        beforeEach(() => {
+            vi.setSystemTime(new Date(2026, 2, 25));
+        });
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
+        function openField(field: HTMLInputElement): void {
+            act(() => field.focus());
+            fireEvent.click(field);
+        }
+
+        async function settle(): Promise<void> {
+            await act(async () => {
+                await new Promise((resolve) => setTimeout(resolve, 50));
+            });
+        }
+
+        const LEAVE_ACTIONS = {
+            Tab: (_startInput: HTMLInputElement, endInput: HTMLInputElement) => {
+                fireEvent.keyDown(endInput, { key: "Tab", code: "Tab" });
+                act(() => endInput.blur());
+            },
+            "Shift+Tab": (startInput: HTMLInputElement, endInput: HTMLInputElement) => {
+                fireEvent.keyDown(endInput, { key: "Tab", code: "Tab", shiftKey: true });
+                act(() => startInput.focus());
+            },
+            Escape: (_startInput: HTMLInputElement, endInput: HTMLInputElement) => {
+                fireEvent.keyDown(endInput, { key: "Escape", code: "Escape" });
+            },
+        };
+
+        it.each(
+            PICK_CASES.flatMap((pickCase) =>
+                (Object.keys(LEAVE_ACTIONS) as (keyof typeof LEAVE_ACTIONS)[]).map(
+                    (leave) => [pickCase[0], pickCase[1], leave, pickCase[2]] as const,
+                ),
+            ),
+        )(
+            "%s: keeps the start %s picked in the calendar after %s out of the empty end field",
+            async (granularity, title, leave, from) => {
+                const { onRangeChange } = renderControlledPicker(granularity, {
+                    from: undefined,
+                    to: undefined,
+                });
+                const [startInput, endInput] = getFields();
+                openField(startInput);
+                pressCell(title);
+
+                expect(startInput.value).toBe(title);
+                expect(endInput).toHaveAttribute("aria-invalid", "false");
+                LEAVE_ACTIONS[leave](startInput, endInput);
+                await settle();
+
+                expect(startInput.value).toBe(title);
+                expect(startInput).toHaveAttribute("aria-invalid", "false");
+                expect(onRangeChange).toHaveBeenLastCalledWith({ from, to: undefined });
+            },
+        );
+
+        it.each(PICK_CASES)(
+            "%s: keeps the end %s picked in the calendar after leaving the empty start field",
+            async (granularity, title, _from, to) => {
+                const { onRangeChange } = renderControlledPicker(granularity, {
+                    from: undefined,
+                    to: undefined,
+                });
+                const [startInput, endInput] = getFields();
+                openField(endInput);
+                pressCell(title);
+                act(() => (document.activeElement as HTMLElement).blur());
+                await settle();
+
+                expect(endInput.value).toBe(title);
+                expect(onRangeChange).toHaveBeenLastCalledWith({ from: undefined, to });
+                expect(startInput.value).toBe("");
+            },
+        );
+
+        it("commits the whole range when both periods are picked in the calendar", async () => {
+            const { onRangeChange } = renderControlledPicker("GDC.time.month", {
+                from: undefined,
+                to: undefined,
+            });
+            const [startInput] = getFields();
+            openField(startInput);
+            pressCell("3/2026");
+            pressCell("5/2026");
+            await settle();
+
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-03", to: "2026-05" });
+        });
+
+        it("commits the whole range when the start is picked and the end typed", async () => {
+            const { onRangeChange } = renderControlledPicker("GDC.time.month", {
+                from: undefined,
+                to: undefined,
+            });
+            const [startInput, endInput] = getFields();
+            openField(startInput);
+            pressCell("3/2026");
+            typeIntoField(endInput, "5/2026");
+            fireEvent.keyDown(endInput, { key: "Tab", code: "Tab" });
+            act(() => endInput.blur());
+            await settle();
+
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-03", to: "2026-05" });
+        });
+
+        it("keeps focus in the field when the calendar is pressed", () => {
+            renderControlledPicker("GDC.time.year", { from: undefined, to: undefined });
+            const [startInput] = getFields();
+            openField(startInput);
+
+            expect(fireEvent.mouseDown(document.querySelector('[title="2026"] .rc-picker-cell-inner')!)).toBe(
+                false,
+            );
+            expect(fireEvent.mouseDown(document.querySelector(".rc-picker-header-prev-btn")!)).toBe(false);
+            expect(fireEvent.mouseDown(startInput)).toBe(true);
+            expect(fireEvent.mouseDown(document.querySelector(".gd-period-range-picker__hint")!)).toBe(true);
+        });
+
+        it.each([true, false])(
+            "commits the start field typed and confirmed with Enter, keeping focus there (calendar open: %s)",
+            async (calendarOpen) => {
+                const { onRangeChange, submitForm } = renderControlledPicker("GDC.time.month", {
+                    from: undefined,
+                    to: undefined,
+                });
+                const [startInput, endInput] = getFields();
+                act(() => startInput.focus());
+                if (calendarOpen) {
+                    fireEvent.click(startInput);
+                }
+                typeIntoField(startInput, "5/2026");
+                fireEvent.keyDown(startInput, { key: "Enter", code: "Enter" });
+                await settle();
+
+                expect(document.activeElement).toBe(startInput);
+                expect(isCalendarVisuallyOpen()).toBe(calendarOpen);
+                expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-05", to: undefined });
+                expect(submitForm).not.toHaveBeenCalled();
+
+                act(() => endInput.focus());
+                act(() => endInput.blur());
+                await settle();
+                expect(startInput.value).toBe("5/2026");
+                expect(onRangeChange).toHaveBeenLastCalledWith({ from: "2026-05", to: undefined });
+            },
+        );
+
+        it("commits the end field typed and confirmed with Enter while the start is empty", async () => {
+            const { onRangeChange, submitForm } = renderControlledPicker("GDC.time.month", {
+                from: undefined,
+                to: undefined,
+            });
+            const [, endInput] = getFields();
+            openField(endInput);
+            typeIntoField(endInput, "5/2026");
+            fireEvent.keyDown(endInput, { key: "Enter", code: "Enter" });
+            await settle();
+
+            expect(document.activeElement).toBe(endInput);
+            expect(onRangeChange).toHaveBeenLastCalledWith({ from: undefined, to: "2026-05" });
+            expect(submitForm).not.toHaveBeenCalled();
+        });
+
+        it("commits nothing when Enter confirms unparsable text", async () => {
+            const { onRangeChange } = renderControlledPicker("GDC.time.month", {
+                from: undefined,
+                to: undefined,
+            });
+            const [startInput] = getFields();
+            openField(startInput);
+            typeIntoField(startInput, "garbage");
+            fireEvent.keyDown(startInput, { key: "Enter", code: "Enter" });
+            await settle();
+
+            expect(document.activeElement).toBe(startInput);
+            expect(startInput).toHaveAttribute("aria-invalid", "true");
+            expect(onRangeChange).not.toHaveBeenCalled();
         });
     });
 });

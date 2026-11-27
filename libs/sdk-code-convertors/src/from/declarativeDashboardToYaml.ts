@@ -4,6 +4,7 @@ import { Document, Pair, YAMLMap, YAMLSeq } from "yaml";
 
 import {
     type AfmObjectIdentifier,
+    type DashboardParameterizedDateFilter,
     type DeclarativeAnalyticalDashboard,
     type DeclarativeAnalyticalDashboardExtension,
     type DeclarativeFilterContext,
@@ -61,6 +62,11 @@ import { serializeUrlTarget } from "../utils/customUrl.js";
 import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "../utils/errors.js";
 import { matchConditionToYaml } from "../utils/filterUtils.js";
 import { parseGranularity } from "../utils/granularityUtils.js";
+import {
+    type StoredFilterContextItem,
+    isDashboardPeriodDateFilter,
+    periodDateFilterToYaml,
+} from "../utils/periodDateFilter.js";
 import { fromDeclarativePermissions } from "../utils/permissionUtils.js";
 import { collectFieldLevelFilters } from "../utils/sharedUtils.js";
 import { DASHBOARD_COMMENT } from "../utils/texts.js";
@@ -1087,7 +1093,10 @@ function sourceMeasureFilterRefsToYaml(
 }
 
 /** @internal */
-export type FilterContextItem = { yaml: YAMLMap; filter: IFilterContextDefinition["filters"][number] };
+export type FilterContextItem = {
+    yaml: YAMLMap;
+    filter: IFilterContextDefinition["filters"][number] | DashboardParameterizedDateFilter;
+};
 type EmptyValueHandling = NonNullable<IDashboardDateFilter["dateFilter"]["emptyValueHandling"]>;
 
 function getDateFilterEmptyValueHandling(filter: IDashboardDateFilter): EmptyValueHandling | undefined {
@@ -1108,7 +1117,7 @@ export function declarativeFilterContextToYaml(
     const filtersMap: { [key: string]: FilterContextItem } = {};
     const content = filterContext ? (filterContext.content as IFilterContextDefinition) : undefined;
 
-    const declarativeFilters = content?.filters ?? [];
+    const declarativeFilters: StoredFilterContextItem[] = content?.filters ?? [];
 
     declarativeFilters.forEach((filter) => {
         // Date filters bound to a data set are explicit controls, so only the common one is omitted.
@@ -1121,6 +1130,11 @@ export function declarativeFilterContextToYaml(
             "date",
             updateErrorContext(errorContext, { path: ["date"] }),
         );
+        if (isDashboardPeriodDateFilter(filter)) {
+            const def = declarativePeriodDateFilterToYaml(filter, errorContext);
+            filters.push(new Pair(key, def));
+            filtersMap[key] = { yaml: def, filter };
+        }
         if (isDashboardDateFilter(filter)) {
             const def = declarativeDateFilterToYaml(filter, errorContext);
             filters.push(new Pair(key, def));
@@ -1164,7 +1178,11 @@ export function declarativeFilterContextToYaml(
     });
 
     // create default date if config is specified but no common date
-    const commonFilter = declarativeFilters.find(isDashboardCommonDateFilter);
+    const commonFilter = declarativeFilters.find(
+        (filter) =>
+            isDashboardCommonDateFilter(filter) ||
+            (isDashboardPeriodDateFilter(filter) && !filter.dashboardParameterizedDateFilter.dataSet),
+    );
     if (!commonFilter && dateFilterConfig) {
         const filter: IDashboardDateFilter = {
             dateFilter: {
@@ -1297,6 +1315,24 @@ function declarativeDateFilterToYaml(filter: IDashboardDateFilter, errorContext?
     }
 
     const emptyValueHandling = getDateFilterEmptyValueHandling(filter);
+    if (emptyValueHandling) {
+        dateFilter.add(new Pair("empty_values", emptyValueHandling));
+    }
+
+    return dateFilter;
+}
+
+function declarativePeriodDateFilterToYaml(
+    filter: DashboardParameterizedDateFilter,
+    errorContext?: IErrorContext,
+): YAMLMap {
+    const { emptyValueHandling } = filter.dashboardParameterizedDateFilter;
+    const dateFilter = periodDateFilterToYaml(
+        filter.dashboardParameterizedDateFilter,
+        "dashboard",
+        updateErrorContext(errorContext, { path: ["dashboardParameterizedDateFilter"] }),
+    );
+
     if (emptyValueHandling) {
         dateFilter.add(new Pair("empty_values", emptyValueHandling));
     }

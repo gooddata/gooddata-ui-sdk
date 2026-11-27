@@ -18,6 +18,7 @@ import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-k
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { AvoidResizeFlickering } from "./components/AvoidResizeFlickering.js";
+import { DrillableCellHintProvider } from "./components/Cell/DrillableCellHint.js";
 import { ErrorComponent } from "./components/ErrorComponent.js";
 import { LoadingComponent } from "./components/LoadingComponent.js";
 import { OVERLAY_CONTROLLER_Z_INDEX } from "./constants/internal.js";
@@ -217,7 +218,9 @@ function RenderPivotTableNextAgGrid() {
                         onBlur={handleBlur}
                         {...getPivotContainerTestIdProps(isReadyForInitialPaint)}
                     >
-                        <AgGridReact key={gridKey} {...agGridReactProps} />
+                        <DrillableCellHintProvider>
+                            <AgGridReact key={gridKey} {...agGridReactProps} />
+                        </DrillableCellHintProvider>
                     </div>
                 );
             }}

@@ -1042,6 +1042,60 @@ export const isDashboardDateFilterModeChanged = eventGuard<IDashboardDateFilterM
     "GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED",
 );
 
+/**
+ * Payload of the {@link IDashboardDateFilterOfAnyTypeModeChanged} event.
+ *
+ * @alpha
+ */
+export interface IDashboardDateFilterOfAnyTypeModeChangedPayload {
+    /**
+     * The updated definition of the dashboard date filter.
+     */
+    readonly filter: DashboardDateFilterOfAnyType;
+    readonly filterConfig: IDashboardDateFilterConfig;
+}
+
+/**
+ * This event is emitted when the mode of a date filter with a dimension changes, for a date filter of any type.
+ *
+ * @remarks
+ * The `GDC.DASH/EVT.DATE_FILTER_CONFIG.MODE_CHANGED` event is emitted too, unless the filter is an absolute
+ * date filter with granularity.
+ *
+ * @alpha
+ */
+export interface IDashboardDateFilterOfAnyTypeModeChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.DATE_FILTER_OF_ANY_TYPE_CONFIG.MODE_CHANGED";
+    readonly payload: IDashboardDateFilterOfAnyTypeModeChangedPayload;
+}
+
+export function dateFilterOfAnyTypeModeChanged(
+    ctx: DashboardContext,
+    filter: DashboardDateFilterOfAnyType,
+    filterConfig: IDashboardDateFilterConfig,
+    correlationId?: string,
+): IDashboardDateFilterOfAnyTypeModeChanged {
+    return {
+        type: "GDC.DASH/EVT.DATE_FILTER_OF_ANY_TYPE_CONFIG.MODE_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+            filterConfig,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardDateFilterOfAnyTypeModeChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDateFilterOfAnyTypeModeChanged = eventGuard<IDashboardDateFilterOfAnyTypeModeChanged>(
+    "GDC.DASH/EVT.DATE_FILTER_OF_ANY_TYPE_CONFIG.MODE_CHANGED",
+);
+
 //
 //
 //
@@ -1152,6 +1206,58 @@ export const isDashboardDateFilterRemoved = eventGuard<IDashboardDateFilterRemov
     "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED",
 );
 
+/**
+ * Payload of the {@link IDashboardDateFilterOfAnyTypeRemoved} event.
+ *
+ * @alpha
+ */
+export interface IDashboardDateFilterOfAnyTypeRemovedPayload {
+    /**
+     * Definition of the removed date filter.
+     */
+    readonly removed: DashboardDateFilterOfAnyType;
+}
+
+/**
+ * This event is emitted after a dashboard date filter with a dimension of any type is successfully removed
+ * from the dashboard's filters.
+ *
+ * @remarks
+ * The `GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.REMOVED` event is emitted too, unless the filter is an absolute
+ * date filter with granularity.
+ *
+ * @alpha
+ */
+export interface IDashboardDateFilterOfAnyTypeRemoved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.REMOVED";
+    readonly payload: IDashboardDateFilterOfAnyTypeRemovedPayload;
+}
+
+export function dateFilterOfAnyTypeRemoved(
+    ctx: DashboardContext,
+    removed: DashboardDateFilterOfAnyType,
+    correlationId?: string,
+): IDashboardDateFilterOfAnyTypeRemoved {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.REMOVED",
+        ctx,
+        correlationId,
+        payload: {
+            removed,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardDateFilterOfAnyTypeRemoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDateFilterOfAnyTypeRemoved = eventGuard<IDashboardDateFilterOfAnyTypeRemoved>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.REMOVED",
+);
+
 //
 //
 //
@@ -1215,6 +1321,72 @@ export function dateFilterMoved(
  */
 export const isDashboardDateFilterMoved = eventGuard<IDashboardDateFilterMoved>(
     "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED",
+);
+
+/**
+ * Payload of the {@link IDashboardDateFilterOfAnyTypeMoved} event.
+ *
+ * @alpha
+ */
+export interface IDashboardDateFilterOfAnyTypeMovedPayload {
+    /**
+     * Definition of the dashboard date filter that was moved.
+     */
+    readonly moved: DashboardDateFilterOfAnyType;
+
+    /**
+     * The original position of the filter.
+     */
+    readonly fromIndex: number;
+
+    /**
+     * New absolute position of the filter.
+     */
+    readonly toIndex: number;
+}
+
+/**
+ * This event is emitted after a dashboard date filter with a dimension of any type is moved from one position
+ * in the filter bar to a new position.
+ *
+ * @remarks
+ * The `GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED` event is emitted too, unless the filter is an absolute
+ * date filter with granularity.
+ *
+ * @alpha
+ */
+export interface IDashboardDateFilterOfAnyTypeMoved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.MOVED";
+    readonly payload: IDashboardDateFilterOfAnyTypeMovedPayload;
+}
+
+export function dateFilterOfAnyTypeMoved(
+    ctx: DashboardContext,
+    moved: DashboardDateFilterOfAnyType,
+    fromIndex: number,
+    toIndex: number,
+    correlationId?: string,
+): IDashboardDateFilterOfAnyTypeMoved {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.MOVED",
+        ctx,
+        correlationId,
+        payload: {
+            moved,
+            fromIndex,
+            toIndex,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link IDashboardDateFilterOfAnyTypeMoved}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardDateFilterOfAnyTypeMoved = eventGuard<IDashboardDateFilterOfAnyTypeMoved>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER_OF_ANY_TYPE.MOVED",
 );
 
 /**

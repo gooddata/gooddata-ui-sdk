@@ -1,0 +1,307 @@
+// (C) 2026 GoodData Corporation
+
+import { type ComponentType, type ReactElement, type ReactNode, useMemo } from "react";
+
+import { render, screen } from "@testing-library/react";
+import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+
+import { type INotificationChannelIdentifier } from "@gooddata/sdk-model";
+
+// ---------------------------------------------------------------------------
+// Mocks — unlike ScheduledEmailDialogStateProvider.test.tsx, the ScheduledEmailDialogContext
+// module is NOT mocked: the subject is a decorator re-providing that context, so the real
+// provider/hook pair must run. The store-backed hooks are mocked because no dashboard store is
+// wired here; `useScheduledEmailFormState` and the state provider run for real — the
+// seed-follows-decoration behaviour under test lives there.
+// ---------------------------------------------------------------------------
+
+const {
+    mockUseAutomationsContext,
+    mockUseAutomationFiltersSelect,
+    mockUseValidateExistingAutomationFilters,
+    mockUseAutomationExportParameters,
+} = vi.hoisted(() => ({
+    mockUseAutomationsContext: vi.fn(),
+    mockUseAutomationFiltersSelect: vi.fn(),
+    mockUseValidateExistingAutomationFilters: vi.fn<typeof useValidateExistingAutomationFilters>(),
+    mockUseAutomationExportParameters: vi.fn(),
+}));
+
+vi.mock("../../contexts/AutomationsContext.js", () => ({
+    useAutomationsContext: mockUseAutomationsContext,
+}));
+
+vi.mock("../../shared/automationFilters/useAutomationFiltersSelect.js", () => ({
+    useAutomationFiltersSelect: mockUseAutomationFiltersSelect,
+}));
+
+vi.mock("../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js", () => ({
+    useValidateExistingAutomationFilters: mockUseValidateExistingAutomationFilters,
+}));
+
+vi.mock("../../shared/automationFilters/useAutomationExportParameters.js", () => ({
+    useAutomationExportParameters: mockUseAutomationExportParameters,
+}));
+
+vi.mock("../../../dashboardContexts/DashboardComponentsContext.js", () => ({
+    useDashboardComponentsContext: () => ({
+        ScheduledEmailDialogComponent: GuardedStubScheduledEmailDialogComponent,
+        ScheduledEmailDialogContextDecoratorComponent: resolvedDecorator,
+    }),
+}));
+
+// ---------------------------------------------------------------------------
+// Imports placed AFTER vi.mock() calls to pick up mocked versions
+// ---------------------------------------------------------------------------
+
+import { DefaultDialogContextDecorator } from "../../../dashboardContexts/DefaultDialogContextDecorator.js";
+import { IntlWrapper } from "../../../localization/IntlWrapper.js";
+import {
+    type IScheduledEmailDialogContextValue,
+    ScheduledEmailDialogContextProvider,
+    useScheduledEmailDialogContext,
+} from "../../contexts/ScheduledEmailDialogContext.js";
+import { type useValidateExistingAutomationFilters } from "../../shared/automationFilters/hooks/useValidateExistingAutomationFilters.js";
+import { ScheduledEmailDialog } from "../ScheduledEmailDialog.js";
+import {
+    AUTOMATIONS_CONTEXT,
+    SCHEDULED_EMAIL_DIALOG_CONTEXT,
+    SENTINEL_CHANNEL,
+} from "../tests/scheduledEmail.test.helpers.js";
+import { VALID_FILTERS_RESULT } from "../tests/scheduledEmailBlocks.test.helpers.js";
+
+import { useScheduledExportDraft } from "./ScheduledExportDraftContext.js";
+
+// ---------------------------------------------------------------------------
+// Fixtures
+// ---------------------------------------------------------------------------
+
+const DECORATED_CHANNEL: INotificationChannelIdentifier = {
+    ...SENTINEL_CHANNEL,
+    id: "decorated-channel",
+};
+
+// The base context deliberately has no channels: any channel the state model seeds from can
+// only have come through the decorator.
+const BASE_CONTEXT: IScheduledEmailDialogContextValue = {
+    ...SCHEDULED_EMAIL_DIALOG_CONTEXT,
+    notificationChannels: [],
+};
+
+/**
+ * Stands in for a customer decorator: re-provides the read context with `notificationChannels`
+ * decorated, everything else — including `isLoading` — untouched.
+ */
+function DecoratingDecorator({ children }: { children?: ReactNode }) {
+    const ctx = useScheduledEmailDialogContext();
+    const decorated = useMemo(() => ({ ...ctx, notificationChannels: [DECORATED_CHANNEL] }), [ctx]);
+    return (
+        <ScheduledEmailDialogContextProvider value={decorated}>
+            {children}
+        </ScheduledEmailDialogContextProvider>
+    );
+}
+
+/**
+ * Stands in for the resolved dialog. Honours the accessors' documented contract (isLoading
+ * check first), then reads one direct context member and one state-model-seeded member — the
+ * pair that distinguishes this slot's placement from a decorator mounted below the state
+ * provider, where only the direct read follows the decoration.
+ */
+function GuardedStubScheduledEmailDialogComponent() {
+    const ctx = useScheduledEmailDialogContext();
+
+    if (ctx.isLoading) {
+        return <div data-testid="gate">LOADING</div>;
+    }
+
+    return (
+        <>
+            <div data-testid="direct-channel">{ctx.notificationChannels[0]?.id ?? "NONE"}</div>
+            <SeededChannelProbe />
+        </>
+    );
+}
+
+function SeededChannelProbe() {
+    const { editedAutomation } = useScheduledExportDraft();
+    return <div data-testid="draft-channel">{editedAutomation.notificationChannel ?? "NONE"}</div>;
+}
+
+/**
+ * Stands in for a buggy decorator: forces `isLoading` false while the connector still reports
+ * loading — the contract violation that corrupts the draft seed.
+ */
+function ForcedFalseDecorator({ children }: { children?: ReactNode }) {
+    const ctx = useScheduledEmailDialogContext();
+    const decorated = useMemo(() => ({ ...ctx, isLoading: false }), [ctx]);
+    return (
+        <ScheduledEmailDialogContextProvider value={decorated}>
+            {children}
+        </ScheduledEmailDialogContextProvider>
+    );
+}
+
+/**
+ * Stands in for a buggy decorator that builds a fresh object instead of spreading the read
+ * value, losing the `insight` key. `insight` is the safe key to drop: everything downstream
+ * treats it as optional (a dashboard export has none), so the probe's warning is observable
+ * without a crash. The cast is the point: it reproduces a plain-JS consumer (or a stale spread)
+ * shipping a structurally incomplete value past the compiler.
+ */
+function KeyDroppingDecorator({ children }: { children?: ReactNode }) {
+    const ctx = useScheduledEmailDialogContext();
+    const decorated = useMemo(() => {
+        const { insight: _dropped, ...rest } = ctx;
+        return rest as IScheduledEmailDialogContextValue;
+    }, [ctx]);
+    return (
+        <ScheduledEmailDialogContextProvider value={decorated}>
+            {children}
+        </ScheduledEmailDialogContextProvider>
+    );
+}
+
+let resolvedDecorator: ComponentType<{ children?: ReactNode }>;
+
+function renderSeam(value: IScheduledEmailDialogContextValue) {
+    return render(
+        <IntlWrapper>
+            <ScheduledEmailDialogContextProvider value={value}>
+                <ScheduledEmailDialog onCancel={vi.fn()} />
+            </ScheduledEmailDialogContextProvider>
+        </IntlWrapper>,
+    );
+}
+
+function rerenderSeam(rerender: (ui: ReactElement) => void, value: IScheduledEmailDialogContextValue) {
+    rerender(
+        <IntlWrapper>
+            <ScheduledEmailDialogContextProvider value={value}>
+                <ScheduledEmailDialog onCancel={vi.fn()} />
+            </ScheduledEmailDialogContextProvider>
+        </IntlWrapper>,
+    );
+}
+
+beforeEach(() => {
+    vi.clearAllMocks();
+    resolvedDecorator = DecoratingDecorator;
+
+    mockUseAutomationsContext.mockReturnValue(AUTOMATIONS_CONTEXT);
+    mockUseAutomationFiltersSelect.mockReturnValue({
+        editedAutomationFilters: [],
+        setEditedAutomationFilters: vi.fn(),
+        storeFilters: true,
+        setStoreFilters: vi.fn(),
+        availableFilters: [],
+        availableFiltersAsVisibleFilters: undefined,
+        filtersForNewAutomation: [],
+        filtersByTab: undefined,
+        editedAutomationFiltersByTab: undefined,
+        setEditedAutomationFiltersByTab: vi.fn(),
+        availableFiltersAsVisibleFiltersByTab: undefined,
+    });
+    mockUseValidateExistingAutomationFilters.mockReturnValue(VALID_FILTERS_RESULT);
+    mockUseAutomationExportParameters.mockReturnValue({
+        parametersEnabled: false,
+        visibleParametersByTab: {},
+        availableParametersByTab: {},
+        flatTabId: undefined,
+        onParameterAdd: vi.fn(),
+        onParameterChange: vi.fn(),
+        onParameterDelete: vi.fn(),
+        onParameterAddByTab: vi.fn(),
+        onParameterChangeByTab: vi.fn(),
+        onParameterDeleteByTab: vi.fn(),
+        applyLatest: vi.fn(),
+        onStoreParametersChange: vi.fn(),
+    });
+});
+
+// ---------------------------------------------------------------------------
+// Tests
+// ---------------------------------------------------------------------------
+
+describe("ScheduledEmailDialog context-decorator slot", () => {
+    it("seeds the state model from the decorated context, not just direct reads", () => {
+        renderSeam(BASE_CONTEXT);
+
+        expect(screen.getByTestId("direct-channel")).toHaveTextContent(DECORATED_CHANNEL.id);
+        expect(screen.getByTestId("draft-channel")).toHaveTextContent(DECORATED_CHANNEL.id);
+    });
+
+    it("keeps the loading gate: a decorator that passes isLoading through seeds after the flip", () => {
+        const { rerender } = renderSeam({ ...BASE_CONTEXT, isLoading: true });
+
+        expect(screen.getByTestId("gate")).toHaveTextContent("LOADING");
+
+        rerenderSeam(rerender, { ...BASE_CONTEXT, isLoading: false });
+
+        expect(screen.getByTestId("draft-channel")).toHaveTextContent(DECORATED_CHANNEL.id);
+    });
+
+    it("is inert with the passthrough default: the state model seeds from the connector context", () => {
+        resolvedDecorator = DefaultDialogContextDecorator;
+
+        renderSeam({ ...SCHEDULED_EMAIL_DIALOG_CONTEXT, notificationChannels: [SENTINEL_CHANNEL] });
+
+        expect(screen.getByTestId("direct-channel")).toHaveTextContent(SENTINEL_CHANNEL.id);
+        expect(screen.getByTestId("draft-channel")).toHaveTextContent(SENTINEL_CHANNEL.id);
+    });
+});
+
+describe("ScheduledEmailDialog decorator contract check", () => {
+    let warnSpy: MockInstance<typeof console.warn>;
+
+    beforeEach(() => {
+        warnSpy = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    });
+
+    afterEach(() => {
+        warnSpy.mockRestore();
+    });
+
+    it("warns once, naming the seam, when the decorator forces isLoading false during loading", () => {
+        resolvedDecorator = ForcedFalseDecorator;
+
+        const { rerender } = renderSeam({ ...BASE_CONTEXT, isLoading: true });
+
+        expect(warnSpy).toHaveBeenCalledTimes(1);
+        expect(warnSpy.mock.calls[0][0]).toContain("ScheduledEmailDialogContextDecoratorComponent");
+        expect(warnSpy.mock.calls[0][0]).toContain("isLoading");
+
+        rerenderSeam(rerender, { ...BASE_CONTEXT, isLoading: true });
+        expect(warnSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("warns naming the dropped key when the decorator loses keys the connector provided", () => {
+        resolvedDecorator = KeyDroppingDecorator;
+
+        // Rendered while loading: the check sits above the state provider, so it warns even
+        // though the gated model never mounts — and nothing below dereferences the dropped key.
+        renderSeam({ ...BASE_CONTEXT, isLoading: true });
+
+        expect(warnSpy).toHaveBeenCalledTimes(1);
+        expect(warnSpy.mock.calls[0][0]).toContain("ScheduledEmailDialogContextDecoratorComponent");
+        expect(warnSpy.mock.calls[0][0]).toContain("insight");
+    });
+
+    it("is silent for the passthrough default", () => {
+        resolvedDecorator = DefaultDialogContextDecorator;
+
+        const { rerender } = renderSeam({ ...BASE_CONTEXT, isLoading: true });
+        rerenderSeam(rerender, BASE_CONTEXT);
+
+        expect(warnSpy).not.toHaveBeenCalled();
+    });
+
+    it("is silent for a compliant decorator that overrides members and passes isLoading through", () => {
+        resolvedDecorator = DecoratingDecorator;
+
+        const { rerender } = renderSeam({ ...BASE_CONTEXT, isLoading: true });
+        rerenderSeam(rerender, BASE_CONTEXT);
+
+        expect(warnSpy).not.toHaveBeenCalled();
+    });
+});

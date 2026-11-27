@@ -430,9 +430,31 @@ export const useAutomationFiltersByTab = ({
         isFilterRestricted,
     } = useAutomationsContext();
 
-    const [filterAnnouncement] = useState<string>("");
-    const addFilterButtonRef = useRef<HTMLButtonElement | HTMLDivElement>(null);
+    const intl = useIntl();
+    const [filterAnnouncement, setFilterAnnouncement] = useState<string>("");
+    // Every tab section has its own "Add filter" button, so keep their elements by tab id.
+    const addFilterButtonRefs = useRef<Record<string, HTMLButtonElement | HTMLDivElement | null>>({});
     const filterGroupRef = useRef<HTMLDivElement>(null);
+
+    const focusTabAddFilterButton = useCallback((tabId: string) => {
+        // Wait for the re-render that adds the chip: the button may be replaced by it,
+        // and the closed dropdown would otherwise leave focus on <body>.
+        setTimeout(() => {
+            requestAnimationFrame(() => {
+                addFilterButtonRefs.current[tabId]?.focus();
+            });
+        });
+    }, []);
+
+    const announceFiltersChanged = useCallback((message: string) => {
+        // Clear the live region first, so the same message (e.g. adding City to two tabs)
+        // still changes its content and is announced again.
+        setFilterAnnouncement("");
+        setTimeout(() => {
+            // Defer announcement to next render so screen reader doesn't skip it
+            setFilterAnnouncement(message);
+        });
+    }, []);
 
     const processedFiltersByTab = useMemo(() => {
         if (!filtersByTab || filtersByTab.length === 0) {
@@ -579,9 +601,27 @@ export const useAutomationFiltersByTab = ({
                     ...editedFiltersByTab,
                     [tabId]: [...currentTabFilters, availableFilter],
                 });
+
+                const filterTitle = getFilterTitle(availableFilter, allAttributes, allDateDatasets, intl);
+                announceFiltersChanged(
+                    intl.formatMessage(
+                        { id: "automationFilters.announcement.filterAdded" },
+                        { title: filterTitle },
+                    ),
+                );
+                focusTabAddFilterButton(tabId);
             }
         },
-        [editedFiltersByTab, onFiltersByTabChange, filtersByTab],
+        [
+            editedFiltersByTab,
+            onFiltersByTabChange,
+            filtersByTab,
+            allAttributes,
+            allDateDatasets,
+            intl,
+            announceFiltersChanged,
+            focusTabAddFilterButton,
+        ],
     );
 
     const handleTabRestrictedFiltersRemove = useCallback(
@@ -615,13 +655,17 @@ export const useAutomationFiltersByTab = ({
         });
     }, []);
 
-    const setAddFilterButtonRefs = useCallback(
+    const setTabAddFilterButtonRefs = useCallback(
         (
+            tabId: string,
             element: HTMLButtonElement | HTMLDivElement | null,
             dropdownButtonRef?: MutableRefObject<HTMLElement>,
         ) => {
-            addFilterButtonRef.current = element;
-            if (dropdownButtonRef && element) {
+            if (!element) {
+                return;
+            }
+            addFilterButtonRefs.current[tabId] = element;
+            if (dropdownButtonRef) {
                 dropdownButtonRef.current = element;
             }
         },
@@ -656,6 +700,7 @@ export const useAutomationFiltersByTab = ({
         handleTabRestrictedFiltersRemove,
         handleStoreFiltersChange,
         makeFilterGroupUnfocusable,
-        setAddFilterButtonRefs,
+        setTabAddFilterButtonRefs,
+        focusTabAddFilterButton,
     };
 };

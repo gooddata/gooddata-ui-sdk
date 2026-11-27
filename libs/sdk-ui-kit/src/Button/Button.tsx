@@ -64,6 +64,7 @@ export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
         ariaExpanded,
         ariaPressed,
         ariaCurrent,
+        ariaDisabled,
     } = accessibilityConfig ?? {};
 
     const ariaDropdownProps = {
@@ -132,7 +133,7 @@ export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
             className={classNames}
             type={type}
             onClick={handleClick}
-            aria-disabled={disabled}
+            aria-disabled={ariaDisabled ?? disabled}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledBy}
             aria-describedby={ariaDescribedBy}

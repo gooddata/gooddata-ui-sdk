@@ -90,10 +90,15 @@ export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonPr
     const [isOverlayAligned, setIsOverlayAligned] = useState(false);
     const onOverlayAlign = useCallback(() => setIsOverlayAligned(true), []);
 
+    // Set when the menu is opened from the keyboard: focus moves to the first item as soon as
+    // the menu is aligned and visible (focus cannot move into the hidden Overlay before that).
+    const [shouldFocusFirstItem, setShouldFocusFirstItem] = useState(false);
+
     const onMenuButtonClick = useCallback(() => {
         setIsOpen((prevIsOpen) => !prevIsOpen);
         setSelectedMenuItem(null);
         setIsOverlayAligned(false);
+        setShouldFocusFirstItem(false);
     }, []);
 
     // Returns the menu items in the order they are rendered. The map order is not reliable,
@@ -108,6 +113,7 @@ export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonPr
         setSelectedMenuItem(null);
         setParentItemId(null);
         setAutofocusSubmenu(false);
+        setShouldFocusFirstItem(false);
     }, []);
 
     const openSubmenu = useCallback((menuItem: IMenuButtonItemMenu) => {
@@ -208,24 +214,50 @@ export function DefaultMenuButton({ menuItems, isEnabled = true }: IMenuButtonPr
         }
     }, [selectedMenuItem, parentItemId, menuItemRefs, autofocusSubmenu, getMenuItemElements]);
 
-    // Down Arrow on the trigger opens the menu; the autofocus then moves focus to its first item.
-    // When the menu is already open, focus moves to its first item directly. The event is consumed
-    // here, so focus moves by exactly one step.
+    // Header items are registered too, but they are not focusable, so skip them.
+    const focusFirstMenuItem = useCallback(() => {
+        const firstItem = getMenuItemElements().find(
+            (element) => element.getAttribute("role") === "menuitem",
+        );
+        firstItem?.focus();
+        return !!firstItem && document.activeElement === firstItem;
+    }, [getMenuItemElements]);
+
+    useEffect(() => {
+        if (shouldFocusFirstItem && isOpen && isOverlayAligned && focusFirstMenuItem()) {
+            setShouldFocusFirstItem(false);
+        }
+    }, [shouldFocusFirstItem, isOpen, isOverlayAligned, focusFirstMenuItem]);
+
+    // Menu button pattern: Enter, Space and Down Arrow on the trigger open the menu and move focus
+    // to its first item. When the menu is already open, focus moves to its first item directly.
+    // The key is consumed here (no native click, no further handling), so a single keypress moves
+    // focus by exactly one step.
     const onTriggerKeyDown = useCallback(
         (event: KeyboardEvent<HTMLButtonElement>) => {
-            if (event.code !== "ArrowDown") {
+            const isArrowDown = event.code === "ArrowDown" || event.key === "ArrowDown";
+            if (!isArrowDown && !isActionKey(event)) {
                 return;
             }
             event.preventDefault();
             event.stopPropagation();
 
+            if (event.repeat) {
+                return;
+            }
+
             if (isOpen) {
-                getMenuItemElements()[0]?.focus();
+                if (isArrowDown) {
+                    focusFirstMenuItem();
+                } else {
+                    onClose();
+                }
                 return;
             }
             onMenuButtonClick();
+            setShouldFocusFirstItem(true);
         },
-        [isOpen, getMenuItemElements, onMenuButtonClick],
+        [isOpen, focusFirstMenuItem, onMenuButtonClick, onClose],
     );
 
     useEffect(() => {

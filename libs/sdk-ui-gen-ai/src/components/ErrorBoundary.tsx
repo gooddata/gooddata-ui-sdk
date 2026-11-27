@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { Component, type ErrorInfo, type PropsWithChildren, type ReactNode, useCallback } from "react";
+import { Component, type ErrorInfo, type ReactNode, useCallback } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,6 +17,7 @@ import { GlobalError } from "./GlobalError.js";
 
 type ErrorBoundaryProps = {
     children: ReactNode;
+    autofocus?: boolean;
     globalError: Record<string, unknown> | null;
     isClearing: boolean;
     setGlobalError: (payload: { error: Error }) => void;
@@ -55,6 +56,7 @@ class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundary
                 const traceId = (error.responseBody as any)?.traceId as string;
                 return (
                     <GlobalError
+                        autofocus={this.props.autofocus}
                         errorDetails={error.message}
                         errorTraceId={error.traceId ?? traceId}
                         clearError={this.clearError.bind(this)}
@@ -65,6 +67,7 @@ class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundary
             if (isAnalyticalBackendError(error) && error.abeType === AnalyticalBackendErrorTypes.UNEXPECTED) {
                 return (
                     <GlobalError
+                        autofocus={this.props.autofocus}
                         errorDetails={error.message}
                         clearError={this.clearError.bind(this)}
                         clearing={this.props.isClearing}
@@ -73,6 +76,7 @@ class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundary
             }
             return (
                 <GlobalError
+                    autofocus={this.props.autofocus}
                     errorDetails={error.message as string}
                     clearError={this.clearError.bind(this)}
                     clearing={this.props.isClearing}
@@ -84,7 +88,7 @@ class ErrorBoundaryComponent extends Component<ErrorBoundaryProps, ErrorBoundary
     }
 }
 
-export function ErrorBoundary({ children }: PropsWithChildren) {
+export function ErrorBoundary({ children, autofocus }: { children: ReactNode; autofocus?: boolean }) {
     const dispatch = useDispatch();
     const globalError = useSelector(globalErrorSelector);
     const isClearing = useSelector(asyncProcessSelector) === "clearing";
@@ -102,6 +106,7 @@ export function ErrorBoundary({ children }: PropsWithChildren) {
 
     return (
         <ErrorBoundaryComponent
+            autofocus={autofocus}
             globalError={globalError}
             isClearing={isClearing}
             setGlobalError={setGlobalError}

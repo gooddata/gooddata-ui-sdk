@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { useCallback, useRef } from "react";
+
 import cx from "classnames";
 import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
@@ -15,6 +17,10 @@ export interface IKdaDialogActionButtonsProps {
     status?: "done" | "error" | string;
     titleElementId?: string;
     toggleAriaDescribedBy?: string;
+    /**
+     * Id of the expand / minimize toggle button.
+     */
+    toggleButtonId?: string;
     onClose?: () => void;
     className?: string;
 }
@@ -31,6 +37,7 @@ export function KdaDialogActionButtons({
     status,
     titleElementId,
     toggleAriaDescribedBy,
+    toggleButtonId,
 }: IKdaDialogActionButtonsProps) {
     const intl = useIntl();
     const { state, setState } = useKdaState();
@@ -51,6 +58,7 @@ export function KdaDialogActionButtons({
             size={size}
             titleElementId={titleElementId}
             toggleAriaDescribedBy={toggleAriaDescribedBy}
+            toggleButtonId={toggleButtonId}
             isMinimized={isMinimized}
             expandLabel={expandLabel}
             shrinkLabel={shrinkLabel}
@@ -77,6 +85,34 @@ interface IKdaDialogActionButtonsViewProps extends IKdaDialogActionButtonsProps 
     onToggle: () => void;
 }
 
+/**
+ * When the analysis finishes while the dialog is minimized, the toggle button is replaced
+ * (the expand icon button becomes the Open button). If the replaced button had focus, move
+ * focus to its replacement so keyboard users do not lose their place. Focus elsewhere is left alone.
+ *
+ * Focus is handed over in the same commit, as the replacement mounts. The shared autofocus
+ * (`useUiAutofocusConnectors`) cannot be used here: it focuses in a later animation frame, so focus
+ * would drop to the page body in between and screen readers would re-enter and re-announce the dialog.
+ */
+function useToggleFocusKeeper() {
+    const elementRef = useRef<HTMLButtonElement | null>(null);
+    const hadFocusRef = useRef(false);
+
+    return useCallback((element: HTMLButtonElement | null) => {
+        if (element) {
+            elementRef.current = element;
+            if (hadFocusRef.current) {
+                hadFocusRef.current = false;
+                element.focus();
+            }
+            return;
+        }
+        // React detaches the ref before it removes the button from the DOM, so it still has focus here.
+        hadFocusRef.current = !!elementRef.current && elementRef.current === document.activeElement;
+        elementRef.current = null;
+    }, []);
+}
+
 function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
     const {
         size,
@@ -85,6 +121,7 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
         expandLabel,
         titleElementId,
         toggleAriaDescribedBy,
+        toggleButtonId,
         shrinkLabel,
         closeLabel,
         onToggle,
@@ -94,6 +131,7 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
     const intl = useIntl();
     const text = status && buttonMessages[status] ? intl.formatMessage(buttonMessages[status]) : "";
     const isFinished = status === "done" || status === "error";
+    const toggleRef = useToggleFocusKeeper();
     const toggleDescribedBy = toggleAriaDescribedBy ?? titleElementId;
     const expandedHeaderDescribedBy = isMinimized ? undefined : toggleDescribedBy;
 
@@ -115,6 +153,8 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
                 {isMinimized && isFinished ? (
                     <div className="gd-kda-dialog-action-buttons__button__open">
                         <UiButton
+                            ref={toggleRef}
+                            id={toggleButtonId}
                             label={text}
                             accessibilityConfig={{
                                 ariaDescribedBy: toggleDescribedBy,
@@ -126,6 +166,8 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
                     </div>
                 ) : (
                     <UiIconButton
+                        ref={toggleRef}
+                        id={toggleButtonId}
                         label={isMinimized ? expandLabel : shrinkLabel}
                         icon={isMinimized ? "expand" : "shrink"}
                         accessibilityConfig={{

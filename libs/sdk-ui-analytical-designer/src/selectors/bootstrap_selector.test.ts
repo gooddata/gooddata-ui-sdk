@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { type IBootstrapData } from "../actions/app_context_actions.js";
 import { initialState } from "../reducers/initial_state.js";
@@ -11,10 +11,6 @@ import { type PartialRecursive } from "../typings/type_utils.js";
 
 import { getOrganizationId, isTopBarHidden } from "./bootstrap_selector.js";
 import { getConfig } from "./report_visualization_selector.js";
-
-vi.hoisted(() => {
-    vi.resetModules();
-});
 
 describe("Bootstrap selector test", () => {
     describe("getConfig", () => {

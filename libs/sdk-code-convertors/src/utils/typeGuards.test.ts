@@ -2,16 +2,22 @@
 
 import { describe, expect, it } from "vitest";
 
+import { isPeriodDateFilter } from "./periodDateFilter.js";
 import {
     isAbsoluteDateFilter,
+    isAllTimeDateFilter,
     isArbitraryTextFilter,
     isArithmeticMetricField,
     isAttributeField,
     isAttributeFilter,
     isAttributeSort,
     isCalculatedMetricField,
+    isDashboardAbsoluteDateFilter,
     isDashboardArbitraryTextFilter,
+    isDashboardEmptyDateFilter,
     isDashboardMatchTextFilter,
+    isDashboardNoopDateFilter,
+    isDashboardRelativeDateFilter,
     isDashboardTextFilter,
     isDateFilter,
     isInlineMetricField,
@@ -248,6 +254,66 @@ describe("typeGuards", () => {
             expect(isDashboardTextFilter(match)).toBe(true);
             expect(isDashboardArbitraryTextFilter(match)).toBe(false);
             expect(isDashboardMatchTextFilter(match)).toBe(true);
+        });
+    });
+
+    describe("a date filter set to a period", () => {
+        // A period names its parameter instead of granularity, from and to. Anything the parameter sits
+        // next to, even what the schema rejects, must not turn it into a filter of another kind.
+        const visualisationPeriods = [
+            { type: "date_filter", using: "date", parameter: "last_13_months" },
+            { type: "date_filter", using: "date", parameter: "last_13_months", empty_values: "only" },
+            { type: "date_filter", using: "date", parameter: "last_13_months", from: "2020", to: "2021" },
+            { type: "date_filter", using: "date", parameter: "p", granularity: "YEAR", from: -1, to: 0 },
+        ];
+        const dashboardPeriods = [
+            { type: "date_filter", parameter: "last_13_months" },
+            { type: "date_filter", parameter: "last_13_months", date: "order_date" },
+            { type: "date_filter", parameter: "last_13_months", from: "2020-01-01", to: "2020-12-31" },
+            { type: "date_filter", parameter: "last_13_months", granularity: "YEAR", from: -1, to: 0 },
+        ];
+
+        it.each(visualisationPeriods)(
+            "is a period, not a static, relative or All time filter: %j",
+            (filter) => {
+                expect(isPeriodDateFilter(filter)).toBe(true);
+                expect(isDateFilter(filter)).toBe(true);
+                expect(isAbsoluteDateFilter(filter)).toBe(false);
+                expect(isRelativeDateFilter(filter)).toBe(false);
+                expect(isAllTimeDateFilter(filter)).toBe(false);
+            },
+        );
+
+        it.each(dashboardPeriods)(
+            "is a period, not a static, relative or empty dashboard filter: %j",
+            (filter) => {
+                expect(isPeriodDateFilter(filter)).toBe(true);
+                expect(isDashboardAbsoluteDateFilter(filter)).toBe(false);
+                expect(isDashboardRelativeDateFilter(filter)).toBe(false);
+                expect(isDashboardEmptyDateFilter(filter)).toBe(false);
+                expect(isDashboardNoopDateFilter(filter)).toBe(false);
+            },
+        );
+
+        it("is never read as another date filter for a parameter that is not a period id", () => {
+            const filter = { type: "date_filter", using: "date", parameter: 42 };
+
+            expect(isPeriodDateFilter(filter)).toBe(false);
+            expect(isAllTimeDateFilter(filter)).toBe(false);
+            expect(isRelativeDateFilter(filter)).toBe(false);
+            expect(isDashboardEmptyDateFilter(filter)).toBe(false);
+        });
+
+        it("leaves the date filters without a parameter as they were", () => {
+            expect(isPeriodDateFilter({ type: "date_filter", using: "date" })).toBe(false);
+            expect(isAllTimeDateFilter({ type: "date_filter", using: "date" })).toBe(true);
+            expect(isDashboardNoopDateFilter({ type: "date_filter" })).toBe(true);
+            expect(
+                isDashboardRelativeDateFilter({ type: "date_filter", granularity: "YEAR", from: -1, to: 0 }),
+            ).toBe(true);
+            expect(isPeriodDateFilter({ type: "attribute_filter", using: "label/x", parameter: "p" })).toBe(
+                false,
+            );
         });
     });
 });

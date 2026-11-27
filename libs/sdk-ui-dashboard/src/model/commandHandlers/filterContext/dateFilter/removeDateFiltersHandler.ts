@@ -6,16 +6,23 @@ import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { areObjRefsEqual, isUriRef, serializeObjRef } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
+    isDashboardDateFilter,
+    isUriRef,
+    serializeObjRef,
+} from "@gooddata/sdk-model";
 import { _partition } from "@gooddata/util";
 
 import { type IRemoveDateFilters } from "../../../commands/filters.js";
-import { dateFilterRemoved } from "../../../events/filters.js";
+import { dateFilterOfAnyTypeRemoved, dateFilterRemoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import {
     selectFilterContextAttributeFilters,
-    selectFilterContextDateFiltersWithDimension,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
@@ -27,20 +34,17 @@ export function* removeDateFiltersHandler(
 ): SagaIterator<void> {
     const { dataSets } = cmd.payload;
 
-    const allDateFiltersWithDimension: ReturnType<typeof selectFilterContextDateFiltersWithDimension> =
-        yield select(selectFilterContextDateFiltersWithDimension);
-
-    const allAttributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
-    );
+    const allDateFiltersWithDimension: ReturnType<
+        typeof selectFilterContextDateFiltersWithDimensionOfAnyType
+    > = yield select(selectFilterContextDateFiltersWithDimensionOfAnyType);
 
     const [removedFilters, _survivingFilters] = _partition(allDateFiltersWithDimension, (item) =>
-        dataSets.some((ds) => areObjRefsEqual(ds, item.dateFilter.dataSet)),
+        dataSets.some((ds) => areObjRefsEqual(ds, dashboardFilterObjRef(item))),
     );
 
     const invalidDataSets = difference(
         dataSets.map(serializeObjRef),
-        allDateFiltersWithDimension.map((filter) => serializeObjRef(filter.dateFilter.dataSet!)),
+        allDateFiltersWithDimension.map((filter) => serializeObjRef(dashboardFilterObjRef(filter)!)),
     );
 
     if (invalidDataSets.length) {
@@ -52,11 +56,15 @@ export function* removeDateFiltersHandler(
     }
 
     for (const removedFilter of removedFilters) {
-        const dataSetRef = removedFilter.dateFilter.dataSet;
-        // dateFilter.localIdentifier is the new format stored by useDependentDateFilterConfigurationState;
-        // dataSetRef?.identifier (dataset identifier) is the legacy format. Both must be matched here
+        const dataSetRef = dashboardFilterObjRef(removedFilter)!;
+        // read the dependencies left by the previous removal, its cleanup must not be overwritten
+        const allAttributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
+            selectFilterContextAttributeFilters,
+        );
+        // the local identifier is the new format stored by useDependentDateFilterConfigurationState;
+        // dataSetRef.identifier (dataset identifier) is the legacy format. Both must be matched here
         // so that cleanup works regardless of which format a dependent reference was saved in.
-        const filterLocalIdentifier = removedFilter.dateFilter.localIdentifier;
+        const filterLocalIdentifier = dashboardFilterLocalIdentifier(removedFilter);
 
         invariant(!isUriRef(dataSetRef));
         const affectedDependentFilters = allAttributeFilters.filter((item) => {
@@ -68,7 +76,7 @@ export function* removeDateFiltersHandler(
                     // filterLocalIdentifier is also undefined, incorrectly tagging unrelated filters.
                     ((filterLocalIdentifier !== undefined &&
                         depdendentDateFilter.filterLocalIdentifier === filterLocalIdentifier) ||
-                        depdendentDateFilter.filterLocalIdentifier === dataSetRef?.identifier) &&
+                        depdendentDateFilter.filterLocalIdentifier === dataSetRef.identifier) &&
                     !depdendentDateFilter.isCommonDate
                 );
             });
@@ -87,26 +95,29 @@ export function* removeDateFiltersHandler(
                         (parent) =>
                             (filterLocalIdentifier === undefined ||
                                 parent.filterLocalIdentifier !== filterLocalIdentifier) &&
-                            parent.filterLocalIdentifier !== dataSetRef?.identifier,
+                            parent.filterLocalIdentifier !== dataSetRef.identifier,
                     ),
                 }),
             ),
             // remove filter itself
             tabsActions.removeDateFilter({
-                dataSet: removedFilter.dateFilter.dataSet!,
+                dataSet: dataSetRef,
             }),
 
             // remove reflect dashboard date filter config
-            tabsActions.removeDateFilterConfigs(removedFilter.dateFilter.dataSet!),
+            tabsActions.removeDateFilterConfigs(dataSetRef),
             // house-keeping: ensure the removed date filter disappears from widget ignore lists
             tabsActions.removeIgnoredDateFilter({
-                dateDataSets: [removedFilter.dateFilter.dataSet!],
+                dateDataSets: [dataSetRef],
             }),
         ]);
 
         yield put(batch);
 
-        yield dispatchDashboardEvent(dateFilterRemoved(ctx, removedFilter, cmd.correlationId));
+        if (isDashboardDateFilter(removedFilter)) {
+            yield dispatchDashboardEvent(dateFilterRemoved(ctx, removedFilter, cmd.correlationId));
+        }
+        yield dispatchDashboardEvent(dateFilterOfAnyTypeRemoved(ctx, removedFilter, cmd.correlationId));
     }
 
     yield call(dispatchFilterContextChanged, ctx, cmd);

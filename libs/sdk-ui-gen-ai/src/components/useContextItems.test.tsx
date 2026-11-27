@@ -14,15 +14,6 @@ import { type ContextObjectListState, type IGenAIContextListItem, type SelectedC
 
 import { useAmbientContextItems, useUserContextItems } from "./hooks/useContextItems.js";
 
-// `isolate: false` shares one module graph per worker, so the modules imported above may already
-// have been replaced by a sibling test file's `vi.mock()` earlier in the same worker (the context
-// indicator and chooser suites mock react-redux). Dropping the module registry from `vi.hoisted()`
-// (it runs before this file's own imports, unlike any `beforeEach`) makes those imports resolve
-// through the real implementations again.
-vi.hoisted(() => {
-    vi.resetModules();
-});
-
 const messages = { "gd.gen-ai.context.untitled": "Untitled", "gd.gen-ai.context.this": "This dashboard" };
 
 const ambientDashboardRef = idRef("ambient-dashboard", "analyticalDashboard");

@@ -10,6 +10,8 @@ import { type IPatternObject, type ISeriesDataItem, type ISeriesItem } from "../
 
 const FORECAST_COLOR_PERCENT = 0.8;
 const FORECAST_LINE_COLOR_PERCENT = 0.5;
+// Higher than the Highcharts default series group zIndex (0.1) used by the forecast series.
+const FORECAST_ACTUAL_SERIES_Z_INDEX = 1;
 
 function getForecastColor(color: string | IPatternObject): string | IPatternObject {
     if (typeof color === "string") {
@@ -92,7 +94,9 @@ export function assignForecastAxes(
     ];
     const predictedData = [
         ...data!.slice(0, -1).map((): null => null),
-        last,
+        // The point only connects the forecast line to the actual data. The forecast series has no drill,
+        // so the point must not be drillable, even though it repeats the (possibly drillable) last actual point.
+        { ...last, drilldown: false },
         ...forecastData.map((item) => {
             return {
                 name: last.name,
@@ -106,7 +110,14 @@ export function assignForecastAxes(
     const seriesName = firstSeries.name ?? "";
 
     return [
-        { ...firstSeries, data: seriesData as ISeriesDataItem[] },
+        {
+            ...firstSeries,
+            data: seriesData as ISeriesDataItem[],
+            // The joining points of the forecast series lie exactly on the last actual point. Highcharts resolves
+            // a hover/click tie between overlapping points by series zIndex (then by the higher series index),
+            // so keep the actual series on top: the last actual point stays hoverable and drillable by mouse.
+            zIndex: FORECAST_ACTUAL_SERIES_Z_INDEX,
+        },
         {
             ...firstSeries,
             ...(forecastSeriesNames ? { name: forecastSeriesNames.confidenceInterval(seriesName) } : {}),

@@ -75,7 +75,7 @@
         },
         "parameterDefinition": {
             "title": "Parameter Definition",
-            "description": "A typed parameter definition: textual or numeric.",
+            "description": "A typed parameter definition: textual, numeric or a date range.",
             "allOf": [
                 {
                     "if": {
@@ -102,15 +102,332 @@
                     "then": {
                         "$ref": "#/$defs/numberParameterDefinition"
                     }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "DATE_RANGE"
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/dateRangeParameterDefinition"
+                    }
                 }
             ],
             "properties": {
                 "type": {
                     "type": "string",
-                    "enum": ["STRING", "NUMBER"]
+                    "enum": ["STRING", "NUMBER", "DATE_RANGE"]
                 }
             },
             "required": ["type"]
+        },
+        "dateRangeParameterDefinition": {
+            "title": "Date Range Parameter Definition",
+            "description": "A named period: a range of whole periods of one granularity. A date filter that uses the parameter filters by its current range.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["DATE_RANGE"]
+                },
+                "defaultValue": {
+                    "$ref": "#/$defs/dateRangeParameterValue",
+                    "description": "The range used whenever the parameter is not overridden."
+                }
+            },
+            "required": ["type", "defaultValue"],
+            "$semantic": {
+                "type": "parameter_constraints"
+            }
+        },
+        "dateRangeParameterValue": {
+            "title": "Date Range Parameter Value",
+            "description": "A range of whole periods. At least one of 'from' and 'to' is set; a missing one leaves that end open.",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "granularity": {
+                    "type": "string",
+                    "enum": ["YEAR", "QUARTER", "MONTH", "WEEK", "DAY", "HOUR", "MINUTE", "SECOND"],
+                    "description": "The unit of 'from' and 'to'."
+                },
+                "from": {
+                    "type": ["string", "integer"],
+                    "description": "The first period, inclusive, in the format of the granularity: YYYY, YYYY-Q, YYYY-MM, YYYY-WW (ISO week), YYYY-MM-DD, YYYY-MM-DD HH, YYYY-MM-DD HH:mm or YYYY-MM-DD HH:mm:ss."
+                },
+                "to": {
+                    "type": ["string", "integer"],
+                    "description": "The last period, inclusive, in the same format as 'from'."
+                }
+            },
+            "required": ["granularity"],
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "granularity": {
+                                "const": "YEAR"
+                            }
+                        },
+                        "required": ["granularity"]
+                    },
+                    "then": {
+                        "title": "Year Period",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": ["YEAR"]
+                            },
+                            "from": {
+                                "type": ["string", "integer"],
+                                "pattern": "^[0-9]{4}$",
+                                "minimum": 1000,
+                                "maximum": 9999,
+                                "description": "The first year, inclusive: YYYY, with or without quotes."
+                            },
+                            "to": {
+                                "type": ["string", "integer"],
+                                "pattern": "^[0-9]{4}$",
+                                "minimum": 1000,
+                                "maximum": 9999,
+                                "description": "The last year, inclusive: YYYY, with or without quotes."
+                            }
+                        },
+                        "required": ["granularity"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "granularity": {
+                                "const": "QUARTER"
+                            }
+                        },
+                        "required": ["granularity"]
+                    },
+                    "then": {
+                        "title": "Quarter Period",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": ["QUARTER"]
+                            },
+                            "from": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]$",
+                                "description": "The first quarter, inclusive: YYYY-Q."
+                            },
+                            "to": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]$",
+                                "description": "The last quarter, inclusive: YYYY-Q."
+                            }
+                        },
+                        "required": ["granularity"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "granularity": {
+                                "const": "MONTH"
+                            }
+                        },
+                        "required": ["granularity"]
+                    },
+                    "then": {
+                        "title": "Month Period",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": ["MONTH"]
+                            },
+                            "from": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}$",
+                                "description": "The first month, inclusive: YYYY-MM."
+                            },
+                            "to": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}$",
+                                "description": "The last month, inclusive: YYYY-MM."
+                            }
+                        },
+                        "required": ["granularity"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "granularity": {
+                                "const": "WEEK"
+                            }
+                        },
+                        "required": ["granularity"]
+                    },
+                    "then": {
+                        "title": "Week Period",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": ["WEEK"]
+                            },
+                            "from": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}$",
+                                "description": "The first week, inclusive: YYYY-WW, an ISO week."
+                            },
+                            "to": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}$",
+                                "description": "The last week, inclusive: YYYY-WW, an ISO week."
+                            }
+                        },
+                        "required": ["granularity"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "granularity": {
+                                "const": "DAY"
+                            }
+                        },
+                        "required": ["granularity"]
+                    },
+                    "then": {
+                        "title": "Day Period",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": ["DAY"]
+                            },
+                            "from": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                                "description": "The first day, inclusive: YYYY-MM-DD."
+                            },
+                            "to": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+                                "description": "The last day, inclusive: YYYY-MM-DD."
+                            }
+                        },
+                        "required": ["granularity"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "granularity": {
+                                "const": "HOUR"
+                            }
+                        },
+                        "required": ["granularity"]
+                    },
+                    "then": {
+                        "title": "Hour Period",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": ["HOUR"]
+                            },
+                            "from": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}$",
+                                "description": "The first hour, inclusive: YYYY-MM-DD HH."
+                            },
+                            "to": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}$",
+                                "description": "The last hour, inclusive: YYYY-MM-DD HH."
+                            }
+                        },
+                        "required": ["granularity"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "granularity": {
+                                "const": "MINUTE"
+                            }
+                        },
+                        "required": ["granularity"]
+                    },
+                    "then": {
+                        "title": "Minute Period",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": ["MINUTE"]
+                            },
+                            "from": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$",
+                                "description": "The first minute, inclusive: YYYY-MM-DD HH:mm."
+                            },
+                            "to": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}$",
+                                "description": "The last minute, inclusive: YYYY-MM-DD HH:mm."
+                            }
+                        },
+                        "required": ["granularity"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "granularity": {
+                                "const": "SECOND"
+                            }
+                        },
+                        "required": ["granularity"]
+                    },
+                    "then": {
+                        "title": "Second Period",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": ["SECOND"]
+                            },
+                            "from": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$",
+                                "description": "The first second, inclusive: YYYY-MM-DD HH:mm:ss."
+                            },
+                            "to": {
+                                "type": "string",
+                                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}$",
+                                "description": "The last second, inclusive: YYYY-MM-DD HH:mm:ss."
+                            }
+                        },
+                        "required": ["granularity"]
+                    }
+                }
+            ]
         },
         "numberParameterDefinition": {
             "title": "Number Parameter Definition",

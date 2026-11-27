@@ -2,6 +2,8 @@
 
 import { type ComponentType } from "react";
 
+import { useIntl } from "react-intl";
+
 import { type INotification } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, type UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 
@@ -191,8 +193,15 @@ export function DefaultNotificationsPanel({
     skeletonItemsCount,
     maxListHeight,
 }: INotificationsPanelComponentProps) {
+    const intl = useIntl();
+
     return (
-        <div className={b()} id={NOTIFICATIONS_PANEL_ID}>
+        <div
+            className={b()}
+            id={NOTIFICATIONS_PANEL_ID}
+            role="region"
+            aria-label={intl.formatMessage({ id: "notifications.panel.button.label" })}
+        >
             <NotificationsPanelHeader
                 activeView={activeView}
                 changeActiveView={changeActiveView}

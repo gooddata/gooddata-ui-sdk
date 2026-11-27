@@ -12,6 +12,7 @@ import {
     type IMatchAttributeFilterBody,
     type IMeasureValueFilterBody,
     type INegativeAttributeFilterBody,
+    type IParameterizedDateFilterBody,
     type IPositiveAttributeFilterBody,
     type IRankingFilterBody,
     type IRelativeDateFilter,
@@ -31,6 +32,7 @@ import {
     isMatchAttributeFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
+    isParameterizedDateFilter,
     isPositiveAttributeFilter,
     isRangeCondition,
     isRankingFilter,
@@ -42,6 +44,7 @@ import { type FromEntities } from "../types.js";
 import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "../utils/errors.js";
 import { matchConditionToYaml, parseDateValuesToYaml } from "../utils/filterUtils.js";
 import { parseGranularity } from "../utils/granularityUtils.js";
+import { periodDateFilterToYaml } from "../utils/periodDateFilter.js";
 import { createFilterItemKeyName, getIdentifier } from "../utils/yamlUtils.js";
 
 /** @internal */
@@ -311,6 +314,16 @@ function declarativeFilterToYaml(
         });
         return { key, yaml, filter, carried };
     }
+    if (isParameterizedDateFilter(filter)) {
+        const { yaml, carried } = declarativePeriodDateFilterToYaml(filter.parameterizedDateFilter, {
+            entities,
+            claimKey,
+            connectedAttributeFilters,
+            readLegacyEmptyValuesFilter,
+            errorContext: updateErrorContext(errorContext, { path: ["parameterizedDateFilter"] }),
+        });
+        return { key, yaml, filter, carried };
+    }
     if (isPositiveAttributeFilter(filter)) {
         return {
             key,
@@ -484,6 +497,21 @@ export function declarativeAbsoluteDateFilterToYaml(
     const carried = processConnectedAttributeFilters(map, connectedAttributeFilters, {
         ...options,
         emptyValueHandling: absoluteDateFilter.emptyValueHandling,
+        errorContext,
+    });
+
+    return { yaml: map, carried };
+}
+
+function declarativePeriodDateFilterToYaml(
+    periodDateFilter: IParameterizedDateFilterBody,
+    { connectedAttributeFilters = [], errorContext, ...options }: DateFilterEmitOptions,
+): { yaml: YAMLMap; carried: WrittenFilter[] } {
+    const map = periodDateFilterToYaml(periodDateFilter, "visualisation", errorContext);
+
+    const carried = processConnectedAttributeFilters(map, connectedAttributeFilters, {
+        ...options,
+        emptyValueHandling: periodDateFilter.emptyValueHandling,
         errorContext,
     });
 

@@ -32,6 +32,7 @@ __all__ = [
     "yaml_computed_attribute_to_declarative",
     "yaml_visualisation_to_declarative",
     "yaml_dashboard_to_declarative",
+    "yaml_parameter_to_declarative",
     "yaml_plugin_to_declarative",
     "yaml_attribute_hierarchy_to_declarative",
     "yaml_publisher_document_to_declarative",
@@ -45,6 +46,7 @@ __all__ = [
     "declarative_computed_attribute_to_yaml",
     "declarative_visualisation_to_yaml",
     "declarative_dashboard_to_yaml",
+    "declarative_parameter_to_yaml",
     "declarative_plugin_to_yaml",
     "declarative_attribute_hierarchy_to_yaml",
     "declarative_publisher_document_to_yaml",
@@ -93,6 +95,11 @@ def yaml_visualisation_to_declarative(*args) -> dict:
 def yaml_dashboard_to_declarative(*args) -> dict:
     """Convert a parsed dashboard YAML dict to a declarative API dict."""
     return _call("yamlDashboardToDeclarative", *args)
+
+
+def yaml_parameter_to_declarative(*args) -> dict:
+    """Convert a parsed parameter YAML dict to a declarative API dict."""
+    return _call("yamlParameterToDeclarative", *args)
 
 
 def yaml_plugin_to_declarative(*args) -> dict:
@@ -156,6 +163,11 @@ def declarative_visualisation_to_yaml(*args) -> dict:
 def declarative_dashboard_to_yaml(*args) -> dict:
     """Convert a declarative dashboard dict to YAML format."""
     return _call("declarativeDashboardToYaml", *args)
+
+
+def declarative_parameter_to_yaml(*args) -> dict:
+    """Convert a declarative parameter dict to YAML format."""
+    return _call("declarativeParameterToYaml", *args)
 
 
 def declarative_plugin_to_yaml(*args) -> dict:

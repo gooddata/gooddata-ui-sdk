@@ -22,10 +22,6 @@ import { type ICorePivotTableNextProps } from "../../types/internal.js";
 
 import { useHeaderMenuAggregations } from "./useHeaderMenuAggregations.js";
 
-vi.hoisted(() => {
-    vi.resetModules();
-});
-
 const rows = [newAttribute("state", (a) => a.localId("a1")), newAttribute("city", (a) => a.localId("a2"))];
 const columns = [
     newAttribute("category", (a) => a.localId("c1")),

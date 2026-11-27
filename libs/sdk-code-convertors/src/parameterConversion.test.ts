@@ -1,8 +1,9 @@
 // (C) 2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
+import { parse } from "yaml";
 
-import type { Parameter } from "@gooddata/sdk-code-schemas/v1";
+import type { DateRangeParameterValue, Parameter } from "@gooddata/sdk-code-schemas/v1";
 
 import { declarativeParameterToYaml } from "./from/declarativeParameterToYaml.js";
 import { yamlParameterToDeclarative } from "./to/yamlParameterToDeclarative.js";
@@ -10,6 +11,7 @@ import {
     type DeclarativeNumberParameter,
     type DeclarativeStringParameter,
     isDeclarativeCodeParameter,
+    isDeclarativeDateRangeParameter,
     isDeclarativeNumberParameter,
     isDeclarativeStringParameter,
 } from "./utils/parameterUtils.js";
@@ -74,8 +76,16 @@ describe("parameter conversion", () => {
                 definition: { type: "STRING", defaultValue: "Actual", constraints: { maxLength: 50 } },
             });
 
-            expect(Object.keys(minLength.content.constraints ?? {})).toEqual(["minLength"]);
-            expect(Object.keys(maxLength.content.constraints ?? {})).toEqual(["maxLength"]);
+            expect(minLength.content).toStrictEqual({
+                type: "STRING",
+                defaultValue: "Actual",
+                constraints: { minLength: 1 },
+            });
+            expect(maxLength.content).toStrictEqual({
+                type: "STRING",
+                defaultValue: "Actual",
+                constraints: { maxLength: 50 },
+            });
         });
 
         it("should convert allowed values with and without titles", () => {
@@ -284,7 +294,11 @@ describe("parameter conversion", () => {
                 content: { type: "STRING", defaultValue: "Actual", constraints: { minLength: 1 } },
             });
 
-            expect(Object.keys(json.definition.constraints ?? {})).toEqual(["minLength"]);
+            expect(json.definition).toStrictEqual({
+                type: "STRING",
+                defaultValue: "Actual",
+                constraints: { minLength: 1 },
+            });
             expect(content).not.toContain("maxLength");
         });
 
@@ -303,6 +317,119 @@ describe("parameter conversion", () => {
             const { json } = declarativeParameterToYaml(declarative);
 
             expect(json.definition).toEqual({ type: "STRING", defaultValue: "Actual" });
+        });
+    });
+
+    describe("date range parameters", () => {
+        type Granularity = DateRangeParameterValue["granularity"];
+        type Range = { from?: string; to?: string };
+        const periodsByGranularity: Array<[Granularity, string, string]> = [
+            ["YEAR", "2024", "2025"],
+            ["QUARTER", "2024-4", "2025-1"],
+            ["MONTH", "2024-11", "2025-11"],
+            ["WEEK", "2024-01", "2024-52"],
+            ["DAY", "2024-11-01", "2025-11-30"],
+            ["HOUR", "2024-11-01 08", "2024-11-01 17"],
+            ["MINUTE", "2024-11-01 08:00", "2024-11-01 08:30"],
+            ["SECOND", "2024-11-01 08:00:00", "2024-11-01 08:00:59"],
+        ];
+        const ranges = periodsByGranularity.flatMap(
+            ([granularity, from, to]): Array<[string, Granularity, Range]> => [
+                ["closed", granularity, { from, to }],
+                ["open start", granularity, { to }],
+                ["open end", granularity, { from }],
+            ],
+        );
+        const period = (granularity: Granularity, range: Range): Parameter => ({
+            type: "parameter",
+            id: "reporting_period",
+            title: "Reporting period",
+            definition: { type: "DATE_RANGE", defaultValue: { granularity, ...range } },
+        });
+
+        it.each(ranges)(
+            "round-trips a %s %s range unchanged, through the YAML text too",
+            (_, granularity, range) => {
+                const input = period(granularity, range);
+
+                const declarative = yamlParameterToDeclarative(input);
+                const { json, content } = declarativeParameterToYaml(declarative);
+
+                expect(declarative.content).toStrictEqual({
+                    type: "DATE_RANGE",
+                    defaultValue: { granularity, ...range },
+                });
+                expect(json).toStrictEqual(input);
+                expect(yamlParameterToDeclarative(parse(content) as Parameter)).toStrictEqual(declarative);
+            },
+        );
+
+        it.each(periodsByGranularity.filter(([granularity]) => granularity !== "YEAR"))(
+            "writes both ends of a %s range without quotes, as the catalog editor does",
+            (granularity, from, to) => {
+                const { content } = declarativeParameterToYaml({
+                    id: "reporting_period",
+                    title: "Reporting period",
+                    content: { type: "DATE_RANGE", defaultValue: { granularity, from, to } },
+                });
+
+                expect(content).toContain(`from: ${from}\n`);
+                expect(content).toContain(`to: ${to}\n`);
+            },
+        );
+
+        it("introduces a period file as a period, not as a value metrics reference", () => {
+            const { content } = declarativeParameterToYaml({
+                id: "this_year",
+                title: "This year",
+                content: { type: "DATE_RANGE", defaultValue: { granularity: "YEAR", from: "2025" } },
+            });
+
+            expect(content.startsWith("# A date range parameter is a named period")).toBe(true);
+        });
+
+        it("keeps a year that looks like a number a string in the YAML text", () => {
+            const { content } = declarativeParameterToYaml({
+                id: "this_year",
+                title: "This year",
+                content: { type: "DATE_RANGE", defaultValue: { granularity: "YEAR", from: "2025" } },
+            });
+
+            expect(content).toContain('from: "2025"');
+            expect(parse(content).definition.defaultValue).toStrictEqual({
+                granularity: "YEAR",
+                from: "2025",
+            });
+        });
+
+        it("takes a year written without quotes as its text", () => {
+            const declarative = yamlParameterToDeclarative(
+                parse(
+                    "type: parameter\nid: years\ndefinition:\n  type: DATE_RANGE\n  defaultValue:\n    granularity: YEAR\n    from: 2024\n    to: 2025\n",
+                ) as Parameter,
+            );
+
+            expect(declarative.content).toStrictEqual({
+                type: "DATE_RANGE",
+                defaultValue: { granularity: "YEAR", from: "2024", to: "2025" },
+            });
+        });
+
+        it("is a parameter code can represent", () => {
+            const dateRange = {
+                id: "p",
+                title: "P",
+                content: { type: "DATE_RANGE" as const, defaultValue: { granularity: "MONTH" as const } },
+            };
+            expect(isDeclarativeCodeParameter(dateRange)).toBe(true);
+            expect(isDeclarativeDateRangeParameter(dateRange)).toBe(true);
+            expect(
+                isDeclarativeDateRangeParameter({
+                    id: "n",
+                    title: "N",
+                    content: { type: "NUMBER", defaultValue: 1 },
+                }),
+            ).toBe(false);
         });
     });
 });

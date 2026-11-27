@@ -6,8 +6,10 @@ import {
     type AfmLocalIdentifier,
     type AfmObjectIdentifier,
     type AfmObjectIdentifierIdentifierTypeEnum,
+    type DashboardParameterizedDateFilter,
     type DeclarativeDataset,
     type DeclarativeTable,
+    type IdentifierRef as StoredIdentifierRef,
     isAfmObjectIdentifier,
 } from "@gooddata/api-client-tiger";
 import {
@@ -27,6 +29,7 @@ import {
     isMatchAttributeFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
+    isParameterizedDateFilter,
     isPositiveAttributeFilter,
     isRankingFilter,
     isRelativeDateFilter,
@@ -123,11 +126,69 @@ export function findTable(
     return {};
 }
 
+/** The id of a reference, as the model holds it or as the declarative API sends it. */
+export function storedReferenceId(ref: ObjRef | StoredIdentifierRef, errorContext?: IErrorContext): string {
+    return isStoredIdentifierRef(ref) ? ref.identifier.id : getIdentifier(ref, true, errorContext);
+}
+
+// The declarative API nests the id with its type; the model's identifier reference names the id itself.
+function isStoredIdentifierRef(ref: ObjRef | StoredIdentifierRef): ref is StoredIdentifierRef {
+    return "identifier" in ref && typeof ref.identifier === "object";
+}
+
+// A key is an identifier of at most 255 characters, and a visualization adds "_<n>" to a repeated one. A period's
+// key joins two ids, so one longer than 240 characters keeps its first 240 and ends with a hash of the whole,
+// which leaves room for that suffix.
+const LONG_KEY_START = 240;
+
+// FNV-1a, 32 bits.
+function hashOf(text: string): string {
+    let hash = 0x811c9dc5;
+    for (let i = 0; i < text.length; i++) {
+        hash = Math.imul(hash ^ text.charCodeAt(i), 0x01000193);
+    }
+    return (hash >>> 0).toString(36);
+}
+
+/**
+ * A period date filter is keyed by its local identifier. One stored without it is named after its date
+ * data set, or `fallback` for a dashboard's common date filter, and its parameter.
+ */
+function periodFilterKeyName(
+    body: {
+        localIdentifier?: string;
+        dataSet?: ObjRef | StoredIdentifierRef;
+        parameter: ObjRef | StoredIdentifierRef;
+    },
+    fallback: string,
+    errorContext?: IErrorContext,
+): string {
+    if (body.localIdentifier) {
+        return body.localIdentifier;
+    }
+    const dataSet = body.dataSet
+        ? storedReferenceId(body.dataSet, updateErrorContext(errorContext, { path: ["dataSet"] }))
+        : fallback;
+    const parameter = storedReferenceId(
+        body.parameter,
+        updateErrorContext(errorContext, { path: ["parameter"] }),
+    );
+    const key = `${dataSet}_${parameter}`;
+    return key.length <= LONG_KEY_START ? key : `${key.slice(0, LONG_KEY_START)}_${hashOf(key)}`;
+}
+
 export function createFilterContextItemKeyName(
-    item: FilterContextItem,
+    item: FilterContextItem | DashboardParameterizedDateFilter,
     type: string = "date",
     errorContext?: IErrorContext,
 ) {
+    if ("dashboardParameterizedDateFilter" in item) {
+        return periodFilterKeyName(
+            item.dashboardParameterizedDateFilter,
+            type,
+            updateErrorContext(errorContext, { path: ["dashboardParameterizedDateFilter"] }),
+        );
+    }
     if (isDashboardDateFilter(item)) {
         // Use localIdentifier if present, otherwise generate from dataSet/granularity
         if (item.dateFilter.localIdentifier) {
@@ -170,6 +231,13 @@ export function createFilterContextItemKeyName(
 }
 
 export function createFilterItemKeyName(item: IFilter, type: string = "date", errorContext?: IErrorContext) {
+    if (isParameterizedDateFilter(item)) {
+        return periodFilterKeyName(
+            item.parameterizedDateFilter,
+            type,
+            updateErrorContext(errorContext, { path: ["parameterizedDateFilter"] }),
+        );
+    }
     if (isAbsoluteDateFilter(item)) {
         return item.absoluteDateFilter.dataSet
             ? getIdentifier(

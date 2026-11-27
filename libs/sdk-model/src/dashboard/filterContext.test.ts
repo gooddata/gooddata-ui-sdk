@@ -21,6 +21,7 @@ import {
     isDashboardDateFilter,
     isDashboardDateFilterOfAnyType,
     isDashboardDateFilterReference,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardParameterizedDateFilter,
     isExportOverrideFilterContext,
     isFilterContext,
@@ -260,6 +261,33 @@ describe("absolute date filter with granularity in the filter context", () => {
             expect(isDashboardCommonDateFilterOfAnyType(input)).toBe(expectedResult);
         },
     );
+
+    it.each<[boolean, string, unknown]>([
+        ...InvalidInputTestCases,
+        [true, "absolute date filter with granularity and data set", granularityDateFilter],
+        [
+            false,
+            "absolute date filter with granularity without data set",
+            {
+                dashboardAbsoluteGranularityDateFilter: {
+                    ...granularityDateFilter.dashboardAbsoluteGranularityDateFilter,
+                    dataSet: undefined,
+                },
+            },
+        ],
+        [false, "dashboard date filter without data set", dashboardDateFilter],
+        [
+            true,
+            "dashboard date filter with data set",
+            { dateFilter: { ...dashboardDateFilter.dateFilter, dataSet } },
+        ],
+        [false, "dashboard attribute filter", dashboardAttributeFilter],
+    ])(
+        "isDashboardDateFilterWithDimensionOfAnyType should return %s when input is %s",
+        (expectedResult, _desc, input) => {
+            expect(isDashboardDateFilterWithDimensionOfAnyType(input)).toBe(expectedResult);
+        },
+    );
 });
 
 describe("parameterized date filter in the filter context", () => {
@@ -312,6 +340,13 @@ describe("parameterized date filter in the filter context", () => {
         expect(isDashboardCommonDateFilterOfAnyType(newDashboardParameterizedDateFilter(parameter))).toBe(
             true,
         );
+    });
+
+    it("is a date filter with a dimension only with a data set", () => {
+        expect(isDashboardDateFilterWithDimensionOfAnyType(parameterizedDateFilter)).toBe(true);
+        expect(
+            isDashboardDateFilterWithDimensionOfAnyType(newDashboardParameterizedDateFilter(parameter)),
+        ).toBe(false);
     });
 
     it("is covered only by the guards of any type", () => {

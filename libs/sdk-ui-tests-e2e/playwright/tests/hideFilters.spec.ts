@@ -111,9 +111,10 @@ test.describe("Hide Filters", { additionalWindowProperties: { useSafeLocalIdenti
         async ({ page }) => {
             await visit(page, "dashboard/dashboard-tiger-readonly-date-filter");
 
-            // Click the date filter button
+            // Click the locked date filter button (disabled, so use JS click)
             const dateFilterButton = page.locator(".s-date-filter-button");
-            await dateFilterButton.click();
+            await expect(dateFilterButton).toHaveAttribute("aria-disabled", "true");
+            await dateFilterButton.evaluate((el: HTMLElement) => el.click());
 
             // Assert the dropdown body does not open (readonly in view mode)
             await expect(page.locator(".s-extended-date-filters-body")).toHaveCount(0);

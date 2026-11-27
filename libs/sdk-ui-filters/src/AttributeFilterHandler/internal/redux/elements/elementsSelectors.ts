@@ -5,6 +5,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeElement,
     type IAttributeMetadataObject,
     type IMeasure,
@@ -190,8 +191,9 @@ export const selectLimitingValidationItems: FilterSelector<ObjRef[]> = createSel
 /**
  * @internal
  */
-export const selectLimitingDateFilters: FilterSelector<IRelativeDateFilter[] | IAbsoluteDateFilter[]> =
-    createSelector(selectState, (state) => state.elements.currentOptions.limitingDateFilters ?? []);
+export const selectLimitingDateFilters: FilterSelector<
+    (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[]
+> = createSelector(selectState, (state) => state.elements.currentOptions.limitingDateFilters ?? []);
 
 /**
  * @internal

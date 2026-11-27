@@ -52,6 +52,7 @@ describe("assignForecastAxes", () => {
             {
                 ...baseSeries,
                 data: [...baseSeries.data!, null, null, null],
+                zIndex: 1,
             },
             {
                 color: "rgb(204,204,204)",
@@ -110,6 +111,7 @@ describe("assignForecastAxes", () => {
                         format: "0.00",
                         name: "A",
                         y: 6,
+                        drilldown: false,
                     },
                     {
                         format: "0.00",
@@ -144,6 +146,40 @@ describe("assignForecastAxes", () => {
         });
 
         expect(data.map((series) => series.name)).toEqual(["A", "A confidence interval", "A forecast"]);
+    });
+
+    it("should not make the forecast point that joins the drillable actual data drillable", () => {
+        const drillableSeries: ISeriesItem = {
+            ...baseSeries,
+            isDrillable: true,
+            data: baseSeries.data!.map((point) => ({ ...point, drilldown: true })),
+        };
+
+        const [actual, confidenceInterval, forecast] = assignForecastAxes(
+            "line",
+            [drillableSeries],
+            forecastValues,
+        );
+
+        const isDrillable = (point: unknown) => (point as { drilldown?: boolean } | null)?.drilldown;
+
+        expect(actual.data!.slice(0, 5).every((point) => isDrillable(point) === true)).toBe(true);
+        expect(confidenceInterval.data!.some(isDrillable)).toBe(false);
+        expect(forecast.data!.some(isDrillable)).toBe(false);
+        expect(forecast.data![4]).toEqual(expect.objectContaining({ y: 6, drilldown: false }));
+    });
+
+    it("should keep the actual series above the forecast series so its last point wins hover and click", () => {
+        const [actual, confidenceInterval, forecast] = assignForecastAxes(
+            "line",
+            [baseSeries],
+            forecastValues,
+        );
+
+        // Highcharts default series group zIndex is 0.1; a tie between overlapping points goes to the higher zIndex.
+        const defaultZIndex = 0.1;
+        expect(actual.zIndex).toBeGreaterThan(confidenceInterval.zIndex ?? defaultZIndex);
+        expect(actual.zIndex).toBeGreaterThan(forecast.zIndex ?? defaultZIndex);
     });
 
     it("should not assign if there are more series", () => {

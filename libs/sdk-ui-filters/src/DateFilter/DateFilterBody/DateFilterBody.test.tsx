@@ -162,6 +162,23 @@ describe("ExtendedDateFilterBody", () => {
         expect(screen.queryByText("Set default date filter for viewers:")).not.toBeInTheDocument();
     });
 
+    it("should name the custom period buttons group and the actions group", () => {
+        const absoluteForm: IUiAbsoluteDateFilterForm = {
+            localIdentifier: "ABSOLUTE_FORM",
+            type: "absoluteForm",
+            name: "",
+            visible: true,
+        };
+        renderDateFilterBody({ filterOptions: { absoluteForm, allTime }, selectedFilterOption: allTime });
+
+        const customPeriodGroup = screen.getByRole("group", { name: "Custom period type" });
+        expect(customPeriodGroup).toContainElement(screen.getByRole("button", { name: /Static period/i }));
+
+        const actionsGroup = screen.getByRole("group", { name: "Date filter actions" });
+        expect(actionsGroup).toContainElement(screen.getByRole("button", { name: "Apply" }));
+        expect(actionsGroup).toContainElement(screen.getByRole("button", { name: "Cancel" }));
+    });
+
     describe("absolute form granularities", () => {
         const absoluteForm: IUiAbsoluteDateFilterForm = {
             localIdentifier: "ABSOLUTE_FORM",

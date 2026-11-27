@@ -6,8 +6,8 @@ import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import {
+    type DashboardDateFilterOfAnyType,
     type ICatalogDateDataset,
-    type IDashboardDateFilter,
     type ObjRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -34,7 +34,7 @@ export interface IParentFiltersPageProps {
     validParentFilters: ObjRef[];
     dependentDateFilters: IDashboardDependentDateFilter[];
     availableDatasets: ICatalogDateDataset[];
-    dependentCommonDateFilter: IDashboardDateFilter;
+    dependentCommonDateFilter: DashboardDateFilterOfAnyType;
     commonDateFilterTitle: string;
     onSelect: (item: ValuesLimitingItem) => void;
     onGoBack: () => void;

@@ -1,0 +1,291 @@
+// (C) 2026 GoodData Corporation
+
+import { type ReactNode } from "react";
+
+import { render } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+
+import type { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
+const fixtures = vi.hoisted(() => {
+    const buildAutomationUrl = vi.fn(() => "/target-url");
+    const navigate = vi.fn();
+    const onAlertingManagementEdit = vi.fn();
+    const onAlertingCreateSuccess = vi.fn();
+    const onAlertingCreateError = vi.fn();
+    const onAlertingUpdateSuccess = vi.fn();
+    const onAlertingUpdateError = vi.fn();
+    const onAlertingDeleteSuccess = vi.fn();
+    const onAlertingDeleteError = vi.fn();
+    let managementDialogProps: Record<string, unknown> | undefined;
+    let dialogProps: Record<string, unknown> | undefined;
+    let automationsError: Error | undefined;
+    let notSupportedDialogProps: Record<string, unknown> | undefined;
+    const blocksAutomation = vi.fn((_isDashboardExport: boolean) => false);
+    const buildDialogContext = vi.fn(() => ({}));
+    const alertsState = { isAlertDialogOpen: false, isAlertManagementDialogOpen: true };
+
+    return {
+        buildAutomationUrl,
+        navigate,
+        onAlertingManagementEdit,
+        onAlertingCreateSuccess,
+        onAlertingCreateError,
+        onAlertingUpdateSuccess,
+        onAlertingUpdateError,
+        onAlertingDeleteSuccess,
+        onAlertingDeleteError,
+        alertsState,
+        get managementDialogProps() {
+            return managementDialogProps;
+        },
+        set managementDialogProps(value: Record<string, unknown> | undefined) {
+            managementDialogProps = value;
+        },
+        get dialogProps() {
+            return dialogProps;
+        },
+        set dialogProps(value: Record<string, unknown> | undefined) {
+            dialogProps = value;
+        },
+        get automationsError() {
+            return automationsError;
+        },
+        blocksAutomation,
+        buildDialogContext,
+        get notSupportedDialogProps() {
+            return notSupportedDialogProps;
+        },
+        set notSupportedDialogProps(value: Record<string, unknown> | undefined) {
+            notSupportedDialogProps = value;
+        },
+        set automationsError(value: Error | undefined) {
+            automationsError = value;
+        },
+    };
+});
+
+vi.mock("@gooddata/sdk-ui", () => ({
+    ErrorComponent: () => null,
+    LoadingComponent: () => null,
+    buildAutomationUrl: fixtures.buildAutomationUrl,
+    navigate: fixtures.navigate,
+    useWorkspaceStrict: () => "workspace-id",
+}));
+
+vi.mock("../../../model/react/DashboardStoreProvider.js", () => ({
+    useDashboardSelector: vi.fn((selector: () => unknown) => selector()),
+}));
+
+vi.mock("../../../model/react/useDashboardAlerting/useDashboardAlerts.js", () => ({
+    useDashboardAlerts: () => ({
+        isInitialized: true,
+        get isAlertDialogOpen() {
+            return fixtures.alertsState.isAlertDialogOpen;
+        },
+        get isAlertManagementDialogOpen() {
+            return fixtures.alertsState.isAlertManagementDialogOpen;
+        },
+        alertToEdit: undefined,
+        automations: [],
+        automationsError: fixtures.automationsError,
+        automationsLoading: false,
+        notificationChannels: [],
+        onAlertingCancel: vi.fn(),
+        onAlertingCreateSuccess: fixtures.onAlertingCreateSuccess,
+        onAlertingCreateError: fixtures.onAlertingCreateError,
+        onAlertingUpdateSuccess: fixtures.onAlertingUpdateSuccess,
+        onAlertingUpdateError: fixtures.onAlertingUpdateError,
+        onAlertingManagementClose: vi.fn(),
+        onAlertingManagementAdd: vi.fn(),
+        onAlertingManagementEdit: fixtures.onAlertingManagementEdit,
+        onAlertingDeleteSuccess: fixtures.onAlertingDeleteSuccess,
+        onAlertingDeleteError: fixtures.onAlertingDeleteError,
+        widget: undefined,
+        insight: undefined,
+    }),
+}));
+
+vi.mock("../../../model/store/config/configSelectors.js", () => ({
+    selectExternalRecipient: () => "recipient@example.com",
+    selectIsEmbedded: () => false,
+    selectSettings: () => ({}),
+}));
+
+vi.mock("../../../model/store/meta/metaSelectors.js", () => ({
+    selectDashboardId: () => "current-dashboard",
+}));
+
+vi.mock("../alerting/AlertingDialog.js", () => ({
+    AlertingDialog: (props: Record<string, unknown>) => {
+        fixtures.dialogProps = props;
+        return null;
+    },
+}));
+
+vi.mock("../alerting/AlertingManagementDialog.js", () => ({
+    AlertingManagementDialog: (props: Record<string, unknown>) => {
+        fixtures.managementDialogProps = props;
+        return null;
+    },
+}));
+
+vi.mock("../contexts/AlertingDialogContext.js", () => ({
+    AlertingDialogContextProvider: ({ children }: { children: ReactNode }) => children,
+}));
+
+vi.mock("../contexts/AlertingManagementDialogContext.js", () => ({
+    AlertingManagementDialogContextProvider: ({ children }: { children: ReactNode }) => children,
+}));
+
+vi.mock("../contexts/AutomationsContext.js", () => ({
+    AutomationsContextProvider: ({ children }: { children: ReactNode }) => children,
+}));
+
+vi.mock("./hooks/useBuildAlertingDialogContext.js", () => ({
+    useBuildAlertingDialogContext: fixtures.buildDialogContext,
+}));
+
+vi.mock("./hooks/useBuildAlertingManagementDialogContext.js", () => ({
+    useBuildAlertingManagementDialogContext: () => ({
+        dashboardId: "current-dashboard",
+        isEmbedded: false,
+        canManageWorkspace: true,
+        currentUser: { login: "user" },
+        dashboardTitle: "Current Dashboard",
+        isAlertDialogOpen: false,
+        managementDialogContext: {},
+        enableAccessibilityMode: false,
+        getWidgetByRef: () => undefined,
+        getInsightByWidgetRef: () => undefined,
+        pauseAlert: vi.fn(),
+        resumeAlert: vi.fn(),
+    }),
+}));
+
+vi.mock("./hooks/useBuildAutomationsContext.js", () => ({
+    useBuildAutomationsContext: () => ({}),
+}));
+
+vi.mock("./hooks/useAbsoluteGranularityDateFilterBlocksAutomation.js", () => ({
+    useAbsoluteGranularityDateFilterBlocksAutomation: fixtures.blocksAutomation,
+}));
+
+vi.mock("../shared/components/AbsoluteGranularityDateFilterNotSupportedDialog.js", () => ({
+    AbsoluteGranularityDateFilterNotSupportedDialog: (props: Record<string, unknown>) => {
+        fixtures.notSupportedDialogProps = props;
+        return null;
+    },
+}));
+
+import { AlertingConnector } from "./AlertingConnector.js";
+
+describe("AlertingConnector", () => {
+    beforeEach(() => {
+        fixtures.buildAutomationUrl.mockClear();
+        fixtures.navigate.mockClear();
+        fixtures.onAlertingManagementEdit.mockClear();
+        fixtures.managementDialogProps = undefined;
+        fixtures.dialogProps = undefined;
+        fixtures.automationsError = undefined;
+        fixtures.notSupportedDialogProps = undefined;
+        fixtures.blocksAutomation.mockReset();
+        fixtures.blocksAutomation.mockReturnValue(false);
+        fixtures.buildDialogContext.mockClear();
+        fixtures.alertsState.isAlertDialogOpen = false;
+        fixtures.alertsState.isAlertManagementDialogOpen = true;
+    });
+
+    it("uses host routes when editing an alert on another dashboard in shell mode", () => {
+        render(<AlertingConnector />);
+
+        const onEdit = fixtures.managementDialogProps?.["onEdit"] as
+            | ((alert: IAutomationMetadataObject) => void)
+            | undefined;
+        expect(onEdit).toBeDefined();
+
+        onEdit?.({
+            id: "alert-1",
+            dashboard: { id: "other-dashboard" },
+        } as IAutomationMetadataObject);
+
+        expect(fixtures.buildAutomationUrl).toHaveBeenCalledWith({
+            workspaceId: "workspace-id",
+            dashboardId: "other-dashboard",
+            automationId: "alert-1",
+            isEmbedded: false,
+            queryParams: { recipient: "recipient@example.com" },
+        });
+        expect(fixtures.navigate).toHaveBeenCalledWith("/target-url");
+        expect(fixtures.onAlertingManagementEdit).not.toHaveBeenCalled();
+    });
+
+    it("falls back to local edit when the target dashboard id is missing", () => {
+        render(<AlertingConnector />);
+
+        const onEdit = fixtures.managementDialogProps?.["onEdit"] as
+            | ((alert: IAutomationMetadataObject) => void)
+            | undefined;
+
+        onEdit?.({
+            id: "alert-2",
+            dashboard: undefined,
+        } as IAutomationMetadataObject);
+
+        expect(fixtures.navigate).not.toHaveBeenCalled();
+        expect(fixtures.buildAutomationUrl).not.toHaveBeenCalled();
+        expect(fixtures.onAlertingManagementEdit).toHaveBeenCalledWith({
+            id: "alert-2",
+            dashboard: undefined,
+        });
+    });
+
+    it("wires the lifecycle callbacks to the create/edit dialog", () => {
+        fixtures.alertsState.isAlertDialogOpen = true;
+        fixtures.alertsState.isAlertManagementDialogOpen = false;
+
+        render(<AlertingConnector />);
+
+        expect(fixtures.dialogProps).toBeDefined();
+        for (const prop of ["users", "usersError"]) {
+            expect(fixtures.dialogProps?.[prop]).toBeUndefined();
+        }
+        expect(fixtures.dialogProps?.["onCreateSuccess"]).toBe(fixtures.onAlertingCreateSuccess);
+        expect(fixtures.dialogProps?.["onCreateError"]).toBe(fixtures.onAlertingCreateError);
+        expect(fixtures.dialogProps?.["onUpdateSuccess"]).toBe(fixtures.onAlertingUpdateSuccess);
+        expect(fixtures.dialogProps?.["onUpdateError"]).toBe(fixtures.onAlertingUpdateError);
+        expect(fixtures.dialogProps?.["onDeleteSuccess"]).toBe(fixtures.onAlertingDeleteSuccess);
+        expect(fixtures.dialogProps?.["onDeleteError"]).toBe(fixtures.onAlertingDeleteError);
+    });
+
+    it("renders the management dialog even when the alerts hook reports an error", () => {
+        fixtures.automationsError = new Error("automations failed to load");
+
+        render(<AlertingConnector />);
+
+        expect(fixtures.managementDialogProps).toBeDefined();
+    });
+
+    it("shows the not supported dialog without building the alert dialog when the filters block it", () => {
+        fixtures.alertsState.isAlertDialogOpen = true;
+        fixtures.alertsState.isAlertManagementDialogOpen = false;
+        fixtures.blocksAutomation.mockReturnValue(true);
+
+        render(<AlertingConnector />);
+
+        expect(fixtures.blocksAutomation).toHaveBeenCalledWith(false);
+        expect(fixtures.notSupportedDialogProps?.["automationType"]).toBe("alert");
+        expect(fixtures.dialogProps).toBeUndefined();
+        expect(fixtures.buildDialogContext).not.toHaveBeenCalled();
+    });
+
+    it("shows the alert dialog when the filters do not block it", () => {
+        fixtures.alertsState.isAlertDialogOpen = true;
+        fixtures.alertsState.isAlertManagementDialogOpen = false;
+
+        render(<AlertingConnector />);
+
+        expect(fixtures.notSupportedDialogProps).toBeUndefined();
+        expect(fixtures.dialogProps).toBeDefined();
+    });
+});

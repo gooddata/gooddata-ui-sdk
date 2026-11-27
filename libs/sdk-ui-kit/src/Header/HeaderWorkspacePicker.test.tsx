@@ -32,7 +32,7 @@ const renderPicker = (onSelect = vi.fn()) => {
 };
 
 const openPicker = async () => {
-    await userEvent.click(screen.getByRole("button", { name: "KD finance" }));
+    await userEvent.click(screen.getByRole("button", { name: "KD finance, current workspace" }));
     const combobox = await screen.findByRole("combobox", { name: "Search workspaces" });
     // the autofocus waits for a visible overlay, which jsdom never reports
     combobox.focus();
@@ -55,6 +55,27 @@ function FilteringPicker({ isLoading = false }: { isLoading?: boolean }) {
 }
 
 describe("HeaderWorkspacePicker", () => {
+    it("names the button as the current workspace and updates it when the workspace changes", () => {
+        const { rerender } = render(<Wrapped workspaces={workspaces} selectedWorkspace={workspaces[2]} />);
+        const button = screen.getByRole("button", { name: "KD finance, current workspace" });
+        expect(button).toHaveAttribute("aria-haspopup", "dialog");
+        expect(button).toHaveAttribute("aria-expanded", "false");
+        expect(button).toHaveTextContent("KD finance");
+        expect(button).toHaveAttribute("data-testid", "kd_finance");
+
+        rerender(<Wrapped workspaces={workspaces} selectedWorkspace={workspaces[1]} />);
+        expect(screen.getByRole("button", { name: "KD sales, current workspace" })).toBe(button);
+    });
+
+    it("names the button after the picker when there is no workspace name", () => {
+        render(
+            <Wrapped workspaces={workspaces} selectedWorkspace={{ id: "", title: " ", description: "" }} />,
+        );
+        const button = screen.getByRole("button", { name: "Workspace picker" });
+        expect(button).toHaveAttribute("aria-haspopup", "dialog");
+        expect(button).toHaveAttribute("aria-expanded", "false");
+    });
+
     it("exposes the search input as a combobox controlling the workspaces listbox", async () => {
         renderPicker();
         const combobox = await openPicker();
@@ -132,7 +153,7 @@ describe("HeaderWorkspacePicker", () => {
 
     it("does not announce or describe no results while the results are loading", async () => {
         render(<FilteringPicker isLoading />);
-        await userEvent.click(screen.getByRole("button", { name: "KD finance" }));
+        await userEvent.click(screen.getByRole("button", { name: "KD finance, current workspace" }));
         vi.useFakeTimers();
         try {
             fireEvent.change(screen.getByPlaceholderText("Search workspaces"), { target: { value: "xyz" } });

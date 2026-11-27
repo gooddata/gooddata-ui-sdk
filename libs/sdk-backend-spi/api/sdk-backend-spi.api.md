@@ -24,6 +24,7 @@ import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import type { GenAIObjectType } from '@gooddata/sdk-model';
 import { GeoCollectionKind } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
+import { IAbsoluteGranularityDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAgent } from '@gooddata/sdk-model';
@@ -278,7 +279,7 @@ export type AnalyticalBackendFactory = (config?: IAnalyticalBackendConfig, implC
 export type AnalyticsAsCodeDocument = Dataset | DateDataset | Metric | ComputedAttribute | Parameter | Visualisation | Dashboard | Plugin_2 | AttributeHierarchy;
 
 // @internal
-export type AnalyticsCatalogGenerateDescriptionObjectType = Extract<ObjectType, "insight" | "analyticalDashboard" | "measure" | "fact" | "attribute">;
+export type AnalyticsCatalogGenerateDescriptionObjectType = Extract<ObjectType, "insight" | "analyticalDashboard" | "measure" | "fact" | "attribute" | "document">;
 
 // @internal
 export type AnalyticsCatalogGenerateTitleObjectType = AnalyticsCatalogGenerateDescriptionObjectType;
@@ -1576,7 +1577,7 @@ export interface IElementsQuery extends ICancelable<IElementsQuery> {
     query(): Promise<IElementsQueryResult>;
     withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
     withAvailableElementsOnly(validateBy: ObjRef[]): IElementsQuery;
-    withDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery;
+    withDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[]): IElementsQuery;
     withLimit(limit: number): IElementsQuery;
     withMeasures(measures: IMeasure[]): IElementsQuery;
     withOffset(offset: number): IElementsQuery;

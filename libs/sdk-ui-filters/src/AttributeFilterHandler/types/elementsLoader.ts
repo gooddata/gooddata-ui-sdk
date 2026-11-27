@@ -6,6 +6,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeElement,
     type IAttributeMetadataObject,
     type IMeasure,
@@ -61,7 +62,7 @@ export interface ILoadElementsOptions {
     order?: SortDirection;
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     limitingMeasures?: IMeasure[];
-    limitingDateFilters?: IRelativeDateFilter[] | IAbsoluteDateFilter[];
+    limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[];
     limitingValidationItems?: ObjRef[];
     elements?: ElementsQueryOptionsElementsSpecification;
     includeTotalCountWithoutFilters?: boolean;
@@ -253,7 +254,9 @@ export interface IAttributeElementLoader {
      *
      * @param filters - filters to use.
      */
-    setLimitingDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): void;
+    setLimitingDateFilters(
+        filters: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[],
+    ): void;
 
     /**
      * Returns the current offset used for the attribute element loads.
@@ -304,7 +307,7 @@ export interface IAttributeElementLoader {
     /**
      * Returns the current date filters used to filter the attribute element loads.
      */
-    getLimitingDateFilters(): (IRelativeDateFilter | IAbsoluteDateFilter)[];
+    getLimitingDateFilters(): (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[];
 
     /**
      * Returns all attribute elements loaded by initialElementsPageLoad and nextElementsPageLoad methods.

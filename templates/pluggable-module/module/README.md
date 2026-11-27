@@ -12,11 +12,8 @@ Pluggable application module for **gdc-app-template-name**.
 ## Development
 
 ```bash
-# Run tests in watch mode
+# Run in dev mode
 rushx dev
-
-# Run tests once
-rushx test-once
 
 # Build
 rushx build

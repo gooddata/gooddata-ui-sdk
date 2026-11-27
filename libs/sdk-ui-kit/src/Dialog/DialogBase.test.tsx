@@ -2,10 +2,13 @@
 
 import { type ReactNode } from "react";
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
+import { IntlProvider } from "react-intl";
 import { describe, expect, it, vi } from "vitest";
 
 import { Input } from "../Form/Input.js";
+import { ToastsCenterContextProvider } from "../Messages/toasts/ToastsCenter.js";
+import { useToastMessage } from "../Messages/toasts/useToastMessage.js";
 
 import { DialogBase } from "./DialogBase.js";
 import { CONFIRM_DIALOG_BASE_ID } from "./elementId.js";
@@ -79,6 +82,58 @@ describe("Dialog", () => {
                 expect(onSubmit).toHaveBeenCalledTimes(expectedCalledTimes);
             },
         );
+    });
+
+    describe("toast announcements", () => {
+        function AddToastButton() {
+            const { addSuccess } = useToastMessage();
+            return (
+                <button
+                    type={"button"}
+                    onClick={() => addSuccess({ id: "metric.saved" }, { values: { name: "Revenue" } })}
+                >
+                    Save
+                </button>
+            );
+        }
+
+        function renderInToastsContext(isModal: boolean) {
+            return render(
+                <IntlProvider
+                    locale={"en-US"}
+                    messages={{ "metric.saved": "Metric ''{name}'' saved." }}
+                    onError={() => {}}
+                >
+                    <ToastsCenterContextProvider>
+                        <DialogBase accessibilityConfig={{ title: "Edit metric", isModal }}>
+                            <AddToastButton />
+                        </DialogBase>
+                    </ToastsCenterContextProvider>
+                </IntlProvider>,
+            );
+        }
+
+        it("should announce a toast once when the dialog is not aria-modal", () => {
+            renderInToastsContext(false);
+
+            fireEvent.click(screen.getByRole("button", { name: "Save" }));
+
+            const regions = screen
+                .getAllByRole("status")
+                .filter((region) => region.textContent?.includes("Metric 'Revenue' saved."));
+            expect(regions).toHaveLength(1);
+            expect(screen.getByRole("dialog")).not.toContainElement(regions[0]);
+        });
+
+        it("should announce a toast from inside an aria-modal dialog", () => {
+            renderInToastsContext(true);
+
+            const dialog = screen.getByRole("dialog");
+            fireEvent.click(screen.getByRole("button", { name: "Save" }));
+
+            const regionInDialog = within(dialog).getByRole("status");
+            expect(regionInDialog).toHaveTextContent("Metric 'Revenue' saved.");
+        });
     });
 
     describe("cancel", () => {

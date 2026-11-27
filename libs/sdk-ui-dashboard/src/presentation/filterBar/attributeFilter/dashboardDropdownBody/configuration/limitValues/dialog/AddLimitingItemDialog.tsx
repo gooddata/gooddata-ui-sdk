@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 
-import { type ICatalogDateDataset, type IDashboardDateFilter, type ObjRef } from "@gooddata/sdk-model";
+import {
+    type DashboardDateFilterOfAnyType,
+    type ICatalogDateDataset,
+    type ObjRef,
+} from "@gooddata/sdk-model";
 import { type IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import { type IDashboardAttributeFilterParentItem } from "../../../../../../../model/types/attributeFilterTypes.js";
@@ -33,7 +37,7 @@ export interface IAddLimitingItemDialogProps {
     currentlySelectedItems: ObjRef[];
     dependentDateFilters: IDashboardDependentDateFilter[];
     availableDatasets: ICatalogDateDataset[];
-    dependentCommonDateFilter: IDashboardDateFilter;
+    dependentCommonDateFilter: DashboardDateFilterOfAnyType;
     commonDateFilterTitle: string;
     onSelect: (item: ValuesLimitingItem) => void;
     onClose: () => void;

@@ -3,6 +3,7 @@
 import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeDisplayFormMetadataObject,
     type IAttributeElement,
     type IAttributeFilter,
@@ -56,7 +57,11 @@ export interface IUseAttributeFilterHandlerStateResult {
             search?: string;
             limitingAttributeFilters?: IElementsQueryAttributeFilter[];
             limitingMeasures?: IMeasure[];
-            limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
+            limitingDateFilters?: (
+                | IRelativeDateFilter
+                | IAbsoluteDateFilter
+                | IAbsoluteGranularityDateFilter
+            )[];
             limitingValidationItems?: ObjRef[];
         };
     };

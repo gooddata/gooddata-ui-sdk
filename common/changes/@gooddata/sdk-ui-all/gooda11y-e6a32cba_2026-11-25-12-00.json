@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-metric-component: The \"Metric definition\" MAQL editor announces the result of the Format Document (Shift+Alt+F) and Format Selection (Ctrl+K Ctrl+F) commands to screen readers, including when there is nothing to format or formatting fails.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

@@ -4,8 +4,9 @@ import { type SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
 
 import {
+    dashboardFilterObjRef,
     isDashboardAttributeFilterItem,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
@@ -44,8 +45,8 @@ export function* removeRestrictedFiltersHandler(
         ...filterLocalIdentifiers(restricted.filter(isDashboardMeasureValueFilter)),
     ];
     const dateFilterDataSets = restricted
-        .filter(isDashboardDateFilterWithDimension)
-        .map((filter) => filter.dateFilter.dataSet!);
+        .filter(isDashboardDateFilterWithDimensionOfAnyType)
+        .map((filter) => dashboardFilterObjRef(filter)!);
 
     if (attributeFilterLocalIds.length) {
         yield call(

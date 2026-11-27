@@ -6,6 +6,7 @@ import {
     type DateAttributeGranularity,
     idRef,
     newAbsoluteDateFilter,
+    newAbsoluteGranularityDateFilter,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -49,6 +50,36 @@ describe("mapDashboardDateFilterToDependentDateFilter", () => {
         ).toStrictEqual({
             dateFilter: {
                 relativeDateFilter: { dataset, granularity: "WEEK", from: -10, to: -10 },
+            },
+        });
+    });
+
+    it("sends an absolute date filter with granularity with both edges", () => {
+        expect(
+            mapDashboardDateFilterToDependentDateFilter(
+                newAbsoluteGranularityDateFilter(dataSet, "GDC.time.month", "2026-03", "2026-05", {
+                    localIdentifier: "dateFilterLocalId",
+                }),
+            ),
+        ).toStrictEqual({
+            dateFilter: {
+                absoluteGranularityDateFilter: {
+                    dataset,
+                    granularity: "MONTH",
+                    from: "2026-03",
+                    to: "2026-05",
+                },
+            },
+        });
+    });
+
+    it.each([
+        ["from", newAbsoluteGranularityDateFilter(dataSet, "GDC.time.year", "2025"), { from: "2025" }],
+        ["to", newAbsoluteGranularityDateFilter(dataSet, "GDC.time.year", undefined, "2025"), { to: "2025" }],
+    ])("sends an absolute date filter with granularity with only %s", (_edge, filter, range) => {
+        expect(mapDashboardDateFilterToDependentDateFilter(filter)).toStrictEqual({
+            dateFilter: {
+                absoluteGranularityDateFilter: { dataset, granularity: "YEAR", ...range },
             },
         });
     });

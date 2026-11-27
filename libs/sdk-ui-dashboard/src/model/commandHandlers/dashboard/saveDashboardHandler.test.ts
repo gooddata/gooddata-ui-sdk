@@ -1,8 +1,9 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import {
+    type IDashboard,
     type IDashboardDefinition,
     type IDashboardLayout,
     type IDashboardWidget,
@@ -20,7 +21,7 @@ import {
     SimpleDashboardIdentifier,
     SimpleDashboardWithReferences,
 } from "../../../tests/SimpleDashboard.test.helpers.js";
-import { saveDashboard } from "../../commands/dashboard.js";
+import { changeDashboardDefinition, saveDashboard } from "../../commands/dashboard.js";
 import { addLayoutSection } from "../../commands/layout.js";
 import { createDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
@@ -42,6 +43,22 @@ import { isTemporaryIdentity } from "../../utils/dashboardItemUtils.js";
 
 import { dashboardWithDrillReferences } from "./dashboardDrillReferences.js";
 import { getDashboardWithSharing } from "./saveDashboardHandler.js";
+
+const AiDrafts = ["A", "B"].map((suffix, index) => ({
+    ...SimpleDashboardWithReferences.dashboard,
+    identifier: `draft-${suffix}`,
+    ref: idRef(`draft-${suffix}`),
+    uri: `/draft-${suffix}`,
+    title: `Draft ${suffix}`,
+    filterContext: SimpleDashboardFilterContext,
+    tabs: undefined,
+    layout: {
+        ...SimpleDashboardWithReferences.dashboard.layout!,
+        sections: SimpleDashboardWithReferences.dashboard
+            .layout!.sections.slice(1, index + 2)
+            .map((section) => ({ ...section, items: section.items.slice(0, 1) })),
+    },
+}));
 
 describe("save dashboard handler", () => {
     describe("for a new dashboard", () => {
@@ -192,6 +209,100 @@ describe("save dashboard handler", () => {
 
             expect(event.payload.originalDashboardId).toEqual(SimpleDashboardIdentifier);
             expect(event.payload.savedInsights).toEqual([]);
+        });
+
+        it.each([
+            [0, 1, false],
+            [1, 0, false],
+            [0, 1, true],
+            [1, 0, true],
+        ] as const)(
+            "saves the opened AI draft, not the previously opened one (first: %s, opened: %s, first already saved: %s)",
+            async (firstIndex, openedIndex, firstAlreadySaved) => {
+                const firstDraft = AiDrafts[firstIndex];
+                const openedDraft = AiDrafts[openedIndex];
+                const workspace = Tester.ctx.backend.workspace(Tester.ctx.workspace);
+                const dashboards = workspace.dashboards();
+                vi.spyOn(workspace, "dashboards").mockReturnValue(dashboards);
+                vi.spyOn(Tester.ctx.backend, "workspace").mockReturnValue(workspace);
+
+                // The recorded backend's create always generates an ID; use its persistence
+                // implementation with the supplied identity to support the AI create contract.
+                const create = vi
+                    .spyOn(dashboards, "createDashboard")
+                    .mockImplementation((definition) =>
+                        dashboards.updateDashboard({ ...definition, title: "" } as IDashboard, definition),
+                    );
+                const get = vi.spyOn(dashboards, "getDashboard");
+                if (firstAlreadySaved) {
+                    await dashboards.updateDashboard({ ...firstDraft, title: "" }, firstDraft);
+                }
+
+                Tester.dispatch(configActions.setAiMode("active"));
+                for (const draft of [firstDraft, openedDraft]) {
+                    await Tester.dispatchAndWaitFor(
+                        changeDashboardDefinition(draft),
+                        "GDC.DASH/EVT.DEFINITION_CHANGED",
+                    );
+                }
+                get.mockClear();
+
+                const event: DashboardSaved = await Tester.dispatchAndWaitFor(
+                    saveDashboard(),
+                    "GDC.DASH/EVT.SAVED",
+                );
+
+                expect(get).toHaveBeenCalledExactlyOnceWith(openedDraft.ref);
+                expect(create).toHaveBeenCalledExactlyOnceWith(
+                    expect.objectContaining({
+                        identifier: openedDraft.identifier,
+                        ref: openedDraft.ref,
+                        uri: openedDraft.uri,
+                        title: openedDraft.title,
+                    }),
+                    false,
+                );
+                expect(event.payload.newDashboard).toBe(true);
+                expect(event.payload.originalDashboardId).toBe(openedDraft.identifier);
+                expect(event.payload.dashboard.identifier).toBe(openedDraft.identifier);
+                expect(event.ctx.dashboardRef).toEqual(openedDraft.ref);
+
+                const storedDashboard = await dashboards.getDashboard(openedDraft.ref);
+                expect(storedDashboard.title).toBe(openedDraft.title);
+                expect(storedDashboard.layout).toEqual(openedDraft.layout);
+                expect(storedDashboard.layout?.sections.flatMap((section) => section.items)).toHaveLength(
+                    openedIndex + 1,
+                );
+                const previousDashboard = await dashboards
+                    .getDashboard(firstDraft.ref)
+                    .catch(({ httpStatus }) => ({ httpStatus }));
+                expect(previousDashboard).toEqual(firstAlreadySaved ? firstDraft : { httpStatus: 404 });
+            },
+        );
+
+        it("keeps the saved dashboard identity when applying other AI definitions", async () => {
+            let existingDashboardTester: DashboardTester;
+            await preloadedTesterFactory((tester) => {
+                existingDashboardTester = tester;
+            }, SimpleDashboardIdentifier);
+            existingDashboardTester!.dispatch(configActions.setAiMode("active"));
+
+            for (const draft of AiDrafts) {
+                await existingDashboardTester!.dispatchAndWaitFor(
+                    changeDashboardDefinition(draft),
+                    "GDC.DASH/EVT.DEFINITION_CHANGED",
+                );
+            }
+            const event: DashboardSaved = await existingDashboardTester!.dispatchAndWaitFor(
+                saveDashboard(),
+                "GDC.DASH/EVT.SAVED",
+            );
+
+            expect(event.payload.newDashboard).toBe(false);
+            expect(event.payload.originalDashboardId).toBe(SimpleDashboardIdentifier);
+            expect(event.payload.dashboard.identifier).toBe(SimpleDashboardIdentifier);
+            expect(event.payload.dashboard.title).toBe(AiDrafts[1].title);
+            expect(event.payload.dashboard.layout).toEqual(AiDrafts[1].layout);
         });
 
         it("should emit correct events", async () => {

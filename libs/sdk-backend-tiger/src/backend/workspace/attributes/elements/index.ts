@@ -27,6 +27,7 @@ import {
 import {
     type DateAttributeGranularity,
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IArbitraryAttributeFilter,
     type IAttributeElement,
     type IAttributeFilter,
@@ -142,7 +143,9 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     private signal: AbortSignal | null = null;
     private options: IElementsQueryOptions | undefined;
     private attributeFilters: IElementsQueryAttributeFilter[] | undefined;
-    private dateFilters: (IRelativeDateFilter | IAbsoluteDateFilter)[] | undefined;
+    private dateFilters:
+        | (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[]
+        | undefined;
     private validateBy: ObjRef[] | undefined;
 
     constructor(
@@ -175,7 +178,9 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         return this;
     }
 
-    public withDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery {
+    public withDateFilters(
+        filters: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[],
+    ): IElementsQuery {
         this.dateFilters = filters;
         return this;
     }

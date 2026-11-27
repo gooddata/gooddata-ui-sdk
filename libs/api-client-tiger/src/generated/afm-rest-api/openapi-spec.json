@@ -6546,13 +6546,14 @@
                     },
                     "objectType": {
                         "type": "string",
-                        "description": "Type of the object to describe. One of: visualization, dashboard, metric, fact, attribute",
+                        "description": "Type of the object to describe. One of: visualization, dashboard, metric, fact, attribute, document",
                         "enum": [
                             "Visualization",
                             "Dashboard",
                             "Metric",
                             "Fact",
-                            "Attribute"
+                            "Attribute",
+                            "Document"
                         ]
                     }
                 }
@@ -6589,7 +6590,8 @@
                             "Dashboard",
                             "Metric",
                             "Fact",
-                            "Attribute"
+                            "Attribute",
+                            "Document"
                         ]
                     }
                 }

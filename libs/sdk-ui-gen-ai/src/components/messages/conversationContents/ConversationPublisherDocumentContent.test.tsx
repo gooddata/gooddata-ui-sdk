@@ -25,6 +25,7 @@ import {
     setAmbientUserContextAction,
     setIsPreviewAction,
     setSettingsAction,
+    setUserContextAction,
 } from "../../../store/chatWindow/chatWindowSlice.js";
 import {
     messagesSliceName,
@@ -93,6 +94,14 @@ const DOCUMENT_V2: IPublisherDocumentDefinitionV2 = {
     },
 };
 
+function documentV2Context(id: string | null) {
+    return {
+        ref: id === null ? undefined : idRef(id, "document"),
+        title: "Open",
+        definition: DOCUMENT_V2,
+    };
+}
+
 function renderCard({
     saved,
     baseDocumentId,
@@ -108,6 +117,8 @@ function renderCard({
     allowNativeLinks,
     openDocumentId,
     openDraftRef,
+    openDocumentV2Id,
+    pinnedDocumentV2Id,
     linkHandler = vi.fn(),
     canManage = false,
     canCreateDocument = true,
@@ -126,6 +137,10 @@ function renderCard({
     allowNativeLinks?: boolean;
     openDocumentId?: string;
     openDraftRef?: string;
+    /** The document open in the Publisher v2 editor; `null` is one that was never saved. */
+    openDocumentV2Id?: string | null;
+    /** A Publisher v2 document the user pinned as the chat's context. */
+    pinnedDocumentV2Id?: string;
     linkHandler?: (event: LinkHandlerEvent) => string | undefined;
     canManage?: boolean;
     canCreateDocument?: boolean;
@@ -158,6 +173,20 @@ function renderCard({
                         },
                     },
                 },
+            }),
+        );
+    }
+    if (openDocumentV2Id !== undefined) {
+        store.dispatch(
+            setAmbientUserContextAction({
+                userContext: { view: { publisherDocumentV2: documentV2Context(openDocumentV2Id) } },
+            }),
+        );
+    }
+    if (pinnedDocumentV2Id !== undefined) {
+        store.dispatch(
+            setUserContextAction({
+                userContext: { view: { publisherDocumentV2: documentV2Context(pinnedDocumentV2Id) } },
             }),
         );
     }
@@ -198,6 +227,12 @@ function renderCard({
 }
 
 const openButton = () => screen.getByRole("button", { name: "Open" });
+
+const expectDisabled = (linkHandler: ReturnType<typeof renderCard>["linkHandler"]) => {
+    expect((openButton() as HTMLButtonElement).disabled).toBe(true);
+    fireEvent.click(openButton());
+    expect(linkHandler).not.toHaveBeenCalled();
+};
 
 const originalLocation = Object.getOwnPropertyDescriptor(window, "location");
 
@@ -598,6 +633,106 @@ describe("ConversationPublisherDocumentContent", () => {
 
         expect(linkHandler).not.toHaveBeenCalled();
     });
+
+    describe("without the create-document permission", () => {
+        const v2Card = {
+            documentV2: DOCUMENT_V2,
+            isPublisherV2Enabled: true,
+            canCreateDocument: false,
+        };
+
+        it("opens a draft written from the document open in the editor, with its conversation and message", () => {
+            const { linkHandler } = renderCard({ ...v2Card, baseDocumentId: "d1", openDocumentV2Id: "d1" });
+
+            fireEvent.click(openButton());
+
+            expect(linkHandler).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    type: "report",
+                    id: "item-1",
+                    action: "open",
+                    itemUrl: "/workspace/ws-1/reports/document/d1?conversation=conv-1&item=item-1",
+                    conversationId: "local-conversation-1",
+                    threadId: "conv-1",
+                }),
+            );
+        });
+
+        it("opens a draft saved into the document open in the editor", () => {
+            const { linkHandler } = renderCard({
+                ...v2Card,
+                baseDocumentId: "d0",
+                saved: "d1",
+                openDocumentV2Id: "d1",
+            });
+
+            fireEvent.click(openButton());
+
+            expect(linkHandler).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    id: "d1",
+                    itemUrl: "/workspace/ws-1/reports/document/d1?conversation=conv-1&item=item-1",
+                }),
+            );
+        });
+
+        it.each([
+            ["another document is open", { openDocumentV2Id: "other" }],
+            ["no document is open", {}],
+            [
+                "the chat does not receive the open document",
+                { openDocumentV2Id: "d1", isContextSetupEnabled: false },
+            ],
+            ["the document is only pinned as the chat's context", { pinnedDocumentV2Id: "d1" }],
+            [
+                "the document is only pinned while another one is open",
+                { pinnedDocumentV2Id: "d1", openDocumentV2Id: "other" },
+            ],
+        ])("cannot open a draft of a document when %s", (_description, options) => {
+            const { linkHandler } = renderCard({ ...v2Card, baseDocumentId: "d1", ...options });
+
+            expectDisabled(linkHandler);
+        });
+
+        it.each([
+            ["a saved document", "d1"],
+            ["a document that was never saved", null],
+        ])("cannot open a new draft while %s is open", (_description, openDocumentV2Id) => {
+            const { linkHandler } = renderCard({ ...v2Card, openDocumentV2Id });
+
+            expectDisabled(linkHandler);
+        });
+
+        it("cannot open a draft in the previous document format, even of the document that is open", () => {
+            const { linkHandler } = renderCard({
+                canCreateDocument: false,
+                baseDocumentId: "base-1",
+                openDocumentV2Id: "base-1",
+            });
+
+            expectDisabled(linkHandler);
+        });
+    });
+
+    it.each([false, true])(
+        "cannot open a draft of the open document from an agent preview (create-document permission: %s)",
+        async (canCreateDocument) => {
+            const { linkHandler } = renderCard({
+                documentV2: DOCUMENT_V2,
+                isPublisherV2Enabled: true,
+                canCreateDocument,
+                baseDocumentId: "d1",
+                openDocumentV2Id: "d1",
+                isPreview: true,
+            });
+
+            expectDisabled(linkHandler);
+            fireEvent.mouseEnter(openButton().parentElement!);
+            expect(await screen.findByRole("tooltip")).toHaveTextContent(
+                "Documents can't be opened from the agent preview.",
+            );
+        },
+    );
 
     it("says the document is unavailable when it no longer resolves", () => {
         renderCard({ publisherDocument: null });

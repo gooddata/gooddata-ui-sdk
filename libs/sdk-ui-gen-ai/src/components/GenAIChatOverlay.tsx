@@ -19,6 +19,7 @@ import { type RootState } from "../store/types.js";
 
 import { isChatWindowCovered } from "./chatOverlayEscapeGuard.js";
 import { type GenAIAssistantDisplayMode } from "./ConfigContext.js";
+import { REPLY_BOX_ID } from "./constants.js";
 import { GenAIChatConversations } from "./GenAIChatConversations.js";
 import { GenAIChatHeader } from "./GenAIChatHeader.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
@@ -112,6 +113,12 @@ export function GenAIChatOverlay({
                         isModal={isFullscreen}
                         returnFocusTo={returnFocusTo}
                         returnFocusAfterClose={!!returnFocusTo}
+                        // Open straight into the chat input, never stopping on the first focusable
+                        // element ("Recent conversations" button) first. When the input is not
+                        // rendered (error states), the Dialog falls back to its first focusable
+                        // element, so focus always moves into the dialog, even when the input
+                        // itself declines to autofocus (e.g. a pending clarifying question).
+                        initialFocus={REPLY_BOX_ID}
                         alignPoints={[position]}
                         closeOnEscape={false}
                         submitOnEnterKey={false}

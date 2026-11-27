@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: after adding a filter to a dashboard tab in the Scheduled emails dialog, focus returns to that tab's Add filter button and the added filter is announced, so focus no longer leaves the dialog.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

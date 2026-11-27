@@ -12,7 +12,6 @@ import {
     type FilterContextItem,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
-    type IDashboardDateFilter,
     type IDashboardMeasureValueFilter,
     type ObjRef,
     areObjRefsEqual,
@@ -26,7 +25,6 @@ import {
     dashboardFilterObjRef,
     dashboardMeasureValueFilterLocalIdentifier,
     getAttributeElementsItems,
-    isAllTimeDashboardDateFilter,
     isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
@@ -45,10 +43,6 @@ import {
 } from "@gooddata/sdk-model";
 import { _compact, _partition, _uniqBy } from "@gooddata/util";
 
-import {
-    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
-    containsAbsoluteGranularityDateFilterWithDataSet,
-} from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED } from "../../../_staging/dashboard/parameterizedDateFilters.js";
 import { type ChangeFilterContextSelection } from "../../commands/filters.js";
@@ -65,10 +59,7 @@ import {
     selectAttributeFilterConfigsSelectionTypeMap,
     selectAttributeFilterConfigsSelectionTypeMapByTab,
 } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import {
-    type IUpdateAttributeFilterSelectionPayload,
-    type IUpsertDateFilterPayload,
-} from "../../store/tabs/filterContext/filterContextReducers.js";
+import { type IUpdateAttributeFilterSelectionPayload } from "../../store/tabs/filterContext/filterContextReducers.js";
 import {
     isDisplayFormRefOf,
     selectAttributeFilterDisplayFormsMap,
@@ -79,10 +70,10 @@ import {
     selectFilterContextAttributeFilterItems,
     selectFilterContextAttributeFilterItemsForTab,
     type selectFilterContextAttributeFilters,
-    selectFilterContextDateFilterByDataSet,
     selectFilterContextDateFilterByDataSetForTab,
-    selectFilterContextDateFiltersWithDimension,
+    selectFilterContextDateFilterOfAnyTypeByDataSet,
     selectFilterContextDateFiltersWithDimensionForTab,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
     selectFilterContextFilters,
     selectFilterContextMeasureValueFilters,
     selectFiltersForTab,
@@ -278,18 +269,18 @@ function* selectFilterContextAttributeFilterByDisplayFormTabAware(
 function* selectFilterContextDateFilterByDataSetTabAware(
     dataSet: ObjRef,
     tabLocalIdentifier?: string,
-): SagaIterator<ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>>> {
+): SagaIterator<DashboardDateFilterOfAnyType | undefined> {
     return tabLocalIdentifier
         ? yield select(selectFilterContextDateFilterByDataSetForTab(dataSet, tabLocalIdentifier))
-        : yield select(selectFilterContextDateFilterByDataSet(dataSet));
+        : yield select(selectFilterContextDateFilterOfAnyTypeByDataSet(dataSet));
 }
 
 function* selectFilterContextDateFiltersWithDimensionTabAware(
     tabLocalIdentifier?: string,
-): SagaIterator<ReturnType<typeof selectFilterContextDateFiltersWithDimension>> {
+): SagaIterator<DashboardDateFilterOfAnyType[]> {
     return tabLocalIdentifier
         ? yield select(selectFilterContextDateFiltersWithDimensionForTab(tabLocalIdentifier))
-        : yield select(selectFilterContextDateFiltersWithDimension);
+        : yield select(selectFilterContextDateFiltersWithDimensionOfAnyType);
 }
 
 function* selectFilterContextMeasureValueFiltersTabAware(
@@ -419,13 +410,6 @@ export function* changeFilterContextSelectionHandler(
             ) && !(matchByLocalIdentifier && addressesRestrictedFilter(filter)),
     );
 
-    if (containsAbsoluteGranularityDateFilterWithDataSet(normalizedFilters)) {
-        yield dispatchDashboardEvent(
-            invalidArgumentsProvided(ctx, cmd, ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED),
-        );
-        return;
-    }
-
     const disabledComputedAttributeRef: SagaReturnType<typeof findDisabledComputedAttributeRef> = yield call(
         findDisabledComputedAttributeRef,
         [
@@ -539,7 +523,13 @@ export function* changeFilterContextSelectionHandler(
             restorePerTabOriginals,
             tabLocalIdentifier,
         ),
-        call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers, tabLocalIdentifier),
+        call(
+            getDateFiltersUpdateActions,
+            dateFiltersWithDimension,
+            resetOthers,
+            restorePerTabOriginals,
+            tabLocalIdentifier,
+        ),
         call(getMeasureValueFiltersUpdateActions, measureValueFilters, resetOthers, tabLocalIdentifier),
     ]);
 
@@ -1347,76 +1337,56 @@ function* getMeasureValueFiltersUpdateActions(
 }
 
 function* getDateFiltersUpdateActions(
-    dateFilters: IDashboardDateFilter[],
+    dateFilters: DashboardDateFilterOfAnyType[],
     resetOthers: boolean,
+    restorePerTabOriginals: boolean,
     tabLocalIdentifier?: string,
 ): SagaIterator<SelectionUpdateAction[]> {
     const updateActions: SelectionUpdateAction[] = [];
     const handledDataSets = new Set<string>();
 
     for (const dateFilter of dateFilters) {
-        const filterRef = dateFilter.dateFilter.dataSet!;
-        const dashboardFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>> =
+        const filterRef = dashboardFilterObjRef(dateFilter)!;
+        const dashboardFilter: SagaReturnType<typeof selectFilterContextDateFilterByDataSetTabAware> =
             yield call(selectFilterContextDateFilterByDataSetTabAware, filterRef, tabLocalIdentifier);
 
         if (dashboardFilter) {
-            const localIdentifierObj = dateFilter.dateFilter.localIdentifier
-                ? { localIdentifier: dateFilter.dateFilter.localIdentifier }
-                : {};
-            const emptyValueHandlingObj = dateFilter.dateFilter.emptyValueHandling
-                ? { emptyValueHandling: dateFilter.dateFilter.emptyValueHandling }
-                : {};
-            handledDataSets.add(serializeObjRef(dashboardFilter.dateFilter.dataSet!));
-            const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
-                ? {
-                      type: "allTime",
-                      dataSet: dateFilter.dateFilter.dataSet,
-                      ...localIdentifierObj,
-                      ...emptyValueHandlingObj,
-                      tabLocalIdentifier,
-                  }
-                : {
-                      type: dateFilter.dateFilter.type,
-                      granularity: dateFilter.dateFilter.granularity,
-                      from: dateFilter.dateFilter.from,
-                      to: dateFilter.dateFilter.to,
-                      dataSet: dateFilter.dateFilter.dataSet,
-                      ...localIdentifierObj,
-                      ...(dateFilter.dateFilter.boundedFilter
-                          ? { boundedFilter: dateFilter.dateFilter.boundedFilter }
-                          : {}),
-                      ...emptyValueHandlingObj,
-                      tabLocalIdentifier,
-                  };
-
-            updateActions.push(tabsActions.upsertDateFilter(upsertPayload));
+            handledDataSets.add(serializeObjRef(dashboardFilterObjRef(dashboardFilter)!));
+            // the same check as for the common date filter, a filter that cannot be applied keeps its selection
+            const canApply: SagaReturnType<typeof canApplyDateFilter> =
+                isDashboardAbsoluteGranularityDateFilter(dateFilter) && !restorePerTabOriginals
+                    ? yield call(canApplyDateFilter, dateFilter)
+                    : true;
+            if (!canApply) {
+                continue;
+            }
+            updateActions.push(
+                tabsActions.upsertDateFilter({
+                    ...toUpsertDateFilterPayload(dateFilter),
+                    tabLocalIdentifier,
+                }),
+            );
         }
     }
 
     if (resetOthers) {
-        const currentDateFilters: ReturnType<typeof selectFilterContextDateFiltersWithDimension> = yield call(
-            selectFilterContextDateFiltersWithDimensionTabAware,
-            tabLocalIdentifier,
-        );
+        const currentDateFilters: SagaReturnType<typeof selectFilterContextDateFiltersWithDimensionTabAware> =
+            yield call(selectFilterContextDateFiltersWithDimensionTabAware, tabLocalIdentifier);
 
         // for filters that have not been handled by the loop above, create a clear selection actions
         const unhandledFilters = currentDateFilters.filter(
-            (filter) => !handledDataSets.has(serializeObjRef(filter.dateFilter.dataSet!)),
+            (filter) => !handledDataSets.has(serializeObjRef(dashboardFilterObjRef(filter)!)),
         );
-        if (unhandledFilters.length > 0) {
-            for (const dateFilter of unhandledFilters) {
-                const localIdentifierObj = dateFilter.dateFilter.localIdentifier
-                    ? { localIdentifier: dateFilter.dateFilter.localIdentifier }
-                    : {};
-                updateActions.push(
-                    tabsActions.upsertDateFilter({
-                        type: "allTime",
-                        dataSet: dateFilter.dateFilter.dataSet,
-                        ...localIdentifierObj,
-                        tabLocalIdentifier,
-                    }),
-                );
-            }
+        for (const dateFilter of unhandledFilters) {
+            const localIdentifier = dashboardFilterLocalIdentifier(dateFilter);
+            updateActions.push(
+                tabsActions.upsertDateFilter({
+                    type: "allTime",
+                    dataSet: dashboardFilterObjRef(dateFilter),
+                    ...(localIdentifier ? { localIdentifier } : {}),
+                    tabLocalIdentifier,
+                }),
+            );
         }
     }
 

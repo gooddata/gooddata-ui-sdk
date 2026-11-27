@@ -554,6 +554,26 @@ export function isDashboardDateFilterWithDimension(obj: unknown): obj is IDashbo
 }
 
 /**
+ * Type-guard testing whether the provided object is a date filter with dimension of any type, i.e. an instance of
+ * {@link DashboardDateFilterOfAnyType} with date dataSet (aka dimension) defined.
+ * @alpha
+ */
+export function isDashboardDateFilterWithDimensionOfAnyType(
+    obj: unknown,
+): obj is DashboardDateFilterOfAnyType {
+    if (isDashboardDateFilter(obj)) {
+        return !!obj.dateFilter.dataSet;
+    }
+    if (isDashboardAbsoluteGranularityDateFilter(obj)) {
+        return !!obj.dashboardAbsoluteGranularityDateFilter.dataSet;
+    }
+    if (isDashboardParameterizedDateFilter(obj)) {
+        return !!obj.dashboardParameterizedDateFilter.dataSet;
+    }
+    return false;
+}
+
+/**
  * Returns true when given date filter has type set to relative.
  * @alpha
  */

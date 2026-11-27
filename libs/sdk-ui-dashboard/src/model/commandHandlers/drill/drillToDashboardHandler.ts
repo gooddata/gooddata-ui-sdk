@@ -285,6 +285,7 @@ function selectAllMeasureValueFilters(state: DashboardState): IDashboardMeasureV
     return selectFilterContextMeasureValueFilters(state);
 }
 
+// TODO INE: MC-5779 - date filters with dimension of the whole-period type are not passed through yet.
 function selectAllDraggableFilters(state: DashboardState): FilterContextItem[] {
     return selectFilterContextDraggableFilterItems(state);
 }

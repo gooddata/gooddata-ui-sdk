@@ -1,8 +1,13 @@
 // (C) 2026 GoodData Corporation
 
-import { type NumberParameterDefinition, type StringParameterDefinition } from "@gooddata/api-client-tiger";
+import {
+    type DateRangeParameterDefinition,
+    type NumberParameterDefinition,
+    type StringParameterDefinition,
+} from "@gooddata/api-client-tiger";
 import type {
     Parameter,
+    DateRangeParameterDefinition as YamlDateRangeDefinition,
     NumberParameterDefinition as YamlNumberDefinition,
     StringParameterDefinition as YamlStringDefinition,
 } from "@gooddata/sdk-code-schemas/v1";
@@ -11,6 +16,7 @@ import {
     type DeclarativeCodeParameter,
     optionalConstraints,
     toAllowedValue,
+    toDateRangeValue,
 } from "../utils/parameterUtils.js";
 import { convertIdToTitle } from "../utils/sharedUtils.js";
 
@@ -27,10 +33,15 @@ export function yamlParameterToDeclarative(input: Parameter): DeclarativeCodePar
 
 function yamlParameterDefinitionToDeclarative(
     definition: Parameter["definition"],
-): StringParameterDefinition | NumberParameterDefinition {
-    return definition.type === "NUMBER"
-        ? yamlNumberDefinitionToDeclarative(definition)
-        : yamlStringDefinitionToDeclarative(definition);
+): DeclarativeCodeParameter["content"] {
+    switch (definition.type) {
+        case "STRING":
+            return yamlStringDefinitionToDeclarative(definition);
+        case "NUMBER":
+            return yamlNumberDefinitionToDeclarative(definition);
+        case "DATE_RANGE":
+            return yamlDateRangeDefinitionToDeclarative(definition);
+    }
 }
 
 function yamlStringDefinitionToDeclarative(definition: YamlStringDefinition): StringParameterDefinition {
@@ -54,5 +65,14 @@ function yamlNumberDefinitionToDeclarative(definition: YamlNumberDefinition): Nu
         type: "NUMBER",
         defaultValue: definition.defaultValue,
         ...optionalConstraints({ min, max }),
+    };
+}
+
+function yamlDateRangeDefinitionToDeclarative(
+    definition: YamlDateRangeDefinition,
+): DateRangeParameterDefinition {
+    return {
+        type: "DATE_RANGE",
+        defaultValue: toDateRangeValue(definition.defaultValue),
     };
 }

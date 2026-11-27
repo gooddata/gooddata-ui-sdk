@@ -30,6 +30,8 @@ export enum CoreErrorCode {
     PagesOrSectionsRequired = "core.pagesOrSectionsRequired",
     MissingRequiredKey = "core.missingRequiredKey",
     UnsupportedGranularity = "core.unsupportedGranularity",
+    PeriodFilterNotSupported = "core.periodFilterNotSupported",
+    PeriodFilterWithRange = "core.periodFilterWithRange",
 }
 
 /**
@@ -61,6 +63,8 @@ export const CoreErrorMessages: Record<CoreErrorCode, string> = {
     [CoreErrorCode.PagesOrSectionsRequired]: `Content defines neither "pages" nor "sections". Add one of them; an empty document has "pages: []".`,
     [CoreErrorCode.MissingRequiredKey]: `Missing required key "{0}".`,
     [CoreErrorCode.UnsupportedGranularity]: `Granularity {0} is not supported. Supported granularities: {1}.`,
+    [CoreErrorCode.PeriodFilterNotSupported]: `Date filter "{0}" uses a date range parameter, which documents do not support.`,
+    [CoreErrorCode.PeriodFilterWithRange]: `Date filter "{0}" uses a date range parameter, so it cannot also set {1}.`,
 };
 
 /**
@@ -92,6 +96,8 @@ export const CoreErrorTypes: Record<CoreErrorCode, string> = {
     [CoreErrorCode.PagesOrSectionsRequired]: "PagesOrSectionsRequired",
     [CoreErrorCode.MissingRequiredKey]: "MissingRequiredKey",
     [CoreErrorCode.UnsupportedGranularity]: "UnsupportedGranularity",
+    [CoreErrorCode.PeriodFilterNotSupported]: "PeriodFilterNotSupported",
+    [CoreErrorCode.PeriodFilterWithRange]: "PeriodFilterWithRange",
 };
 
 /**

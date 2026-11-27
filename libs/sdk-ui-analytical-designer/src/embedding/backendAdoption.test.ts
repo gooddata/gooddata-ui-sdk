@@ -23,12 +23,6 @@ import { isEmbeddingOriginValidationEnabled } from "../selectors/feature_flag_se
 import { storeApiToken } from "../store/application_context/app_context_actions.js";
 import { selectApiToken, selectApiTokenType } from "../store/application_context/app_context_selector.js";
 
-// The suite runs with `isolate: false`, so a sibling test file that loaded api_token_received_saga.ts with a mocked
-// backend.js leaves it cached that way. Drop the cache before this file's imports so both load for real.
-vi.hoisted(() => {
-    vi.resetModules();
-});
-
 const PARENT_ORIGIN = "https://embedder.example.com";
 
 const setApiTokenCommand = (token: string, type: "gooddata" | "jwt") =>

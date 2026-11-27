@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-filters: A period picked from the calendar, or typed and confirmed with Enter, in one period range picker field is no longer cleared when the other field is left empty, and the other field no longer shows an \"is empty\" error right after the pick. Enter in a field of an incomplete range commits that field and keeps focus in it.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

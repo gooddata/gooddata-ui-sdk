@@ -429,7 +429,7 @@ export interface IAnalyticsCatalogService {
  */
 export type AnalyticsCatalogGenerateDescriptionObjectType = Extract<
     ObjectType,
-    "insight" | "analyticalDashboard" | "measure" | "fact" | "attribute"
+    "insight" | "analyticalDashboard" | "measure" | "fact" | "attribute" | "document"
 >;
 
 /**

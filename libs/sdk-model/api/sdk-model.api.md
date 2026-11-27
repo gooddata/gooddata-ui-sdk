@@ -7647,6 +7647,9 @@ export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardD
 export function isDashboardDateFilterWithDimension(obj: unknown): obj is IDashboardDateFilter;
 
 // @alpha
+export function isDashboardDateFilterWithDimensionOfAnyType(obj: unknown): obj is DashboardDateFilterOfAnyType;
+
+// @alpha
 export function isDashboardDefinition(obj: unknown): obj is IDashboardDefinition;
 
 // @public

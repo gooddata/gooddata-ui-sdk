@@ -5,9 +5,20 @@ import { type ReactNode, useState } from "react";
 import { useIntl } from "react-intl";
 
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { Button, UiCopyButton, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import {
+    Button,
+    UiCopyButton,
+    UiIconButton,
+    UiTooltip,
+    useUiAutofocusConnectors,
+} from "@gooddata/sdk-ui-kit";
 
 type GlobalErrorProps = {
+    /**
+     * Focus the first action of the error when it mounts. Used where the error replaces
+     * the chat input that would otherwise receive the initial focus.
+     */
+    autofocus?: boolean;
     errorMessage?: string;
     errorDescription?: string;
     errorDetails?: string;
@@ -18,6 +29,7 @@ type GlobalErrorProps = {
 };
 
 export function GlobalError({
+    autofocus = false,
     errorMessage,
     errorDescription,
     errorDetails,
@@ -31,8 +43,10 @@ export function GlobalError({
     const [showMore, setShowMore] = useState(false);
     const hasShowMoreButton = Boolean(errorDetails && !showMore);
 
+    const autofocusConnectors = useUiAutofocusConnectors<HTMLDivElement>({ active: autofocus });
+
     return (
-        <div className="gd-gen-ai-chat__global_error">
+        <div className="gd-gen-ai-chat__global_error" ref={autofocusConnectors.ref}>
             <div>
                 <ErrorComponent
                     message={errorMessage ?? intl.formatMessage({ id: "gd.gen-ai.global-error" })}

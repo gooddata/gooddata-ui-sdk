@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-code-convertors: The Python package exposes `yaml_parameter_to_declarative` and `declarative_parameter_to_yaml`, so Python can convert parameters between Analytics as Code and the declarative API.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

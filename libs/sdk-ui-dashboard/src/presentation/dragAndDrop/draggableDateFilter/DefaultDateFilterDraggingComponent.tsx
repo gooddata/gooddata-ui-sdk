@@ -1,5 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
+import { dashboardFilterObjRef } from "@gooddata/sdk-model";
 import { IconDragHandle, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -12,9 +13,9 @@ export function DefaultDateFilterDraggingComponent({ item }: IDateFilterDragging
     const theme = useTheme();
 
     const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
-    const dateDataSet = dateDataSetsMap.get(item.filter.dateFilter.dataSet!);
+    const dateDataSet = dateDataSetsMap.get(dashboardFilterObjRef(item.filter)!);
     const dataSetTitle = dateDataSet ? dateDataSet.dataSet.title : "";
-    const { title } = useCurrentDateFilterConfig(item.filter.dateFilter.dataSet, dataSetTitle);
+    const { title } = useCurrentDateFilterConfig(dashboardFilterObjRef(item.filter), dataSetTitle);
 
     if (!dateDataSet) {
         return null;

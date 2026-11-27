@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type DashboardDateFilterOfAnyType,
     type ICatalogDateDataset,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
@@ -97,6 +98,17 @@ export interface IDashboardRichTextWidgetFilterSettingsChangedPayload {
     readonly ignoredDateFilters?: IDashboardDateFilter[];
 
     /**
+     * Date filters with dimension of any type that are ignored for the widget.
+     *
+     * @remarks
+     * Unlike `ignoredDateFilters`, it lists the absolute date filters with granularity too.
+     * If empty, then all date filters defined for the dashboard are in effect.
+     *
+     * @alpha
+     */
+    readonly ignoredDateFiltersOfAnyType?: DashboardDateFilterOfAnyType[];
+
+    /**
      * Date dataset used for date filtering.
      *
      * If undefined, then dashboard's date filter is not in effect for the widget.
@@ -128,6 +140,7 @@ export function richTextWidgetFilterSettingsChanged(
     dateDatasetForFiltering: ICatalogDateDataset | undefined,
     correlationId?: string,
     ignoredDateFilters?: IDashboardDateFilter[],
+    ignoredDateFiltersOfAnyType?: DashboardDateFilterOfAnyType[],
 ): IDashboardRichTextWidgetFilterSettingsChanged {
     return {
         type: "GDC.DASH/EVT.RICH_TEXT_WIDGET.FILTER_SETTINGS_CHANGED",
@@ -137,6 +150,7 @@ export function richTextWidgetFilterSettingsChanged(
             ref,
             ignoredAttributeFilters,
             ignoredDateFilters,
+            ignoredDateFiltersOfAnyType,
             dateDatasetForFiltering,
         },
     };

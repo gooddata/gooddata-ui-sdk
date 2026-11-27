@@ -15,6 +15,7 @@ import type {
     DashboardAttributeFilter,
     DashboardFilters,
     DashboardMetricValueFilter,
+    DashboardPeriodDateFilter,
     DashboardRelativeDateFilter,
     DashboardTextFilter,
     IgnoredDrillDown,
@@ -68,10 +69,10 @@ import { parseUrlTarget } from "../utils/customUrl.js";
 import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "../utils/errors.js";
 import { yamlConditionToMatch } from "../utils/filterUtils.js";
 import { convertGranularity } from "../utils/granularityUtils.js";
+import { isPeriodDateFilter, periodDateFilterToStored } from "../utils/periodDateFilter.js";
 import { toDeclarativePermissions } from "../utils/permissionUtils.js";
 import { collectFieldLevelFilters, convertIdToTitle, getFullField } from "../utils/sharedUtils.js";
 import {
-    isAbsoluteDateFilter,
     isAttributeField,
     isAttributeFilter,
     isContainerWidget,
@@ -84,10 +85,10 @@ import {
     isDashboardNoopDateFilter,
     isDashboardRelativeDateFilter,
     isDashboardTextFilter,
+    isDateFilter,
     isInsightWidget,
     isMetricValueFilter,
     isRankingFilter,
-    isRelativeDateFilter,
     isRichTextWidget,
     isVisualizationSwitcherWidget,
     parseReferenceObject,
@@ -875,7 +876,7 @@ function sourceInsightFilterIdToDeclarative(
             label: createIdentifier<any>(filter.using),
         };
     }
-    if (isAbsoluteDateFilter(filter) || isRelativeDateFilter(filter)) {
+    if (isDateFilter(filter)) {
         return {
             type: "dateFilter",
             dataSet: createIdentifier<any>(filter.using, { forceType: "dataset" }),
@@ -1001,6 +1002,7 @@ function flattenFilters(
     | DashboardTextFilter
     | DashboardAbsoluteDateFilter
     | DashboardRelativeDateFilter
+    | DashboardPeriodDateFilter
     | DashboardMetricValueFilter
 > {
     if (!yamlFilters) {
@@ -1012,6 +1014,7 @@ function flattenFilters(
         | DashboardTextFilter
         | DashboardAbsoluteDateFilter
         | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter
         | DashboardMetricValueFilter
     > = {};
 
@@ -1026,6 +1029,7 @@ function flattenFilters(
                 | DashboardTextFilter
                 | DashboardAbsoluteDateFilter
                 | DashboardRelativeDateFilter
+                | DashboardPeriodDateFilter
                 | DashboardMetricValueFilter;
         }
     }
@@ -1074,7 +1078,8 @@ export function yamlFilterContextToDeclarative(
         ([, filter]) =>
             isDashboardAbsoluteDateFilter(filter) ||
             isDashboardRelativeDateFilter(filter) ||
-            isDashboardEmptyDateFilter(filter),
+            isDashboardEmptyDateFilter(filter) ||
+            isPeriodDateFilter(filter),
     );
 
     const resolveFilterParents = (
@@ -1113,6 +1118,7 @@ export function yamlFilterContextToDeclarative(
             const filter = flatFilters[key];
             const isAbsoluteDateFilter = isDashboardAbsoluteDateFilter(filter);
             const isRelativeDateFilter = isDashboardRelativeDateFilter(filter);
+            const isPeriodFilter = isPeriodDateFilter(filter);
 
             if (isDashboardArbitraryTextFilter(filter)) {
                 const attributeFilterConfig: Partial<IDashboardAttributeFilterConfig> = {};
@@ -1201,7 +1207,7 @@ export function yamlFilterContextToDeclarative(
                 };
             }
 
-            if (isAbsoluteDateFilter || isRelativeDateFilter) {
+            if (isAbsoluteDateFilter || isRelativeDateFilter || isPeriodFilter) {
                 const emptyValueHandling = extractDashboardEmptyValueHandling(filter);
                 //others date filters
                 if (filter["date"]) {
@@ -1219,6 +1225,12 @@ export function yamlFilterContextToDeclarative(
                     if (isDashboardNoopDateFilter(filter)) {
                         return null;
                     }
+                }
+
+                if (isPeriodFilter) {
+                    return {
+                        dashboardParameterizedDateFilter: periodDateFilterToStored(filter, key, "dashboard"),
+                    };
                 }
 
                 return {
@@ -1428,7 +1440,11 @@ function extractFilterGroupsConfig(
 }
 
 function fillDateFilterConfig(
-    filter: DashboardAttributeFilter | DashboardAbsoluteDateFilter | DashboardRelativeDateFilter,
+    filter:
+        | DashboardAttributeFilter
+        | DashboardAbsoluteDateFilter
+        | DashboardRelativeDateFilter
+        | DashboardPeriodDateFilter,
     config?: Partial<IDashboardDateFilterConfig>,
 ): IDashboardDateFilterConfig {
     const current = config ?? {

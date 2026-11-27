@@ -10,7 +10,7 @@ import {
     selectCatalogDateDatasets,
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectEnableUnavailableItemsVisibility } from "../../../../model/store/config/configSelectors.js";
-import { selectFilterContextDateFilterByDataSet } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextDateFilterOfAnyTypeByDataSet } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 import { DateDatasetDuplicityWarning } from "./DateDatasetDuplicityWarning.js";
 import { DateDatasetPicker } from "./DateDatasetPicker.js";
@@ -55,7 +55,7 @@ export function DateDatasetFilter({
     const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
 
     const duplicatedDateDatasetFilter = useDashboardSelector(
-        selectFilterContextDateFilterByDataSet(widget.dateDataSet!),
+        selectFilterContextDateFilterOfAnyTypeByDataSet(widget.dateDataSet!),
     );
 
     const { selectedDateDatasetHiddenByObjectAvailability, status: visibleDateDatasetsStatus } =

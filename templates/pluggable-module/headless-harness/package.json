@@ -1,6 +1,6 @@
 {
     "name": "gdc-headless-template-name-harness",
-    "version": "11.71.0-alpha.0",
+    "version": "11.71.0-alpha.1",
     "private": true,
     "description": "Standalone harness for gdc-headless-template-name module",
     "license": "UNLICENSED",

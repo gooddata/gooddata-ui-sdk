@@ -66,6 +66,8 @@ export function HeaderWorkspacePickerButton({
             className="gd-header-button gd-workspace-picker-button"
             onClick={onClick}
             title={title}
+            // keep the test id derived from the workspace name, not from the aria-label
+            dataTestId={simplifyText(title ?? "") || undefined}
             accessibilityConfig={accessibilityConfig}
         >
             <div className={classNames}>{title?.trim().length > 0 ? title : <>&nbsp;</>}</div>

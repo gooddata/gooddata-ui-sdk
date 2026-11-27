@@ -33,7 +33,12 @@ import { ThemeProvider } from "../theme/theme.js";
 
 import { maqlCompletion } from "./extensions/completion.js";
 import { decorationsPlugin, maqlDecorations } from "./extensions/decorations.js";
-import { formatMaqlDocument, formatMaqlSelection, maqlFormattingKeymap } from "./extensions/formatting.js";
+import {
+    FORMATTING_PHRASES,
+    formatMaqlDocument,
+    formatMaqlSelection,
+    maqlFormattingKeymap,
+} from "./extensions/formatting.js";
 import { maqlHover } from "./extensions/hover.js";
 import { semanticTokens } from "./extensions/semanticTokens.js";
 import {
@@ -233,6 +238,18 @@ export const MaqlEditor = forwardRef<IMaqlEditorApi, IMaqlEditorProps>(function 
                     id: "metricComponent.editMetric.suggestion.documentation",
                 }),
                 Close: intl.formatMessage({ id: "metricComponent.editMetric.suggestion.closeDocumentation" }),
+                [FORMATTING_PHRASES.documentFormatted]: intl.formatMessage({
+                    id: "metricComponent.editMetric.format.documentFormatted",
+                }),
+                [FORMATTING_PHRASES.selectionFormatted]: intl.formatMessage({
+                    id: "metricComponent.editMetric.format.selectionFormatted",
+                }),
+                [FORMATTING_PHRASES.nothingToFormat]: intl.formatMessage({
+                    id: "metricComponent.editMetric.format.nothingToFormat",
+                }),
+                [FORMATTING_PHRASES.failed]: intl.formatMessage({
+                    id: "metricComponent.editMetric.format.failed",
+                }),
             }),
         [intl],
     );

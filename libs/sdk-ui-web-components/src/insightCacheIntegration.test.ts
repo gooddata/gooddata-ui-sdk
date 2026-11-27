@@ -11,7 +11,7 @@ import { clearInsightViewCaches } from "@gooddata/sdk-ui-ext";
 
 /*
  * Proves the composition that the other suites cannot: that the cache entry `refresh()` evicts is
- * the same entry `InsightView` reads through. `insight.test.ts` stubs `@gooddata/sdk-ui-ext`
+ * the same entry `InsightView` reads through. `insight.isolated.test.ts` stubs `@gooddata/sdk-ui-ext`
  * wholesale, so it can only show that `clearInsightViewCacheForInsight` was called with the right
  * arguments; and `sdk-ui-ext`'s own tests exercise the loader without the element wiring.
  *

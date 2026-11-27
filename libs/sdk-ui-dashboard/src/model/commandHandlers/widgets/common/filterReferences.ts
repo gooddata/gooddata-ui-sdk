@@ -2,8 +2,8 @@
 
 import {
     type DashboardAttributeFilterItem,
+    type DashboardDateFilterOfAnyType,
     type IDashboardAttributeFilterReference,
-    type IDashboardDateFilter,
     type IDashboardDateFilterReference,
     type IDashboardFilterReference,
     type IDashboardMeasureValueFilter,
@@ -20,7 +20,9 @@ import {
  * @returns references to the filters
  */
 export function toDashboardFilterReferences(
-    filters?: Array<DashboardAttributeFilterItem | IDashboardDateFilter | IDashboardMeasureValueFilter>,
+    filters?: Array<
+        DashboardAttributeFilterItem | DashboardDateFilterOfAnyType | IDashboardMeasureValueFilter
+    >,
 ): IDashboardFilterReference[] | undefined {
     return filters?.map((filter) => {
         if (isDashboardAttributeFilterItem(filter)) {
@@ -41,7 +43,7 @@ export function toDashboardFilterReferences(
         }
         const filterReference: IDashboardDateFilterReference = {
             type: "dateFilterReference",
-            dataSet: filter.dateFilter.dataSet!,
+            dataSet: dashboardFilterObjRef(filter)!,
         };
 
         return filterReference;

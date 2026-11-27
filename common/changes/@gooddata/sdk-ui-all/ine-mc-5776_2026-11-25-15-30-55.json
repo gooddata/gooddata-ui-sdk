@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "comment": "Date filter with granularity works as a parent filter and as a date filter with a dimension; dependent date filter APIs accept it",
+      "type": "none",
+      "packageName": "@gooddata/sdk-ui-all"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all",
+  "email": "ivan.nejezchleb@gooddata.com"
+}

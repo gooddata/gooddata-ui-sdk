@@ -84,6 +84,16 @@ describe("GranularPermissionsDropdown", () => {
         expect(button).toHaveAttribute("aria-expanded", "false");
     });
 
+    it("names the opened list box as the permission list of the grantee", async () => {
+        renderDropdown();
+
+        const button = await screen.findByRole("button", { name: "Permission: Can edit & share" });
+        fireEvent.click(button);
+
+        const listbox = await screen.findByRole("listbox", { name: "Permission for Marketing" });
+        expect(button).toHaveAttribute("aria-controls", listbox.id);
+    });
+
     it("announces the newly selected permission after the permission changes", async () => {
         renderDropdown();
 

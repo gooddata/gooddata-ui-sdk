@@ -11,6 +11,7 @@ import {
 import {
     type AccessGranteeDetail,
     type CatalogItem,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeDisplayFormMetadataObject,
     type IAttributeElement,
     type IAttributeFilter,
@@ -309,6 +310,9 @@ export type AttributeElementsFilteringPredicate<T> = (
  */
 export type AttributeElementsFiltering = {
     attributeFilters?: Record<Identifier, AttributeElementsFilteringPredicate<IAttributeFilter>>;
-    dateFilters?: Record<Identifier, AttributeElementsFilteringPredicate<IDateFilter>>;
+    dateFilters?: Record<
+        Identifier,
+        AttributeElementsFilteringPredicate<IDateFilter | IAbsoluteGranularityDateFilter>
+    >;
     measures?: Record<Identifier, AttributeElementsFilteringPredicate<IMeasure>>;
 };

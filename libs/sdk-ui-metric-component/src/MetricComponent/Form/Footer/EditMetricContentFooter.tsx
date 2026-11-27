@@ -141,6 +141,7 @@ function EditMetricContentFooterComponent({
                         <Button
                             value={intl.formatMessage({ id: "metricComponent.editMetric.saveAsNew" })}
                             onClick={onSaveAs}
+                            accessibilityConfig={{ ariaDisabled: isSaveAsDisabled }}
                             className={classNames(
                                 "gd-button-secondary",
                                 "s-button-save-as",
@@ -158,6 +159,7 @@ function EditMetricContentFooterComponent({
                         <Button
                             value={intl.formatMessage({ id: "metricComponent.editMetric.save" })}
                             onClick={onSave}
+                            accessibilityConfig={{ ariaDisabled: isSaveDisabled }}
                             className={classNames(
                                 "gd-button-action",
                                 "s-button-save",

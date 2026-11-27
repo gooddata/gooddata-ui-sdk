@@ -12,6 +12,7 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardFilterObjRef,
     filterObjRef,
     isAllTimeDashboardDateFilter,
     isAllValuesDashboardAttributeFilter,
@@ -19,7 +20,7 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
@@ -232,9 +233,9 @@ function useNonIgnoredFilters(widget: FilterableDashboardWidget | undefined | nu
                     return nonIgnoredFilterState.nonIgnoredFilterRefs.some((validRef) =>
                         areObjRefsEqual(validRef, dashboardAttributeFilterItemDisplayForm(filter)),
                     );
-                } else if (isDashboardDateFilterWithDimension(filter)) {
+                } else if (isDashboardDateFilterWithDimensionOfAnyType(filter)) {
                     return nonIgnoredFilterState.nonIgnoredFilterRefs.some((validRef) =>
-                        areObjRefsEqual(validRef, filter.dateFilter.dataSet),
+                        areObjRefsEqual(validRef, dashboardFilterObjRef(filter)),
                     );
                 } else if (isDashboardMeasureValueFilter(filter)) {
                     return nonIgnoredFilterState.nonIgnoredFilterRefs.some((validRef) =>
@@ -342,7 +343,7 @@ function filtersDigest(
                 const isNoop = isAllValuesDashboardAttributeFilter(filter);
 
                 return !isNoop || !isInEditMode;
-            } else if (isDashboardDateFilterWithDimension(filter)) {
+            } else if (isDashboardDateFilterWithDimensionOfAnyType(filter)) {
                 /**
                  * Remove noop date filters in edit mode as they would cause a useless query when a new filter (noop by default) is added.
                  * Keep them in view mode so that switching to and from All on an ignored filter does not show loading.
@@ -350,7 +351,9 @@ function filtersDigest(
                  * (adding a new filter) loading-free as well. Switching to and from All in edit mode will still show loading, but have no way
                  * of telling whether a noop filter is noop because it was just added or because it was set that way by the user.
                  */
-                const isNoop = isAllTimeDashboardDateFilter(filter.dateFilter);
+                // whole periods always filter
+                const isNoop =
+                    isDashboardDateFilter(filter) && isAllTimeDashboardDateFilter(filter.dateFilter);
 
                 return !isNoop || !isInEditMode;
             } else if (isDashboardCommonDateFilterOfAnyType(filter)) {

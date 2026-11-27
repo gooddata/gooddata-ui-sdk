@@ -27,7 +27,6 @@ import { type ObjRefMap, newInsightMap } from "../../../_staging/metadata/objRef
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectCatalogAttributeDisplayForms,
     selectCatalogAttributesWithComputed,
     selectCatalogDateDatasets,
     selectCatalogMeasures,
@@ -294,6 +293,15 @@ const selectRawExportMeasureOverridesForInsight: (
 );
 
 /**
+ * Display forms of catalog attributes including computed attributes. Computed attributes are not part of
+ * the plain catalog attributes, so without them their titles are missing and raw export headers fall back
+ * to local ids.
+ */
+const selectDisplayFormsWithComputed = createSelector(selectCatalogAttributesWithComputed, (attributes) =>
+    attributes.flatMap((attribute) => [...attribute.displayForms, ...attribute.geoPinDisplayForms]),
+);
+
+/**
  * For geo display forms (latitude, longitude, area, pin), resolves the parent attribute's
  * default display form title instead of the geo-specific display form title.
  * Returns the original title for non-geo display forms.
@@ -333,7 +341,7 @@ const selectRawExportDisplayFormOverridesForInsight: (
 ) => DashboardSelector<IRawExportCustomOverrides["displayForms"] | undefined> = createMemoizedSelector(
     (insight: IInsightDefinition | undefined) => {
         return createSelector(
-            selectCatalogAttributeDisplayForms,
+            selectDisplayFormsWithComputed,
             selectCatalogDateDatasets,
             selectCatalogAttributesWithComputed,
             (catalogAttributeDisplayForms, catalogDateDatasets, catalogAttributes) => {
@@ -410,7 +418,7 @@ const selectRawExportDisplayFormOverridesForInsightByRef: (
     (ref: ObjRef | undefined) => {
         return createSelector(
             selectInsightByRef(ref),
-            selectCatalogAttributeDisplayForms,
+            selectDisplayFormsWithComputed,
             selectCatalogDateDatasets,
             selectCatalogAttributesWithComputed,
             (insight, catalogAttributeDisplayForms, catalogDateDatasets, catalogAttributes) => {

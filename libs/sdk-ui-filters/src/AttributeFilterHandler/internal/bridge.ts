@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeElement,
     type IAttributeFilter,
     type IAttributeMetadataObject,
@@ -484,11 +485,17 @@ export class AttributeFilterReduxBridge {
         return this.redux.select(selectLimitingAttributeFilters);
     };
 
-    setLimitingDateFilters = (filters: IRelativeDateFilter[] | IAbsoluteDateFilter[]): void => {
+    setLimitingDateFilters = (
+        filters: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[],
+    ): void => {
         this.redux.dispatch(actions.setLimitingDateFilters({ filters }));
     };
 
-    getLimitingDateFilters = (): IRelativeDateFilter[] | IAbsoluteDateFilter[] => {
+    getLimitingDateFilters = (): (
+        | IRelativeDateFilter
+        | IAbsoluteDateFilter
+        | IAbsoluteGranularityDateFilter
+    )[] => {
         return this.redux.select(selectLimitingDateFilters);
     };
 

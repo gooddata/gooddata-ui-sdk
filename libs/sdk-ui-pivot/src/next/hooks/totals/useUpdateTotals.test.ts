@@ -20,10 +20,6 @@ import { type ICorePivotTableNextProps } from "../../types/internal.js";
 
 import { useUpdateTotals } from "./useUpdateTotals.js";
 
-vi.hoisted(() => {
-    vi.resetModules();
-});
-
 describe("useUpdateTotals", () => {
     const rowAttributes = [
         newAttribute("state", (a) => a.localId("a1")),

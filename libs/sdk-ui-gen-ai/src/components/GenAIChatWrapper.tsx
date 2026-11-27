@@ -89,6 +89,7 @@ function GenAIChatWrapperComponent({
     if (evaluated && hasUnsupportedOpenAiModel) {
         return (
             <GlobalError
+                autofocus={autofocus}
                 errorMessage={intl.formatMessage({ id: "gd.gen-ai.global-unsupported-model" })}
                 errorDescription={intl.formatMessage({
                     id: "gd.gen-ai.global-unsupported-model.description",
@@ -116,6 +117,7 @@ function GenAIChatWrapperComponent({
     if (evaluated && count === 0) {
         return (
             <GlobalError
+                autofocus={autofocus}
                 errorMessage={intl.formatMessage({ id: "gd.gen-ai.global-no-llm" })}
                 errorDescription={intl.formatMessage({ id: "gd.gen-ai.global-no-llm.description" })}
                 clearError={() => {
@@ -137,7 +139,7 @@ function GenAIChatWrapperComponent({
     }
 
     return (
-        <ErrorBoundary>
+        <ErrorBoundary autofocus={autofocus}>
             <div className={cx("gd-gen-ai-chat", className)}>
                 <NavigationBypass />
                 <Messages />

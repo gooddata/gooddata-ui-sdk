@@ -15,10 +15,10 @@ import {
     type MeasureValueFilterCondition,
     exportOverrideFilterContextIdentifier,
     idRef,
+    newAllTimeDashboardDateFilter,
     newDashboardParameterizedDateFilter,
+    newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
-
-import { ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 
 import {
     applyDefaultFilterView,
@@ -478,7 +478,7 @@ describe("filterViews", () => {
             });
         });
 
-        describe("default view with an absolute date filter with granularity for a date dataset", () => {
+        describe("default view with an absolute date filter with granularity", () => {
             const regionFilter = (uris: string[]): FilterContextItem => ({
                 attributeFilter: {
                     displayForm: idRef("region", "displayForm"),
@@ -507,30 +507,8 @@ describe("filterViews", () => {
                 description: "",
                 filters,
             });
-            const tabbedDashboard = buildDashboard({
-                tabs: [
-                    {
-                        localIdentifier: "tab-A",
-                        title: "Tab A",
-                        filterContext: buildFilterContext([regionFilter(["stored-a"])]),
-                    },
-                    {
-                        localIdentifier: "tab-B",
-                        title: "Tab B",
-                        filterContext: buildFilterContext([regionFilter(["stored-b"])]),
-                    },
-                ],
-            });
-            const unsupportedTabView = buildFilterView({
-                tabLocalIdentifier: "tab-A",
-                filterContext: viewFilterContext([granularityDateFilter, regionFilter(["view"])]),
-            });
-            const legacyView = buildFilterView({
-                ref: idRef("filter-view-2", "filterView"),
-                filterContext: viewFilterContext([regionFilter(["legacy-view"])]),
-            });
-
-            const skippedViewWarning = `The default filter view "Default view" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED}`;
+            const closedDateFilter = (localIdentifier: string): FilterContextItem =>
+                newAllTimeDashboardDateFilter(idRef("closed", "dataSet"), localIdentifier);
 
             let warn: MockInstance<typeof console.warn>;
             beforeEach(() => {
@@ -540,45 +518,100 @@ describe("filterViews", () => {
                 warn.mockRestore();
             });
 
-            it("skips the view of a tab without falling back to the view saved without a tab", () => {
-                const updated = applyDefaultFilterView(
-                    tabbedDashboard,
-                    [unsupportedTabView, legacyView],
-                    undefined,
-                    [],
-                );
-
-                expect(updated.tabs).toEqual(tabbedDashboard.tabs);
-                expect(warn).toHaveBeenCalledWith(skippedViewWarning);
-            });
-
-            it("skips the view when filters persist across tabs", () => {
-                const updated = applyDefaultFilterView(tabbedDashboard, [unsupportedTabView], undefined, [], {
-                    persistFiltersAcrossTabs: true,
-                    activeTabLocalIdentifier: "tab-A",
-                });
-
-                expect(updated).toBe(tabbedDashboard);
-                expect(warn).toHaveBeenCalledWith(skippedViewWarning);
-            });
-
-            it("finds no default view for a tab whose view it cannot apply", () => {
-                expect(
-                    findTabDefaultFilterView([unsupportedTabView, legacyView], "tab-A", true),
-                ).toBeUndefined();
-                expect(warn).toHaveBeenCalledWith(skippedViewWarning);
-            });
-
-            it("skips the view saved without a tab on a dashboard without tabs", () => {
-                const dashboard = buildDashboard({
-                    filterContext: buildFilterContext([regionFilter(["stored"])]),
+            it("applies the view of a tab with the filter for a date dataset by its date dataset", () => {
+                const tabbedDashboard = buildDashboard({
+                    tabs: [
+                        {
+                            localIdentifier: "tab-A",
+                            title: "Tab A",
+                            filterContext: buildFilterContext([
+                                closedDateFilter("closed-a"),
+                                regionFilter(["stored-a"]),
+                            ]),
+                        },
+                    ],
                 });
                 const view = buildFilterView({
+                    tabLocalIdentifier: "tab-A",
                     filterContext: viewFilterContext([granularityDateFilter, regionFilter(["view"])]),
                 });
 
-                expect(applyDefaultFilterView(dashboard, [view], undefined, [])).toBe(dashboard);
-                expect(warn).toHaveBeenCalledWith(skippedViewWarning);
+                const updated = applyDefaultFilterView(tabbedDashboard, [view], undefined, []);
+
+                expect(updated.tabs?.[0].filterContext?.filters).toEqual([
+                    {
+                        dashboardAbsoluteGranularityDateFilter: {
+                            granularity: "GDC.time.month",
+                            from: "2026-01",
+                            to: "2026-03",
+                            dataSet: idRef("closed", "dataSet"),
+                            localIdentifier: "closed-a",
+                        },
+                    },
+                    regionFilter(["view"]),
+                ]);
+                expect(warn).not.toHaveBeenCalled();
+            });
+
+            it("finds the default view of a tab with the filter for a date dataset", () => {
+                const view = buildFilterView({
+                    tabLocalIdentifier: "tab-A",
+                    filterContext: viewFilterContext([granularityDateFilter]),
+                });
+
+                expect(findTabDefaultFilterView([view], "tab-A", true)).toBe(view);
+            });
+
+            it("replaces the filter for a date dataset with the value of the view keeping its identity", () => {
+                const dashboard = buildDashboard({
+                    filterContext: buildFilterContext([
+                        {
+                            dashboardAbsoluteGranularityDateFilter: {
+                                granularity: "GDC.time.year",
+                                from: "2025",
+                                dataSet: idRef("closed", "dataSet"),
+                                localIdentifier: "closed-a",
+                            },
+                        },
+                    ]),
+                });
+                const view = buildFilterView({
+                    filterContext: viewFilterContext([
+                        newRelativeDashboardDateFilter("GDC.time.month", -3, -1, idRef("closed", "dataSet")),
+                    ]),
+                });
+
+                const updated = applyDefaultFilterView(dashboard, [view], undefined, []);
+
+                expect(updated.filterContext?.filters).toEqual([
+                    newRelativeDashboardDateFilter(
+                        "GDC.time.month",
+                        -3,
+                        -1,
+                        idRef("closed", "dataSet"),
+                        "closed-a",
+                    ),
+                ]);
+            });
+
+            it("resets the filter for a date dataset that the view does not have to All time", () => {
+                const dashboard = buildDashboard({
+                    filterContext: buildFilterContext([
+                        {
+                            dashboardAbsoluteGranularityDateFilter: {
+                                granularity: "GDC.time.year",
+                                from: "2025",
+                                dataSet: idRef("closed", "dataSet"),
+                                localIdentifier: "closed-a",
+                            },
+                        },
+                    ]),
+                });
+                const view = buildFilterView({ filterContext: viewFilterContext([]) });
+
+                const updated = applyDefaultFilterView(dashboard, [view], undefined, []);
+
+                expect(updated.filterContext?.filters).toEqual([closedDateFilter("closed-a")]);
             });
 
             it("applies the view with the common filter", () => {

@@ -135,6 +135,14 @@ export function HeaderWorkspacePicker({
                     ...accessibilityConfig,
                     ariaHaspopup: "dialog",
                     popupType: "dialog",
+                    // without a workspace name the button has no visible text, so name it after the picker
+                    ariaLabel:
+                        selectedWorkspaceTitle.trim().length > 0
+                            ? intl.formatMessage(
+                                  { id: "gs.header.projectPicker.currentWorkspace.aria" },
+                                  { workspace: selectedWorkspaceTitle },
+                              )
+                            : intl.formatMessage({ id: "gs.header.projectPicker.pickerName.aria" }),
                 };
 
                 return (

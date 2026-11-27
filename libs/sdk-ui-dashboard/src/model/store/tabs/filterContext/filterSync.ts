@@ -6,7 +6,6 @@ import {
     type DashboardDateFilterOfAnyType,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
-    type IDashboardDateFilter,
     type IDashboardMeasureValueFilter,
     type ObjRef,
     type ParameterValue,
@@ -17,13 +16,14 @@ import {
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemValidateElementsBy,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilterOfAnyType,
-    isDashboardDateFilter,
     isDashboardDateFilterOfAnyType,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
     isDashboardParameterizedDateFilter,
@@ -149,18 +149,31 @@ export function withCommonDateFilterLocalIdentifier(
     filter: DashboardDateFilterOfAnyType,
     localIdentifier: string | undefined,
 ): DashboardDateFilterOfAnyType {
+    return withDateFilterIdentity(filter, localIdentifier, undefined);
+}
+
+/**
+ * The value of the date filter with the identity of another one: its local identifier and its date dataset,
+ * also when they are undefined.
+ *
+ * @internal
+ */
+export function withDateFilterIdentity(
+    filter: DashboardDateFilterOfAnyType,
+    localIdentifier: string | undefined,
+    dataSet: ObjRef | undefined,
+): DashboardDateFilterOfAnyType {
+    const identity = {
+        ...(dataSet ? { dataSet } : {}),
+        ...(localIdentifier ? { localIdentifier } : {}),
+    };
     if (isDashboardAbsoluteGranularityDateFilter(filter)) {
         const {
             localIdentifier: _localIdentifier,
             dataSet: _dataSet,
             ...body
         } = filter.dashboardAbsoluteGranularityDateFilter;
-        return {
-            dashboardAbsoluteGranularityDateFilter: {
-                ...body,
-                ...(localIdentifier ? { localIdentifier } : {}),
-            },
-        };
+        return { dashboardAbsoluteGranularityDateFilter: { ...body, ...identity } };
     }
     if (isDashboardParameterizedDateFilter(filter)) {
         const {
@@ -168,15 +181,10 @@ export function withCommonDateFilterLocalIdentifier(
             dataSet: _dataSet,
             ...body
         } = filter.dashboardParameterizedDateFilter;
-        return {
-            dashboardParameterizedDateFilter: {
-                ...body,
-                ...(localIdentifier ? { localIdentifier } : {}),
-            },
-        };
+        return { dashboardParameterizedDateFilter: { ...body, ...identity } };
     }
     const { localIdentifier: _localIdentifier, dataSet: _dataSet, ...body } = filter.dateFilter;
-    return { dateFilter: { ...body, ...(localIdentifier ? { localIdentifier } : {}) } };
+    return { dateFilter: { ...body, ...identity } };
 }
 
 /**
@@ -320,21 +328,12 @@ export function applyMirroredFilterValue(
         return withCommonDateFilterLocalIdentifier(source, dashboardFilterLocalIdentifier(target));
     }
 
-    if (isDashboardDateFilter(source) && isDashboardDateFilter(target)) {
-        const dateFilter: IDashboardDateFilter["dateFilter"] = {
-            ...source.dateFilter,
-        };
-        if (target.dateFilter.localIdentifier) {
-            dateFilter.localIdentifier = target.dateFilter.localIdentifier;
-        } else {
-            delete dateFilter.localIdentifier;
-        }
-        if (target.dateFilter.dataSet) {
-            dateFilter.dataSet = target.dateFilter.dataSet;
-        } else {
-            delete dateFilter.dataSet;
-        }
-        return { dateFilter };
+    if (isDashboardDateFilterOfAnyType(source) && isDashboardDateFilterOfAnyType(target)) {
+        return withDateFilterIdentity(
+            source,
+            dashboardFilterLocalIdentifier(target),
+            dashboardFilterObjRef(target),
+        );
     }
 
     if (isDashboardMeasureValueFilter(source) && isDashboardMeasureValueFilter(target)) {
@@ -426,11 +425,12 @@ export function findAppliedFilterForStaged(
     if (isCommonDateFilter(staged)) {
         return filters.find(isDashboardCommonDateFilterOfAnyType);
     }
-    if ("dateFilter" in staged && staged.dateFilter) {
+    if (isDashboardDateFilterWithDimensionOfAnyType(staged)) {
+        const dataSet = dashboardFilterObjRef(staged);
         return filters.find(
             (filter) =>
-                isDashboardDateFilter(filter) &&
-                areObjRefsEqual(filter.dateFilter.dataSet, staged.dateFilter.dataSet),
+                isDashboardDateFilterWithDimensionOfAnyType(filter) &&
+                areObjRefsEqual(dashboardFilterObjRef(filter), dataSet),
         );
     }
     const localIdentifier = stagedLocalIdentifier(staged);
@@ -463,11 +463,10 @@ function dropStagedOverlay(tab: ITabState, applied: FilterContextItem): void {
     }
     const overlays = isDashboardCommonDateFilterOfAnyType(applied)
         ? (item: StagedFilter) => isDashboardCommonDateFilterOfAnyType(item)
-        : isDashboardDateFilter(applied)
+        : isDashboardDateFilterWithDimensionOfAnyType(applied)
           ? (item: StagedFilter) =>
-                "dateFilter" in item &&
-                !!item.dateFilter &&
-                areObjRefsEqual(item.dateFilter.dataSet, applied.dateFilter.dataSet)
+                isDashboardDateFilterWithDimensionOfAnyType(item) &&
+                areObjRefsEqual(dashboardFilterObjRef(item), dashboardFilterObjRef(applied))
           : (item: StagedFilter) =>
                 !isDashboardDateFilterOfAnyType(item) &&
                 stagedLocalIdentifier(item) !== undefined &&
@@ -605,16 +604,14 @@ function findDateCounterpart(
     if (isCommonDateFilter(sourceFilter)) {
         return targets.find(isDashboardCommonDateFilterOfAnyType);
     }
-    if (
-        isDashboardAbsoluteGranularityDateFilter(sourceFilter) ||
-        isDashboardParameterizedDateFilter(sourceFilter)
-    ) {
+    if (isDashboardParameterizedDateFilter(sourceFilter)) {
         return undefined;
     }
-    const dataSet = sourceFilter.dateFilter.dataSet;
+    const dataSet = dashboardFilterObjRef(sourceFilter);
     return targets.find(
-        (filter): filter is IDashboardDateFilter =>
-            isDashboardDateFilter(filter) && areObjRefsEqual(filter.dateFilter.dataSet, dataSet),
+        (filter): filter is DashboardDateFilterOfAnyType =>
+            isDashboardDateFilterWithDimensionOfAnyType(filter) &&
+            areObjRefsEqual(dashboardFilterObjRef(filter), dataSet),
     );
 }
 

@@ -27,7 +27,6 @@ import {
     newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
-import { ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED } from "../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
 import {
@@ -43,7 +42,7 @@ import {
     removeAttributeFilter,
 } from "../../commands/filters.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../DashboardTester.js";
-import { type IDashboardCommandFailed, isDashboardCommandFailed } from "../../events/general.js";
+import { isDashboardCommandFailed } from "../../events/general.js";
 import { selectRestrictedDashboardFilterLocalIdentifiers } from "../../store/filtering/dashboardFilterSelectors.js";
 import {
     selectFilterContextAttributeFilterByDisplayForm,
@@ -52,6 +51,7 @@ import {
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilter,
     selectFilterContextDateFilterOfAnyType,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
     selectFilterContextFilters,
     selectFilterContextMeasureValueFilters,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
@@ -165,24 +165,17 @@ describe("change filter context selection handler", () => {
                 );
             });
 
-            it("should reject the whole command with the filter for a date dataset as a filter context item", async () => {
-                const filtersBefore = selectFilterContextFilters(Tester.state());
+            it("should apply the filter for a date dataset as a filter context item without changing the common date filter", async () => {
+                const dateFilterBefore = selectFilterContextDateFilterOfAnyType(Tester.state());
 
-                const event: IDashboardCommandFailed<any> = await Tester.dispatchAndWaitFor(
+                await Tester.dispatchAndWaitFor(
                     changeFilterContextSelectionByParams({
-                        filters: [
-                            newRelativeDashboardDateFilter("GDC.time.year", -1, -1),
-                            granularityDateFilterItemWithDataSet,
-                        ],
+                        filters: [granularityDateFilterItemWithDataSet],
                     }),
-                    "GDC.DASH/EVT.COMMAND.FAILED",
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
                 );
 
-                expect(event.payload.reason).toEqual("USER_ERROR");
-                expect(event.payload.message).toEqual(
-                    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
-                );
-                expect(selectFilterContextFilters(Tester.state())).toEqual(filtersBefore);
+                expect(selectFilterContextDateFilterOfAnyType(Tester.state())).toEqual(dateFilterBefore);
             });
 
             it.each([
@@ -291,28 +284,92 @@ describe("change filter context selection handler", () => {
                     {
                         customizationFns: customizationFnsWithPreload,
                         customCapabilities: { supportsMultipleDateFilters: true },
+                        initCommand: initializeDashboard({
+                            settings: { enableAbsoluteDateFilterGranularity: true },
+                        }),
                     },
                 );
             });
 
-            it("should reject the whole command with the filter as an execution filter", async () => {
-                const filtersBefore = selectFilterContextFilters(Tester.state());
+            it.each([
+                ["a filter context item", granularityDateFilterItemWithDataSet],
+                ["an execution filter", granularityExecutionFilter],
+            ])("should set the date filter for a date dataset from %s", async (_desc, filter) => {
+                Tester.dispatch(
+                    tabsActions.addDateFilter({ index: -1, dateDataset: idRef("closed", "dataSet") }),
+                );
 
-                const event: IDashboardCommandFailed<any> = await Tester.dispatchAndWaitFor(
+                await Tester.dispatchAndWaitFor(
+                    changeFilterContextSelectionByParams({
+                        filters: [newRelativeDashboardDateFilter("GDC.time.year", -1, -1), filter],
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(selectFilterContextDateFiltersWithDimensionOfAnyType(Tester.state())).toEqual([
+                    granularityDateFilterItemWithDataSet,
+                ]);
+                expect(selectFilterContextDateFilter(Tester.state())?.dateFilter).toMatchObject({
+                    type: "relative",
+                    granularity: "GDC.time.year",
+                });
+            });
+        });
+
+        describe("with multiple date filters and the absolute date filter granularity off", () => {
+            let Tester: DashboardTester;
+            const dataSet = idRef("closed", "dataSet");
+            beforeEach(async () => {
+                await preloadedTesterFactory(
+                    (tester) => {
+                        Tester = tester;
+                    },
+                    EmptyDashboardIdentifier,
+                    {
+                        customizationFns: customizationFnsWithPreload,
+                        customCapabilities: { supportsMultipleDateFilters: true },
+                    },
+                );
+                Tester.dispatch(tabsActions.addDateFilter({ index: -1, dateDataset: dataSet }));
+            });
+
+            it("should skip the date filter for a date dataset and apply the other filters", async () => {
+                const dateFiltersBefore = selectFilterContextDateFiltersWithDimensionOfAnyType(
+                    Tester.state(),
+                );
+
+                await Tester.dispatchAndWaitFor(
                     changeFilterContextSelectionByParams({
                         filters: [
                             newRelativeDashboardDateFilter("GDC.time.year", -1, -1),
-                            granularityExecutionFilter,
+                            granularityDateFilterItemWithDataSet,
                         ],
+                        resetOthers: true,
                     }),
-                    "GDC.DASH/EVT.COMMAND.FAILED",
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
                 );
 
-                expect(event.payload.reason).toEqual("USER_ERROR");
-                expect(event.payload.message).toEqual(
-                    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
+                expect(selectFilterContextDateFiltersWithDimensionOfAnyType(Tester.state())).toEqual(
+                    dateFiltersBefore,
                 );
-                expect(selectFilterContextFilters(Tester.state())).toEqual(filtersBefore);
+                expect(selectFilterContextDateFilter(Tester.state())?.dateFilter).toMatchObject({
+                    type: "relative",
+                    granularity: "GDC.time.year",
+                });
+            });
+
+            it("should restore the date filter for a date dataset on reset", async () => {
+                await Tester.dispatchAndWaitFor(
+                    changeFilterContextSelectionByParams({
+                        filters: [granularityDateFilterItemWithDataSet],
+                        restorePerTabOriginals: true,
+                    }),
+                    "GDC.DASH/EVT.FILTER_CONTEXT.CHANGED",
+                );
+
+                expect(selectFilterContextDateFiltersWithDimensionOfAnyType(Tester.state())).toEqual([
+                    granularityDateFilterItemWithDataSet,
+                ]);
             });
         });
     });

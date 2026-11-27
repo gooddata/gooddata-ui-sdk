@@ -718,6 +718,7 @@ export {
     isDashboardDateFilterWithDimension,
     isDashboardCommonDateFilter,
     isDashboardCommonDateFilterOfAnyType,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isRelativeDashboardDateFilter,
     isAbsoluteDashboardDateFilter,
     isDashboardDateFilterReference,

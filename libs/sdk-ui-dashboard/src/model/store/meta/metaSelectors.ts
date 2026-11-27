@@ -31,7 +31,7 @@ import {
     isBrowserDetectedTimezone,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilterOfAnyType,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isTempFilterContext,
@@ -327,7 +327,7 @@ const selectPersistedDashboardDraggableFiltersByTab: DashboardSelector<Record<st
             (acc, [identifier, filters]) => {
                 acc[identifier] = filters.filter(
                     (filter) =>
-                        isDashboardDateFilterWithDimension(filter) ||
+                        isDashboardDateFilterWithDimensionOfAnyType(filter) ||
                         isDashboardAttributeFilter(filter) ||
                         isDashboardTextAttributeFilter(filter) ||
                         isDashboardMeasureValueFilter(filter),
@@ -344,7 +344,7 @@ const selectWorkingDraggableFiltersByTab: DashboardSelector<Record<string, Filte
             (acc, [identifier, filters]) => {
                 acc[identifier] = filters.filter(
                     (filter) =>
-                        isDashboardDateFilterWithDimension(filter) ||
+                        isDashboardDateFilterWithDimensionOfAnyType(filter) ||
                         isDashboardAttributeFilter(filter) ||
                         isDashboardTextAttributeFilter(filter) ||
                         isDashboardMeasureValueFilter(filter),

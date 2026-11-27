@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-metric-component: The minimized metric editor bar is a group named \"Minimized metric editor\" together with its visible \"Editing: N metrics\" text, so screen readers tell what the bar holds and how many metrics are being edited when focus moves to its \"Restore editor\" and \"Close editor\" buttons.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

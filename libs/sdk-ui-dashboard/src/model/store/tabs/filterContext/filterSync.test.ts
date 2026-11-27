@@ -9,13 +9,19 @@ import {
     type IDashboardMeasureValueFilter,
     type ObjRef,
     idRef,
+    newAllTimeDashboardDateFilter,
     newDashboardParameterizedDateFilter,
+    newRelativeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
 import { type ITabState } from "../tabsState.js";
 
 import { type FilterContextState, type WorkingFilterContextItem } from "./filterContextState.js";
-import { findCounterpartFilter, withCommonDateFilterLocalIdentifier } from "./filterSync.js";
+import {
+    applyMirroredFilterValue,
+    findCounterpartFilter,
+    withCommonDateFilterLocalIdentifier,
+} from "./filterSync.js";
 
 const measure = idRef("amount", "measure");
 
@@ -97,5 +103,56 @@ describe("withCommonDateFilterLocalIdentifier", () => {
                 emptyValueHandling: "include",
             }),
         );
+    });
+});
+
+describe("date filters with a dimension of any type", () => {
+    const dataSet = idRef("closed", "dataSet");
+    const otherDataSet = idRef("created", "dataSet");
+    const monthFilter = (localIdentifier: string, filterDataSet: ObjRef = dataSet): FilterContextItem => ({
+        dashboardAbsoluteGranularityDateFilter: {
+            granularity: "GDC.time.month",
+            from: "2026-03",
+            to: "2026-05",
+            dataSet: filterDataSet,
+            localIdentifier,
+        },
+    });
+
+    it.each<[string, FilterContextItem, FilterContextItem]>([
+        [
+            "the new type with the old type",
+            monthFilter("source"),
+            newRelativeDashboardDateFilter("GDC.time.year", -1, -1, dataSet, "target"),
+        ],
+        [
+            "the old type with the new type",
+            newAllTimeDashboardDateFilter(dataSet, "source"),
+            monthFilter("target"),
+        ],
+        ["the new type with the new type", monthFilter("source"), monthFilter("target")],
+    ])("matches %s by the date dataset", (_desc, sourceFilter, counterpart) => {
+        const source = tab("tab-a", [sourceFilter]);
+        const target = tab("tab-b", [monthFilter("other", otherDataSet), counterpart]);
+
+        expect(findCounterpartFilter(source, sourceFilter, target)).toBe(counterpart);
+    });
+
+    it("mirrors the value of the new type keeping the identity of the target", () => {
+        expect(
+            applyMirroredFilterValue(
+                monthFilter("source"),
+                newRelativeDashboardDateFilter("GDC.time.year", -1, -1, dataSet, "target"),
+            ),
+        ).toEqual(monthFilter("target"));
+    });
+
+    it("mirrors the value of the old type keeping the identity of the target of the new type", () => {
+        expect(
+            applyMirroredFilterValue(
+                newRelativeDashboardDateFilter("GDC.time.year", -1, -1, dataSet, "source"),
+                monthFilter("target"),
+            ),
+        ).toEqual(newRelativeDashboardDateFilter("GDC.time.year", -1, -1, dataSet, "target"));
     });
 });

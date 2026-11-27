@@ -51,6 +51,16 @@ describe("Usage", () => {
         expect(screen.getByText("1 metric, 1 visualization")).toBeInTheDocument();
     });
 
+    it("should include the 'used in' label in the accessible name of the usage button", async () => {
+        await act(async () => {
+            renderUsage([metric], []);
+        });
+
+        const button = screen.getByRole("button", { name: "used in: 1 metric" });
+        expect(button).toHaveTextContent("1 metric");
+        expect(button).toHaveAttribute("data-testid", "1_metric");
+    });
+
     it("should render with more metrics and more insights", async () => {
         await act(async () => {
             renderUsage([metric, metric], [insight, insight]);

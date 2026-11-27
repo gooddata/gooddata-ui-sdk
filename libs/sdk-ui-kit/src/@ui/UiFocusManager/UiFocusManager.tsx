@@ -1,10 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type KeyboardEvent,
     type KeyboardEventHandler,
     type ReactNode,
     useCallback,
+    useLayoutEffect,
     useMemo,
     useRef,
 } from "react";
@@ -88,6 +89,15 @@ export const useUiFocusManagerConnectors = <T extends HTMLElement = HTMLElement>
     const enabledConnectorsRef = useAutoupdateRef(enabledConnectors);
 
     const combinedRefs = useCombineRefs(...enabledConnectors.map((connector) => connector.ref));
+
+    // The combined ref callback is stable, so React does not call it again when a helper gets enabled
+    // after mount (e.g. a dialog switching from non-modal to modal). Hand the already mounted element
+    // to the newly enabled helpers, otherwise e.g. the focus trap would swallow the first Tab.
+    useLayoutEffect(() => {
+        if (element.current) {
+            combinedRefs(element.current as T);
+        }
+    }, [enabledConnectors, combinedRefs]);
 
     const combinedRefCallback = useCallback(
         (el: HTMLElement | null) => {

@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 import { FormattedMessage, type IntlShape, useIntl } from "react-intl";
 
@@ -62,6 +62,8 @@ export function Usage({
 
     const [isOpenedUsages, setOpen] = useState(false);
     const intl = useIntl();
+    const usedInLabelId = useId();
+    const buttonId = useId();
 
     const toggleOpenUsagesOverlay = () => {
         setOpen(!isOpenedUsages);
@@ -88,12 +90,14 @@ export function Usage({
 
     return (
         <div className={cx(classes.root, "s-objectUsage")}>
-            <span className={classes.usedIn}>
+            <span className={classes.usedIn} id={usedInLabelId}>
                 <FormattedMessage id="metricComponent.objectUsage.usedIn" />
             </span>
             <Button
+                id={buttonId}
                 className={cx(classes.link, "gd-button-link")}
                 tagName="a"
+                accessibilityConfig={{ ariaLabelledBy: `${usedInLabelId} ${buttonId}` }}
                 value={createTitle(intl, measures.length, insights.length)}
                 onClick={toggleOpenUsagesOverlay}
             />

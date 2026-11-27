@@ -9,6 +9,7 @@ import { CatalogItem } from '@gooddata/sdk-model';
 import { dummyBackend } from '@gooddata/sdk-backend-base';
 import { dummyBackendEmptyData } from '@gooddata/sdk-backend-base';
 import { dummyDataView } from '@gooddata/sdk-backend-base';
+import { IAbsoluteGranularityDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
@@ -49,7 +50,7 @@ import { ValidationContext } from '@gooddata/sdk-backend-spi';
 // @internal (undocumented)
 export type AttributeElementsFiltering = {
     attributeFilters?: Record<Identifier, AttributeElementsFilteringPredicate<IAttributeFilter>>;
-    dateFilters?: Record<Identifier, AttributeElementsFilteringPredicate<IDateFilter>>;
+    dateFilters?: Record<Identifier, AttributeElementsFilteringPredicate<IDateFilter | IAbsoluteGranularityDateFilter>>;
     measures?: Record<Identifier, AttributeElementsFilteringPredicate<IMeasure>>;
 };
 
@@ -147,7 +148,7 @@ export type NamedDataView = {
 export function newAttributeFilterLimitingItem(attributeFilter: IAttributeFilter, predicate: AttributeElementsFilteringPredicate<IAttributeFilter>): Record<Identifier, AttributeElementsFilteringPredicate<IAttributeFilter>>;
 
 // @internal (undocumented)
-export function newDateFilterLimitingItem(dateFilter: IDateFilter, predicate: AttributeElementsFilteringPredicate<IDateFilter>): Record<Identifier, AttributeElementsFilteringPredicate<IDateFilter>>;
+export function newDateFilterLimitingItem(dateFilter: IDateFilter | IAbsoluteGranularityDateFilter, predicate: AttributeElementsFilteringPredicate<IDateFilter | IAbsoluteGranularityDateFilter>): Record<Identifier, AttributeElementsFilteringPredicate<IDateFilter | IAbsoluteGranularityDateFilter>>;
 
 // @internal (undocumented)
 export function newMeasureLimitingItem(measure: IMeasure<IMeasureDefinition>, predicate: AttributeElementsFilteringPredicate<IMeasure>): Record<Identifier, AttributeElementsFilteringPredicate<IMeasure>>;

@@ -3,12 +3,14 @@
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
+import { isDashboardDateFilter } from "@gooddata/sdk-model";
+
 import { type IMoveDateFilter } from "../../../commands/filters.js";
-import { dateFilterMoved } from "../../../events/filters.js";
+import { dateFilterMoved, dateFilterOfAnyTypeMoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import {
-    selectFilterContextDateFilterByDataSet,
+    selectFilterContextDateFilterOfAnyTypeByDataSet,
     selectFilterContextDraggableFilterIndexByRef,
     selectFilterContextFilters,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
@@ -20,8 +22,8 @@ export function* moveDateFilterHandler(ctx: DashboardContext, cmd: IMoveDateFilt
     const { dataSet, index } = cmd.payload;
 
     // validate dataSet
-    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterByDataSet>> =
-        yield select(selectFilterContextDateFilterByDataSet(dataSet));
+    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextDateFilterOfAnyTypeByDataSet>> =
+        yield select(selectFilterContextDateFilterOfAnyTypeByDataSet(dataSet));
 
     if (!affectedFilter) {
         throw invalidArgumentsProvided(ctx, cmd, `Filter with dataSet ${dataSet} not found.`);
@@ -54,8 +56,13 @@ export function* moveDateFilterHandler(ctx: DashboardContext, cmd: IMoveDateFilt
     const finalIndex: ReturnType<ReturnType<typeof selectFilterContextDraggableFilterIndexByRef>> =
         yield select(selectFilterContextDraggableFilterIndexByRef(dataSet));
 
+    if (isDashboardDateFilter(affectedFilter)) {
+        yield dispatchDashboardEvent(
+            dateFilterMoved(ctx, affectedFilter, originalIndex, finalIndex, cmd.correlationId),
+        );
+    }
     yield dispatchDashboardEvent(
-        dateFilterMoved(ctx, affectedFilter, originalIndex, finalIndex, cmd.correlationId),
+        dateFilterOfAnyTypeMoved(ctx, affectedFilter, originalIndex, finalIndex, cmd.correlationId),
     );
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }

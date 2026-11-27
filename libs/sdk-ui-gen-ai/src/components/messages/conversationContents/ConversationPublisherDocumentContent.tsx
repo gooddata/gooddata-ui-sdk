@@ -16,9 +16,17 @@ import {
     publisherDocumentPartFormat,
     summarizePublisherDocument,
 } from "../../../publisherDocumentPart.js";
-import { isPreviewSelector, settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
+import {
+    isPreviewSelector,
+    openPublisherDocumentV2IdSelector,
+    settingsSelector,
+} from "../../../store/chatWindow/chatWindowSelectors.js";
 import { conversationSelector } from "../../../store/messages/messagesSelectors.js";
-import { formatPublisherDocumentPeriod, getPublisherDocumentItemUrl } from "../../../utils.js";
+import {
+    formatPublisherDocumentPeriod,
+    getPublisherDocumentItemUrl,
+    publisherDocumentTargetId,
+} from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
 
 export type ConversationPublisherDocumentContentProps = {
@@ -39,6 +47,7 @@ export function ConversationPublisherDocumentContent({
     const conversationId = conversation?.id;
     const settings = useSelector(settingsSelector);
     const isPreview = useSelector(isPreviewSelector);
+    const openDocumentV2Id = useSelector(openPublisherDocumentV2IdSelector);
 
     if (!settings?.enableBusinessBriefingReportsApp) {
         return null;
@@ -66,10 +75,14 @@ export function ConversationPublisherDocumentContent({
 
     const { saved, baseDocumentId } = part;
 
-    // Opening a drafted document needs the create-document permission; without it the Open button is disabled.
+    // Without the create-document permission, only a draft of the document open in the editor opens.
+    // Publisher relays the open document only from its editor, which such a user gets only as its creator.
+    const targetDocumentId = publisherDocumentTargetId({ saved, baseDocumentId });
+    const isDraftOfOpenDocument =
+        format === "aac-v2" && targetDocumentId !== undefined && targetDocumentId === openDocumentV2Id;
     // The publisher app cannot read an agent preview's conversation, so the document cannot open from there.
     const itemUrl =
-        config.canCreateDocument && !isPreview
+        (config.canCreateDocument || isDraftOfOpenDocument) && !isPreview
             ? getPublisherDocumentItemUrl({
                   workspaceId,
                   saved,

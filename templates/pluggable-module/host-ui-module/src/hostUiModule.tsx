@@ -11,7 +11,7 @@ import {
 import { HostUi, type IHostUiState } from "./HostUi.js";
 import "./HostUi.css";
 
-// vite.config.ts and vitest.config.ts define both values at build time.
+// vite.config.ts defines both values at build time.
 declare const __BUILD_TIMESTAMP__: number;
 declare const __ALLOWED_ORGANIZATIONS__: string[];
 

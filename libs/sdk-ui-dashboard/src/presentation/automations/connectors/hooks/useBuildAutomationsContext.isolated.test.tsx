@@ -1,0 +1,321 @@
+// (C) 2026 GoodData Corporation
+
+import { renderHook } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+
+import type { DateFilterGranularity, FilterContextItem } from "@gooddata/sdk-model";
+import type { IDateFilterOptionsByType } from "@gooddata/sdk-ui-filters";
+
+const selectors = vi.hoisted(() => {
+    const availableGranularities: DateFilterGranularity[] = ["GDC.time.date"];
+    const dateFilterOptions: IDateFilterOptionsByType = {
+        allTime: {
+            localIdentifier: "allTime",
+            type: "allTime",
+            name: "All time",
+            visible: true,
+        },
+    };
+    const granularitiesPerTab: Record<string, DateFilterGranularity[]> = {
+        tab1: ["GDC.time.month"],
+    };
+    const optionsPerTab: Record<string, IDateFilterOptionsByType | undefined> = {
+        tab1: {
+            relativeForm: {
+                fromLimit: -30,
+                toLimit: 0,
+                localIdentifier: "relative",
+                type: "relativeForm",
+                name: "Relative",
+                visible: true,
+            },
+        } as unknown as IDateFilterOptionsByType,
+    };
+
+    // Every mocked selector must return one of these. A mock that allocates per call
+    // (`() => []`) would make the context value change identity on every render, which the
+    // referential-stability test below exists to catch. In production every one of these
+    // selectors is a createSelector and returns a stable reference.
+    return {
+        availableGranularities,
+        dateFilterOptions,
+        granularitiesPerTab,
+        optionsPerTab,
+        emptyArray: [] as never[],
+        emptyRecord: {} as Record<string, never>,
+        emptyMap: new Map<never, never>(),
+        emptySet: new Set<never>(),
+        // the child of a restricted parent on "tab1" only; it uses no restricted object itself
+        restrictedByTab: { tab1: new Set(["child"]) } as Record<string, Set<string>>,
+        separators: { decimal: ".", thousand: "," },
+        currentUser: { login: "test@example.com", ref: { identifier: "test" } },
+        widgetsMap: { get: () => undefined },
+        parameterCatalog: [] as never[],
+        dashboardParametersByTab: {} as Record<string, never>,
+        tabs: [{ localIdentifier: "tab1" }],
+        widgetTabMap: { "widget-1": "tab1" } as Record<string, string>,
+        // mutable so the timezone-precedence tests can vary what the store serves
+        timezoneValues: {
+            workspace: undefined as string | undefined,
+            custom: undefined as string | undefined,
+            featureEnabled: false as boolean,
+            config: undefined as { allowUserOverrideInViewMode?: boolean; timezoneId?: string } | undefined,
+            scheduledExport: undefined as string | undefined,
+        },
+    };
+});
+
+vi.mock("../../../../model/react/DashboardStoreProvider.js", () => ({
+    useDashboardSelector: vi.fn((selector: () => unknown) => selector()),
+}));
+
+vi.mock("../../../../model/store/catalog/catalogSelectors.js", () => ({
+    selectAllCatalogAttributesMap: () => selectors.emptyMap,
+    selectAllCatalogDisplayFormsMap: () => selectors.emptyMap,
+    selectCatalogAttributes: () => selectors.emptyArray,
+    selectCatalogAttributesWithComputed: () => selectors.emptyArray,
+    selectCatalogDateDatasets: () => selectors.emptyArray,
+    selectCatalogMeasures: () => selectors.emptyArray,
+    selectCatalogParameters: () => selectors.parameterCatalog,
+    selectCatalogParametersIsLoaded: () => true,
+}));
+
+vi.mock("../../../../model/store/config/configSelectors.js", () => ({
+    selectDateFormat: () => "MM/dd/yyyy",
+    selectEnableAlertOncePerInterval: () => false,
+    selectEnableAnomalyDetectionAlert: () => false,
+    selectEnableAutomationEvaluationMode: () => false,
+    selectEnableTimezoneChange: () => selectors.timezoneValues.featureEnabled,
+    selectEnableParameters: () => true,
+    selectEnableSlideshowExports: () => false,
+    selectEnableStringParameters: () => true,
+    selectExternalRecipient: () => undefined,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet: () => false,
+    selectIsWhiteLabeled: () => false,
+    selectLocale: () => "en-US",
+    selectSeparators: () => selectors.separators,
+    selectSettings: () => undefined,
+    selectTimezone: () => selectors.timezoneValues.workspace,
+    selectWeekStart: () => "Sunday",
+}));
+
+vi.mock("../../../../model/store/drill/drillSelectors.js", () => ({
+    selectIsCrossFiltering: () => false,
+}));
+
+vi.mock("../../../../model/store/tabs/tabsSelectors.js", () => ({
+    selectTabs: () => selectors.tabs,
+}));
+
+vi.mock("../../../../model/store/tabs/parameters/parametersSelectors.js", () => ({
+    selectSmartPersistedTabsParameters: () => selectors.dashboardParametersByTab,
+}));
+
+vi.mock("../../../../model/store/permissions/permissionsSelectors.js", () => ({
+    selectCanCreateAutomation: () => true,
+    selectCanManageWorkspace: () => false,
+    selectCanUseAiAssistant: () => false,
+}));
+
+vi.mock("../../../../model/store/user/userSelectors.js", () => ({
+    selectCurrentUser: () => selectors.currentUser,
+}));
+
+vi.mock("../../../../model/store/filtering/dashboardFilterSelectors.js", () => ({
+    selectAutomationAvailableDashboardFilters: () => selectors.emptyArray,
+    selectAutomationCommonDateFilterId: () => undefined,
+    selectAllDashboardFiltersWithoutCrossFiltering: () => selectors.emptyArray,
+    selectAutomationDefaultSelectedFilters: () => selectors.emptyArray,
+    selectAutomationFiltersByTab: () => selectors.emptyArray,
+    selectExecutableDashboardFiltersWithoutCrossFiltering: () => selectors.emptyArray,
+    selectDashboardHiddenFilters: () => selectors.emptyArray,
+    selectDashboardLockedFilters: () => selectors.emptyArray,
+    selectRestrictedDashboardFilterLocalIdentifiers: () => selectors.emptySet,
+    selectRestrictedDashboardFilterLocalIdentifiersByTab: () => selectors.restrictedByTab,
+}));
+
+vi.mock("../../../../model/store/unavailableObjects/unavailableObjectsSelectors.js", () => ({
+    selectUnavailableObjects: () => selectors.emptyArray,
+}));
+
+vi.mock("../../../../model/store/meta/metaSelectors.js", () => ({
+    selectDashboardTimezoneConfig: () => selectors.timezoneValues.config,
+    selectEffectiveDashboardTimezone: () => selectors.timezoneValues.custom,
+    selectPersistedDashboardFilterContextDateFilterConfig: () => undefined,
+    selectScheduledExportTimezone: () => selectors.timezoneValues.scheduledExport,
+}));
+
+vi.mock("../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js", () => ({
+    selectAttributeFilterConfigsOverrides: () => selectors.emptyArray,
+    selectAttributeFilterConfigsOverridesByTab: () => selectors.emptyRecord,
+    selectAttributeFilterConfigsSelectionTypeMap: () => selectors.emptyMap,
+    selectAttributeFilterConfigsSelectionTypeMapByTab: () => selectors.emptyRecord,
+    selectEffectiveAttributeFiltersModeMap: () => selectors.emptyMap,
+}));
+
+vi.mock("../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js", () => ({
+    selectDateFilterConfigOverridesByTab: () => selectors.emptyRecord,
+    selectEffectiveDateFilterAvailableGranularities: () => selectors.availableGranularities,
+    selectEffectiveDateFilterGranularitiesPerTab: () => selectors.granularitiesPerTab,
+    selectEffectiveDateFilterMode: () => "active",
+    selectEffectiveDateFilterOptions: () => selectors.dateFilterOptions,
+    selectEffectiveDateFilterOptionsPerTab: () => selectors.optionsPerTab,
+}));
+
+vi.mock("../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js", () => ({
+    selectDateFilterConfigsOverrides: () => selectors.emptyArray,
+    selectDateFilterConfigsOverridesByTab: () => selectors.emptyRecord,
+    selectEffectiveDateFiltersModeMap: () => selectors.emptyMap,
+}));
+
+vi.mock("../../../../model/store/tabs/filterContext/filterContextSelectors.js", () => ({
+    selectAttributeFilterDisplayFormsMap: () => selectors.emptyMap,
+}));
+
+vi.mock("../../../../model/store/entitlements/entitlementsSelectors.js", () => ({
+    selectMaxAutomationRecipients: () => 10,
+    selectEntitlementMinimumRecurrenceMinutes: () => undefined,
+}));
+
+vi.mock("../../../../model/store/ui/uiSelectors.js", () => ({
+    selectExecutionTimestamp: () => undefined,
+    selectScheduleEmailDialogReturnFocusTo: () => undefined,
+}));
+
+vi.mock(
+    "../../../../model/store/tabs/measureValueFilterConfigs/measureValueFilterConfigsSelectors.js",
+    () => ({
+        selectMeasureValueFilterConfigsOverrides: () => selectors.emptyArray,
+        selectMeasureValueFilterConfigsOverridesByTab: () => selectors.emptyRecord,
+    }),
+);
+
+vi.mock("../../../../model/store/tabs/layout/layoutSelectors.js", () => ({
+    selectWidgetsMap: () => selectors.widgetsMap,
+    selectWidgetLocalIdToTabIdMap: () => selectors.widgetTabMap,
+}));
+
+import { useBuildAutomationsContext } from "./useBuildAutomationsContext.js";
+
+describe("useBuildAutomationsContext", () => {
+    it("preserves per-tab date filter configuration in the automations context bridge", () => {
+        const { result } = renderHook(() => useBuildAutomationsContext());
+
+        expect(result.current.dateFilterConfig.availableGranularities).toEqual(
+            selectors.availableGranularities,
+        );
+        expect(result.current.dateFilterConfig.dateFilterOptions).toEqual(selectors.dateFilterOptions);
+        expect(result.current.dateFilterConfig.getGranularitiesForTab("tab1")).toEqual(
+            selectors.granularitiesPerTab["tab1"],
+        );
+        expect(result.current.dateFilterConfig.getOptionsForTab("tab1")).toEqual(
+            selectors.optionsPerTab["tab1"],
+        );
+        expect(result.current.dateFilterConfig.getGranularitiesForTab("missing-tab")).toEqual([]);
+        expect(result.current.dateFilterConfig.getOptionsForTab("missing-tab")).toBeUndefined();
+        expect(result.current.features.canCreateAutomation).toBe(true);
+    });
+});
+
+describe("useBuildAutomationsContext — restricted filters", () => {
+    it("tells a restricted filter by the restricted filters of its own tab", () => {
+        const { result } = renderHook(() => useBuildAutomationsContext());
+        const child = {
+            attributeFilter: {
+                displayForm: { identifier: "readable", type: "displayForm" },
+                negativeSelection: true,
+                attributeElements: { uris: [] },
+                localIdentifier: "child",
+            },
+        } as FilterContextItem;
+
+        expect(result.current.isFilterRestricted(child, "tab1")).toBe(true);
+        expect(result.current.isFilterRestricted(child, "tab2")).toBe(false);
+        // the active tab restricts nothing here
+        expect(result.current.isFilterRestricted(child)).toBe(false);
+    });
+});
+
+describe("useBuildAutomationsContext — parameter data", () => {
+    it("exposes the dashboard-global parameter data the shared automationFilters hooks need", () => {
+        const { result } = renderHook(() => useBuildAutomationsContext());
+
+        expect(result.current.parameters).toEqual({
+            enabled: true,
+            stringParametersEnabled: true,
+            catalog: selectors.parameterCatalog,
+            catalogIsLoaded: true,
+            dashboardParametersByTab: selectors.dashboardParametersByTab,
+        });
+        expect(result.current.tabIds).toEqual(["tab1"]);
+        expect(result.current.widgetLocalIdToTabIdMap).toBe(selectors.widgetTabMap);
+    });
+});
+
+describe("useBuildAutomationsContext — referential stability", () => {
+    it("returns a referentially identical context value when re-rendered with unchanged store state", () => {
+        const { result, rerender } = renderHook(() => useBuildAutomationsContext());
+        const first = result.current;
+
+        rerender();
+
+        // The whole context value, not just its members: an unmemoized `tabIds` or `parameters`
+        // would land in the top-level useMemo's dependency array and change this identity on
+        // every render, re-rendering every consumer in both dialog trees.
+        expect(result.current).toBe(first);
+        expect(result.current.tabIds).toBe(first.tabIds);
+        expect(result.current.parameters).toBe(first.parameters);
+    });
+});
+
+describe("useBuildAutomationsContext — timezone source", () => {
+    it("prefers the custom dashboard timezone over the workspace setting", () => {
+        selectors.timezoneValues.workspace = "Europe/Prague";
+        selectors.timezoneValues.custom = "Asia/Tokyo";
+        try {
+            const { result } = renderHook(() => useBuildAutomationsContext());
+
+            expect(result.current.timezone).toBe("Asia/Tokyo");
+        } finally {
+            selectors.timezoneValues.workspace = undefined;
+            selectors.timezoneValues.custom = undefined;
+        }
+    });
+
+    it("falls back to the workspace timezone when no custom timezone is defined", () => {
+        selectors.timezoneValues.workspace = "Europe/Prague";
+        try {
+            const { result } = renderHook(() => useBuildAutomationsContext());
+
+            expect(result.current.timezone).toBe("Europe/Prague");
+        } finally {
+            selectors.timezoneValues.workspace = undefined;
+        }
+    });
+
+    it("publishes the scheduled-export timezone inputs read from the store", () => {
+        selectors.timezoneValues.workspace = "America/Argentina/Buenos_Aires";
+        selectors.timezoneValues.custom = "Europe/Prague";
+        selectors.timezoneValues.featureEnabled = true;
+        selectors.timezoneValues.config = { allowUserOverrideInViewMode: true, timezoneId: "Asia/Tokyo" };
+        selectors.timezoneValues.scheduledExport = "Europe/Prague";
+        try {
+            const { result } = renderHook(() => useBuildAutomationsContext());
+
+            expect(result.current.exportTimezones).toEqual({
+                isTimezoneFeatureEnabled: true,
+                allowUserOverrideInViewMode: true,
+                configuredTimezoneId: "Asia/Tokyo",
+                workspaceTimezone: "America/Argentina/Buenos_Aires",
+                effectiveTimezone: "Europe/Prague",
+                scheduledExportTimezone: "Europe/Prague",
+            });
+        } finally {
+            selectors.timezoneValues.workspace = undefined;
+            selectors.timezoneValues.custom = undefined;
+            selectors.timezoneValues.featureEnabled = false;
+            selectors.timezoneValues.config = undefined;
+            selectors.timezoneValues.scheduledExport = undefined;
+        }
+    });
+});

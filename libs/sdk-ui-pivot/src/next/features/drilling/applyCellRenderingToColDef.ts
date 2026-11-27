@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type RefObject } from "react";
+import { Fragment, type RefObject, createElement } from "react";
 
 import {
     type DataViewFacade,
@@ -8,6 +8,7 @@ import {
     isMeasureGroupHeaderColumnDefinition,
 } from "@gooddata/sdk-ui";
 
+import { DrillableCellDescription } from "../../components/Cell/DrillableCellHint.js";
 import { type AgGridCellRendererParams, type AgGridColumnDef } from "../../types/agGrid.js";
 import { getCellClassName, getCellTypes, getTransposedCellClassName } from "../styling/cell.js";
 
@@ -46,7 +47,17 @@ export const applyCellRenderingToColDef =
                 cellRenderer: (params: AgGridCellRendererParams) => {
                     const drillableItems = drillableItemsRef.current;
                     const cellTypes = getCellTypes(params, drillableItems, dv);
-                    return cellRendererFactory(params, cellTypes);
+                    // Drillability is otherwise conveyed only visually (cell class), so expose it
+                    // to screen readers as the description of the grid cell.
+                    return createElement(
+                        Fragment,
+                        null,
+                        cellRendererFactory(params, cellTypes),
+                        createElement(DrillableCellDescription, {
+                            eGridCell: params.eGridCell,
+                            isDrillable: !!cellTypes?.isDrillable,
+                        }),
+                    );
                 },
             }),
         };

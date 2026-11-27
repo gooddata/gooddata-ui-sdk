@@ -70,6 +70,7 @@ import {
 import {
     type DashboardFiltersApplyMode,
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IActiveCalendars,
     type IAiRateLimit,
     type IAlertDefault,
@@ -517,13 +518,13 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         private readonly execWrapper: PreparedExecutionWrapper,
         private readonly ctx: CachingContext,
         private readonly deleteExecutionCacheEntry: () => void,
-        private allData?: Promise<IDataView> | undefined,
-        private allForecastConfig?: IForecastConfig | undefined,
-        private allForecastData?: Promise<IForecastResult> | undefined,
-        private allOutliersConfig?: IOutliersConfig | undefined,
-        private allOutliersData?: Promise<IOutliersResult> | undefined,
-        private windows?: LRUCache<string, Promise<IDataView>> | undefined,
-        private collectionItemsCache?: CollectionItemsCache | undefined,
+        private allData?: Promise<IDataView>,
+        private allForecastConfig?: IForecastConfig,
+        private allForecastData?: Promise<IForecastResult>,
+        private allOutliersConfig?: IOutliersConfig,
+        private allOutliersData?: Promise<IOutliersResult>,
+        private windows?: LRUCache<string, Promise<IDataView>>,
+        private collectionItemsCache?: CollectionItemsCache,
     ) {
         super(decorated, execWrapper);
 
@@ -1107,7 +1108,7 @@ function elementsCacheKey(
         offset?: number;
         options?: IElementsQueryOptions;
         attributeFilters?: IElementsQueryAttributeFilter[];
-        dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
+        dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[];
         measures?: IMeasure[];
         validateBy?: ObjRef[];
     },
@@ -1130,7 +1131,7 @@ function completeElementsCacheKey(
         offset?: number;
         options?: IElementsQueryOptions;
         attributeFilters?: IElementsQueryAttributeFilter[];
-        dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
+        dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[];
         measures?: IMeasure[];
         validateBy?: ObjRef[];
         signal?: AbortSignal;
@@ -1284,7 +1285,7 @@ class CachedElementsQuery extends DecoratedElementsQuery {
             offset?: number;
             options?: IElementsQueryOptions;
             attributeFilters?: IElementsQueryAttributeFilter[];
-            dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
+            dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[];
             measures?: IMeasure[];
             validateBy?: ObjRef[];
         } = {},
@@ -1442,7 +1443,9 @@ class CachedElementsQuery extends DecoratedElementsQuery {
             offset?: number | undefined;
             options?: IElementsQueryOptions | undefined;
             attributeFilters?: IElementsQueryAttributeFilter[] | undefined;
-            dateFilters?: IRelativeDateFilter[] | undefined;
+            dateFilters?:
+                | (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[]
+                | undefined;
             measures?: IMeasure<IMeasureDefinitionType>[] | undefined;
             validateBy?: ObjRef[];
             signal?: AbortSignal;

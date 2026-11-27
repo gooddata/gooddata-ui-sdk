@@ -27,11 +27,17 @@ import type { MatchFilterOperator } from "@gooddata/sdk-model";
 import { type ExportEntities, type ToExecutionResults } from "../types.js";
 import { convertBucketToTitle } from "../utils/convertBucketToTitle.js";
 import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
+import { type IErrorContext } from "../utils/errors.js";
 import {
     foldLegacyEmptyValuesWithFilter,
     parseDateValues,
     yamlConditionToMatch,
 } from "../utils/filterUtils.js";
+import {
+    isPeriodDateFilter,
+    periodReference,
+    refusePeriodDateFilterOwnRange,
+} from "../utils/periodDateFilter.js";
 import { getFullField } from "../utils/sharedUtils.js";
 import {
     isAbsoluteDateFilter,
@@ -149,7 +155,9 @@ function buildExecution(entities: ExportEntities, query: Query): AFM {
                                     item,
                                     aggregation: fieldDef.aggregation,
                                     computeRatio: fieldDef.compute_ratio,
-                                    filters: buildFilters(entities, fieldDef.filter_by),
+                                    filters: buildFilters(entities, fieldDef.filter_by, {
+                                        path: ["fields", field, "filter_by"],
+                                    }),
                                 },
                             },
                         };
@@ -165,7 +173,9 @@ function buildExecution(entities: ExportEntities, query: Query): AFM {
                                 measure: {
                                     item,
                                     computeRatio: fieldDef.compute_ratio,
-                                    filters: buildFilters(entities, fieldDef.filter_by),
+                                    filters: buildFilters(entities, fieldDef.filter_by, {
+                                        path: ["fields", field, "filter_by"],
+                                    }),
                                 },
                             },
                         };
@@ -232,7 +242,7 @@ function buildExecution(entities: ExportEntities, query: Query): AFM {
                 return null;
             })
             .filter((a) => a !== null) as MeasureItem[],
-        filters: buildFilters(entities, query.filter_by),
+        filters: buildFilters(entities, query.filter_by, { path: ["filter_by"] }),
         auxMeasures: [],
     };
 }
@@ -280,7 +290,11 @@ function dateFilterEmptyValueHandling(filter: DateFilter): {
  * you add or change a date filter property here, change it there too, and extend
  * `AacFilterParity.test.ts` in sdk-backend-tiger, which fails if the two diverge.
  */
-function buildFilters(entities: ExportEntities, filters_by: QueryFilters | undefined): FilterDefinition[] {
+function buildFilters(
+    entities: ExportEntities,
+    filters_by: QueryFilters | undefined,
+    errorContext?: IErrorContext,
+): FilterDefinition[] {
     if (!filters_by) {
         return [];
     }
@@ -291,6 +305,18 @@ function buildFilters(entities: ExportEntities, filters_by: QueryFilters | undef
         const queryFilter = filters_by[key];
         // The same for the insight-level and the metric-level date filter, as in deploy
         const filter = isDateFilter(queryFilter) ? foldLegacyEmptyValuesWithFilter(queryFilter) : queryFilter;
+        if (isDateFilter(filter) && isPeriodDateFilter(filter)) {
+            refusePeriodDateFilterOwnRange(filter, key, errorContext);
+            // Deploy stores the key as the filter's local identifier, so the preview sends it too
+            filters.push({
+                parameterizedDateFilter: {
+                    dataset: periodReference(filter.using, "dataset"),
+                    parameter: periodReference(filter.parameter, "parameter"),
+                    localIdentifier: key,
+                    ...dateFilterEmptyValueHandling(filter),
+                },
+            });
+        }
         if (isAbsoluteDateFilter(filter)) {
             filters.push({
                 absoluteDateFilter: {

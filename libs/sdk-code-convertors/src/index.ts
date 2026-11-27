@@ -92,9 +92,11 @@ export { yamlMetricToDeclarative } from "./to/yamlMetricToDeclarative.js";
 export { yamlParameterToDeclarative } from "./to/yamlParameterToDeclarative.js";
 export {
     isDeclarativeCodeParameter,
+    isDeclarativeDateRangeParameter,
     isDeclarativeNumberParameter,
     isDeclarativeStringParameter,
     type DeclarativeCodeParameter,
+    type DeclarativeDateRangeParameter,
     type DeclarativeNumberParameter,
     type DeclarativeStringParameter,
 } from "./utils/parameterUtils.js";

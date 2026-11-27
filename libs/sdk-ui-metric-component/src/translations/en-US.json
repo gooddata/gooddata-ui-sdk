@@ -203,6 +203,22 @@
         "text": "Format Selection",
         "crowdinContext": "Item of the right-click menu of the code editor; reformats the selected code"
     },
+    "metricComponent.editMetric.format.documentFormatted": {
+        "text": "Code formatted",
+        "crowdinContext": "Status message read by screen readers after the whole code in the MAQL editor was reformatted"
+    },
+    "metricComponent.editMetric.format.selectionFormatted": {
+        "text": "Selection formatted",
+        "crowdinContext": "Status message read by screen readers after the selected code in the MAQL editor was reformatted"
+    },
+    "metricComponent.editMetric.format.nothingToFormat": {
+        "text": "Nothing to format",
+        "crowdinContext": "Status message read by screen readers when the format command of the MAQL editor found nothing to change"
+    },
+    "metricComponent.editMetric.format.failed": {
+        "text": "Formatting failed",
+        "crowdinContext": "Status message read by screen readers when the format command of the MAQL editor could not format the code"
+    },
     "metricComponent.editMetric.contextMenu.cut": {
         "text": "Cut",
         "crowdinContext": "Item of the right-click menu of the code editor; cuts the selected text to the clipboard"
@@ -506,6 +522,10 @@
     "metricComponent.minimize.restore": {
         "text": "Restore editor",
         "crowdinContext": "Accessible name of the icon button that reopens the minimized metric editor"
+    },
+    "metricComponent.minimize.label": {
+        "text": "Minimized metric editor",
+        "crowdinContext": "Accessible name of the small bar that holds the minimized metric editor. Screen readers announce it followed by the bar's visible text, for example 'Minimized metric editor, Editing: 2 metrics'"
     },
     "metricComponent.tabs.minimize": {
         "text": "Minimize editor",

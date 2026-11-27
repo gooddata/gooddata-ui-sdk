@@ -3,7 +3,7 @@
 import { type RunResult, expectSaga } from "redux-saga-test-plan";
 import { throwError } from "redux-saga-test-plan/providers";
 import { call, delay, put, select, take } from "redux-saga/effects";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
@@ -58,10 +58,6 @@ import {
     saveReportRequested,
     savedInsightPermissions,
 } from "./save_report_sagas.js";
-
-vi.hoisted(() => {
-    vi.resetModules();
-});
 
 describe("saveReport", () => {
     const timeoutId = 101;

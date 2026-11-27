@@ -2,6 +2,7 @@
 
 import {
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IAttributeElement,
     type IAttributeFilter,
     type IMeasure,
@@ -300,12 +301,15 @@ export interface IElementsQuery extends ICancelable<IElementsQuery> {
     /**
      * Sets the date filters that will limit the available elements
      *
+     * @remarks
+     * The absolute date filter with granularity is supported only by some backends.
+     *
      * @param filters - date filters limiting the elements
      * @returns element query
      */
-
-    // will add relativeDateFilters
-    withDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery;
+    withDateFilters(
+        filters: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[],
+    ): IElementsQuery;
 }
 
 /**

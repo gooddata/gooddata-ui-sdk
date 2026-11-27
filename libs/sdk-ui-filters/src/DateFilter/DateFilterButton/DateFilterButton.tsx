@@ -3,8 +3,9 @@
 import { type KeyboardEvent, type MutableRefObject, type ReactNode, useCallback } from "react";
 
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
-import { isActionKey } from "@gooddata/sdk-ui-kit";
+import { isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
 import { FilterButtonCustomIcon } from "../../shared/components/internal/FilterButtonCustomIcon.js";
@@ -39,6 +40,8 @@ export function DateFilterButton({
     buttonRef,
     dropdownId,
 }: IDateFilterButtonProps) {
+    const intl = useIntl();
+    const lockedDescriptionId = useIdPrefixed("date-filter-button-locked");
     const handleKeyDown = useCallback(
         (e: KeyboardEvent) => {
             if (isActionKey(e) && disabled) {
@@ -65,9 +68,17 @@ export function DateFilterButton({
             aria-haspopup="dialog"
             aria-expanded={isOpen}
             aria-controls={isOpen ? dropdownId : undefined}
+            aria-disabled={disabled || undefined}
+            aria-describedby={disabled ? lockedDescriptionId : undefined}
             tabIndex={0}
             onKeyDown={handleKeyDown}
         >
+            {disabled ? (
+                // aria-hidden keeps the text out of the button's name; aria-describedby still reads it.
+                <span className="sr-only" id={lockedDescriptionId} aria-hidden="true">
+                    {intl.formatMessage({ id: "filters.locked.filter.tooltip" })}
+                </span>
+            ) : null}
             <div className="button-content">
                 <div className="s-date-filter-title button-title">{title}</div>
                 <div className="button-subtitle">{children}</div>

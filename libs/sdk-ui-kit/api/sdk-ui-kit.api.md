@@ -1293,6 +1293,7 @@ export interface IBucketItemDescriptors {
 
 // @internal (undocumented)
 export interface IButtonAccessibilityConfig extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
+    ariaDisabled?: AriaAttributes["aria-disabled"];
 }
 
 // @internal (undocumented)

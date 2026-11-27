@@ -415,24 +415,13 @@ rush-logs
 ",
   "module/.goodchangesrc.json": "{
     "type": "app",
-    "targets": [
-        {
-            "targetName": "gdc-snap-headless-module-unit-tests",
-            "changeDirs": [
-                {
-                    "glob": "**/*",
-                    "type": "fine-grained",
-                    "filter": "**/*.test.ts"
-                }
-            ]
-        }
-    ],
+    "targets": [{}],
     "ignores": ["README.md", ".oxlintrc.json", "eslint.config.ts", ".env.template", ".gitignore"]
 }
 ",
   "module/.oxlintrc.json": "{
     "$schema": "./node_modules/oxlint/configuration_schema.json",
-    "extends": ["node_modules/@gooddata/oxlint-config/dist/esm-vitest.json"],
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/browser-esm.json"],
     "options": {
         "typeAware": true
     },
@@ -797,11 +786,6 @@ Registry config: \`{ "publicAppId": "<public app id>", "region": "EU" }\`. The P
             "outputFolderNames": []
         },
         {
-            "operationName": "_phase:test",
-            "outputFolderNames": [],
-            "weight": 4
-        },
-        {
             "operationName": "_phase:pack-build",
             "outputFolderNames": [],
             "disableBuildCacheForOperation": true
@@ -816,7 +800,7 @@ Registry config: \`{ "publicAppId": "<public app id>", "region": "EU" }\`. The P
 ",
   "module/eslint.config.ts": "// (C) 2026 GoodData Corporation
 
-export { default } from "@gooddata/eslint-config/v10/oxlint/esm-vitest";
+export { default } from "@gooddata/eslint-config/v10/oxlint/browser-esm";
 ",
   "module/package.json": "{
     "name": "gdc-snap-headless-module",
@@ -853,7 +837,6 @@ export { default } from "@gooddata/eslint-config/v10/oxlint/esm-vitest";
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
-        "test-once": "vitest run",
         "validate": "npm run lint && npm run format-check"
     },
     "dependencies": {
@@ -881,50 +864,9 @@ export { default } from "@gooddata/eslint-config/v10/oxlint/esm-vitest";
         "oxlint-tsgolint": "<VERSION>",
         "rolldown": "<VERSION>",
         "typescript": "<VERSION>",
-        "vite": "<VERSION>",
-        "vitest": "<VERSION>"
+        "vite": "<VERSION>"
     }
 }
-",
-  "module/src/headlessModule.test.ts": "// (C) 2026 GoodData Corporation
-
-import { describe, expect, it, vi } from "vitest";
-
-import { type IPlatformContext, type ITelemetryProvider } from "@gooddata/sdk-pluggable-application-model";
-
-import { createTelemetryProvider, headlessModule } from "./headlessModule.js";
-
-describe("headlessModule", () => {
-    it("registers one telemetry provider and unregisters it on unmount", () => {
-        const unregister = vi.fn();
-        const registerTelemetryProvider = vi.fn((_provider: ITelemetryProvider) => unregister);
-
-        const handle = headlessModule.mount({
-            id: "gdc-snap-headless",
-            ctx: {} as IPlatformContext,
-            config: {},
-            registerTelemetryProvider,
-        });
-
-        expect(registerTelemetryProvider).toHaveBeenCalledTimes(1);
-        handle.unmount();
-        expect(unregister).toHaveBeenCalledTimes(1);
-    });
-});
-
-describe("createTelemetryProvider", () => {
-    it("writes events with the configured prefix", () => {
-        const info = vi.spyOn(console, "info").mockImplementation(() => {});
-
-        createTelemetryProvider({ logPrefix: "[test]" }).trackEvent("app-load-completed", {
-            sourceApplication: "gdc-dashboards",
-        });
-
-        expect(info).toHaveBeenCalledWith("[test]", "event", "app-load-completed", {
-            sourceApplication: "gdc-dashboards",
-        });
-    });
-});
 ",
   "module/src/headlessModule.ts": "// (C) 2026 GoodData Corporation
 
@@ -936,7 +878,7 @@ import {
     type ITelemetryProvider,
 } from "@gooddata/sdk-pluggable-application-model";
 
-// vite.config.ts and vitest.config.ts define both values at build time.
+// vite.config.ts defines both values at build time.
 declare const __BUILD_TIMESTAMP__: number;
 declare const __ALLOWED_ORGANIZATIONS__: string[];
 
@@ -1104,23 +1046,6 @@ export default defineConfig(({ mode, command }): UserConfig => {
             }),
         ],
     };
-});
-",
-  "module/vitest.config.ts": "// (C) 2026 GoodData Corporation
-
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-    define: {
-        __BUILD_TIMESTAMP__: "0",
-        __ALLOWED_ORGANIZATIONS__: "[]",
-    },
-    test: {
-        environment: "node",
-        reporters: ["default"],
-        include: ["src/**/*.test.ts"],
-        restoreMocks: true,
-    },
 });
 ",
 }
@@ -1596,24 +1521,13 @@ rush-logs
 ",
   "module/.goodchangesrc.json": "{
     "type": "app",
-    "targets": [
-        {
-            "targetName": "gdc-snap-host-ui-module-unit-tests",
-            "changeDirs": [
-                {
-                    "glob": "**/*",
-                    "type": "fine-grained",
-                    "filter": "**/*.test.ts*"
-                }
-            ]
-        }
-    ],
+    "targets": [{}],
     "ignores": ["README.md", ".oxlintrc.json", "eslint.config.ts", ".env.template", ".gitignore"]
 }
 ",
   "module/.oxlintrc.json": "{
     "$schema": "./node_modules/oxlint/configuration_schema.json",
-    "extends": ["node_modules/@gooddata/oxlint-config/dist/react-vitest.json"],
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/react.json"],
     "options": {
         "typeAware": true
     },
@@ -1732,11 +1646,6 @@ When the module fails to load, the host logs the error and uses its default chro
             "outputFolderNames": []
         },
         {
-            "operationName": "_phase:test",
-            "outputFolderNames": [],
-            "weight": 4
-        },
-        {
             "operationName": "_phase:pack-build",
             "outputFolderNames": [],
             "disableBuildCacheForOperation": true
@@ -1751,7 +1660,7 @@ When the module fails to load, the host logs the error and uses its default chro
 ",
   "module/eslint.config.ts": "// (C) 2026 GoodData Corporation
 
-export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
+export { default } from "@gooddata/eslint-config/v10/oxlint/react";
 ",
   "module/package.json": "{
     "name": "gdc-snap-host-ui-module",
@@ -1790,7 +1699,6 @@ export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
-        "test-once": "vitest run",
         "validate": "npm run lint && npm run format-check"
     },
     "dependencies": {
@@ -1801,8 +1709,6 @@ export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
         "@gooddata/eslint-config": "<VERSION>",
         "@gooddata/oxlint-config": "<VERSION>",
         "@module-federation/vite": "<VERSION>",
-        "@testing-library/dom": "<VERSION>",
-        "@testing-library/react": "<VERSION>",
         "@types/node": "<VERSION>",
         "@types/react": "<VERSION>",
         "@types/react-dom": "<VERSION>",
@@ -1816,7 +1722,6 @@ export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
         "eslint-plugin-regexp": "<VERSION>",
         "eslint-plugin-sonarjs": "<VERSION>",
         "eslint-plugin-tsdoc": "<VERSION>",
-        "happy-dom": "<VERSION>",
         "jiti": "<VERSION>",
         "npm-run-all": "<VERSION>",
         "oxfmt": "<VERSION>",
@@ -1827,8 +1732,7 @@ export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
         "react-dom": "<VERSION>",
         "rolldown": "<VERSION>",
         "typescript": "<VERSION>",
-        "vite": "<VERSION>",
-        "vitest": "<VERSION>"
+        "vite": "<VERSION>"
     }
 }
 ",
@@ -2162,183 +2066,6 @@ class HostUiErrorBoundary extends Component<IHostUiErrorBoundaryProps, { hasErro
     }
 }
 ",
-  "module/src/hostUiModule.test.tsx": "// (C) 2026 GoodData Corporation
-
-import { act } from "react";
-
-import { afterEach, describe, expect, it, vi } from "vitest";
-
-import { type PluggableApplicationRegistryItem } from "@gooddata/sdk-model";
-import {
-    type IHostUiMountHandle,
-    type IHostUiMountOptions,
-    type IPlatformContext,
-} from "@gooddata/sdk-pluggable-application-model";
-
-import { getNavigationItems } from "./HostUi.js";
-import { hostUiModule } from "./hostUiModule.js";
-
-// React warns when act() runs outside a test environment that declares it.
-(globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
-
-const ctx = {
-    user: { login: "user@example.com" },
-    organization: { id: "org-1", title: "Example organization" },
-    currentWorkspaceId: "ws-1",
-} as IPlatformContext;
-
-const applications: PluggableApplicationRegistryItem[] = [
-    {
-        apiVersion: "1.0",
-        id: "workspace-app",
-        applicationScope: "workspace",
-        menuOrder: 2,
-        title: "Workspace app",
-        local: { routeBase: "/workspace-app" },
-    },
-    {
-        apiVersion: "1.0",
-        id: "organization-app",
-        applicationScope: "organization",
-        menuOrder: 1,
-        title: "Organization app",
-        local: { routeBase: "/organization-app" },
-    },
-];
-
-let container: HTMLElement;
-let handle: IHostUiMountHandle | undefined;
-
-function mount(overrides: Partial<IHostUiMountOptions> = {}) {
-    container = document.createElement("div");
-    document.body.appendChild(container);
-    act(() => {
-        handle = hostUiModule.mount({
-            container,
-            ctx,
-            resolvedApplications: applications,
-            pathname: "/organization/organization-app",
-            navigate: vi.fn(),
-            replace: vi.fn(),
-            ...overrides,
-        });
-    });
-    return handle!;
-}
-
-describe("hostUiModule", () => {
-    afterEach(() => {
-        act(() => handle?.unmount());
-        handle = undefined;
-        container.remove();
-    });
-
-    it("returns the app container synchronously and places it in the layout", () => {
-        const mounted = mount();
-
-        expect(container.contains(mounted.getAppContainer())).toBe(true);
-    });
-
-    it("navigates through the host on a menu click", () => {
-        const navigate = vi.fn();
-        mount({ navigate });
-
-        act(() => {
-            container.querySelector<HTMLAnchorElement>('a[href="/workspace/ws-1/workspace-app"]')!.click();
-        });
-
-        expect(navigate).toHaveBeenCalledWith("/workspace/ws-1/workspace-app");
-    });
-
-    it("moves the active item when the host pushes a new pathname", () => {
-        const mounted = mount();
-
-        act(() => mounted.updatePathname?.("/workspace/ws-1/workspace-app/detail"));
-
-        expect(container.querySelector('[aria-current="page"]')?.textContent).toBe("Workspace app");
-    });
-
-    it("keeps the application container when the header fails to render", () => {
-        vi.spyOn(console, "error").mockImplementation(() => {});
-        const onError = vi.fn();
-        const mounted = mount({ onError });
-        const brokenItem = {
-            key: "broken",
-            href: "https://example.com",
-            get label(): string {
-                throw new Error("broken label");
-            },
-        };
-
-        act(() => mounted.updateHeader?.({ helpMenuItems: [brokenItem] }));
-
-        expect(container.querySelector("header")).toBeNull();
-        expect(container.querySelector('[role="alert"]')).not.toBeNull();
-        expect(container.contains(mounted.getAppContainer())).toBe(true);
-        expect(onError).toHaveBeenCalledWith("broken label", "gdc-snap-host-ui");
-
-        act(() => {
-            mounted.updateHeader?.(undefined);
-            mounted.updatePathname?.("/workspace/ws-1/workspace-app");
-        });
-
-        expect(container.querySelector("header")).not.toBeNull();
-    });
-
-    it("renders only the application container in the export mode", () => {
-        const mounted = mount({ ctx: { ...ctx, isExportMode: true } });
-
-        expect(document.title).toBe("Organization app");
-        act(() => mounted.notify?.({ type: "newDeploymentAvailable", commitHash: "abc" }));
-
-        expect(container.querySelector("header")).toBeNull();
-        expect(container.querySelector('[role="status"]')).toBeNull();
-        expect(container.contains(mounted.getAppContainer())).toBe(true);
-    });
-});
-
-describe("hostUiModule theme", () => {
-    it("applies the header colors of the organization theme", () => {
-        const themed = document.createElement("div");
-        let themedHandle: IHostUiMountHandle | undefined;
-        act(() => {
-            themedHandle = hostUiModule.mount({
-                container: themed,
-                ctx: { ...ctx, theme: { header: { backgroundColor: "#123456" } } },
-                resolvedApplications: [],
-                pathname: "/",
-                navigate: vi.fn(),
-                replace: vi.fn(),
-            });
-        });
-
-        const root = themed.firstElementChild as HTMLElement;
-        expect(root.style.getPropertyValue("--gdc-snap-host-ui-header-background")).toBe("#123456");
-        act(() => themedHandle?.unmount());
-    });
-});
-
-describe("hostUiModule metadata", () => {
-    it("carries the build metadata that the host checks for a secured remote", () => {
-        expect(hostUiModule.allowedOrganizations).toEqual([]);
-        expect(hostUiModule.buildTimestamp).toBe(0);
-    });
-});
-
-describe("getNavigationItems", () => {
-    it("sorts by menu order and hides workspace apps outside a workspace", () => {
-        const items = getNavigationItems(applications, { ...ctx, currentWorkspaceId: undefined }, "/");
-
-        expect(items.map((item) => item.id)).toEqual(["organization-app"]);
-    });
-
-    it("marks the active application on an embedded route", () => {
-        const items = getNavigationItems(applications, ctx, "/embedded/workspace/ws-1/workspace-app");
-
-        expect(items.find((item) => item.isActive)?.id).toBe("workspace-app");
-    });
-});
-",
   "module/src/hostUiModule.tsx": "// (C) 2026 GoodData Corporation
 
 import { type Root, createRoot } from "react-dom/client";
@@ -2352,7 +2079,7 @@ import {
 import { HostUi, type IHostUiState } from "./HostUi.js";
 import "./HostUi.css";
 
-// vite.config.ts and vitest.config.ts define both values at build time.
+// vite.config.ts defines both values at build time.
 declare const __BUILD_TIMESTAMP__: number;
 declare const __ALLOWED_ORGANIZATIONS__: string[];
 
@@ -2569,26 +2296,6 @@ export default defineConfig(({ mode, command }): UserConfig => {
             react(),
         ],
     };
-});
-",
-  "module/vitest.config.ts": "// (C) 2026 GoodData Corporation
-
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-    define: {
-        __BUILD_TIMESTAMP__: "0",
-        __ALLOWED_ORGANIZATIONS__: "[]",
-    },
-    test: {
-        environment: "happy-dom",
-        reporters: ["default"],
-        include: ["src/**/*.test.{ts,tsx}"],
-        isolate: false,
-        restoreMocks: true,
-        unstubEnvs: true,
-        unstubGlobals: true,
-    },
 });
 ",
 }
@@ -3085,24 +2792,13 @@ rush-logs
 ",
   "module/.goodchangesrc.json": "{
     "type": "app",
-    "targets": [
-        {
-            "targetName": "gdc-snap-test-module-unit-tests",
-            "changeDirs": [
-                {
-                    "glob": "**/*",
-                    "type": "fine-grained",
-                    "filter": "**/*.test.ts*"
-                }
-            ]
-        }
-    ],
+    "targets": [{}],
     "ignores": ["README.md", ".oxlintrc.json", "eslint.config.ts", ".env.template", ".gitignore"]
 }
 ",
   "module/.oxlintrc.json": "{
     "$schema": "./node_modules/oxlint/configuration_schema.json",
-    "extends": ["node_modules/@gooddata/oxlint-config/dist/react-vitest.json"],
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/react.json"],
     "options": {
         "typeAware": true
     },
@@ -3140,11 +2836,8 @@ Pluggable application module for **gdc-snap-test**.
 ## Development
 
 \`\`\`bash
-# Run tests in watch mode
+# Run in dev mode
 rushx dev
-
-# Run tests once
-rushx test-once
 
 # Build
 rushx build
@@ -3183,11 +2876,6 @@ The \`asyncComponentTranslations\` map is typed as \`Record<ILocale, ...>\`. If 
             "outputFolderNames": []
         },
         {
-            "operationName": "_phase:test",
-            "outputFolderNames": [],
-            "weight": 4
-        },
-        {
             "operationName": "_phase:pack-build",
             "outputFolderNames": [],
             "disableBuildCacheForOperation": true
@@ -3202,7 +2890,7 @@ The \`asyncComponentTranslations\` map is typed as \`Record<ILocale, ...>\`. If 
 ",
   "module/eslint.config.ts": "// (C) 2026 GoodData Corporation
 
-export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
+export { default } from "@gooddata/eslint-config/v10/oxlint/react";
 ",
   "module/package.json": "{
     "name": "gdc-snap-test-module",
@@ -3239,7 +2927,6 @@ export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
         "format-write": "oxfmt .",
         "lint": "oxlint . --quiet && eslint .",
         "lint-fix": "oxlint . --quiet --fix && eslint . --fix",
-        "test-once": "vitest run",
         "validate": "npm run lint && npm run format-check"
     },
     "dependencies": {
@@ -3255,8 +2942,6 @@ export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
         "@gooddata/eslint-config": "<VERSION>",
         "@gooddata/oxlint-config": "<VERSION>",
         "@module-federation/vite": "<VERSION>",
-        "@testing-library/dom": "<VERSION>",
-        "@testing-library/react": "<VERSION>",
         "@types/lodash-es": "<VERSION>",
         "@types/node": "<VERSION>",
         "@types/react": "<VERSION>",
@@ -3271,7 +2956,6 @@ export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
         "eslint-plugin-regexp": "<VERSION>",
         "eslint-plugin-sonarjs": "<VERSION>",
         "eslint-plugin-tsdoc": "<VERSION>",
-        "happy-dom": "<VERSION>",
         "jiti": "<VERSION>",
         "npm-run-all": "<VERSION>",
         "oxfmt": "<VERSION>",
@@ -3283,118 +2967,9 @@ export { default } from "@gooddata/eslint-config/v10/oxlint/react-vitest";
         "rolldown": "<VERSION>",
         "sass": "<VERSION>",
         "typescript": "<VERSION>",
-        "vite": "<VERSION>",
-        "vitest": "<VERSION>"
+        "vite": "<VERSION>"
     }
 }
-",
-  "module/src/App.test.tsx": "// (C) 2026 GoodData Corporation
-
-import { type ReactElement, version as reactVersion } from "react";
-
-import { cleanup, render, screen } from "@testing-library/react";
-import { IntlProvider } from "react-intl";
-import { afterEach, describe, expect, it, vi } from "vitest";
-
-import {
-    type IPluggableAppTelemetryCallbacks,
-    LIB_VERSION as sdkVersion,
-} from "@gooddata/sdk-pluggable-application-model";
-import { BackendProvider } from "@gooddata/sdk-ui";
-import { type IClientPlatformContext, PlatformContextProvider } from "@gooddata/sdk-ui-pluggable-application";
-
-import { App } from "./App.js";
-import { reportPageView } from "./pluggableApp.js";
-
-function createMockCtx(): IClientPlatformContext {
-    return {
-        version: "1.0",
-        auth: { type: "contextDeferred" },
-        user: { login: "test@example.com" },
-        organization: { id: "org-1", title: "Test Org" },
-        userSettings: {} as IClientPlatformContext["userSettings"],
-        whiteLabeling: undefined,
-        embeddingMode: "none",
-        backend: {
-            // Minimal mock — extend as needed for your tests
-        } as IClientPlatformContext["backend"],
-    } as IClientPlatformContext;
-}
-
-function renderWithProviders(ui: ReactElement) {
-    const ctx = createMockCtx();
-    return render(
-        <PlatformContextProvider value={ctx}>
-            <BackendProvider backend={ctx.backend}>
-                <IntlProvider
-                    locale="en-US"
-                    messages={{ "gdc-snap-test.title": "Snapshot Test" }}
-                >
-                    {ui}
-                </IntlProvider>
-            </BackendProvider>
-        </PlatformContextProvider>,
-    );
-}
-
-// Vitest globals are off, so testing-library cannot register its own auto-cleanup. Unmount
-// explicitly — without it the rendered trees stack up in the shared document and later
-// queries hit "found multiple elements", both within this file and across files when
-// isolation is disabled.
-afterEach(() => {
-    cleanup();
-});
-
-describe("App", () => {
-    it("renders the application title", () => {
-        renderWithProviders(<App />);
-        expect(screen.getByText("Snapshot Test")).toBeTruthy();
-    });
-
-    it("renders user information from context", () => {
-        renderWithProviders(<App />);
-        expect(screen.getByText(/test@example.com/)).toBeTruthy();
-    });
-
-    it("reports one page view carrying the module React / SDK versions and the workspace id", () => {
-        const trackPageView = vi.fn();
-        const onTelemetryEvent: IPluggableAppTelemetryCallbacks = {
-            trackEvent: vi.fn(),
-            trackPageView,
-            trackTiming: vi.fn(),
-        };
-
-        reportPageView(onTelemetryEvent, "ws-1");
-
-        expect(trackPageView).toHaveBeenCalledTimes(1);
-        expect(trackPageView).toHaveBeenCalledWith("gdc-snap-test", {
-            moduleReactVersion: reactVersion,
-            moduleSdkVersion: sdkVersion,
-            identifiers: { workspaceId: "ws-1" },
-        });
-    });
-
-    it("reports a page view without identifiers for an organization-scoped app", () => {
-        const trackPageView = vi.fn();
-        const onTelemetryEvent: IPluggableAppTelemetryCallbacks = {
-            trackEvent: vi.fn(),
-            trackPageView,
-            trackTiming: vi.fn(),
-        };
-
-        reportPageView(onTelemetryEvent, undefined);
-
-        expect(trackPageView).toHaveBeenCalledTimes(1);
-        expect(trackPageView).toHaveBeenCalledWith("gdc-snap-test", {
-            moduleReactVersion: reactVersion,
-            moduleSdkVersion: sdkVersion,
-        });
-    });
-
-    it("no-ops when the host supplies no telemetry callbacks (standalone run)", () => {
-        expect(() => reportPageView(undefined, "ws-1")).not.toThrow();
-    });
-});
 ",
   "module/src/App.tsx": "// (C) 2026 GoodData Corporation
 
@@ -4006,22 +3581,6 @@ export default defineConfig(({ mode, command }): UserConfig => {
             gitRevisionPlugin(),
         ],
     };
-});
-",
-  "module/vitest.config.ts": "// (C) 2026 GoodData Corporation
-
-import { defineConfig } from "vitest/config";
-
-export default defineConfig({
-    test: {
-        environment: "happy-dom",
-        reporters: ["default"],
-        include: ["src/**/*.test.{ts,tsx}"],
-        isolate: false,
-        restoreMocks: true,
-        unstubEnvs: true,
-        unstubGlobals: true,
-    },
 });
 ",
 }

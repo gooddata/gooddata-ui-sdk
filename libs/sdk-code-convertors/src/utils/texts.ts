@@ -35,6 +35,11 @@ export const PARAMETER_COMMENT = [
     " https://www.gooddata.ai/docs/cloud/experimental-features/numeric-parameters/",
 ].join("\n");
 
+export const PERIOD_PARAMETER_COMMENT = [
+    " A date range parameter is a named period: a range of whole years, quarters, months, weeks, days, hours, minutes or seconds.",
+    " Date filters in visualizations and dashboards use it instead of fixed dates, so changing its range changes every filter that uses it.",
+].join("\n");
+
 export const VISUALISATION_COMMENT = [
     " A visualization is a visual representation of a user's analytical view of the data.",
     " You build visualizations from metrics, attributes, and optionally filters that are combined in a way to visualize a particular aspect of your data.",

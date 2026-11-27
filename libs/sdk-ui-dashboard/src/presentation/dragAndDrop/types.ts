@@ -4,7 +4,7 @@ import { type ComponentType, type ReactElement } from "react";
 
 import {
     type DashboardAttributeFilterItem,
-    type IDashboardDateFilter,
+    type DashboardDateFilterOfAnyType,
     type IDashboardMeasureValueFilter,
     type IFilter,
     type IInsight,
@@ -76,7 +76,7 @@ export function isAttributeFilterDraggableItem(
  */
 export type DateFilterDraggableItem = {
     type: "dateFilter";
-    filter: IDashboardDateFilter;
+    filter: DashboardDateFilterOfAnyType;
     filterIndex: number;
 };
 

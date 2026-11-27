@@ -17,8 +17,8 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardAttributeFilterReference,
     isDashboardCommonDateFilterOfAnyType,
-    isDashboardDateFilter,
     isDashboardDateFilterReference,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMeasureValueFilter,
     isDashboardMeasureValueFilterReference,
     isDateFilterOfAnyType,
@@ -44,8 +44,11 @@ export function removeIgnoredWidgetFilters(
         isDashboardCommonDateFilterOfAnyType(filter)
             ? !!widget.dateDataSet
             : !widget.ignoreDashboardFilters.some((ignoredFilter) => {
-                  if (isDashboardDateFilter(filter) && ignoredFilter.type === "dateFilterReference") {
-                      return areObjRefsEqual(ignoredFilter.dataSet, filter.dateFilter.dataSet);
+                  if (
+                      isDashboardDateFilterWithDimensionOfAnyType(filter) &&
+                      ignoredFilter.type === "dateFilterReference"
+                  ) {
+                      return areObjRefsEqual(ignoredFilter.dataSet, dashboardFilterObjRef(filter));
                   }
 
                   if (

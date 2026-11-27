@@ -11,6 +11,7 @@ import {
     areObjRefsEqual,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     dashboardMeasureValueFilterLocalIdentifier,
     isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
@@ -18,6 +19,8 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
+    isDashboardDateFilterOfAnyType,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
     isDashboardParameterizedDateFilter,
@@ -31,19 +34,24 @@ import { generateFilterLocalIdentifier } from "../../_infra/generators.js";
 import type { FilterContextState, IWorkingFilterContextDefinition } from "./filterContextState.js";
 
 /**
- * The working common date filter replaces the applied one, also when its type differs. The applied local
- * identifier is kept.
+ * The working date filter replaces the applied one, also when its type differs. The applied local
+ * identifier and date dataset are kept.
  */
-function mergeCommonDateFilter(
+function mergeDateFilterOfAnyType(
     appliedFilter: DashboardDateFilterOfAnyType,
     workingFilter: DashboardDateFilterOfAnyType,
 ): DashboardDateFilterOfAnyType {
     const localIdentifier = dashboardFilterLocalIdentifier(appliedFilter);
+    const dataSet = dashboardFilterObjRef(appliedFilter);
+    const identity = {
+        ...(dataSet ? { dataSet } : {}),
+        ...(localIdentifier ? { localIdentifier } : {}),
+    };
     if (isDashboardAbsoluteGranularityDateFilter(workingFilter)) {
         return {
             dashboardAbsoluteGranularityDateFilter: {
                 ...workingFilter.dashboardAbsoluteGranularityDateFilter,
-                ...(localIdentifier ? { localIdentifier } : {}),
+                ...identity,
             },
         };
     }
@@ -66,7 +74,7 @@ function mergeCommonDateFilter(
                 ..._omitBy(rest, (value) => value === undefined),
                 type,
                 granularity,
-                ...(localIdentifier ? { localIdentifier } : {}),
+                ...identity,
             },
         };
     }
@@ -159,22 +167,16 @@ export function applyFilterContext(
             return (workingFilter ?? appliedFilter) as FilterContextItem;
         } else if (isDashboardCommonDateFilterOfAnyType(appliedFilter)) {
             const workingFilter = workingFilterContext?.filters.find(isDashboardCommonDateFilterOfAnyType);
-            return workingFilter ? mergeCommonDateFilter(appliedFilter, workingFilter) : appliedFilter;
-        } else if (isDashboardDateFilter(appliedFilter)) {
-            const workingFilter: IDashboardDateFilter | undefined = workingFilterContext?.filters
-                ?.filter(isDashboardDateFilter)
-                .find((item) => areObjRefsEqual(item.dateFilter.dataSet, appliedFilter.dateFilter.dataSet));
-            if (!workingFilter?.dateFilter) {
-                return appliedFilter;
-            }
-
-            return mergeDateFilter(appliedFilter, workingFilter);
-        } else if (
-            isDashboardAbsoluteGranularityDateFilter(appliedFilter) ||
-            isDashboardParameterizedDateFilter(appliedFilter)
-        ) {
-            // TODO MC-5776: date filters with a dimension are not merged yet, the dashboard rejects them.
+            return workingFilter ? mergeDateFilterOfAnyType(appliedFilter, workingFilter) : appliedFilter;
+        } else if (isDashboardParameterizedDateFilter(appliedFilter)) {
+            // the dashboard rejects parameterized date filters, they are not merged
             return appliedFilter;
+        } else if (isDashboardDateFilterOfAnyType(appliedFilter)) {
+            const dataSet = dashboardFilterObjRef(appliedFilter);
+            const workingFilter = workingFilterContext?.filters
+                ?.filter(isDashboardDateFilterWithDimensionOfAnyType)
+                .find((item) => areObjRefsEqual(dashboardFilterObjRef(item), dataSet));
+            return workingFilter ? mergeDateFilterOfAnyType(appliedFilter, workingFilter) : appliedFilter;
         } else if (isDashboardMeasureValueFilter(appliedFilter)) {
             const workingFilter = workingFilterContext?.filters
                 ?.filter(isDashboardMeasureValueFilter)

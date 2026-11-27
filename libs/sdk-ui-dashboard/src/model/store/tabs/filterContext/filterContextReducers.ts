@@ -44,7 +44,7 @@ import {
     isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
     isDashboardDateFilterOfAnyType,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
     isIdentifierRef,
@@ -331,13 +331,17 @@ export interface IUpsertDateFilterNonAllTimePayload {
 }
 
 /**
- * Whole periods of the common date filter.
+ * Whole periods of the common date filter or of a date filter with a dimension.
  *
  * @internal
  */
 export interface IUpsertDateFilterAbsoluteGranularityPayload {
     readonly type: "absoluteGranularity";
     readonly granularity: DatePeriodGranularity;
+    /**
+     * Date dataset of a date filter with a dimension, undefined for the common date filter.
+     */
+    readonly dataSet?: ObjRef;
     readonly from?: DatePeriodLiteral;
     readonly to?: DatePeriodLiteral;
     readonly isWorkingSelectionChange?: boolean;
@@ -368,17 +372,18 @@ export type IUpsertDateFilterPayload =
  * @internal
  */
 export function upsertDateFilterPayloadDataSet(payload: IUpsertDateFilterPayload): ObjRef | undefined {
-    return payload.type === "absoluteGranularity" ? undefined : payload.dataSet;
+    return payload.dataSet;
 }
 
 function newDashboardAbsoluteGranularityDateFilter(
     payload: IUpsertDateFilterAbsoluteGranularityPayload,
     localIdentifier: string | undefined,
 ): IDashboardAbsoluteGranularityDateFilter {
-    const { granularity, from, to, emptyValueHandling } = payload;
+    const { granularity, from, to, emptyValueHandling, dataSet } = payload;
     return {
         dashboardAbsoluteGranularityDateFilter: {
             granularity,
+            ...(dataSet ? { dataSet } : {}),
             ...((from === undefined
                 ? { to }
                 : to === undefined
@@ -414,7 +419,9 @@ function upsertDateFilterOnTab(targetTab: ITabState, payload: IUpsertDateFilterP
 
     if (dateDataSet) {
         existingFilterIndex = filterContextDefinition.filters.findIndex(
-            (item) => isDashboardDateFilter(item) && areObjRefsEqual(item.dateFilter.dataSet, dateDataSet),
+            (item) =>
+                isDashboardDateFilterWithDimensionOfAnyType(item) &&
+                areObjRefsEqual(dashboardFilterObjRef(item), dateDataSet),
         );
     } else {
         existingFilterIndex = filterContextDefinition.filters.findIndex((item) =>
@@ -422,7 +429,7 @@ function upsertDateFilterOnTab(targetTab: ITabState, payload: IUpsertDateFilterP
         );
     }
 
-    // A change of the type of the common date filter keeps its local identifier.
+    // A change of the type of a date filter keeps its local identifier.
     const existingFilter = filterContextDefinition.filters[existingFilterIndex];
     const existingLocalIdentifier =
         isDashboardAbsoluteGranularityDateFilter(existingFilter) || isDashboardDateFilter(existingFilter)
@@ -451,7 +458,7 @@ function upsertDateFilterOnTab(targetTab: ITabState, payload: IUpsertDateFilterP
                 );
             } else if (isDashboardAbsoluteGranularityDateFilter(dateFilter)) {
                 filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
-                    undefined,
+                    dateFilter.dashboardAbsoluteGranularityDateFilter.dataSet,
                     existingLocalIdentifier,
                     payload.emptyValueHandling,
                 );
@@ -474,6 +481,12 @@ function upsertDateFilterOnTab(targetTab: ITabState, payload: IUpsertDateFilterP
                     filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
                         dateFilter.dateFilter.dataSet,
                         dateFilter.dateFilter.localIdentifier,
+                        payload.emptyValueHandling,
+                    );
+                } else if (isDashboardAbsoluteGranularityDateFilter(dateFilter)) {
+                    filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
+                        dateFilter.dashboardAbsoluteGranularityDateFilter.dataSet,
+                        existingLocalIdentifier,
                         payload.emptyValueHandling,
                     );
                 }
@@ -523,12 +536,14 @@ function upsertDateFilterOnTab(targetTab: ITabState, payload: IUpsertDateFilterP
             }
         } else if (isDashboardAbsoluteGranularityDateFilter(dateFilter)) {
             const filterLocalIdentifier = localIdentifier ?? existingLocalIdentifier;
+            const existingDataSet = dateFilter.dashboardAbsoluteGranularityDateFilter.dataSet;
             filterContextDefinition.filters[existingFilterIndex] = {
                 dateFilter: {
                     granularity,
                     type,
                     from,
                     to,
+                    ...(existingDataSet ? { dataSet: existingDataSet } : {}),
                     ...(filterLocalIdentifier ? { localIdentifier: filterLocalIdentifier } : {}),
                     ...(boundedFilter ? { boundedFilter } : {}),
                     ...(emptyValueHandling ? { emptyValueHandling } : {}),
@@ -818,11 +833,11 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
     const { definition } = target;
 
     // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
-    const isDateFilterPresent = definition.filters.findIndex(isDashboardDateFilter) >= 0;
+    const isCommonDateFilterPresent = definition.filters.findIndex(isDashboardCommonDateFilterOfAnyType) >= 0;
     const hasSelection = initialSelection && !attributeElementsIsEmpty(initialSelection);
     const isNegative = selectionMode !== "single" && (initialIsNegativeSelection || !hasSelection);
     // If DateFilter is present we have to move index by 1 because index of filter is calculated just for AttributeFilers array
-    const attributeFilterIndex = isDateFilterPresent ? index + 1 : index;
+    const attributeFilterIndex = isCommonDateFilterPresent ? index + 1 : index;
 
     const filter: IDashboardAttributeFilter = {
         attributeFilter: {
@@ -878,8 +893,8 @@ const addTextAttributeFilter: FilterContextReducer<PayloadAction<IAddTextAttribu
     const { definition } = target;
 
     // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
-    const isDateFilterPresent = definition.filters.findIndex(isDashboardDateFilter) >= 0;
-    const attributeFilterIndex = isDateFilterPresent ? index + 1 : index;
+    const isCommonDateFilterPresent = definition.filters.findIndex(isDashboardCommonDateFilterOfAnyType) >= 0;
+    const attributeFilterIndex = isCommonDateFilterPresent ? index + 1 : index;
     const filterWithLocalIdentifier = withAttributeFilterLocalIdentifier(
         filter,
         resolveAttributeFilterLocalIdentifier(
@@ -1074,12 +1089,12 @@ const moveAttributeFilter: FilterContextReducer<PayloadAction<IMoveAttributeFilt
     filters.splice(currentFilterIndex, 1);
 
     // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
-    const isDateFilterPresent = filters.findIndex(isDashboardDateFilter) >= 0;
+    const isCommonDateFilterPresent = filters.findIndex(isDashboardCommonDateFilterOfAnyType) >= 0;
     if (index === -1) {
         filters.push(filter);
     } else {
         // If DateFilter is present we have to move index by 1 because index of filter is calculated just for AttributeFilers array
-        const attributeFilterIndex = isDateFilterPresent ? index + 1 : index;
+        const attributeFilterIndex = isCommonDateFilterPresent ? index + 1 : index;
         filters.splice(attributeFilterIndex, 0, filter);
     }
 };
@@ -1629,19 +1644,15 @@ const removeDateFilter: FilterContextReducer<PayloadAction<IRemoveDateFilterPayl
 
     const { dataSet } = action.payload;
     const { filterContext, definition } = target;
-    const removed = definition.filters.find(
-        (item) =>
-            isDashboardDateFilterWithDimension(item) && areObjRefsEqual(item.dateFilter.dataSet, dataSet),
-    );
-    const removedLocalIdentifier = isDashboardDateFilter(removed)
-        ? removed.dateFilter.localIdentifier
-        : undefined;
+    const isRemovedFilter = (item: FilterContextItem) =>
+        isDashboardDateFilterWithDimensionOfAnyType(item) &&
+        areObjRefsEqual(dashboardFilterObjRef(item), dataSet);
+    const removed = definition.filters.find(isRemovedFilter);
+    const removedLocalIdentifier = removed ? dashboardFilterLocalIdentifier(removed) : undefined;
 
     filterContext.filterContextDefinition = {
         ...definition,
-        filters: definition.filters.filter(
-            (item) => !isDashboardDateFilter(item) || !areObjRefsEqual(item.dateFilter.dataSet!, dataSet),
-        ),
+        filters: definition.filters.filter((item) => !isRemovedFilter(item)),
     };
     removeDimensionDateFilterDependencies(
         filterContext.filterContextDefinition,
@@ -1731,7 +1742,9 @@ const moveDateFilter: FilterContextReducer<PayloadAction<IMoveDateFilterPayload>
     const { dataSet, index } = action.payload;
     const filters = target.definition.filters;
     const currentFilterIndex = filters.findIndex(
-        (item) => isDashboardDateFilter(item) && areObjRefsEqual(item.dateFilter.dataSet!, dataSet),
+        (item) =>
+            isDashboardDateFilterWithDimensionOfAnyType(item) &&
+            areObjRefsEqual(dashboardFilterObjRef(item), dataSet),
     );
     invariant(currentFilterIndex >= 0, "Attempt to move non-existing filter");
 

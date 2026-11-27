@@ -3,6 +3,7 @@
 import {
     type ComponentProps,
     type FocusEvent,
+    type MouseEvent,
     useCallback,
     useEffect,
     useMemo,
@@ -362,9 +363,13 @@ export function PeriodRangePickerImpl({
     const inputIds = useMemo(() => ({ start: startInputId, end: endInputId }), [startInputId, endInputId]);
 
     const pickerMode = GRANULARITY_TO_PICKER_MODE[granularity];
+    // A new `value` makes rc-picker reload both fields from `range`; bumping this forces one while `range`
+    // stays the same.
+    const [valueReloadCount, setValueReloadCount] = useState(0);
     const value = useMemo(
         () => parseRangeValue({ from: range.from, to: range.to }, granularity, weekStart),
-        [range.from, range.to, granularity, weekStart],
+        // oxlint-disable-next-line react-hooks/exhaustive-deps
+        [range.from, range.to, granularity, weekStart, valueReloadCount],
     );
 
     // Enter is handled in a DOM event handler several component layers down (AccessibleFieldInput),
@@ -375,7 +380,6 @@ export function PeriodRangePickerImpl({
         start: { hasParseError: false, isBlank: !range.from },
         end: { hasParseError: false, isBlank: !range.to },
     });
-    const enterCommitRef = useRef(false);
 
     const {
         pickerValue: yearPickerValue,
@@ -411,6 +415,14 @@ export function PeriodRangePickerImpl({
             setLiveValue(dates);
             if (info.range) {
                 setLastEditedSide(info.range);
+                // A picked date reaches the field's text one render after rc-picker moves focus to the other
+                // field, so the blur of that move would otherwise still see the field blank.
+                if (dates[info.range === "start" ? 0 : 1]) {
+                    fieldRawStateRef.current = {
+                        ...fieldRawStateRef.current,
+                        [info.range]: { hasParseError: false, isBlank: false },
+                    };
+                }
             }
             followYearPageEdit(dates, info);
         },
@@ -482,21 +494,8 @@ export function PeriodRangePickerImpl({
         [granularity, weekStart],
     );
 
-    // rc-picker's `onChange` fires once per completed round, not per field (see `submitField` in its
-    // useRangeValueChange), so tabbing out of the start field would otherwise commit nothing. Blur is
-    // the per-field commit point, mirroring the classic DateRangePicker's onDateInputBlur.
-    const handleFieldBlur = useCallback(
-        (_event: FocusEvent<HTMLElement>, info: { range?: PeriodRangeSide }) => {
-            if (enterCommitRef.current) {
-                // rc-picker's own `useFocusEvents` also deactivates/blurs the field as part of confirming it
-                // via Enter. Letting this one through too would recompute using this closure's now-stale
-                // `range`, clobbering whichever side handleEnterCommit did (or deliberately didn't) commit.
-                return;
-            }
-            const side = info.range;
-            if (!side) {
-                return;
-            }
+    const commitField = useCallback(
+        (side: PeriodRangeSide) => {
             setTouched((prev) => (prev[side] ? prev : { ...prev, [side]: true }));
             if (fieldRawStateRef.current[side].hasParseError) {
                 // Leaving `range` untouched keeps rc-picker's own controlled `value` prop untouched too, so
@@ -508,6 +507,28 @@ export function PeriodRangePickerImpl({
             onRangeChange({ ...range, [rangeKey]: resolveSideValue(side) });
         },
         [range, onRangeChange, resolveSideValue],
+    );
+
+    // rc-picker's `onChange` fires once per completed round, not per field (see `submitField` in its
+    // useRangeValueChange), so tabbing out of the start field would otherwise commit nothing. Blur is
+    // the per-field commit point, mirroring the classic DateRangePicker's onDateInputBlur.
+    const handleFieldBlur = useCallback(
+        (_event: FocusEvent<HTMLElement>, info: { range?: PeriodRangeSide }) => {
+            if (info.range) {
+                commitField(info.range);
+            }
+        },
+        [commitField],
+    );
+
+    // rc-picker keeps a field's date after its text is emptied, so picking that date again is no change and
+    // the text stays empty. Committing the emptied field and reloading rc-picker from `range` drops that date.
+    const handleFieldCleared = useCallback(
+        (side: PeriodRangeSide) => {
+            onRangeChange({ ...range, [side === "start" ? "from" : "to"]: undefined });
+            setValueReloadCount((count) => count + 1);
+        },
+        [range, onRangeChange],
     );
 
     const isDateOrderError = Boolean(
@@ -635,31 +656,28 @@ export function PeriodRangePickerImpl({
         );
     }, [showRangePreview, previewRange, intl, setPreviewAnnouncement]);
 
-    // Enter applies the whole range immediately in INDIVIDUAL mode, mirroring the classic picker's
-    // `onSubmitValue(true)`. It cannot hang off handleChange: rc-picker's onChange is a per-round event,
-    // so an Enter in the start field - before the end field has participated in the round - never
-    // reaches it. Reads the refs rather than state because it runs from a DOM handler.
-    //
-    // Both sides must be present, parsable and in order; otherwise Enter is a no-op - it neither applies
-    // nor commits, because the offending field already shows its own error and blur will commit it once
-    // the user leaves it.
-    const handleEnterCommit = useCallback(() => {
-        const from = resolveSideValue("start");
-        const to = resolveSideValue("end");
-        if (from === undefined || to === undefined) {
-            return;
-        }
+    // Enter applies the whole range immediately in INDIVIDUAL mode. While either side is empty or unparsable,
+    // or the periods are reversed, it applies nothing and commits only its own field, the way blur does.
+    // Reads the refs rather than state because it runs from a DOM handler.
+    const handleEnterCommit = useCallback(
+        (side: PeriodRangeSide) => {
+            const from = resolveSideValue("start");
+            const to = resolveSideValue("end");
+            const [start, end] = liveValueRef.current;
+            const orderKind: PeriodRangeFieldErrorKind =
+                start && end && isPeriodOrderReversed(granularity, start, end, weekStart)
+                    ? "order"
+                    : undefined;
+            if (from === undefined || to === undefined || isBlockingFieldError(orderKind)) {
+                commitField(side);
+                return;
+            }
 
-        const [start, end] = liveValueRef.current;
-        const orderKind: PeriodRangeFieldErrorKind =
-            start && end && isPeriodOrderReversed(granularity, start, end, weekStart) ? "order" : undefined;
-        if (isBlockingFieldError(orderKind)) {
-            return;
-        }
-
-        onRangeChange({ from, to });
-        debouncedSubmitForm();
-    }, [resolveSideValue, granularity, weekStart, onRangeChange, debouncedSubmitForm]);
+            onRangeChange({ from, to });
+            debouncedSubmitForm();
+        },
+        [resolveSideValue, granularity, weekStart, commitField, onRangeChange, debouncedSubmitForm],
+    );
 
     const accessibility = useMemo<IPeriodRangeAccessibility>(
         () => ({
@@ -676,9 +694,9 @@ export function PeriodRangePickerImpl({
                 hintId,
             },
             onFieldStateChange: handleFieldStateChange,
+            onFieldCleared: handleFieldCleared,
             isCalendarOpen: open,
             onRequestOpen: openCalendar,
-            enterCommitRef,
             onEnterCommit: handleEnterCommit,
             ignoreEnter: withoutApply,
         }),
@@ -688,6 +706,7 @@ export function PeriodRangePickerImpl({
             fieldErrorKind.start,
             fieldErrorKind.end,
             handleFieldStateChange,
+            handleFieldCleared,
             hintId,
             startErrorId,
             endErrorId,
@@ -734,12 +753,6 @@ export function PeriodRangePickerImpl({
 
     const handleChange = useCallback(
         (dates: [Date | null, Date | null] | null) => {
-            if (enterCommitRef.current) {
-                // Enter is owned by handleEnterCommit, which does not depend on this per-round event.
-                // Letting it through as well would commit the range a second time in INDIVIDUAL, and
-                // would commit at all in ALL_AT_ONCE, where Enter must stay inert.
-                return;
-            }
             if (!dates?.[0] || !dates[1]) {
                 // A partial range reaches onChange once `allowEmpty` lets it past rc-picker's
                 // validateEmptyDateRange. The blur handler owns per-field commits, including clearing a
@@ -756,6 +769,15 @@ export function PeriodRangePickerImpl({
     );
 
     const getPopupContainer = useCallback(() => wrapperRef.current ?? document.body, []);
+
+    // The calendar can take focus. Pressing it would blur the field before the picked period reaches it, which
+    // commits the field's previous value, and the calendar's own blur would then be reported for the other field.
+    const handleMouseDown = useCallback((event: MouseEvent<HTMLDivElement>) => {
+        if ((event.target as Element).closest(".rc-picker-dropdown")) {
+            event.preventDefault();
+        }
+    }, []);
+
     const placeholder = intl.formatMessage(messages.placeholder);
 
     return (
@@ -766,6 +788,7 @@ export function PeriodRangePickerImpl({
                     : "gd-period-range-picker s-period-range-picker"
             }
             ref={wrapperRef}
+            onMouseDown={handleMouseDown}
         >
             <PeriodRangeAccessibilityContext.Provider value={accessibility}>
                 <YearPageAnchorContext.Provider value={isYear ? yearPageAnchorYear : undefined}>

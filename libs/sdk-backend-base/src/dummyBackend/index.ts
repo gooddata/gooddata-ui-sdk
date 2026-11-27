@@ -155,6 +155,7 @@ import {
     type DimensionGenerator,
     type FilterContextItem,
     type IAbsoluteDateFilter,
+    type IAbsoluteGranularityDateFilter,
     type IActiveCalendars,
     type IAiRateLimit,
     type IAlertDefault,
@@ -1690,7 +1691,9 @@ class DummyElementsQuery implements IElementsQuery {
         return Promise.resolve(new DummyElementsQueryResult([], this.limit, this.offset, 0));
     };
 
-    withDateFilters(_filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery {
+    withDateFilters(
+        _filters: (IRelativeDateFilter | IAbsoluteDateFilter | IAbsoluteGranularityDateFilter)[],
+    ): IElementsQuery {
         throw new NotSupported("not supported");
     }
 

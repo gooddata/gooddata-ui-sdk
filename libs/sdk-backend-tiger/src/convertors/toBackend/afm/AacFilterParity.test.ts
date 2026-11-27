@@ -10,6 +10,7 @@ import {
     newAbsoluteDateFilter,
     newAllTimeFilter,
     newNegativeAttributeFilter,
+    newParameterizedDateFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
 } from "@gooddata/sdk-model";
@@ -28,6 +29,9 @@ describe("AaC query preview AFM matches the model filter conversion", () => {
     const DATASET = "expected_ship_date";
     const MODES: EmptyValues[] = ["include", "exclude", "only"];
     const YEAR_LABEL = "label/expected_ship_date.year";
+    const PERIOD = "last_13_months";
+    // Deploy stores a period filter's YAML key as its local identifier
+    const KEY = "f";
 
     const Scenarios: Array<[string, unknown, IFilter | IFilter[]]> = [
         ["All time, no mode", { type: "date_filter", using: DATASET }, newAllTimeFilter(DATASET)],
@@ -105,10 +109,33 @@ describe("AaC query preview AFM matches the model filter conversion", () => {
                 newNegativeAttributeFilter(idRef("expected_ship_date.year", "displayForm"), ["2025"]),
             ],
         ],
+        [
+            "period, no mode",
+            { type: "date_filter", using: DATASET, parameter: PERIOD },
+            newParameterizedDateFilter(DATASET, PERIOD, { localIdentifier: KEY }),
+        ],
+        ...MODES.map((mode): [string, unknown, IFilter | IFilter[]] => [
+            `period, ${mode}`,
+            { type: "date_filter", using: DATASET, parameter: PERIOD, empty_values: mode },
+            newParameterizedDateFilter(DATASET, PERIOD, { localIdentifier: KEY, emptyValueHandling: mode }),
+        ]),
+        [
+            "period with positive with: filter",
+            {
+                type: "date_filter",
+                using: DATASET,
+                parameter: PERIOD,
+                with: { y: { type: "attribute_filter", using: YEAR_LABEL, state: { include: ["2025"] } } },
+            },
+            [
+                newParameterizedDateFilter(DATASET, PERIOD, { localIdentifier: KEY }),
+                newPositiveAttributeFilter(idRef("expected_ship_date.year", "displayForm"), ["2025"]),
+            ],
+        ],
     ];
 
     it.each(Scenarios)("%s", (_name, yamlFilter, modelFilter) => {
-        const query = { fields: {}, filter_by: { f: yamlFilter } } as unknown as Parameters<
+        const query = { fields: {}, filter_by: { [KEY]: yamlFilter } } as unknown as Parameters<
             typeof buildAfmExecution
         >[1];
 

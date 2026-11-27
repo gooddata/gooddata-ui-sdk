@@ -832,77 +832,77 @@ interface DashboardFilterGroup {
 //
 // @public (undocumented)
 interface DashboardFilters {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters1 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters10" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters10 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters2 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters3 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters4 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters5 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters6 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters7" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters7 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters8" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters8 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardFilters9" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
 interface DashboardFilters9 {
-    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
+    [k: string]: DashboardAbsoluteDateFilter | DashboardRelativeDateFilter | DashboardPeriodDateFilter | DashboardAttributeFilter | DashboardTextFilter | DashboardMetricValueFilter | DashboardFilterGroup;
 }
 
 // Warning: (ae-missing-release-tag) "DashboardMetricValueFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -939,6 +939,16 @@ type DashboardParameters = DashboardParameter[];
 //
 // @public
 type DashboardParameters1 = DashboardParameter[];
+
+// Warning: (ae-missing-release-tag) "DashboardPeriodDateFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DashboardPeriodDateFilter {
+    // (undocumented)
+    [k: string]: unknown;
+    // (undocumented)
+    type: "date_filter" | "attribute_filter" | "text_filter" | "metric_value_filter" | "filter_group";
+}
 
 // Warning: (ae-missing-release-tag) "DashboardRelativeDateFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -1048,7 +1058,7 @@ interface DateDataset {
 // Warning: (ae-missing-release-tag) "DateFilter" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
-type DateFilter = DateFilter1 | DateFilter2;
+type DateFilter = DateFilter1 | DateFilter2 | DateFilter3;
 
 // Warning: (ae-missing-release-tag) "DateFilter1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -1080,6 +1090,85 @@ type DateFilter2 = {
     empty_values?: "only" | "include" | "exclude";
     [k: string]: unknown;
 };
+
+// Warning: (ae-missing-release-tag) "DateFilter3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+type DateFilter3 = {
+    type: "date_filter";
+    using: string;
+    parameter: string;
+    with?: {
+        [k: string]: AttributeFilter;
+    };
+    empty_values?: "only" | "include" | "exclude";
+    [k: string]: unknown;
+};
+
+// Warning: (ae-missing-release-tag) "DateRangeParameterDefinition" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+interface DateRangeParameterDefinition {
+    // (undocumented)
+    defaultValue: DateRangeParameterValue;
+    // (undocumented)
+    type: "DATE_RANGE";
+}
+
+// Warning: (ae-missing-release-tag) "DateRangeParameterValue" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DateRangeParameterValue = DateRangeParameterValue1 | DateRangeParameterValue2 | DateRangeParameterValue3 | DateRangeParameterValue4 | DateRangeParameterValue5 | DateRangeParameterValue6 | DateRangeParameterValue7 | DateRangeParameterValue8;
+
+// Warning: (ae-missing-release-tag) "DateRangeParameterValue1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DateRangeParameterValue1 = YearPeriod;
+
+// Warning: (ae-missing-release-tag) "DateRangeParameterValue2" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DateRangeParameterValue2 = QuarterPeriod;
+
+// Warning: (ae-missing-release-tag) "DateRangeParameterValue3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DateRangeParameterValue3 = MonthPeriod;
+
+// Warning: (ae-missing-release-tag) "DateRangeParameterValue4" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DateRangeParameterValue4 = WeekPeriod;
+
+// Warning: (ae-missing-release-tag) "DateRangeParameterValue5" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DateRangeParameterValue5 = DayPeriod;
+
+// Warning: (ae-missing-release-tag) "DateRangeParameterValue6" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DateRangeParameterValue6 = HourPeriod;
+
+// Warning: (ae-missing-release-tag) "DateRangeParameterValue7" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DateRangeParameterValue7 = MinutePeriod;
+
+// Warning: (ae-missing-release-tag) "DateRangeParameterValue8" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type DateRangeParameterValue8 = SecondPeriod;
+
+// Warning: (ae-missing-release-tag) "DayPeriod" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface DayPeriod {
+    from?: string;
+    // (undocumented)
+    granularity: "DAY";
+    to?: string;
+}
 
 // Warning: (ae-missing-release-tag) "DependencyWheelChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -1407,6 +1496,16 @@ interface HeatmapChart {
     title?: string;
     type: "heatmap_chart";
     view_by?: Bucket[];
+}
+
+// Warning: (ae-missing-release-tag) "HourPeriod" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface HourPeriod {
+    from?: string;
+    // (undocumented)
+    granularity: "HOUR";
+    to?: string;
 }
 
 // Warning: (ae-missing-release-tag) "Id" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
@@ -4854,6 +4953,7 @@ export const metadata_v1: {
                             if: {
                                 properties?: undefined;
                                 required?: undefined;
+                                not?: undefined;
                                 allOf: ({
                                     not?: undefined;
                                     properties: {
@@ -4869,6 +4969,12 @@ export const metadata_v1: {
                                                 type: string;
                                             };
                                         };
+                                        required: string[];
+                                    };
+                                } | {
+                                    properties?: undefined;
+                                    not: {
+                                        properties?: undefined;
                                         required: string[];
                                     };
                                 })[];
@@ -4888,6 +4994,24 @@ export const metadata_v1: {
                                     };
                                 };
                                 required: string[];
+                                not: {
+                                    required: string[];
+                                };
+                            };
+                            then: {
+                                $ref: string;
+                            };
+                        } | {
+                            if: {
+                                not?: undefined;
+                                allOf?: undefined;
+                                properties: {
+                                    from?: undefined;
+                                    type: {
+                                        const: string;
+                                    };
+                                };
+                                required: string[];
                             };
                             then: {
                                 $ref: string;
@@ -4895,6 +5019,7 @@ export const metadata_v1: {
                         } | {
                             if: {
                                 required?: undefined;
+                                not?: undefined;
                                 allOf?: undefined;
                                 properties: {
                                     from?: undefined;
@@ -7614,6 +7739,7 @@ export const metadata_v1: {
                         if: {
                             properties?: undefined;
                             required?: undefined;
+                            not?: undefined;
                             allOf: ({
                                 not?: undefined;
                                 properties: {
@@ -7629,6 +7755,12 @@ export const metadata_v1: {
                                             type: string;
                                         };
                                     };
+                                    required: string[];
+                                };
+                            } | {
+                                properties?: undefined;
+                                not: {
+                                    properties?: undefined;
                                     required: string[];
                                 };
                             })[];
@@ -7648,6 +7780,24 @@ export const metadata_v1: {
                                 };
                             };
                             required: string[];
+                            not: {
+                                required: string[];
+                            };
+                        };
+                        then: {
+                            $ref: string;
+                        };
+                    } | {
+                        if: {
+                            not?: undefined;
+                            allOf?: undefined;
+                            properties: {
+                                from?: undefined;
+                                type: {
+                                    const: string;
+                                };
+                            };
+                            required: string[];
                         };
                         then: {
                             $ref: string;
@@ -7655,6 +7805,7 @@ export const metadata_v1: {
                     } | {
                         if: {
                             required?: undefined;
+                            not?: undefined;
                             allOf?: undefined;
                             properties: {
                                 from?: undefined;
@@ -7765,6 +7916,56 @@ export const metadata_v1: {
                         type: string;
                     })[];
                 };
+            };
+            required: string[];
+        };
+        dashboardPeriodDateFilter: {
+            type: string;
+            title: string;
+            description: string;
+            properties: {
+                title: {
+                    type: string;
+                    description: string;
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                parameter: {
+                    $ref: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                mode: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                empty_values: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                date: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                    } | {
+                        source?: undefined;
+                        type: string;
+                    })[];
+                };
+            };
+            not: {
+                anyOf: {
+                    required: string[];
+                }[];
             };
             required: string[];
         };
@@ -8423,6 +8624,7 @@ export const metadata_v1: {
                         if: {
                             properties?: undefined;
                             required?: undefined;
+                            not?: undefined;
                             allOf: ({
                                 not?: undefined;
                                 properties: {
@@ -8438,6 +8640,12 @@ export const metadata_v1: {
                                             type: string;
                                         };
                                     };
+                                    required: string[];
+                                };
+                            } | {
+                                properties?: undefined;
+                                not: {
+                                    properties?: undefined;
                                     required: string[];
                                 };
                             })[];
@@ -8457,6 +8665,24 @@ export const metadata_v1: {
                                 };
                             };
                             required: string[];
+                            not: {
+                                required: string[];
+                            };
+                        };
+                        then: {
+                            $ref: string;
+                        };
+                    } | {
+                        if: {
+                            not?: undefined;
+                            allOf?: undefined;
+                            properties: {
+                                from?: undefined;
+                                type: {
+                                    const: string;
+                                };
+                            };
+                            required: string[];
                         };
                         then: {
                             $ref: string;
@@ -8464,6 +8690,7 @@ export const metadata_v1: {
                     } | {
                         if: {
                             required?: undefined;
+                            not?: undefined;
                             allOf?: undefined;
                             properties: {
                                 from?: undefined;
@@ -8698,6 +8925,10 @@ export const metadata_v1: {
                 to: {
                     type: string[];
                 };
+                parameter: {
+                    type: string;
+                    description: string;
+                };
                 with: {
                     type: string;
                     description: string;
@@ -8716,15 +8947,19 @@ export const metadata_v1: {
             };
             allOf: ({
                 if: {
-                    not?: undefined;
+                    allOf?: undefined;
                     properties: {
                         granularity: {
                             type: string;
                         };
                     };
                     required: string[];
+                    not: {
+                        required: string[];
+                    };
                 };
                 then: {
+                    not?: undefined;
                     properties: {
                         type: {
                             type: string;
@@ -8768,6 +9003,7 @@ export const metadata_v1: {
                             enum: string[];
                             description: string;
                         };
+                        parameter?: undefined;
                     };
                     required: string[];
                 };
@@ -8775,16 +9011,25 @@ export const metadata_v1: {
                 if: {
                     properties?: undefined;
                     required?: undefined;
-                    not: {
-                        properties: {
-                            granularity: {
-                                type: string;
+                    not?: undefined;
+                    allOf: ({
+                        not: {
+                            properties: {
+                                granularity: {
+                                    type: string;
+                                };
                             };
+                            required: string[];
                         };
-                        required: string[];
-                    };
+                    } | {
+                        not: {
+                            properties?: undefined;
+                            required: string[];
+                        };
+                    })[];
                 };
                 then: {
+                    not?: undefined;
                     properties: {
                         granularity?: undefined;
                         type: {
@@ -8824,6 +9069,62 @@ export const metadata_v1: {
                             enum: string[];
                             description: string;
                         };
+                        parameter?: undefined;
+                    };
+                    required: string[];
+                };
+            } | {
+                if: {
+                    properties?: undefined;
+                    not?: undefined;
+                    allOf?: undefined;
+                    required: string[];
+                };
+                then: {
+                    properties: {
+                        from?: undefined;
+                        to?: undefined;
+                        granularity?: undefined;
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                        using: {
+                            type: string;
+                            description: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                            };
+                        };
+                        parameter: {
+                            type: string;
+                            description: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                            };
+                        };
+                        with: {
+                            type: string;
+                            description: string;
+                            additionalProperties: boolean;
+                            patternProperties: {
+                                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                                    $ref: string;
+                                };
+                            };
+                        };
+                        empty_values: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                    };
+                    not: {
+                        anyOf: {
+                            required: string[];
+                        }[];
                     };
                     required: string[];
                 };
@@ -12252,6 +12553,119 @@ export const metadata_v1: {
                 type: string;
             };
         };
+        dateRangeParameterDefinition: {
+            title: string;
+            description: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                defaultValue: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            required: string[];
+            $semantic: {
+                type: string;
+            };
+        };
+        dateRangeParameterValue: {
+            title: string;
+            description: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                granularity: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                from: {
+                    type: string[];
+                    description: string;
+                };
+                to: {
+                    type: string[];
+                    description: string;
+                };
+            };
+            required: string[];
+            allOf: ({
+                if: {
+                    properties: {
+                        granularity: {
+                            const: string;
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        granularity: {
+                            type: string;
+                            enum: string[];
+                        };
+                        from: {
+                            type: string[];
+                            pattern: string;
+                            minimum: number;
+                            maximum: number;
+                            description: string;
+                        };
+                        to: {
+                            type: string[];
+                            pattern: string;
+                            minimum: number;
+                            maximum: number;
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                };
+            } | {
+                if: {
+                    properties: {
+                        granularity: {
+                            const: string;
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        granularity: {
+                            type: string;
+                            enum: string[];
+                        };
+                        from: {
+                            minimum?: undefined;
+                            maximum?: undefined;
+                            type: string;
+                            pattern: string;
+                            description: string;
+                        };
+                        to: {
+                            minimum?: undefined;
+                            maximum?: undefined;
+                            type: string;
+                            pattern: string;
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                };
+            })[];
+        };
         parameterAllowedValue: {
             title: string;
             type: string;
@@ -13723,6 +14137,26 @@ type MetricValueFilter = MultipleConditions | Comparison | Range_2 | All;
 // @public (undocumented)
 type MetricValueFilterCondition = AllNoCondition | ComparisonCondition | RangeCondition;
 
+// Warning: (ae-missing-release-tag) "MinutePeriod" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface MinutePeriod {
+    from?: string;
+    // (undocumented)
+    granularity: "MINUTE";
+    to?: string;
+}
+
+// Warning: (ae-missing-release-tag) "MonthPeriod" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface MonthPeriod {
+    from?: string;
+    // (undocumented)
+    granularity: "MONTH";
+    to?: string;
+}
+
 // Warning: (ae-missing-release-tag) "MultipleConditions" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -13824,7 +14258,7 @@ interface ParameterAllowedValue {
 // Warning: (ae-missing-release-tag) "ParameterDefinition" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
-type ParameterDefinition = ParameterDefinition1 | ParameterDefinition2;
+type ParameterDefinition = ParameterDefinition1 | ParameterDefinition2 | ParameterDefinition3;
 
 // Warning: (ae-missing-release-tag) "ParameterDefinition1" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -13835,6 +14269,11 @@ type ParameterDefinition1 = StringParameterDefinition;
 //
 // @public
 type ParameterDefinition2 = NumberParameterDefinition;
+
+// Warning: (ae-missing-release-tag) "ParameterDefinition3" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+type ParameterDefinition3 = DateRangeParameterDefinition;
 
 // Warning: (ae-missing-release-tag) "Permission" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
@@ -15345,6 +15784,16 @@ interface PyramidChart {
     view_by?: Bucket[];
 }
 
+// Warning: (ae-missing-release-tag) "QuarterPeriod" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface QuarterPeriod {
+    from?: string;
+    // (undocumented)
+    granularity: "QUARTER";
+    to?: string;
+}
+
 // Warning: (ae-missing-release-tag) "Query" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public
@@ -16335,6 +16784,16 @@ interface ScatterChart {
     view_by?: Bucket[];
 }
 
+// Warning: (ae-missing-release-tag) "SecondPeriod" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface SecondPeriod {
+    from?: string;
+    // (undocumented)
+    granularity: "SECOND";
+    to?: string;
+}
+
 // Warning: (ae-missing-release-tag) "Section" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -16946,6 +17405,16 @@ declare namespace v1 {
         ParameterDefinition,
         ParameterDefinition1,
         ParameterDefinition2,
+        ParameterDefinition3,
+        DateRangeParameterValue,
+        DateRangeParameterValue1,
+        DateRangeParameterValue2,
+        DateRangeParameterValue3,
+        DateRangeParameterValue4,
+        DateRangeParameterValue5,
+        DateRangeParameterValue6,
+        DateRangeParameterValue7,
+        DateRangeParameterValue8,
         Metadata27,
         Metadata29,
         Visualisation,
@@ -16974,6 +17443,7 @@ declare namespace v1 {
         ComputedAttributeIdentifier7,
         DisplayAsLabelIdentifier4,
         DateFilter2,
+        DateFilter3,
         Filter2,
         Filter3,
         TextFilter,
@@ -17266,6 +17736,7 @@ declare namespace v1 {
         DashboardFilters,
         DashboardAbsoluteDateFilter,
         DashboardRelativeDateFilter,
+        DashboardPeriodDateFilter,
         DashboardStateSelect,
         LocalDateFilter,
         LocalDateFilter1,
@@ -17290,6 +17761,15 @@ declare namespace v1 {
         ParameterAllowedValue,
         NumberParameterDefinition,
         NumberParameterConstraints,
+        DateRangeParameterDefinition,
+        YearPeriod,
+        QuarterPeriod,
+        MonthPeriod,
+        WeekPeriod,
+        DayPeriod,
+        HourPeriod,
+        MinutePeriod,
+        SecondPeriod,
         Metadata28,
         Table,
         Query,
@@ -25482,6 +25962,16 @@ interface WaterfallChart {
     view_by?: Bucket[];
 }
 
+// Warning: (ae-missing-release-tag) "WeekPeriod" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface WeekPeriod {
+    from?: string;
+    // (undocumented)
+    granularity: "WEEK";
+    to?: string;
+}
+
 // Warning: (ae-missing-release-tag) "Widget" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)
@@ -25542,6 +26032,16 @@ interface WorkspaceDataFilter {
     filter_id: string;
     // (undocumented)
     source_column: SourceColumn;
+}
+
+// Warning: (ae-missing-release-tag) "YearPeriod" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+interface YearPeriod {
+    from?: string | number;
+    // (undocumented)
+    granularity: "YEAR";
+    to?: string | number;
 }
 
 ```

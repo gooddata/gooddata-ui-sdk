@@ -76,7 +76,7 @@ import { waterfallChart } from "../configs/waterfallChart.js";
 import { BucketsType, type ExportEntities } from "../types.js";
 import { convertBucketToTitle } from "../utils/convertBucketToTitle.js";
 import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";
-import { CoreErrorCode, newError, updateErrorContext } from "../utils/errors.js";
+import { CoreErrorCode, type IErrorContext, newError, updateErrorContext } from "../utils/errors.js";
 import {
     foldLegacyEmptyValuesWithFilter,
     parseDateValuesToDeclarative,
@@ -84,6 +84,11 @@ import {
 } from "../utils/filterUtils.js";
 import { convertGranularity } from "../utils/granularityUtils.js";
 import { mapLocationLabel } from "../utils/locationUtils.js";
+import {
+    type YamlPeriodDateFilter,
+    isPeriodDateFilter,
+    periodDateFilterToStored,
+} from "../utils/periodDateFilter.js";
 import { assertUnreachable, convertIdToTitle, getFullBucket, getFullField } from "../utils/sharedUtils.js";
 import {
     isAbsoluteDateFilter,
@@ -293,6 +298,7 @@ export function yamlReportToDeclarative(
         query.filter_by,
         attrFilterConfig,
         true,
+        { path: ["query", "filter_by"] },
     );
     const parameters = yamlQueryParametersToDeclarative(query.parameters ?? []);
 
@@ -372,6 +378,7 @@ function yamlReportFieldToDeclarative(
     if (!field) {
         return {};
     }
+    const filtersContext = { path: ["query", "fields", localName, "filter_by"] };
 
     if (isAttributeField(field) && opts.location) {
         const { displayForm, latitude, longitude } = mapLocationLabel(entities, field);
@@ -428,7 +435,13 @@ function yamlReportFieldToDeclarative(
         const item = createIdentifier(field.using, { forceMetric: true }) as any;
         if (item) {
             const aggregation = (field.aggregation ?? "SUM").toLowerCase() as MeasureAggregation;
-            const { filters, attributeFilterConfigs } = yamlFiltersToDeclarative(entities, field.filter_by);
+            const { filters, attributeFilterConfigs } = yamlFiltersToDeclarative(
+                entities,
+                field.filter_by,
+                {},
+                false,
+                filtersContext,
+            );
             return {
                 bucketItem: {
                     measure: {
@@ -453,7 +466,13 @@ function yamlReportFieldToDeclarative(
     }
     if (isMetricField(field)) {
         const item = createIdentifier(field.using, { forceMetric: true }) as any;
-        const { filters, attributeFilterConfigs } = yamlFiltersToDeclarative(entities, field.filter_by);
+        const { filters, attributeFilterConfigs } = yamlFiltersToDeclarative(
+            entities,
+            field.filter_by,
+            {},
+            false,
+            filtersContext,
+        );
         if (item) {
             return {
                 bucketItem: {
@@ -757,6 +776,30 @@ function dateFilterWithFieldToDeclarative(
     );
 }
 
+function yamlPeriodDateFilterToDeclarative(
+    entities: ExportEntities,
+    key: string,
+    filter: YamlPeriodDateFilter & DateFilter,
+    assignFilterLocalId: boolean,
+    errorContext: IErrorContext | undefined,
+): YamlFilterToDeclarativeResult {
+    return mergeDeclarativeResults(
+        {
+            filters: [
+                {
+                    parameterizedDateFilter: periodDateFilterToStored(
+                        filter,
+                        key,
+                        "visualisation",
+                        errorContext,
+                    ) as any,
+                },
+            ],
+        },
+        dateFilterWithFieldToDeclarative(entities, filter, assignFilterLocalId),
+    );
+}
+
 function yamlRelativeDateFilterToDeclarative(
     entities: ExportEntities,
     filter: DateFilter,
@@ -1057,10 +1100,21 @@ function yamlFilterToDeclarative(
     // Only view-level (report/layer) filters need a localIdentifier so their displayAsLabel can be
     // correlated via attributeFilterConfigs. Measure-scoped filters must NOT carry one.
     assignFilterLocalId: boolean,
+    errorContext?: IErrorContext,
 ): YamlFilterToDeclarativeResult {
     // The same for the insight-level and the metric-level date filter
     if (isDateFilter(filter)) {
-        filter = foldLegacyEmptyValuesWithFilter(filter);
+        const dateFilter = foldLegacyEmptyValuesWithFilter(filter);
+        if (isPeriodDateFilter(dateFilter)) {
+            return yamlPeriodDateFilterToDeclarative(
+                entities,
+                key,
+                dateFilter,
+                assignFilterLocalId,
+                errorContext,
+            );
+        }
+        filter = dateFilter;
     }
     if (isAbsoluteDateFilter(filter)) {
         return yamlAbsoluteDateFilterToDeclarative(entities, filter, assignFilterLocalId);
@@ -1135,6 +1189,8 @@ export function yamlFiltersToDeclarative(
     // View-level (report/layer) filters set this so their displayAsLabel correlates via localIdentifier;
     // measure-scoped filters leave it false.
     assignFilterLocalId = false,
+    // Where `filters_by` sits in the document, so an error can name the filter's path.
+    errorContext?: IErrorContext,
 ): {
     filters: IFilter[];
     attributeFilterConfigs: IAttributeFilterConfigs | undefined;
@@ -1144,12 +1200,12 @@ export function yamlFiltersToDeclarative(
         { filters: [], attributeFilterConfig: attributeFilterConfigs },
         ...(filters_by && !isArray
             ? Object.entries(filters_by).map(([key, filter]) =>
-                  yamlFilterToDeclarative(entities, key, filter, assignFilterLocalId),
+                  yamlFilterToDeclarative(entities, key, filter, assignFilterLocalId, errorContext),
               )
             : []),
         ...(filters_by && isArray
             ? filters_by.map((filter, i) =>
-                  yamlFilterToDeclarative(entities, i.toString(), filter, assignFilterLocalId),
+                  yamlFilterToDeclarative(entities, i.toString(), filter, assignFilterLocalId, errorContext),
               )
             : []),
     );

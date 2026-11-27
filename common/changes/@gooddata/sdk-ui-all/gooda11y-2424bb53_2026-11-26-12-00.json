@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-metric-component: The \"Change metric ID?\" confirmation dialog tells screen readers its warning message, including the original metric ID, when it opens. The Close dialog button no longer repeats the dialog title.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

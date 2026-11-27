@@ -181,15 +181,36 @@ export function isDateFilter(obj: unknown): obj is DateFilter {
     );
 }
 
+/**
+ * A date filter set to a period names a date range parameter instead of its own `granularity`, `from`
+ * and `to`. The static, relative and All time guards exclude it, so no caller reads a period as one of
+ * them, whatever order it checks in.
+ */
+function namesParameter(obj: object): boolean {
+    return "parameter" in obj && obj.parameter !== undefined;
+}
+
+function isOwnRangeDateFilter(obj: unknown): obj is DateFilter {
+    return isDateFilter(obj) && !namesParameter(obj);
+}
+
 export function isAbsoluteDateFilter(obj: unknown): obj is DateFilter {
     return (
-        isDateFilter(obj) && typeof obj.from === "string" && typeof obj.to === "string" && !obj.granularity
+        isOwnRangeDateFilter(obj) &&
+        typeof obj.from === "string" &&
+        typeof obj.to === "string" &&
+        !obj.granularity
     );
 }
 
 export function isRelativeDateFilter(obj: unknown): obj is DateFilter {
     // Case 1: Date filter with from/to as numbers and granularity
-    if (isDateFilter(obj) && typeof obj.from === "number" && typeof obj.to === "number" && obj.granularity) {
+    if (
+        isOwnRangeDateFilter(obj) &&
+        typeof obj.from === "number" &&
+        typeof obj.to === "number" &&
+        obj.granularity
+    ) {
         return true;
     }
     // Case 2: All-time date filter (no from/to, possible granularity)
@@ -197,7 +218,7 @@ export function isRelativeDateFilter(obj: unknown): obj is DateFilter {
 }
 
 export function isAllTimeDateFilter(obj: unknown): obj is DateFilter {
-    return isDateFilter(obj) && typeof obj.from === "undefined" && typeof obj.to === "undefined";
+    return isOwnRangeDateFilter(obj) && typeof obj.from === "undefined" && typeof obj.to === "undefined";
 }
 
 export function isAttributeFilter(obj: unknown): obj is AttributeFilter {
@@ -402,13 +423,21 @@ export function isDashboardDateFilter(
     return typeof obj === "object" && obj !== null && "type" in obj && obj.type === "date_filter";
 }
 
+function isOwnRangeDashboardDateFilter(
+    obj: unknown,
+): obj is DashboardRelativeDateFilter | DashboardAbsoluteDateFilter {
+    return isDashboardDateFilter(obj) && !namesParameter(obj);
+}
+
 export function isDashboardAbsoluteDateFilter(obj: unknown): obj is DashboardAbsoluteDateFilter {
-    return isDashboardDateFilter(obj) && typeof obj["from"] === "string" && typeof obj["to"] === "string";
+    return (
+        isOwnRangeDashboardDateFilter(obj) && typeof obj["from"] === "string" && typeof obj["to"] === "string"
+    );
 }
 
 export function isDashboardEmptyDateFilter(obj: unknown): boolean {
     return (
-        isDashboardDateFilter(obj) &&
+        isOwnRangeDashboardDateFilter(obj) &&
         typeof obj["from"] === "undefined" &&
         typeof obj["to"] === "undefined" &&
         typeof obj["granularity"] === "undefined" &&
@@ -424,7 +453,7 @@ export function isDashboardNoopDateFilter(obj: unknown): boolean {
 }
 
 export function isDashboardRelativeDateFilter(obj: unknown): obj is DashboardRelativeDateFilter {
-    if (isDashboardDateFilter(obj)) {
+    if (isOwnRangeDashboardDateFilter(obj)) {
         const fromType = typeof obj["from"];
         const toType = typeof obj["to"];
 

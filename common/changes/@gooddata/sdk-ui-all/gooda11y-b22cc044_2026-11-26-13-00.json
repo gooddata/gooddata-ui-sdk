@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-kit: A dialog that becomes modal after it is shown, such as the expanded key driver analysis dialog, traps focus right away, so the first Tab moves to the next control instead of a silent stop.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

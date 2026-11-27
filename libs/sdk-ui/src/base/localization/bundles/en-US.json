@@ -147,6 +147,10 @@
         "text": "Workspace picker",
         "crowdinContext": "Aria-label for workspace picker"
     },
+    "gs.header.projectPicker.currentWorkspace.aria": {
+        "text": "{workspace}, current workspace",
+        "crowdinContext": "Aria-label for the header button that shows the name of the current workspace and opens the workspace picker. {workspace} is the workspace name, which is the button's visible text; keep it at the start so speech input users can activate the button by saying its visible text."
+    },
     "gs.header.projectPicker.workspaces": {
         "text": "Workspaces",
         "crowdinContext": "Heading before list of workspaces"
@@ -875,6 +879,10 @@
         "text": "sorted {direction}",
         "crowdinContext": "ARIA label for header cell sort state. Example: 'sorted ascending'. The {direction} placeholder is replaced with 'ascending' or 'descending'."
     },
+    "visualizations.table.cell.aria.drillableHint": {
+        "text": "Drillable, press Enter to drill",
+        "crowdinContext": "Screen reader text announced together with the value of a table cell that can be drilled into. Tells the user that pressing the Enter key on the cell opens the drill action."
+    },
     "apply": {
         "text": "Apply",
         "crowdinContext": "Button label to confirm and apply changes or selections in a dialog or form."
@@ -918,6 +926,14 @@
     "dateFilterDropdown.relativeForm.label": {
         "text": "Granularity",
         "crowdinContext": "Label for the granularity selection in the date filter dropdown component, allowing users to select a time range for filtering data."
+    },
+    "dateFilterDropdown.customPeriod.ariaLabel": {
+        "text": "Custom period type",
+        "crowdinContext": "Accessible name of the group containing the 'Static period' and 'Relative period' buttons in the date filter dropdown, announced by screen readers."
+    },
+    "dateFilterDropdown.actions.ariaLabel": {
+        "text": "Date filter actions",
+        "crowdinContext": "Accessible name of the group containing the Cancel and Apply buttons at the bottom of the date filter dropdown, announced by screen readers."
     },
     "dateFilter.tab.standard": {
         "text": "Standard",
@@ -3138,6 +3154,10 @@
     "shareDialog.share.granular.grantee.permission.ariaLabel": {
         "text": "Permission: {permission}",
         "crowdinContext": "Accessible name of the permission selector button for a user or group in the share dialog. {permission} is the currently selected permission level shown on the button (e.g. 'Can edit & share')."
+    },
+    "shareDialog.share.granular.grantee.permission.list.ariaLabel": {
+        "text": "Permission for {grantee}",
+        "crowdinContext": "Accessible name of the list of permission options that opens from the permission selector button of a user or group in the share dialog. {grantee} is the name of the user or group (e.g. 'All users')."
     },
     "shareDialog.olp.label.suffix.primary": {
         "text": "(Primary)",

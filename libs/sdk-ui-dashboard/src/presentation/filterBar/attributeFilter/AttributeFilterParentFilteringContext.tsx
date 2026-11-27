@@ -8,11 +8,11 @@ import {
     DashboardAttributeFilterConfigModeValues,
     type DashboardAttributeFilterItem,
     DashboardAttributeFilterSelectionTypeValues,
+    type DashboardDateFilterOfAnyType,
     type IAttributeElement,
     type IAttributeMetadataObject,
     type IAttributeOrMeasure,
     type IDashboardAttributeFilter,
-    type IDashboardDateFilter,
     type ObjRef,
     areObjRefsEqual,
     dashboardAttributeFilterItemDisplayForm,
@@ -32,8 +32,8 @@ import { useDashboardCommandProcessing } from "../../../model/react/useDashboard
 import { selectAllCatalogDisplayFormsMap } from "../../../model/store/catalog/catalogSelectors.js";
 import { selectRestrictedDashboardFilterLocalIdentifiers } from "../../../model/store/filtering/dashboardFilterSelectors.js";
 import {
-    selectFilterContextDateFilter,
-    selectFilterContextDateFiltersWithDimension,
+    selectFilterContextDateFilterOfAnyType,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
     selectOtherContextAttributeFilterItems,
 } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
@@ -140,8 +140,8 @@ export function AttributeFilterParentFilteringProvider({
         selectOtherContextAttributeFilterItems(filterRef),
     );
 
-    const allNeighborDateFilters: IDashboardDateFilter[] = useDashboardSelector(
-        selectFilterContextDateFiltersWithDimension,
+    const allNeighborDateFilters: DashboardDateFilterOfAnyType[] = useDashboardSelector(
+        selectFilterContextDateFiltersWithDimensionOfAnyType,
     );
     const restrictedFilterLocalIdentifiers = useDashboardSelector(
         selectRestrictedDashboardFilterLocalIdentifiers,
@@ -165,8 +165,8 @@ export function AttributeFilterParentFilteringProvider({
         [allNeighborDateFilters, restrictedFilterLocalIdentifiers],
     );
 
-    const commonDateFilter: IDashboardDateFilter | undefined = useDashboardSelector(
-        selectFilterContextDateFilter,
+    const commonDateFilter: DashboardDateFilterOfAnyType | undefined = useDashboardSelector(
+        selectFilterContextDateFilterOfAnyType,
     );
 
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);

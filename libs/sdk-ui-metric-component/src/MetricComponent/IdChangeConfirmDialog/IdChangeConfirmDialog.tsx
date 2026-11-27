@@ -1,6 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type ReactElement } from "react";
+import { type ReactElement, useId } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -80,6 +80,9 @@ export function IdChangeConfirmDialog({
     const conflictsOccurred = conflicts.conflictWith.length > 0;
     const bothWarnings = conflictsOccurred && metricIdChanged;
 
+    // Tie the warning message to the dialog so screen readers announce it when the dialog opens.
+    const descriptionElementId = useId();
+
     return (
         <ConfirmDialog
             cancelButtonText={
@@ -108,8 +111,9 @@ export function IdChangeConfirmDialog({
                     : intl.formatMessage({ id: "metricComponent.idChangeConfirmDialog.headline" })
             }
             containerClassName={cx(classes.root, "s-id_change_dialog")}
+            accessibilityConfig={{ descriptionElementId }}
         >
-            <>
+            <div id={descriptionElementId}>
                 {metricIdChanged && (
                     <WarningArea
                         simple={!bothWarnings}
@@ -150,7 +154,7 @@ export function IdChangeConfirmDialog({
                         }
                     />
                 )}
-            </>
+            </div>
         </ConfirmDialog>
     );
 }
@@ -171,7 +175,7 @@ function WarningArea({ title, content, simple }: IWarningAreaProps) {
     return (
         <div className={classes.warningArea}>
             <div className={classes.warningIconArea}>
-                <div className="icon gd-icon-warning" />
+                <div className="icon gd-icon-warning" aria-hidden="true" />
             </div>
             <div className={classes.warningSpace}></div>
             <div className={classes.warningTextArea}>

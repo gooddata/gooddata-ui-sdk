@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-dashboard: Enter, Space and Down Arrow on the dashboard \"More actions\" button open the menu and move focus to its first item, and a single Down Arrow moves focus by exactly one item.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

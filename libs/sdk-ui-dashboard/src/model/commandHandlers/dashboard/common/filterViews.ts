@@ -6,13 +6,13 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterItem,
+    type DashboardDateFilterOfAnyType,
     type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IDashboard,
     type IDashboardArbitraryAttributeFilter,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
-    type IDashboardDateFilter,
     type IDashboardFilterView,
     type IDashboardMeasureValueFilter,
     type IDashboardParameter,
@@ -26,6 +26,7 @@ import {
     dashboardAttributeFilterItemTitle,
     dashboardAttributeFilterItemValidateElementsBy,
     dashboardFilterLocalIdentifier,
+    dashboardFilterObjRef,
     dashboardMeasureValueFilterLocalIdentifier,
     isDashboardAbsoluteGranularityDateFilter,
     isDashboardArbitraryAttributeFilter,
@@ -33,19 +34,18 @@ import {
     isDashboardAttributeFilterItem,
     isDashboardCommonDateFilterOfAnyType,
     isDashboardDateFilter,
+    isDashboardDateFilterOfAnyType,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMatchAttributeFilter,
     isDashboardMeasureValueFilter,
     isDashboardTextAttributeFilter,
     isExportOverrideFilterContext,
     isFilterContext,
     isSingleSelectionFilter,
+    newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 import { _isEqual, _omit } from "@gooddata/util";
 
-import {
-    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
-    containsAbsoluteGranularityDateFilterWithDataSet,
-} from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import {
     PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED,
     containsDashboardParameterizedDateFilter,
@@ -58,6 +58,7 @@ import {
     findCounterpartFilter,
     targetAcceptsAttributeFilterValue,
     withCommonDateFilterLocalIdentifier,
+    withDateFilterIdentity,
 } from "../../../store/tabs/filterContext/filterSync.js";
 import { type ITabState } from "../../../store/tabs/tabsState.js";
 import { isFilterTypeCompatibleWithSelectionType } from "../../../utils/attributeFilterSelectionTypeCompatibility.js";
@@ -98,15 +99,17 @@ const findMatchingAttributeFilterItemByLocalIdentifier = (
 
 // date filters do not have localIdentifier set, compare them by dataSet instead
 const findMatchingDateFilterByDataSet = (
-    filter: IDashboardDateFilter,
+    filter: DashboardDateFilterOfAnyType,
     viewFilters: FilterContextItem[],
-): IDashboardDateFilter | undefined =>
-    viewFilters.find(
-        (item): item is IDashboardDateFilter =>
-            isDashboardDateFilter(item) &&
-            ((item.dateFilter.dataSet === undefined && filter.dateFilter.dataSet === undefined) ||
-                areObjRefsEqual(item.dateFilter.dataSet, filter.dateFilter.dataSet)),
+): DashboardDateFilterOfAnyType | undefined => {
+    const dataSet = dashboardFilterObjRef(filter);
+    return viewFilters.find(
+        (item): item is DashboardDateFilterOfAnyType =>
+            isDashboardDateFilterOfAnyType(item) &&
+            ((dashboardFilterObjRef(item) === undefined && dataSet === undefined) ||
+                areObjRefsEqual(dashboardFilterObjRef(item), dataSet)),
     );
+};
 
 // MVF: match only when both localIdentifier and the referenced metric agree.
 // The metric ref is set in edit mode and not changeable in view mode, so a localId
@@ -358,6 +361,20 @@ export const changeFilterContextSelection = (
                   )
                 : filter;
         }
+        // whole periods of a date filter with a dimension replace the filter as a whole too
+        if (isDashboardDateFilterWithDimensionOfAnyType(filter)) {
+            const viewFilter = findMatchingDateFilterByDataSet(filter, filterViewFilters);
+            if (
+                isDashboardAbsoluteGranularityDateFilter(filter) ||
+                isDashboardAbsoluteGranularityDateFilter(viewFilter)
+            ) {
+                const dataSet = dashboardFilterObjRef(filter);
+                const localIdentifier = dashboardFilterLocalIdentifier(filter);
+                return viewFilter
+                    ? withDateFilterIdentity(viewFilter, localIdentifier, dataSet)
+                    : newAllTimeDashboardDateFilter(dataSet, localIdentifier);
+            }
+        }
         if (isDashboardAttributeFilter(filter)) {
             const filterLocalId = filter.attributeFilter.localIdentifier;
             const filterConfig = filterLocalId ? configsMap.get(filterLocalId) : undefined;
@@ -414,7 +431,7 @@ export const changeFilterContextSelection = (
             };
         } else if (isDashboardDateFilter(filter)) {
             const viewFilter = findMatchingDateFilterByDataSet(filter, filterViewFilters);
-            if (viewFilter) {
+            if (isDashboardDateFilter(viewFilter)) {
                 return {
                     dateFilter: {
                         ...filter.dateFilter,
@@ -572,12 +589,6 @@ export function findTabDefaultFilterView(
 function supportedDefaultFilterView(
     view: IDashboardFilterView | undefined,
 ): IDashboardFilterView | undefined {
-    if (view && containsAbsoluteGranularityDateFilterWithDataSet(view.filterContext.filters)) {
-        console.warn(
-            `The default filter view "${view.name}" was not applied. ${ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED}`,
-        );
-        return undefined;
-    }
     if (view && containsDashboardParameterizedDateFilter(view.filterContext.filters)) {
         console.warn(
             `The default filter view "${view.name}" was not applied. ${PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED}`,
@@ -819,7 +830,7 @@ function findSameTabFilter(
     filters: FilterContextItem[],
     filter: FilterContextItem,
 ): FilterContextItem | undefined {
-    if (isDashboardDateFilter(filter)) {
+    if (isDashboardDateFilterOfAnyType(filter)) {
         return findMatchingDateFilterByDataSet(filter, filters);
     }
     const localIdentifier = dashboardFilterLocalIdentifier(filter);

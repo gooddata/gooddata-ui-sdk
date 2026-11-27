@@ -135,6 +135,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: ICrossFilteri
     );
 
     const widgetRef = cmd.payload.drillEvent.widgetRef!;
+    // TODO INE: MC-5779 - date filters with dimension of the whole-period type are not counted here yet.
     const currentFilters: ReturnType<typeof selectFilterContextDraggableFilterItems> = yield select(
         selectFilterContextDraggableFilterItems,
     );

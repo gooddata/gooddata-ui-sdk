@@ -5,10 +5,10 @@ import { type ComponentType } from "react";
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type DashboardAttributeFilterSelectionMode,
+    type DashboardDateFilterOfAnyType,
     type IAttributeElement,
     type IAttributeFilter,
     type IAttributeMetadataObject,
-    type IDashboardDateFilter,
     type ILocale,
     type ISeparators,
     type ObjRef,
@@ -226,9 +226,13 @@ export interface IAttributeFilterCoreProps {
     /**
      * Specifies a dependent date filter that will be used to reduce options for for current attribute filter.
      *
+     * @remarks
+     * The absolute date filter with granularity is alpha, it limits the options only on backends that
+     * support it.
+     *
      * @beta
      */
-    dependentDateFilters?: IDashboardDateFilter[];
+    dependentDateFilters?: DashboardDateFilterOfAnyType[];
 
     /**
      * Specify title for the attribute filter.

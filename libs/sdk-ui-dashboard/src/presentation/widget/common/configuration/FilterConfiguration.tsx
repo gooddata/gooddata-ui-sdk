@@ -9,10 +9,11 @@ import {
     dashboardAttributeFilterItemDisplayForm,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
+    dashboardFilterObjRef,
     insightFilters,
     isAttributeMetadataObject,
     isDashboardAttributeFilterItem,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilterWithDimensionOfAnyType,
     isDashboardMeasureValueFilter,
     isInsightWidget,
     isRankingFilter,
@@ -55,7 +56,7 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
         return filters.filter(
             (f) =>
                 isDashboardAttributeFilterItem(f) ||
-                isDashboardDateFilterWithDimension(f) ||
+                isDashboardDateFilterWithDimensionOfAnyType(f) ||
                 isDashboardMeasureValueFilter(f),
         );
     }, [filters]);
@@ -132,11 +133,12 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
                             widget={widget}
                         />
                     );
-                } else if (isDashboardDateFilterWithDimension(filter)) {
+                } else if (isDashboardDateFilterWithDimensionOfAnyType(filter)) {
+                    const dataSet = dashboardFilterObjRef(filter)!;
                     return (
                         <DateFilterConfigurationItem
-                            key={objRefToString(filter.dateFilter.dataSet!)}
-                            dataSetRef={filter.dateFilter.dataSet!}
+                            key={objRefToString(dataSet)}
+                            dataSetRef={dataSet}
                             widget={widget}
                         />
                     );

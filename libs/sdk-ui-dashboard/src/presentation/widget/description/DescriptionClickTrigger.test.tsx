@@ -1,7 +1,7 @@
 // (C) 2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
@@ -10,11 +10,6 @@ import { IntlWrapper } from "../../localization/IntlWrapper.js";
 
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
 import { type IDescriptionClickTriggerProps } from "./types.js";
-
-// `isolate: false` shares one module graph per worker; make sure the real modules are used.
-vi.hoisted(() => {
-    vi.resetModules();
-});
 
 const props: IDescriptionClickTriggerProps = {
     className: "widget-description-test",

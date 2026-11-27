@@ -13,7 +13,6 @@ import {
     newDashboardParameterizedDateFilter,
 } from "@gooddata/sdk-model";
 
-import { ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED } from "../../../../_staging/dashboard/absoluteGranularityDateFilters.js";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { PARAMETERIZED_DATE_FILTER_NOT_SUPPORTED } from "../../../../_staging/dashboard/parameterizedDateFilters.js";
 import {
@@ -31,7 +30,7 @@ import { SimpleDashboardIdentifier } from "../../../../tests/SimpleDashboard.tes
 import { initializeDashboard } from "../../../commands/dashboard.js";
 import { DashboardTester, preloadedTesterFactory } from "../../../DashboardTester.js";
 import { type DashboardInitialized } from "../../../events/dashboard.js";
-import { type IDashboardCommandFailed, isDashboardCommandFailed } from "../../../events/general.js";
+import { isDashboardCommandFailed } from "../../../events/general.js";
 import {
     selectCatalogDateRangeParameters,
     selectCatalogDateRangeParametersStatus,
@@ -48,6 +47,7 @@ import { selectEffectiveDateFilterConfig } from "../../../store/tabs/dateFilterC
 import {
     selectAttributeFilterDisplayForms,
     selectFilterContextDateFilterOfAnyType,
+    selectFilterContextDateFiltersWithDimensionOfAnyType,
     selectFilterContextDefinition,
     selectFilterContextIdentity,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
@@ -153,37 +153,27 @@ describe("initialize dashboard handler", () => {
                 },
             ],
         ])(
-            "should fail to load a dashboard with the filter for a date dataset in %s",
+            "should load a dashboard with the filter for a date dataset in %s",
             async (_desc, preloadedDashboard) => {
                 const customizationFns: PrivateDashboardContext = { preloadedDashboard };
                 const tester = DashboardTester.forRecording(EmptyDashboardIdentifier, { customizationFns });
 
-                const event: IDashboardCommandFailed<any> = await tester.dispatchAndWaitFor(
-                    initializeDashboard(),
-                    "GDC.DASH/EVT.COMMAND.FAILED",
-                );
+                tester.dispatch(initializeDashboard());
+                await tester.waitFor("GDC.DASH/EVT.INITIALIZED");
 
-                expect(event.payload.error).toBeInstanceOf(NotSupported);
-                expect(event.payload.error?.message).toBe(
-                    ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
-                );
+                expect(selectFilterContextDateFiltersWithDimensionOfAnyType(tester.state())).toEqual([
+                    granularityDateFilter,
+                ]);
             },
         );
 
-        it("should fail to initialize a new dashboard with the filter for a date dataset in the default filter overrides", async () => {
+        it("should initialize a new dashboard with the filter for a date dataset in the default filter overrides", async () => {
             const tester = DashboardTester.forNewDashboard(undefined, undefined, {
                 overrideDefaultFilters: [granularityDateFilter],
             });
 
-            const event: IDashboardCommandFailed<any> = await tester.dispatchAndWaitFor(
-                initializeDashboard(),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
-
-            expect(event.payload.error).toBeInstanceOf(NotSupported);
-            expect(event.payload.error?.message).toBe(
-                ABSOLUTE_GRANULARITY_DATE_FILTER_WITH_DATA_SET_NOT_SUPPORTED,
-            );
+            tester.dispatch(initializeDashboard());
+            await tester.waitFor("GDC.DASH/EVT.INITIALIZED");
         });
 
         it("should load a dashboard with the common filter in its filter context", async () => {
